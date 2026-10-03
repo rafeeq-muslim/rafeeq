@@ -1,0 +1,25 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Team-private material (never publish)
+*.opus
+*.ogg
+*WhatsApp*
+private/
+
+# Dependencies and builds
+node_modules/
+.venv/
+__pycache__/
+dist/
+build/
+.next/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
