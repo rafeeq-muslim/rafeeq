@@ -12,7 +12,7 @@
 | --- | --- |
 | عضوًا في الفريق | [دليل كتابة وثائق المتطلبات](docs/prd/00-guide.md)، ثم [وثيقة المنتج](docs/prd/PRD-000-product.md) |
 | وكيلًا برمجيًا (Claude Code وغيره) | [`AGENTS.md`](AGENTS.md) |
-| تريد مثالًا لوثيقة ميزة | [F04 المساعد المعرفي](docs/prd/features/F04-knowledge-assistant.md) · [F05 تقدّم التعلّم](docs/prd/features/F05-learning-progress.md) |
+| تريد مثالًا لوثيقة ميزة | [المساعد المعرفي الموثّق (F04)](docs/prd/features/F04-knowledge-assistant.md) · [متابعة التقدّم والأوسمة (F05)](docs/prd/features/F05-learning-progress.md) |
 
 ## الفريق
 
