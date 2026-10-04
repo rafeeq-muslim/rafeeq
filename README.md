@@ -1,8 +1,8 @@
 # رفيق | Rafeeq
 
-**يرافق المسلم الجديد في سنته الأولى بلغته، ويجيبه من مصادر موثوقة، ويصله بإنسان حين يحتاج.**
+**يرافق المسلم الجديد في سنته الأولى بلغته: يتعلّم أساسيات دينه في مسار ممتع، ويجد جوابًا موثّقًا لسؤاله، ويصل إلى إنسان حين يحتاج.**
 
-*Rafeeq accompanies new Muslims through their first year, in their own language: it answers from trusted Islamic sources and connects them to a human when needed.*
+*Rafeeq accompanies new Muslims through their first year, in their own language: a gamified learning path, answers from trusted Islamic sources only, and a human when they need one.*
 
 مشروع فريق رفيق في تحدي الذكاء الاصطناعي في خدمة المحتوى الإسلامي (مؤسسة باذل)، المسار الثالث: التجارب التفاعلية والرحلة المعرفية للتعريف بالإسلام وتعلمه.
 
@@ -10,9 +10,10 @@
 
 | إن كنت | فاقرأ |
 | --- | --- |
-| عضوًا في الفريق | [دليل كتابة وثائق المتطلبات](docs/prd/00-guide.md)، ثم [وثيقة المنتج](docs/prd/PRD-000-product.md) |
+| عضوًا في الفريق | [ابدأ من هنا](docs/00-start-here.md)، ثم [المنتج في صفحة](docs/product.md) و[قائمة الميزات](docs/features.md) |
 | وكيلًا برمجيًا (Claude Code وغيره) | [`AGENTS.md`](AGENTS.md) |
-| تريد مثالًا لوثيقة ميزة | [المساعد المعرفي الموثّق (F04)](docs/prd/features/F04-knowledge-assistant.md) · [متابعة التقدّم والأوسمة (F05)](docs/prd/features/F05-learning-progress.md) |
+| تريد مثالًا لوثيقة ميزة | [الإجابة الموثّقة](docs/domains/knowledge/features/KNW-01-sourced-answer.md) · [سلسلة الأيام الرحيمة](docs/domains/motivation/features/MOT-02-forgiving-streak.md) · [الحساب الاختياري](docs/domains/platform/features/PLT-02-optional-account.md) |
+| تستخدم Claude على الويب | ارفع مهارة [`skills/rafeeq-prd`](skills/rafeeq-prd/) |
 
 ## الفريق
 
@@ -23,4 +24,4 @@
 
 ## الحالة
 
-المستودع في مرحلة التوثيق والتجهيز قبل أيام التحدي (4 إلى 6 أكتوبر 2026). سيُضاف الكود، وتعليمات التشغيل، وسجل المصادر والتراخيص.
+أيام التحدي من 4 إلى 6 أكتوبر 2026. سيُضاف الكود، وتعليمات التشغيل، وسجل المصادر والتراخيص.
