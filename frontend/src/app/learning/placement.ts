@@ -19,7 +19,9 @@ export function probes(content: Content): Probe[] {
   const out: Probe[] = []
   for (const unit of visibleUnits(content.units)) {
     const lessons = unit.lessons.map((id) => content.lessons[id]).filter(Boolean)
-    const keys = lessons.flatMap((l) => l.objectives.filter((o) => o.key).map((o) => ({ o, l })))
+    const marked = lessons.flatMap((l) => l.objectives.filter((o) => o.key).map((o) => ({ o, l })))
+    // Units without marked key objectives: each lesson's first objective, in order.
+    const keys = marked.length >= 2 ? marked : lessons.flatMap((l) => l.objectives.slice(0, 1).map((o) => ({ o, l })))
     const picked: Exercise[] = []
     for (const { o, l } of keys) {
       const ex = l.exercises.find((e) => e.objectives.includes(o.id) && e.type === "choose") ?? l.exercises.find((e) => e.objectives.includes(o.id))

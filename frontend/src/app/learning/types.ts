@@ -8,7 +8,11 @@ export type Card = {
   kind: "text" | "step" | "review"
   text: string
   image_url?: string | null
+  extra_images?: string[]
   quran?: QuranRef | null
+  /** Recitation for this card in the learner's language (one file or verse by verse). */
+  audio?: string[] | null
+  hadith?: boolean
 }
 
 export type Objective = { id: string; text: string; cards: string[]; key?: boolean }
@@ -33,6 +37,8 @@ export type Lesson = {
   approved: boolean
   /** Team preview: the working text differs from what learners see. */
   changed?: boolean
+  /** LRN-01 R5: optional support video in the learner's language. */
+  media?: { video?: string | null } | null
 }
 
 export type Unit = {

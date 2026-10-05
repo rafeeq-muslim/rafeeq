@@ -33,6 +33,7 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 | Decision | Why | To change |
 | --- | --- | --- |
 | Arabic and English card text from the **spreadsheet you supplied**; Filipino from the book's official site | You asked to use the spreadsheet; it matches the printed book where the site is wrong (e.g. the Zabur and Dawud) | Point `SOURCE_FILES` in `content/tools/build.py` back at the site |
+| **Unit 1 is مهند's draft** (`content/units/unit-01/unit.json`, 7 lessons, 21 step photos); team units load through `backend/app/learning/team_units.py` and replace any pipeline unit of the same order. Step photos are served only through `/api/content/media/unit-NN/images/*` | Teammates' content wins; the unit files themselves are never exposed | Remove the folder to fall back to the pipeline's unit 1 |
 | Lessons cite Quran verses **by reference only**; the words come from the stored QuranEnc record (Arabic + Saheeh International for English, Rowwad for Tagalog) | rules.md §1.3 | Translation keys in `backend/app/knowledge/scripture.py` |
 | English and Filipino prayer steps no longer contain transliterated adhkar or their translations | Avoids learners reciting a translation in prayer; Arabic keeps every dhikr | Restore from each lesson's `dropped` list |
 | The wiping-over-socks invalidator follows each language's source (Arabic: what requires wudu or ghusl; English/Filipino: ghusl only); no exercise asks about it | A fiqh difference between editions; the reviewer decides | Flagged for مهند in `content/README.md` |

@@ -11,6 +11,7 @@ import { IconArrowLeft, IconHelpCircle, IconSparkles, IconX } from "@tabler/icon
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   AlertDialog,
@@ -241,10 +242,47 @@ function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
           {t("lesson.step")}
         </p>
       )}
-      {card.image_url && <img src={card.image_url} alt="" className="w-full rounded-card bg-muted object-cover" loading="lazy" />}
-      {card.text && <p className="font-reading text-reading whitespace-pre-line text-foreground">{card.text}</p>}
+      {index === 0 && lesson.media?.video && <SupportVideo src={lesson.media.video} />}
+      {(card.image_url || card.extra_images?.length) && (
+        <div className="flex gap-3">
+          {[card.image_url, ...(card.extra_images ?? [])].filter(Boolean).map((src) => (
+            <img key={src!} src={src!} alt="" className="min-w-0 flex-1 rounded-card bg-card object-contain p-2" loading="lazy" />
+          ))}
+        </div>
+      )}
+      {card.text && (
+        <p className={cn("font-reading text-reading whitespace-pre-line text-foreground", card.hadith && "border-s-4 border-primary/30 ps-4")}>{card.text}</p>
+      )}
       {card.quran && <VerseBlock quran={card.quran} />}
+      {card.audio && card.audio.length > 0 && <Recitation files={card.audio} />}
       {index === lesson.cards.length - 1 && page && <p className="text-caption text-muted-foreground">{page}</p>}
     </article>
+  )
+}
+
+/** Al-Fatihah and similar recitations: one file or verse by verse, plain
+ * players, no music (rules.md). Audio is part of the approved lesson. */
+function Recitation({ files }: { files: string[] }) {
+  const { t } = useT()
+  return (
+    <figure className="flex flex-col gap-2 rounded-card bg-card p-4">
+      <figcaption className="text-label font-bold text-muted-foreground">{t("lesson.listen")}</figcaption>
+      {files.map((src, i) => (
+        <audio key={src} controls preload="none" src={src} className="w-full" aria-label={`${t("lesson.listen")} ${i + 1}`} />
+      ))}
+    </figure>
+  )
+}
+
+/** LRN-01 R5: an optional support video, opened only when asked. */
+function SupportVideo({ src }: { src: string }) {
+  const { t } = useT()
+  const [open, setOpen] = React.useState(false)
+  return open ? (
+    <video controls playsInline preload="metadata" src={src} className="w-full rounded-card bg-black" />
+  ) : (
+    <Button variant="secondary" className="w-fit" onClick={() => setOpen(true)}>
+      {t("lesson.video")}
+    </Button>
   )
 }

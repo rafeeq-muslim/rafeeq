@@ -1,12 +1,15 @@
 """Learning API: the path's content (LRN-01) for one language."""
 
+import re
 from datetime import UTC, datetime
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Response, status
+from fastapi.responses import FileResponse
 from pydantic import AwareDatetime, BaseModel, Field
 from sqlalchemy import select
 
+from app.core.config import get_settings
 from app.core.deps import CurrentUser, OptionalUser, Session
 from app.knowledge.review import published
 from app.learning.content import build_content
@@ -112,3 +115,18 @@ async def merge_learning(body: LearningSync, session: Session, user: CurrentUser
         row.mastered_at, row.last_exercise_id, row.checks_done = m.masteredAt, m.lastExerciseId, m.checksDone
     await session.commit()
     return await _learning_of(session, user.id)
+
+
+# --- Step photos of team units (only images; never the unit files) -----------
+
+_MEDIA = re.compile(r"^unit-\d{2}/images/[A-Za-z0-9._-]+\.(webp|png|jpg)$")
+
+
+@router.get("/content/media/{path:path}")
+async def content_media(path: str) -> FileResponse:
+    if not _MEDIA.fullmatch(path) or ".." in path:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
+    f = get_settings().content_dir / "units" / path
+    if not f.is_file():
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
+    return FileResponse(f, headers={"Cache-Control": "public, max-age=604800"})

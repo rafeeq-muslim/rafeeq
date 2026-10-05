@@ -1,6 +1,6 @@
 # Overnight build: status and handoff
 
-Owner of this file: Claude (product engineer). Updated: 2026-10-05 ~22:00 (server time, UTC).
+Owner of this file: Claude (product engineer). Updated: 2026-10-05 ~22:30 (server time, UTC).
 
 Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automatic rollback).
 
@@ -11,6 +11,9 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 - KNW-02 corpus loader and Quran scripture API (QuranEnc, HadeethEnc, islamqa, binbaz, IslamHouse book loaded in production). KNW-05 review desk.
 - MOT-02 streak, MOT-03 badges, MOT-05 reminders (web push), MOT-07 engagement status, MOT-08/09 team indicators.
 - Docs: `plan.md`, `decisions-for-review.md`, `conflicts.md`, `ux-journey.md`, sources research, convert research, AI tool layer.
+
+## Heartbeat 22:30
+- Merged مهند's commit on `lrn-01-04-mot-02-08-learning-motivation-docs`: unit 1 content draft in his format with 21 step photos and `content/check_content.py`. Unit 1 is now served from it (photos, Al-Fatiha audio, support videos); units 2–6 from the pipeline. No open PRs.
 
 ## In progress (background agents, same working tree)
 - Ask and AI agents: KNW-01 answer pipeline, embeddings, KNW-10 explain/guide/tagging, KNW-04 reliability test, `ai-agents.md` with model analysis.

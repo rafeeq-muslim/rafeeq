@@ -14,6 +14,7 @@ from typing import Any
 from app.core.config import get_settings
 from app.knowledge import review
 from app.knowledge.review import ReviewItem
+from app.learning import team_units
 
 LANGS = ("ar", "en", "tl")
 
@@ -48,6 +49,15 @@ def store() -> ContentStore:
     media = root / "day-one-media.json"
     if media.exists():
         s.media = json.loads(media.read_text(encoding="utf-8"))
+    # Units written by the Learning team replace pipeline units of the same order.
+    for unit, lessons in team_units.load(root):
+        for old in [u for u in s.units if u.get("order") == unit["order"] or u["id"] == unit["id"]]:
+            for lid in old.get("lessons", []):
+                s.lessons.pop(lid, None)
+            s.units.remove(old)
+        s.units.append(unit)
+        s.lessons.update({lesson["id"]: lesson for lesson in lessons})
+    s.units.sort(key=lambda u: u.get("order", 0))
     return s
 
 
@@ -63,7 +73,7 @@ def lang_view(node: Any, lang: str) -> Any:
 
 
 _PRIVATE = ("review_status", "dropped", "notes")
-LESSON_TEXT = ("title", "cards", "objectives", "exercises", "source")
+LESSON_TEXT = ("title", "cards", "objectives", "exercises", "source", "media")
 UNIT_TEXT = ("title", "badge_name", "source_credit")
 
 

@@ -56,6 +56,10 @@ Backend packages follow the six domains (`platform`, `learning`, `motivation`, `
 | Help requests | Server (needed for a human to answer) | Server | Text only if the learner writes it; urgent requests carry question text only with consent |
 | Push subscription + reminder time | Server | Server | Endpoint, chosen local time, time zone. Notification text is neutral |
 
+## 4b. Content formats
+
+The Learning team writes units in `content/units/<unit>/unit.json` (format in `content/README.md`, checker `content/check_content.py`). The app converts them on load (`backend/app/learning/team_units.py`); a team unit replaces any pipeline unit (`content/units.json` + `content/lessons/`) with the same order. New units arriving in the team format need no code change.
+
 ## 5. Personas → accounts and roles
 
 | Persona | How they get in | Role |
