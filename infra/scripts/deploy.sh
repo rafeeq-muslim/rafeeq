@@ -29,6 +29,14 @@ for img in rafeeq-backend rafeeq-web; do
 done
 
 $COMPOSE build
+
+# Migrate before switching, with no time limit: a long migration (e.g. an
+# index over the whole corpus) must never trip the health check, and a
+# failed migration must leave the running version untouched. Migrations are
+# additive (expand only), so the previous image still runs on the new schema.
+$COMPOSE up -d db
+$COMPOSE run --rm --no-deps backend sh -c 'export DATABASE_URL=postgresql+asyncpg://rafeeq:${POSTGRES_PASSWORD}@db:5432/rafeeq && alembic upgrade head'
+
 $COMPOSE up -d --remove-orphans
 
 for i in $(seq 1 60); do
