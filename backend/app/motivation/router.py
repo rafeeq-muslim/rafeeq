@@ -11,7 +11,7 @@ from datetime import UTC, date, datetime, timedelta
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import AwareDatetime, BaseModel, Field
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -71,8 +71,9 @@ def _when(at: datetime | None, now: datetime) -> datetime:
 
 
 @router.post("/events", status_code=202)
-async def events(body: EventsIn, session: Session) -> dict:
+async def events(body: EventsIn, session: Session, request: Request) -> dict:
     ratelimit.hit(f"events:{body.install_id}", limit=60, window_s=60)
+    ratelimit.hit(f"events-ip:{request.client.host if request.client else '-'}", limit=240, window_s=60)  # address kept in memory only
     now = datetime.now(UTC)
     if any(e.type == "opt_out" for e in body.events):
         await opt_out(session, body.install_id, now)

@@ -17,11 +17,12 @@ import re
 from datetime import UTC, date, datetime
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field, field_validator
 from pywebpush import WebPushException, webpush
 from sqlalchemy import delete, select
 
+from app.core import ratelimit
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.deps import OptionalUser, Session
@@ -93,7 +94,8 @@ async def _by_endpoint(session, endpoint: str) -> PushSubscription:
 
 
 @router.post("/subscribe", status_code=204)
-async def subscribe(body: SubscribeIn, session: Session, user: OptionalUser) -> None:
+async def subscribe(body: SubscribeIn, session: Session, user: OptionalUser, request: Request) -> None:
+    ratelimit.hit(f"push-sub:{request.client.host if request.client else '-'}", limit=20, window_s=3600)
     sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.subscription.endpoint))
     if sub is None:
         sub = PushSubscription(endpoint=body.subscription.endpoint)
