@@ -143,7 +143,12 @@ async def _visible(session, me: User, request_id: uuid.UUID) -> HelpRequest:
     req = await session.scalar(
         select(HelpRequest).where(
             HelpRequest.id == request_id,
-            or_(visible_clause(me, now()), and_(HelpRequest.mentor_id == me.id, not_(blocked_by_owner_clause(me.id)))),
+            # Security review #2: an assigned mentor keeps access only while the
+            # request is not closed (ending a mentor link closes its thread).
+            or_(
+                visible_clause(me, now()),
+                and_(HelpRequest.mentor_id == me.id, HelpRequest.status != "closed", not_(blocked_by_owner_clause(me.id))),
+            ),
         )
     )
     if req is None:

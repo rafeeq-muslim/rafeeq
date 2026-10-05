@@ -79,3 +79,19 @@ See `ai-agents.md` (written with the AI build): agents, models, measured prices,
 | Short Sharia lines (qibla reassurance, «follow your country's announcement») go through the review desk as `practice_line`; en/tl drafted by Claude | rules §1.4; nothing shown before approval per language | `content/practice/lines.json` |
 | Custom habits default to worship (private, no count); worship habits keep only today's mark, no history | Safest reading of rules §3; Ibn Uthaymeen's view on tracking tables is an open question for Mohannad | `habits.ts` |
 | No `HabitKept` event is sent | Nothing in Motivation consumes it and it would move habit data off the device | When MOT adds a consumer |
+
+## Security review (2026-10-05, read-only pass) — status
+
+Fixed: #2 ex-mentor kept access to a closed thread (`companion/inbox.py`), #4 deploys only from `main` (`deploy.yml`).
+
+Open, in priority order (details in the review notes; next session fixes these first):
+1. **Host router logs visitors' real IPs** (`~/claude-works/nginx-app-router/generated/rafeeq.conf`, combined format, 14 days). Needs the router's access-log option for this app set to off, and purging `rafeeq.access.log*`. Outside the repo.
+2. Push endpoint SSRF: allow only known push-service hosts; no redirects.
+3. CI runs on the production host for any branch/PR: give CI a separate unprivileged runner.
+4. Guests can drain the AI budget (explain/guide): daily per-key and global caps, cache explanations.
+5. Forged guest tokens can flood urgent requests: HMAC-signed tokens, global urgent cap.
+6. Username enumeration (`/username-available` unthrottled, login timing): rate-limit, dummy hash on misses.
+7. Password change keeps other sessions: revoke refresh sessions on password/2FA change.
+8. Security headers missing on the app shell (add_header in locations), no CSP/frame-ancestors, add `no-referrer` meta.
+9. Verifier copy check for scripture only in Arabic (`knowledge/verify.py`): run for all languages.
+10. Low: invite reuse race, login-limit key strip, mentor gender change, outbox rows linking install and account, admin approving challenge text, small-cohort suppression, push stays linked after sign-out, db container gets all secrets.
