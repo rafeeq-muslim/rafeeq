@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Review builds embed the Thmanyah font: never commit
+dist-review

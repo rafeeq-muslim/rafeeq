@@ -1,47 +1,60 @@
-/* Thmanyah (brand typeface). Licence: may be bundled in our web/mobile app,
-   must not be redistributed or hosted as downloadable files, and must not be
-   modified (font.thmanyah.com/licenses). The files live in
-   public/fonts/thmanyah/ locally and are git-ignored; rename them to the
-   names below after downloading from font.thmanyah.com. local() picks up an
-   installed copy first. Missing files fall back to IBM Plex Sans Arabic and
-   Noto Naskh Arabic. */
+/* Thmanyah (brand typeface). Licence (font.thmanyah.com/licenses): may be
+   bundled in our web and mobile apps; must not be redistributed, hosted as
+   downloadable files, or modified. Copy the official woff2 files (names
+   unchanged, from "thmanyah typeface/<family>/woff2/") into
+   public/fonts/thmanyah/. That folder is git-ignored: never commit the files.
+   Missing files fall back to IBM Plex Sans Arabic and Noto Naskh Arabic. */
 @font-face {
   font-family: "thmanyah sans";
   font-weight: 400;
   font-display: swap;
-  src: local("Thmanyah Sans Regular"), local("thmanyahsans-Regular"),
-    url("/fonts/thmanyah/sans-regular.woff2") format("woff2"),
-    url("/fonts/thmanyah/sans-regular.otf") format("opentype");
+  src: url("/fonts/thmanyah/thmanyahsans-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: "thmanyah sans";
   font-weight: 500;
   font-display: swap;
-  src: local("Thmanyah Sans Medium"), local("thmanyahsans-Medium"),
-    url("/fonts/thmanyah/sans-medium.woff2") format("woff2"),
-    url("/fonts/thmanyah/sans-medium.otf") format("opentype");
+  src: url("/fonts/thmanyah/thmanyahsans-Medium.woff2") format("woff2");
 }
 @font-face {
   font-family: "thmanyah sans";
   font-weight: 700;
   font-display: swap;
-  src: local("Thmanyah Sans Bold"), local("thmanyahsans-Bold"),
-    url("/fonts/thmanyah/sans-bold.woff2") format("woff2"),
-    url("/fonts/thmanyah/sans-bold.otf") format("opentype");
+  src: url("/fonts/thmanyah/thmanyahsans-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Medium.woff2") format("woff2");
 }
 @font-face {
   font-family: "thmanyah serif display";
   font-weight: 700;
   font-display: swap;
-  src: local("Thmanyah Serif Display Bold"), local("thmanyahserifdisplay-Bold"),
-    url("/fonts/thmanyah/serif-display-bold.woff2") format("woff2"),
-    url("/fonts/thmanyah/serif-display-bold.otf") format("opentype");
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2") format("woff2");
 }
 @font-face {
   font-family: "thmanyah serif text";
   font-weight: 400;
   font-display: swap;
-  src: local("Thmanyah Serif Text Regular"), local("thmanyahseriftext-Regular"),
-    url("/fonts/thmanyah/serif-text-regular.woff2") format("woff2"),
-    url("/fonts/thmanyah/serif-text-regular.otf") format("opentype");
+  src: url("/fonts/thmanyah/thmanyahseriftext-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahseriftext-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahseriftext-Bold.woff2") format("woff2");
 }

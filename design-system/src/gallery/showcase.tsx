@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { PetalList, PetalListItem } from "@/components/rafeeq"
+import { NoteButton } from "./notes"
 
 /** A titled block in the gallery. */
 function Section({
@@ -18,13 +19,15 @@ function Section({
   description?: React.ReactNode
   children: React.ReactNode
 }) {
+  const ref = React.useRef<HTMLElement>(null)
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="flex scroll-mt-28 flex-col gap-5">
-      <header className="flex flex-col gap-1">
+      <header ref={ref} data-comment-target className="flex flex-col gap-2">
         <h2 id={`${id}-title`} className="font-heading text-h2 font-bold">
           {title}
         </h2>
         {description && <p className="max-w-3xl text-body text-muted-foreground">{description}</p>}
+        <NoteButton target={title} targetRef={ref} />
       </header>
       {children}
     </section>
@@ -59,9 +62,12 @@ function Demo({
 }) {
   const [open, setOpen] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
+  const ref = React.useRef<HTMLElement>(null)
   return (
     <article
+      ref={ref}
       data-slot="demo"
+      data-comment-target
       className="flex flex-col overflow-hidden rounded-card border bg-card shadow-card"
     >
       <div className="flex flex-col gap-2 p-5">
@@ -81,6 +87,7 @@ function Demo({
             ))}
           </PetalList>
         )}
+        <NoteButton target={name} targetRef={ref} className="mt-1" />
       </div>
       <div
         className={cn(
@@ -103,9 +110,13 @@ function Demo({
               size="sm"
               className="ms-auto"
               onClick={() => {
-                navigator.clipboard?.writeText(code.trim())
-                setCopied(true)
-                window.setTimeout(() => setCopied(false), 1500)
+                navigator.clipboard?.writeText(code.trim()).then(
+                  () => {
+                    setCopied(true)
+                    window.setTimeout(() => setCopied(false), 1500)
+                  },
+                  () => setOpen(true)
+                )
               }}
             >
               {copied ? <IconCheck data-icon="inline-start" /> : <IconCopy data-icon="inline-start" />}

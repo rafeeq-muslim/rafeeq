@@ -10,6 +10,7 @@ import { RafeeqSymbol } from "@/components/rafeeq"
 import { Foundations } from "@/gallery/foundations"
 import { Primitives } from "@/gallery/primitives"
 import { RafeeqComponents } from "@/gallery/rafeeq"
+import { NotesProvider } from "@/gallery/notes"
 import { Screens } from "@/gallery/screens"
 
 type Dir = "rtl" | "ltr"
@@ -17,14 +18,19 @@ type Theme = "light" | "dark"
 const TABS = ["foundations", "primitives", "rafeeq", "screens"] as const
 type Tab = (typeof TABS)[number]
 
-// ?tab=screens&dir=ltr&theme=dark deep-links a view (used for screenshots).
+// ?tab=screens&dir=ltr&theme=dark (or #screens) deep-links a view. Without
+// a theme param the page follows the viewer's theme (claude.ai sets
+// data-theme on the root; otherwise prefers-color-scheme).
 function initial() {
   const q = new URLSearchParams(window.location.search)
-  const tab = q.get("tab")
+  const tab = q.get("tab") ?? window.location.hash.slice(1)
+  const host = document.documentElement.getAttribute("data-theme")
+  const systemDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches
+  const theme = q.get("theme") ?? (host === "dark" || host === "light" ? host : systemDark ? "dark" : "light")
   return {
-    tab: (TABS as readonly string[]).includes(tab ?? "") ? (tab as Tab) : "rafeeq",
+    tab: (TABS as readonly string[]).includes(tab) ? (tab as Tab) : "rafeeq",
     dir: (q.get("dir") === "ltr" ? "ltr" : "rtl") as Dir,
-    theme: (q.get("theme") === "dark" ? "dark" : "light") as Theme,
+    theme: (theme === "dark" ? "dark" : "light") as Theme,
   }
 }
 
@@ -36,6 +42,7 @@ export default function App() {
 
   React.useEffect(() => {
     document.documentElement.dir = dir
+    document.documentElement.lang = dir === "rtl" ? "ar" : "en"
   }, [dir])
   React.useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark")
@@ -44,6 +51,7 @@ export default function App() {
   return (
     <DirectionProvider dir={dir}>
       <TooltipProvider>
+        <NotesProvider>
         <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)} className="min-h-svh gap-0">
           <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 md:px-8">
@@ -102,6 +110,7 @@ export default function App() {
           </main>
         </Tabs>
         <Toaster position="top-center" />
+        </NotesProvider>
       </TooltipProvider>
     </DirectionProvider>
   )

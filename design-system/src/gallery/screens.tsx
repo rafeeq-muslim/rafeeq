@@ -46,6 +46,7 @@ import {
   XpChip,
   type NavKey,
 } from "@/components/rafeeq"
+import { NoteButton } from "./notes"
 import { Section } from "./showcase"
 
 /* ---------- Device frames (gallery chrome, not part of the system) ---------- */
@@ -76,15 +77,21 @@ function Phone({
   dark?: boolean
   children: React.ReactNode
 }) {
+  const ref = React.useRef<HTMLDivElement>(null)
   return (
     <figure className="flex w-[390px] max-w-full shrink-0 flex-col gap-3">
-      <div className="relative h-[800px] overflow-hidden rounded-[44px] border-[10px] border-ink bg-background shadow-raised dark:border-white/15">
+      <div
+        ref={ref}
+        data-comment-target
+        className="relative h-[800px] overflow-hidden rounded-[44px] border-[10px] border-ink bg-background shadow-raised dark:border-white/15"
+      >
         <StatusBar dark={dark} />
         <div className="h-full pt-11 has-[[data-slot=journey-sky]]:pt-0 has-[[data-slot=celebration-screen]]:pt-0 [&_[data-slot=celebration-screen]]:pt-16 [&_[data-slot=journey-sky]]:pt-16">
           {children}
         </div>
       </div>
       <figcaption className="text-center text-label font-medium text-muted-foreground">{label}</figcaption>
+      <NoteButton target={`شاشة ${label}`} targetRef={ref} className="items-center" />
     </figure>
   )
 }
@@ -108,7 +115,12 @@ function Desktop({ label, children }: { label: string; children: React.ReactNode
           <span className="size-2.5 rounded-full bg-white/30" />
           <span className="size-2.5 rounded-full bg-white/30" />
         </div>
-        <div ref={ref} className="relative w-full overflow-hidden bg-background" style={{ height: 800 * scale }}>
+        <div
+          ref={ref}
+          data-comment-target
+          className="relative w-full overflow-hidden bg-background"
+          style={{ height: 800 * scale }}
+        >
           <div
             className="absolute top-0 start-0 h-[800px] w-[1280px] origin-top-left rtl:origin-top-right"
             style={{ transform: `scale(${scale})` }}
@@ -118,6 +130,7 @@ function Desktop({ label, children }: { label: string; children: React.ReactNode
         </div>
       </div>
       <figcaption className="text-center text-label font-medium text-muted-foreground">{label}</figcaption>
+      <NoteButton target="الرئيسية على الحاسب" targetRef={ref} className="items-center" />
     </figure>
   )
 }

@@ -34,7 +34,7 @@ Then: replace any `import { cn } from "cn"` with `@/lib/utils` (the preset injec
 
 ## Fonts
 
-Thmanyah is the brand font. Its licence (font.thmanyah.com/licenses) allows bundling it in our app but forbids redistributing, hosting for download, or modifying the files. Download it from font.thmanyah.com, rename the files as listed in `src/styles/fonts.css`, and put them in `public/fonts/thmanyah/` (git-ignored, never commit). Until then the app falls back to IBM Plex Sans Arabic and Noto Naskh Arabic (SIL OFL, self-hosted via `@fontsource`).
+Thmanyah is the brand font. Its licence (font.thmanyah.com/licenses) allows bundling it in our app but forbids redistributing, hosting for download, or modifying the files. Download it from font.thmanyah.com, copy the official woff2 files (names unchanged) into `public/fonts/thmanyah/` (git-ignored, never commit). Until then the app falls back to IBM Plex Sans Arabic and Noto Naskh Arabic (SIL OFL, self-hosted via `@fontsource`).
 
 ## Visual direction
 
