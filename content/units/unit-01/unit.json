@@ -1,0 +1,2966 @@
+{
+  "schema_version": 1,
+  "id": "u01",
+  "order": 1,
+  "feature": "LRN-01",
+  "status": "draft_unreviewed",
+  "review_note": "Prepared without item-by-item Sharia review (decision 2026-10-05). Must be re-reviewed and approved by the Sharia reviewer, per language, before it is shown to users (rules.md §1.4).",
+  "title": {
+    "ar": "دليل اليوم الأول",
+    "en": "My First Day Guide",
+    "tl": "Gabay sa Unang Araw"
+  },
+  "badge": {
+    "ar": "أكملت دليل اليوم الأول",
+    "en": "I completed My First Day Guide",
+    "tl": "Natapos ko ang Gabay sa Unang Araw"
+  },
+  "credit": {
+    "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري (newmuslimguideline.com)، والصور منه. وصوت الفاتحة وترجمة معانيها من IslamHouse.",
+    "en": "The lessons in this unit are from the book “New Muslim Guideline” by Muhammad al-Shehri (newmuslimguideline.com), including the photos. Al-Fatihah audio and meaning are from IslamHouse.",
+    "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na “New Muslim Guideline” ni Muhammad al-Shehri (newmuslimguideline.com), pati ang mga larawan. Ang audio at kahulugan ng Al-Fatiha ay mula sa IslamHouse."
+  },
+  "media": {
+    "support_video": {
+      "wudu": {
+        "ar": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-sifat-alwoduo.mp4",
+        "en": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en-how-to-perform-wudu.mp4",
+        "tl": null
+      },
+      "salah": {
+        "ar": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-how-to-pray.mp4",
+        "en": "https://ih-download.islamenc.com/data/en/ih_videos/mp4/single/en_Salah_With_al_Duaa.mp4",
+        "tl": null
+      }
+    },
+    "audio": {
+      "fatiha": {
+        "ar": [
+          "https://d1.islamhouse.com/data/ar/ih_sounds/chain_01/mokhtasar-fe-tafceer/ar-001-mokhtasar-fe-tafceer.mp3"
+        ],
+        "en": [
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-01-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-02-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-03-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-04-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-05-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-06-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-07-alfatihah.mp3"
+        ],
+        "tl": [
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-01-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-02-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-03-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-04-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-05-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-06-alfatihah.mp3",
+          "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-07-alfatihah.mp3"
+        ]
+      }
+    },
+    "media_note": "Serve these files from Rafeeq's own storage, never embedded from a video platform (LRN-01 rule 5). The English prayer video did not play in a test browser: test it, convert its format if needed, otherwise leave English prayer lessons without a video."
+  },
+  "omitted": [
+    {
+      "where": "Lessons 5–7 (English and Filipino)",
+      "what": "Transliterated adhkar and Al-Fatihah",
+      "why": "No transliteration (rules.md §1.4); replaced with the Arabic wording from the Arabic edition, and recorded in each card's `edited` field."
+    },
+    {
+      "where": "Lesson 4 (English) and lesson 7 (Filipino)",
+      "what": "Lines the site repeats",
+      "why": "Duplicates on the site pages; recorded in each card's `note` field."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u01-l1",
+      "order": 1,
+      "title": {
+        "ar": "أشهد",
+        "en": "I Bear Witness",
+        "tl": "Ako ay Sumasaksi"
+      },
+      "objectives": [
+        {
+          "id": "u01-l1-o1",
+          "text": {
+            "ar": "يعرف معنى «لا إله إلا الله»: لا معبود حق إلا الله",
+            "en": "Knows that “there is no god but Allah” means there is no deity worthy of worship except Allah",
+            "tl": "Alam na ang “لا إله إلا الله” ay nangangahulugang walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+          }
+        },
+        {
+          "id": "u01-l1-o2",
+          "text": {
+            "ar": "يعرف معنى «محمد رسول الله»",
+            "en": "Knows what “Muhammad is the Messenger of Allah” means",
+            "tl": "Alam ang kahulugan ng “si Muhammad ay Sugo ng Allah”"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l1-c1",
+          "kind": "text",
+          "text": {
+            "ar": "شهادة أنَّ لا إله إلا الله وأنَّ محمدًا رسول الله",
+            "en": "Shahādah (To bear witness that there is no god except Allah and that Muhammad is the Messenger of Allah).",
+            "tl": "Ang Shadatayn o pagsasaksi na walang diyos na karapat-dapat sambahin maliban sa Allah at si Muhammad ay Sugo ng Allah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "The Pillars of Islam: the first pillar"
+          },
+          "objectives": [
+            "u01-l1-o1",
+            "u01-l1-o2"
+          ]
+        },
+        {
+          "id": "u01-l1-c2",
+          "kind": "quran",
+          "ref": "47:19",
+          "text": {
+            "ar": "قال تعالى: ﴿فَاعْلَمْ أَنَّهُ لَا إِلَهَ إِلَّا اللَّهُ﴾  [محمد: 19].",
+            "en": "Allah Almighty says: {So know [O Muhammad], that there is no deity except Allah} [Ch. 47, Verse 19]",
+            "tl": "Sinabi ng Allah: “At iyong alamin, (O Muhammad), na katiyakang walang ibang diyos na karapat-dapat sambahin maliban sa Allah.” (Qur’an 47:19)"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "The first pillar"
+          },
+          "objectives": [
+            "u01-l1-o1"
+          ],
+          "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release."
+        },
+        {
+          "id": "u01-l1-c3",
+          "kind": "quran",
+          "ref": "9:128",
+          "text": {
+            "ar": "وقال تعالى: ﴿لَقَدْ جَاءكُمْ رَسُولٌ مِّنْ أَنفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُّمْ حَرِيصٌ عَلَيْكُم بِالْمُؤْمِنِينَ رَؤُوفٌ رَّحِيمٌ﴾  [التوبة: 128].",
+            "en": "He also says: {There has certainly come to you a Messenger from among yourselves. Grievous to him is what you suffer; [he is] concerned over you and is kind and merciful towards the believers.} [Ch. 9, Verse 128]",
+            "tl": "Sinabi pa ng Allah: “Katiyakang dumating sa inyo, O kayong mga mananampalataya, ang Sugo na mula sa inyo, na naghihirap ang kalooban sa anumang natatamo ninyong kahirapan o kapinsalaan, nagmamalasakit sa inyo upang maituwid ang inyong paniniwala at maging mabuti ang inyong kalagayan, at siya ay maawain, ubod ng buti at mapagmahal sa mga mananampalataya.” (Qur’an 9: 128)"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "The first pillar"
+          },
+          "objectives": [
+            "u01-l1-o2"
+          ],
+          "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release."
+        },
+        {
+          "id": "u01-l1-c4",
+          "kind": "text",
+          "text": {
+            "ar": "معنى شهادة أنَّ لا إله إلا الله : لا معبودَ حقٌّ إلا الله.",
+            "en": "The Shahādah that \"There is no god but Allah\" means that there is no deity worthy of worship except Allah.",
+            "tl": "Ang kahulugan ng pagsasaksi ng “لا إله إلا الله”: Walang ibang diyos na karapat-dapat sambahin maliban sa Allah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "The first pillar"
+          },
+          "objectives": [
+            "u01-l1-o1"
+          ],
+          "edited": {
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l1-c5",
+          "kind": "text",
+          "text": {
+            "ar": "معنى شهادة أنَّ محمدًا رسول الله : طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألا يُعَبد الله إلا بما شرع.",
+            "en": "The Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, leave what he forbade and warned against, and worship Allah only in the manner he instructed.",
+            "tl": "Ang kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "The first pillar"
+          },
+          "objectives": [
+            "u01-l1-o2"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l1-e1",
+          "type": "choice",
+          "objectives": [
+            "u01-l1-o1"
+          ],
+          "prompt": {
+            "ar": "ما معنى «لا إله إلا الله»؟",
+            "en": "What does “there is no god but Allah” mean?",
+            "tl": "Ano ang kahulugan ng “لا إله إلا الله”?"
+          },
+          "explain_card": "u01-l1-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "لا معبودَ حقٌّ إلا الله",
+                "en": "There is no deity worthy of worship except Allah",
+                "tl": "Walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه، وألا يُعبد الله إلا بما شرع",
+                "en": "To obey his orders, believe what he related, leave what he forbade, and worship Allah only in the manner he instructed",
+                "tl": "Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "أن الإنسان يعبد ما يشاء",
+                "en": "That a person may worship whatever he wishes",
+                "tl": "Na maaaring sambahin ng tao ang anumang nais niya"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l1-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l1-o2"
+          ],
+          "prompt": {
+            "ar": "أيّ هذه من معنى «محمد رسول الله»؟",
+            "en": "Which of these is part of the meaning of “Muhammad is the Messenger of Allah”?",
+            "tl": "Alin dito ang bahagi ng kahulugan ng “si Muhammad ay Sugo ng Allah”?"
+          },
+          "explain_card": "u01-l1-c5",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "طاعته فيما أمر",
+                "en": "To obey his orders",
+                "tl": "Ang pagsunod sa kanyang utos"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "أن يُعبد هو مع الله",
+                "en": "To worship him alongside Allah",
+                "tl": "Ang sambahin siya kasama ng Allah"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "أن نختار من أوامره ما يعجبنا",
+                "en": "To choose only the orders we like",
+                "tl": "Ang piliin lamang ang mga utos na gusto natin"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l1-e3",
+          "type": "match",
+          "objectives": [
+            "u01-l1-o1",
+            "u01-l1-o2"
+          ],
+          "prompt": {
+            "ar": "صِل كل شهادة بمعناها",
+            "en": "Match each testimony with its meaning",
+            "tl": "Itugma ang bawat pagsaksi sa kahulugan nito"
+          },
+          "explain_card": "u01-l1-c1",
+          "pairs": [
+            {
+              "left": {
+                "ar": "لا إله إلا الله",
+                "en": "There is no god but Allah",
+                "tl": "لا إله إلا الله"
+              },
+              "right": {
+                "ar": "لا معبودَ حقٌّ إلا الله",
+                "en": "There is no deity worthy of worship except Allah",
+                "tl": "Walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+              }
+            },
+            {
+              "left": {
+                "ar": "محمد رسول الله",
+                "en": "Muhammad is the Messenger of Allah",
+                "tl": "Si Muhammad ay Sugo ng Allah"
+              },
+              "right": {
+                "ar": "طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه، وألا يُعبد الله إلا بما شرع",
+                "en": "To obey his orders, believe what he related, leave what he forbade, and worship Allah only in the manner he instructed",
+                "tl": "Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u01-l1-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l1-o1"
+          ],
+          "prompt": {
+            "ar": "من يستحق العبادة وحده؟",
+            "en": "Who alone is worthy of worship?",
+            "tl": "Sino lamang ang karapat-dapat sambahin?"
+          },
+          "explain_card": "u01-l1-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "الله",
+                "en": "Allah",
+                "tl": "Allah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الأنبياء",
+                "en": "The prophets",
+                "tl": "Ang mga propeta"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الصالحون",
+                "en": "Righteous people",
+                "tl": "Ang mabubuting tao"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l2",
+      "order": 2,
+      "title": {
+        "ar": "قبل الوضوء",
+        "en": "Before Wudu’",
+        "tl": "Bago ang Wudhu"
+      },
+      "objectives": [
+        {
+          "id": "u01-l2-o1",
+          "text": {
+            "ar": "يعرف أن الطهارة شرط لصحة الصلاة",
+            "en": "Knows that purification is a condition for the validity of prayer",
+            "tl": "Alam na ang paglilinis ay kondisyon upang tanggapin ang salah"
+          }
+        },
+        {
+          "id": "u01-l2-o2",
+          "text": {
+            "ar": "يعرف ما يجب له الوضوء",
+            "en": "Knows the acts for which wudu’ is obligatory",
+            "tl": "Alam kung kailan obligado ang wudhu"
+          }
+        },
+        {
+          "id": "u01-l2-o3",
+          "text": {
+            "ar": "يعرف الماء الطهور وأوصافه الثلاثة",
+            "en": "Knows what purifying water is and its three characteristics",
+            "tl": "Alam kung ano ang malinis na tubig at ang tatlo nitong katangian"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l2-c1",
+          "kind": "quran",
+          "ref": "2:222",
+          "text": {
+            "ar": "قال تعالى: (إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ)  [البقرة: 222].",
+            "en": "Allah Almighty says: {Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.} [Ch. 2, Verse 222]",
+            "tl": "Sinabi ng Allah: “Ang Allâh, samakatuwid, ay nagmamahal sa Kanyang mga alipin, na palaging humihingi ng kanilang kapatawaran at pagsisisi, at nagmamahal sa Kanyang mga aliping malilinis.’’ (Qur’an 2:22)"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: opening"
+          },
+          "objectives": [
+            "u01-l2-o1"
+          ],
+          "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release.",
+          "note": "The Filipino page cites this verse as (Qur’an 2:22); the correct reference is 2:222. Fix during verification."
+        },
+        {
+          "id": "u01-l2-c2",
+          "kind": "hadith",
+          "text": {
+            "ar": "قال ﷺ : (تَوَضَّأ نَحْوَ وُضُوئِي هَذَا) .",
+            "en": "The Prophet (pbuh) said: “Perform ablution similar to my ablution . ”",
+            "tl": "Sinabi ng Propeta ﷺ: “Mag-wudhu ka tulad ng pag-wudhu ko na ito.”"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: opening"
+          },
+          "objectives": [
+            "u01-l2-o1"
+          ],
+          "verify": "Link to HadeethEnc (source and grade) and check the wording before release."
+        },
+        {
+          "id": "u01-l2-c2b",
+          "kind": "text",
+          "text": {
+            "ar": "من عظيم شأن الصلاة أنْ شرع الله الطهارة قبلها، وجعلها شرطًا لصحتها، فهي مفتاح الصلاة، واستشعار فضلها يجعل القلب مشتاقًا لأداء الصلاة، قال ﷺ : (الطهور شطر الإيمان .. والصلاة نور) . وقال ﷺ : (من توضأ فأحسن الوضوء خرجت خطاياه من جسده) . فيُقْدِم العبد إلى ربه متطهرًا طهارة حسية بالوضوء، ومعنوية بأداء هذه العبادة، مخلصًا لله تعالى، مقتديًا بهدي النبي ﷺ .",
+            "en": "Because of the immense status of Salah (prayer), Allah prescribed purification before it and made purification a condition for the validity of the prayer. It is the key to prayer (the first step towards performing it). The consciousness of its merit makes the heart long to perform prayer. The Prophet (Allah’s prayers and peace be upon him) said: \"Purification is half of Imān… and prayer is light.\"\nHe (Allah’s prayers and peace be upon him) also said: \"He who performs the Wudu’ perfectly, his sins come out from his body.”\nSo, a Muslim stands before his Lord in a state of physical purification through ablution and spiritual purification through performing this act of worship sincerely to Allah Almighty and in compliance with the guidance of the Prophet (Allah’s prayers and peace be upon him).",
+            "tl": "Kabilang sa pagiging dakila ng antas ng salah ay isinabatas ng Allah ang taharah o paglilinis bago ito isagawa, ito ay ginawang kondisyon upang tanggaapin ang salah, at ito ang susi ng Salah. Ang pagpapahalaga sa kainaman ng salah ang nagtutulak sa puso upang mas lalong manabik sa pagtataguyod nito. Sinabi ng Propeta ﷺ: “Ang kalinisan ay bahagi ng pananampalataya; at ang Salah ay liwanag.”\nSinabi pa ng Propeta ﷺ: “Sinuman ang nagsagawa ng wudhu at ito ay kanyang pinabuti, tiyak na maaalis ang kanyang mga kasalanan mula sa kanyang katawan.”\nHaharap ang isang alipin sa kanyang Panginoon na malinis ang kanyang panlabas na anyo dahil sa wudhu; gayundin ang kanyang kalooban sa pagsasagawa ng pagsamba na dalisay sa Allah, at alinsunod sa kapamaraanan ng Propeta ﷺ."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: opening paragraph"
+          },
+          "objectives": [
+            "u01-l2-o1"
+          ],
+          "contains_hadith": true,
+          "verify": "The paragraph quotes two hadiths: link them to HadeethEnc (source and grade) and check the wording before release."
+        },
+        {
+          "id": "u01-l2-c3",
+          "kind": "text",
+          "text": {
+            "ar": "ما يجب له الوضوء:\nالصلاة مطلقًا سواء كانت فرضًا أو نافلةً.\nالطواف بالكعبة.\nمسُّ المصحف.",
+            "en": "What are the acts of worship for which ablution is obligatory?\nThe prayer whether mandatory or supererogatory.\nCircumambulating the Ka‘bah (Tawāf).\nTouching the Mus-haf (bound copy of the Qur’an).",
+            "tl": "Kailan magiging wajib o obligado sa kanya ang wudhu?\nPagsasagawa ng Salah ito man ay obligadong salah o sunnah.\nPagtatawaf (pag-ikot) sa Ka’bah.\nPaghawak ng Mushaf (Qur’an)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "What requires wudu’"
+          },
+          "objectives": [
+            "u01-l2-o2"
+          ]
+        },
+        {
+          "id": "u01-l2-c4",
+          "kind": "text",
+          "text": {
+            "ar": "أتوضأ وأغتسل بالماء الطهور:\nالماء الطهور هو : كل ماء نزل من السماء أو نبع من الأرض وبقي علي أصل خلقته، ولم تتغير أحد أوصافه الثلاثة، وهي: اللون والطعم والريح: بشيء من الأشياء التي تسلب طهورية الماء.",
+            "en": "I perform ablution (Wudu’) and ritual bath (Ghusl) with purifying water.\nPurifying water is any water that falls from the sky or springs from the earth and remains in its original state without a change to any of its three characteristics: color, taste, and smell; by one of them the state of purity of water is interrupted.",
+            "tl": "Ako ay magwuwudo at maliligo gamit ang malinis na tubig\nAng malinis na tubig: Lahat ng tubig na nagmula sa langit o lumabas mula sa lupa, nanatili sa orihinal na pagkalikha nito at hindi nabago ang isa sa tatlo nitong mga katangian, at ito ay ang mga: kulay, lasa at amoy; sa pamamagitan ng mga bagay na nakakaalis ng pagkalinis ng tubig."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "Purifying water"
+          },
+          "objectives": [
+            "u01-l2-o3"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l2-e1",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o1"
+          ],
+          "prompt": {
+            "ar": "الطهارة بالنسبة للصلاة:",
+            "en": "For prayer, purification is:",
+            "tl": "Para sa salah, ang paglilinis ay:"
+          },
+          "explain_card": "u01-l2-c2b",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "شرط لصحتها",
+                "en": "A condition for its validity",
+                "tl": "Kondisyon upang tanggapin ito"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "تكون بعد الصلاة",
+                "en": "Done after the prayer",
+                "tl": "Ginagawa pagkatapos ng salah"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا علاقة لها بالصلاة",
+                "en": "Unrelated to the prayer",
+                "tl": "Walang kaugnayan sa salah"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l2-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o1"
+          ],
+          "prompt": {
+            "ar": "ماذا سمّى الكتاب الطهارة؟",
+            "en": "What does the book call purification?",
+            "tl": "Ano ang tawag ng aklat sa paglilinis?"
+          },
+          "explain_card": "u01-l2-c2b",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "مفتاح الصلاة",
+                "en": "The key to prayer",
+                "tl": "Ang susi ng Salah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "آخر الصلاة",
+                "en": "The end of prayer",
+                "tl": "Ang wakas ng salah"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "بديل الصلاة",
+                "en": "A replacement for prayer",
+                "tl": "Kapalit ng salah"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l2-e3",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o2"
+          ],
+          "prompt": {
+            "ar": "أيّ هذه يجب له الوضوء؟",
+            "en": "Which of these requires wudu’?",
+            "tl": "Alin dito ang nangangailangan ng wudhu?"
+          },
+          "explain_card": "u01-l2-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "مسُّ المصحف",
+                "en": "Touching the Mus-haf",
+                "tl": "Paghawak ng Mushaf (Qur’an)"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الأكل والشرب",
+                "en": "Eating and drinking",
+                "tl": "Pagkain at pag-inom"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "المشي إلى العمل",
+                "en": "Walking to work",
+                "tl": "Paglakad papunta sa trabaho"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l2-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o2"
+          ],
+          "prompt": {
+            "ar": "الصلاة التي يجب لها الوضوء:",
+            "en": "The prayer that requires wudu’ is:",
+            "tl": "Ang salah na nangangailangan ng wudhu ay:"
+          },
+          "explain_card": "u01-l2-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "كل صلاة، فرضًا كانت أو نافلة",
+                "en": "Every prayer, obligatory or voluntary",
+                "tl": "Bawat salah, obligado man o sunnah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الفرض وحده",
+                "en": "Obligatory prayers only",
+                "tl": "Ang obligadong salah lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "صلاة الفجر وحدها",
+                "en": "Only the Fajr prayer",
+                "tl": "Ang Fajr lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l2-e5",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o3"
+          ],
+          "prompt": {
+            "ar": "الماء الطهور هو:",
+            "en": "Purifying water is:",
+            "tl": "Ang malinis na tubig ay:"
+          },
+          "explain_card": "u01-l2-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "ماء نزل من السماء أو نبع من الأرض وبقي على أصل خلقته",
+                "en": "Water from the sky or the earth that remains in its original state",
+                "tl": "Tubig mula sa langit o lupa na nanatili sa orihinal na pagkalikha nito"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "كل ماء تغيّر لونه أو طعمه أو ريحه بما يسلب طهوريته",
+                "en": "Any water whose colour, taste or smell was changed by something that removes its purity",
+                "tl": "Tubig na nabago ang kulay, lasa o amoy dahil sa bagay na nakakaalis ng pagkalinis nito"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الماء المعبأ وحده",
+                "en": "Bottled water only",
+                "tl": "Nakaboteng tubig lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l2-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l2-o3"
+          ],
+          "prompt": {
+            "ar": "ما الأوصاف الثلاثة للماء؟",
+            "en": "What are the three characteristics of water?",
+            "tl": "Ano ang tatlong katangian ng tubig?"
+          },
+          "explain_card": "u01-l2-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "اللون والطعم والريح",
+                "en": "Colour, taste and smell",
+                "tl": "Kulay, lasa at amoy"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الحرارة والوزن والحجم",
+                "en": "Temperature, weight and volume",
+                "tl": "Init, bigat at dami"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "اللون والحجم والمصدر",
+                "en": "Colour, volume and source",
+                "tl": "Kulay, dami at pinagmulan"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l3",
+      "order": 3,
+      "title": {
+        "ar": "أتوضأ (1)",
+        "en": "I Make Wudu’ (1)",
+        "tl": "Ako ay Magwuwudhu (1)"
+      },
+      "support_video": "wudu",
+      "objectives": [
+        {
+          "id": "u01-l3-o1",
+          "text": {
+            "ar": "يعرف أن محل النية القلب ومعناها",
+            "en": "Knows that intention is in the heart and what it means",
+            "tl": "Alam na ang intensyon ay nasa puso at ang kahulugan nito"
+          }
+        },
+        {
+          "id": "u01-l3-o2",
+          "text": {
+            "ar": "يرتّب خطوات الوضوء الأربع الأولى",
+            "en": "Orders the first four steps of wudu’",
+            "tl": "Naisasaayos ang unang apat na hakbang ng wudhu"
+          }
+        },
+        {
+          "id": "u01-l3-o3",
+          "text": {
+            "ar": "يميّز المضمضة من الاستنشاق والاستنثار",
+            "en": "Tells rinsing the mouth apart from sniffing and blowing out water",
+            "tl": "Natutukoy ang pagkakaiba ng pagmumog sa istinshaq at istinthar"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l3-c1",
+          "kind": "text",
+          "text": {
+            "ar": "النيَّة\nومحلها القلب، ومعنى النية : عزم القلب على فعل العبادة تقربًا إلى الله تعالى.",
+            "en": "Making Niyyah (intention) in the heart.\nNiyyah refers to the resolve in the heart to perform the worship to get close to Allah.",
+            "tl": "Ang intensyon sa puso. Ang kahulugan niyo ay ang hangarin ng puso na gawin ang isang pagsamba upang mapalapit sa Allah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 1"
+          },
+          "objectives": [
+            "u01-l3-o1",
+            "u01-l3-o2"
+          ]
+        },
+        {
+          "id": "u01-l3-c2",
+          "kind": "text",
+          "text": {
+            "ar": "غسل الكفين",
+            "en": "Washing the two hands up to the wrists.",
+            "tl": "Ang paghugas ng kamay ng tatlong beses."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 2"
+          },
+          "objectives": [
+            "u01-l3-o2"
+          ],
+          "image": "images/wudu-2-hands.webp"
+        },
+        {
+          "id": "u01-l3-c3",
+          "kind": "text",
+          "text": {
+            "ar": "المضمضة\nالمضمضة هي : إدخال الماء في الفم وإدارته فيه، ثم إخراجه.",
+            "en": "Rinsing the mouth (Madmadah)\nRinsing the mouth : means to let water into the mouth and swirl it inside then spit it out.",
+            "tl": "Ang pagmumog ng tatlong beses\nAng madmada (Pagmumog): Ang pagpasok ng tubig sa bibig at pananatili sa loob nito at pagkatapos ay ilalabas ito."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 3"
+          },
+          "objectives": [
+            "u01-l3-o2",
+            "u01-l3-o3"
+          ],
+          "image": "images/wudu-3-mouth.webp"
+        },
+        {
+          "id": "u01-l3-c4",
+          "kind": "text",
+          "text": {
+            "ar": "الاستنشاق والاستنثار\nالاستنشاق: وهو اجتذاب الماء بالنفس إلى أقصى الأنف.\nثم الاستنثار: وهو إخراج ما في الأنف من مخاط وغيره بالنفس.",
+            "en": "Sniffing water into the nostrils (Istinshāq)\nIstinshāq : Sniffing water deep into the nose.\nIstinthār : Blowing mucus and the like from the nose.",
+            "tl": "Al-istinsha’q: Ang pagsinghut ng tubig upang papasok sa ilong.\nAl-istinthar: Ang pagsinga ng tubig na ipinasok mula sa ilong"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 4"
+          },
+          "objectives": [
+            "u01-l3-o2",
+            "u01-l3-o3"
+          ],
+          "image": "images/wudu-4-nose.webp"
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l3-e1",
+          "type": "choice",
+          "objectives": [
+            "u01-l3-o1"
+          ],
+          "prompt": {
+            "ar": "أين محل النية؟",
+            "en": "Where is the intention made?",
+            "tl": "Saan ginagawa ang intensyon?"
+          },
+          "explain_card": "u01-l3-c1",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "القلب",
+                "en": "In the heart",
+                "tl": "Sa puso"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "اللسان",
+                "en": "On the tongue",
+                "tl": "Sa dila"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الورق",
+                "en": "On paper",
+                "tl": "Sa papel"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l3-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l3-o1"
+          ],
+          "prompt": {
+            "ar": "ما معنى النية؟",
+            "en": "What does intention mean?",
+            "tl": "Ano ang kahulugan ng intensyon?"
+          },
+          "explain_card": "u01-l3-c1",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "عزم القلب على فعل العبادة تقربًا إلى الله",
+                "en": "The resolve in the heart to perform the worship to get close to Allah",
+                "tl": "Ang hangarin ng puso na gawin ang isang pagsamba upang mapalapit sa Allah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "غسل الوجه ثلاث مرات",
+                "en": "Washing the face three times",
+                "tl": "Paghugas ng mukha nang tatlong beses"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "قول الوضوء بصوت عالٍ",
+                "en": "Saying the wudu’ aloud",
+                "tl": "Pagsasabi ng wudhu nang malakas"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l3-e3",
+          "type": "order",
+          "objectives": [
+            "u01-l3-o2"
+          ],
+          "prompt": {
+            "ar": "رتّب أول خطوات الوضوء",
+            "en": "Put the first steps of wudu’ in order",
+            "tl": "Isaayos ang mga unang hakbang ng wudhu"
+          },
+          "explain_card": "u01-l3-c2",
+          "items": [
+            {
+              "id": "intent",
+              "text": {
+                "ar": "النية",
+                "en": "Intention",
+                "tl": "Intensyon"
+              }
+            },
+            {
+              "id": "hands",
+              "text": {
+                "ar": "غسل الكفين",
+                "en": "Washing the hands",
+                "tl": "Paghugas ng kamay"
+              }
+            },
+            {
+              "id": "mouth",
+              "text": {
+                "ar": "المضمضة",
+                "en": "Rinsing the mouth",
+                "tl": "Pagmumog"
+              }
+            },
+            {
+              "id": "nose",
+              "text": {
+                "ar": "الاستنشاق والاستنثار",
+                "en": "Sniffing water into the nose",
+                "tl": "Istinshaq at istinthar"
+              }
+            }
+          ],
+          "answer": [
+            "intent",
+            "hands",
+            "mouth",
+            "nose"
+          ]
+        },
+        {
+          "id": "u01-l3-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l3-o2"
+          ],
+          "prompt": {
+            "ar": "ما الخطوة بعد غسل الكفين؟",
+            "en": "What comes after washing the hands?",
+            "tl": "Ano ang kasunod ng paghugas ng kamay?"
+          },
+          "explain_card": "u01-l3-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "المضمضة",
+                "en": "Rinsing the mouth",
+                "tl": "Pagmumog"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "غسل الرجلين",
+                "en": "Washing the feet",
+                "tl": "Paghugas ng paa"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "النية",
+                "en": "Intention",
+                "tl": "Intensyon"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l3-e5",
+          "type": "match",
+          "objectives": [
+            "u01-l3-o3"
+          ],
+          "prompt": {
+            "ar": "صِل كل كلمة بمعناها",
+            "en": "Match each word with its meaning",
+            "tl": "Itugma ang bawat salita sa kahulugan nito"
+          },
+          "explain_card": "u01-l3-c4",
+          "pairs": [
+            {
+              "left": {
+                "ar": "المضمضة",
+                "en": "Madmadah",
+                "tl": "Madmada"
+              },
+              "right": {
+                "ar": "إدخال الماء في الفم وإدارته فيه ثم إخراجه",
+                "en": "Letting water into the mouth, swirling it, then spitting it out",
+                "tl": "Pagpasok ng tubig sa bibig at pagkatapos ay ilalabas ito"
+              }
+            },
+            {
+              "left": {
+                "ar": "الاستنشاق",
+                "en": "Istinshāq",
+                "tl": "Istinshaq"
+              },
+              "right": {
+                "ar": "اجتذاب الماء بالنفس إلى أقصى الأنف",
+                "en": "Sniffing water deep into the nose",
+                "tl": "Pagsinghot ng tubig papasok sa ilong"
+              }
+            },
+            {
+              "left": {
+                "ar": "الاستنثار",
+                "en": "Istinthār",
+                "tl": "Istinthar"
+              },
+              "right": {
+                "ar": "إخراج ما في الأنف بالنفس",
+                "en": "Blowing out what is in the nose",
+                "tl": "Pagsinga ng tubig mula sa ilong"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u01-l3-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l3-o3"
+          ],
+          "prompt": {
+            "ar": "إدخال الماء في الفم وإدارته فيه ثم إخراجه هو:",
+            "en": "Letting water into the mouth, swirling it, then spitting it out is:",
+            "tl": "Ang pagpasok ng tubig sa bibig at paglabas nito ay:"
+          },
+          "explain_card": "u01-l3-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "المضمضة",
+                "en": "Madmadah (rinsing the mouth)",
+                "tl": "Madmada (pagmumog)"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الاستنشاق",
+                "en": "Istinshāq",
+                "tl": "Istinshaq"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الاستنثار",
+                "en": "Istinthār",
+                "tl": "Istinthar"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l4",
+      "order": 4,
+      "title": {
+        "ar": "أتوضأ (2)",
+        "en": "I Make Wudu’ (2)",
+        "tl": "Ako ay Magwuwudhu (2)"
+      },
+      "support_video": "wudu",
+      "objectives": [
+        {
+          "id": "u01-l4-o1",
+          "text": {
+            "ar": "يرتّب خطوات الوضوء الثماني",
+            "en": "Orders all eight steps of wudu’",
+            "tl": "Naisasaayos ang walong hakbang ng wudhu"
+          }
+        },
+        {
+          "id": "u01-l4-o2",
+          "text": {
+            "ar": "يعرف حدود ما يُغسل: الوجه، والمرفقان، والكعبان",
+            "en": "Knows the limits of washing: the face, the elbows and the ankles",
+            "tl": "Alam ang hangganan ng hinuhugasan: ang mukha, ang siko at ang bukong-bukong"
+          }
+        },
+        {
+          "id": "u01-l4-o3",
+          "text": {
+            "ar": "يعرف ما يبطل الوضوء",
+            "en": "Knows what nullifies wudu’",
+            "tl": "Alam kung ano ang nakakasira sa wudhu"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l4-c1",
+          "kind": "text",
+          "text": {
+            "ar": "غسل الوجه\nحد الوجه:\nالوجه: ما تحصل به المواجهة.\nوحدُّه عرضًا: من الأذنِ إلى الأذنِ.\nوحدُّه طولًا: ما بين منابت شعر الرَّأس المعتاد إلى منتهى الذقن.\nيشمل غسل الوجه كل ما فيه من شعر خفيف، وكذلك البياض والعذار.\nوالبياض هو: ما بين العذار وشحمة الأُذن.\nوالعذار هو: الشعر الذي على العظم الناتئ، الموازي لثقب الأُذن الماضي إلى داخل الرأس، وما انحط عنه إلى وتد الأُذن.\nوكذلك يشمل غسل الوجه كل الظاهر من الشعر الكثيف من اللحية مع ما استرسل منه.",
+            "en": "Washing the face\nFace boundaries:\nThe face: the part of the body with which \"facing\" is achieved.\nFacial boundary widthwise: from one ear to the other ear.\nFacial boundary lengthwise: from the usual hairline on the forehead down to the end of the chin.\nWashing the face includes everything on it, such as thin hair and also the sideburns, and the area between it and the earlobe.\nWashing the face also includes all the visible heavy hair of the beard and what extends from it.",
+            "tl": "Ang paghugas ng mukha.\nAng mga hangganan ng mukha ng huhugasan ay ang sumusunod:\nKahulugan ng Mukha: Ang bagay na kung saan ay magaganap ang pagharap.\nAng taas: Mula sa tinutubuan ng buhok hanggang sa baba.\nAng lapad: Mula sa tainga hanggang sa kabilang tainga.\nNasasaklaw ang paghugas ng mukha ang lahat ng malilit na buhok sa mukha at ang bayad at idhar.\nBayad: Ang lugar sa pagitan ng earlobe at ng tragus.\nIdha’r: Ang buhok na tumubo sa tragus kahilera sa earhole.\nNasasakop din ang paghuhugas ng mukha sa bawat makakapal na buhok ng balbas at ang sobra nito."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 5"
+          },
+          "objectives": [
+            "u01-l4-o1",
+            "u01-l4-o2"
+          ],
+          "image": "images/wudu-5-face.webp",
+          "note": "The English page repeats the face definitions in two wordings; the first complete wording is used."
+        },
+        {
+          "id": "u01-l4-c2",
+          "kind": "text",
+          "text": {
+            "ar": "غسل اليدين\nابتداءً من رؤوس أصابع اليدين إلى المرفقين.\nويدخل المرفقان في غَسل اليدين المفروض.",
+            "en": "Washing the hands\nstarting from the fingertips up to the elbows.\nWashing the elbows is included in the obligatory washing of the hands.",
+            "tl": "Ang paghugas ng dalawang kamay kasama ang siko,\nsimula sa mga daliri hanggang sa siko at ang siko ay kabilang sa dapat hugasan."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 6"
+          },
+          "objectives": [
+            "u01-l4-o1",
+            "u01-l4-o2"
+          ],
+          "image": "images/wudu-6-arms.webp"
+        },
+        {
+          "id": "u01-l4-c3",
+          "kind": "text",
+          "text": {
+            "ar": "مسح كل الرأس باليدين مع الأذنين مرةً واحدة\nيبدأ بمقدم رأسه ذاهبًا بهما إلى قفاه ثم يردهما.\nويُدخل سبابتيه في أذنيه،  ويُخالف بإبهاميه على ظاهر أذنيه، فيمسح بذلك ظاهر الأذن وباطنها.",
+            "en": "Passing the wet hands over the head and the ears once .\nOne starts at the hairline and moves his hands back to the nape and then back.\nHe then inserts his index fingers inside his ears\nwhile passing his thumbs over the back of his ears, thus wiping the front and back of the ear.",
+            "tl": "Ang pagpunas ng ulo pati ang dalawang tainga gamit ang dalawang kamay ng isang beses lamang, magsisimula sa unahan ng ulo hanggang sa batok at pagkatapos ibalik ang pagpunas sa unahan ng ulo. At ipasok ang dalawang hintuturo sa tainga at ang hinlalaki ay nakapunas sa ibabaw ng tainga."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 7"
+          },
+          "objectives": [
+            "u01-l4-o1"
+          ],
+          "image": "images/wudu-7-head.webp",
+          "extra_images": [
+            "images/wudu-7-ears.webp"
+          ]
+        },
+        {
+          "id": "u01-l4-c4",
+          "kind": "text",
+          "text": {
+            "ar": "غسل الرجلين\nمن بداية أصابع القدمين إلى الكعبين، ويدخل الكعبان في غسل الرجلين المفروض.\nالكعبان هما : العظمان الناتئان في أسفل الساق.",
+            "en": "Washing the feet\nfrom the toes up to the ankles, given that washing the ankles is included in the obligatory washing of the feet.\nThe ankles are the protruding bones at the bottom of the leg.",
+            "tl": "Ang paghugas ng dalawang paa mula sa mga daliri ng paa hanggang sa bukong-bukong."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn wudu’: step 8"
+          },
+          "objectives": [
+            "u01-l4-o1",
+            "u01-l4-o2"
+          ],
+          "image": "images/wudu-8-feet.webp"
+        },
+        {
+          "id": "u01-l4-c5",
+          "kind": "text",
+          "text": {
+            "ar": "يبطل الوضوء بهذه الأمور:\nالخارج من السبيلين: كالبول، والغائط، والريح، والمني، والمذي.\nزوال العقل بنوم مستغرق، أو إغماء أو مسكر، أو جنون.\nكل ما يوجب الغسل: كالجنابة، والحيض، والنفاس.",
+            "en": "Nullifiers of Ablution:\nExcretions from the frontal or anal passages such as urine, feces, wind, semen, and pre-ejaculatory fluid.\nLoss of consciousness due to deep sleep, fainting, drunkenness, or insanity.\nEverything that requires Ghusl, like Janābah (ritual impurity), menstruation, and postpartum period.",
+            "tl": "Mawawalan ng bisa ang wudo kapag nagawa ang mga bagay na ito:\nLahat ng bagay na lumalabas mula sa unahan at likurang maseselang parte ng tao, tulad ng ihi, dumi, utot at simelya.\nKawalan ng pag-iisap tulad ng pagkatulog nang mahimbing, pagkawala ng malay, pagkalasing, o wala sa tamang kaisipan.\nLahat ng dahilan sa pagka obligado ng gusul (pagligo) tulad ng junub, regla at dugo sanhi ng panganganak."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "Nullifiers of wudu’"
+          },
+          "objectives": [
+            "u01-l4-o3"
+          ]
+        },
+        {
+          "id": "u01-l4-c6",
+          "kind": "text",
+          "text": {
+            "ar": "إذا قضى الإنسان حاجته وجب عليه أن يزيل النجاسة إما بالماء الطهور وهذا أفضل، أو بغير الماء الطهور مما تزول به النجاسة كالأحجار والأوراق والقماش ونحو ذلك، على أن يكون ذلك بثلاث مسحات مُنقية فأكثر وبشيء طاهر مباح.",
+            "en": "If someone wants to relieve himself (herself), then he (she) should clean away whatever has been passed from the urethra or anus with clean  water (preferred) or using toilet paper and other clean implements like stones. Any clean appliance that can be used in addition to water (should be repeated three times or more).",
+            "tl": "Kapag dumumi ang tao, kailangan sa kanya na alisin ang karumihan sa pamamagitan ng tubig na naipandadalisay, at ito ay pinakamainam, o sa pamamagitan ng hindi tubig na naipandadalisay, na nakapag-aalis ng  karumihan gaya ng bato, papel, dahon, tela, at iba pa roon sa kundisyong iyon ay tatlong ulit, o higit pa, na pagpapahahid ng nasabing malinis na ipinahihintulot na bagay."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "After relieving oneself"
+          },
+          "objectives": [
+            "u01-l4-o3"
+          ]
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l4-e1",
+          "type": "order",
+          "objectives": [
+            "u01-l4-o1"
+          ],
+          "prompt": {
+            "ar": "رتّب خطوات الوضوء كلها",
+            "en": "Put all the steps of wudu’ in order",
+            "tl": "Isaayos ang lahat ng hakbang ng wudhu"
+          },
+          "explain_card": "u01-l4-c1",
+          "items": [
+            {
+              "id": "intent",
+              "text": {
+                "ar": "النية",
+                "en": "Intention",
+                "tl": "Intensyon"
+              }
+            },
+            {
+              "id": "hands",
+              "text": {
+                "ar": "غسل الكفين",
+                "en": "Washing the hands",
+                "tl": "Paghugas ng kamay"
+              }
+            },
+            {
+              "id": "mouth",
+              "text": {
+                "ar": "المضمضة",
+                "en": "Rinsing the mouth",
+                "tl": "Pagmumog"
+              }
+            },
+            {
+              "id": "nose",
+              "text": {
+                "ar": "الاستنشاق والاستنثار",
+                "en": "Sniffing water into the nose",
+                "tl": "Istinshaq at istinthar"
+              }
+            },
+            {
+              "id": "face",
+              "text": {
+                "ar": "غسل الوجه",
+                "en": "Washing the face",
+                "tl": "Paghugas ng mukha"
+              }
+            },
+            {
+              "id": "arms",
+              "text": {
+                "ar": "غسل اليدين إلى المرفقين",
+                "en": "Washing the hands to the elbows",
+                "tl": "Paghugas ng kamay hanggang siko"
+              }
+            },
+            {
+              "id": "head",
+              "text": {
+                "ar": "مسح الرأس مع الأذنين",
+                "en": "Wiping the head and ears",
+                "tl": "Pagpunas ng ulo at tainga"
+              }
+            },
+            {
+              "id": "feet",
+              "text": {
+                "ar": "غسل الرجلين",
+                "en": "Washing the feet",
+                "tl": "Paghugas ng paa"
+              }
+            }
+          ],
+          "answer": [
+            "intent",
+            "hands",
+            "mouth",
+            "nose",
+            "face",
+            "arms",
+            "head",
+            "feet"
+          ]
+        },
+        {
+          "id": "u01-l4-e2",
+          "type": "order",
+          "objectives": [
+            "u01-l4-o1"
+          ],
+          "prompt": {
+            "ar": "رتّب آخر أربع خطوات في الوضوء",
+            "en": "Put the last four steps of wudu’ in order",
+            "tl": "Isaayos ang huling apat na hakbang ng wudhu"
+          },
+          "explain_card": "u01-l4-c3",
+          "items": [
+            {
+              "id": "face",
+              "text": {
+                "ar": "غسل الوجه",
+                "en": "Washing the face",
+                "tl": "Paghugas ng mukha"
+              }
+            },
+            {
+              "id": "arms",
+              "text": {
+                "ar": "غسل اليدين إلى المرفقين",
+                "en": "Washing the hands to the elbows",
+                "tl": "Paghugas ng kamay hanggang siko"
+              }
+            },
+            {
+              "id": "head",
+              "text": {
+                "ar": "مسح الرأس مع الأذنين",
+                "en": "Wiping the head and ears",
+                "tl": "Pagpunas ng ulo at tainga"
+              }
+            },
+            {
+              "id": "feet",
+              "text": {
+                "ar": "غسل الرجلين",
+                "en": "Washing the feet",
+                "tl": "Paghugas ng paa"
+              }
+            }
+          ],
+          "answer": [
+            "face",
+            "arms",
+            "head",
+            "feet"
+          ]
+        },
+        {
+          "id": "u01-l4-e3",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o2"
+          ],
+          "prompt": {
+            "ar": "هل يدخل المرفقان في غسل اليدين؟",
+            "en": "Are the elbows included when washing the hands?",
+            "tl": "Kasama ba ang siko sa paghugas ng kamay?"
+          },
+          "explain_card": "u01-l4-c2",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "نعم، يدخلان في الغسل",
+                "en": "Yes, they are included",
+                "tl": "Oo, kasama ang siko"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "لا، يُغسل إلى الرسغ فقط",
+                "en": "No, only up to the wrists",
+                "tl": "Hindi, hanggang pulso lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l4-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o2"
+          ],
+          "prompt": {
+            "ar": "حد الوجه عرضًا:",
+            "en": "The face’s width is:",
+            "tl": "Ang lapad ng mukha ay:"
+          },
+          "explain_card": "u01-l4-c1",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "من الأذن إلى الأذن",
+                "en": "From one ear to the other ear",
+                "tl": "Mula sa tainga hanggang sa kabilang tainga"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "من العين إلى العين",
+                "en": "From one eye to the other eye",
+                "tl": "Mula sa mata hanggang sa kabilang mata"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الأنف وحده",
+                "en": "The nose only",
+                "tl": "Ang ilong lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l4-e5",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o2"
+          ],
+          "prompt": {
+            "ar": "إلى أين تُغسل الرجلان؟",
+            "en": "Up to where are the feet washed?",
+            "tl": "Hanggang saan hinuhugasan ang paa?"
+          },
+          "explain_card": "u01-l4-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "إلى الكعبين، ويدخلان في الغسل",
+                "en": "Up to the ankles, which are included",
+                "tl": "Hanggang sa bukong-bukong"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "إلى الركبتين",
+                "en": "Up to the knees",
+                "tl": "Hanggang sa tuhod"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "الأصابع وحدها",
+                "en": "The toes only",
+                "tl": "Ang mga daliri lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l4-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o3"
+          ],
+          "prompt": {
+            "ar": "أيّ هذه يبطل الوضوء؟",
+            "en": "Which of these nullifies wudu’?",
+            "tl": "Alin dito ang nakakasira sa wudhu?"
+          },
+          "explain_card": "u01-l4-c5",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "النوم المستغرق",
+                "en": "Deep sleep",
+                "tl": "Mahimbing na pagtulog"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "شرب الماء",
+                "en": "Drinking water",
+                "tl": "Pag-inom ng tubig"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "المشي",
+                "en": "Walking",
+                "tl": "Paglakad"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l4-e7",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o3"
+          ],
+          "prompt": {
+            "ar": "كل ما يوجب الغسل يبطل الوضوء.",
+            "en": "Everything that requires ghusl nullifies wudu’.",
+            "tl": "Ang lahat ng dahilan ng pagka-obligado ng ghusl ay nakakasira sa wudhu."
+          },
+          "explain_card": "u01-l4-c5",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "صحيح",
+                "en": "True",
+                "tl": "Tama"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "خطأ",
+                "en": "False",
+                "tl": "Mali"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l5",
+      "order": 5,
+      "title": {
+        "ar": "أتهيأ للصلاة",
+        "en": "I Prepare for Prayer",
+        "tl": "Inihahanda Ko ang Sarili sa Salah"
+      },
+      "objectives": [
+        {
+          "id": "u01-l5-o1",
+          "text": {
+            "ar": "يعرف الصلوات الخمس بترتيبها",
+            "en": "Knows the five daily prayers in order",
+            "tl": "Alam ang limang pagdarasal ayon sa pagkakasunod"
+          }
+        },
+        {
+          "id": "u01-l5-o2",
+          "text": {
+            "ar": "يعرف أن الحدث الأصغر يوجب الوضوء والأكبر يوجب الغسل",
+            "en": "Knows minor impurity requires wudu’ and major impurity requires ghusl",
+            "tl": "Alam na ang maliit na karumihan ay nangangailangan ng wudhu at ang malaki ay ng ghusl"
+          }
+        },
+        {
+          "id": "u01-l5-o3",
+          "text": {
+            "ar": "يعرف شروط الطهارة والستر في الصلاة",
+            "en": "Knows the requirements of cleanliness and covering in prayer",
+            "tl": "Alam ang mga kondisyon ng kalinisan at pagtatakip sa salah"
+          }
+        },
+        {
+          "id": "u01-l5-o4",
+          "text": {
+            "ar": "يعرف ما يفعله من لم يحفظ أقوال الصلاة بعد",
+            "en": "Knows what to do before memorizing the words of prayer",
+            "tl": "Alam ang gagawin kung hindi pa kabisado ang mga salita ng salah"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l5-c1",
+          "kind": "text",
+          "text": {
+            "ar": "افترض الله على المسلم في اليوم والليلة خمس صلوات وهي: الفجر والظهر والعصر والمغرب والعشاء.",
+            "en": "Allah ordained upon the Muslim five prayers in the day and night; they are Fajr (dawn) prayer, Dhuhr (noon) prayer, ‘Asr (afternoon) prayer, Maghrib (sunset) prayer, and 'Isha’ (night) prayer.",
+            "tl": "Inobliga ng Allah ang limang beses na pagdarasal sa bawat araw at ito ay ang mga sumusunod:  Ang Fajr, Dhuhur, Asar, Maghrib at Isha."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: opening"
+          },
+          "objectives": [
+            "u01-l5-o1"
+          ]
+        },
+        {
+          "id": "u01-l5-c2",
+          "kind": "text",
+          "text": {
+            "ar": "إذا دخل وقت الصلاة يتطهَّر المسلم من الحدث الأصغر والحدث الأكبر، إذا كان محدثًا حدثًا أكبر.\nالحدث الأكبر هو: ما يُوجب على المسلم الغُسل.\nالحدث الأصغر هو: ما يُوجب على المسلم الوضوء.",
+            "en": "When the time of prayer starts, the Muslim purifies himself from the state of minor impurity, and major impurity if he is in a state of major impurity.\nMajor impurity is what requires Ghusl (ritual bath).\nMinor impurity is what requires Wudu’ (ablution).",
+            "tl": "Kapag pumasok ang oras ng salah marapat na maging malinis ang isang muslim mula sa estado ng maliit at malaking karumihan.\nHadath Akbar (estado ng malaking karumihan): nangangailangan ng Ghusl (buong paghuhugas o pagligo).\nHadath Asghar (estado ng maliit na karumihan): nangangailangan ng Wudhu."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I prepare for prayer"
+          },
+          "objectives": [
+            "u01-l5-o2"
+          ]
+        },
+        {
+          "id": "u01-l5-c3",
+          "kind": "text",
+          "text": {
+            "ar": "يصلي المسلم بملابسَ طاهرةً في مكان طاهر من النجاسات ساترًا عورته.\nيتزين المسلم بملابس لائقة وقت الصلاة ويستر جسده بها، ولا يجوز للرجل في الصلاة أن يبدي شيئًا مما بين السرة والركبة.\nيجب على المرأة أن تستر جميع بدنها في الصلاة إلا الوجه والكفين.",
+            "en": "The Muslim prays in a clean place free of impurities, wearing clean clothes that conceal his ‘Awra (body parts that must be covered during prayer).\nA Muslim wears proper clothing which covers his body in prayer. A man is not allowed to pray with the area between his navel and knees uncovered.\nThe woman must cover her whole body in prayer except for her face and hands.",
+            "tl": "Ang isang Muslim ay nagdarasal sa dalisay na lugar na may dalisay na damit na natatakpan ang kanyang Awra (maseselang bahagi ng katawan). Ang isang Muslim ay nagsusuot nang mabuti at maayos na damit na tumatakip sa kanyang katawan sa salah, at hindi maari na ipakita sa salah ang bahagi ng kanyang awra at ito ay sa pagitan ng pusod at tuhod para sa mga kalalakihan.\nDapat takpan ng isang babae ang kanyang buong katawan maliban sa mukha at mga kamay."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I prepare for prayer"
+          },
+          "objectives": [
+            "u01-l5-o3"
+          ]
+        },
+        {
+          "id": "u01-l5-c4",
+          "kind": "reassurance",
+          "text": {
+            "ar": "لا يتحدث المسلم في الصلاة بغير الأقوال الخاصة بها، وينصت إلى الإمام، ولا يلتفت في صلاته، وإن عجز عن حفظ الأقوال الخاصة بالصلاة فإنه يذكر الله ويسبِّحه حتى ينتهي من الصلاة، ويلزمه المبادرة إلى تعلُّم الصلاة وأقوالها.",
+            "en": "While performing Salah, the Muslim only says the words relevant to Salah, he listens to the Imam (the person leading the congregational prayer), and he does not turn left or right in Salah. If he is unable to memorize the words of Salah, he should mention Allah and glorify Him until the prayer ends. He is required to hasten to learn Salah and its words.",
+            "tl": "Hindi marapat sa isang muslim na magsalita habang nagsasalah maliban sa mga salita na bibigkasin para sa salah, makinig sa Imam at hindi maaaring lumingon habang nagsasalah. Kung hindi pa kabisado an mga salita na bibigkasin sa salah, marapat na kanyang gawin na lamang ay magdhikr o alalahanin at luwalhatiin ang Allah hanngang sa matapos ang salah. Nararapat lamang na magmadali na pag-aralan ang paraan ng salah at mga salita na dapat bigkasin dito."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I prepare for prayer"
+          },
+          "objectives": [
+            "u01-l5-o4"
+          ],
+          "edited": {
+            "en": "Removed the transliterated parenthesis “(by saying 'Subhān Allah')” (LRN-01 rule 3)."
+          }
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l5-e1",
+          "type": "order",
+          "objectives": [
+            "u01-l5-o1"
+          ],
+          "prompt": {
+            "ar": "رتّب الصلوات الخمس في اليوم",
+            "en": "Put the five daily prayers in order",
+            "tl": "Isaayos ang limang pagdarasal sa isang araw"
+          },
+          "explain_card": "u01-l5-c1",
+          "items": [
+            {
+              "id": "fajr",
+              "text": {
+                "ar": "الفجر",
+                "en": "Fajr",
+                "tl": "Fajr"
+              }
+            },
+            {
+              "id": "dhuhr",
+              "text": {
+                "ar": "الظهر",
+                "en": "Dhuhr",
+                "tl": "Dhuhur"
+              }
+            },
+            {
+              "id": "asr",
+              "text": {
+                "ar": "العصر",
+                "en": "‘Asr",
+                "tl": "Asar"
+              }
+            },
+            {
+              "id": "maghrib",
+              "text": {
+                "ar": "المغرب",
+                "en": "Maghrib",
+                "tl": "Maghrib"
+              }
+            },
+            {
+              "id": "isha",
+              "text": {
+                "ar": "العشاء",
+                "en": "‘Isha’",
+                "tl": "Isha"
+              }
+            }
+          ],
+          "answer": [
+            "fajr",
+            "dhuhr",
+            "asr",
+            "maghrib",
+            "isha"
+          ]
+        },
+        {
+          "id": "u01-l5-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o1"
+          ],
+          "prompt": {
+            "ar": "كم صلاة افترضها الله في اليوم والليلة؟",
+            "en": "How many prayers did Allah ordain in a day and night?",
+            "tl": "Ilang pagdarasal ang inobliga ng Allah sa bawat araw?"
+          },
+          "explain_card": "u01-l5-c1",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "خمس",
+                "en": "Five",
+                "tl": "Lima"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "ثلاث",
+                "en": "Three",
+                "tl": "Tatlo"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "سبع",
+                "en": "Seven",
+                "tl": "Pito"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e3",
+          "type": "match",
+          "objectives": [
+            "u01-l5-o2"
+          ],
+          "prompt": {
+            "ar": "صِل كل حدث بما يوجبه",
+            "en": "Match each impurity with what it requires",
+            "tl": "Itugma ang bawat karumihan sa kinakailangan nito"
+          },
+          "explain_card": "u01-l5-c2",
+          "pairs": [
+            {
+              "left": {
+                "ar": "الحدث الأصغر",
+                "en": "Minor impurity",
+                "tl": "Hadath Asghar"
+              },
+              "right": {
+                "ar": "الوضوء",
+                "en": "Wudu’",
+                "tl": "Wudhu"
+              }
+            },
+            {
+              "left": {
+                "ar": "الحدث الأكبر",
+                "en": "Major impurity",
+                "tl": "Hadath Akbar"
+              },
+              "right": {
+                "ar": "الغسل",
+                "en": "Ghusl",
+                "tl": "Ghusl"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u01-l5-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o2"
+          ],
+          "prompt": {
+            "ar": "الحدث الأكبر يوجب:",
+            "en": "Major impurity requires:",
+            "tl": "Ang Hadath Akbar ay nangangailangan ng:"
+          },
+          "explain_card": "u01-l5-c2",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "الغسل",
+                "en": "Ghusl",
+                "tl": "Ghusl"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "غسل الكفين فقط",
+                "en": "Washing the hands only",
+                "tl": "Paghugas ng kamay lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا شيء",
+                "en": "Nothing",
+                "tl": "Wala"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e5",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o3"
+          ],
+          "prompt": {
+            "ar": "ما الذي تستره المرأة في الصلاة؟",
+            "en": "What does a woman cover in prayer?",
+            "tl": "Ano ang tinatakpan ng babae sa salah?"
+          },
+          "explain_card": "u01-l5-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "جميع بدنها إلا الوجه والكفين",
+                "en": "Her whole body except the face and hands",
+                "tl": "Ang buong katawan maliban sa mukha at mga kamay"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "رأسها فقط",
+                "en": "Only her head",
+                "tl": "Ang ulo lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا يلزمها ستر",
+                "en": "Nothing is required",
+                "tl": "Walang kailangang takpan"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o3"
+          ],
+          "prompt": {
+            "ar": "يصلي المسلم:",
+            "en": "A Muslim prays:",
+            "tl": "Ang Muslim ay nagdarasal:"
+          },
+          "explain_card": "u01-l5-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "بملابس طاهرة في مكان طاهر ساترًا عورته",
+                "en": "In clean clothes, in a clean place, with his ‘awrah covered",
+                "tl": "Na may dalisay na damit, sa dalisay na lugar, na natatakpan ang awra"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "في أي مكان ولو كان نجسًا",
+                "en": "Anywhere, even if impure",
+                "tl": "Kahit saan, kahit marumi"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "بأي لباس ولو لم يستر",
+                "en": "In any clothes, even if uncovered",
+                "tl": "Kahit anong damit, kahit hindi natatakpan"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e7",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o4"
+          ],
+          "prompt": {
+            "ar": "من لم يحفظ أقوال الصلاة بعد:",
+            "en": "Someone who has not yet memorized the words of prayer:",
+            "tl": "Ang hindi pa kabisado ang mga salita ng salah ay:"
+          },
+          "explain_card": "u01-l5-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "يذكر الله ويسبّحه حتى ينتهي من الصلاة",
+                "en": "Mentions Allah and glorifies Him until the prayer ends",
+                "tl": "Magdhikr at luwalhatiin ang Allah hanggang sa matapos ang salah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "لا يصلي حتى يحفظها",
+                "en": "Does not pray until he memorizes them",
+                "tl": "Hindi magsasalah hanggang makabisado"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "يسكت حتى ينتهي الناس",
+                "en": "Stays silent until the others finish",
+                "tl": "Tatahimik hanggang matapos ang iba"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e8",
+          "type": "choice",
+          "objectives": [
+            "u01-l5-o4"
+          ],
+          "prompt": {
+            "ar": "وماذا يلزمه بعد ذلك؟",
+            "en": "And what must he do after that?",
+            "tl": "At ano ang dapat niyang gawin pagkatapos?"
+          },
+          "explain_card": "u01-l5-c4",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "أن يبادر إلى تعلّم الصلاة وأقوالها",
+                "en": "Hasten to learn the prayer and its words",
+                "tl": "Magmadali na pag-aralan ang salah at mga salita nito"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "أن يترك الصلاة",
+                "en": "Leave the prayer",
+                "tl": "Iwan ang salah"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا شيء",
+                "en": "Nothing",
+                "tl": "Wala"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l6",
+      "order": 6,
+      "title": {
+        "ar": "أصلي (1)",
+        "en": "I Pray (1)",
+        "tl": "Ako ay Magsasalah (1)"
+      },
+      "support_video": "salah",
+      "objectives": [
+        {
+          "id": "u01-l6-o1",
+          "text": {
+            "ar": "يرتّب أول أفعال الصلاة حتى الركوع",
+            "en": "Orders the first actions of prayer up to bowing",
+            "tl": "Naisasaayos ang mga unang gawain ng salah hanggang sa pagyuko"
+          }
+        },
+        {
+          "id": "u01-l6-o2",
+          "text": {
+            "ar": "يعرف ما يقوله في الركوع وكيف يركع",
+            "en": "Knows what to say in bowing and how to bow",
+            "tl": "Alam ang sasabihin sa pagyuko at kung paano yumuko"
+          }
+        },
+        {
+          "id": "u01-l6-o3",
+          "text": {
+            "ar": "يعرف أن الفاتحة تُقرأ في كل ركعة",
+            "en": "Knows that al-Fātiḥah is read in every rak‘ah",
+            "tl": "Alam na ang Al-Fatiha ay binabasa sa bawat raka’a"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l6-c1",
+          "kind": "text",
+          "text": {
+            "ar": "النيَّة\nللفريضة التي أريد أداءها، ومحلها القلب.\nبعد أن أتوضأ، أستقبل القبلة، وأصلي قائمًا إذا كنت قادرًا على ذلك.",
+            "en": "I make the intention in my heart for the prayer I intend to perform .\nAfter I perform ablution, I stand in the direction of the Qiblah (direction of the prayer towards Makkah), and I pray while standing if I am able to.",
+            "tl": "Pagkakaroon ng niyah o intensyon sa pagsasagawa ng uri ng obligadong salah na nais niyang itaguyod at ang lugar ng intension ay ang puso.\nPagkatapos kong mag-wudhu ako ay haharap sa Qibla (direksyon ng Salah) at magsasalah nang nakatayo kung ito ay kaya mong gawin."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 1"
+          },
+          "objectives": [
+            "u01-l6-o1"
+          ]
+        },
+        {
+          "id": "u01-l6-c2",
+          "kind": "text",
+          "text": {
+            "ar": "أرفع يديَّ بمحاذاة المنكبين وأقول: (الله أكبر) ناويًا الدخول في الصلاة.",
+            "en": "I raise my hands to the level of my shoulders and say (الله أكبر) (Allah is the Most Great) with the intention of beginning the prayer.",
+            "tl": "itataas ko ang aking kamay na nakahanay sa aking mga balikat at sasabihin ang katagang: (الله أكبر) (ang Allah ang Pinakadakila) na may kasamang hangarin na simulan ang salah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 2"
+          },
+          "objectives": [
+            "u01-l6-o1"
+          ],
+          "image": "images/salah-02-takbir.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l6-c3",
+          "kind": "text",
+          "text": {
+            "ar": "أقرأ دعاء الاستفتاح بما ورد، ومن ذلك قول: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) .",
+            "en": "I say an opening Du‘ā’ (supplication) as reported from the Prophet (Allah’s prayers and peace be upon him). One of the opening supplications is the following: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) (Glory and praise be to You O Allah. Blessed is Your Name and Exalted is Your Majesty, and there is none worthy of worship but You)",
+            "tl": "Aking sasabihin ang pambungad na Duaa (pagsusumamo) na naiulat sa Sunnah, at kabilang dito ang pagsabi: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) “Ang kaluwalhatian ay sa Iyo O Allah, at papuri. Pinagpala ang Iyong Pangalan at Itinaas ang iyong Kamahalan. Walang karapat-dapat sambahin kundi Ikaw lamang.”"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 3"
+          },
+          "objectives": [
+            "u01-l6-o1"
+          ],
+          "image": "images/salah-03-opening.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l6-c4",
+          "kind": "text",
+          "text": {
+            "ar": "أستعيذ بالله من الشيطان الرجيم فأقول: (أعوذُ باللهِ من الشيطان الرجيم) .",
+            "en": "I seek refuge in Allah from the accursed Satan, saying: (أعوذُ باللهِ من الشيطان الرجيم) (I seek refuge in Allah from the accursed Satan)",
+            "tl": "Humihingi ako ng kanlungan kay Allah mula sa isinumpa na Shaytan (Satanas) sa pagsasabing: (أعوذُ باللهِ من الشيطان الرجيم)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 4"
+          },
+          "objectives": [
+            "u01-l6-o1"
+          ],
+          "image": "images/salah-04-istiadha.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l6-c5",
+          "kind": "fatiha",
+          "text": {
+            "ar": "أقرأ سورة الفاتحة في كل ركعة وهي:",
+            "en": "I read Surat al-Fātihah (Ch. 1 of the Qur’an) in every Rak‘ah (unit of the prayer):",
+            "tl": "Babasahin ko ang Surah Al Fatiha sa bawat raka’a:"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 5"
+          },
+          "objectives": [
+            "u01-l6-o1",
+            "u01-l6-o3"
+          ],
+          "image": "images/salah-05-fatiha.webp",
+          "quran_ref": "1:1-7",
+          "audio": "fatiha",
+          "quran_text": {
+            "ar": "﴿بسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ (1) الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (2) الرَّحْمَنِ الرَّحِيمِ (3) مَالِكِ يَوْمِ الدِّينِ (4) إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (5) اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ (6) صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ(7)﴾ .",
+            "en": "{In the name of Allah, the Most Compassionate, the Most Merciful (1) Praise is due to Allah, Lord of the worlds (2) The Most Compassionate, the Most Merciful (3) Sovereign of the Day of Recompense (4) It is You Who we worship, and it is You Who we ask for help (5) Guide us to the straight path (6) The path of those upon whom You have blessed, not of those who have evoked [Your] anger or of those who are astray (7)}",
+            "tl": "Sa Ngalan ng Allah, ang Mahabagin, ang Maawain. [Ang lahat ng papuri ay sa Allah], ang Panginoon ng lahat ng mga nilikha. Ang Mahabagin, ang Maawain. Ang Maalik [Makapangyarihan at Kataas-taasang Hari] sa Araw ng Pagbabayad [ng gantimpala at parusa]. [Tanging] Ikaw lamang po ang aming sinasamba, at [tanging] Ikaw lamang po ang aming hinihingan [ng tulong]. Patnubayan Mo po kami sa matuwid na landas. Sa landas ng yaong mga ginawaran Mo ng Iyong pagpapala, hindi [sa landas] ng mga umani ng [Iyong] poot, at ng mga nangaligaw."
+          },
+          "edited": {
+            "en": "Stray punctuation “.blessed” corrected to “blessed”.",
+            "tl": "Removed the transliterated word “Al-Hamdulillah” and a stray bracket; the Tagalog meaning is kept (LRN-01 rule 3)."
+          },
+          "verify": "Check the Arabic against the King Fahd Complex text and the meanings against QuranEnc before release."
+        },
+        {
+          "id": "u01-l6-c6",
+          "kind": "text",
+          "text": {
+            "ar": "أقرأ بعد الفاتحة ما تيسَّر من القرآن في الركعة الأولى والثانية فقط من كل صلاة، وهذا ليس بواجب ولكن في فعله أجر عظيم.",
+            "en": "After al-Fātihah, I recite verses from the Qur’an (other than al-Fātihah) only in the first and second Rak‘ah. This recitation is not obligatory but doing it yields a great reward.",
+            "tl": "Magbabasa ako ng isang surah o kabanata mula sa Qur’an pagkatapos ng Al-Fatiha sa una at ikalawang yunit lamang ng pagdarasal (rakaa). Ang nasabing pagbigkas ay hindi obligado ngunit nagdudulot ng malaking gantimpala."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 6"
+          },
+          "objectives": [
+            "u01-l6-o3"
+          ],
+          "image": "images/salah-06-recitation.webp"
+        },
+        {
+          "id": "u01-l6-c7",
+          "kind": "text",
+          "text": {
+            "ar": "أقول: (الله أكبر) ثم أركع حتى يكون ظهري مستويًا ويداي على ركبتيَّ مفرَّجة الأصابع، ثم أقول في الركوع: (سبحان ربي العظيم) .",
+            "en": "I say (الله أكبر) then I make Ruku‘ by bowing until my back is level, and my hands are on my knees with the fingers spread out, then I say while in Ruku‘ (سبحان ربي العظيم) (Glory is to my Lord, the Great).",
+            "tl": "Sasabihin ko: (الله أكبر) at ako ay yuyuko hanggang sa maging tuwid ang likod at nakalatag ang aking kamay sa aking tuhod na nakabukas ang mga daliri, at aking sasabihin: (سبحان ربي العظيم) (Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 7"
+          },
+          "objectives": [
+            "u01-l6-o1",
+            "u01-l6-o2"
+          ],
+          "image": "images/salah-07-ruku.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l6-e1",
+          "type": "order",
+          "objectives": [
+            "u01-l6-o1"
+          ],
+          "prompt": {
+            "ar": "رتّب أول أفعال الصلاة",
+            "en": "Put the first actions of prayer in order",
+            "tl": "Isaayos ang mga unang gawain ng salah"
+          },
+          "explain_card": "u01-l6-c2",
+          "items": [
+            {
+              "id": "intent",
+              "text": {
+                "ar": "النية واستقبال القبلة",
+                "en": "Intention and facing the Qiblah",
+                "tl": "Niyah at pagharap sa Qibla"
+              }
+            },
+            {
+              "id": "takbir",
+              "text": {
+                "ar": "رفع اليدين والتكبير",
+                "en": "Raising the hands and saying الله أكبر",
+                "tl": "Pagtaas ng kamay at pagsabi ng الله أكبر"
+              }
+            },
+            {
+              "id": "opening",
+              "text": {
+                "ar": "دعاء الاستفتاح",
+                "en": "The opening supplication",
+                "tl": "Ang pambungad na Duaa"
+              }
+            },
+            {
+              "id": "istiadha",
+              "text": {
+                "ar": "الاستعاذة",
+                "en": "Seeking refuge from Satan",
+                "tl": "Paghingi ng kanlungan mula kay Shaytan"
+              }
+            },
+            {
+              "id": "fatiha",
+              "text": {
+                "ar": "قراءة الفاتحة",
+                "en": "Reading al-Fātihah",
+                "tl": "Pagbasa ng Al-Fatiha"
+              }
+            },
+            {
+              "id": "ruku",
+              "text": {
+                "ar": "الركوع",
+                "en": "Bowing (Ruku‘)",
+                "tl": "Pagyuko (Ruku’)"
+              }
+            }
+          ],
+          "answer": [
+            "intent",
+            "takbir",
+            "opening",
+            "istiadha",
+            "fatiha",
+            "ruku"
+          ]
+        },
+        {
+          "id": "u01-l6-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l6-o1"
+          ],
+          "prompt": {
+            "ar": "بماذا أدخل في الصلاة؟",
+            "en": "How do I begin the prayer?",
+            "tl": "Paano ko sisimulan ang salah?"
+          },
+          "explain_card": "u01-l6-c2",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "أرفع يديّ وأقول: الله أكبر ناويًا الدخول في الصلاة",
+                "en": "I raise my hands and say الله أكبر, intending to begin the prayer",
+                "tl": "Itataas ko ang aking kamay at sasabihin ang الله أكبر na may hangaring simulan ang salah"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "أسلّم عن يميني",
+                "en": "I turn to the right and give salām",
+                "tl": "Babati ako sa kanan"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "أسجد مباشرة",
+                "en": "I prostrate straight away",
+                "tl": "Magpapatirapa agad"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l6-e3",
+          "type": "choice",
+          "objectives": [
+            "u01-l6-o2"
+          ],
+          "prompt": {
+            "ar": "ماذا أقول في الركوع؟",
+            "en": "What do I say while bowing?",
+            "tl": "Ano ang sasabihin ko sa pagyuko?"
+          },
+          "explain_card": "u01-l6-c7",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "سبحان ربي العظيم",
+                "en": "سبحان ربي العظيم",
+                "tl": "سبحان ربي العظيم"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "سبحان ربي الأعلى",
+                "en": "سبحان ربي الأعلى",
+                "tl": "سبحان ربي الأعلى"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "ربي اغفر لي",
+                "en": "ربي اغفر لي",
+                "tl": "ربي اغفر لي"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l6-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l6-o2"
+          ],
+          "prompt": {
+            "ar": "كيف أركع؟",
+            "en": "How do I bow?",
+            "tl": "Paano ako yuyuko?"
+          },
+          "explain_card": "u01-l6-c7",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "حتى يستوي ظهري، ويداي على ركبتيّ مفرّجة الأصابع",
+                "en": "Until my back is level, my hands on my knees with fingers spread",
+                "tl": "Hanggang tuwid ang likod at nasa tuhod ang mga kamay na nakabukas ang mga daliri"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "أضع جبهتي على الأرض",
+                "en": "I put my forehead on the ground",
+                "tl": "Ilalagay ko ang noo sa lupa"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "أجلس على قدمي اليسرى",
+                "en": "I sit on my left foot",
+                "tl": "Uupo ako sa kaliwang paa"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l6-e5",
+          "type": "choice",
+          "objectives": [
+            "u01-l6-o3"
+          ],
+          "prompt": {
+            "ar": "متى أقرأ سورة الفاتحة؟",
+            "en": "When do I read al-Fātihah?",
+            "tl": "Kailan ko babasahin ang Al-Fatiha?"
+          },
+          "explain_card": "u01-l6-c5",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "في كل ركعة",
+                "en": "In every rak‘ah",
+                "tl": "Sa bawat raka’a"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "في الركعة الأولى فقط",
+                "en": "In the first rak‘ah only",
+                "tl": "Sa unang raka’a lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "بعد السلام",
+                "en": "After ending the prayer",
+                "tl": "Pagkatapos ng salah"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l6-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l6-o3"
+          ],
+          "prompt": {
+            "ar": "قراءة ما تيسّر بعد الفاتحة:",
+            "en": "Reciting more of the Qur’an after al-Fātihah is:",
+            "tl": "Ang pagbasa pagkatapos ng Al-Fatiha ay:"
+          },
+          "explain_card": "u01-l6-c6",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "في الركعتين الأوليين، وليست واجبة وفيها أجر عظيم",
+                "en": "In the first two rak‘ahs; not obligatory but with great reward",
+                "tl": "Sa una at ikalawang raka’a; hindi obligado ngunit may malaking gantimpala"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "واجبة في كل ركعة",
+                "en": "Obligatory in every rak‘ah",
+                "tl": "Obligado sa bawat raka’a"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "في الركعة الأخيرة فقط",
+                "en": "In the last rak‘ah only",
+                "tl": "Sa huling raka’a lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    },
+    {
+      "id": "u01-l7",
+      "order": 7,
+      "title": {
+        "ar": "أصلي (2)",
+        "en": "I Pray (2)",
+        "tl": "Ako ay Magsasalah (2)"
+      },
+      "support_video": "salah",
+      "objectives": [
+        {
+          "id": "u01-l7-o1",
+          "text": {
+            "ar": "يرتّب أفعال الصلاة من الرفع من الركوع حتى القيام",
+            "en": "Orders the actions from rising after bowing to standing again",
+            "tl": "Naisasaayos ang mga gawain mula sa pagtayo sa pagkayuko hanggang sa muling pagtayo"
+          }
+        },
+        {
+          "id": "u01-l7-o2",
+          "text": {
+            "ar": "يعرف ذكر كل موضع: الرفع والسجود والجلوس",
+            "en": "Knows what is said when rising, prostrating and sitting",
+            "tl": "Alam ang sasabihin sa pagtayo, pagpapatirapa at pag-upo"
+          }
+        },
+        {
+          "id": "u01-l7-o3",
+          "text": {
+            "ar": "يعرف التشهد ومتى يُقال، وكيف تنتهي الصلاة",
+            "en": "Knows the tashahhud, when it is said, and how the prayer ends",
+            "tl": "Alam ang tashahud, kung kailan ito sinasabi, at kung paano nagtatapos ang salah"
+          }
+        }
+      ],
+      "cards": [
+        {
+          "id": "u01-l7-c1",
+          "kind": "text",
+          "text": {
+            "ar": "أرفع من الركوع قائلًا: (سمع الله لمن حمده) رافعًا يديَّ إلى حذو المنكبين، وإذا اعتدل جسمي واقفًا أقولُ: (ربنا ولك الحمد) .",
+            "en": "I rise from Ruku‘ while saying: (سمع الله لمن حمده) (Allah hears the one who praises Him) and raising my hands to the level of my shoulders. When I stand straight, I say: (ربنا ولك الحمد) (Our Lord, and to You is all praise).",
+            "tl": "Ako ay tatayo mula sa pagkayuko at sasabihin: (سمع الله لمن حمده) (dininig ng Allah ang sinumang pumuri sa kanya). Itataas ko ang aking mga kamay sa antas ng balikat, at kung ang aking katawan ay ganap nang nakatayo, sasabihin ko: (ربنا ولك الحمد) (Panginoon namin, tanging sa Iyo lamang ang papuri)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 8"
+          },
+          "objectives": [
+            "u01-l7-o1",
+            "u01-l7-o2"
+          ],
+          "image": "images/salah-08-rising.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l7-c2",
+          "kind": "text",
+          "text": {
+            "ar": "أقولُ: (الله أكبر) وأسجد على اليدين والركبتين والقدمين والجبهة والأنف، وأقول في سجودي: (سبحان ربي الأعلى) .",
+            "en": "I say (الله أكبر) and prostrate on my hands, knees, feet, forehead, and nose, then I say while prostrating: (سبحان ربي الأعلى) (Glory is to my Lord, the Most High).",
+            "tl": "Sasabihin ko ang (الله أكبر) at ako ay magpapatirapa gamit ang mga kamay, tuhod, paa, noo at ilong, at sasabihin ko sa aking pagpatirapa: (سبحان ربي الأعلى) (Luwalhati sa aking Panginoon, ang Kataas-taasan)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 9"
+          },
+          "objectives": [
+            "u01-l7-o1",
+            "u01-l7-o2"
+          ],
+          "image": "images/salah-09-sujud.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l7-c3",
+          "kind": "text",
+          "text": {
+            "ar": "أقولُ: (الله أكبر) وأرفع من السجود حتى أستوي مستقيم الظهر جالسًا على القدم اليسرى وناصبًا القدم اليمنى، وأقول: (ربي اغفر لي) .",
+            "en": "I say (الله أكبر) and rise from the Sujūd (prostration) to sit with my back straight, sitting on my left foot and keeping my right foot erect, and say: (ربي اغفر لي) (My Lord, forgive my sins).",
+            "tl": "Sasabihin ko: (الله أكبر) at ako ay babangon mula sa pagkatirapa hanggang sa maging ganap na matuwid ang aking likod sa pagkakaupo sa kaliwang paa at nakataas ang kanang paa, at bibigkasin ang katagang: (ربي اغفر لي) (Panginoon, patawarin mo ako)."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 10"
+          },
+          "objectives": [
+            "u01-l7-o1",
+            "u01-l7-o2"
+          ],
+          "image": "images/salah-10-sitting.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l7-c4",
+          "kind": "text",
+          "text": {
+            "ar": "أقولُ: (الله أكبر) وأسجد مرة أخرى مثل السجدة الأولى.",
+            "en": "I say (الله أكبر) and prostrate again like the first time.",
+            "tl": "Sasabihin ko: (الله أكبر) at muli akong mag-sujud o magpatirapa tulad ng unang sujud."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 11"
+          },
+          "objectives": [
+            "u01-l7-o1"
+          ],
+          "image": "images/salah-11-sujud2.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l7-c5",
+          "kind": "text",
+          "text": {
+            "ar": "أرفع من السجود قائلًا: (الله أكبر) حتى أستقيم واقفًا، وأفعل في بقية ركعات الصلاة مثل ما فعلت في الركعة الأولى.",
+            "en": "I rise from the Sujūd to stand up straight while saying (الله أكبر), and I repeat the same steps in the remaining units of the prayer.",
+            "tl": "Ako ay tatayo mula sa sujud at sasabihin: (الله أكبر) upang makatayo ako nang tuwid, at gawin ang natitirang mga rakaat ng panalangin tulad ng ginawa ko sa unang rak’ah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 12"
+          },
+          "objectives": [
+            "u01-l7-o1"
+          ],
+          "image": "images/salah-12-standing.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          },
+          "note": "The Filipino page repeats this step as “Panglabing-isang hakbang”; the repeat is omitted."
+        },
+        {
+          "id": "u01-l7-c6",
+          "kind": "text",
+          "text": {
+            "ar": "بعد الركعة الثانية من صلاة الظهر والعصر والمغرب والعشاء أجلس لقراءة التشهد الأول وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) ثم أقوم للركعة الثالثة بعد ذلك.",
+            "en": "After the second prostration in the second Rak‘ah of Dhuhr, ‘Asr, Maghrib, and 'Isha’ prayers, I sit to say the first Tashahhud (testimony of faith) whose wording is as follows: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) (All compliments, prayers, and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger). Then I stand up for the third Rak‘ah.",
+            "tl": "Matapos ang pangalawang rakaa ng Dhuhr, Asr, Maghrib at Isha, ako ay uupo upang sabihin ang unang Tashahud: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله).\n“Ang lahat ng kapangyarihan at kadakilaan ay para sa Allah, lahat ng mga panalangin, at lahat ng mabuting pagsasalita at pagkilos ay para sa Kanya. Ang kapayapaan ay sumaiyo O Propeta, at gayundin ang awa ng Allah at ang Kanyang mga pagpapala. Ang kapayapaan ay mapapa-saatin, at sa mga mabubuting lingkod ng Allah. Pinapatotohanan ko na walang sinumang may karapatang sambahin maliban sa Allah, at pinatototohanan ko na si Muhammad ay Kanyang lingkod at sugo.” Pagkatapos ay lilipat ako sa pangatlong rakaa."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: first tashahhud"
+          },
+          "objectives": [
+            "u01-l7-o3"
+          ],
+          "image": "images/salah-13-tashahhud.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The Filipino paragraph is split where the page joins the first and last tashahhud."
+          }
+        },
+        {
+          "id": "u01-l7-c7",
+          "kind": "text",
+          "text": {
+            "ar": "بعد الركعة الأخيرة من كل صلاة أجلس لقراءة التشهد الأخير، وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد).",
+            "en": "After the second prostration in the last Rak‘ah of every prayer, I sit to say the last Tashahhud whose wording is as follows (the first Tashahhud plus sending peace and prayers upon the Prophet): (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد) (All compliments, prayers and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger. O Allah, send prayers upon Muhammad and upon the family of Muhammad as You sent prayers upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory. O Allah, send blessings upon Muhammad and upon the family of Muhammad as You sent blessings upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory).",
+            "tl": "Sa huling rakaa ng bawat pagdarasal ako ay uupo upang sabihin ang unang Tashahud bilang karagdagan sa sumusunod na pagbigkas: (اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد).\n“O Allah! Puriin nawa si Muhammad, at ang pamilya ni Muhammad, tulad ng pagpuri Mo kay Ibraaheem, at ang pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat na puriin, at luwalhatiin. At Ikaw ang nagkaloob ng mga pagpapala kay Muhammad, at sa pamilya ni Muhammad, tulad ng pagpapadala mo ng mga pagpapala kay Ibraaheem, at sa pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat puruiin luwalhatiin.’’"
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: last tashahhud"
+          },
+          "objectives": [
+            "u01-l7-o3"
+          ],
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        },
+        {
+          "id": "u01-l7-c8",
+          "kind": "text",
+          "text": {
+            "ar": "بعد ذلك أسلم عن يميني فأقول: (السلام عليكم ورحمة الله) وأسلم عن شمالي فأقول: (السلام عليكم ورحمة الله) ناويًا الخروج من الصلاة، وأكون بذلك قد أديت الصلاة.",
+            "en": "I intend to conclude the prayer and turn my head to the right, saying: (السلام عليكم ورحمة الله) (Peace and blessings of Allah be upon you). Then I turn my head to the left, saying: (السلام عليكم ورحمة الله). Upon doing that, I have completed the performance of my prayer.",
+            "tl": "Nais kong tapusin ang salah sa pamamagitan ng pagsasabi ng: (السلام عليكم ورحمة الله), ang kapayapaan at mga pagpapala ng Allah ay sumaiyo, isang beses habang nakaharap sa kanang direksyon at isang beses habang nakaharap sa kaliwang direksyon; sa ganoong paraan magtatapos ang salah."
+          },
+          "provenance": {
+            "source": "newmuslimguideline.com",
+            "section": "I learn to pray: step 13"
+          },
+          "objectives": [
+            "u01-l7-o3"
+          ],
+          "image": "images/salah-14-taslim.webp",
+          "edited": {
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+          }
+        }
+      ],
+      "exercises": [
+        {
+          "id": "u01-l7-e1",
+          "type": "order",
+          "objectives": [
+            "u01-l7-o1"
+          ],
+          "prompt": {
+            "ar": "رتّب أفعال الصلاة بعد الركوع",
+            "en": "Put the actions after bowing in order",
+            "tl": "Isaayos ang mga gawain pagkatapos ng pagyuko"
+          },
+          "explain_card": "u01-l7-c1",
+          "items": [
+            {
+              "id": "rising",
+              "text": {
+                "ar": "الرفع من الركوع",
+                "en": "Rising from bowing",
+                "tl": "Pagtayo mula sa pagkayuko"
+              }
+            },
+            {
+              "id": "sujud",
+              "text": {
+                "ar": "السجود",
+                "en": "Prostration (Sujūd)",
+                "tl": "Pagpapatirapa (Sujud)"
+              }
+            },
+            {
+              "id": "sitting",
+              "text": {
+                "ar": "الجلوس بين السجدتين",
+                "en": "Sitting between the two prostrations",
+                "tl": "Pag-upo sa pagitan ng dalawang sujud"
+              }
+            },
+            {
+              "id": "sujud2",
+              "text": {
+                "ar": "السجدة الثانية",
+                "en": "The second prostration",
+                "tl": "Ang ikalawang sujud"
+              }
+            },
+            {
+              "id": "standing",
+              "text": {
+                "ar": "القيام إلى الركعة التالية",
+                "en": "Standing for the next rak‘ah",
+                "tl": "Pagtayo para sa susunod na raka’a"
+              }
+            }
+          ],
+          "answer": [
+            "rising",
+            "sujud",
+            "sitting",
+            "sujud2",
+            "standing"
+          ]
+        },
+        {
+          "id": "u01-l7-e2",
+          "type": "choice",
+          "objectives": [
+            "u01-l7-o1"
+          ],
+          "prompt": {
+            "ar": "على ماذا أسجد؟",
+            "en": "On what do I prostrate?",
+            "tl": "Saan ako magpapatirapa?"
+          },
+          "explain_card": "u01-l7-c2",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "اليدين والركبتين والقدمين والجبهة والأنف",
+                "en": "Hands, knees, feet, forehead and nose",
+                "tl": "Mga kamay, tuhod, paa, noo at ilong"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الجبهة وحدها",
+                "en": "The forehead only",
+                "tl": "Ang noo lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "اليدين وحدهما",
+                "en": "The hands only",
+                "tl": "Ang mga kamay lamang"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l7-e3",
+          "type": "match",
+          "objectives": [
+            "u01-l7-o2"
+          ],
+          "prompt": {
+            "ar": "صِل كل موضع بذكره",
+            "en": "Match each position with what is said in it",
+            "tl": "Itugma ang bawat posisyon sa sinasabi rito"
+          },
+          "explain_card": "u01-l7-c2",
+          "pairs": [
+            {
+              "left": {
+                "ar": "الرفع من الركوع",
+                "en": "Rising from bowing",
+                "tl": "Pagtayo mula sa pagkayuko"
+              },
+              "right": {
+                "ar": "سمع الله لمن حمده",
+                "en": "سمع الله لمن حمده",
+                "tl": "سمع الله لمن حمده"
+              }
+            },
+            {
+              "left": {
+                "ar": "السجود",
+                "en": "Prostration (Sujūd)",
+                "tl": "Pagpapatirapa (Sujud)"
+              },
+              "right": {
+                "ar": "سبحان ربي الأعلى",
+                "en": "سبحان ربي الأعلى",
+                "tl": "سبحان ربي الأعلى"
+              }
+            },
+            {
+              "left": {
+                "ar": "الجلوس بين السجدتين",
+                "en": "Sitting between the two prostrations",
+                "tl": "Pag-upo sa pagitan ng dalawang sujud"
+              },
+              "right": {
+                "ar": "ربي اغفر لي",
+                "en": "ربي اغفر لي",
+                "tl": "ربي اغفر لي"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u01-l7-e4",
+          "type": "choice",
+          "objectives": [
+            "u01-l7-o2"
+          ],
+          "prompt": {
+            "ar": "ماذا أقول بين السجدتين؟",
+            "en": "What do I say between the two prostrations?",
+            "tl": "Ano ang sasabihin ko sa pagitan ng dalawang sujud?"
+          },
+          "explain_card": "u01-l7-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "ربي اغفر لي",
+                "en": "ربي اغفر لي",
+                "tl": "ربي اغفر لي"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "سبحان ربي الأعلى",
+                "en": "سبحان ربي الأعلى",
+                "tl": "سبحان ربي الأعلى"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "سمع الله لمن حمده",
+                "en": "سمع الله لمن حمده",
+                "tl": "سمع الله لمن حمده"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l7-e5",
+          "type": "choice",
+          "objectives": [
+            "u01-l7-o3"
+          ],
+          "prompt": {
+            "ar": "في أي الصلوات أجلس للتشهد الأول؟",
+            "en": "In which prayers do I sit for the first tashahhud?",
+            "tl": "Sa aling mga salah ako uupo para sa unang Tashahud?"
+          },
+          "explain_card": "u01-l7-c6",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "الظهر والعصر والمغرب والعشاء",
+                "en": "Dhuhr, ‘Asr, Maghrib and ‘Isha’",
+                "tl": "Dhuhr, Asr, Maghrib at Isha"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "الفجر وحدها",
+                "en": "Fajr only",
+                "tl": "Fajr lamang"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا يوجد تشهد أول",
+                "en": "There is no first tashahhud",
+                "tl": "Walang unang Tashahud"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l7-e6",
+          "type": "choice",
+          "objectives": [
+            "u01-l7-o3"
+          ],
+          "prompt": {
+            "ar": "كيف تنتهي الصلاة؟",
+            "en": "How does the prayer end?",
+            "tl": "Paano nagtatapos ang salah?"
+          },
+          "explain_card": "u01-l7-c8",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "أسلّم عن يميني ثم عن شمالي",
+                "en": "I give salām to my right, then to my left",
+                "tl": "Babati ako sa kanan, pagkatapos sa kaliwa"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "أقوم من السجود",
+                "en": "I stand up from prostration",
+                "tl": "Tatayo ako mula sa sujud"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "أرفع يديّ وأكبّر",
+                "en": "I raise my hands and say الله أكبر",
+                "tl": "Itataas ko ang kamay at sasabihin ang الله أكبر"
+              }
+            }
+          ],
+          "answer": "a"
+        }
+      ]
+    }
+  ]
+}
