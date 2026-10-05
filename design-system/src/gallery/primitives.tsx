@@ -2,7 +2,6 @@ import * as React from "react"
 import {
   IconArrowLeft,
   IconBookmark,
-  IconInbox,
   IconInfoCircle,
   IconSend2,
   IconTrash,
@@ -91,6 +90,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { SpotIllustration } from "@/components/rafeeq"
 import { Demo, Section } from "./showcase"
 
 function Primitives() {
@@ -342,7 +342,7 @@ toast("حُفظت البطاقة")`}
             description="الحالة الفارغة: ما هذا، ولماذا هو فارغ، وكيف تبدأ."
             code={`<Empty>
   <EmptyHeader>
-    <EmptyMedia variant="icon"><IconInbox /></EmptyMedia>
+    <EmptyMedia><SpotIllustration kind="saved" /></EmptyMedia>
     <EmptyTitle>لا أسئلة محفوظة بعد</EmptyTitle>
     <EmptyDescription>احفظ أي إجابة لتعود إليها هنا.</EmptyDescription>
   </EmptyHeader>
@@ -351,8 +351,8 @@ toast("حُفظت البطاقة")`}
           >
             <Empty className="w-full border">
               <EmptyHeader>
-                <EmptyMedia variant="icon">
-                  <IconInbox />
+                <EmptyMedia>
+                  <SpotIllustration kind="saved" size={96} />
                 </EmptyMedia>
                 <EmptyTitle>لا أسئلة محفوظة بعد</EmptyTitle>
                 <EmptyDescription>احفظ أي إجابة لتعود إليها هنا.</EmptyDescription>

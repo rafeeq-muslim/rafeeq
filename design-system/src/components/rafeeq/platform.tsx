@@ -209,5 +209,5 @@ function PrivacyNote({
   )
 }
 
-export { BottomNav, AppHeader, LanguageSwitcher, QuickExitButton, PrivacyNote, LOCALES }
+export { BottomNav, AppHeader, LanguageSwitcher, QuickExitButton, PrivacyNote, LOCALES, NAV }
 export type { NavKey, LocaleCode }

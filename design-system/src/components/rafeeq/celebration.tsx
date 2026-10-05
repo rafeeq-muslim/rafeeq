@@ -2,21 +2,23 @@ import * as React from "react"
 import { IconArrowLeft, IconShare, type TablerIcon } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Halo } from "./brand"
+import { CoreGlow, PetalConfetti } from "./graphics"
 import { MilestoneBadge } from "./motivation"
 
 /**
- * Milestone celebration (MOT-03), the "peak" of a unit. Always on the ink
- * surface (it forces the `.dark` token set), with the core glow and the
- * amber CTA: the one place amber is a primary action. Celebrates learning
- * only; never shown for worship.
+ * Milestone celebration (MOT-03), the "peak" of a unit and the delight tier
+ * of motion: petal confetti, the core glow, and the badge arriving with a
+ * small overshoot. Always on the ink surface (forces the `.dark` tokens).
+ * The amber CTA is the one place amber is the primary action. Celebrates
+ * learning only; never shown for worship.
  */
 function CelebrationScreen({
   icon,
   badgeLabel,
   title,
+  message,
   stats = [],
   primaryLabel,
   secondaryLabel = "شارك فرحتك",
@@ -29,6 +31,8 @@ function CelebrationScreen({
   badgeLabel: string
   /** e.g. «أتممت مرحلة الوضوء» */
   title: string
+  /** One encouraging sentence about what this unlocks. */
+  message?: string
   /** e.g. ["5 دروس", "120 نقطة تعلّم"] */
   stats?: React.ReactNode[]
   /** e.g. «تابع إلى درس الصلاة» */
@@ -43,39 +47,39 @@ function CelebrationScreen({
       data-slot="celebration-screen"
       aria-labelledby="celebration-title"
       className={cn(
-        "dark relative isolate flex flex-col items-center gap-5 overflow-hidden bg-background px-6 py-10 text-center text-foreground",
+        "dark relative isolate flex flex-col items-center overflow-hidden bg-[radial-gradient(120%_70%_at_50%_20%,var(--rf-deep)_0%,var(--rf-ink)_70%)] px-6 pt-[calc(env(safe-area-inset-top,0px)+3rem)] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] text-center text-foreground",
         className
       )}
     >
-      <div
-        aria-hidden="true"
-        className="absolute top-6 -z-10 size-72 rounded-full bg-grad-glow opacity-25 blur-3xl"
-      />
-      <Halo className="absolute top-0 -z-10 size-80 text-white/10" />
-      <MilestoneBadge
-        icon={icon}
-        earned
-        size={132}
-        className="animate-in duration-500 zoom-in-90 fade-in"
-      />
-      <Badge variant="celebrate" className="h-8 bg-celebrate px-4 text-label text-celebrate-foreground">
+      <Halo className="absolute top-2 -z-10 size-[26rem] text-white/[0.07]" />
+      <PetalConfetti className="-z-10 h-[34%]" />
+
+      <div className="relative grid place-items-center">
+        <CoreGlow className="size-72 opacity-70" />
+        <MilestoneBadge icon={icon} earned size={148} className="badge-pop relative" />
+      </div>
+
+      <p className="mt-4 rounded-full bg-celebrate px-4 py-1.5 text-label font-bold text-celebrate-foreground">
         {badgeLabel}
-      </Badge>
-      <h2 id="celebration-title" className="font-heading text-h1 font-bold text-balance">
+      </p>
+      <h2 id="celebration-title" className="mt-4 font-heading text-h1 font-bold text-balance text-white">
         {title}
       </h2>
+      {message && <p className="mt-2 max-w-xs text-body text-white/75">{message}</p>}
       {stats.length > 0 && (
-        <ul className="flex flex-wrap justify-center gap-2">
+        <ul className="mt-5 flex flex-wrap justify-center gap-2">
           {stats.map((s, i) => (
-            <li key={i}>
-              <Badge variant="outline" className="h-8 px-3 text-label tabular-nums">
-                {s}
-              </Badge>
+            <li
+              key={i}
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-label font-medium text-white tabular-nums"
+            >
+              {s}
             </li>
           ))}
         </ul>
       )}
-      <div className="mt-2 flex w-full max-w-sm flex-col gap-2.5">
+
+      <div className="mt-auto flex w-full max-w-sm flex-col gap-3 pt-8">
         <Button size="lg" variant="celebrate" className="w-full" onClick={onPrimary}>
           {primaryLabel}
           <IconArrowLeft data-icon="inline-end" className="ltr:rotate-180" />

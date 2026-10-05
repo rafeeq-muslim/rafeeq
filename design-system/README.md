@@ -34,4 +34,8 @@ Then: replace any `import { cn } from "cn"` with `@/lib/utils` (the preset injec
 
 ## Fonts
 
-Thmanyah is the brand font. Its licence does not allow hosting the files, so it is listed first in the font stack and used only where installed locally. The gallery ships IBM Plex Sans Arabic and Noto Naskh Arabic (SIL OFL) via `@fontsource`, self-hosted.
+Thmanyah is the brand font. Its licence (font.thmanyah.com/licenses) allows bundling it in our app but forbids redistributing, hosting for download, or modifying the files. Download it from font.thmanyah.com, rename the files as listed in `src/styles/fonts.css`, and put them in `public/fonts/thmanyah/` (git-ignored, never commit). Until then the app falls back to IBM Plex Sans Arabic and Noto Naskh Arabic (SIL OFL, self-hosted via `@fontsource`).
+
+## Visual direction
+
+«زهرة تكتمل»: brand graphics generated from the logo petal (`src/components/rafeeq/graphics.tsx`), a night-sky Home hero, tactile lips on pressable surfaces (`tactile` utility in `src/index.css`), and an adaptive `AppShell` (container queries: bottom nav < 840px, rail + pane ≥ 840px). Motion and mobile rules come from Emil Kowalski's `animate` and `mobile-native` skills (vendored in `../.claude/skills/`).

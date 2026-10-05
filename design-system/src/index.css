@@ -8,6 +8,9 @@
 @import "@fontsource/ibm-plex-sans-arabic/700.css";
 @import "@fontsource-variable/noto-naskh-arabic";
 
+/* Brand typeface (local files, not committed) */
+@import "./styles/fonts.css";
+
 /* Layer 1: brand primitives */
 @import "./styles/tokens.css";
 
@@ -132,6 +135,8 @@
   --shadow-glow: var(--rf-shadow-glow);
 
   --ease-rafeeq: var(--rf-ease);
+  --ease-in-out-rafeeq: var(--rf-ease-in-out);
+  --ease-drawer: var(--rf-ease-drawer);
 }
 
 /* ==========================================================
@@ -181,6 +186,13 @@
   --sidebar-accent-foreground: var(--rf-violet-700);
   --sidebar-border: var(--rf-line);
   --sidebar-ring: var(--rf-violet-400);
+  /* Tactile "lip" under pressable surfaces (darker tone of the fill). */
+  --primary-lip: var(--rf-deep);
+  --celebrate-lip: var(--rf-amber-700);
+  --secondary-lip: var(--rf-violet-200);
+  --outline-lip: var(--rf-line);
+  --success-lip: color-mix(in oklab, var(--rf-success) 70%, black);
+  --danger-lip: color-mix(in oklab, var(--rf-error) 70%, black);
 }
 
 /* Dark: ink surfaces (brand "reverse" world). Values not in the brand
@@ -223,6 +235,12 @@
   --sidebar-accent-foreground: var(--rf-mist);
   --sidebar-border: rgb(255 255 255 / 0.1);
   --sidebar-ring: var(--rf-violet-400);
+  --primary-lip: var(--rf-violet-500);
+  --celebrate-lip: var(--rf-amber-700);
+  --secondary-lip: rgb(0 0 0 / 0.35);
+  --outline-lip: rgb(255 255 255 / 0.12);
+  --success-lip: rgb(0 0 0 / 0.35);
+  --danger-lip: rgb(0 0 0 / 0.35);
 }
 
 /* Brand gradients and graphic utilities */
@@ -245,13 +263,93 @@
   background-image: var(--rf-grad-glow);
 }
 
+/* Tactile press: a 4px lip that collapses on press (mobile-game feel).
+   Set --lip to the darker tone of the surface. */
+@utility tactile {
+  box-shadow: 0 var(--lip-depth, 4px) 0 0 var(--lip, var(--outline-lip));
+  transition:
+    translate var(--rf-duration-press) var(--rf-ease),
+    box-shadow var(--rf-duration-press) var(--rf-ease),
+    background-color 150ms ease;
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    translate: 0 var(--lip-depth, 4px);
+    box-shadow: 0 0 0 0 var(--lip, var(--outline-lip));
+  }
+}
+
+/* Year flower bloom and confetti (one orchestrated moment each). */
+@keyframes petal-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@utility petal-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: petal-draw 700ms var(--rf-ease) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+@keyframes petal-pop {
+  from { opacity: 0; transform: translateY(28px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@utility petal-pop {
+  opacity: 0;
+  animation: petal-pop 700ms var(--rf-ease) forwards;
+  animation-delay: calc(var(--i, 0) * 40ms + 200ms);
+}
+
+/* Bottom sheet entrance (drawer curve, Emil Kowalski / Ionic). */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@utility sheet-up {
+  animation: sheet-up 320ms var(--rf-ease-drawer) both;
+}
+/* Celebration badge: the one place with overshoot (M3 Expressive spatial
+   curve), delight tier only. */
+@keyframes badge-pop {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@utility badge-pop {
+  animation: badge-pop 420ms cubic-bezier(0.42, 1.67, 0.21, 0.9) both;
+  animation-delay: 120ms;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  /* mobile-native baseline (Emil Kowalski): no tap flash, no font
+     inflation, no pull-to-refresh hijack; inner scrollers use
+     overscroll-contain. */
   html {
     @apply font-sans;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  /* iOS zooms into inputs under 16px. */
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+  /* Controls: instant taps, no long-press text selection or callout. */
+  button,
+  a,
+  [role="button"],
+  [role="tab"],
+  label[data-slot="field-label"] {
+    touch-action: manipulation;
+  }
+  button,
+  [role="button"],
+  [role="tab"] {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
   }
   body {
     @apply bg-background text-foreground text-body antialiased;
@@ -274,6 +372,7 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
       transition-duration: 0.01ms !important;
     }
   }

@@ -1,0 +1,47 @@
+/* Thmanyah (brand typeface). Licence: may be bundled in our web/mobile app,
+   must not be redistributed or hosted as downloadable files, and must not be
+   modified (font.thmanyah.com/licenses). The files live in
+   public/fonts/thmanyah/ locally and are git-ignored; rename them to the
+   names below after downloading from font.thmanyah.com. local() picks up an
+   installed copy first. Missing files fall back to IBM Plex Sans Arabic and
+   Noto Naskh Arabic. */
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 400;
+  font-display: swap;
+  src: local("Thmanyah Sans Regular"), local("thmanyahsans-Regular"),
+    url("/fonts/thmanyah/sans-regular.woff2") format("woff2"),
+    url("/fonts/thmanyah/sans-regular.otf") format("opentype");
+}
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 500;
+  font-display: swap;
+  src: local("Thmanyah Sans Medium"), local("thmanyahsans-Medium"),
+    url("/fonts/thmanyah/sans-medium.woff2") format("woff2"),
+    url("/fonts/thmanyah/sans-medium.otf") format("opentype");
+}
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 700;
+  font-display: swap;
+  src: local("Thmanyah Sans Bold"), local("thmanyahsans-Bold"),
+    url("/fonts/thmanyah/sans-bold.woff2") format("woff2"),
+    url("/fonts/thmanyah/sans-bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 700;
+  font-display: swap;
+  src: local("Thmanyah Serif Display Bold"), local("thmanyahserifdisplay-Bold"),
+    url("/fonts/thmanyah/serif-display-bold.woff2") format("woff2"),
+    url("/fonts/thmanyah/serif-display-bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 400;
+  font-display: swap;
+  src: local("Thmanyah Serif Text Regular"), local("thmanyahseriftext-Regular"),
+    url("/fonts/thmanyah/serif-text-regular.woff2") format("woff2"),
+    url("/fonts/thmanyah/serif-text-regular.otf") format("opentype");
+}

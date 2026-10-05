@@ -7,6 +7,14 @@ import {
 
 import { RadioGroup } from "@/components/ui/radio-group"
 import {
+  CoreGlow,
+  JourneySky,
+  LessonMedallion,
+  PetalConfetti,
+  PetalPattern,
+  PetalRow,
+  SpotIllustration,
+  YearFlower,
   AiDisclosure,
   AskComposer,
   AssistantMessage,
@@ -47,6 +55,89 @@ function RafeeqComponents() {
   const [habits, setHabits] = React.useState({ fajr: true, walk: false })
   return (
     <div className="flex flex-col gap-14">
+      <Section
+        id="graphics"
+        title="رسوم الهوية"
+        description="كل الرسوم مولّدة بالكود من بتلة الشعار نفسها، فلا ملفات صور ولا شخصيات ولا وجوه. هذه هي «رسومنا»: ما يميّز رفيق عن أي تطبيق آخر."
+      >
+        <div className="grid items-start gap-5 lg:grid-cols-2">
+          <Demo
+            name="YearFlower"
+            domain="MOT · LRN-02"
+            description="عدّاد السنة الأولى رسمًا رئيسيًا: تتلوّن بتلة مع كل شهر تعلّم، من الأعلى مع عقارب الساعة، وتتفتح البتلات على التوالي عند أول ظهور. تتوهّج النواة حين تكتمل السنة."
+            rules={["يقيس التعلّم فقط، لا العبادات", "الحركة مرة واحدة في الشاشة الرئيسية، وتُلغى مع تقليل الحركة"]}
+            code={`<YearFlower month={2} />
+<YearFlower month={12} />                    // complete: core glows
+<YearFlower month={5} tone="night" />        // on ink/violet surfaces`}
+          >
+            <YearFlower month={1} size={96} />
+            <YearFlower month={3} size={96} />
+            <YearFlower month={6} size={96} />
+            <YearFlower month={9} size={96} />
+            <YearFlower month={12} size={96} />
+          </Demo>
+
+          <Demo
+            name="PetalPattern · CoreGlow · PetalConfetti"
+            domain="PLT-04"
+            description="النقشة قوام على الأسطح الملوّنة وتتجاوز الحواف، والوهج ضوء خلف رقم أو وسام، والقصاصات بتلات للاحتفال وحده."
+            rules={["النقشة بنسبة 4 إلى 10% فقط", "الوهج والقصاصات للاحتفال، لا للزخرفة اليومية"]}
+            code={`<div className="relative isolate overflow-hidden bg-primary">
+  <PetalPattern className="-z-10 text-white/10" />
+</div>
+<CoreGlow className="size-64" />
+<PetalConfetti />`}
+            stack
+          >
+            <div className="grid grid-cols-3 gap-3">
+              <div className="relative isolate h-32 overflow-hidden rounded-card bg-primary">
+                <PetalPattern className="-z-10 text-white/12" />
+              </div>
+              <div className="relative isolate grid h-32 place-items-center overflow-hidden rounded-card bg-ink">
+                <CoreGlow className="size-40" />
+                <span className="relative font-heading text-h1 font-bold text-white tabular-nums">30</span>
+              </div>
+              <div className="relative isolate h-32 overflow-hidden rounded-card bg-ink">
+                <PetalConfetti />
+              </div>
+            </div>
+          </Demo>
+
+          <Demo
+            name="SpotIllustration · PetalRow · LessonMedallion"
+            domain="PLT-04"
+            description="رسوم صغيرة للحالات الفارغة والبداية، مبنية من مفردات الشعار فقط: بتلة ونواة ومستطيل مستدير وظل مسطّح. ملوّنة للإنجاز، وهادئة للفراغ."
+            code={`<SpotIllustration kind="saved" />      // saved | companion | offline | start
+<PetalRow count={12} filled={2} />
+<LessonMedallion icon={IconDroplet} />`}
+          >
+            <SpotIllustration kind="start" size={96} />
+            <SpotIllustration kind="saved" size={96} />
+            <SpotIllustration kind="companion" size={96} />
+            <SpotIllustration kind="offline" size={96} />
+            <div className="flex flex-col items-center gap-3">
+              <LessonMedallion icon={IconDroplet} size={64} />
+              <PetalRow count={12} filled={2} />
+            </div>
+          </Demo>
+
+          <Demo
+            name="JourneySky"
+            domain="LRN-02 · MOT"
+            description="رأس الشاشة الرئيسية: سماء ليلية من الحبري إلى البنفسجي العميق، عليها النقشة والهالة تحيط بزهرة السنة، والتحية وعدد أيام الرحلة. تعلوها ورقة المحتوى (JourneySheet) بزاوية 28."
+            code={`<AppShell active="home">
+  <JourneySky name="يوسف" day={42} month={2} monthLabel="الشهر الثاني" streakDays={7} />
+  <JourneySheet>…</JourneySheet>
+</AppShell>`}
+            previewClassName="block p-0"
+          >
+            <div className="@container/shell overflow-hidden">
+              <JourneySky name="يوسف" day={42} month={2} monthLabel="الشهر الثاني" streakDays={7} className="pt-6 pb-8" />
+            </div>
+          </Demo>
+        </div>
+      </Section>
+
       <Section
         id="learning"
         title="التعلّم · LRN"

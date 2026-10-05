@@ -68,7 +68,7 @@
   /* Fonts — Thmanyah first (only where installed locally; its license
      forbids hosting the files), then self-hosted Google Fonts fallbacks. */
   --rf-font-sans: "thmanyah sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
-  --rf-font-display: "thmanyah serif display", "thmanyah sans", "IBM Plex Sans Arabic", serif;
+  --rf-font-display: "thmanyah serif display", "Noto Naskh Arabic Variable", "Noto Naskh Arabic", serif;
   --rf-font-text: "thmanyah serif text", "Noto Naskh Arabic Variable", "Noto Naskh Arabic", serif;
 
   /* Radii */
@@ -92,7 +92,10 @@
   --rf-shadow-raised: 0 2px 6px rgb(29 22 69 / 0.06), 0 16px 40px rgb(29 22 69 / 0.12);
   --rf-shadow-glow: 0 0 0 6px rgb(245 162 58 / 0.18), 0 8px 28px rgb(245 162 58 / 0.35);
 
-  /* Motion */
-  --rf-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* Motion (Emil Kowalski's animate skill: strong curves, UI under 300ms) */
+  --rf-ease: cubic-bezier(0.23, 1, 0.32, 1); /* ease-out: enter/exit, press */
+  --rf-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* on-screen movement */
+  --rf-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* sheets */
+  --rf-duration-press: 120ms;
   --rf-duration: 200ms;
 }

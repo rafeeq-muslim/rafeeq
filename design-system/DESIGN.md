@@ -177,7 +177,9 @@ Rafeeq (رفيق, "companion") walks with a new Muslim through their first year,
 - Arabic first and right-to-left; every screen also works in English and Tagalog (left-to-right).
 - Mobile first: 375–390px is the design width, 44px is the minimum touch target.
 - Calm surfaces (mist background, white cards) with one strong action colour (violet). Amber is rare, so it means "you did it".
-- The brand mark «زهرة الرفاق» (12 petals, one per month of the first year) is reused as a motif: halo, list bullets, the first-year counter and milestone badges.
+- **Concept: «زهرة تكتمل», the year is a flower that completes petal by petal.** Every graphic is generated in code from the logo petal: the year flower (one petal coloured per month of learning, blooming once on Home), the halo framing it, the tone-on-tone petal pattern, the core glow behind numbers and badges, petal confetti, petal bullets and spot illustrations. No mascots, faces or living beings; no mosque or arch clichés.
+- **Mobile-game tactility:** pressable surfaces (main buttons, the continue tile, answer tiles, path steps) carry a 4px darker "lip" and press down on tap (Duolingo's pattern, in our pill shapes and colours). Informational surfaces stay flat.
+- **Night and day:** Home opens on a night-sky hero (ink to deep violet) with the year flower; content sits on a mist sheet that overlaps it with a 28px radius. Celebrations always happen at night.
 
 ## Colors
 
@@ -192,7 +194,7 @@ Rafeeq (رفيق, "companion") walks with a new Muslim through their first year,
 
 ## Typography
 
-- **Thmanyah** is the brand typeface: Sans for UI and text, Serif Display for headings and the wordmark, Serif Text for long reading. Its licence forbids hosting the font files, so the stack uses Thmanyah when installed locally and falls back to self-hosted **IBM Plex Sans Arabic** (UI) and **Noto Naskh Arabic** (reading). No font CDN at runtime.
+- **Thmanyah** is the brand typeface: Sans for UI and text, Serif Display for headings and the wordmark, Serif Text for long reading. Its licence (font.thmanyah.com/licenses) allows bundling it inside our web and mobile apps, and forbids redistributing, hosting it as downloadable files, or modifying it. The files therefore live in the git-ignored `public/fonts/thmanyah/` (see `src/styles/fonts.css`), never in the public repo. Fallbacks: self-hosted **IBM Plex Sans Arabic** (UI) and **Noto Naskh Arabic** (headings and reading). No font CDN at runtime.
 - Scale: display 56/72, h1 40/52, h2 28/40, h3 22/34, reading 19/34, body 17/30, label 15/20, caption 13/20. Arabic needs the taller line heights; do not tighten them.
 - **No letter-spacing on Arabic** (it breaks cursive joins). No italics in Arabic.
 - **Latin digits everywhere** (1, 2, 3), with `tabular-nums` where numbers line up.
@@ -204,12 +206,16 @@ Rafeeq (رفيق, "companion") walks with a new Muslim through their first year,
 - Logical properties only: `ms/me`, `ps/pe`, `start/end`, `text-start`, `border-s`. Physical `ml/mr/pl/pr/left/right` are banned in components.
 - Directional icons (arrows, send) mirror with `rtl:` / `ltr:` variants; non-directional icons never mirror.
 - Screens: one column, 16px side gutters, bottom navigation with five tabs. The mentor tab is always present.
+- **Adaptive shell (container queries on `AppShell`):** below 840px, bottom navigation and a single column. From 840px, a navigation rail on the leading edge (right in Arabic), a centred column up to 600px and a 320px supporting pane. From 1200px, the rail widens into a labelled drawer. Same features on every size; restructure, don't stretch.
+- **Native feel on phones (Emil Kowalski's mobile-native):** `viewport-fit=cover` with `env(safe-area-inset-*)` on bars and sheets, `100dvh` for the shell, inputs at 16px or more (no iOS zoom), no tap highlight, `overscroll-behavior: none` on the page and `contain` on inner scrollers, `touch-action: manipulation` on controls, one `theme-color` per colour scheme.
 
 ## Elevation & Depth
 
 - `shadow-card`: soft, ink-tinted resting cards.
 - `shadow-raised`: hero cards, sheets and the device frame.
 - `shadow-glow`: amber glow for celebration only.
+- **Lip (`tactile` utility):** `box-shadow: 0 4px 0 var(--lip)`, collapsing to 0 with `translate: 0 4px` on press over 120ms. Lip tokens: `--primary-lip` (#3B2D99), `--celebrate-lip` (#B86E12), `--secondary-lip`, `--outline-lip`, `--success-lip`, `--danger-lip`. Path steps use a 6px lip.
+- **Motion (Emil Kowalski's animate):** `--rf-ease` cubic-bezier(.23,1,.32,1) for enter/exit and press, `--rf-ease-in-out` (.77,0,.175,1) for movement, `--rf-ease-drawer` (.32,.72,0,1) for sheets. Press 120ms, UI under 300ms, sheets 320ms. Never `ease-in`, never from `scale(0)`. Frequent actions get no animation; delight is reserved for the year flower's bloom and celebrations (the badge may overshoot there only). Reduced motion lands on the final state.
 - Dark mode is the ink world: surfaces are violet-ink mixes, borders are white at 10%.
 
 ## Shapes
@@ -228,7 +234,9 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - **Badge:** default, secondary, celebrate, success, warning, info, destructive, outline. Height 28.
 - **Card:** full composition (header, title, description, action, content, footer). The footer has no grey band.
 - **Chat:** shadcn `MessageScroller`, `Message`, `Bubble`, `Marker`. `AssistantMessage` requires at least one source and ends with `SourceStrip`.
-- **Path:** `PathNode` has exactly three states (done, current, locked) and zig-zags with logical offsets.
+- **Path:** units are months (`PathUnitHeader` with the petal pattern). `PathNode` is a pebble with a lip and has exactly three states (done, current, locked); the current one carries the «ابدأ» bubble and the halo. Nodes zig-zag with logical offsets.
+- **Exercise:** `ExerciseOption` is a real radio styled as a tactile tile; `ExerciseFeedback` is a bottom sheet in the result colour with the next action in thumb reach.
+- **Shell and graphics:** `AppShell`, `TopBar`, `JourneySky` + `JourneySheet`, `YearFlower`, `PetalPattern`, `CoreGlow`, `PetalConfetti`, `PetalRow`, `SpotIllustration`, `LessonMedallion`.
 - **Motivation:** points, streaks, badges and leaderboards count learning only. The streak pauses, it never resets. Worship habits are private and never rewarded.
 - **Safety:** `HumanHelpButton` is visible on Ask and lesson screens. `DangerHelpPanel` replaces any AI answer in a danger case and never shows invented helpline numbers.
 
@@ -242,4 +250,6 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - Do use logical properties and test every screen in RTL and LTR; don't use `ml-*`, `pr-*`, `left-*` or `text-left`.
 - Do keep Arabic letter-spacing at 0 and line heights tall; don't apply `tracking-tight` to Arabic headings.
 - Do use the official logo files and the parametric `RafeeqSymbol`; don't stretch, recolour or redraw the mark.
+- Do put the lip only on things that can be pressed; don't add it to informational cards.
+- Do generate graphics from the petal geometry; don't add stock illustrations, mascots, faces or mosque/arch imagery.
 - Don't show images of prophets or companions, and don't put music or sound effects under recitation.

@@ -13,6 +13,16 @@ Rafeeq's UI lives in `design-system/` in the repo. Read these before writing UI:
 
 Run the gallery with `cd design-system && npm install && npm run dev`. It shows every token, primitive, Rafeeq component and composed screen, with code to copy. `?tab=screens&dir=ltr&theme=dark` deep-links a view.
 
+## The visual direction (don't fall back to plain shadcn)
+
+- **Concept «زهرة تكتمل»:** the year is a flower completing petal by petal. Use the brand graphics from `@/components/rafeeq` (`YearFlower`, `Halo`, `PetalPattern`, `CoreGlow`, `PetalConfetti`, `PetalRow`, `SpotIllustration`, `LessonMedallion`). Never add stock illustrations, mascots, faces or mosque/arch imagery.
+- **Night and day:** Home = `JourneySky` (night) + `JourneySheet` (mist sheet, radius 28). Celebrations are always on ink.
+- **Tactile = pressable only:** buttons, the continue tile, answer tiles and path steps use the `tactile` utility with a `--lip` token (`--primary-lip`, `--celebrate-lip`, `--outline-lip`…). Informational blocks are flat: no shadow, no lip.
+- **Fewer boxes:** whitespace and section rhythm instead of stacks of identical cards; one primary action per screen, low in thumb reach.
+- **Shell:** build screens inside `AppShell` (bottom nav < 840px; rail on the leading edge + column ≤ 600px + `aside` pane ≥ 840px; labelled rail ≥ 1200px). It uses container queries (`@min-[52.5rem]/shell:`), so use those, not viewport breakpoints, inside it.
+- **Native feel (`.claude/skills/mobile-native`):** safe-area padding on bars and sheets, `dvh` for full-height, inputs ≥ 16px, `overscroll-contain` on inner scrollers, hover only via Tailwind `hover:` (already gated).
+- **Motion (`.claude/skills/animate`):** `ease-rafeeq` (ease-out) for press/enter, `ease-drawer` for sheets; press 120ms, UI < 300ms; never `ease-in` or `scale(0)`; frequent actions don't animate; delight only for the year-flower bloom and celebrations (`badge-pop`, `petal-pop`). Reduced motion shows the final state.
+
 ## How to build a screen
 
 1. **Use what exists, in this order:** a Rafeeq component (`@/components/rafeeq`), then a shadcn primitive (`@/components/ui`), then a new component. Check `docs/design-system.md` → «أيّ مكوّن أستعمل؟».
@@ -32,6 +42,7 @@ Run the gallery with `cd design-system && npm install && npm run dev`. It shows 
 - No `tracking-*` on Arabic. No italics. Keep the scale's tall line heights (`text-body` = 17/30).
 - Latin digits always; add `tabular-nums` where numbers align.
 - Headings use `font-heading` (Thmanyah Serif Display); long reading uses `font-reading`.
+- Thmanyah files are bundled from the git-ignored `design-system/public/fonts/thmanyah/`; never commit them (licence forbids redistribution).
 
 **Brand**
 - Violet = action. Amber (`celebrate`) = celebration and the source strip only, never hover or decoration.
@@ -61,4 +72,4 @@ Write its spec first in `docs/design-system.md` using the «مكوّن جديد�
 
 ## Reviews
 
-For a design review, critique or handoff, use the design skills in `.claude/skills/` (`design-critique`, `design-handoff`, `ux-copy`, `accessibility-review`, `design-system`, `interaction-design`, `ux-writing`), but apply Rafeeq's overrides above: they win over generic advice (for example "tracking-tight on headings" does not apply to Arabic). Before a demo, run `token-compliance` and `accessibility-per-component` on the five most-used components.
+For visual direction use the official `frontend-design` plugin (install from the Claude Code plugin directory). For a design review, critique or handoff, use the design skills in `.claude/skills/` (`design-critique`, `design-handoff`, `ux-copy`, `accessibility-review`, `design-system`, `interaction-design`, `ux-writing`), but apply Rafeeq's overrides above: they win over generic advice (for example "tracking-tight on headings" does not apply to Arabic). Before a demo, run `token-compliance` and `accessibility-per-component` on the five most-used components.
