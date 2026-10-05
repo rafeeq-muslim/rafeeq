@@ -1,0 +1,13 @@
+﻿{
+	"Invocation to be recited on the Day of Arafat": 
+	[
+		{
+			"ID": 237,
+			"ARABIC_TEXT": "قَالَ النَّبِيُّ صلى الله عليه وسلم: ((خَيْرُ الدُّعَاءِ دُعَاءُ يَوْمِ عَرَفَةَ، وَخَيْرُ مَا قُلْتُ أَنَا وَالنَّبيُّونَ مِنْ قَبْلِي: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(The best of supplications is the supplication on the day of AAarafah and the best which I and the Prophets before me have said (is): (La ilaha illal-lahu wahdahu la shareeka lah, lahul-mulku walahul-hamd, wahuwa AAala kulli shayin qadeer.))", 
+ 		    "TRANSLATED_TEXT":"(The best of supplications is the supplication on the day of AAarafah and the best which I and the Prophets before me have said (is): (None has the right to be worshipped except Allah, alone, without partner. To Him belongs all praise and sovereignty and He is over all things omnipotent.))", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/237.mp3" 
+ 		}
+	]
+}

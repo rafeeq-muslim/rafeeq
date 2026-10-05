@@ -1,0 +1,13 @@
+﻿{
+	"The pilgrim's announcement of his arrival for Hajj or Umrah":
+	[
+		{
+			"ID": 233,
+			"ARABIC_TEXT": "((لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ، وَالنِّعْمَةَ، لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Labbaykal-lahumma labbayk, labbayka la shareeka laka labbayk, innal-hamda wanniAAmata laka walmulk, la shareeka lak.)", 
+ 		    "TRANSLATED_TEXT":"(Here I am O Allah, (in response to Your call), here I am. Here I am, You have no partner, here I am.  Verily all praise, grace and sovereignty belong to You. You have no partner.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/233.mp3" 
+ 		}
+	]
+}

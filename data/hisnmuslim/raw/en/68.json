@@ -1,0 +1,21 @@
+﻿{
+	"Invocations for breaking the fast": 
+	[
+		{
+			"ID": 176,
+			"ARABIC_TEXT": "((ذَهَبَ الظَّمَأُ وَابْتَلَّتِ العُرُوقُ، وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Thahabath-thama-o wabtallatil-AAurooq, wathabatal-ajru in shaal-lah.)", 
+ 		    "TRANSLATED_TEXT":"(The thirst has gone and the veins are quenched, and reward is confirmed, if Allah wills.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/176.mp3" 
+ 		},
+		{
+			"ID": 177,
+			"ARABIC_TEXT": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ بِرَحْمَتِكَ الَّتِي وَسِعَتْ كُلَّ شَيْءٍ أَنْ تَغْفِرَ لِي)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma inne as-aluka birahmatikal-latee wasiAAat kulla shay, an taghfira lee.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, I ask You by Your mercy which envelopes all things, that You forgive me.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/177.mp3" 
+ 		}
+	]
+}

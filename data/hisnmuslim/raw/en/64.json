@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for when it rains": 
+	[
+		{
+			"ID": 172,
+			"ARABIC_TEXT": "((اللَّهُمَّ صَيِّباً نَافِعاً)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma sayyiban nafiAAa.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, may it be a beneficial rain cloud.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/172.mp3" 
+ 		}
+	]
+}

@@ -1,0 +1,29 @@
+﻿{
+	"Invocations for when you meet an adversary or a powerful ruler": 
+	[
+		{
+			"ID": 126,
+			"ARABIC_TEXT": "((اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِم، وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma inna najAAaluka fee nuhoorihim wanaAAoothu bika min shuroorihim.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, we place You before them and we take refuge in You from their evil.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/126.mp3" 
+ 		},
+		{ 
+			"ID": 127,
+			"ARABIC_TEXT": "((اللَّهُمَّ أَنْتَ عَضُدِي، وَأَنْتَ نَصِيرِي، بِكَ أَحُولُ وَبِكَ أَصُولُ، وَبِكَ أُقاتِلُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma anta AAadudee, wa-anta naseeree, bika ajoolu wabika asoolu wabika oqatil)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, You are my supporter and You are my helper, by You I move and by You I attack and by You I battle.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/127.mp3" 
+ 		},
+		{
+			"ID": 128,
+			"ARABIC_TEXT": "((حَسْبُنا اللَّهُ وَنِعْمَ الْوَكِيلُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Hasbunal-lahu waniAAmal-wakeel.)", 
+ 		    "TRANSLATED_TEXT":"(Allah is sufficient for us, and how fine a trustee (He is).)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/128.mp3" 
+ 		}
+	]
+}

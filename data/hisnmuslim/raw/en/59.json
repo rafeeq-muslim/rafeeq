@@ -1,0 +1,13 @@
+﻿{
+	"Invocation to be recited after burying the dead": 
+	[
+		{
+			"ID": 164,
+			"ARABIC_TEXT": "((اللَّهُمَّ اغْفِرْ لَهُ، اللَّهُمَّ ثَبِّتْهُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"Allaahum-maghfir lahu Allaahumma thabbithu", 
+ 		    "TRANSLATED_TEXT":"O Allah, forgive him. O Allah, strengthen him", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/164.mp3" 
+ 		}
+	]
+}

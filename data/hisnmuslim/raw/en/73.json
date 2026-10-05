@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for a family who invites you to break your fast with them": 
+	[
+		{
+			"ID": 184,
+			"ARABIC_TEXT": " ((أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلاَئِكَةُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Aftara AAindakumus-sa-imoon, wa-akala taAAamakumul-abrar, wasallat AAalaykumul-mala-ikah.)", 
+ 		    "TRANSLATED_TEXT":"(May the fasting break their fast in your home, and may the dutiful and pious eat your food, and may the angles send prayers upon you.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/184.mp3" 
+ 		}
+	]
+}

@@ -26,7 +26,9 @@
 | Tool | Use | License |
 | --- | --- | --- |
 | `adhan` (batoulapps) | Prayer times and qibla, on-device | MIT |
-| Umm al-Qura official calendar (ummulqura.org.sa, KACST) | Reference prayer times that PRC-01 tests compare against (`research/05`) | Terms not found ⚠️. Keep only the few published times the tests need, cited; never republish the calendar |
+| **Hisn al-Muslim** (al-Qahtani), hisnmuslim.com API | Adhkar text in Arabic and English, repeat counts, Arabic audio (PRC-07); pulled into `data/hisnmuslim/` | Permission obtained by ناصر بن خالد العويمر on 2026-10-05: use approved and data open to the public ⚠️ written confirmation to be filed. Text kept unchanged; Sharia review before display; audio not committed |
+| Haramain adhan recordings | Short adhan clip for PRC-05 | No licensed official download found ⚠️. Owner: General Authority for the Affairs of the Two Holy Mosques (gph.gov.sa). Do not use any recording until it grants permission |
+| Umm al-Qura official calendar (ummulqura.org.sa, KACST) and its API (`umqserv.kacst.gov.sa/api/v1/Prayer/GetPrayers`) | Reference prayer times and Hijri dates that PRC-01 and PRC-04 tests compare against (`research/05`, `research/06`) | Terms not found ⚠️. Team-side only: the app never calls the API (it would send coordinates). Keep only the times the tests need, cited; never republish the calendar |
 | `Intl` `islamic-umalqura` calendar | Hijri dates, built into browsers | Built in |
 | Amiri Quran, Scheherazade New | Arabic and Quran fonts | SIL OFL 1.1 |
 | GeoNames extract | Offline city picker | CC BY (credit link) |

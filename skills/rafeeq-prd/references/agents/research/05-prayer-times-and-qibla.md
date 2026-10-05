@@ -35,9 +35,28 @@ Official times for 2026-10-05 from the Umm al-Qura home page [U1], compared with
 
 - The default can show a prayer **one minute before** the official time. The second setting never does, and never shows sunrise later than the official time. PRC-01 rule 3 requires this.
 - Riyadh, official: Fajr 04:30, Sunrise 05:46, Dhuhr 11:42, Asr 15:05, Maghrib 17:37, Isha 19:07.
-- One day only. The test suite should compare a full year of official times for the 13 cities. Part of the remaining gap is the city point: Riyadh spans about 0.6° of longitude, roughly 2–3 minutes.
+- One day only. The test suite should compare a full year of official times for the 13 cities. The site's own API (`umqserv.kacst.gov.sa/api/v1/Prayer/GetPrayers?...&lat=&lon=&zone=3`, used by ummulqura.org.sa) returns exactly the published Riyadh times for GeoNames' Riyadh point (24.68773, 46.72185), so the gap comes from rounding, not the city point. Use the API to build test fixtures; never call it from the app.
 
 **Qibla:** `adhan`'s `Qibla()` uses the great-circle bearing formula from *Spherical Trigonometry* (p. 50) with Makkah at 21.4225241, 39.8261818 [A2]. Riyadh (24.68773, 46.72185) gives 244.15°, and an independent implementation of the same formula agrees. Great circle is the method used by most bodies; a minority in North America uses the rhumb line [W1]. The two agree closely for the Gulf and the Philippines.
+
+### 3.1 World coverage
+
+`adhan` computes any coordinates on Earth. MWL method, local time, 2026-10-05 and 2027-06-21:
+
+| City | Lat | 2026-10-05 Fajr / Isha | 2027-06-21 Fajr / Isha | Qibla |
+| --- | --- | --- | --- | --- |
+| Manila | 14.6 | 04:35 / 18:50 | 04:08 / 19:43 | 289° |
+| Addis Ababa | 9.0 | 05:03 / 19:19 | 04:50 / 19:59 | 5° |
+| Colombo | 6.9 | 04:49 / 19:05 | 04:40 / 19:40 | 295° |
+| Kathmandu | 27.7 | 04:41 / 18:59 | 03:36 / 20:29 | 272° |
+| Toronto | 43.7 | 05:45 / 20:21 | 03:13 / 23:15 | 55° |
+| London | 51.5 | 05:16 / 20:14 | **01:02 / 01:02** | 119° |
+| Oslo | 59.9 | 05:12 / 20:49 | **01:19 / 01:19** | 139° |
+| Tromsø | 69.6 | 03:44 / 21:03 | **no times (midnight sun)** | 154° |
+| Sydney | −33.9 | 05:03 / 20:20 | 05:30 / 18:18 | 278° |
+
+- Below about 48° the times are normal all year.
+- Above it, in summer, `adhan`'s default `MiddleOfTheNight` rule puts Fajr and Isha at the same minute, and above the Arctic circle it returns nothing. Neither follows the MWL Fiqh Academy decision [M1]. PRC-01 keeps these cities out until the decision is implemented.
 
 ## 4. Countries outside Saudi Arabia
 

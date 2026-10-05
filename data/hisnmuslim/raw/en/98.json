@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for entering a market": 
+	[
+		{
+			"ID": 209,
+			"ARABIC_TEXT": "((لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لاِ يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(La ilaha illal-lah,  wahdahu la shareeka lah, lahul-mulku walahul-hamd, yuhyee wayumeetu wahuwa hayyun la yamoot, biyadihil-khayru wahuwa  AAala kulli shayin qadeer.)", 
+ 		    "TRANSLATED_TEXT":"(None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise.  He gives life and causes death, and He is living and does not die.  In His hand is all good and He is over all things, omnipotent.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/209.mp3" 
+ 		}
+	]
+}

@@ -1,0 +1,13 @@
+﻿{
+	"What to say when you feel frightened: 
+	[
+		{
+			"ID": 245,
+			"ARABIC_TEXT": "((لاَ إِلَهَ إِلاَّ اللَّهُ!)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(La ilaha illal-lah.)", 
+ 		    "TRANSLATED_TEXT":"(None has the right to be worshipped except Allah.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/245.mp3" 
+ 		}
+	]
+}

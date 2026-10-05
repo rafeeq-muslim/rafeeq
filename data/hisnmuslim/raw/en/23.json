@@ -1,0 +1,21 @@
+﻿{
+	"How to recite blessings on the Prophet after the Tashahhud": 
+	[
+		{
+			"ID": 53,
+			"ARABIC_TEXT": "((اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ، وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيتَ عَلَى إِبْرَاهِيمَ، وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma salli AAala Muhammad, wa-AAala ali Muhammad, kama sallayta AAala Ibraheema wa-AAala ali Ibraheem, innaka Hameedun Majeed, allahumma barik AAala  Muhammad, wa-AAala ali Muhammad, kama barakta AAala Ibraheema wa-AAala ali Ibraheem, innaka Hameedun Majeed.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, send prayers upon Muhammad and the followers of Muhammad, just as You sent prayers upon Ibraheem and upon the followers of Ibraheem.  Verily, You are full of praise and majesty. O Allah, send blessings upon Mohammad and upon the family of Muhammad, just as You sent blessings upon Ibraheem and upon the family of Ibraheem.  Verily, You are full of praise and majesty.)(send prayers: praise and exalt him in the highest and superior of gatherings: that of the closest angels to Allah)((al) has been translated in it’s broadest sense: some scholars are of the view that the meaning here is more specific and that it means: his  followers from among his family.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/53.mp3" 
+ 		},
+		{
+			"ID": 54,
+			"ARABIC_TEXT": "((اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى أَزْوَاجِهِ وَذُرِّيَّتِهِ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ. وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى أَزْواجِهِ وَذُرِّيَّتِهِ، كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ. إِنَّكَ حَمِيدٌ مَجِيدٌ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma salli AAala Muhammad wa-AAala azwajihi wathurriyyatihi kama sallayta AAala ali Ibraheem, wabarik AAala Muhammad, wa-AAala azwajihi wathurriyyatih, kama barakta AAala ali Ibraheem. innaka Hameedun Majeed.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, send prayers upon Muhammad and upon the wives and descendants of Muhammad, just as You sent prayers upon the family of Ibraheem, and send blessings upon Muhammad and upon the wives and descendants of Muhammad, just as You sent blessings upon the family of Ibraheem. Verily, You are full of praise and majesty.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/54.mp3" 
+ 		}
+	]
+}

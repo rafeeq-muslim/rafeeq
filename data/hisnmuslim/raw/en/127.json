@@ -1,0 +1,13 @@
+﻿{
+	"What to say when slaughtering or sacrificing an animal": 
+	[
+		{
+			"ID": 246,
+			"ARABIC_TEXT": "((بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ [اللَّهُمَّ مِنْكَ وَلَكَ] اللَّهُمَّ تَقَبَّلْ مِنِّي)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Bismil-lah wallahu akbar, allahumma minka walak, allahumma taqabbal  minnee.)", 
+ 		    "TRANSLATED_TEXT":"(In the name of Allah, and Allah is the greatest.  O Allah, (it is) from You and belongs to You, O Allah, accept this from me.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/246.mp3" 
+ 		}
+	]
+}

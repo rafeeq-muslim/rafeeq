@@ -1,0 +1,13 @@
+﻿{
+	"What to say if you are afraid to go to sleep or feel lonely and depressed": 
+	[
+		{
+			"ID": 113,
+			"ARABIC_TEXT": "((أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ غَضَبِهِ وَعِقَابِهِ، وَشَرِّ عِبَادِهِ، وَمِنْ هَمَزَاتِ الشَّياطِينِ وَأَنْ يَحْضُرُونِ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(aAAoothu bikalimatil-lahit-tammat min ghadabih,waAAiqabih, washarri AAibadih, wamin hamazatish-shayateen, wa-an yahduroon.)", 
+ 		    "TRANSLATED_TEXT":"(I take refuge in the perfect words of Allah from His anger and punishment, and from the evil of His servants, and from the madness and appearance of devils.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/113.mp3" 
+ 		}
+	]
+}

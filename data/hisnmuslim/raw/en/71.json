@@ -1,0 +1,13 @@
+﻿{
+	"A dinner guest's invocation for his host": 
+	[
+		{
+			"ID": 182,
+			"ARABIC_TEXT": " ((اللَّهُمَّ بَارِكْ لَهُمْ فِيمَا رَزَقْتَهُم، وَاغْفِرْ لَهُمْ وَارْحَمْهُمْ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma barik lahum feema razaqtahum, waghfir lahum warhamhum.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, bless for them, that which You have provided them, forgive them and have mercy upon them.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/182.mp3" 
+ 		}
+	]
+}

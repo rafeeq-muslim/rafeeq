@@ -1,0 +1,13 @@
+﻿{
+	"What to say when undressing": 
+	[
+		{
+			"ID": 9,
+			"ARABIC_TEXT": "(بِسْمِ اللَّهِ).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Bismil-lah.)",
+			"TRANSLATED_TEXT":"(In the name of Allah.)",
+			"REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/9.mp3" 
+ 		}
+	]
+}

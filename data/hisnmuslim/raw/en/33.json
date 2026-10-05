@@ -1,0 +1,13 @@
+﻿{
+	"What to say immediately following the Witr prayer": 
+	[
+		{
+			"ID": 119,
+			"ARABIC_TEXT": "((سُبْحَانَ المَلِكِ القُدُّوسِ)) ثلاثَ مرَّاتٍ والثَّالِثَةُ يَجْهَرُ بها ويَمُدُّ بها صَوتَهُ يقولُ: [رَبِّ الْمَلاَئِكَةِ وَالرُّوحِ])).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Subhanal-malikil-quddoos.(three times).on the third time he would raise his voice, elongate it and add: (Rabbil-mala-ikati warrooh.))", 
+ 		    "TRANSLATED_TEXT":"(How perfect The King, The Holy One is.(three times) on the third time he would raise his voice, elongate it and add: (Lord of the angles and the Rooh (i.e. Jibra-eel).))", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/119.mp3" 
+ 		}
+	]
+}

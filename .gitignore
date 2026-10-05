@@ -28,3 +28,6 @@ build/
 # redistributing or hosting the files. Download from font.thmanyah.com
 # into design-system/public/fonts/thmanyah/ locally; never commit them.
 design-system/public/fonts/thmanyah/
+
+# Hisn al-Muslim audio: downloaded locally by data/hisnmuslim/fetch.py --audio, never committed
+data/hisnmuslim/audio/

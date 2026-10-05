@@ -1,0 +1,21 @@
+﻿{
+	"Supplications for prostrating due to recitation of the Qur'an": 
+	[
+		{
+			"ID": 50,
+			"ARABIC_TEXT": "((سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ، وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ، ﴿فَتَبارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Sajada wajhee lillathee khalaqahu washaqqa samAAahu wabasarahu bihawlihi waquwwatih  { tabaraka Allahu ahsanu alkhaliqeen}.)", 
+ 		    "TRANSLATED_TEXT":"(My face fell prostrate before He who created it and brought forth its faculties of hearing and seeing by His might and power.<< So Blessed is Allah, the best of creators.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/50.mp3" 
+ 		},
+		{
+			"ID": 51,
+			"ARABIC_TEXT": "((اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْراً، وَضَعْ عَنِّي بِهَا وِزْراً، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْراً، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahummak-tub lee biha  AAindaka ajra, wadaAA  AAannee biha wizra, wajAAalha lee AAindaka thukhra, wataqabbalha minnee kama taqabbaltaha min AAabdika Dawood.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, record for me a reward for this (prostration), and remove from me a sin.  Save it for me and accept it from me just as You had accepted it from Your servant Dawood.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/51.mp3" 
+ 		}
+	]
+}

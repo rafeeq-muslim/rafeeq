@@ -1,0 +1,13 @@
+﻿{
+	"What to say when you are fasting and someone is rude to you": 
+	[
+		{
+			"ID": 186,
+			"ARABIC_TEXT": "((إِنِّي صَائِمٌ، إِنِّي صَائِمٌ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Innee sa-im, innee sa-im.)", 
+ 		    "TRANSLATED_TEXT":"(I am fasting, I am fasting.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/186.mp3" 
+ 		}
+	]
+}

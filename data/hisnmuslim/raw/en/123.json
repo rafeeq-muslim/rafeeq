@@ -1,0 +1,13 @@
+﻿{
+	"What to say when something that pleases you happens": 
+	[
+		{
+			"ID": 242,
+			"ARABIC_TEXT": "((كَانَ النَّبيُّ صلى الله عليه وسلم إِذَا أَتَاهُ أَمْرٌ يَسُرُّهُ أَوْ يُسَرُّ بِهِ خَرَّ سَاجِداً شُكْراً لِلَّهِ تَبَارَكَ وَتَعَالَى)).", 
+			"LANGUAGE_ARABIC_TRANSLATED_TEXT":"",
+  		    "TRANSLATED_TEXT":"(The Prophet PBUH would prostrate in gratitude to Allah upon receiving news which pleased him or which caused pleasure. )", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/242.mp3" 
+ 		}
+	]
+}

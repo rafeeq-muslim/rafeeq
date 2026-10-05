@@ -1,0 +1,13 @@
+﻿{
+	"The groom’s supplication on the wedding night or when buying an animal": 
+	[
+		{
+			"ID": 191,
+			"ARABIC_TEXT": "إِذَا تَزَوَّجَ أَحَدُكُمُ امْرَأَةً، أَوْ إِذَا اشْتَرَى خَادِماً فَلْيَقُلْ: ((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا جَبَلْتَهَا عَلَيْهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا جَبَلْتَهَا عَلَيْهِ، وَإِذَا اشْتَرَى بَعِيراً فَلْيَأْخُذْ بِذِرْوَةِ سَنَامِهِ وَلْيَقُلْ مِثْلَ ذَلِكَ)).",
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(when you marry a woman or buy a maidservant, you should say: (Allahumma innee as-aluka khayraha wakhayra ma jabaltaha AAalayh, wa-aAAoothu bika min sharriha washarri ma jabaltaha AAalayh.))(and if you buy a camel, then you should take hold of it’s hump and say likewise.)", 
+ 		    "TRANSLATED_TEXT":"(when you marry a woman or buy a maidservant, you should say:(O Allah, I ask You for the goodness within her and the goodness that you have made her inclined towards, and I take refuge with You from the evil within her and the evil that you have made her inclined towards.))(and if you buy a camel, then you should take hold of it’s hump and say likewise.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/191.mp3" 
+ 		}
+	]
+}

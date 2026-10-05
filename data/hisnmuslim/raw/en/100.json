@@ -1,0 +1,13 @@
+﻿{
+	" The traveler's invocation for the one he leaves behind": 
+	[
+		{
+			"ID": 211,
+			"ARABIC_TEXT": "((أَسْتَوْدِعُكُمُ اللَّهَ الَّذِي لاَ تَضِيعُ وَدَائِعُهُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(AstawdiAAukumul-lah, allathee la tadeeAAu wada-iAAuh.)", 
+ 		    "TRANSLATED_TEXT":"(I place you in the trust of Allah, whose trust is never misplaced.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/211.mp3" 
+ 		}
+	]
+}

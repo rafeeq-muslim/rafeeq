@@ -1,0 +1,37 @@
+﻿{
+	"Invocations for anguish": 
+	[
+		{
+			"ID": 122,
+			"ARABIC_TEXT": "((لاَ إِلَهَ إِلاَّ اللَّهُ الْعَظِيمُ الْحَلِيمُ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ، لاَ إِلَهَ إِلاَّ اللَّهُ رَبُّ السَّمَوَاتِ وَرَبُّ الْأَرْضِ وَرَبُّ الْعَرْشِ الْكَرِيمِ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(La ilaha illal-lahul-AAatheemul-haleem, la ilaha illal-lahu rabbul-AAarshil-AAatheem, la ilaha illal-lahu  rabbus-samawati warabbul-ardi warabbul-AAarshil-kareem.)", 
+ 		    "TRANSLATED_TEXT":"(None has the right to be worshipped except Allah Forbearing.  None has the right to be worshipped except Allah, Lord of the magnificent throne.  None has the right to be worshipped except Allah, Lord of the heavens, Lord of the Earth and Lord of the noble throne.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/122.mp3" 
+ 		},
+		{
+			"ID": 123,
+			"ARABIC_TEXT": "((اللَّهُمَّ رَحْمَتَكَ أَرْجُو، فَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ، وَأَصْلِحْ لِي شَأْنِي كُلَّهُ، لاَ إِلَهَ إِلاَّ أَنْتَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma rahmataka arjoo fala takilnee ila nafsee tarfata AAayn, wa-aslih lee sha/nee kullah, la ilaha illa ant.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, it is Your mercy that I hope for, so do not leave me in charge of my affairs even for a blink of an eye and rectify for me all of my affairs.None has the right to be worshipped except You.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/123.mp3" 
+ 		},
+		{
+			"ID": 124,
+			"ARABIC_TEXT": "((لاَ إِلَهَ إِلاَّ أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظّالِمِينَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(La ilaha illa anta subhanaka innee kuntu minath-thalimeen.)", 
+ 		    "TRANSLATED_TEXT":"(None has the right to be worshipped except You.  How perfect You are, verily I was among the wrong-doers.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/124.mp3" 
+ 		},
+		{
+			"ID": 125,
+			"ARABIC_TEXT": "((اللَّهُ اللَّهُ رَبِّي لاَ أُشْرِكُ بِهِ شَيْئاً)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(None has the right to be worshipped except You.  How perfect You are, verily I was among the wrong-doers.)", 
+ 		    "TRANSLATED_TEXT":"(Allah, Allah is my Lord, I do not associate anything with Him.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/125.mp3" 
+ 		}
+	]
+}

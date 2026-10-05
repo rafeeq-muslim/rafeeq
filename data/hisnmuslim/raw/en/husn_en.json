@@ -1,0 +1,797 @@
+﻿{
+	"English": 
+	[
+		{
+			"ID": 27,
+			"TITLE": "Words of remembrance for morning and evening",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_028.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/27.json"
+		},
+		{
+			"ID": 28,
+			"TITLE": "What to say before sleeping",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_029.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/28.json"
+		},
+		{
+			"ID": 1,
+			"TITLE": "supplications for when you wake up",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_002.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/1.json"
+		},
+		{
+			"ID": 6,
+			"TITLE": "Invocation for entering the restroom",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_007.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/6.json"
+		},
+		{
+			"ID": 7,
+			"TITLE": "Invocation for leaving the restroom",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_008.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/7.json"
+		},
+		{
+			"ID": 8,
+			"TITLE": "What to say before performing ablution",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_009.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/8.json"
+		},
+		{
+			"ID": 9,
+			"TITLE": "What to say upon completing ablution",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_010.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/9.json"
+		},
+		{
+			"ID": 10,
+			"TITLE": "What to say when leaving the home",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_011.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/10.json"
+		},
+		{
+			"ID": 11,
+			"TITLE": "What to say when entering the home",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_012.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/11.json"
+		},
+		{
+			"ID": 12,
+			"TITLE": "Invocation for going to the mosque",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_013.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/12.json"
+		},
+		{
+			"ID": 13,
+			"TITLE": "Invocation for entering the mosque",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_014.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/13.json"
+		},
+		{
+			"ID": 14,
+			"TITLE": "Invocation for leaving the mosque",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_015.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/14.json"
+		},
+		{
+			"ID": 15,
+			"TITLE": "What to say upon hearing the Athan (call to prayer)",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_016.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/15.json"
+		},
+		{
+			"ID": 2,
+			"TITLE": "Invocation when getting dressed",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_003.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/2.json"
+		},
+		{
+			"ID": 3,
+			"TITLE": "Invocation when putting on new clothes",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_004.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/3.json"
+		},
+		{
+			"ID": 4,
+			"TITLE": "Invocations for someone who has put on new clothes",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_005.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/4.json"
+		},
+		{
+			"ID": 5,
+			"TITLE": "What to say when undressing",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_006.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/5.json"
+		},
+		{
+			"ID": 16,
+			"TITLE": "Invocations for the beginning of the prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_017.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/16.json"
+		},
+		{
+			"ID": 17,
+			"TITLE": "Invocations during Ruki' (bowing in prayer)",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_018.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/17.json"
+		},
+		{
+			"ID": 18,
+			"TITLE": "Invocations for rising from the Ruki'",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_019.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/18.json"
+		},
+		{
+			"ID": 19,
+			"TITLE": "Invocations during Sujood",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_020.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/19.json"
+		},
+		{
+			"ID": 20,
+			"TITLE": "Invocations for sitting between two prostrations",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_021.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/20.json"
+		},
+		{
+			"ID": 21,
+			"TITLE": "Supplications for prostrating due to recitation of the Qur'an",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_022.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/21.json"
+		},
+		{
+			"ID": 22,
+			"TITLE": "Invocation for At-Tashahhud (sitting in prayer)",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_023.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/22.json"
+		},
+		{
+			"ID": 23,
+			"TITLE": "How to recite blessings on the Prophet after the Tashahhud",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_024.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/23.json"
+		},
+		{
+			"ID": 24,
+			"TITLE": "Invocations after the final Tash-ahhud and before ending the prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_025.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/24.json"
+		},
+		{
+			"ID": 25,
+			"TITLE": "What to say after completing the prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_026.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/25.json"
+		},
+		{
+			"ID": 26,
+			"TITLE": "Istikharah (seeking Allah's Counsel)",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_027.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/26.json"
+		},
+		{
+			"ID": 29,
+			"TITLE": "Invocation to say if you stir in the night",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_030.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/29.json"
+		},
+		{
+			"ID": 30,
+			"TITLE": "What to say if you are afraid to go to sleep or feel lonely and depressed",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_031.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/30.json"
+		},
+		{
+			"ID": 31,
+			"TITLE": "What to do if you have a bad dream or nightmare",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_032.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/31.json"
+		},
+		{
+			"ID": 32,
+			"TITLE": "Invocations for Qunut in the Witr prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_033.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/32.json"
+		},
+		{
+			"ID": 33,
+			"TITLE": "What to say immediately following the Witr prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_034.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/33.json"
+		},
+		{
+			"ID": 34,
+			"TITLE": "Invocations in times of worry and grief",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_035.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/34.json"
+		},
+		{
+			"ID": 35,
+			"TITLE": "Invocations for anguish",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_036.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/35.json"
+		},
+		{
+			"ID": 36,
+			"TITLE": "Invocations for when you meet an adversary or a powerful ruler.",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_037.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/36.json"
+		},
+		{
+			"ID": 37,
+			"TITLE": "Invocations against the oppression of rulers",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_038.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/37.json"
+		},
+		{
+			"ID": 38,
+			"TITLE": "Invocation against an enemy",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_039.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/38.json"
+		},
+		{
+			"ID": 39,
+			"TITLE": "What to say if you fear people may harm you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_040.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/39.json"
+		},
+		{
+			"ID": 40,
+			"TITLE": "Invocations for if you are stricken by in your faith",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_041.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/40.json"
+		},
+		{
+			"ID": 41,
+			"TITLE": "Invocations for the setting of a debt",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_042.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/41.json"
+		},
+		{
+			"ID": 42,
+			"TITLE": "Invocation against the distractions of Satan during the prayer and recitation of the Quran",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_043.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/42.json"
+		},
+		{
+			"ID": 43,
+			"TITLE": "Invocation for when you find something becoming difficult for you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_044.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/43.json"
+		},
+		{
+			"ID": 44,
+			"TITLE": "What to say and do if you commit a sin",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_045.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/44.json"
+		},
+		{
+			"ID": 45,
+			"TITLE": "Invocations against the Devil and his promptings",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_046.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/45.json"
+		},
+		{
+			"ID": 46,
+			"TITLE": "Invocation for when something you dislike happens, or for when you fail to achieve what you attempt to do",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_047.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/46.json"
+		},
+		{
+			"ID": 47,
+			"TITLE": "Congratulations for new parents and how they should respond",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_048.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/47.json"
+		},
+		{
+			"ID": 48,
+			"TITLE": "How to seek Allah's protection for children",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_049.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/48.json"
+		},
+		{
+			"ID": 49,
+			"TITLE": "Invocations for visiting the sick",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_050.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/49.json"
+		},
+		{
+			"ID": 50,
+			"TITLE": "The reward for visiting the sick",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_051.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/50.json"
+		},
+		{
+			"ID": 51,
+			"TITLE": "Invocations of the terminal ill",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_052.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/51.json"
+		},
+		{
+			"ID": 52,
+			"TITLE": "What to encourage the dying person to say",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_053.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/52.json"
+		},
+		{
+			"ID": 53,
+			"TITLE": "Invocation for when tragedy strikes",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_054.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/53.json"
+		},
+		{
+			"ID": 54,
+			"TITLE": "Invocation for closing the eyes of the dead",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_055.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/54.json"
+		},
+		{
+			"ID": 55,
+			"TITLE": "Invocations for the dead in the Funeral prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_056.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/55.json"
+		},
+		{
+			"ID": 56,
+			"TITLE": "Invocations for a child in the Funeral prayer",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_057.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/56.json"
+		},
+		{
+			"ID": 57,
+			"TITLE": "Invocation for the bereaved",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_058.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/57.json"
+		},
+		{
+			"ID": 58,
+			"TITLE": "Invocation to be recited when placing the dead in his grave",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_059.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/58.json"
+		},
+		{
+			"ID": 59,
+			"TITLE": "Invocation to be recited after burying the dead",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_060.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/59.json"
+		},
+		{
+			"ID": 60,
+			"TITLE": "Invocation for visiting the graves",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_061.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/60.json"
+		},
+		{
+			"ID": 61,
+			"TITLE": "Invocations for when the wind blows",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_062.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/61.json"
+		},
+		{
+			"ID": 62,
+			"TITLE": "Invocation for when it thunder",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_063.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/62.json"
+		},
+		{
+			"ID": 63,
+			"TITLE": "Some invocations for rain",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_064.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/63.json"
+		},
+		{
+			"ID": 64,
+			"TITLE": "Invocation for when it rains",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_065.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/64.json"
+		},
+		{
+			"ID": 65,
+			"TITLE": "Supplication after it rains",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_066.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/65.json"
+		},
+		{
+			"ID": 66,
+			"TITLE": "Invocation for the withholding of the rain",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_067.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/66.json"
+		},
+		{
+			"ID": 67,
+			"TITLE": "Invocation for sighting the new moon",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_068.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/67.json"
+		},
+		{
+			"ID": 68,
+			"TITLE": "Invocations for breaking the fast",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_069.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/68.json"
+		},
+		{
+			"ID": 69,
+			"TITLE": "Invocations before eating",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_070.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/69.json"
+		},
+		{
+			"ID": 70,
+			"TITLE": "Invocations after eating",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_071.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/70.json"
+		},
+		{
+			"ID": 71,
+			"TITLE": "A dinner guest's invocation for his host",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_072.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/71.json"
+		},
+		{
+			"ID": 72,
+			"TITLE": "Invocation for someone who gives you drink or offers it to you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_073.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/72.json"
+		},
+		{
+			"ID": 73,
+			"TITLE": "Invocation for a family who invites you to break your fast with them",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_074.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/73.json"
+		},
+		{
+			"ID": 74,
+			"TITLE": "Invocation for someone who offers you food when you are fasting, which you decline",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_075.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/74.json"
+		},
+		{
+			"ID": 75,
+			"TITLE": "What to say when you are fasting and someone is rude to you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_076.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/75.json"
+		},
+		{
+			"ID": 76,
+			"TITLE": "Invocation for when you see the first dates of the season",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_077.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/76.json"
+		},
+		{
+			"ID": 77,
+			"TITLE": "Invocation for sneezing",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_078.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/77.json"
+		},
+		{
+			"ID": 78,
+			"TITLE": "What to say to the disbeliever if he sneezes and praises Allah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_079.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/78.json"
+		},
+		{
+			"ID": 79,
+			"TITLE": "Invocation for the groom",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_080.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/79.json"
+		},
+		{
+			"ID": 80,
+			"TITLE": "The groom’s supplication on the wedding night or when buying an animal",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_081.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/80.json"
+		},
+		{
+			"ID": 81,
+			"TITLE": "Invocation to be recited before intercourse",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_082.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/81.json"
+		},
+		{
+			"ID": 82,
+			"TITLE": "Invocation for anger",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_083.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/82.json"
+		},
+		{
+			"ID": 83,
+			"TITLE": "What to say if you see someone afflicted by misfortune",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_084.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/83.json"
+		},
+		{
+			"ID": 84,
+			"TITLE": "What to say while sitting in an assembly",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_085.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/84.json"
+		},
+		{
+			"ID": 85,
+			"TITLE": "The Expiation of Assembly - Kaffaratul-Majlis",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_086.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/85.json"
+		},
+		{
+			"ID": 86,
+			"TITLE": "vocation for someone who says: May Allah forgive you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_087.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/87.json"
+		},
+		{
+			"ID": 87,
+			"TITLE": "Invocation for someone who does good to you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_088.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/87.json"
+		},
+		{
+			"ID": 88,
+			"TITLE": "Invocation for Allah's protection from the False Messiah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_089.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/88.json"
+		},
+		{
+			"ID": 89,
+			"TITLE": "Invocation for someone who tells you I love you for the sake of Allah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_090.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/89.json"
+		},
+		{
+			"ID": 90,
+			"TITLE": "Invocation for someone who offers you a share of his wealth",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_091.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/90.json"
+		},
+		{
+			"ID": 91,
+			"TITLE": "Invocation (upon receipt of the loan) for someone who lends you money",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_091.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/91.json"
+		},
+		{
+			"ID": 92,
+			"TITLE": "Invocation for fear of Shirk",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_092.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/92.json"
+		},
+		{
+			"ID": 93,
+			"TITLE": "Invocation for someone who tells you: May Allah bless you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_094.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/93.json"
+		},
+		{
+			"ID": 94,
+			"TITLE": "Invocation against evil portent",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_095.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/94.json"
+		},
+		{
+			"ID": 95,
+			"TITLE": "Invocation for riding in a vehicle or on an animal",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_096.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/95.json"
+		},
+		{
+			"ID": 96,
+			"TITLE": "Invocation for traveling",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_097.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/96.json"
+		},
+		{
+			"ID": 97,
+			"TITLE": "Invocation for entering a town or city",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_098.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/97.json"
+		},
+		{
+			"ID": 98,
+			"TITLE": "Invocation for entering a market",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_099.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/98.json"
+		},
+		{
+			"ID": 99,
+			"TITLE": "Invocation for when your vehicle or mount begins to fail",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_100.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/99.json"
+		},
+		{
+			"ID": 100,
+			"TITLE": " The traveler's invocation for the one he leaves behind",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_101.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/100.json"
+		},
+		{
+			"ID": 101,
+			"TITLE": "The resident's invocations for the traveler",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_102.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/101.json"
+		},
+		{
+			"ID": 102,
+			"TITLE": "Glorifying and magnifying Allah on the journey",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_103.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/102.json"
+		},
+		{
+			"ID": 103,
+			"TITLE": "The traveler's invocation at dawn",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_104.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/103.json"
+		},
+		{
+			"ID": 104,
+			"TITLE": "Invocation for a layover (stopping along the way) on the journey",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_105.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/104.json"
+		},
+		{
+			"ID": 105,
+			"TITLE": "What to say upon returning from a Journey",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_106.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/105.json"
+		},
+		{
+			"ID": 106,
+			"TITLE": "What to say if something happens to please you or to displease you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_107.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/106.json"
+		},
+		{
+			"ID": 107,
+			"TITLE": "The excellence of asking for Allah's blessings upon the Prophet pbuh",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_108.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/107.json"
+		},
+		{
+			"ID": 108,
+			"TITLE": "spreading the greetings of Salam (Peace)",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_109.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/108.json"
+		},
+		{
+			"ID": 109,
+			"TITLE": "How to reply to a disbeliever if he says Salam to you",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_110.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/109.json"
+		},
+		{
+			"ID": 110,
+			"TITLE": "Invocation upon hearing the cock's crow or the bray of a donkey",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_111.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/110.json"
+		},
+		{
+			"ID": 111,
+			"TITLE": "Invocation upon hearing a dog barking in the night",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_112.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/111.json"
+		},
+		{
+			"ID": 112,
+			"TITLE": "Invocation for someone you have spoken ill to",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_113.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/112.json"
+		},
+		{
+			"ID": 113,
+			"TITLE": "How a Muslim should praise another Muslim",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_114.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/113.json"
+		},
+		{
+			"ID": 114,
+			"TITLE": "What a Muslim should say when he is praised",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_115.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/114.json"
+		},
+		{
+			"ID": 115,
+			"TITLE": "The pilgrim's announcement of his arrival for Hajj or Umrah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_116.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/115.json"
+		},
+		{
+			"ID": 116,
+			"TITLE": "Saying Allahu Akbar when passing the Black Stone",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_117.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/116.json"
+		},
+		{
+			"ID": 117,
+			"TITLE": "Invocation to be recited between the Yemenite Corner and the Black Stone",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_118.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/117.json"
+		},
+		{
+			"ID": 118,
+			"TITLE": "Invocation to be recited while standing at Safa and Marwah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_119.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/118.json"
+		},
+		{
+			"ID": 119,
+			"TITLE": "Invocation to be recited on the Day of Arafat",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_120.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/119.json"
+		},
+		{
+			"ID": 120,
+			"TITLE": "Supplication to be recited at the sacred area of Muzdalifah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_121.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/120.json"
+		},
+		{
+			"ID": 121,
+			"TITLE": "Saying Allahu Akbar while stoning the three pillars at Mina",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_122.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/121.json"
+		},
+		{
+			"ID": 122,
+			"TITLE": "What to say when surprised or startled",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_123.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/122.json"
+		},
+		{
+			"ID": 123,
+			"TITLE": "What to say when something that pleases you happens",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_124.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/123.json"
+		},
+		{
+			"ID": 124,
+			"TITLE": "What to say when you feel a pain in your body",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_125.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/124.json"
+		},
+		{
+			"ID": 125,
+			"TITLE": "What to say when you fear you may afflict something with the evil eye",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_126.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/125.json"
+		},
+		{
+			"ID": 126,
+			"TITLE": "What to say when you feel frightened",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_127.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/126.json"
+		},
+		{
+			"ID": 127,
+			"TITLE": "What to say when slaughtering or sacrificing an animal",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_128.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/127.json"
+		},
+		{
+			"ID": 128,
+			"TITLE": "What to say to foil the devil's plots",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_129.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/128.json"
+		},
+		{
+			"ID": 129,
+			"TITLE": "Repentance and seeking forgiveness",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_130.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/129.json"
+		},
+		{
+			"ID": 130,
+			"TITLE": "The excellence of remembering Allah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_131.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/130.json"
+		},
+		{
+			"ID": 131,
+			"TITLE": "How the Prophet glorified Allah",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_132.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/131.json"
+		},
+		{
+			"ID": 132,
+			"TITLE": "Types of goodness and good etiquette for community life",
+			"AUDIO_URL": "http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_133.mp3",
+			"TEXT": "http://www.hisnmuslim.com/api/en/132.json"
+		}
+	]
+}

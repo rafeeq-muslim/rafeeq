@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for At-Tashahhud (sitting in prayer)": 
+	[
+		{
+			"ID": 52,
+			"ARABIC_TEXT": "((التَّحِيَّاتُ لِلَّهِ، وَالصَّلَواتُ، وَالطَّيِّباتُ، السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ. أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسولُهُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Attahiyyatu lillahi wassalawatu wattayyibat, assalamu AAalayka ayyuhan-nabiyyu warahmatul-lahi wabarakatuh, assalamu AAalayna waAAala AAibadil-lahis-saliheen. Ash-hadu an la ilaha illal-lah, wa-ashhadu anna Muhammadan AAabduhu warasooluh.)", 
+ 		    "TRANSLATED_TEXT":"(At-tahiyyat is for Allah. All acts of worship and good deeds are for Him.  Peace and the mercy and blessings of Allah be upon you O Prophet.  Peace be upon us and all of Allah’s righteous servants. I bear witness that none has the right to be worshipped except Allah and I bear witness that Muhammad is His slave and Messenger.)(At-tahiyyat: all words which indicate the glorification of Allah.  His eternal existence, His perfection and His sovereignty.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/52.mp3" 
+ 		}
+	]
+}
