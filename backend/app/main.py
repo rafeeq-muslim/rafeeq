@@ -9,7 +9,7 @@ from sqlalchemy import select, text
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.security import hash_password
-from app.knowledge import review
+from app.knowledge import review, scripture
 from app.learning import router as learning
 from app.motivation import router as motivation
 from app.platform import admin, auth, push
@@ -52,7 +52,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Rafeeq API", lifespan=lifespan, docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-for r in (auth.router, auth.me, admin.router, learning.router, review.router, motivation.router, push.router):
+for r in (auth.router, auth.me, admin.router, learning.router, review.router, motivation.router, push.router, scripture.router):
     app.include_router(r)
 
 

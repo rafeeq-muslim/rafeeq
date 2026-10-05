@@ -22,6 +22,10 @@ services:
     environment:
       ENV: production
       PUBLIC_URL: https://rafeeq.nan.sa
+      CORPUS_DIR: /srv/corpus
+    # KNW-02 source files: outside the public repo, read-only in the container.
+    volumes:
+      - /home/naser/.local/share/rafeeq/corpus:/srv/corpus:ro
     depends_on: { db: { condition: service_healthy } }
     command: ["sh", "-c", "export DATABASE_URL=postgresql+asyncpg://rafeeq:$${POSTGRES_PASSWORD}@db:5432/rafeeq && alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*' --no-access-log"]
   web:

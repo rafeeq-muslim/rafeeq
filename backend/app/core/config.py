@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     # Content (lessons, cards, fixed replies) shipped with the repo.
     content_dir: Path = ROOT / "content"
     hisnmuslim_dir: Path = ROOT / "data" / "hisnmuslim"
+    # Normalized source files (KNW-02). Kept outside the public repo; mounted read-only in production.
+    corpus_dir: Path = Path.home() / ".local/share/rafeeq/corpus"
 
     # AI (OpenRouter). Budget is a hard cap on paid calls (product owner: $10).
     openrouter_api_key: str = ""
