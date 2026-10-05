@@ -25,6 +25,8 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | دليل اليوم الأول | `day_one_unit` | First unit: shahada meaning, wudu, first prayer |
 | بطاقة الشرح | `explanation_card` | One short piece of approved source text inside a lesson, shown with its source |
 | المقطع الداعم | `support_video` | Optional approved video inside a lesson; never completes the lesson by itself |
+| هدف التعلّم | `learning_objective` | One observable behaviour per objective, 2–4 per lesson, written from the lesson's cards (LRN-10) |
+| الإتقان | `mastery` | Probability 0–1 that the learner has mastered an objective (Bayesian Knowledge Tracing); levels `not_started`, `exposed`, `practising`, `mastered` |
 | اختبار تحديد المستوى | `placement_test` | Short test letting knowledgeable users skip ahead |
 
 ## Motivation (`MOT`)
@@ -89,6 +91,7 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | `ContentApproved` | KNW → LRN |
 | `LessonCompleted` (with `is_repeat`), `UnitCompleted`, `ReviewCompleted` | LRN → MOT |
 | `ExerciseMissed` | LRN → LRN review list (LRN-04) |
+| `ObjectiveAsked` (objective ID only, with the learner's consent; never question text) | KNW → LRN (LRN-10) |
 | `BadgeEarned`, `EngagementStatusChanged` (carries whether the learner shares progress with the mentor) | MOT → CMP |
 | `GroupJoined`, `GroupLeft` (proposed; to agree with the CMP owner) | CMP → MOT |
 | `HabitKept` (non-worship only), `HabitGraduated` (non-worship only) | PRC → MOT |
