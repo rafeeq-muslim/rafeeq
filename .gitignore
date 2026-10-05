@@ -23,3 +23,8 @@ build/
 .DS_Store
 .idea/
 .vscode/
+
+# Thmanyah font files: licence allows bundling in our app but forbids
+# redistributing or hosting the files. Download from font.thmanyah.com
+# into design-system/public/fonts/thmanyah/ locally; never commit them.
+design-system/public/fonts/thmanyah/

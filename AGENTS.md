@@ -31,6 +31,13 @@ The human docs are in Arabic; code, identifiers, commits and code comments are i
 - Use each source only as its license allows (`docs/agents/sources.md`).
 - The repo will be public: never commit secrets, user data, chat exports, voice notes, phone numbers or emails.
 
+## UI and the design system
+
+- All UI uses `design-system/` (shadcn/ui + Tailwind v4, Arabic-first RTL). Read `design-system/DESIGN.md` and the skill `skills/rafeeq-design-system/SKILL.md` before building a screen.
+- Use Rafeeq components (`@/components/rafeeq`) and shadcn primitives before writing new UI; semantic tokens only; logical properties only; no letter-spacing on Arabic.
+- Run `npm run check:design` and `npx tsc -b` in `design-system/` before committing UI.
+- Design skills for review and handoff are in `.claude/skills/`; the Rafeeq skill's rules win over generic advice.
+
 ## Definition of done for any change
 
 - The feature's examples pass as tests.

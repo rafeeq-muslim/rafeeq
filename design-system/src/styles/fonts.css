@@ -1,0 +1,60 @@
+/* Thmanyah (brand typeface). Licence (font.thmanyah.com/licenses): may be
+   bundled in our web and mobile apps; must not be redistributed, hosted as
+   downloadable files, or modified. Copy the official woff2 files (names
+   unchanged, from "thmanyah typeface/<family>/woff2/") into
+   public/fonts/thmanyah/. That folder is git-ignored: never commit the files.
+   Missing files fall back to IBM Plex Sans Arabic and Noto Naskh Arabic. */
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahsans-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahsans-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah sans";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahsans-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif display";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahseriftext-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahseriftext-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "thmanyah serif text";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/thmanyah/thmanyahseriftext-Bold.woff2") format("woff2");
+}
