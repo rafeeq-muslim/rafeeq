@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => ({
                 { src: "/brand/rafeeq-app-icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
               ],
             },
-            injectManifest: { globPatterns: ["**/*.{js,css,html,svg,woff2,png}"], globIgnores: ["landing/**"], maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
+            injectManifest: { globPatterns: ["**/*.{js,css,html,svg,woff2,png}"], globIgnores: ["landing/**", "brand/*-1024.png", "assets/App-*.js", "assets/ibm-plex-*", "assets/noto-naskh-*"], maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
             devOptions: { enabled: false },
           }),
         ]),
