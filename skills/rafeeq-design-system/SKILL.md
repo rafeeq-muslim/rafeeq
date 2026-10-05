@@ -5,13 +5,13 @@ description: Build, review or extend Rafeeq (رفيق) UI with its design system
 
 # Rafeeq design system
 
-Rafeeq's UI lives in `design-system/` in the repo. Read these before writing UI:
+Rafeeq's UI lives in `frontend/` in the repo. Read these before writing UI:
 
-1. `design-system/DESIGN.md`: tokens and the rules (the contract).
+1. `frontend/DESIGN.md`: tokens and the rules (the contract).
 2. `docs/design-system.md`: the Arabic reference: component catalogue, which component to use when, and examples.
 3. `docs/agents/rules.md`: product rules that the UI must enforce (sources, safety, privacy, motivation).
 
-Run the gallery with `cd design-system && npm install && npm run dev`. It shows every token, primitive, Rafeeq component and composed screen, with code to copy. `?tab=screens&dir=ltr&theme=dark` deep-links a view.
+Run the gallery with `cd frontend && npm install && npm run dev`. It shows every token, primitive, Rafeeq component and composed screen, with code to copy. `?tab=screens&dir=ltr&theme=dark` deep-links a view.
 
 ## The visual direction (don't fall back to plain shadcn)
 
@@ -42,7 +42,7 @@ Run the gallery with `cd design-system && npm install && npm run dev`. It shows 
 - No `tracking-*` on Arabic. No italics. Keep the scale's tall line heights (`text-body` = 17/30).
 - Latin digits always; add `tabular-nums` where numbers align.
 - Headings use `font-heading` (Thmanyah Serif Display); long reading uses `font-reading`.
-- Thmanyah files are bundled from the git-ignored `design-system/public/fonts/thmanyah/`; never commit them (licence forbids redistribution).
+- Thmanyah files are bundled from the git-ignored `frontend/public/fonts/thmanyah/`; never commit them (licence forbids redistribution).
 
 **Brand**
 - Violet = action. Amber (`celebrate`) = celebration and the source strip only, never hover or decoration.
@@ -64,7 +64,7 @@ Run the gallery with `cd design-system && npm install && npm run dev`. It shows 
 - Icons inside components: `data-icon="inline-start|inline-end"`, no size classes. Tabler icons, `stroke={1.75}`.
 - `gap-*` not `space-*`; `size-*` when width = height; `cn()` for conditional classes; no manual `dark:` colours.
 - Dialog, Sheet and Drawer always have a title (use `sr-only` if hidden). Chat uses `MessageScroller` / `Message` / `Bubble` / `Marker`.
-- Add primitives with `npx shadcn@latest add <name>` from `design-system/`, then replace any `from "cn"` import with `@/lib/utils`, check the icon library is Tabler, and re-theme sizes (inputs h-12, text-label/body).
+- Add primitives with `npx shadcn@latest add <name>` from `frontend/`, then replace any `from "cn"` import with `@/lib/utils`, check the icon library is Tabler, and re-theme sizes (inputs h-12, text-label/body).
 
 ## Adding a new component
 

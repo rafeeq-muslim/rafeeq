@@ -1,0 +1,39 @@
+# Production on this server: `docker compose -p rafeeq -f infra/compose.prod.yml up -d --build`
+# Secrets live only in /home/naser/.config/rafeeq/secrets.env (never in git).
+name: rafeeq
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rafeeq
+      POSTGRES_DB: rafeeq
+    env_file: /home/naser/.config/rafeeq/secrets.env
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rafeeq -d rafeeq"]
+      interval: 5s
+      retries: 20
+  backend:
+    image: rafeeq-backend:latest
+    build: { context: .., dockerfile: backend/Dockerfile }
+    restart: unless-stopped
+    env_file: /home/naser/.config/rafeeq/secrets.env
+    environment:
+      ENV: production
+      PUBLIC_URL: https://rafeeq.nan.sa
+    depends_on: { db: { condition: service_healthy } }
+    command: ["sh", "-c", "export DATABASE_URL=postgresql+asyncpg://rafeeq:$${POSTGRES_PASSWORD}@db:5432/rafeeq && alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"]
+  web:
+    image: rafeeq-web:latest
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_VAPID_PUBLIC_KEY: ${VITE_VAPID_PUBLIC_KEY:-}
+        VITE_BUILD_ID: ${VITE_BUILD_ID:-dev}
+    restart: unless-stopped
+    ports: ["127.0.0.1:5380:80"]
+    depends_on: [backend]
+volumes:
+  pgdata:

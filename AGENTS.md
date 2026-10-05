@@ -33,9 +33,9 @@ The human docs are in Arabic; code, identifiers, commits and code comments are i
 
 ## UI and the design system
 
-- All UI uses `design-system/` (shadcn/ui + Tailwind v4, Arabic-first RTL). Read `design-system/DESIGN.md` and the skill `skills/rafeeq-design-system/SKILL.md` before building a screen.
+- All UI uses `frontend/` (shadcn/ui + Tailwind v4, Arabic-first RTL). Read `frontend/DESIGN.md` and the skill `skills/rafeeq-design-system/SKILL.md` before building a screen.
 - Use Rafeeq components (`@/components/rafeeq`) and shadcn primitives before writing new UI; semantic tokens only; logical properties only; no letter-spacing on Arabic.
-- Run `npm run check:design` and `npx tsc -b` in `design-system/` before committing UI.
+- Run `npm run check:design` and `npx tsc -b` in `frontend/` before committing UI.
 - Design skills for review and handoff are in `.claude/skills/`; the Rafeeq skill's rules win over generic advice.
 
 ## Definition of done for any change

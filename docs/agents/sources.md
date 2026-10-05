@@ -56,10 +56,10 @@ Every video must be watched in full by the Sharia reviewer before use (no music 
 | Amiri Quran, Scheherazade New | Arabic and Quran fonts | SIL OFL 1.1 |
 | GeoNames extract | Offline city picker | CC BY (credit link) |
 | ICSA MCP server (`islamic-content-mcp-server`) | Developer access to ICSA sources | ISC per repo; confirm official status |
-| Thmanyah (Sans, Serif Display, Serif Text) | Brand typeface | Licence https://font.thmanyah.com/licenses: free for commercial use incl. embedding in web/mobile apps as part of the bundled product; **no redistribution, hosting for download, or modification**. Download only from font.thmanyah.com; files kept in git-ignored `design-system/public/fonts/thmanyah/`, never committed |
+| Thmanyah (Sans, Serif Display, Serif Text) | Brand typeface | Licence https://font.thmanyah.com/licenses: free for commercial use incl. embedding in web/mobile apps as part of the bundled product; **no redistribution, hosting for download, or modification**. Download only from font.thmanyah.com; files kept in git-ignored `frontend/public/fonts/thmanyah/`, never committed |
 | IBM Plex Sans Arabic, Noto Naskh Arabic (`@fontsource`) | Self-hosted fallback fonts for UI and reading | SIL OFL 1.1 |
 | Tabler Icons (`@tabler/icons-react`) | Icon set named in the brand guide | MIT |
-| shadcn/ui, Radix UI, Tailwind CSS, Vite, React, sonner, vaul, input-otp, `@shadcn/react` | Design-system code (`design-system/`) | MIT |
+| shadcn/ui, Radix UI, Tailwind CSS, Vite, React, sonner, vaul, input-otp, `@shadcn/react` | Design-system code (`frontend/`) | MIT |
 | Agent skills in `.claude/skills/` | shadcn (MIT), Anthropic Design plugin (Apache-2.0), cuellarfr/design-skills (MIT), design-system-ops subset (MIT), Emil Kowalski mobile-native/animate/break-ui (MIT), pwa-skill-suite pwa-rtl (MIT); licence file kept in each skill folder. `frontend-design` is Anthropic's official plugin (installed via the plugin directory, not vendored) | As listed |
 
 ## Avoid

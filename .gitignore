@@ -31,8 +31,8 @@ build/
 
 # Thmanyah font files: licence allows bundling in our app but forbids
 # redistributing or hosting the files. Download from font.thmanyah.com
-# into design-system/public/fonts/thmanyah/ locally; never commit them.
-design-system/public/fonts/thmanyah/
+# into frontend/public/fonts/thmanyah/ locally; never commit them.
+frontend/public/fonts/thmanyah/
 
 # Hisn al-Muslim audio: downloaded locally by data/hisnmuslim/fetch.py --audio, never committed
 data/hisnmuslim/audio/
