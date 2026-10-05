@@ -6,6 +6,7 @@ Newest first. "Why" and "rejected" let anyone revisit a decision without re-argu
 
 | Date | Decision | Why | Rejected alternatives |
 | --- | --- | --- | --- |
+| 2026-10-05 | Prayer times follow each country's official calendar (Umm al-Qura in KSA); where none exists, the Muslim World League method. The user is never asked about a calculation method or madhhab (PRC-01) | Follows what local mosques use; keeps new Muslims away from details they don't need; `research/05`. Domain owner's choice | User picks method and madhhab; one method for every country |
 | 2026-10-04 | Docs use domains (strategic DDD) and behaviours (BDD Example Mapping: story, rules, examples, questions). Detailed tactical DDD (aggregates, repositories) is out of scope for docs | Domains give light limits for short-time work; behaviours become acceptance criteria and tests | Fully open creativity (not practical in 3 days); heavy DDD (over-engineering) |
 | 2026-10-04 | Six domains: Learning, Motivation, Knowledge & Ask (with Discover), Companion & Community, Daily Practice, Platform. Organizations postponed | Product owner's choice | 8 domains with separate Discover and Content; Discover inside Platform |
 | 2026-10-04 | Worship is tracked privately with no rewards; points and badges only for learning and non-worship habits | Riya' risk; rewards must stay secondary to intention | Worship habits with gentle rewards; no worship tracking at all |

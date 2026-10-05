@@ -26,6 +26,7 @@
 | Tool | Use | License |
 | --- | --- | --- |
 | `adhan` (batoulapps) | Prayer times and qibla, on-device | MIT |
+| Umm al-Qura official calendar (ummulqura.org.sa, KACST) | Reference prayer times that PRC-01 tests compare against (`research/05`) | Terms not found ⚠️. Keep only the few published times the tests need, cited; never republish the calendar |
 | `Intl` `islamic-umalqura` calendar | Hijri dates, built into browsers | Built in |
 | Amiri Quran, Scheherazade New | Arabic and Quran fonts | SIL OFL 1.1 |
 | GeoNames extract | Offline city picker | CC BY (credit link) |
