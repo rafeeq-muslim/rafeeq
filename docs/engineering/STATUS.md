@@ -1,25 +1,32 @@
 # Overnight build: status and handoff
 
-Owner of this file: Claude (product engineer). Updated: 2026-10-05 ~20:45 (server time).
+Owner of this file: Claude (product engineer). Updated: 2026-10-05 ~22:00 (server time, UTC).
 
-## Done
-- Musallam's KNW docs (implementation plan + KNW-02..09) committed under his name (Musallam-1 noreply), PR #4 merged.
-- Mohannad's follow-up (LRN-05, 07, 09, 10, KNW-10, MOT-09) PR #5 merged (features.md conflict resolved).
-- PR #3 (PRC-01/04/05 docs + Hisn al-Muslim data) merged (decisions.md conflict: kept both).
-- OpenRouter key stored server-side only: /home/naser/.config/rafeeq/secrets.env (600). Key limit $50, app cap to enforce: $10.
-- Model price scan done (OpenRouter, Oct 5): gemma-4-31b-it $0.09/$0.34 per M; gemma-4-26b-a4b-it $0.076/$0.255; deepseek-v4-pro $0.209/$0.418; qwen3.8-flash $0.15/$0.47; embeddings baai/bge-m3 $0.01/M (Musallam's plan).
-- Server facts: Docker 29 + compose v5; nginx wildcard router *.nan.sa via /home/naser/claude-works/nginx-app-router (skill add-app); 24 cores, 122 GB RAM.
-- Scrollcraft skill unpacked at scratchpad/scrollcraft (landing page = final step).
+Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automatic rollback).
 
-## Blocked / needs the user
-- CronCreate recurring GitHub watcher was refused by the auto-mode classifier ("Create Unsafe Agents"). Do not retry; report it.
+## Done and deployed
+- Foundations: `frontend/` (React PWA on the design system), `backend/` (FastAPI, Postgres + pgvector, Alembic), Docker images, compose, nginx, router app `rafeeq.nan.sa`, CI + deploy on two self-hosted runners.
+- PLT-01 onboarding, PLT-02 accounts (generated credentials, optional email 2FA, invite codes for roles), Me (privacy, quick exit, discreet mode, reminder, language, delete account, erase device), Admin (invites, roles).
+- LRN-01/03/09 content: 6 units, 25 lessons in ar/en/tl, all waiting for Sharia approval. LRN-02 path, LRN-03 lesson player, LRN-04 review, LRN-05 placement, LRN-10 mastery.
+- KNW-02 corpus loader and Quran scripture API (QuranEnc, HadeethEnc, islamqa, binbaz, IslamHouse book loaded in production). KNW-05 review desk.
+- MOT-02 streak, MOT-03 badges, MOT-05 reminders (web push), MOT-07 engagement status, MOT-08/09 team indicators.
+- Docs: `plan.md`, `decisions-for-review.md`, `conflicts.md`, `ux-journey.md`, sources research, convert research, AI tool layer.
 
-## Read so far (PRDs)
-rules.md, product.md, domains.md, features.md, decisions.md, LRN-01/02/03/04/05/07/09/10, MOT-02/03/05/06/07/08/09, KNW-01/10 + KNW implementation plan + KNW-02..09.
+## In progress (background agents, same working tree)
+- Ask and AI agents: KNW-01 answer pipeline, embeddings, KNW-10 explain/guide/tagging, KNW-04 reliability test, `ai-agents.md` with model analysis.
+- Companion: CMP-01..05 drafts and build (human help, mentor inbox, choose mentor, report, groups) + MOT-06 challenge.
+- Practice and Discover: PRC-01/04/05/07, habits, KNW-03/06/07/08/09.
+- Landing page with the Scrollcraft skill at `/landing/`.
+
+## Credentials and access (never in git)
+- Secrets: `/home/naser/.config/rafeeq/secrets.env` (OpenRouter key, DB, JWT, VAPID, bootstrap admin `rafeeq-admin`).
+- Invite codes for production (Sharia reviewer, mentors, team): `/home/naser/.config/rafeeq/invites.txt`.
+
+## Needs the product owner
+See `decisions-for-review.md` → "Postponed: needs you" (email provider, helplines, permission letters, Sharia approval, Tagalog review).
 
 ## Next
-1. Read remaining: PRC-01/04/05, PLT-02, glossary, sources, context, personas, companion/platform/practice READMEs, research index.
-2. Write docs/engineering/plan.md (architecture, phases, per-feature implementation plans), docs/engineering/decisions-for-review.md, docs/engineering/conflicts.md.
-3. Write missing PRDs (CMP-01, CMP-02, CMP-05, PLT-01, PLT-03, PLT-05, PLT-06, PRC-07...) in the team format, marked as Claude drafts.
-4. Scaffold: frontend/ (move design-system in), backend/ (FastAPI + Postgres/pgvector), docker compose, rafeeq.nan.sa via router, GH Actions (CI + deploy via self-hosted runner, push to main only).
-5. Build P1 end to end, then P2/P3, AI agents, KNW-04 eval, landing page (scrollcraft) last.
+1. Integrate the agents' work, run all checks, commit, deploy, walk every screen on the live site.
+2. Landing page wiring: first-time visitors at `/` see `/landing/`; its call to action opens `/welcome`.
+3. Security review and code review passes; fix findings.
+4. Keep watching GitHub for new PRs and commits; apply the PRD → plan → code → tests procedure to anything new.

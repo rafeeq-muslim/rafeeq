@@ -14,7 +14,7 @@ declare const self: ServiceWorkerGlobalScope
 self.skipWaiting()
 cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { denylist: [/^\/api\//] }))
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { denylist: [/^\/api\//, /^\/landing(\/|$)/] }))
 
 // Approved lesson content and Quran passages: usable offline.
 registerRoute(({ url }) => url.pathname.startsWith("/api/content") || url.pathname.startsWith("/api/scripture"), new NetworkFirst({ cacheName: "rafeeq-content", networkTimeoutSeconds: 4 }))
