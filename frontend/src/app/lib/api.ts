@@ -1,5 +1,6 @@
 /** Fetch wrapper: JSON, access token, one refresh retry on 401. */
 import { useAuth } from "@/app/stores/auth"
+import { useDevice } from "@/app/stores/device"
 
 export class ApiError extends Error {
   status: number
@@ -62,6 +63,8 @@ export async function api<T = unknown>(path: string, opts: Opts = {}, retried = 
 const QUEUE_KEY = "rafeeq.eventQueue"
 
 export function sendEvent(event: Record<string, unknown>) {
+  if (!useDevice.getState().shareEvents && event.type !== "opt_out") return
+  event = { at: new Date().toISOString(), ...event }
   try {
     const q: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
     q.push(event)
@@ -79,8 +82,13 @@ export async function flushEvents() {
   try {
     const q: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
     if (q.length === 0) return
-    const r = await fetch("/api/events", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ events: q }) })
-    if (r.ok) localStorage.setItem(QUEUE_KEY, "[]")
+    const install_id = useDevice.getState().installId
+    const r = await fetch("/api/events", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ install_id, events: q.slice(0, 500) }),
+    })
+    if (r.ok || r.status === 422) localStorage.setItem(QUEUE_KEY, JSON.stringify(q.slice(500)))
   } catch {
     /* retried on next event or when back online */
   } finally {

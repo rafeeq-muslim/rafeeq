@@ -27,9 +27,10 @@ async def _schema():
 async def _clean():
     ratelimit.reset()
     yield
+    # DELETE in reverse dependency order: far faster than TRUNCATE on near-empty tables.
     async with engine.begin() as conn:
-        names = ", ".join(f'"{t.name}"' for t in Base.metadata.sorted_tables)
-        await conn.execute(text(f"TRUNCATE {names} CASCADE"))
+        for t in reversed(Base.metadata.sorted_tables):
+            await conn.execute(t.delete())
 
 
 @pytest.fixture
@@ -47,3 +48,17 @@ async def register(client, username="layla-1", password="pass-1234-word", **extr
 
 def auth(token: str) -> dict:
     return {"Authorization": f"Bearer {token}"}
+
+
+async def with_roles(client, username: str, *roles: str) -> str:
+    """Register an account, give it roles directly in the database, return its token."""
+    from sqlalchemy import update
+
+    from app.core.db import SessionLocal
+    from app.platform.models import User
+
+    out = await register(client, username=username)
+    async with SessionLocal() as s:
+        await s.execute(update(User).where(User.username == username).values(roles=list(roles)))
+        await s.commit()
+    return out["access_token"]

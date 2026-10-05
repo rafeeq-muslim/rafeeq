@@ -1,15 +1,15 @@
 """Learning (LRN). Lesson content itself is versioned in `content/` and loaded
 at start-up; the database holds account copies of progress (guests keep
-theirs on the device) and the Sharia reviewer's approvals."""
+theirs on the device). Approvals of lesson text live in Knowledge (KNW-05)."""
 
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, UniqueConstraint, func
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.db import Base, IdMixin
+from app.core.db import Base
 
 _user_fk = lambda: ForeignKey("users.id", ondelete="CASCADE")  # noqa: E731
 
@@ -46,26 +46,6 @@ class ObjectiveMastery(Base):
     mastered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     last_exercise_id: Mapped[str | None] = mapped_column(String(24), nullable=True)
     checks_done: Mapped[int] = mapped_column(Integer, default=0)  # LRN-04: 7- and 30-day rechecks
-
-
-class ContentApproval(IdMixin, Base):
-    """rules.md §1.4 and LRN-01 R6: nothing is shown in a language before the
-    Sharia reviewer approves it in that language. One row per item+language;
-    `content_hash` ties the approval to the exact text approved (KNW-05 R3)."""
-
-    __tablename__ = "content_approvals"
-    __table_args__ = (UniqueConstraint("item_type", "item_id", "lang"),)
-    item_type: Mapped[str] = mapped_column(
-        String(24)
-    )  # lesson | unit | badge | challenge_text | fixed_reply | daily_card | dhikr | library_item
-    item_id: Mapped[str] = mapped_column(String(64))
-    lang: Mapped[str] = mapped_column(String(5))
-    status: Mapped[str] = mapped_column(String(12), default="in_review")  # in_review | approved | returned
-    content_hash: Mapped[str] = mapped_column(String(64))
-    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
-    decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
-    note: Mapped[str | None] = mapped_column(Text, nullable=True)
-    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 
 class ExplanationBlock(Base):

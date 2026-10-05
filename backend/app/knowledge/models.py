@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, String, Text, func
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, String, Text, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -151,3 +151,42 @@ class EvalAnswer(IdMixin, Base):
     checks: Mapped[dict] = mapped_column(JSONB, default=dict)
     passed: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     review: Mapped[str | None] = mapped_column(Text, nullable=True)  # Sharia reviewer verdict for normal questions
+
+
+class ContentApproval(IdMixin, Base):
+    """KNW-05: the version of a team-written item that learners see, per
+    language (R6). Written only when the Sharia reviewer approves (R5); an
+    edit after that leaves this row, so the old approved text stays visible
+    until the new one is approved (R3). `snapshot` is the approved text in
+    that language and `content_hash` its fingerprint."""
+
+    __tablename__ = "content_approvals"
+    __table_args__ = (UniqueConstraint("item_type", "item_id", "lang"),)
+    item_type: Mapped[str] = mapped_column(
+        String(24)
+    )  # lesson | unit | media | daily_card | dhikr | library_item | fixed_reply | badge | challenge_text
+    item_id: Mapped[str] = mapped_column(String(64))
+    lang: Mapped[str] = mapped_column(String(5))
+    status: Mapped[str] = mapped_column(String(12), default="approved")
+    content_hash: Mapped[str] = mapped_column(String(64))
+    snapshot: Mapped[dict | list | str | None] = mapped_column(JSONB, nullable=True)
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+
+class ContentReview(IdMixin, Base):
+    """KNW-05 R3/R4: every decision, kept forever: which version (hash), who,
+    when, and the written reason for a return."""
+
+    __tablename__ = "knw_reviews"
+    __table_args__ = (Index("ix_knw_reviews_item", "item_type", "item_id", "lang"),)
+    item_type: Mapped[str] = mapped_column(String(24))
+    item_id: Mapped[str] = mapped_column(String(64))
+    lang: Mapped[str] = mapped_column(String(5))
+    content_hash: Mapped[str] = mapped_column(String(64))
+    decision: Mapped[str] = mapped_column(String(8))  # approved | returned
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    reviewer_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    decided_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

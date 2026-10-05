@@ -4,12 +4,14 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.responses import ORJSONResponse
 from sqlalchemy import select, text
 
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.security import hash_password
+from app.knowledge import review
+from app.learning import router as learning
+from app.motivation import router as motivation
 from app.platform import admin, auth
 from app.platform.models import User
 
@@ -48,11 +50,9 @@ async def lifespan(app: FastAPI):
     jobs.stop()
 
 
-app = FastAPI(
-    title="Rafeeq API", default_response_class=ORJSONResponse, lifespan=lifespan, docs_url="/api/docs", openapi_url="/api/openapi.json"
-)
+app = FastAPI(title="Rafeeq API", lifespan=lifespan, docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-for r in (auth.router, auth.me, admin.router):
+for r in (auth.router, auth.me, admin.router, learning.router, review.router, motivation.router):
     app.include_router(r)
 
 
