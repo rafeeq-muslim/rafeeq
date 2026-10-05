@@ -1,0 +1,21 @@
+# Conflicts between documents, and how they were resolved
+
+Order of authority: `docs/agents/rules.md` → the feature document → the domain implementation plan → `plan.md`. Where two documents of the same rank disagreed, the newer decision in `docs/agents/decisions.md` or the product owner's explicit instruction won. Each resolution cites its evidence.
+
+| # | Conflict | Resolution | Evidence |
+| --- | --- | --- | --- |
+| 1 | PLT-02 R1 example invites a guest to "join the leaderboard"; MOT-04 (leaderboard) was removed | No leaderboard. The same moment applies to joining a group or choosing a mentor, which need an account | decisions.md 2026-10-05 (MOT-01/MOT-04 removed) |
+| 2 | The owner asks for "active notifications"; PRC-05 says web prayer reminders are unreliable | Web push for the learning reminder (MOT-05), human replies and group challenges. Prayer reminders work in-app and when the app is open, with an honest note about the web's limits | PRC-05 research; Web Push cannot schedule local alarms |
+| 3 | rules.md §3 "at most one notification a day" vs PRC-05 five prayer reminders | The one-a-day rule covers motivation reminders; prayer reminders are the learner's own tool and exempt | decisions.md exemption for prayer reminders |
+| 4 | "Nothing shown before Sharia approval" vs "the app must be totally functional" tonight | Everything is built and deployed; content waits in the review desk; learners see an honest "being reviewed" state; the team previews | rules.md §1.4, KNW-05 R1 |
+| 5 | CMP-05 groups (P1) need reporting, but CMP-04 was P2 | Basic report and block ship with groups | Safety rule: harm goes to a human |
+| 6 | sources.md names the official site as the single text source; the owner supplied an aligned Arabic/English spreadsheet and asked to use it | Spreadsheet for Arabic and English (it matches the printed book where the site is wrong); site for Filipino; differences listed in `content/tools/sheet_vs_site.txt` | Owner's instruction; printed book IslamHouse 2831443 |
+| 7 | islamqa.info terms allow personal use only; the owner instructed to use its offline Arabic and English archives | Indexed for the assistant, labelled "permission pending", never committed to the public repo; permission request listed for sending | Owner's instruction 2026-10-05; sources.md row |
+| 8 | KNW-05 R3 (old approved text stays visible after an edit) vs approving by content hash only | Approvals store the approved snapshot; learners are served the snapshot | KNW-05 R3 |
+| 9 | MOT-07 R4 "no IP stored" vs default web server logs | Logs without addresses in the app's nginx and uvicorn; the host router is outside the app and noted for its owner | rules.md §4 |
+| 10 | LRN-02 locks lessons until the previous one is done; LRN-05 unlocks passed units | A fourth path state, "open", for lessons unlocked by placement | LRN-05 R4 |
+| 11 | Brand: Latin digits everywhere vs Arabic-Indic verse numbers in the mushaf tradition | Latin digits inside the verse ornament ﴿128﴾ | Brand guide, DESIGN.md |
+| 12 | Wiping over socks: the Arabic book says what requires wudu or ghusl breaks it; the English and Filipino editions say ghusl only | Each language follows its own edition; no exercise tests the difference; flagged to the Sharia reviewer | `content/README.md` |
+| 13 | The Postman link given for HadeethEnc is in fact the IslamHouse API v3 documentation | HadeethEnc uses its own API and terms; IslamHouse v3 powers the library | `docs/domains/knowledge/research/sources-2026-10-05.md` |
+| 14 | PLT-02 R2 allows only three account fields; CMP-05 groups are same-gender | Gender is not asked at sign-up; it is asked only when a learner joins a group or chooses a mentor, and only for matching | PLT-02 R2, CMP-05 draft |
+| 15 | The KNW plan says reviews happen through repository pull requests for now; PRDs require reviewer approval inside the product | An in-app review desk (the plan's P2 option, built now), because the reviewer is not a GitHub user | implementation-plan.md §8.2 |
