@@ -1,0 +1,333 @@
+{
+  "id": "u3-l1",
+  "unit": "u3",
+  "order": 1,
+  "title": {
+    "ar": "أركان الإسلام الخمسة",
+    "en": "The Five Pillars of Islam",
+    "tl": "Ang Limang Haligi ng Islam"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإسلام (intro) + الركن الأول (review)",
+    "steps": null,
+    "page_ar": "27–31",
+    "page": "p. 2–3",
+    "sheet_rows": "47–53"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u3-l1-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال ﷺ: (بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ، شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَصَوْمِ رَمَضَانَ، وَحَجِّ البَيْتِ).",
+        "en": "The Prophet (pbuh) said: “Islam is built on five (pillars): the testimony that there is no god except Allah and that Muhammad is the Messenger of Allah, establishing prayer, giving Zakat, fasting the month of Ramadan, and pilgrimage to the (Sacred) House.”",
+        "tl": "Sinabi ng Propeta Muhammad ﷺ: “Itinayo ang Islam sa limang haligi: 1) Pagsasaksi na walang ibang Diyos na karapat-dapat sambahin maliban sa Allah at si Muhamamad ay sugo ng Allah, 2) Pagtataguyod ng pagdarasal limang beses sa isang araw, 3) Pagbibigay ng Zakah (Obligadong kawang-gawa), 4) Pag-aayuno sa buwan ng Ramadhan, at 5) Pagsasagawa ng Hajj sa Makkah.”"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillars intro"
+    },
+    {
+      "id": "u3-l1-c2",
+      "kind": "text",
+      "text": {
+        "ar": "أركان الإسلام عباداتٌ تلزم كل مسلم، ولا يصح إسلام الإنسان إلا باعتقاد وجوبها والإتيان بها جميعًا؛ لأنَّ الإسلامَ مبنيٌّ عليها، لذلك سُميت بأركانِ الإسلام.\nوهذه الأركان هي:",
+        "en": "The pillars of Islam are the outward acts of worship that every Muslim must observe and believe in their obligation; otherwise, his belief is not valid, as Islam is built on them. That is why they are called the pillars of Islam.\nThese pillars are as follows:",
+        "tl": "Ang mga haligi ng Islam ay mga pagsamba na marapat gampanan ng bawat muslim. Hindi magiging wasto ang Islam ng isang tao kung hindi niya paniwalaan at itaguyod ang lahat ng mga haliging ito sapagka’t dito naitayo ang Islam, kaya’t tinawag itong mga haligi ng Islam.\nMaikling Pagpapaliwanag sa mga Haliging ito:"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillars intro"
+    },
+    {
+      "id": "u3-l1-c3",
+      "kind": "review",
+      "text": {
+        "ar": "الركن الأول: شهادة أنَّ لا إله إلا الله وأنَّ محمدًا رسول الله.\nمعنى شهادة أنَّ لا إله إلا الله: لا معبودَ حقٌّ إلا الله.\nمعنى شهادة أنَّ محمدًا رسول الله: طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألا يُعَبد الله إلا بما شرع.",
+        "en": "First Pillar: Shahādah (To bear witness that there is no god except Allah and that Muhammad is the Messenger of Allah).\nThe Shahādah that \"There is no god but Allah\" means that there is no deity worthy of worship except Allah.\nThe Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, avoid what he forbade and warned against, and worship Allah only in the manner he instructed.",
+        "tl": "Ang Unang Haligi\nAng Shadatayn o pagsasaksi na walang diyos na karapat-dapat sambahin maliban sa Allah at si Muhammad ay Sugo ng Allah.\nAng kahulugan ng pagsasaksi: Walang ibang diyos na karapat-dapat sambahin maliban sa Allah.\nAng kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 1 (review of u1-l1)"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u3-l1-o1",
+      "text": {
+        "ar": "يعدّد أركان الإسلام الخمسة بترتيبها",
+        "en": "Lists the five pillars of Islam in order",
+        "tl": "Naiisa-isa ang limang haligi ng Islam ayon sa pagkakasunod"
+      },
+      "cards": [
+        "u3-l1-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u3-l1-o2",
+      "text": {
+        "ar": "يعرف أن أركان الإسلام تلزم كل مسلم، ولماذا سُمّيت أركانًا",
+        "en": "Knows that the pillars of Islam are required of every Muslim, and why they are called pillars",
+        "tl": "Alam na ang mga haligi ng Islam ay dapat gampanan ng bawat Muslim, at kung bakit tinawag itong mga haligi"
+      },
+      "cards": [
+        "u3-l1-c2"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u3-l1-e1",
+      "type": "order",
+      "objectives": [
+        "u3-l1-o1"
+      ],
+      "cards": [
+        "u3-l1-c1"
+      ],
+      "prompt": {
+        "ar": "رتّب أركان الإسلام كما في الحديث",
+        "en": "Put the pillars of Islam in the order of the hadith",
+        "tl": "Isaayos ang mga haligi ng Islam ayon sa hadith"
+      },
+      "items": [
+        {
+          "id": "s4",
+          "text": {
+            "ar": "صوم رمضان",
+            "en": "Fasting the month of Ramadan",
+            "tl": "Ang pag-aayuno sa buwan ng Ramadhan"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "إيتاء الزكاة",
+            "en": "Giving Zakah",
+            "tl": "Ang pagbibigay ng Zakah"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "إقام الصلاة",
+            "en": "Establishing prayer",
+            "tl": "Ang pagdarasal (Salah)"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "الشهادتان",
+            "en": "The testimony of faith",
+            "tl": "Ang pagsasaksi"
+          }
+        },
+        {
+          "id": "s5",
+          "text": {
+            "ar": "حج البيت",
+            "en": "Pilgrimage to the House (Hajj)",
+            "tl": "Ang Hajj sa Makkah"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "u3-l1-e2",
+      "type": "choose",
+      "objectives": [
+        "u3-l1-o1"
+      ],
+      "cards": [
+        "u3-l1-c1"
+      ],
+      "prompt": {
+        "ar": "على كم بُني الإسلام؟",
+        "en": "On how many pillars is Islam built?",
+        "tl": "Sa ilang haligi itinayo ang Islam?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "على ثلاث",
+            "en": "Three",
+            "tl": "Tatlo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "على خمس",
+            "en": "Five",
+            "tl": "Lima"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "على ست",
+            "en": "Six",
+            "tl": "Anim"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u3-l1-e3",
+      "type": "choose",
+      "objectives": [
+        "u3-l1-o2"
+      ],
+      "cards": [
+        "u3-l1-c2"
+      ],
+      "prompt": {
+        "ar": "لماذا سُمّيت أركان الإسلام بهذا الاسم؟",
+        "en": "Why are they called the pillars of Islam?",
+        "tl": "Bakit tinawag itong mga haligi ng Islam?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لأن الإسلام مبنيّ عليها",
+            "en": "Because Islam is built on them",
+            "tl": "Sapagka’t dito naitayo ang Islam"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لأنها لا تلزم المسلم",
+            "en": "Because a Muslim does not have to do them",
+            "tl": "Sapagka’t hindi ito kailangang gawin ng Muslim"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l1-e4",
+      "type": "choose",
+      "objectives": [
+        "u3-l1-o2"
+      ],
+      "cards": [
+        "u3-l1-c2"
+      ],
+      "prompt": {
+        "ar": "أركان الإسلام:",
+        "en": "The pillars of Islam:",
+        "tl": "Ang mga haligi ng Islam:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يكفي المسلم أن يأتي ببعضها",
+            "en": "it is enough for a Muslim to do some of them",
+            "tl": "sapat na sa Muslim ang gawin ang ilan lamang sa mga ito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "تلزم كل مسلم، ولا يصح إسلامه إلا باعتقاد وجوبها والإتيان بها جميعًا",
+            "en": "are required of every Muslim, who must observe all of them and believe they are obligatory",
+            "tl": "ay dapat gampanan ng bawat Muslim; kailangang paniwalaan at itaguyod ang lahat ng ito"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u3-l1-e5",
+      "type": "match",
+      "objectives": [
+        "u1-l1-o1",
+        "u1-l1-o2"
+      ],
+      "cards": [
+        "u3-l1-c3"
+      ],
+      "prompt": {
+        "ar": "مراجعة: صِل كل شهادة بمعناها",
+        "en": "Review: match each testimony with its meaning",
+        "tl": "Balik-aral: itugma ang bawat pagsaksi sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "شهادة أن لا إله إلا الله",
+            "en": "The testimony that there is no god but Allah",
+            "tl": "Ang pagsaksi na walang diyos maliban sa Allah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "شهادة أن محمدًا رسول الله",
+            "en": "The testimony that Muhammad is the Messenger of Allah",
+            "tl": "Ang pagsaksi na si Muhammad ay Sugo ng Allah"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "طاعته فيما أمر، وتصديقه فيما أخبر",
+            "en": "Obeying his orders and believing what he related",
+            "tl": "Ang pagsunod sa kanyang utos at paniniwala sa kanyang ibinalita"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "لا معبود حق إلا الله",
+            "en": "There is no deity worthy of worship except Allah",
+            "tl": "Walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "tl",
+      "card": "u3-l1-c3",
+      "text": "ng ‘’la ilaha illa Allah’’",
+      "reason": "transliteration"
+    }
+  ],
+  "notes": "Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 (LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise (e5) counts toward the u1-l1 objectives. The two verses of the first pillar are not repeated here."
+}

@@ -1,0 +1,516 @@
+{
+  "id": "u6-l2",
+  "unit": "u6",
+  "order": 2,
+  "title": {
+    "ar": "من صفات المؤمن",
+    "en": "Some Traits of the Believer",
+    "tl": "Ilan sa mga Katangian ng Mananampalataya"
+  },
+  "source": {
+    "site_section": "من صفات المؤمن",
+    "steps": null,
+    "page_ar": "113–116",
+    "page": "p. 8–9",
+    "sheet_rows": "225–247"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u6-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 8,
+        "ayat": [
+          2,
+          2
+        ]
+      },
+      "source_ref": "believer"
+    },
+    {
+      "id": "u6-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "صادقٌ في حديثه ولا يكذب.\nيفي بالعهد والوعد.\nلا يفجر في الخصومة.\nيؤدي الأمانة.\nيحب لأخيه المسلم ما يحب لنفسه.\nكريمٌ.\nيُحسن إلى الناس.\nيصل الرحم.",
+        "en": "Honest in speech and does not lie.\nHonors his vows and promises.\nDoes not use foul language when quarrels.\nFulfills trusts to whom they are due.\nLoves for his fellow Muslim what he loves for himself.\nGenerous.\nTreats people kindly.\nUpholds kinship ties.",
+        "tl": "Matapat at hindi nagsisinungaling.\nTinutupad ang kanyang mga pangako.\nHindi lalampas sa mga limitasyon sa pag-aaway.\nPinapangalagaan at ibinabalik ang mga bagay na ipinagkatiwala sa kanya.\nMinamahal niya ang kanyang kapatid na Muslim kung anuman ang gusto niya para sa kanyang sarili.\nMapagbigay.\nMaganda ang pakikitungo sa mga tao.\nBumibisita sa kanyang mga kamag-anak."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "traits 1-8"
+    },
+    {
+      "id": "u6-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "يرضى بقدر الله ويشكره في حال الرخاء ويصبر في حال الضراء.\nيتصف بالحياء.\nيرحم الخلق.\nقلبُه سليمٌ من الأحقاد وجوارحه سليمة من الاعتداء على الغير.\nيعفو عن الناس.\nلا يأكل الربا ولا يتعامل به.\nلا يزني.",
+        "en": "Content with what Allah decrees for him, grateful to Allah in times of prosperity and is patient in times of adversity.\nModest.\nShows mercy to all creation.\nHis heart is free of grudges and he does not harm others in any way.\nForgives people.\nAvoids usury.\nDoes not commit adultery.",
+        "tl": "Siya ay nalulugod sa kapalaran at tadhan ng Allah at nagpapasalamat sa Kanya sa kaganapan ng kasaganaan at nagtitimpi sa kaganapan ng pagkabalisa o kagipitan.\nMayumi at mahiyain.\nMahabagin sa mga nilikha.\nAng kanyang puso ay malinis mula sa mga inngit at pagkamuhi, at ang kanyang katawan ay malinis mula sa panananakit sa kapwa.\nMapagpatawad sa mga tao.\nHindi kumakain mula sa Riba at hindi nakikipag-uganayan dito.\nHindi nanganaglunya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "traits 9-15"
+    },
+    {
+      "id": "u6-l2-c4",
+      "kind": "text",
+      "text": {
+        "ar": "لا يشرب الخمر.\nيحسن إلى جيرانه.\nلا يظلم ولا يغدر.\nلا يسرق ولا يحتال.\nبارٌّ بوالديه، وإن كانوا غير مسلمين، ويطيعهم في المعروف.\nيربي أولاده على الفضيلة، ويأمرهم بالواجبات الشرعية، وينهاهم عن الرذيلة والمحرمات.\nلا يتشبه بأفعال غير المسلمين في خصائصهم الدينية أو العادات التي أصبحت ميزةً وشعاراً لهم.",
+        "en": "Does not drink alcohol.\nTreats his neighbors well.\nDoes not oppress or betray.\nDoes not steal or defraud.\nDutiful to his parents, even if they are not Muslims, and obeys in doing good.\nBrings up his children and teaches them virtues and good characters, and commands them to do their religious duties and forbids them from vice and all prohibitions.\nDoes not imitate non-Muslims in what is peculiar to their religions or the habits that have become distinctive signs of them.",
+        "tl": "Hindi umiinom ng alak.\nMabuti ang pakikitungo sa kanyang kapitbahay.\nHindi nanloloko at nang-aapi ng kapwa.\nIniiwasan ang mga pagnanakaw at pandaraya.\nMabuti ang pakikitungo sa kanyang mga magulang, kahit na hindi sila Muslim at sumusunod sa kanilang mabubuting utos.\nDinidisplina ang kanyang mga anak sa kabutihan at nag-uutos sa kanila sa paggawa ng mga pagsamba, at nagbabawal sa paggawa ng kasamaan at ipinagbabawal.\nHindi gumagaya sa mga gawaing hindi Muslim na mayroong marka at palatandaan ng kanilang relihiyon at tradisyonal na mga kilos."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "traits 16-22"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u6-l2-o1",
+      "text": {
+        "ar": "يذكر من صفات المؤمن في معاملة الناس: الصدق والوفاء بالعهد وأداء الأمانة وصلة الرحم",
+        "en": "Names traits of the believer in dealing with people: honesty, keeping promises, fulfilling trusts, kinship ties",
+        "tl": "Nasasabi ang mga katangian ng mananampalataya sa pakikitungo sa tao: katapatan, pagtupad sa pangako, pag-iingat ng ipinagkatiwala, pagbisita sa kamag-anak"
+      },
+      "cards": [
+        "u6-l2-c2",
+        "u6-l2-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l2-o2",
+      "text": {
+        "ar": "يعرف حال قلب المؤمن مع قدر الله ومع الناس",
+        "en": "Knows the state of the believer’s heart toward Allah’s decree and toward people",
+        "tl": "Alam ang kalagayan ng puso ng mananampalataya sa tadhana ng Allah at sa kapwa"
+      },
+      "cards": [
+        "u6-l2-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u6-l2-o3",
+      "text": {
+        "ar": "يعرف ما يجتنبه المؤمن: الربا والزنا والخمر والظلم والسرقة",
+        "en": "Knows what the believer avoids: usury, adultery, alcohol, oppression and theft",
+        "tl": "Alam ang iniiwasan ng mananampalataya: Riba, pangangalunya, alak, pang-aapi at pagnanakaw"
+      },
+      "cards": [
+        "u6-l2-c3",
+        "u6-l2-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l2-o4",
+      "text": {
+        "ar": "يعرف حق الوالدين والجيران في الدرس",
+        "en": "Knows what the lesson says about parents and neighbours",
+        "tl": "Alam ang sinasabi ng aralin tungkol sa mga magulang at kapitbahay"
+      },
+      "cards": [
+        "u6-l2-c4"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u6-l2-e1",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o1"
+      ],
+      "cards": [
+        "u6-l2-c2",
+        "u6-l2-c1"
+      ],
+      "prompt": {
+        "ar": "المؤمن في حديثه:",
+        "en": "In his speech, the believer is:",
+        "tl": "Sa kanyang pananalita, ang mananampalataya ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "صادق لا يكذب",
+            "en": "honest and does not lie",
+            "tl": "matapat at hindi nagsisinungaling"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يكذب أحيانًا",
+            "en": "sometimes lies",
+            "tl": "paminsan-minsang nagsisinungaling"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l2-e2",
+      "type": "match",
+      "objectives": [
+        "u6-l2-o1"
+      ],
+      "cards": [
+        "u6-l2-c2"
+      ],
+      "prompt": {
+        "ar": "صِل كل أمر بما يفعله المؤمن تجاهه",
+        "en": "Match each thing with what the believer does with it",
+        "tl": "Itugma ang bawat bagay sa ginagawa ng mananampalataya rito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "العهد والوعد",
+            "en": "Vows and promises",
+            "tl": "Mga pangako"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الأمانة",
+            "en": "Trusts",
+            "tl": "Ang ipinagkatiwala sa kanya"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الرحم",
+            "en": "Kinship ties",
+            "tl": "Mga kamag-anak"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "يؤديها",
+            "en": "he fulfills them",
+            "tl": "ibinabalik niya"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "يصلها",
+            "en": "he upholds them",
+            "tl": "binibisita niya"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "يفي بهما",
+            "en": "he honors them",
+            "tl": "tinutupad niya"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u6-l2-e3",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o2"
+      ],
+      "cards": [
+        "u6-l2-c3"
+      ],
+      "prompt": {
+        "ar": "المؤمن في حال الرخاء وفي حال الضراء:",
+        "en": "In times of prosperity and of adversity, the believer:",
+        "tl": "Sa panahon ng kasaganaan at ng kagipitan, ang mananampalataya ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يشكر الله في الرخاء، ويصبر في الضراء",
+            "en": "is grateful to Allah in prosperity and patient in adversity",
+            "tl": "nagpapasalamat sa Allah sa kasaganaan at nagtitimpi sa kagipitan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يسخط على قدر الله في الضراء",
+            "en": "is angry at Allah’s decree in adversity",
+            "tl": "nagagalit sa tadhana ng Allah sa kagipitan"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l2-e4",
+      "type": "match",
+      "objectives": [
+        "u6-l2-o2",
+        "u6-l2-o3"
+      ],
+      "cards": [
+        "u6-l2-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل عبارة بتمامها كما في الدرس",
+        "en": "Match each phrase with its ending, as in the lesson",
+        "tl": "Itugma ang bawat parirala sa katapusan nito, ayon sa aralin"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "قلب المؤمن",
+            "en": "The believer’s heart",
+            "tl": "Ang puso ng mananampalataya"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الربا",
+            "en": "Usury",
+            "tl": "Ang Riba"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الناس",
+            "en": "People",
+            "tl": "Ang mga tao"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "لا يأكله ولا يتعامل به",
+            "en": "he avoids it",
+            "tl": "hindi siya kumakain mula rito"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "يعفو عنهم",
+            "en": "he forgives them",
+            "tl": "pinapatawad niya sila"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "سليم من الأحقاد",
+            "en": "is free of grudges",
+            "tl": "ay malinis mula sa inggit at pagkamuhi"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u6-l2-e5",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o3"
+      ],
+      "cards": [
+        "u6-l2-c3",
+        "u6-l2-c4"
+      ],
+      "prompt": {
+        "ar": "مما يجتنبه المؤمن كما في الدرس:",
+        "en": "Which of these does the believer avoid, as the lesson says?",
+        "tl": "Alin dito ang iniiwasan ng mananampalataya ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الربا، والزنا، وشرب الخمر",
+            "en": "Usury, adultery and drinking alcohol",
+            "tl": "Riba, pangangalunya at pag-inom ng alak"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "صلة الرحم، والإحسان إلى الجيران",
+            "en": "Upholding kinship ties and treating neighbours well",
+            "tl": "Pagbisita sa kamag-anak at mabuting pakikitungo sa kapitbahay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l2-e6",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o4"
+      ],
+      "cards": [
+        "u6-l2-c4"
+      ],
+      "prompt": {
+        "ar": "المؤمن مع والديه وإن كانا غير مسلمَين:",
+        "en": "With his parents, even if they are not Muslims, the believer:",
+        "tl": "Sa kanyang mga magulang, kahit hindi sila Muslim, ang mananampalataya ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لا يبرّهما لأنهما غير مسلمَين",
+            "en": "is not dutiful to them because they are not Muslims",
+            "tl": "hindi mabuti ang pakikitungo sa kanila dahil hindi sila Muslim"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بارّ بهما، ويطيعهما في المعروف",
+            "en": "is dutiful to them and obeys them in doing good",
+            "tl": "mabuti ang pakikitungo sa kanila at sumusunod sa kanilang mabubuting utos"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l2-e7",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o4"
+      ],
+      "cards": [
+        "u6-l2-c4"
+      ],
+      "prompt": {
+        "ar": "المؤمن مع جيرانه:",
+        "en": "With his neighbours, the believer:",
+        "tl": "Sa kanyang mga kapitbahay, ang mananampalataya ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يحسن إليهم",
+            "en": "treats them well",
+            "tl": "mabuti ang pakikitungo sa kanila"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يعتدي عليهم",
+            "en": "harms them",
+            "tl": "nananakit sa kanila"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l2-e8",
+      "type": "choose",
+      "objectives": [
+        "u6-l2-o3"
+      ],
+      "cards": [
+        "u6-l2-c4"
+      ],
+      "prompt": {
+        "ar": "هل يسرق المؤمن أو يحتال؟",
+        "en": "Does the believer steal or defraud?",
+        "tl": "Nagnanakaw o nandaraya ba ang mananampalataya?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "نعم، إذا احتاج",
+            "en": "Yes, if he is in need",
+            "tl": "Oo, kapag nangangailangan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لا يسرق ولا يحتال",
+            "en": "He does not steal or defraud",
+            "tl": "Iniiwasan niya ang pagnanakaw at pandaraya"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "من صفات المؤمن",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "Some Characteristics of the Believer",
+      "reason": "repeats the section title (shown as the lesson title)"
+    }
+  ],
+  "notes": "Section «من صفات المؤمن». In the spreadsheet the English row for the verse (8:2) has no \"Allah says:\" lead-in, so the English text of card 1 is empty and the card shows only the verse. The traits are split into three cards in the same order in all three languages (22 traits each)."
+}

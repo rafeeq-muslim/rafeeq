@@ -1,0 +1,363 @@
+{
+  "id": "u2-l4",
+  "unit": "u2",
+  "order": 4,
+  "title": {
+    "ar": "القرآن كلام ربي",
+    "en": "The Qur’an Is the Word of My Lord",
+    "tl": "Ang Qur’an ay Salita ng Aking Panginoon"
+  },
+  "source": {
+    "site_section": "القرآن كلام ربي",
+    "steps": null,
+    "page_ar": "24–25",
+    "page": "p. 2",
+    "sheet_rows": "43–45"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u2-l4-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 4,
+        "ayat": [
+          174,
+          174
+        ]
+      },
+      "source_ref": "quran"
+    },
+    {
+      "id": "u2-l4-c2",
+      "kind": "text",
+      "text": {
+        "ar": "القرآن الكريم هو كلام الله تعالى الذي أنزله على نبيه محمد ﷺ ليُخرج الناس من الظلمات إلى النور ويهديهم إلى الصراط المستقيم.",
+        "en": "The noble Qur'an is the word of Allah Almighty which He revealed to His Prophet Muhammad (pbuh) to bring mankind out of darknesses into the light and guide them to the straight path.",
+        "tl": "Ang Maluwalhating Qur’an ay salita ng Allah na ipinahayag Niya kay propeta Muhammad ﷺ upang hanguin ang mga tao mula sa kadiliman tungo sa liwanag at sa matuwid na landas."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "quran"
+    },
+    {
+      "id": "u2-l4-c3",
+      "kind": "text",
+      "text": {
+        "ar": "من قرأهُ حصل له أجرٌ عظيم، ومن عملَ بهدْيهِ سَلَكَ الطريق القويم.",
+        "en": "Whoever reads it earns a great reward, and whoever acts upon its guidance is on the true path.",
+        "tl": "Sinuman ang magbasa nito ay makakatamo ng dakilang gantimpala, at sinuman ang gawing patnubay ang Qur’an ay katotohanang tinahak niya ang matuwid na landas."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "quran"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u2-l4-o1",
+      "text": {
+        "ar": "يعرف أن القرآن كلام الله أنزله على نبيه محمد ﷺ",
+        "en": "Knows that the Qur’an is the word of Allah, revealed to His Prophet Muhammad ﷺ",
+        "tl": "Alam na ang Qur’an ay salita ng Allah na ipinahayag kay Propeta Muhammad ﷺ"
+      },
+      "cards": [
+        "u2-l4-c2",
+        "u2-l4-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u2-l4-o2",
+      "text": {
+        "ar": "يعرف لماذا أنزل الله القرآن",
+        "en": "Knows why Allah revealed the Qur’an",
+        "tl": "Alam kung bakit ipinahayag ng Allah ang Qur’an"
+      },
+      "cards": [
+        "u2-l4-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u2-l4-o3",
+      "text": {
+        "ar": "يعرف فضل قراءة القرآن والعمل بهديه",
+        "en": "Knows the reward of reading the Qur’an and acting upon its guidance",
+        "tl": "Alam ang gantimpala ng pagbasa ng Qur’an at pagsunod sa patnubay nito"
+      },
+      "cards": [
+        "u2-l4-c3"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u2-l4-e1",
+      "type": "choose",
+      "objectives": [
+        "u2-l4-o1"
+      ],
+      "cards": [
+        "u2-l4-c2",
+        "u2-l4-c1"
+      ],
+      "prompt": {
+        "ar": "القرآن الكريم هو:",
+        "en": "The Noble Qur’an is:",
+        "tl": "Ang Maluwalhating Qur’an ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "كلام الله تعالى",
+            "en": "the word of Allah Almighty",
+            "tl": "salita ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "كلام النبي ﷺ",
+            "en": "the word of the Prophet ﷺ",
+            "tl": "salita ng Propeta ﷺ"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "كلام الناس",
+            "en": "the word of people",
+            "tl": "salita ng mga tao"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l4-e2",
+      "type": "match",
+      "objectives": [
+        "u2-l4-o1",
+        "u2-l4-o2"
+      ],
+      "cards": [
+        "u2-l4-c2"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "أنزله الله",
+            "en": "Allah revealed it",
+            "tl": "Ipinahayag ito ng Allah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "ليخرج الناس",
+            "en": "to bring mankind",
+            "tl": "upang hanguin ang mga tao"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "ويهديهم",
+            "en": "and guide them",
+            "tl": "at gabayan sila"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "من الظلمات إلى النور",
+            "en": "out of darknesses into the light",
+            "tl": "mula sa kadiliman tungo sa liwanag"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "إلى الصراط المستقيم",
+            "en": "to the straight path",
+            "tl": "sa matuwid na landas"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "على نبيه محمد ﷺ",
+            "en": "to His Prophet Muhammad (pbuh)",
+            "tl": "kay Propeta Muhammad ﷺ"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l4-e3",
+      "type": "choose",
+      "objectives": [
+        "u2-l4-o2"
+      ],
+      "cards": [
+        "u2-l4-c2"
+      ],
+      "prompt": {
+        "ar": "أنزل الله القرآن ليخرج الناس:",
+        "en": "Allah revealed the Qur’an to bring mankind:",
+        "tl": "Ipinahayag ng Allah ang Qur’an upang hanguin ang mga tao:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "من الظلمات إلى النور",
+            "en": "out of darknesses into the light",
+            "tl": "mula sa kadiliman tungo sa liwanag"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "من النور إلى الظلمات",
+            "en": "out of the light into darknesses",
+            "tl": "mula sa liwanag tungo sa kadiliman"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l4-e4",
+      "type": "match",
+      "objectives": [
+        "u2-l4-o3"
+      ],
+      "cards": [
+        "u2-l4-c3"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "من قرأه",
+            "en": "Whoever reads it",
+            "tl": "Sinuman ang magbasa nito"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "من عمل بهديه",
+            "en": "Whoever acts upon its guidance",
+            "tl": "Sinuman ang gawing patnubay ang Qur’an"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "سلك الطريق القويم",
+            "en": "is on the true path",
+            "tl": "ay tinahak ang matuwid na landas"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "حصل له أجر عظيم",
+            "en": "earns a great reward",
+            "tl": "ay makakatamo ng dakilang gantimpala"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l4-e5",
+      "type": "choose",
+      "objectives": [
+        "u2-l4-o3"
+      ],
+      "cards": [
+        "u2-l4-c3"
+      ],
+      "prompt": {
+        "ar": "ماذا يحصل لمن قرأ القرآن؟",
+        "en": "What does the one who reads the Qur’an earn?",
+        "tl": "Ano ang makakamit ng sinumang magbasa ng Qur’an?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أجر عظيم",
+            "en": "A great reward",
+            "tl": "Dakilang gantimpala"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الظلمات",
+            "en": "Darknesses",
+            "tl": "Kadiliman"
+          }
+        }
+      ],
+      "answer": "a"
+    }
+  ],
+  "dropped": [],
+  "notes": "Section «القرآن كلام ربي». The verse (An-Nisa 4:174) is shown from the Quran database (LRN-09 rule 2 example)."
+}

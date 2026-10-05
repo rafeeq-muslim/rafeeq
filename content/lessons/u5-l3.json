@@ -1,0 +1,306 @@
+{
+  "id": "u5-l3",
+  "unit": "u5",
+  "order": 3,
+  "title": {
+    "ar": "التيمم",
+    "en": "Tayammum (Dry Purification)",
+    "tl": "Ang Tayammum"
+  },
+  "source": {
+    "site_section": "التيمم (intro + tab9_1, tab9_2)",
+    "steps": null,
+    "page_ar": "86–88",
+    "page": "p. 7",
+    "sheet_rows": "185–189"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u5-l3-c1",
+      "kind": "text",
+      "text": {
+        "ar": "إذا لم يجد المسلم الماء الذي يتطهر به أو لم يستطع استعمال الماء لمرض ونحوه وخشي أن يفوته وقت الصلاة فإنه يتيمم بالتراب.",
+        "en": "If the Muslim cannot find water to use for purification, or if he is unable to use water because of an illness or the like, and he fears that he might miss performing the prayer on time, then he may make Tayammum with sand or dust.",
+        "tl": "Sa panahon na walang mahanap na tubig ang isang muslim upang gamitin sa pagwu-wudhu o paglilinis, o hindi kaya’y wala siyang kakayahan upang gamitin ang tubig sanhi ng sakit o iba pang dahilan at siya ay nangangamba na mawala ang oras ng salah, pinapahintulutan sa kanya ang tayammum gamit ang lupa."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "when tayammum"
+    },
+    {
+      "id": "u5-l3-c2",
+      "kind": "text",
+      "text": {
+        "ar": "وصفة ذلك أن يضرب بيديه ضربة واحدة ثم يمسح بهما وجهه وكفيه فقط. ويُشترط أن يكونَ الترابُ طاهرًا.",
+        "en": "Tayammum is achieved by striking the soil with the hands once then wiping his face and hands up to the wrist, provided that the dust or the soil is pure.",
+        "tl": "Ang pamamaraan ng pag-tayammum ay sa pamamagitan ng pagdampi sa lupa ng mga kamay nang isang beses at punasan ang mukha at mga kamay, sa kondisyon na ang alikabok o lupa ay malinis."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "how tayammum"
+    },
+    {
+      "id": "u5-l3-c3",
+      "kind": "text",
+      "text": {
+        "ar": "يبطل التيمم بهذه الأمور:\n1- يَبطُل التيمُّمُ بما يَبطُلُ به الوضوءُ.\n2- إذا وُجد الماء قبل البدء في العبادة التي تم التيمم لها.",
+        "en": "Tayammum is nullified by:\n1- Whatever nullifies ablution also nullifies Tayammum.\n2- If water is found before starting the worship for which the Tayammum was made.",
+        "tl": "Mga bagay na mawawalan ng bisa ang Tayammum:\n1 Mawawalan ng bisa ang tayammum sa mga bagay na makakasira sa wudhu.\n2 Kapag nakahanap ng tubig bago simulan ang pagsamba kung saan ginawa ang tayammum."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "what invalidates tayammum"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u5-l3-o1",
+      "text": {
+        "ar": "يعرف متى يتيمم المسلم",
+        "en": "Knows when a Muslim makes tayammum",
+        "tl": "Alam kung kailan nagta-tayammum ang Muslim"
+      },
+      "cards": [
+        "u5-l3-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l3-o2",
+      "text": {
+        "ar": "يصف صفة التيمم",
+        "en": "Describes how tayammum is done",
+        "tl": "Nailalarawan ang paraan ng tayammum"
+      },
+      "cards": [
+        "u5-l3-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l3-o3",
+      "text": {
+        "ar": "يعرف مبطلات التيمم",
+        "en": "Knows what invalidates tayammum",
+        "tl": "Alam ang nakasisira sa tayammum"
+      },
+      "cards": [
+        "u5-l3-c3"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u5-l3-e1",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o1"
+      ],
+      "cards": [
+        "u5-l3-c1"
+      ],
+      "prompt": {
+        "ar": "متى يتيمم المسلم؟",
+        "en": "When does a Muslim make tayammum?",
+        "tl": "Kailan nagta-tayammum ang isang Muslim?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "إذا لم يجد الماء أو لم يستطع استعماله لمرض ونحوه، وخشي فوات وقت الصلاة",
+            "en": "when he cannot find water or cannot use it because of illness or the like, and fears missing the prayer time",
+            "tl": "kapag walang mahanap na tubig o hindi magamit dahil sa sakit, at nangangamba na mawala ang oras ng salah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إذا وجد الماء واستطاع استعماله",
+            "en": "when he has water and is able to use it",
+            "tl": "kapag may tubig at kaya itong gamitin"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l3-e2",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o1"
+      ],
+      "cards": [
+        "u5-l3-c1"
+      ],
+      "prompt": {
+        "ar": "بماذا يتيمم المسلم؟",
+        "en": "With what is tayammum made?",
+        "tl": "Gamit ang ano ang tayammum?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بالماء",
+            "en": "With water",
+            "tl": "Gamit ang tubig"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بالتراب",
+            "en": "With sand or dust (earth)",
+            "tl": "Gamit ang lupa"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-l3-e3",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o2"
+      ],
+      "cards": [
+        "u5-l3-c2"
+      ],
+      "prompt": {
+        "ar": "ماذا يمسح المتيمم؟",
+        "en": "What does one wipe in tayammum?",
+        "tl": "Ano ang pinupunasan sa tayammum?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الوجه والكفين",
+            "en": "The face and the hands",
+            "tl": "Ang mukha at mga kamay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الرأس والرجلين",
+            "en": "The head and the feet",
+            "tl": "Ang ulo at mga paa"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l3-e4",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o2"
+      ],
+      "cards": [
+        "u5-l3-c2"
+      ],
+      "prompt": {
+        "ar": "يُشترط في التراب الذي يُتيمم به:",
+        "en": "The earth used for tayammum must be:",
+        "tl": "Ang lupang ginagamit sa tayammum ay dapat:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يكون مبلولًا بالماء",
+            "en": "wet with water",
+            "tl": "basa ng tubig"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن يكون طاهرًا",
+            "en": "pure",
+            "tl": "malinis"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o3"
+      ],
+      "cards": [
+        "u5-l3-c3"
+      ],
+      "prompt": {
+        "ar": "يبطل التيمم:",
+        "en": "Tayammum is invalidated:",
+        "tl": "Nawawalan ng bisa ang tayammum:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بما يبطل به الوضوء، وإذا وُجد الماء قبل البدء في العبادة",
+            "en": "by whatever invalidates wudu, and if water is found before starting the worship",
+            "tl": "sa mga bagay na nakasisira sa wudhu, at kapag nakahanap ng tubig bago simulan ang pagsamba"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بمسح الوجه والكفين",
+            "en": "by wiping the face and hands",
+            "tl": "sa pagpunas ng mukha at kamay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u5-l3-o3"
+      ],
+      "cards": [
+        "u5-l3-c3"
+      ],
+      "prompt": {
+        "ar": "إذا وجد المتيمم الماء قبل البدء في العبادة التي تيمم لها:",
+        "en": "If water is found before starting the worship for which tayammum was made:",
+        "tl": "Kapag nakahanap ng tubig bago simulan ang pagsamba kung saan ginawa ang tayammum:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بقي تيممه صحيحًا",
+            "en": "the tayammum stays valid",
+            "tl": "may bisa pa rin ang tayammum"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بطل تيممه",
+            "en": "the tayammum is invalid",
+            "tl": "nawawalan ng bisa ang tayammum"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [],
+  "notes": "Section «التيمم». The English (and Filipino) says the hands are wiped \"up to the wrist\"; the Arabic says «وكفيه فقط»; exercises say \"face and hands\" only. The number of strikes is taught on the card (one) but not tested against another number, since scholars differ on it."
+}

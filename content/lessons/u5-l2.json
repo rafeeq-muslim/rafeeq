@@ -1,0 +1,323 @@
+{
+  "id": "u5-l2",
+  "unit": "u5",
+  "order": 2,
+  "title": {
+    "ar": "الغسل",
+    "en": "Ghusl (Ritual Bath)",
+    "tl": "Ang Ghusl (Pagligo)"
+  },
+  "source": {
+    "site_section": "الغسل (intro + tab8_1, tab8_2)",
+    "steps": null,
+    "page_ar": "82–84",
+    "page": "p. 7",
+    "sheet_rows": "175–183"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u5-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "إذا حصل من الرجل أو المرأة جماعٌ، أو نزل المنيُّ منهما بشهوة حال اليقظة أو النوم؛ وجبَ عليهما الغُسل حتى يتمكنا من أداء الصلاة أو ما يلزم له الطهارة، وكذلك المرأة إذا طهرت من الحيض والنفاس وجبَ عليها الغُسل قبل أن تتمكن من أداء الصلاة أو ما يلزم له الطهارة.",
+        "en": "If a man or a woman had sexual intercourse or ejaculated semen with lust while being awake or asleep, they must make Ghusl (take a ritual bath) in order to perform prayer or any worship that requires purification. Also, the woman must make Ghusl at the end of her menstrual period or postpartum period before she can perform prayer or any worship that requires purification.",
+        "tl": "Kapag nangyari ang pakikipagtalik sa lalaki at babae o di kaya’y lumabas ang semilya nila kahit hindi sa pagtatalik ay obligado na sila ay maligo upang pahintulutan sila mag-salah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "when ghusl is required"
+    },
+    {
+      "id": "u5-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "وصفة الغُسل كالتالي:\nأنْ يعمم المسلم بدنه كله بالماء على أي وجه كان، ومن ذلك المضمضة والاستنشاق، فإذا عمَّمَ بدنه بالماء ارتفع عنه الحدث الأكبر، وتمت طهارته.",
+        "en": "The manner of performing Ghusl is as follows:\nThat the Muslim washes his whole body with water in any way, including rinsing the mouth and sniffing water into the nostrils. If the water reached his whole body, he becomes free of major impurity and his purification is complete.",
+        "tl": "Ang paraan ng gag-ghusl ay ang mga sumusunod:\nBabasain ng isang muslim ang kanyang buong katawan ng tubig kahit sa anong paraan, kalakip dito ang pagmumog at pagsinghot ng tubig. Kapag nabasa ang kanyang buong katawan ay ganap na siyang malinis."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "how to make ghusl"
+    },
+    {
+      "id": "u5-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "يحظر على الجُنب فعل ما يلي حتى يغتسل:\n01 الصلاة.\n02 الطواف بالكعبة.\n03 المكث في المسجد، ويجوز له العبور فقط من غير مكث.\n04 مس المصحف.\n05 قراءة القرآن.",
+        "en": "The person in a state of Janābah (major ritual impurity) is not allowed to do the following until he makes Ghusl:\n1- Praying.\n2- Circumambulating the Ka‘bah (Tawāf).\n3- Staying in the Masjid (mosque), but he may only pass without staying therein.\n4- Touching the Mus-haf (bound copy of the Qur’an).\n5- Reciting the Qur’an.",
+        "tl": "Mga bagay na hindi maaring gawin ng isang Junub hanggang sa siya ay maligo:\n1 Ang Salah\n2 Pagtawaf sa Ka’bah\n3 Pananatili sa Masjid, ngunit pinapahintulutan lamang ang pagdaan dito na walang halong pananatili.\n4 Paghawak ng Mushaf ( Qur’an )\n5 Pagbasa ng Qur’an"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "forbidden until ghusl"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u5-l2-o1",
+      "text": {
+        "ar": "يعرف مما يوجب الغسل الجماعَ ونزول المني بشهوة",
+        "en": "Knows that intercourse and ejaculation with desire require ghusl",
+        "tl": "Alam na ang pakikipagtalik at paglabas ng semilya ay nag-oobliga ng paligo"
+      },
+      "cards": [
+        "u5-l2-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l2-o2",
+      "text": {
+        "ar": "يصف صفة الغسل: تعميم البدن كله بالماء",
+        "en": "Describes ghusl: washing the whole body with water",
+        "tl": "Nailalarawan ang ghusl: pagbasa ng buong katawan ng tubig"
+      },
+      "cards": [
+        "u5-l2-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l2-o3",
+      "text": {
+        "ar": "يعرف ما يُحظر على الجنب حتى يغتسل",
+        "en": "Knows what a person in janābah may not do until he makes ghusl",
+        "tl": "Alam ang mga bagay na hindi maaaring gawin ng isang junub hanggang siya ay maligo"
+      },
+      "cards": [
+        "u5-l2-c3"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u5-l2-e1",
+      "type": "choose",
+      "objectives": [
+        "u5-l2-o1"
+      ],
+      "cards": [
+        "u5-l2-c1"
+      ],
+      "prompt": {
+        "ar": "مما يوجب الغسل كما في الدرس:",
+        "en": "Which of these requires ghusl, as the lesson says?",
+        "tl": "Alin dito ang nag-oobliga ng paligo ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الجماع، أو نزول المني بشهوة",
+            "en": "Sexual intercourse, or ejaculating semen with lust",
+            "tl": "Pakikipagtalik, o paglabas ng semilya"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "قراءة القرآن",
+            "en": "Reciting the Qur’an",
+            "tl": "Pagbasa ng Qur’an"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l2-e2",
+      "type": "match",
+      "objectives": [
+        "u5-l2-o1",
+        "u5-l2-o2",
+        "u5-l2-o3"
+      ],
+      "cards": [
+        "u5-l2-c1",
+        "u5-l2-c2",
+        "u5-l2-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل عبارة بما يناسبها",
+        "en": "Match each phrase with what fits it",
+        "tl": "Itugma ang bawat parirala sa angkop dito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الجماع",
+            "en": "Sexual intercourse",
+            "tl": "Pakikipagtalik"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "تعميم البدن كله بالماء",
+            "en": "Washing the whole body with water",
+            "tl": "Pagbasa ng buong katawan ng tubig"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "المكث في المسجد",
+            "en": "Staying in the masjid",
+            "tl": "Pananatili sa Masjid"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "صفة الغسل",
+            "en": "how ghusl is done",
+            "tl": "paraan ng ghusl"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "يُحظر على الجنب حتى يغتسل",
+            "en": "not allowed for a junub until he makes ghusl",
+            "tl": "hindi maaari sa junub hanggang siya ay maligo"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "يوجب الغسل",
+            "en": "requires ghusl",
+            "tl": "nag-oobliga ng paligo"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u5-l2-e3",
+      "type": "choose",
+      "objectives": [
+        "u5-l2-o2"
+      ],
+      "cards": [
+        "u5-l2-c2"
+      ],
+      "prompt": {
+        "ar": "صفة الغسل:",
+        "en": "The manner of ghusl:",
+        "tl": "Ang paraan ng ghusl:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يعمّم المسلم بدنه كله بالماء، ومن ذلك المضمضة والاستنشاق",
+            "en": "the Muslim washes his whole body with water, including rinsing the mouth and sniffing water into the nose",
+            "tl": "babasain ng Muslim ang buong katawan ng tubig, kasama ang pagmumog at pagsinghot ng tubig"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن يغسل الوجه واليدين فقط",
+            "en": "washing only the face and hands",
+            "tl": "paghuhugas lamang ng mukha at kamay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l2-e4",
+      "type": "choose",
+      "objectives": [
+        "u5-l2-o2"
+      ],
+      "cards": [
+        "u5-l2-c2"
+      ],
+      "prompt": {
+        "ar": "إذا عمّم المسلم بدنه بالماء:",
+        "en": "When the water has reached the whole body:",
+        "tl": "Kapag nabasa ang buong katawan ng tubig:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لم تتم طهارته بعد",
+            "en": "his purification is not complete yet",
+            "tl": "hindi pa siya malinis"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "تمّت طهارته",
+            "en": "his purification is complete",
+            "tl": "ganap na siyang malinis"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-l2-e5",
+      "type": "choose",
+      "objectives": [
+        "u5-l2-o3"
+      ],
+      "cards": [
+        "u5-l2-c3"
+      ],
+      "prompt": {
+        "ar": "مما يُحظر على الجنب حتى يغتسل:",
+        "en": "Which of these may a junub not do until he makes ghusl?",
+        "tl": "Alin dito ang hindi maaaring gawin ng junub hanggang siya ay maligo?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الصلاة، والطواف بالكعبة، ومسّ المصحف",
+            "en": "Praying, circling the Ka‘bah, and touching the Mus-haf",
+            "tl": "Ang Salah, pagtawaf sa Ka’bah, at paghawak ng Mushaf"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "تعميم البدن بالماء",
+            "en": "Washing the whole body with water",
+            "tl": "Pagbasa ng buong katawan ng tubig"
+          }
+        }
+      ],
+      "answer": "a"
+    }
+  ],
+  "dropped": [],
+  "notes": "Section «الغسل». The Filipino page translates only the first sentence of the intro (intercourse / emission of semen) and not the sentence on the end of menstruation and post-natal bleeding; exercises ask only about what all three languages say. The sentence «ويجوز له العبور فقط من غير مكث» is shown on the card but not used in an exercise (passing through a masjid is a matter scholars differ on)."
+}

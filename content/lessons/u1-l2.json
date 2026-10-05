@@ -1,0 +1,403 @@
+{
+  "id": "u1-l2",
+  "unit": "u1",
+  "order": 2,
+  "title": {
+    "ar": "قبل الوضوء: ما يجب له الوضوء، والماء الطهور",
+    "en": "Before Wudu: What Requires Wudu, and Purifying Water",
+    "tl": "Bago ang Wudhu: Kailan Kailangan ang Wudhu, at ang Malinis na Tubig"
+  },
+  "source": {
+    "site_section": "أتعلم الوضوء (section intro, before the steps)",
+    "steps": null,
+    "page_ar": "60–62",
+    "page": "p. 5",
+    "sheet_rows": "116–123"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          222,
+          222
+        ]
+      },
+      "source_ref": "wudu intro"
+    },
+    {
+      "id": "u1-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "قال ﷺ: (تَوَضَّأ نَحْوَ وُضُوئِي هَذَا). من عظيم شأن الصلاة أنْ شرع الله الطهارة قبلها، وجعلها شرطًا لصحتها، فهي مفتاح الصلاة، واستشعار فضلها يجعل القلب مشتاقًا لأداء الصلاة، قال ﷺ: (الطهور شطر الإيمان.. والصلاة نور).",
+        "en": "The Prophet (pbuh) said: “Perform ablution similar to my ablution.” Because of the immense status of Salah (prayer), Allah prescribed purification before it and made purification a condition for the validity of the prayer. It is the key to prayer (the first step towards performing it). Consciousness of its merit makes the heart long to perform prayer. The Prophet (pbuh) said: \"Purification is half of Imān… and prayer is light.\"",
+        "tl": "Sinabi ng Propeta ﷺ: “Mag-wudhu ka tulad ng pag-wudhu ko na ito.”\nKabilang sa pagiging dakila ng antas ng salah ay isinabatas ng Allah ang taharah o paglilinis bago ito isagawa, ito ay ginawang kondisyon upang tanggaapin ang salah, at ito ang susi ng Salah. Ang pagpapahalaga sa kainaman ng salah ang nagtutulak sa puso upang mas lalong manabik sa pagtataguyod nito. Sinabi ng Propeta ﷺ: “Ang kalinisan ay bahagi ng pananampalataya; at ang Salah ay liwanag.”"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "wudu intro"
+    },
+    {
+      "id": "u1-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "وقال ﷺ: (من توضأ فأحسن الوضوء خرجت خطاياه من جسده).\nفيُقْدِم العبد إلى ربه متطهرًا طهارة حسية بالوضوء، ومعنوية بأداء هذه العبادة، مخلصًا لله تعالى، مقتديًا بهدي النبي ﷺ.",
+        "en": "He (pbuh) also said: “He who performs the Wudu’ perfectly, his sins come out from his body.”\nSo, a Muslim stands before his Lord in a state of physical purification through ablution and spiritual purification through performing this act of worship sincerely to Allah Almighty and in compliance with the guidance of the Prophet (pbuh).",
+        "tl": "Sinabi pa ng Propeta ﷺ: “Sinuman ang nagsagawa ng wudhu at ito ay kanyang pinabuti, tiyak na maaalis ang kanyang mga kasalanan mula sa kanyang katawan.”\nHaharap ang isang alipin sa kanyang Panginoon na malinis ang kanyang panlabas na anyo dahil sa wudhu; gayundin ang kanyang kalooban sa pagsasagawa ng pagsamba na dalisay sa Allah, at alinsunod sa kapamaraanan ng Propeta ﷺ."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "wudu intro"
+    },
+    {
+      "id": "u1-l2-c4",
+      "kind": "text",
+      "text": {
+        "ar": "ما يجب له الوضوء :\n1- الصلاة مطلقًا سواء كانت فرضًا أو نافلةً.\n2- الطواف بالكعبة.\n3- مسُّ المصحف.",
+        "en": "What are the acts of worship for which ablution is obligatory?\n1- The prayer whether mandatory or supererogatory.\n2- Circumambulating the Ka‘bah (Tawāf).\n3- Touching the Mus-haf (bound copy of the Qur’an).",
+        "tl": "Kailan magiging wajib o obligado sa kanya ang wudhu? :\n1 Pagsasagawa ng Salah ito man ay obligadong salah o sunnah.\n2 Pagtatawaf (pag-ikot) sa Ka’bah.\n3 Paghawak ng Mushaf (Qur’an)."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "what requires wudu"
+    },
+    {
+      "id": "u1-l2-c5",
+      "kind": "text",
+      "text": {
+        "ar": "أتوضأ وأغتسل بالماء الطهور:\nالماء الطهور هو: كل ماء نزل من السماء أو نبع من الأرض وبقي على أصل خلقته، ولم تتغير أحد أوصافه الثلاثة، وهي: اللون والطعم والريح: بشيء من الأشياء التي تسلب طهورية الماء.",
+        "en": "I perform ablution (Wudu’) and ritual bath (Ghusl) with purifying water.\nPurifying water is any water that falls from the sky or springs from the earth and remains in its original state without a change to any of its three characteristics: color, taste, and smell; by one of them the state of purity of water is interrupted.",
+        "tl": "Ako ay magwuwudo at maliligo gamit ang malinis na tubig\nAng malinis na tubig: Lahat ng tubig na nagmula sa langit o lumabas mula sa lupa, nanatili sa orihinal na pagkalikha nito at hindi nabago ang isa sa tatlo nitong mga katangian, at ito ay ang mga: kulay, lasa at amoy; sa pamamagitan ng mga bagay na nakakaalis ng pagkalinis ng tubig."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "purifying water"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l2-o1",
+      "text": {
+        "ar": "يذكر ما يجب له الوضوء: الصلاة، والطواف بالكعبة، ومسّ المصحف",
+        "en": "Names what wudu is required for: prayer, circling the Ka‘bah, and touching the Mus-haf",
+        "tl": "Nasasabi kung kailan kailangan ang wudhu: sa Salah, sa pagtawaf sa Ka’bah, at sa paghawak ng Mushaf"
+      },
+      "cards": [
+        "u1-l2-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l2-o2",
+      "text": {
+        "ar": "يعرف الماء الطهور الذي يُتوضأ ويُغتسل به",
+        "en": "Recognises the purifying water used for wudu and ghusl",
+        "tl": "Nakikilala ang malinis na tubig na ginagamit sa wudhu at paliligo"
+      },
+      "cards": [
+        "u1-l2-c5"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l2-o3",
+      "text": {
+        "ar": "يعرف أن الله جعل الطهارة شرطًا لصحة الصلاة ومفتاحًا لها",
+        "en": "Knows that Allah made purification a condition for the validity of prayer and its key",
+        "tl": "Alam na ginawa ng Allah ang paglilinis na kondisyon at susi ng Salah"
+      },
+      "cards": [
+        "u1-l2-c1",
+        "u1-l2-c2",
+        "u1-l2-c3"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l2-e1",
+      "type": "choose",
+      "objectives": [
+        "u1-l2-o1"
+      ],
+      "cards": [
+        "u1-l2-c4"
+      ],
+      "prompt": {
+        "ar": "الوضوء يجب للصلاة:",
+        "en": "Wudu is required for prayer:",
+        "tl": "Kailangan ang wudhu sa Salah:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "فرضًا كانت أو نافلة",
+            "en": "whether mandatory or supererogatory (voluntary)",
+            "tl": "obligado man o sunnah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الفريضة فقط",
+            "en": "only the mandatory prayer",
+            "tl": "sa obligadong Salah lamang"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "النافلة فقط",
+            "en": "only the voluntary prayer",
+            "tl": "sa sunnah na Salah lamang"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l2-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l2-o1"
+      ],
+      "cards": [
+        "u1-l2-c4"
+      ],
+      "prompt": {
+        "ar": "أكمل ما يجب له الوضوء كما في الدرس: الصلاة، والطواف بالكعبة، و…",
+        "en": "Complete what wudu is required for, as in the lesson: prayer, circling the Ka‘bah, and …",
+        "tl": "Kumpletuhin kung kailan kailangan ang wudhu ayon sa aralin: Salah, pagtawaf sa Ka’bah, at …"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لون الماء وطعمه",
+            "en": "the colour and taste of water",
+            "tl": "ang kulay at lasa ng tubig"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "مسّ المصحف",
+            "en": "touching the Mus-haf (copy of the Qur’an)",
+            "tl": "paghawak ng Mushaf (Qur’an)"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الماء النازل من السماء",
+            "en": "water that falls from the sky",
+            "tl": "tubig na nagmula sa langit"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l2-e3",
+      "type": "choose",
+      "objectives": [
+        "u1-l2-o2"
+      ],
+      "cards": [
+        "u1-l2-c5"
+      ],
+      "prompt": {
+        "ar": "الماء الطهور هو كل ماء:",
+        "en": "Purifying water is any water that:",
+        "tl": "Ang malinis na tubig ay lahat ng tubig na:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "نزل من السماء أو نبع من الأرض، وبقي على أصل خلقته",
+            "en": "falls from the sky or springs from the earth and stays in its original state",
+            "tl": "nagmula sa langit o lumabas mula sa lupa at nanatili sa orihinal na pagkalikha nito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "تغيّر لونه أو طعمه أو ريحه بشيء يسلب طهوريته",
+            "en": "had its colour, taste or smell changed by something that takes away its purity",
+            "tl": "nabago ang kulay, lasa o amoy dahil sa bagay na nakakaalis ng pagkalinis nito"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l2-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l2-o2"
+      ],
+      "cards": [
+        "u1-l2-c5"
+      ],
+      "prompt": {
+        "ar": "ما أوصاف الماء الثلاثة التي ذكرها الدرس؟",
+        "en": "What are the three characteristics of water named in the lesson?",
+        "tl": "Ano ang tatlong katangian ng tubig na binanggit sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الصلاة والطواف ومسّ المصحف",
+            "en": "prayer, circling the Ka‘bah and touching the Mus-haf",
+            "tl": "Salah, pagtawaf at paghawak ng Mushaf"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "اللون والطعم والريح",
+            "en": "colour, taste and smell",
+            "tl": "kulay, lasa at amoy"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l2-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l2-o3"
+      ],
+      "cards": [
+        "u1-l2-c2",
+        "u1-l2-c1"
+      ],
+      "prompt": {
+        "ar": "ما منزلة الطهارة من الصلاة كما في الدرس؟",
+        "en": "What is purification to prayer, as the lesson says?",
+        "tl": "Ano ang kaugnayan ng paglilinis sa Salah ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "شرط لصحة الصلاة، وهي مفتاحها",
+            "en": "A condition for the validity of prayer, and its key",
+            "tl": "Ito ay kondisyon ng Salah at ito ang susi nito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لا علاقة لها بالصلاة",
+            "en": "It has nothing to do with prayer",
+            "tl": "Wala itong kinalaman sa Salah"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l2-e6",
+      "type": "match",
+      "objectives": [
+        "u1-l2-o3"
+      ],
+      "cards": [
+        "u1-l2-c2",
+        "u1-l2-c3"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل قول للنبي ﷺ بتمامه كما في الدرس",
+        "en": "Match the beginning of each saying of the Prophet ﷺ with its ending, as in the lesson",
+        "tl": "Itugma ang simula ng bawat sinabi ng Propeta ﷺ sa katapusan nito, ayon sa aralin"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الطهور",
+            "en": "Purification",
+            "tl": "Ang kalinisan"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "والصلاة",
+            "en": "And prayer",
+            "tl": "At ang Salah"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "من توضأ فأحسن الوضوء",
+            "en": "He who performs wudu perfectly",
+            "tl": "Sinuman ang nagsagawa ng wudhu at ito ay kanyang pinabuti"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "نور",
+            "en": "is light",
+            "tl": "ay liwanag"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "خرجت خطاياه من جسده",
+            "en": "his sins come out from his body",
+            "tl": "maaalis ang kanyang mga kasalanan mula sa kanyang katawan"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "شطر الإيمان",
+            "en": "is half of Imān",
+            "tl": "ay bahagi ng pananampalataya"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": "The PRD lists pp. 61–62; the section intro also includes the verse on p. 60 (Al-Baqarah 2:222), kept as card 1 so no sentence is lost. The spreadsheet and the Filipino page cite this verse as \"2:22\"; the quran field uses 2:222 (the Arabic site and the English text). Hadith are kept as the book quotes them (no hadith database id yet)."
+}

@@ -1,0 +1,594 @@
+{
+  "id": "u6-l4",
+  "unit": "u6",
+  "order": 4,
+  "title": {
+    "ar": "سعادتي في ديني (2)",
+    "en": "My Happiness in My Religion (2)",
+    "tl": "Ang Aking Kaligayahan sa Aking Relihiyon (2)"
+  },
+  "source": {
+    "site_section": "سعادتي في ديني الإسلام (second half)",
+    "steps": null,
+    "page_ar": "122–125",
+    "page": "p. 9–10",
+    "sheet_rows": "253–257"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u6-l4-c1",
+      "kind": "text",
+      "text": {
+        "ar": "تلك الحلاوة التي لا يمكن أن يصف لذتها إلا من ذاقها بفعل الطاعات واجتناب السيئات، لذلك يقول النبي محمد ﷺ: (ذاق طعم الإيمان من رضي بالله ربًا وبالإسلام دينًا وبمحمد رسولًا).",
+        "en": "That is the sweetness whose delight cannot be described except by someone who tasted it by doing good deeds and shunning evil ones. The Prophet (pbuh) said: “He who is content with Allah as his Lord, has truly found the taste of faith, with Islam as his religion, and Muhammad as his Prophet.”",
+        "tl": "Ang tamis na iyon, na mailalarawan lamang ng taong nakatikim nito sa pamamagitan ng pagsunod at pag-iwas sa kasamaan, kaya’t sinabi ng Propeta Mohammad ﷺ: “Tunay na matitikman ang tamis ng pananampalataya ng sinumang nalugod sa Allah bilang kanyang Panginoon, ang Islam bilang kanyang relihiyon, at si Muhammad bilang kanyang sugo.”"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c2",
+      "kind": "text",
+      "text": {
+        "ar": "نعم إذا استشعر الإنسان حضوره الدائم بين يدي خالقه، وعرفه بأسمائه وصفاته الحسنى، وعبده كأنه يراه، وأخلص في عبادته لله، ولم يرد بها غير الله جلَّ جلاله عاش الحياة الطيبة السعيدة في الدنيا وحسن العاقبة في الآخرة.",
+        "en": "Verily, if a person is mindful that he is ever in the presence of His Creator, and he knows His Creator by knowing His Beautiful Names and Attributes, and He worships Him as if he sees Him, dedicating his worship sincerely to Allah and seeking by it none other than Him, he would live a happy and blissful life in this world and enjoy the best outcome in the Hereafter.",
+        "tl": "Oo, kung ang isang tao ay laging nararamdaman ang pag-iral ng kanyang Panginoon, nakilala Siya sa pamamagitan ng Kanyang mabubuting pangalan at katangian, sinamba Siya na para bang nakikita Siya at naging dalisay sa kanyang pagsamba sa Allah, at walang ibang hinangad kundi ang lugod ng Allah, tiyak na siya ay mamumuhay nang mabuti at masayang buhay sa mundong ito at mayroong mabuting kalalabasan sa hinaharap."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c3",
+      "kind": "text",
+      "text": {
+        "ar": "حتى المصائب التي تقع على المؤمن في الدنيا فإنَّ حرَّها يزول ببرد اليقين، والرضا بقدر الله تعالى، وحمده على كل أقداره خيرها وشرها، والرضا التام بها.",
+        "en": "Even the calamities that befall a believer in the life of this world, their intensity is alleviated by the comfort of certitude and perfect contentment with Allah’s predestination and praising Him for all that He decrees.",
+        "tl": "Kahit na ang mga pagsubok at sakuna na sinapit ng isang mananampalataya sa mundong ito, ang init nito ay maaalis ng lamig ng katiyakan, nalulugod sya sa kapalaran at tadhana ng Allah, at pinuri at pinasalamatan ang Allah sa lahat ng mga tadhana sa kanya, mabuti man o masama."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c4",
+      "kind": "text",
+      "text": {
+        "ar": "ومما ينبغي أن يحرص عليه المسلم لتزداد سعادته وطمأنينته كثرة ذكره لله تعالى، وتلاوته للقرآن الكريم، كما قال تعالى:",
+        "en": "Among the deeds that the Muslim should maintain in order to add to his happiness and reassurance is to remember Allah often and to read the Noble Qur’an. Allah says:",
+        "tl": "Kabilang sa mga bagay na dapat maging masigasig ang isang Muslim upang madagdagan ang kanyang kaligayahan at kapanatagan ng sarili, ay ang madalas na pag-alaala sa Allah at pagbabasa sa banal na Qur’an, katulad ng sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 13,
+        "ayat": [
+          28,
+          28
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c5",
+      "kind": "text",
+      "text": {
+        "ar": "وكلما زاد المسلم من ذكره لله وتلاوته للقرآن زاد ارتباطه بالله تعالى، وزكَّت نفسه وقوي إيمانه.",
+        "en": "The more the Muslim remembers Allah and read s the Qur’an, the stronger his bond with Allah becomes; his heart becomes purified and his faith becomes stronger.",
+        "tl": "Kaya’t sa tuwing pinaparami ng isang muslim ang pag-alaala sa Allah at pagbabasa ng banal na Qur’an ay lalong tumitibay ang koneskyon niya sa Allah, at nagiging dalisay ang kanyang sarili at lumalakas ang kanyang pananampalataya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c6",
+      "kind": "text",
+      "text": {
+        "ar": "كذلك ينبغي على المسلم أن يحرص على تعلُّم أمور دينه من المصادر الصحيحة حتى يعبد الله تعالى على بصيرة، فقد قال النبي ﷺ: (طلب العلم فريضة على كل مسلم)، وأن يكون مستسلمًا منقادًا لأوامر الله تعالى الذي خلقه، سواء عرف الحكمة منها أو لم يعرف، فقد قال تعالى في كتابه الكريم:",
+        "en": "The Muslim should also be keen on learning his religion from the correct reliable sources in order to worship Allah based on sure knowledge; the Prophet (pbuh) said: “Seeking knowledge is a duty upon every Muslim.” The Muslim should be submissive and yielding to the commands of Allah who created him, whether he knows the wisdom behind them or not; Allah (SWT) says:",
+        "tl": "Gayundin, dapat magsikap ang isang Muslim na alamin ang mga bagay ng kanyang relihiyon mula sa tamang mga mapagkukunan, upang sumamba sa Allah na may sapat na kaalaman at kaunawaan, tunay na sinabi ng Propeta ﷺ: “Ang pagsasaliksik ng kaalaman ay obligado sa bawat muslim.” Marapat lamang sa isang Muslim na tumalima at sumunod sa kautusan ng Allah na lumikha sa kanya, napag-alaman man ang karunungan nito o hindi, sinabi ng Allah sa maluwalhating Qur’an:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 33,
+        "ayat": [
+          36,
+          36
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l4-c7",
+      "kind": "text",
+      "text": {
+        "ar": "وصلى الله وسلم على نبينا محمد وعلى آله وصحبه أجمعين.",
+        "en": "May Allah’s peace and blessings be upon our Prophet Muhammad and upon his household and Companions!",
+        "tl": "‘’Ang mga pagpapala at kapayapaan ng Allah ay mapasa-kay Muhammad, sa kanyang pamilya at sa lahat ng kanyang kasamahan.‘’"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "closing"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u6-l4-o1",
+      "text": {
+        "ar": "يعرف أن مَن رضي بالله ربًا وبالإسلام دينًا وبمحمد ﷺ رسولًا ذاق طعم الإيمان",
+        "en": "Knows that whoever is content with Allah as Lord, Islam as religion and Muhammad ﷺ as Messenger has tasted faith",
+        "tl": "Alam na matitikman ang tamis ng pananampalataya ng sinumang nalugod sa Allah bilang Panginoon, sa Islam bilang relihiyon, at kay Muhammad ﷺ bilang sugo"
+      },
+      "cards": [
+        "u6-l4-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l4-o2",
+      "text": {
+        "ar": "يعرف أن مَن عبد الله كأنه يراه وأخلص له عاش الحياة الطيبة",
+        "en": "Knows that whoever worships Allah as if he sees Him, sincerely, lives a good life",
+        "tl": "Alam na ang sumasamba sa Allah na para bang nakikita Siya, nang taos-puso, ay mamumuhay nang mabuti"
+      },
+      "cards": [
+        "u6-l4-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u6-l4-o3",
+      "text": {
+        "ar": "يعرف أن حرّ المصائب يزول ببرد اليقين والرضا بقدر الله",
+        "en": "Knows that the pain of calamities is eased by certainty and contentment with Allah’s decree",
+        "tl": "Alam na naiibsan ang init ng pagsubok sa lamig ng katiyakan at pagkalugod sa tadhana ng Allah"
+      },
+      "cards": [
+        "u6-l4-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u6-l4-o4",
+      "text": {
+        "ar": "يعرف ما يزيد سعادة المسلم: ذكر الله وتلاوة القرآن وتعلّم دينه من المصادر الصحيحة",
+        "en": "Knows what adds to a Muslim’s happiness: remembering Allah, reading the Qur’an, and learning his religion from correct sources",
+        "tl": "Alam ang nagdaragdag sa kaligayahan ng Muslim: pag-alaala sa Allah, pagbasa ng Qur’an at pag-aaral ng relihiyon mula sa tamang mapagkukunan"
+      },
+      "cards": [
+        "u6-l4-c4",
+        "u6-l4-c5",
+        "u6-l4-c6",
+        "u6-l4-c7"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u6-l4-e1",
+      "type": "match",
+      "objectives": [
+        "u6-l4-o1"
+      ],
+      "cards": [
+        "u6-l4-c1"
+      ],
+      "prompt": {
+        "ar": "أكمل قول النبي ﷺ كما في الدرس: «ذاق طعم الإيمان من رضي…»",
+        "en": "Complete the saying of the Prophet ﷺ, as in the lesson: whoever is content with…",
+        "tl": "Kumpletuhin ang sinabi ng Propeta ﷺ ayon sa aralin: sinumang nalugod sa…"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "بالله",
+            "en": "Allah",
+            "tl": "Allah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "وبالإسلام",
+            "en": "Islam",
+            "tl": "Islam"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "وبمحمد ﷺ",
+            "en": "Muhammad ﷺ",
+            "tl": "Muhammad ﷺ"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "رسولًا",
+            "en": "as his Prophet",
+            "tl": "bilang kanyang sugo"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "ربًا",
+            "en": "as his Lord",
+            "tl": "bilang kanyang Panginoon"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "دينًا",
+            "en": "as his religion",
+            "tl": "bilang kanyang relihiyon"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u6-l4-e2",
+      "type": "choose",
+      "objectives": [
+        "u6-l4-o1"
+      ],
+      "cards": [
+        "u6-l4-c1"
+      ],
+      "prompt": {
+        "ar": "ماذا يذوق مَن رضي بالله ربًا وبالإسلام دينًا وبمحمد ﷺ رسولًا؟",
+        "en": "What does the one content with Allah as Lord, Islam as religion and Muhammad ﷺ as Prophet find?",
+        "tl": "Ano ang matitikman ng sinumang nalugod sa Allah bilang Panginoon, sa Islam bilang relihiyon at kay Muhammad ﷺ bilang sugo?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "حرّ المصائب",
+            "en": "the pain of calamities",
+            "tl": "ang init ng mga pagsubok"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "طعم الإيمان",
+            "en": "the taste of faith",
+            "tl": "ang tamis ng pananampalataya"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l4-e3",
+      "type": "choose",
+      "objectives": [
+        "u6-l4-o2"
+      ],
+      "cards": [
+        "u6-l4-c2"
+      ],
+      "prompt": {
+        "ar": "مَن عبد الله كأنه يراه وأخلص له ولم يرد بعبادته غيره:",
+        "en": "Whoever worships Allah as if he sees Him, sincerely, seeking none other than Him:",
+        "tl": "Sinuman ang sumamba sa Allah na para bang nakikita Siya, taos-puso at walang ibang hinangad:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "عاش الحياة الطيبة السعيدة في الدنيا، وحسن العاقبة في الآخرة",
+            "en": "lives a happy, blissful life in this world and has the best outcome in the Hereafter",
+            "tl": "mamumuhay nang mabuti at masaya sa mundong ito at may mabuting kalalabasan sa hinaharap"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "عاش حياة شقية",
+            "en": "lives a miserable life",
+            "tl": "mamumuhay nang miserable"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l4-e4",
+      "type": "choose",
+      "objectives": [
+        "u6-l4-o2"
+      ],
+      "cards": [
+        "u6-l4-c2"
+      ],
+      "prompt": {
+        "ar": "كيف يعبد المؤمن ربه كما في الدرس؟",
+        "en": "How does the believer worship his Lord, as the lesson says?",
+        "tl": "Paano sumasamba ang mananampalataya sa kanyang Panginoon ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يريد بعبادته غير الله",
+            "en": "seeking someone other than Allah by it",
+            "tl": "na may ibang hinahangad bukod sa Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "كأنه يراه، مخلصًا له",
+            "en": "as if he sees Him, sincerely",
+            "tl": "na para bang nakikita Siya, nang taos-puso"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l4-e5",
+      "type": "choose",
+      "objectives": [
+        "u6-l4-o3"
+      ],
+      "cards": [
+        "u6-l4-c3"
+      ],
+      "prompt": {
+        "ar": "بماذا يزول حرّ المصائب التي تقع على المؤمن؟",
+        "en": "What eases the calamities that befall a believer?",
+        "tl": "Ano ang nag-aalis ng init ng mga pagsubok na sinasapit ng mananampalataya?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ببرد اليقين، والرضا بقدر الله، وحمده على أقداره",
+            "en": "certitude, contentment with Allah’s predestination, and praising Him for what He decrees",
+            "tl": "ang lamig ng katiyakan, pagkalugod sa tadhana ng Allah, at pagpuri sa Kanya"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بالسخط على قدر الله",
+            "en": "being angry at Allah’s decree",
+            "tl": "ang pagkagalit sa tadhana ng Allah"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l4-e6",
+      "type": "match",
+      "objectives": [
+        "u6-l4-o3",
+        "u6-l4-o4"
+      ],
+      "cards": [
+        "u6-l4-c3",
+        "u6-l4-c4",
+        "u6-l4-c5"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "حرّ المصائب",
+            "en": "The intensity of calamities",
+            "tl": "Ang init ng mga pagsubok"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "كثرة ذكر الله وتلاوة القرآن",
+            "en": "Remembering Allah often and reading the Qur’an",
+            "tl": "Ang madalas na pag-alaala sa Allah at pagbasa ng Qur’an"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "كلما زاد المسلم من ذكر الله",
+            "en": "The more the Muslim remembers Allah",
+            "tl": "Sa tuwing pinaparami ng Muslim ang pag-alaala sa Allah"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "تزداد بهما سعادة المسلم وطمأنينته",
+            "en": "add to the Muslim’s happiness and reassurance",
+            "tl": "ay nagdaragdag sa kaligayahan at kapanatagan ng Muslim"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "زاد ارتباطه بالله وقوي إيمانه",
+            "en": "the stronger his bond with Allah and his faith",
+            "tl": "lalong tumitibay ang koneksyon niya sa Allah at ang kanyang pananampalataya"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "يزول ببرد اليقين والرضا بقدر الله",
+            "en": "is eased by certitude and contentment with Allah’s decree",
+            "tl": "ay naaalis ng lamig ng katiyakan at pagkalugod sa tadhana ng Allah"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u6-l4-e7",
+      "type": "choose",
+      "objectives": [
+        "u6-l4-o4"
+      ],
+      "cards": [
+        "u6-l4-c6"
+      ],
+      "prompt": {
+        "ar": "من أين يتعلّم المسلم أمور دينه كما في الدرس؟",
+        "en": "Where should the Muslim learn his religion, as the lesson says?",
+        "tl": "Saan dapat pag-aralan ng Muslim ang kanyang relihiyon ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "من المصادر الصحيحة",
+            "en": "from the correct, reliable sources",
+            "tl": "mula sa tamang mga mapagkukunan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "من أي مصدر كان",
+            "en": "from any source at all",
+            "tl": "mula sa kahit anong mapagkukunan"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l4-e8",
+      "type": "match",
+      "objectives": [
+        "u6-l4-o4"
+      ],
+      "cards": [
+        "u6-l4-c6",
+        "u6-l4-c7"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "طلب العلم",
+            "en": "Seeking knowledge",
+            "tl": "Ang pagsasaliksik ng kaalaman"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "المسلم مع أوامر الله",
+            "en": "The Muslim, with Allah’s commands,",
+            "tl": "Ang Muslim, sa kautusan ng Allah,"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "صلى الله وسلم",
+            "en": "May Allah’s peace and blessings be",
+            "tl": "Ang mga pagpapala at kapayapaan ng Allah ay"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "مستسلم منقاد لها، عرف الحكمة منها أو لم يعرف",
+            "en": "is submissive and yielding, whether he knows the wisdom or not",
+            "tl": "ay tumatalima at sumusunod, napag-alaman man ang karunungan nito o hindi"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "على نبينا محمد وعلى آله وصحبه",
+            "en": "upon our Prophet Muhammad, his household and Companions",
+            "tl": "mapasa-kay Muhammad, sa kanyang pamilya at sa lahat ng kanyang kasamahan"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "فريضة على كل مسلم",
+            "en": "is a duty upon every Muslim",
+            "tl": "ay obligado sa bawat Muslim"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": "Second half of «سعادتي في ديني الإسلام», ending with the book's closing prayer upon the Prophet ﷺ (card 7). Verses 13:28 and 33:36 are shown from the Quran database. The hadith are kept as the book quotes them. The closing line (card 7) is covered by one pair in exercise e8."
+}

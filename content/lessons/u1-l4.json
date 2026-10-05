@@ -1,0 +1,657 @@
+{
+  "id": "u1-l4",
+  "unit": "u1",
+  "order": 4,
+  "title": {
+    "ar": "أتوضأ (2): الخطوات 5–8، وما يبطل الوضوء",
+    "en": "I Perform Wudu (2): Steps 5–8, and What Breaks Wudu",
+    "tl": "Ako ay Nagwu-wudhu (2): Mga Hakbang 5–8, at ang Nakasisira sa Wudhu"
+  },
+  "source": {
+    "site_section": "أتعلم الوضوء › tabs 5–9",
+    "steps": "5-8",
+    "page_ar": "67–73",
+    "page": "p. 5–6",
+    "sheet_rows": "132–152"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l4-c1",
+      "kind": "step",
+      "text": {
+        "ar": "غسل الوجه.\nحدُّ الوجه:\nالوجه: ما تحصل به المواجهة.\nوحدُّه عرضًا: من الأذنِ إلى الأذنِ.\nوحدُّه طولًا: ما بينَ منابت شعر الرَّأس المعتاد إلى منتهى الذقن.",
+        "en": "Washing the face.\nFace boundaries:\nThe face: the part of the body with which \"facing\" is achieved.\nFacial boundary widthwise: from one ear to the other ear.\nFacial boundary lengthwise: from the usual hairline on the forehead down to the end of the chin.",
+        "tl": "Ang paghugas ng mukha.\nAng mga hangganan ng mukha ng huhugasan ay ang sumusunod:\nKahulugan ng Mukha: Ang bagay na kung saan ay magaganap ang pagharap.\nAng taas: Mula sa tinutubuan ng buhok hanggang sa baba.\nAng lapad: Mula sa tainga hanggang sa kabilang tainga."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720213354050.png",
+      "quran": null,
+      "source_ref": "step 5"
+    },
+    {
+      "id": "u1-l4-c2",
+      "kind": "text",
+      "text": {
+        "ar": "يشمل غسل الوجه كل ما فيه من شعر خفيف، وكذلك البياض والعذار.\nوالبياض هو: ما بين العذار وشحمة الأذن.\nوالعذار هو: الشعر الذي على العظم الناتئ، الموازي لثقب الأُذن الماضي إِلى داخل الرأس، وما انحط عنه إلى وتد الأذن.\nوكذلك يشمل غسل الوجه كل الظاهر من الشعر الكثيف من اللحية مع ما استرسل منه.",
+        "en": "Washing the face includes everything on it, such as thin hair and also the sideburns and the area between it and the earlobe.\nand also the sideburns\nand the area between it and the earlobe.\nWashing the face also includes all the visible heavy hair of the beard and what extends from it.",
+        "tl": "Nasasaklaw ang paghugas ng mukha ang lahat ng malilit na buhok sa mukha at ang bayad at idhar.\nBayad: Ang lugar sa pagitan ng earlobe at ng tragus.\nIdha’r: Ang buhok na tumubo sa tragus kahilera sa earhole.\nNasasakop din ang paghuhugas ng mukha sa bawat makakapal na buhok ng balbas at ang sobra nito."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "step 5"
+    },
+    {
+      "id": "u1-l4-c3",
+      "kind": "step",
+      "text": {
+        "ar": "غسل اليدين ابتداءً من رؤوس أصابع اليدين إلى المرفقين.\nويدخل المرفقان في غَسل اليدين المفروض.",
+        "en": "Washing the hands starting from the fingertips up to the elbows.\nWashing the elbows is included in the obligatory washing of the hands.",
+        "tl": "Ang paghugas ng dalawang kamay kasama ang siko, simula sa mga daliri hanggang sa siko at ang siko ay kabilang sa dapat hugasan."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720211711060.png",
+      "quran": null,
+      "source_ref": "step 6"
+    },
+    {
+      "id": "u1-l4-c4",
+      "kind": "step",
+      "text": {
+        "ar": "مسح كل الرأس باليدين مع الأذنين مرةً واحدة.\nيبدأ بمقدم رأسه ذاهبًا بهما إلى قفاه ثم يردهما.\nويُدخل سبابتيه في أذنيه.\nويُخالف بإبهاميه على ظاهر أذنيه، فيمسح بذلك ظاهر الأذن وباطنها.",
+        "en": "Passing the wet hands over the head and the ears once.\nOne starts at the hairline and moves his hands back to the nape and then all the way back.\nHe then inserts his index fingers inside his ears while passing his thumbs over the back of his ears, thus wiping the front and back of the ear.",
+        "tl": "Ang pagpunas ng ulo pati ang dalawang tainga gamit ang dalawang kamay ng isang beses lamang, magsisimula sa unahan ng ulo hanggang sa batok at pagkatapos ibalik ang pagpunas sa unahan ng ulo. At ipasok ang dalawang hintuturo sa tainga at ang hinlalaki ay nakapunas sa ibabaw ng tainga."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720212421060.png",
+      "quran": null,
+      "source_ref": "step 7"
+    },
+    {
+      "id": "u1-l4-c5",
+      "kind": "step",
+      "text": {
+        "ar": "غسل الرجلين من بداية أصابع القدمين إلى الكعبين، ويدخل الكعبان في غسل الرجلين المفروض.\nالكعبان هما: العظمان الناتئان في أسفل الساق.",
+        "en": "Washing the feet from the toes up to the ankles, given that washing the ankles is included in the obligatory washing of the feet.\nThe ankles are the protruding bones at the bottom of the leg.",
+        "tl": "Ang paghugas ng dalawang paa mula sa mga daliri ng paa hanggang sa bukong-bukong."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720214725060.png",
+      "quran": null,
+      "source_ref": "step 8"
+    },
+    {
+      "id": "u1-l4-c6",
+      "kind": "text",
+      "text": {
+        "ar": "يبطل الوضوء بهذه الأمور:\n1. الخارج من السبيلين كالبول، والغائط، والريح، والمني، والمذي.\n2. زوال العقل بنوم مستغرق، أو إغماء، أو مسكر، أو جنون.\n3. كل ما يوجب الغُسل كالجنابة، والحيض، والنفاس.",
+        "en": "Nullifiers of Ablution:\n1- Excretions from the frontal or anal passages such as urine, feces, wind, semen, and pre-ejaculatory fluid.\n2- Loss of consciousness due to deep sleep, fainting, drunkenness, or insanity.\n4- Everything that requires Ghusl, like Janābah (ritual impurity), menstruation, and postpartum period.",
+        "tl": "Mawawalan ng bisa ang wudo kapag nagawa ang mga bagay na ito :\n1 Lahat ng bagay na lumalabas mula sa unahan at likurang maseselang parte ng tao, tulad ng ihi, dumi, utot at simelya.\n2 Kawalan ng pag-iisap tulad ng pagkatulog nang mahimbing, pagkawala ng malay, pagkalasing, o wala sa tamang kaisipan.\n3 Lahat ng dahilan sa pagka obligado ng gusul (pagligo) tulad ng junub, regla at dugo sanhi ng panganganak."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "nullifiers of wudu"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l4-o1",
+      "text": {
+        "ar": "يرتّب خطوات الوضوء من الخامسة إلى الثامنة",
+        "en": "Puts wudu steps five to eight in order",
+        "tl": "Naisasaayos ang mga hakbang lima hanggang walo ng wudhu"
+      },
+      "cards": [
+        "u1-l4-c1",
+        "u1-l4-c3",
+        "u1-l4-c4",
+        "u1-l4-c5"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l4-o2",
+      "text": {
+        "ar": "يعرف حدود الوجه في الوضوء وما يشمله غسله",
+        "en": "Knows the boundaries of the face in wudu and what washing it includes",
+        "tl": "Alam ang mga hangganan ng mukha sa wudhu at ang kasama sa paghuhugas nito"
+      },
+      "cards": [
+        "u1-l4-c1",
+        "u1-l4-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u1-l4-o3",
+      "text": {
+        "ar": "يعرف حدّ غسل اليدين والرجلين، وأن الرأس يُمسح مع الأذنين مرة واحدة",
+        "en": "Knows how far the hands and feet are washed, and that the head is wiped with the ears once",
+        "tl": "Alam kung hanggang saan hinuhugasan ang mga kamay at paa, at na pinupunasan ang ulo kasama ang tainga nang isang beses"
+      },
+      "cards": [
+        "u1-l4-c3",
+        "u1-l4-c4",
+        "u1-l4-c5"
+      ],
+      "key": false
+    },
+    {
+      "id": "u1-l4-o4",
+      "text": {
+        "ar": "يعرف نواقض الوضوء الثلاثة",
+        "en": "Knows the three things that break wudu",
+        "tl": "Alam ang tatlong bagay na nakasisira sa wudhu"
+      },
+      "cards": [
+        "u1-l4-c6"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l4-e1",
+      "type": "order",
+      "objectives": [
+        "u1-l4-o1"
+      ],
+      "cards": [
+        "u1-l4-c1",
+        "u1-l4-c3",
+        "u1-l4-c4",
+        "u1-l4-c5"
+      ],
+      "prompt": {
+        "ar": "رتّب خطوات الوضوء من الخامسة إلى الثامنة",
+        "en": "Put wudu steps five to eight in order",
+        "tl": "Isaayos ang mga hakbang lima hanggang walo ng wudhu"
+      },
+      "items": [
+        {
+          "id": "s3",
+          "text": {
+            "ar": "مسح الرأس مع الأذنين",
+            "en": "Wiping the head and the ears",
+            "tl": "Ang pagpunas ng ulo pati ang dalawang tainga"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "غسل اليدين إلى المرفقين",
+            "en": "Washing the hands up to the elbows",
+            "tl": "Ang paghugas ng dalawang kamay kasama ang siko"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "غسل الوجه",
+            "en": "Washing the face",
+            "tl": "Ang paghugas ng mukha"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "غسل الرجلين إلى الكعبين",
+            "en": "Washing the feet up to the ankles",
+            "tl": "Ang paghugas ng dalawang paa hanggang sa bukong-bukong"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "u1-l4-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o2"
+      ],
+      "cards": [
+        "u1-l4-c1"
+      ],
+      "prompt": {
+        "ar": "حدّ الوجه عرضًا:",
+        "en": "The face, widthwise, is:",
+        "tl": "Ang lapad ng mukha ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ما بين منابت شعر الرأس المعتاد إلى منتهى الذقن",
+            "en": "from the usual hairline down to the end of the chin",
+            "tl": "mula sa tinutubuan ng buhok hanggang sa baba"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "من الأذن إلى الأذن",
+            "en": "from one ear to the other ear",
+            "tl": "mula sa tainga hanggang sa kabilang tainga"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "من رؤوس الأصابع إلى المرفقين",
+            "en": "from the fingertips up to the elbows",
+            "tl": "mula sa mga daliri hanggang sa siko"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l4-e3",
+      "type": "match",
+      "objectives": [
+        "u1-l4-o2",
+        "u1-l4-o3"
+      ],
+      "cards": [
+        "u1-l4-c1",
+        "u1-l4-c3",
+        "u1-l4-c5"
+      ],
+      "prompt": {
+        "ar": "صِل كل عضو بحدّه في الوضوء",
+        "en": "Match each part with how far it is washed in wudu",
+        "tl": "Itugma ang bawat bahagi sa hangganan ng paghuhugas nito sa wudhu"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الوجه طولًا",
+            "en": "The face, lengthwise",
+            "tl": "Ang taas ng mukha"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "اليدان",
+            "en": "The hands",
+            "tl": "Ang dalawang kamay"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الرجلان",
+            "en": "The feet",
+            "tl": "Ang dalawang paa"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "من أصابع القدمين إلى الكعبين",
+            "en": "from the toes up to the ankles",
+            "tl": "mula sa mga daliri ng paa hanggang sa bukong-bukong"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "ما بين منابت شعر الرأس المعتاد إلى منتهى الذقن",
+            "en": "from the usual hairline on the forehead down to the end of the chin",
+            "tl": "mula sa tinutubuan ng buhok hanggang sa baba"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "من رؤوس الأصابع إلى المرفقين",
+            "en": "from the fingertips up to the elbows",
+            "tl": "mula sa mga daliri hanggang sa siko"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l4-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o3"
+      ],
+      "cards": [
+        "u1-l4-c3"
+      ],
+      "prompt": {
+        "ar": "هل يدخل المرفقان في غسل اليدين؟",
+        "en": "Are the elbows included in washing the hands?",
+        "tl": "Kasama ba ang siko sa paghuhugas ng kamay?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لا، يُغسل الكفان إلى الرسغين فقط",
+            "en": "No, only the hands up to the wrists are washed",
+            "tl": "Hindi, ang kamay lamang hanggang pulso"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "نعم، يدخلان في الغسل المفروض",
+            "en": "Yes, they are included in the obligatory washing",
+            "tl": "Oo, ang siko ay kabilang sa dapat hugasan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l4-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o3"
+      ],
+      "cards": [
+        "u1-l4-c4"
+      ],
+      "prompt": {
+        "ar": "كيف يُمسح الرأس في الوضوء؟",
+        "en": "How is the head wiped in wudu?",
+        "tl": "Paano pinupunasan ang ulo sa wudhu?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "باليدين مع الأذنين مرة واحدة",
+            "en": "With the wet hands, over the head and the ears, once",
+            "tl": "Gamit ang dalawang kamay, pati ang dalawang tainga, isang beses lamang"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "تُمسح الأذنان فقط دون الرأس",
+            "en": "Only the ears are wiped, not the head",
+            "tl": "Ang tainga lamang ang pinupunasan, hindi ang ulo"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l4-e6",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o4"
+      ],
+      "cards": [
+        "u1-l4-c6"
+      ],
+      "prompt": {
+        "ar": "أيّ هذه من نواقض الوضوء كما في الدرس؟",
+        "en": "Which of these breaks wudu, as the lesson says?",
+        "tl": "Alin dito ang nakasisira sa wudhu ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "غسل الوجه",
+            "en": "Washing the face",
+            "tl": "Ang paghugas ng mukha"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "مسح الرأس",
+            "en": "Wiping the head",
+            "tl": "Ang pagpunas ng ulo"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "زوال العقل بنوم مستغرق أو إغماء",
+            "en": "Loss of consciousness through deep sleep or fainting",
+            "tl": "Kawalan ng pag-iisip tulad ng mahimbing na pagtulog o pagkawala ng malay"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u1-l4-e7",
+      "type": "match",
+      "objectives": [
+        "u1-l4-o4"
+      ],
+      "cards": [
+        "u1-l4-c6"
+      ],
+      "prompt": {
+        "ar": "صِل كل ناقض بأمثلته",
+        "en": "Match each thing that breaks wudu with its examples",
+        "tl": "Itugma ang bawat nakasisira sa wudhu sa mga halimbawa nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الخارج من السبيلين",
+            "en": "What comes out of the front or back passage",
+            "tl": "Ang lumalabas mula sa unahan at likurang maseselang bahagi"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "زوال العقل",
+            "en": "Loss of consciousness",
+            "tl": "Kawalan ng pag-iisip"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "كل ما يوجب الغسل",
+            "en": "Everything that requires Ghusl",
+            "tl": "Lahat ng nag-oobliga ng paligo (gusul)"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "كالجنابة والحيض والنفاس",
+            "en": "such as Janābah, menstruation and the postpartum period",
+            "tl": "tulad ng junub, regla at dugo dahil sa panganganak"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "كالبول والغائط والريح",
+            "en": "such as urine, feces and wind",
+            "tl": "tulad ng ihi, dumi at utot"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "بنوم مستغرق أو إغماء أو مسكر أو جنون",
+            "en": "through deep sleep, fainting, drunkenness or insanity",
+            "tl": "tulad ng mahimbing na pagtulog, pagkawala ng malay, pagkalasing o pagkawala sa tamang kaisipan"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l4-e8",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o2"
+      ],
+      "cards": [
+        "u1-l4-c2"
+      ],
+      "prompt": {
+        "ar": "يشمل غسل الوجه:",
+        "en": "Washing the face includes:",
+        "tl": "Kasama sa paghuhugas ng mukha ang:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الرجلين إلى الكعبين",
+            "en": "the feet up to the ankles",
+            "tl": "ang mga paa hanggang sa bukong-bukong"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ما فيه من شعر خفيف، والظاهر من شعر اللحية الكثيف",
+            "en": "the thin hair on it, and the visible heavy hair of the beard",
+            "tl": "ang maliliit na buhok sa mukha at ang makapal na buhok ng balbas"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l4-e9",
+      "type": "choose",
+      "objectives": [
+        "u1-l4-o1"
+      ],
+      "cards": [
+        "u1-l4-c1",
+        "u1-l4-c3"
+      ],
+      "prompt": {
+        "ar": "ما الخطوة التي تأتي بعد غسل الوجه؟",
+        "en": "Which step comes after washing the face?",
+        "tl": "Anong hakbang ang kasunod ng paghugas ng mukha?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "غسل الرجلين إلى الكعبين",
+            "en": "Washing the feet up to the ankles",
+            "tl": "Ang paghugas ng dalawang paa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "مسح الرأس مع الأذنين",
+            "en": "Wiping the head and the ears",
+            "tl": "Ang pagpunas ng ulo at tainga"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "غسل اليدين إلى المرفقين",
+            "en": "Washing the hands up to the elbows",
+            "tl": "Ang paghugas ng dalawang kamay kasama ang siko"
+          }
+        }
+      ],
+      "answer": "c"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": "u1-l4-c1",
+      "text": "الخطوة 5:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l4-c1",
+      "text": "Step 5:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l4-c3",
+      "text": "الخطوة 6:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l4-c3",
+      "text": "Step 6:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l4-c4",
+      "text": "الخطوة 7:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l4-c4",
+      "text": "Step 7:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l4-c5",
+      "text": "الخطوة 8:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l4-c5",
+      "text": "Step 8:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    }
+  ],
+  "notes": "Steps 5–8 and «يبطل الوضوء». Not placed in any lesson: the paragraph on cleaning oneself after relieving oneself (site tab3_10, printed p. 74) — it is outside the PRD page range (67–73) and is not in the spreadsheet; see unplaced.json. The English text of step 5 repeats the sideburns sentence in fragments (rows 137–139) and numbers the third nullifier \"4-\"; kept as the book has them (reviewer)."
+}

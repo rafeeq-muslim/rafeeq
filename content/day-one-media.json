@@ -1,0 +1,216 @@
+{
+  "fetched": "2026-10-05",
+  "source": "IslamHouse API v3 (get-item); items chosen in docs/agents/sources.md",
+  "review_status": "in_review",
+  "note": "All audio and video must be heard/watched in full by the Sharia reviewer before use (no music or effects). Files are to be served from Rafeeq, never embedded from a video platform; written confirmation from IslamHouse is still pending (LRN-01 open question).",
+  "al_fatiha_audio": [
+    {
+      "lang": "ar",
+      "islamhouse_id": 2831350,
+      "title": "المختصر في تفسير القرآن الكريم [ 001 ] سورة الفاتحة",
+      "mp3_url": "https://d1.islamhouse.com/data/ar/ih_sounds/chain_01/mokhtasar-fe-tafceer/ar-001-mokhtasar-fe-tafceer.mp3",
+      "mp3_urls": [
+        "https://d1.islamhouse.com/data/ar/ih_sounds/chain_01/mokhtasar-fe-tafceer/ar-001-mokhtasar-fe-tafceer.mp3"
+      ],
+      "per_verse": false,
+      "files": [
+        {
+          "order": 0,
+          "description": "سورة الفاتحة",
+          "url": "https://d1.islamhouse.com/data/ar/ih_sounds/chain_01/mokhtasar-fe-tafceer/ar-001-mokhtasar-fe-tafceer.mp3",
+          "size": "3.01 MB",
+          "type": "MP3"
+        }
+      ],
+      "error": null
+    },
+    {
+      "lang": "en",
+      "islamhouse_id": 2839573,
+      "title": "Explanation of the meanings of the Noble Quran in the English language [ 001 ] Surah Al-Fatihah ( The Opening )",
+      "mp3_url": null,
+      "mp3_urls": [
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-01-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-02-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-03-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-04-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-05-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-06-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-07-alfatihah.mp3"
+      ],
+      "per_verse": true,
+      "files": [
+        {
+          "order": 0,
+          "description": "Verse No. 1",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-01-alfatihah.mp3",
+          "size": "153.09 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 1,
+          "description": "Verse No. 2",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-02-alfatihah.mp3",
+          "size": "149.83 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 2,
+          "description": "Verse No. 3",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-03-alfatihah.mp3",
+          "size": "118.48 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 3,
+          "description": "Verse No. 4",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-04-alfatihah.mp3",
+          "size": "105.45 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 4,
+          "description": "Verse No. 5",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-05-alfatihah.mp3",
+          "size": "145.76 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 5,
+          "description": "Verse No. 6",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-06-alfatihah.mp3",
+          "size": "109.11 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 6,
+          "description": "Verse No. 7",
+          "url": "https://d1.islamhouse.com/data/en/ih_sounds/group/translation-meanings-holy-quran/001-alfatihah/en-07-alfatihah.mp3",
+          "size": "315.17 KB",
+          "type": "MP3"
+        }
+      ],
+      "error": null
+    },
+    {
+      "lang": "tl",
+      "islamhouse_id": 2839167,
+      "title": "Pagsasalin ng mga kahulugan ng Banal na Quran sa wikang Filipino ( Tagalog ) [ 001 ] Surah A-Fatihah ( Ang Panimula )",
+      "mp3_url": null,
+      "mp3_urls": [
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-01-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-02-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-03-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-04-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-05-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-06-alfatihah.mp3",
+        "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-07-alfatihah.mp3"
+      ],
+      "per_verse": true,
+      "files": [
+        {
+          "order": 0,
+          "description": "Verse No. 1",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-01-alfatihah.mp3",
+          "size": "966.24 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 1,
+          "description": "Verse No. 2",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-02-alfatihah.mp3",
+          "size": "905.15 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 2,
+          "description": "Verse No. 3",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-03-alfatihah.mp3",
+          "size": "862.39 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 3,
+          "description": "Verse No. 4",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-04-alfatihah.mp3",
+          "size": "866.87 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 4,
+          "description": "Verse No. 5",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-05-alfatihah.mp3",
+          "size": "910.85 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 5,
+          "description": "Verse No. 6",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-06-alfatihah.mp3",
+          "size": "882.75 KB",
+          "type": "MP3"
+        },
+        {
+          "order": 6,
+          "description": "Verse No. 7",
+          "url": "https://d1.islamhouse.com/data/tl/ih_sounds/group/pagsasalin-ng-mga-kahulugan-ng-banal-na-quran/001-alfatihah/tl-07-alfatihah.mp3",
+          "size": "1.05 MB",
+          "type": "MP3"
+        }
+      ],
+      "error": null
+    }
+  ],
+  "support_videos": [
+    {
+      "topic": "wudu",
+      "lang": "ar",
+      "islamhouse_id": 2834583,
+      "title": "كيف أتوضأ؟ (صفة الوضوء كاملة)",
+      "mp4_url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-sifat-alwoduo.mp4",
+      "size": "21.01 MB",
+      "type": "MP4",
+      "error": null
+    },
+    {
+      "topic": "wudu",
+      "lang": "en",
+      "islamhouse_id": 2834586,
+      "title": "How to perform wudu' (ablution)? (a complete guide of wudu')",
+      "mp4_url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en-how-to-perform-wudu.mp4",
+      "size": "47.24 MB",
+      "type": "MP4",
+      "error": null
+    },
+    {
+      "topic": "prayer",
+      "lang": "ar",
+      "islamhouse_id": 2832089,
+      "title": "كيف أصلي ؟ (الصلاة من التكبير إلى التسليم)",
+      "mp4_url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-how-to-pray.mp4",
+      "size": "25.28 MB",
+      "type": "MP4",
+      "error": null
+    },
+    {
+      "topic": "prayer",
+      "lang": "en",
+      "islamhouse_id": 2838921,
+      "title": "HOW CAN I PRAY?",
+      "mp4_url": "https://ih-download.islamenc.com/data/en/ih_videos/mp4/single/en_Salah_With_al_Duaa.mp4",
+      "size": "0 B",
+      "type": "LINK",
+      "error": null
+    },
+    {
+      "topic": "wudu+prayer",
+      "lang": "tl",
+      "islamhouse_id": null,
+      "title": null,
+      "mp4_url": null,
+      "size": null,
+      "type": null,
+      "error": "No approved Tagalog video (sources.md); Tagalog lessons show no video (LRN-01 rule 5)."
+    }
+  ]
+}

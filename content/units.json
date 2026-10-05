@@ -1,0 +1,153 @@
+[
+  {
+    "id": "u1",
+    "order": 1,
+    "title": {
+      "ar": "دليل اليوم الأول",
+      "en": "First Day Guide",
+      "tl": "Gabay sa Unang Araw"
+    },
+    "badge_name": {
+      "ar": "أكملت دليل اليوم الأول",
+      "en": "Completed the First Day Guide",
+      "tl": "Natapos ang Gabay sa Unang Araw"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u1-l1",
+      "u1-l2",
+      "u1-l3",
+      "u1-l4",
+      "u1-l5",
+      "u1-l6",
+      "u1-l7"
+    ]
+  },
+  {
+    "id": "u2",
+    "order": 2,
+    "title": {
+      "ar": "ربي ونبيي وكتابي",
+      "en": "My Lord, My Prophet and My Book",
+      "tl": "Ang Aking Panginoon, Propeta at Aklat"
+    },
+    "badge_name": {
+      "ar": "أكملت وحدة ربي ونبيي وكتابي",
+      "en": "Completed My Lord, My Prophet and My Book",
+      "tl": "Natapos ang Ang Aking Panginoon, Propeta at Aklat"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u2-l1",
+      "u2-l2",
+      "u2-l3",
+      "u2-l4"
+    ]
+  },
+  {
+    "id": "u3",
+    "order": 3,
+    "title": {
+      "ar": "أركان الإسلام",
+      "en": "The Pillars of Islam",
+      "tl": "Ang mga Haligi ng Islam"
+    },
+    "badge_name": {
+      "ar": "أكملت وحدة أركان الإسلام",
+      "en": "Completed The Pillars of Islam",
+      "tl": "Natapos ang Ang mga Haligi ng Islam"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u3-l1",
+      "u3-l2",
+      "u3-l3"
+    ]
+  },
+  {
+    "id": "u4",
+    "order": 4,
+    "title": {
+      "ar": "أركان الإيمان",
+      "en": "The Pillars of Faith (Iman)",
+      "tl": "Ang mga Haligi ng Iman"
+    },
+    "badge_name": {
+      "ar": "أكملت وحدة أركان الإيمان",
+      "en": "Completed The Pillars of Faith (Iman)",
+      "tl": "Natapos ang Ang mga Haligi ng Iman"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u4-l1",
+      "u4-l2",
+      "u4-l3",
+      "u4-l4"
+    ]
+  },
+  {
+    "id": "u5",
+    "order": 5,
+    "title": {
+      "ar": "أتطهّر",
+      "en": "I Purify Myself",
+      "tl": "Naglilinis Ako (Taharah)"
+    },
+    "badge_name": {
+      "ar": "أكملت وحدة أتطهّر",
+      "en": "Completed I Purify Myself",
+      "tl": "Natapos ang Naglilinis Ako (Taharah)"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u5-l1",
+      "u5-l2",
+      "u5-l3"
+    ]
+  },
+  {
+    "id": "u6",
+    "order": 6,
+    "title": {
+      "ar": "أخلاقي وسعادتي",
+      "en": "My Character and My Happiness",
+      "tl": "Ang Aking Pag-uugali at Kaligayahan"
+    },
+    "badge_name": {
+      "ar": "أكملت وحدة أخلاقي وسعادتي",
+      "en": "Completed My Character and My Happiness",
+      "tl": "Natapos ang Ang Aking Pag-uugali at Kaligayahan"
+    },
+    "source_credit": {
+      "ar": "دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري، من الموقع الرسمي للكتاب newmuslimguideline.com.",
+      "en": "The lessons in this unit are from the book New Muslim Guideline by Muhammad al-Shehri, from the book’s official site newmuslimguideline.com.",
+      "tl": "Ang mga aralin sa yunit na ito ay mula sa aklat na Patnubay Para Sa Bagong Muslim ni Muhammad Ash-Shahrīy, mula sa opisyal na website ng aklat, newmuslimguideline.com."
+    },
+    "lessons": [
+      "u6-l1",
+      "u6-l2",
+      "u6-l3",
+      "u6-l4"
+    ]
+  }
+]

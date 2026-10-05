@@ -1,0 +1,460 @@
+{
+  "id": "u6-l3",
+  "unit": "u6",
+  "order": 3,
+  "title": {
+    "ar": "سعادتي في ديني (1)",
+    "en": "My Happiness in My Religion (1)",
+    "tl": "Ang Aking Kaligayahan sa Aking Relihiyon (1)"
+  },
+  "source": {
+    "site_section": "سعادتي في ديني الإسلام (first half)",
+    "steps": null,
+    "page_ar": "118–122",
+    "page": "p. 9",
+    "sheet_rows": "249–252"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u6-l3-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 16,
+        "ayat": [
+          97,
+          97
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c2",
+      "kind": "text",
+      "text": {
+        "ar": "من أعظم ما يدخل السرور والانشراح والسعادة في قلب المسلم ارتباطه المباشر بربه دون وسيط من الأحياء أو الأموات أو الأصنام، فالله تعالى ذكر في كتابه الكريم أنه قريب من عباده دائمًا، يسمعهم ويستجيب دعاءهم، كما قال سبحانه:",
+        "en": "One of the most important things that brings joy and comfort to the Muslim’s heart is his direct connection to his Lord without a mediator from the living or the dead or the idols. Allah (SWT) said in the Qur’an that He is always near to us to hear and answer our Duā (supplication). Allah says:",
+        "tl": "Isa sa pinakadakilang bagay na dahilan upang makamit ang kasiyahan, kagalakan at kaligayahan sa puso ng isang Muslim ay ang kanyang direktang koneksyon sa kanyang Panginoon nang walang tagapamagitan mula sa mga buhay, patay, o idolo. Tunay na binanggit ng Allah sa Kanyang Maluwalhating Aklat na Siya ay laging malapit sa Kanyang mga alipin, pinapakinggan sila at sinasagot ang kanilang mga panalangin, katulad ng sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          186,
+          186
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c3",
+      "kind": "text",
+      "text": {
+        "ar": "وأمرنا سبحانه بدعائه، وجعل هذا الأمر من أعظم العبادات التي يتقرب بها المسلم إلى ربه، حيث قال عز وجل:",
+        "en": "Allah commands us to call upon Him, and He made supplication one of the great acts of worship whereby a Muslim draws close to Him. Allah says:",
+        "tl": "Inutusan tayo ni Allah manalangin sa Kanya, at ginawa Niya ang bagay na ito na isa sa pinakadakilang gawain ng pagsamba kung saan ang isang Muslim ay lumalapit sa kanyang Panginoon, sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 40,
+        "ayat": [
+          60,
+          60
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c4",
+      "kind": "text",
+      "text": {
+        "ar": "فالمسلم الصالح دائم الاحتياج إلى ربه، ودائم الدعاء بين يديه، والتقرب إليه بالعبادات الصالحة.",
+        "en": "A true Muslim is permanently in need of his Lord and always seeks to supplicate Him and get close to Him through good deeds.",
+        "tl": "Ang matuwid na Muslim ay palaging nangangailangan sa kanyang Panginoon, palaging humihingi ng panalangin, at lumalapit sa kanya sa paggawa ng mabubuting pagsamba."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c5",
+      "kind": "text",
+      "text": {
+        "ar": "وقد أوجدنا الله تعالى في هذا الكون لحكمة عظيمة ولم يخلقنا عبثًا؛ وهي عبادته وحده لا شريك له، وشرع لنا دينًا ربانيًا شاملًا ينظِّم جميع شؤون حياتنا الخاصة والعامة، وحفظ بهذه الشريعة العادلة ضرورات الحياة وهي ديننا وأنفسنا وأعراضنا وعقولنا وأموالنا، ومن عاش متبعًا للأوامر الشرعية مجتنبًا للمحرمات فقد حفظ هذه الضرورات وعاش سعيدًا مطمئنًا في حياته بلا شك.",
+        "en": "Allah Almighty created us in this universe for a great wisdom and not in vain; He created us to worship Him alone without any partner unto Him. He set for us a comprehensive divine religion that organizes all the affairs of our lives, public and private, thereby preserving the five necessities of life: our religion, life, honor, mind, and property. Whoever follows the Sharia commandments and avoids its prohibitions, without doubt, will preserve these necessities and enjoy a happy peaceful life.",
+        "tl": "Nilikha tayo ng Allah sa mundong ito na may dakilang karunungan, at hindi Niya tayo nilikha nang walang kabuluhan; at ito ay ang sambahin lamang Siya nang nag-iisa at bukod tangi at walang halong pagtatambal. Isinabatas Niya ang isang komprehensibong banal na relihiyon na namamahala sa lahat ng ating pribado at pampublikong gawain sa buhay, at sa makatarungang batas na ito ay napapanatili ang mga pangangailangan ng buhay. Ito ay ang ating relihiyon, ating sarili, ating karangalan, ating isipan, at ating kayamanan. Sinuman ang namuhay alinsunod sa batas ng Sharia at iniwasan ang mga ipinagbabawal na bagay, tiyak na kanyang napangalagaan ang mga panganagilanagan na ito; sya ay mamumuhay nang masaya at payapa sa kanyang buhay nang walang duda."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c6",
+      "kind": "text",
+      "text": {
+        "ar": "ورابطة المسلم بربه عميقة تبعث الطمأنينة والراحة النفسية، والشعور بالسكون والأمان والسرور، واستشعار معية الرب جل جلاله وعنايته وولايته لعبده المؤمن، قال تعالى:",
+        "en": "The bond between the Muslim and his Lord is profound, bringing reassurance, spiritual comfort, tranquility, safety, and delight. It makes him feel that Allah is \"with\" him, taking care of Him and protecting Him. Allah says:",
+        "tl": "Ang ugnayan ng Muslim sa kanyang Panginoon ay napakalalim, dahilan upang magkaroon ng kapanatagan at kaginhawaan ng sarili, pakiramdam na pagiging mahinahon, katiwasayan at kasiyahan, at pakiramdam na kasama ang Panginoon sa Kanyang pangangalaga sa Kanyang tapat na mga alipin na mananampalataya. Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          257,
+          257
+        ]
+      },
+      "source_ref": "happiness"
+    },
+    {
+      "id": "u6-l3-c7",
+      "kind": "text",
+      "text": {
+        "ar": "هذه العلاقة العظيمة هي حالة وجدانية تحمل على التنعُّم بعبادة الرحمن، والشوق إلى لقائه وتُحلِّق بقلبه في سماء السعادة باستشعاره حلاوة الإيمان.",
+        "en": "This great relationship is a spiritual state that makes the Muslim feel bliss in worshiping Allah, the Most-Merciful, and yearn to meet Him. It makes the heart filled with happiness when it savors the sweetness of faith.",
+        "tl": "Ang mahusay na ugnayan na ito ay isang pang-sentimental na estado na humahantong sa pagtamasa ng pagsamba sa Pinakamaawain, ang pananabik na makita Siya sa kabilang buhay, at para bagang nakataas ang kanyang puso sa kalangitan dahil sa kaligayahan sa pamamagitan ng pakiramdam ng tamis ng pananampalataya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "happiness"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u6-l3-o1",
+      "text": {
+        "ar": "يعرف أن من أعظم أسباب السعادة ارتباط المسلم المباشر بربه دون وسيط",
+        "en": "Knows that one of the greatest sources of happiness is the Muslim’s direct connection to his Lord, without a mediator",
+        "tl": "Alam na isa sa pinakadakilang dahilan ng kaligayahan ang direktang koneksyon ng Muslim sa kanyang Panginoon, nang walang tagapamagitan"
+      },
+      "cards": [
+        "u6-l3-c2",
+        "u6-l3-c3",
+        "u6-l3-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l3-o2",
+      "text": {
+        "ar": "يعرف الحكمة من خلقنا: عبادة الله وحده",
+        "en": "Knows why we were created: to worship Allah alone",
+        "tl": "Alam kung bakit tayo nilikha: upang sambahin ang Allah lamang"
+      },
+      "cards": [
+        "u6-l3-c5"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l3-o3",
+      "text": {
+        "ar": "يعرف أن الشريعة حفظت ضرورات الحياة الخمس",
+        "en": "Knows that the Sharia preserves the five necessities of life",
+        "tl": "Alam na pinapanatili ng Sharia ang limang pangangailangan ng buhay"
+      },
+      "cards": [
+        "u6-l3-c5"
+      ],
+      "key": false
+    },
+    {
+      "id": "u6-l3-o4",
+      "text": {
+        "ar": "يعرف ما تبعثه رابطة المسلم بربه من طمأنينة وسعادة",
+        "en": "Knows the reassurance and happiness that the bond with his Lord brings",
+        "tl": "Alam ang kapanatagan at kaligayahang dulot ng ugnayan ng Muslim sa kanyang Panginoon"
+      },
+      "cards": [
+        "u6-l3-c6",
+        "u6-l3-c7",
+        "u6-l3-c1"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u6-l3-e1",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o1"
+      ],
+      "cards": [
+        "u6-l3-c2"
+      ],
+      "prompt": {
+        "ar": "من أعظم ما يدخل السعادة في قلب المسلم:",
+        "en": "One of the greatest things that brings joy to the Muslim’s heart:",
+        "tl": "Isa sa pinakadakilang nagdudulot ng kaligayahan sa puso ng Muslim:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ارتباطه المباشر بربه دون وسيط",
+            "en": "his direct connection to his Lord without a mediator",
+            "tl": "ang direktang koneksyon sa kanyang Panginoon nang walang tagapamagitan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "اتخاذ وسيط بينه وبين ربه من الأحياء أو الأموات",
+            "en": "taking a mediator between him and his Lord from the living or the dead",
+            "tl": "pagkakaroon ng tagapamagitan sa pagitan niya at ng kanyang Panginoon mula sa mga buhay o patay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l3-e2",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o1"
+      ],
+      "cards": [
+        "u6-l3-c3",
+        "u6-l3-c4"
+      ],
+      "prompt": {
+        "ar": "بماذا أمرنا الله سبحانه في الدرس؟",
+        "en": "What does Allah command us, as the lesson says?",
+        "tl": "Ano ang iniutos sa atin ng Allah ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بترك الدعاء",
+            "en": "to give up supplication",
+            "tl": "na itigil ang pananalangin"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بدعائه، وجعله من أعظم العبادات",
+            "en": "to call upon Him; He made supplication one of the great acts of worship",
+            "tl": "na manalangin sa Kanya; ginawa Niya itong isa sa pinakadakilang pagsamba"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l3-e3",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o2"
+      ],
+      "cards": [
+        "u6-l3-c5"
+      ],
+      "prompt": {
+        "ar": "لماذا أوجدنا الله في هذا الكون؟",
+        "en": "Why did Allah create us in this universe?",
+        "tl": "Bakit tayo nilikha ng Allah sa mundong ito?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لعبادته وحده لا شريك له",
+            "en": "to worship Him alone without any partner",
+            "tl": "upang sambahin lamang Siya nang walang katambal"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "عبثًا بلا حكمة",
+            "en": "in vain, without wisdom",
+            "tl": "nang walang kabuluhan"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l3-e4",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o3"
+      ],
+      "cards": [
+        "u6-l3-c5"
+      ],
+      "prompt": {
+        "ar": "ضرورات الحياة التي حفظتها الشريعة:",
+        "en": "The necessities of life that the Sharia preserves:",
+        "tl": "Ang mga pangangailangan ng buhay na pinapanatili ng Sharia:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الطمأنينة والراحة والسرور",
+            "en": "reassurance, comfort and delight",
+            "tl": "kapanatagan, kaginhawaan at kasiyahan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الدين والنفس والعرض والعقل والمال",
+            "en": "religion, life, honor, mind and property",
+            "tl": "relihiyon, sarili, karangalan, isipan at kayamanan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o3",
+        "u6-l3-o2"
+      ],
+      "cards": [
+        "u6-l3-c5"
+      ],
+      "prompt": {
+        "ar": "مَن عاش متبعًا للأوامر الشرعية مجتنبًا للمحرمات:",
+        "en": "Whoever follows the Sharia commandments and avoids its prohibitions:",
+        "tl": "Sinuman ang namuhay alinsunod sa Sharia at umiwas sa ipinagbabawal:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "حفظ هذه الضرورات وعاش سعيدًا مطمئنًا",
+            "en": "preserves these necessities and lives a happy, peaceful life",
+            "tl": "napangalagaan ang mga pangangailangang ito at namumuhay nang masaya at payapa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ضيّع هذه الضرورات",
+            "en": "loses these necessities",
+            "tl": "nawawala sa kanya ang mga ito"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u6-l3-o4"
+      ],
+      "cards": [
+        "u6-l3-c6",
+        "u6-l3-c1"
+      ],
+      "prompt": {
+        "ar": "ماذا تبعث رابطة المسلم بربه؟",
+        "en": "What does the Muslim’s bond with his Lord bring?",
+        "tl": "Ano ang dulot ng ugnayan ng Muslim sa kanyang Panginoon?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ضرورات الحياة الخمس",
+            "en": "the five necessities of life",
+            "tl": "ang limang pangangailangan ng buhay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الطمأنينة والراحة النفسية والأمان والسرور",
+            "en": "reassurance, spiritual comfort, safety and delight",
+            "tl": "kapanatagan, kaginhawaan ng sarili, katiwasayan at kasiyahan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l3-e7",
+      "type": "match",
+      "objectives": [
+        "u6-l3-o4",
+        "u6-l3-o1"
+      ],
+      "cards": [
+        "u6-l3-c7",
+        "u6-l3-c4"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "هذه العلاقة العظيمة",
+            "en": "This great relationship",
+            "tl": "Ang mahusay na ugnayan na ito"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "المسلم الصالح",
+            "en": "A true Muslim",
+            "tl": "Ang matuwid na Muslim"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "دائم الاحتياج إلى ربه، ودائم الدعاء بين يديه",
+            "en": "is permanently in need of his Lord and always supplicates Him",
+            "tl": "ay palaging nangangailangan sa kanyang Panginoon at palaging nananalangin"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "حالة وجدانية تحمل على التنعّم بعبادة الرحمن",
+            "en": "is a spiritual state that makes the Muslim feel bliss in worshiping Allah",
+            "tl": "ay isang estado na humahantong sa pagtamasa ng pagsamba sa Pinakamaawain"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": "First half of «سعادتي في ديني الإسلام» (LRN-09 rule 4), split at the paragraph boundary before «تلك الحلاوة». Verses 16:97, 2:186, 40:60 and 2:257 are shown from the Quran database; the cards end where each verse begins and resume after it. The Filipino page quotes 4:124 instead of 16:97 for the opening verse; the quran field follows the Arabic (16:97) for all languages (reviewer)."
+}

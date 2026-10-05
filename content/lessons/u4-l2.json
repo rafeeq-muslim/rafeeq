@@ -1,0 +1,617 @@
+{
+  "id": "u4-l2",
+  "unit": "u4",
+  "order": 2,
+  "title": {
+    "ar": "الملائكة والكتب",
+    "en": "The Angels and the Scriptures",
+    "tl": "Ang mga Anghel at ang mga Aklat"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإيمان › الركن الثاني والثالث (tab6_2, tab6_3)",
+    "steps": null,
+    "page_ar": "48–53",
+    "page": "p. 4",
+    "sheet_rows": "84–98"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u4-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الثاني :الإيمانُ بالملائكة\nقال تعالى:",
+        "en": "Second Pillar: Belief in the Angels\nAllah Almighty says:",
+        "tl": "Ang Pangalawang Haligi\nAng Paniniwala sa mga Anghel.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 35,
+        "ayat": [
+          1,
+          1
+        ]
+      },
+      "source_ref": "iman pillar 2"
+    },
+    {
+      "id": "u4-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "نؤمن بأن الملائكة عالم غيبي، وأنهم عباد لله خلقهم من نور، وجعلهم طائعين متذللين له.",
+        "en": "We believe that the angels are part of the unseen realm, and that they are servants of Allah that He created from light, and made them obedient and submissive to Him.",
+        "tl": "Naniniwala tayo na ang mga anghel ay di nakikitang nilalang. Nilikha sila ng Allah mula sa liwanag, at ginawa Niya silang sumusunod at nagpapakumbaba lamang sa Kanya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 2"
+    },
+    {
+      "id": "u4-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "وهم خلق عظيم لا يحيط بقوتهم وعددهم إلا الله تعالى، ولكلٍّ منهم أوصافٌ وأسماء ووظائف خصَّهم الله تعالى بها، ومنهم جبريل عليه السلام الموكل بالوحي ينزل به من الله تعالى إلى رسله.",
+        "en": "They are a great creation whose numbers and abilities are known to Allah alone. Each of them has names, traits, and duties that Allah assigned to them. One of them is Jibreel (Archangel Gabriel) who is assigned with delivering the revelation from Allah, the Exalted, to His messengers.",
+        "tl": "Sila ay mga dakilang nilikha na walang nakakaalam sa kanilang tunay na lakas at bilang maliban sa Allah lamang. Ang bawat isa sa kanila ay may mga pangalan at katangian at mga tungkulin na itinalaga sa kanila ng Allah. Kabilang sa kanila ay si Jibril na itinalaga ng Allah sa pagpapahayag ng rebelasyon na Kanyang ibinaba sa Kanyang mga sugo."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 2"
+    },
+    {
+      "id": "u4-l2-c4",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الثالث: الإيمانُ بالكتب\nقال تعالى:",
+        "en": "Third Pillar: Belief in Divine Scriptures\nAllah Almighty says:",
+        "tl": "Ang Pangatlong Haligi\nAng Paniniwala sa mga Aklat.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          136,
+          136
+        ]
+      },
+      "source_ref": "iman pillar 3"
+    },
+    {
+      "id": "u4-l2-c5",
+      "kind": "text",
+      "text": {
+        "ar": "التصديق الجازم بأنَّ جميعَ الكتب السماوية كلام الله.\nوأنها منزَّلة من عند الله عز وجل على رسله إلى عباده بالحق المبين.",
+        "en": "The firm belief that all the divine Scriptures are the word of Allah, and that they were revealed from Allah to His messengers bearing the clear truth.",
+        "tl": "Ang matibay na paniniwala na ang lahat ng mga kapahayagan ay salita ng Allah. Mula ito sa Allah na ibinaba sa Kanyang mga Sugo patungo sa sangkatauhan dala ang malinaw na katotohanan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 3"
+    },
+    {
+      "id": "u4-l2-c6",
+      "kind": "text",
+      "text": {
+        "ar": "وأنَّ الله سبحانه بإرساله نبيه محمد ﷺ إلى الناس كافَّة، نسخَ بشريعتِهِ سائرَ الشرائعِ السابقة، وجعلَ القرآنَ الكريم مهيمنًا على سائر الكتب السماوية وناسخاً لها، وقد تكفَّل الله بحفظ القرآن الكريم من أي تبديل أو تحريف، فقال تعالى:",
+        "en": "We believe that Allah has sent His Prophet Muhammad (pbuh) to all of mankind and abrogated, by his Shariah, all the past laws. The Qur’an supersedes all Divine Scriptures and abrogates them, and Allah guaranteed to protect it against any distortion or alteration; He says:",
+        "tl": "Sa pagpadala ng Allah sa Kanyang Sugo na si Muhammad ﷺ para sa buong sangkatauhan binago ng Allah sa pamamagitan ng batas ni Muhammad ﷺ ang mga naunang mga batas at ginawa ang Qur’an na mangibabaw sa mga naunang mga kapayahagan at pamalit sa mga ito. Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 15,
+        "ayat": [
+          9,
+          9
+        ]
+      },
+      "source_ref": "iman pillar 3"
+    },
+    {
+      "id": "u4-l2-c7",
+      "kind": "text",
+      "text": {
+        "ar": "لأنَّ القرآن الكريم آخر كتب الله تعالى إلى البشر، ونبيه محمد ﷺ آخر الرسل، ودين الإسلام هو الدين الذي رضيه الله للبشر إلى قيام الساعة، قال تعالى:",
+        "en": "This is because the Qur'an is the last revelation to mankind, and Muhammad (pbuh) is the last Messenger, and Islam is the religion that Allah has approved for mankind until the Day of Judgment. Allah Almighty says:",
+        "tl": "Ang maluwalhating Qur’an ang huling kapahayagan ng Allah para sa sangkatauhan, at ang Propeta si Muhammad ang huling sugo at ang Islam ang relihiyon na kinalugdan ng Allah para sa sangkatauhan hanngang sa dumating ang araw ng pagkagunaw, sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 3,
+        "ayat": [
+          19,
+          19
+        ]
+      },
+      "source_ref": "iman pillar 3"
+    },
+    {
+      "id": "u4-l2-c8",
+      "kind": "text",
+      "text": {
+        "ar": "والكتب السماوية التي ذكرها الله تعالى في كتابه هي:\nالقرآن الكريم: أنزله الله على نبيه محمد ﷺ.\nالتوراة: أنزلها الله على نبيه موسى عليه السلام.\nالإنجيل: أنزله الله على نبيه عيسى عليه السلام.\nالزبور: أنزله الله على نبيه داوود عليه السلام.\nصحف إبراهيم: أنزلها الله على نبيه إبراهيم عليه السلام.",
+        "en": "The Divine Scriptures that Allah mentioned in the Qur’an are:\nThe Noble Qur’an: Allah revealed it to His Prophet Muhammad (pbuh).\nThe Torah: which Allah revealed to His Prophet Moses (pbuh).\nThe Gospel: which Allah revealed to His Prophet Jesus (pbuh).\nThe Psalms: which Allah revealed to His Prophet David (pbuh).\nThe Scrolls of Abraham: which Allah revealed to His Prophet Abraham (pbuh).",
+        "tl": "Ang mga kapahayagan na ibinaba ng Allah na nabanggit sa Kanyang Aklat ay ang mga sumusunod:\n1 Ang Maluwalhating Qur’an: ipinadala ito ng Allah kay Propeta Muhamad ﷺ.\n2 Ang Tawrah: ipinadala ito ng Allah kay Propeta Musa, sumakanya nawa ang kapayapaan.\n3 Ang Injeel: ipinadala ito ng Allah kay Propeta Eesa, sumakanya nawa ang kapayapaan.\n4 Ang Zaboor: ipinadala ito ng Allah kay Propeta Dawood, sumakanya nawa ang kapayapaan.\n5 Ang Suhoof: ipinadala ito ng Allah kay Propeta Ibrahim, sumakanya nawa ang kapayapaan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 3"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u4-l2-o1",
+      "text": {
+        "ar": "يعرف أن الملائكة عالم غيبي، عباد لله خلقهم من نور، لا يحيط بعددهم إلا الله",
+        "en": "Knows that the angels are of the unseen, servants of Allah created from light, whose number only Allah knows",
+        "tl": "Alam na ang mga anghel ay di nakikitang nilalang, nilikha ng Allah mula sa liwanag, at Siya lamang ang nakaaalam ng kanilang bilang"
+      },
+      "cards": [
+        "u4-l2-c2",
+        "u4-l2-c3",
+        "u4-l2-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u4-l2-o2",
+      "text": {
+        "ar": "يعرف أن جبريل عليه السلام الموكّل بالوحي",
+        "en": "Knows that Jibreel (peace be upon him) is assigned with the revelation",
+        "tl": "Alam na si Jibril ang itinalaga sa pagpapahayag ng rebelasyon"
+      },
+      "cards": [
+        "u4-l2-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l2-o3",
+      "text": {
+        "ar": "يعرف معنى الإيمان بالكتب، وأن القرآن آخرها وقد تكفّل الله بحفظه",
+        "en": "Knows what belief in the Scriptures means, and that the Qur’an is the last of them and Allah guaranteed to protect it",
+        "tl": "Alam ang kahulugan ng paniniwala sa mga Aklat, at na ang Qur’an ang huli at pinangangalagaan ito ng Allah"
+      },
+      "cards": [
+        "u4-l2-c5",
+        "u4-l2-c6",
+        "u4-l2-c7",
+        "u4-l2-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u4-l2-o4",
+      "text": {
+        "ar": "يطابق الكتب السماوية بالأنبياء الذين أُنزلت عليهم",
+        "en": "Matches the divine Scriptures with the prophets they were revealed to",
+        "tl": "Naitutugma ang mga Aklat sa mga propeta na pinagbabaan nito"
+      },
+      "cards": [
+        "u4-l2-c8"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u4-l2-e1",
+      "type": "match",
+      "objectives": [
+        "u4-l2-o1",
+        "u4-l2-o2"
+      ],
+      "cards": [
+        "u4-l2-c2",
+        "u4-l2-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل عبارة بتمامها كما في الدرس",
+        "en": "Match each phrase with its ending, as in the lesson",
+        "tl": "Itugma ang bawat parirala sa katapusan nito, ayon sa aralin"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الملائكة",
+            "en": "The angels",
+            "tl": "Ang mga anghel"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "خلقهم الله",
+            "en": "Allah created them",
+            "tl": "Nilikha sila ng Allah"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "جبريل عليه السلام",
+            "en": "Jibreel",
+            "tl": "Si Jibril"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "الموكّل بالوحي",
+            "en": "is assigned with delivering the revelation",
+            "tl": "ay itinalaga sa pagpapahayag ng rebelasyon"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "عالم غيبي",
+            "en": "are part of the unseen realm",
+            "tl": "ay di nakikitang nilalang"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "من نور",
+            "en": "from light",
+            "tl": "mula sa liwanag"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l2-e2",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o1"
+      ],
+      "cards": [
+        "u4-l2-c3",
+        "u4-l2-c1"
+      ],
+      "prompt": {
+        "ar": "مَن يحيط بقوة الملائكة وعددهم؟",
+        "en": "Who knows the number and abilities of the angels?",
+        "tl": "Sino ang nakaaalam ng tunay na lakas at bilang ng mga anghel?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الناس",
+            "en": "People",
+            "tl": "Ang mga tao"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الله تعالى وحده",
+            "en": "Allah alone",
+            "tl": "Ang Allah lamang"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "جبريل عليه السلام",
+            "en": "Jibreel",
+            "tl": "Si Jibril"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l2-e3",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o2"
+      ],
+      "cards": [
+        "u4-l2-c3"
+      ],
+      "prompt": {
+        "ar": "مَن الموكّل بالوحي من الملائكة كما في الدرس؟",
+        "en": "Which angel is assigned with the revelation, as the lesson says?",
+        "tl": "Sinong anghel ang itinalaga sa rebelasyon ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "موسى عليه السلام",
+            "en": "Moses",
+            "tl": "Si Musa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إبراهيم عليه السلام",
+            "en": "Abraham",
+            "tl": "Si Ibrahim"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "جبريل عليه السلام",
+            "en": "Jibreel",
+            "tl": "Si Jibril"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u4-l2-e4",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o3"
+      ],
+      "cards": [
+        "u4-l2-c5",
+        "u4-l2-c4"
+      ],
+      "prompt": {
+        "ar": "الإيمان بالكتب هو التصديق الجازم بأن:",
+        "en": "Belief in the Scriptures is the firm belief that:",
+        "tl": "Ang paniniwala sa mga Aklat ay ang matibay na paniniwala na:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الكتب السماوية ليست من عند الله",
+            "en": "the divine Scriptures are not from Allah",
+            "tl": "ang mga kapahayagan ay hindi mula sa Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "جميع الكتب السماوية كلام الله، منزّلة من عنده على رسله",
+            "en": "all the divine Scriptures are the word of Allah, revealed by Him to His messengers",
+            "tl": "ang lahat ng mga kapahayagan ay salita ng Allah, ibinaba sa Kanyang mga Sugo"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l2-e5",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o3"
+      ],
+      "cards": [
+        "u4-l2-c6"
+      ],
+      "prompt": {
+        "ar": "مَن تكفّل بحفظ القرآن الكريم من التبديل والتحريف؟",
+        "en": "Who guaranteed to protect the Qur’an against distortion and alteration?",
+        "tl": "Sino ang nangangalaga sa Qur’an mula sa anumang pagbabago?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الله تعالى",
+            "en": "Allah",
+            "tl": "Ang Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الناس",
+            "en": "People",
+            "tl": "Ang mga tao"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l2-e6",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o3"
+      ],
+      "cards": [
+        "u4-l2-c7"
+      ],
+      "prompt": {
+        "ar": "لماذا جعل الله القرآن مهيمنًا على الكتب السابقة؟",
+        "en": "Why did Allah make the Qur’an supersede the earlier Scriptures?",
+        "tl": "Bakit ginawa ng Allah na mangibabaw ang Qur’an sa mga naunang kapahayagan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لأنه أول كتب الله",
+            "en": "Because it is the first of Allah’s Books",
+            "tl": "Dahil ito ang unang aklat ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لأنه آخر كتب الله إلى البشر، ومحمد ﷺ آخر الرسل",
+            "en": "Because it is the last revelation to mankind, and Muhammad ﷺ is the last Messenger",
+            "tl": "Dahil ito ang huling kapahayagan ng Allah, at si Muhammad ang huling sugo"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l2-e7",
+      "type": "match",
+      "objectives": [
+        "u4-l2-o4"
+      ],
+      "cards": [
+        "u4-l2-c8"
+      ],
+      "prompt": {
+        "ar": "صِل كل كتاب بالنبي الذي أُنزل عليه",
+        "en": "Match each Scripture with the prophet it was revealed to",
+        "tl": "Itugma ang bawat aklat sa propeta na pinagbabaan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "القرآن الكريم",
+            "en": "The Noble Qur’an",
+            "tl": "Ang Qur’an"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "التوراة",
+            "en": "The Torah",
+            "tl": "Ang Tawrah"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الإنجيل",
+            "en": "The Gospel",
+            "tl": "Ang Injeel"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "ar": "الزبور",
+            "en": "The Psalms",
+            "tl": "Ang Zaboor"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "عيسى عليه السلام",
+            "en": "Jesus",
+            "tl": "Eesa"
+          }
+        },
+        {
+          "id": "r4",
+          "text": {
+            "ar": "داوود عليه السلام",
+            "en": "David",
+            "tl": "Dawood"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "محمد ﷺ",
+            "en": "Muhammad (pbuh)",
+            "tl": "Muhammad ﷺ"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "موسى عليه السلام",
+            "en": "Moses",
+            "tl": "Musa"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l2-e8",
+      "type": "choose",
+      "objectives": [
+        "u4-l2-o4"
+      ],
+      "cards": [
+        "u4-l2-c8"
+      ],
+      "prompt": {
+        "ar": "على مَن أُنزلت صحف إبراهيم؟",
+        "en": "To whom were the Scrolls of Abraham revealed?",
+        "tl": "Kanino ipinadala ang Suhoof?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "موسى عليه السلام",
+            "en": "Moses",
+            "tl": "Kay Musa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إبراهيم عليه السلام",
+            "en": "Abraham",
+            "tl": "Kay Ibrahim"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "عيسى عليه السلام",
+            "en": "Jesus",
+            "tl": "Kay Eesa"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [],
+  "notes": "Pillars 2 and 3. Verses 35:1, 2:136, 15:9 and 3:19 are shown from the Quran database. The Arabic site says the Psalms (الزبور) were revealed to «عيسى»; the spreadsheet and the printed book say «داوود», as do the English and Filipino — the spreadsheet wording is used (README)."
+}

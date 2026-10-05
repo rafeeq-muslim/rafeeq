@@ -1,0 +1,455 @@
+{
+  "id": "u4-l3",
+  "unit": "u4",
+  "order": 3,
+  "title": {
+    "ar": "الرسل واليوم الآخر",
+    "en": "The Messengers and the Last Day",
+    "tl": "Ang mga Sugo at ang Huling Araw"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإيمان › الركن الرابع والخامس (tab6_4, tab6_5)",
+    "steps": null,
+    "page_ar": "54–56",
+    "page": "p. 4–5",
+    "sheet_rows": "99–106"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u4-l3-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الرابع: الإيمانُ بالرسل\nقال تعالى:",
+        "en": "Fourth Pillar: Belief in the Messengers\nAllah Almighty says:",
+        "tl": "Ang Pang-apat na Haligi\nAng Paniniwala sa mga Sugo\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 16,
+        "ayat": [
+          36,
+          36
+        ]
+      },
+      "source_ref": "iman pillar 4"
+    },
+    {
+      "id": "u4-l3-c2",
+      "kind": "text",
+      "text": {
+        "ar": "التصديق الجازم بأن الله تعالى بعث في كل أمةٍ رسولاً يدعوهم إلى عبادة الله وحده لا شريك له، والكفر بما يُعبد من دونه تعالى.",
+        "en": "We firmly believe that Allah sent a messenger to every nation to call them to worshiping Allah alone without associating any partners with Him, and disbelieving in any deity that is worshiped other than Him.",
+        "tl": "Ito ay ang matibay na paniniwala na ang Allah ay nagpadala sa bawat sambayanan ng Sugo na nag-aanyaya sa pagsamba lamang sa Allah at pagtakwil ng pagsamba sa iba."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 4"
+    },
+    {
+      "id": "u4-l3-c3",
+      "kind": "text",
+      "text": {
+        "ar": "وأَنَّ جميعهم بشرٌ رجالٌ عبيدٌ لله، وأنَّهم صادقون مصدَّقون، أتقياء أمناء، هداة مهتدون، أيَّدهم الله بالمعجزات الدالة على صدقهم، وأنهم بلَّغوا جميع ما أرسلهم الله به، وأنهم جميعًا كانوا على الحق المبين، والهُدى المستبين.",
+        "en": "We believe that all the messengers were humans, men, servants of Allah, honest and trusted, pious, guides and guided, and that Allah supported them with miracles that prove their truthfulness. We believe that they conveyed all that Allah sent them with, and that they were all upon the evident truth and guidance.",
+        "tl": "Ang paniniwala na silang lahat ay mga tao lamang na tagapaglingkod ng Allah, sila ay makatotohanan at pinatotohanan, mga mabubuting mga tao at matitino, mga mararangal at dalisay, mga matakutin sa Allah at mapagkakatiwalaan. Mga nag-gagabay at ginabayan, sila ay pinagkalooban ng mga himala ng Allah bilang patunay na sila ay mga tunay na sugo. Kanilang ipinaabot kung ano ang iniutos ng Allah sa kanila, lahat sila ay nasa matuwid na landas at malinaw na katotohanan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 4"
+    },
+    {
+      "id": "u4-l3-c4",
+      "kind": "text",
+      "text": {
+        "ar": "وقد اتفقت دعوتهم من أولهم إلى آخرهم في أصل الدين، وهو توحيد الله عزَّ وجلَّ في العبادة وعدم الإشراك به.",
+        "en": "Their messages from the first to the last of them shared the same principle of religion, which is to worship Allah alone without associating any partners with Him.",
+        "tl": "Katotohanang nagkaisa ang paanyaya ng naunang mga Sugo at ang mga nahuli sa pagpapatupad ng pundasyon ng pananampalataya, na kung saan ito ang paanyaya sa kaisahan ng Allah, sa pagsamba, at paglayo sa gawaing pagtatambal sa Kanya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 4"
+    },
+    {
+      "id": "u4-l3-c5",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الخامس :الإيمانُ باليوم الآخر\nقال تعالى:",
+        "en": "Fifth Pillar: Belief in the Day of Judgment.\nAllah Almighty says:",
+        "tl": "Ang Panglimang Haligi\nAng Paniniwala sa Araw ng Paghuhukom.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 4,
+        "ayat": [
+          87,
+          87
+        ]
+      },
+      "source_ref": "iman pillar 5"
+    },
+    {
+      "id": "u4-l3-c6",
+      "kind": "text",
+      "text": {
+        "ar": "التصديقُ الجازم بكلِّ ما يتعلق باليوم الآخر، مما أخبر به ربنا عز وجل في كتابه الكريم أو حدثنا عنه نبينا محمد ﷺ، كوفاة الإنسان والبعث والنشور والشفاعة والميزان والحساب والجنة والنار، وغير ذلك مما يتعلق باليوم الآخر.",
+        "en": "The firm belief in all the details related to the Day of Judgment which our Lord mentions in the Qur'an or Prophet Muhammad (pbuh) related to us, like the death of humans, resurrection, intercession, the Scale (weighing of deeds), reckoning, Paradise, Hell, etc.",
+        "tl": "Ito ay ang paniniwala sa lahat ng bagay na may kaugnay sa huling araw na ibinalita sa atin ng Allah sa Kanyang banal na aklat at sinabi sa atin ng Propeta Muhammad ﷺ tulad ng kamatayan ng isang tao, biyaya at kaparusahan sa libingan, ang pagbangon muli, ang pagtitipon ng buong sangkatauhan, ang timbangan, ang paglilitis, ang Paraiso, ang Impiyerno at iba pang mga pangyayari sa Araw ng Paghuhukom."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 5"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u4-l3-o1",
+      "text": {
+        "ar": "يعرف أن الله بعث في كل أمة رسولًا يدعو إلى عبادة الله وحده",
+        "en": "Knows that Allah sent a messenger to every nation calling to worship Allah alone",
+        "tl": "Alam na nagpadala ang Allah sa bawat sambayanan ng Sugo na nag-aanyaya sa pagsamba sa Allah lamang"
+      },
+      "cards": [
+        "u4-l3-c2",
+        "u4-l3-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u4-l3-o2",
+      "text": {
+        "ar": "يعرف صفات الرسل كما في الدرس",
+        "en": "Knows the qualities of the messengers given in the lesson",
+        "tl": "Alam ang mga katangian ng mga sugo ayon sa aralin"
+      },
+      "cards": [
+        "u4-l3-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l3-o3",
+      "text": {
+        "ar": "يعرف أن دعوة الرسل كلهم واحدة في أصل الدين",
+        "en": "Knows that all the messengers called to the same principle of religion",
+        "tl": "Alam na iisa ang paanyaya ng lahat ng mga sugo sa pundasyon ng pananampalataya"
+      },
+      "cards": [
+        "u4-l3-c4"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l3-o4",
+      "text": {
+        "ar": "يذكر أمثلة مما يشمله الإيمان باليوم الآخر",
+        "en": "Gives examples of what belief in the Last Day includes",
+        "tl": "Nakapagbibigay ng mga halimbawa ng kasama sa paniniwala sa Huling Araw"
+      },
+      "cards": [
+        "u4-l3-c6",
+        "u4-l3-c5"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u4-l3-e1",
+      "type": "match",
+      "objectives": [
+        "u4-l3-o1",
+        "u4-l3-o2",
+        "u4-l3-o3"
+      ],
+      "cards": [
+        "u4-l3-c2",
+        "u4-l3-c3",
+        "u4-l3-c4"
+      ],
+      "prompt": {
+        "ar": "صِل بداية كل جملة بتمامها",
+        "en": "Match the start of each sentence with its end",
+        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "بعث الله في كل أمة",
+            "en": "Allah sent to every nation",
+            "tl": "Nagpadala ang Allah sa bawat sambayanan"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "أيّد الله الرسل",
+            "en": "Allah supported the messengers",
+            "tl": "Pinagkalooban ng Allah ang mga sugo"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "اتفقت دعوة الرسل من أولهم إلى آخرهم",
+            "en": "The call of the messengers, from the first to the last",
+            "tl": "Ang paanyaya ng mga naunang Sugo at ng mga nahuli"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "في أصل الدين: توحيد الله في العبادة",
+            "en": "shared one principle: worshipping Allah alone",
+            "tl": "ay nagkaisa sa pundasyon: ang kaisahan ng Allah sa pagsamba"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "رسولًا يدعوهم إلى عبادة الله وحده",
+            "en": "a messenger to call them to worship Allah alone",
+            "tl": "ng Sugo na nag-aanyaya sa pagsamba lamang sa Allah"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "بالمعجزات الدالة على صدقهم",
+            "en": "with miracles that prove their truthfulness",
+            "tl": "ng mga himala bilang patunay na sila ay tunay na sugo"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l3-e2",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o1"
+      ],
+      "cards": [
+        "u4-l3-c2",
+        "u4-l3-c1"
+      ],
+      "prompt": {
+        "ar": "إلى ماذا دعا كل رسول أمته؟",
+        "en": "What did every messenger call his nation to?",
+        "tl": "Saan nag-anyaya ang bawat sugo sa kanyang sambayanan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "إلى أصل دين يختلف من رسول إلى آخر",
+            "en": "To a principle of religion that differed from one messenger to another",
+            "tl": "Sa pundasyon ng pananampalataya na iba-iba sa bawat sugo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إلى عبادة الله وحده لا شريك له، والكفر بما يُعبد من دونه",
+            "en": "To worship Allah alone, and to reject anything worshiped other than Him",
+            "tl": "Sa pagsamba lamang sa Allah at pagtakwil ng pagsamba sa iba"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l3-e3",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o2"
+      ],
+      "cards": [
+        "u4-l3-c3"
+      ],
+      "prompt": {
+        "ar": "الرسل جميعهم:",
+        "en": "All the messengers were:",
+        "tl": "Ang lahat ng mga sugo ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بشر عبيد لله، صادقون مصدَّقون",
+            "en": "humans, servants of Allah, honest and trusted",
+            "tl": "mga tao lamang na tagapaglingkod ng Allah, makatotohanan at pinatotohanan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ليسوا من البشر",
+            "en": "not human beings",
+            "tl": "hindi mga tao"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l3-e4",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o2"
+      ],
+      "cards": [
+        "u4-l3-c3"
+      ],
+      "prompt": {
+        "ar": "هل بلّغ الرسل جميع ما أرسلهم الله به؟",
+        "en": "Did the messengers convey all that Allah sent them with?",
+        "tl": "Ipinaabot ba ng mga sugo ang lahat ng iniutos ng Allah sa kanila?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بلّغوا بعضه وكتموا بعضه",
+            "en": "They conveyed some of it and hid some",
+            "tl": "Ipinaabot nila ang ilan at itinago ang iba"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "نعم، بلّغوه جميعًا",
+            "en": "Yes, they conveyed all of it",
+            "tl": "Oo, ipinaabot nila ang lahat ng ito"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o3"
+      ],
+      "cards": [
+        "u4-l3-c4"
+      ],
+      "prompt": {
+        "ar": "ما أصل الدين الذي اتفقت عليه دعوة الرسل؟",
+        "en": "What is the principle of religion that all the messengers called to?",
+        "tl": "Ano ang pundasyon ng pananampalataya na ipinanawagan ng lahat ng mga sugo?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "توحيد الله في العبادة وعدم الإشراك به",
+            "en": "Worshipping Allah alone without associating partners with Him",
+            "tl": "Ang kaisahan ng Allah sa pagsamba at paglayo sa pagtatambal sa Kanya"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "اختلفت دعوتهم في أصل الدين",
+            "en": "They differed on the principle of religion",
+            "tl": "Nagkaiba-iba sila sa pundasyon ng pananampalataya"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o4"
+      ],
+      "cards": [
+        "u4-l3-c6",
+        "u4-l3-c5"
+      ],
+      "prompt": {
+        "ar": "مما يتعلق باليوم الآخر كما في الدرس:",
+        "en": "Which of these is part of the Last Day, as the lesson says?",
+        "tl": "Alin dito ang kaugnay ng Huling Araw ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بعث رسول إلى كل أمة",
+            "en": "Sending a messenger to every nation",
+            "tl": "Ang pagpapadala ng Sugo sa bawat sambayanan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "البعث والميزان والحساب والجنة والنار",
+            "en": "Resurrection, the Scale, reckoning, Paradise and Hell",
+            "tl": "Ang pagbangon muli, ang timbangan, ang paglilitis, ang Paraiso at ang Impiyerno"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l3-e7",
+      "type": "choose",
+      "objectives": [
+        "u4-l3-o4"
+      ],
+      "cards": [
+        "u4-l3-c6"
+      ],
+      "prompt": {
+        "ar": "الإيمان باليوم الآخر هو التصديق الجازم بكل ما يتعلق به مما:",
+        "en": "Belief in the Last Day is firm belief in everything about it that:",
+        "tl": "Ang paniniwala sa Huling Araw ay paniniwala sa lahat ng tungkol dito na:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أخبر به ربنا في كتابه، أو حدّثنا عنه نبينا محمد ﷺ",
+            "en": "our Lord mentions in the Qur’an or Prophet Muhammad told us",
+            "tl": "ibinalita sa atin ng Allah sa Kanyang aklat at sinabi sa atin ng Propeta Muhammad ﷺ"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لم يخبر به الله ولا رسوله",
+            "en": "neither Allah nor His Messenger told us",
+            "tl": "hindi ibinalita ng Allah o ng Kanyang Sugo"
+          }
+        }
+      ],
+      "answer": "a"
+    }
+  ],
+  "dropped": [],
+  "notes": "Pillars 4 and 5. The Filipino list of Last-Day matters adds items not in the Arabic (blessing and punishment in the grave, the gathering); exercises use only items present in all three languages."
+}

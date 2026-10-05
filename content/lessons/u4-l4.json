@@ -1,0 +1,409 @@
+{
+  "id": "u4-l4",
+  "unit": "u4",
+  "order": 4,
+  "title": {
+    "ar": "القدر خيره وشره",
+    "en": "Predestination, the Good and Bad of It",
+    "tl": "Ang Qadar, Mabuti man o Masama"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإيمان › الركن السادس (tab6_6)",
+    "steps": null,
+    "page_ar": "57–58",
+    "page": "p. 5",
+    "sheet_rows": "107–114"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u4-l4-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن السادس :الإيمانُ بالقدر خيره وشره\nقال تعالى:",
+        "en": "Sixth Pillar: Belief in predestination, the good and bad aspects thereof.\nAllah Almighty says:",
+        "tl": "Ang Pang-anim na Haligi\nAng Paniniwala sa Qadar o Tadhana, Mabuti man o Masama.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 54,
+        "ayat": [
+          49,
+          49
+        ]
+      },
+      "source_ref": "iman pillar 6"
+    },
+    {
+      "id": "u4-l4-c2",
+      "kind": "text",
+      "text": {
+        "ar": "الاعتقادُ بأنَّ كلَّ ما يقع على المخلوقات من أحداث في هذه الدنيا فهو بعلم الله وقدره سبحانه وتعالى وتدبيره وحده لا شريك له، وأنَّ هذه الأقدار مكتوبةٌ قبل خلق الإنسان، وأنَّ للإنسانِ إرادةً ومشيئة، وأنَّه فاعلٌ لأفعالِهِ على الحقيقة؛ لكنَّ ذلك كله لا يخرج عن علم الله وإرادته ومشيئته.",
+        "en": "We believe that every worldly event or situation experienced by any creature occurs by the knowledge and predestination of Allah alone without any partner, and that those predestinations were written before the creation of mankind. We also believe that man has free will and he is the real doer of his actions, but all of that is not beyond the knowledge and will of Allah.",
+        "tl": "Ito ay ang paniniwala na ang lahat ng mga nangyayari sa mga nilikha dito sa mundo ay itinakda ng Allah ﷻ at itong mga pagtatakda ay nakasulat na bago pa man likhain ang tao. Ang bawat tao ay may sariling kagustuhan at pagnanais at siya ang totoong kumikilos o gumagawa nito. Ngunit ang lahat ng ito ay hindi lalabas sa kaalaman, sa kagustuhan at kapahintulutan ng Allah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 6"
+    },
+    {
+      "id": "u4-l4-c3",
+      "kind": "text",
+      "text": {
+        "ar": "فالإيمانُ بالقدرِ يقوم على أربعِ مراتبَ هي :\nالأولى: الإيمانُ بعلم الله الشامل المحيط\nالثانية: الإيمانُ بكتابة الله لكل ما هو كائن إلى يوم القيامة.\nالثالثة: الإيمانُ بمشيئة الله النافذة وقدرته التامة، فما شاء كانَ وما لم يشأْ لم يكنْ.\nالرابعة: الإيمانُ بأنَّ اللهَ خالقُ كلَّ شيءٍ، لا شريكَ له في خلقه.",
+        "en": "Belief in Preordainment is of four levels:\nFirst: Belief in Allah’s Knowledge that encompasses everything.\nSecond: Belief that Allah wrote all that will exist until the Day of Judgment.\nThird: Belief in Allah’s executive Will and His Omnipotence. Whatever He wills occurs, and whatever He does not will never occurs.\nFourth: Belief that Allah is the Creator of everything and that He has no partner in His creation.",
+        "tl": "Ang paniniwala sa Qadar o tadhana ay nababatay sa apat na pantas, ito ay ang sumusunod:\n1 Ang paniniwala sa pangmalawakang kaalaman ng Allah.\n2 Ang paniniwala sa pagsulat ng Allah ng lahat ng mangyayari hanggang sa Araw ng Paghuhukom.\n3 Ang paniniwala sa kagustuhan ng Allah at Kanyang buong kapangyarihan o kakayahan, kaya’t ang anumang Kanyang naisin ay mangyayari at ang anumang hindi Niya naisin ay hindi mangyayari.\n4 Ang paniniwala na ang Allah ang Tagaplikha ng lahat ng bagay at wala Siyang katuwang sa paglikha."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 6"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u4-l4-o1",
+      "text": {
+        "ar": "يعرف معنى الإيمان بالقدر: أن كل ما يقع بعلم الله وقدره، وأن الأقدار مكتوبة قبل خلق الإنسان",
+        "en": "Knows what belief in predestination means: everything happens by Allah’s knowledge and decree, written before mankind was created",
+        "tl": "Alam ang kahulugan ng paniniwala sa Qadar: lahat ay itinakda ng Allah at nakasulat bago pa likhain ang tao"
+      },
+      "cards": [
+        "u4-l4-c2",
+        "u4-l4-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u4-l4-o2",
+      "text": {
+        "ar": "يعرف أن للإنسان إرادة ومشيئة، وأن ذلك لا يخرج عن علم الله ومشيئته",
+        "en": "Knows that a person has a will and choice, and that this is not beyond Allah’s knowledge and will",
+        "tl": "Alam na ang tao ay may sariling kagustuhan, ngunit hindi ito lalabas sa kaalaman at kagustuhan ng Allah"
+      },
+      "cards": [
+        "u4-l4-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l4-o3",
+      "text": {
+        "ar": "يرتّب مراتب الإيمان بالقدر الأربع",
+        "en": "Puts the four levels of belief in predestination in order",
+        "tl": "Naisasaayos ang apat na antas ng paniniwala sa Qadar"
+      },
+      "cards": [
+        "u4-l4-c3"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u4-l4-e1",
+      "type": "order",
+      "objectives": [
+        "u4-l4-o3"
+      ],
+      "cards": [
+        "u4-l4-c3"
+      ],
+      "prompt": {
+        "ar": "رتّب مراتب الإيمان بالقدر",
+        "en": "Put the levels of belief in predestination in order",
+        "tl": "Isaayos ang mga antas ng paniniwala sa Qadar"
+      },
+      "items": [
+        {
+          "id": "s3",
+          "text": {
+            "ar": "المشيئة والقدرة",
+            "en": "Allah’s will and omnipotence",
+            "tl": "Ang kagustuhan at kapangyarihan ng Allah"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "الكتابة",
+            "en": "Allah’s writing of all that will be",
+            "tl": "Ang pagsulat ng Allah"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "العلم",
+            "en": "Allah’s knowledge",
+            "tl": "Ang kaalaman ng Allah"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "الخلق",
+            "en": "Allah as Creator of everything",
+            "tl": "Ang Allah ang Tagapaglikha"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "u4-l4-e2",
+      "type": "match",
+      "objectives": [
+        "u4-l4-o3"
+      ],
+      "cards": [
+        "u4-l4-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل مرتبة بمعناها",
+        "en": "Match each level with its meaning",
+        "tl": "Itugma ang bawat antas sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الأولى",
+            "en": "First",
+            "tl": "Una"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الثانية",
+            "en": "Second",
+            "tl": "Ikalawa"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الثالثة",
+            "en": "Third",
+            "tl": "Ikatlo"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "ar": "الرابعة",
+            "en": "Fourth",
+            "tl": "Ikaapat"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r4",
+          "text": {
+            "ar": "الإيمان بأن الله خالق كل شيء",
+            "en": "Belief that Allah is the Creator of everything",
+            "tl": "Paniniwala na ang Allah ang Tagapaglikha ng lahat ng bagay"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "الإيمان بعلم الله الشامل المحيط",
+            "en": "Belief in Allah’s knowledge that encompasses everything",
+            "tl": "Paniniwala sa pangmalawakang kaalaman ng Allah"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "الإيمان بكتابة الله لكل ما هو كائن إلى يوم القيامة",
+            "en": "Belief that Allah wrote all that will exist until the Day of Judgment",
+            "tl": "Paniniwala sa pagsulat ng Allah ng lahat ng mangyayari hanggang sa Araw ng Paghuhukom"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "الإيمان بمشيئة الله النافذة وقدرته التامة",
+            "en": "Belief in Allah’s executive Will and His Omnipotence",
+            "tl": "Paniniwala sa kagustuhan ng Allah at Kanyang buong kapangyarihan"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l4-e3",
+      "type": "choose",
+      "objectives": [
+        "u4-l4-o1"
+      ],
+      "cards": [
+        "u4-l4-c2",
+        "u4-l4-c1"
+      ],
+      "prompt": {
+        "ar": "متى كُتبت الأقدار؟",
+        "en": "When were the predestinations written?",
+        "tl": "Kailan isinulat ang mga pagtatakda?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "قبل خلق الإنسان",
+            "en": "Before the creation of mankind",
+            "tl": "Bago pa man likhain ang tao"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بعد وقوع الأحداث",
+            "en": "After the events happen",
+            "tl": "Pagkatapos mangyari ang mga bagay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l4-e4",
+      "type": "choose",
+      "objectives": [
+        "u4-l4-o2"
+      ],
+      "cards": [
+        "u4-l4-c2"
+      ],
+      "prompt": {
+        "ar": "هل للإنسان إرادة ومشيئة؟",
+        "en": "Does a person have a will and choice?",
+        "tl": "May sariling kagustuhan ba ang tao?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لا، ليس له إرادة ولا مشيئة",
+            "en": "No, he has no will or choice",
+            "tl": "Wala, wala siyang sariling kagustuhan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "نعم، وهو فاعل لأفعاله حقيقة، ولا يخرج ذلك عن علم الله ومشيئته",
+            "en": "Yes; he is the real doer of his actions, and this is not beyond Allah’s knowledge and will",
+            "tl": "Oo; siya ang totoong gumagawa nito, ngunit hindi ito lalabas sa kaalaman at kagustuhan ng Allah"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l4-e5",
+      "type": "choose",
+      "objectives": [
+        "u4-l4-o1"
+      ],
+      "cards": [
+        "u4-l4-c2"
+      ],
+      "prompt": {
+        "ar": "كل ما يقع على المخلوقات في هذه الدنيا هو:",
+        "en": "Everything that happens to the creatures in this world is:",
+        "tl": "Ang lahat ng nangyayari sa mga nilikha sa mundong ito ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بعلم الله وقدره وتدبيره وحده",
+            "en": "by the knowledge and predestination of Allah alone",
+            "tl": "itinakda ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "خارج عن علم الله",
+            "en": "beyond Allah’s knowledge",
+            "tl": "labas sa kaalaman ng Allah"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l4-e6",
+      "type": "choose",
+      "objectives": [
+        "u4-l4-o2"
+      ],
+      "cards": [
+        "u4-l4-c2"
+      ],
+      "prompt": {
+        "ar": "أفعال الإنسان:",
+        "en": "A person’s actions:",
+        "tl": "Ang mga gawa ng tao:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "تخرج عن علم الله ومشيئته",
+            "en": "are beyond Allah’s knowledge and will",
+            "tl": "ay labas sa kaalaman at kagustuhan ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يفعلها حقيقة، وهي لا تخرج عن علم الله وإرادته ومشيئته",
+            "en": "are truly his, and are not beyond Allah’s knowledge and will",
+            "tl": "ay talagang kanya, ngunit hindi lumalabas sa kaalaman at kagustuhan ng Allah"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "tl",
+      "card": "u4-l4-c3",
+      "text": "sa “lawhul mahfudh”",
+      "reason": "transliteration"
+    }
+  ],
+  "notes": "Sixth pillar. Filipino card 3: the Arabic phrase \"lawhul mahfudh\" in Latin letters was dropped from the second level; the sentence still reads \"the belief that Allah wrote all that will happen\"."
+}

@@ -1,0 +1,487 @@
+{
+  "id": "u1-l3",
+  "unit": "u1",
+  "order": 3,
+  "title": {
+    "ar": "أتوضأ (1): الخطوات 1–4",
+    "en": "I Perform Wudu (1): Steps 1–4",
+    "tl": "Ako ay Nagwu-wudhu (1): Mga Hakbang 1–4"
+  },
+  "source": {
+    "site_section": "أتعلم الوضوء › tabs 1–4",
+    "steps": "1-4",
+    "page_ar": "63–66",
+    "page": "p. 5",
+    "sheet_rows": "125–131"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l3-c1",
+      "kind": "step",
+      "text": {
+        "ar": "النيَّة ومحلها القلب، ومعنى النية: عزم القلب على فعل العبادة تقربًا إلى الله تعالى.",
+        "en": "Making Niyyah (intention) in the heart. Niyyah refers to the resolve in the heart to perform the worship in order to get close to Allah.",
+        "tl": "Ang intensyon sa puso. Ang kahulugan niyo ay ang hangarin ng puso na gawin ang isang pagsamba upang mapalapit sa Allah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "step 1"
+    },
+    {
+      "id": "u1-l3-c2",
+      "kind": "step",
+      "text": {
+        "ar": "غسل الكفين.",
+        "en": "Washing the two hands up to the wrists.",
+        "tl": "Ang paghugas ng kamay ng tatlong beses."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/310720211703110.png",
+      "quran": null,
+      "source_ref": "step 2"
+    },
+    {
+      "id": "u1-l3-c3",
+      "kind": "step",
+      "text": {
+        "ar": "المضمضة.\nالمضمضة هي: إدخال الماء في الفم وإدارته فيه، ثم إخراجه.",
+        "en": "Rinsing the mouth (Madmadah)\nRinsing the mouth: means to let water into the mouth and swirl it inside then spit it out.",
+        "tl": "Ang pagmumog ng tatlong beses\nAng madmada (Pagmumog): Ang pagpasok ng tubig sa bibig at pananatili sa loob nito at pagkatapos ay ilalabas ito."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720212642050.png",
+      "quran": null,
+      "source_ref": "step 3"
+    },
+    {
+      "id": "u1-l3-c4",
+      "kind": "step",
+      "text": {
+        "ar": "الاستنشاق.\nالاستنشاق: وهو اجتذاب الماء بالنفس إلى أقصى الأنف.\nثم الاستنثار: وهو إخراج ما في الأنف من مخاط وغيره بالنفس.",
+        "en": "Sniffing water into the nostrils (Istinshāq)\nIstinshāq: Sniffing water deep into the nose.\nIstinthār: Blowing mucus and the like from the nose.",
+        "tl": "Al-istinsha’q\nAl-istinsha’q: Ang pagsinghut ng tubig upang papasok sa ilong.\nAl-istinthar: Ang pagsinga ng tubig na ipinasok mula sa ilong"
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/240720213845050.png",
+      "quran": null,
+      "source_ref": "step 4"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l3-o1",
+      "text": {
+        "ar": "يعرف أن محل النية القلب",
+        "en": "Knows that the place of the intention is the heart",
+        "tl": "Alam na ang lugar ng intensyon ay ang puso"
+      },
+      "cards": [
+        "u1-l3-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l3-o2",
+      "text": {
+        "ar": "يرتّب خطوات الوضوء الأربع الأولى",
+        "en": "Puts the first four steps of wudu in order",
+        "tl": "Naisasaayos ang unang apat na hakbang ng wudhu"
+      },
+      "cards": [
+        "u1-l3-c1",
+        "u1-l3-c2",
+        "u1-l3-c3",
+        "u1-l3-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l3-o3",
+      "text": {
+        "ar": "يميّز المضمضة من الاستنشاق والاستنثار",
+        "en": "Tells rinsing the mouth apart from sniffing water into the nose and blowing it out",
+        "tl": "Natutukoy ang pagkakaiba ng pagmumog, ng pagsinghot ng tubig at ng pagsinga nito"
+      },
+      "cards": [
+        "u1-l3-c3",
+        "u1-l3-c4"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l3-e1",
+      "type": "choose",
+      "objectives": [
+        "u1-l3-o1"
+      ],
+      "cards": [
+        "u1-l3-c1"
+      ],
+      "prompt": {
+        "ar": "أين محل النية؟",
+        "en": "Where is the place of the intention (Niyyah)?",
+        "tl": "Saan ang lugar ng intensyon?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "القلب",
+            "en": "The heart",
+            "tl": "Ang puso"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "اللسان",
+            "en": "The tongue",
+            "tl": "Ang dila"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "اليدان",
+            "en": "The hands",
+            "tl": "Ang mga kamay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l3-e2",
+      "type": "order",
+      "objectives": [
+        "u1-l3-o2"
+      ],
+      "cards": [
+        "u1-l3-c1",
+        "u1-l3-c2",
+        "u1-l3-c3",
+        "u1-l3-c4"
+      ],
+      "prompt": {
+        "ar": "رتّب خطوات الوضوء الأربع الأولى",
+        "en": "Put the first four steps of wudu in order",
+        "tl": "Isaayos ang unang apat na hakbang ng wudhu"
+      },
+      "items": [
+        {
+          "id": "s2",
+          "text": {
+            "ar": "غسل الكفين",
+            "en": "Washing the two hands up to the wrists",
+            "tl": "Ang paghugas ng kamay"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "النية",
+            "en": "The intention in the heart",
+            "tl": "Ang intensyon sa puso"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "الاستنشاق والاستنثار",
+            "en": "Sniffing water into the nose and blowing it out",
+            "tl": "Ang pagsinghot at pagsinga ng tubig"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "المضمضة",
+            "en": "Rinsing the mouth",
+            "tl": "Ang pagmumog"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "u1-l3-e3",
+      "type": "match",
+      "objectives": [
+        "u1-l3-o3"
+      ],
+      "cards": [
+        "u1-l3-c3",
+        "u1-l3-c4"
+      ],
+      "prompt": {
+        "ar": "صِل كل كلمة بمعناها",
+        "en": "Match each word with its meaning",
+        "tl": "Itugma ang bawat salita sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "المضمضة",
+            "en": "Rinsing the mouth (Madmadah)",
+            "tl": "Ang madmada (pagmumog)"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الاستنشاق",
+            "en": "Istinshāq",
+            "tl": "Al-istinsha’q"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الاستنثار",
+            "en": "Istinthār",
+            "tl": "Al-istinthar"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "إخراج ما في الأنف من مخاط وغيره بالنفس",
+            "en": "Blowing mucus and the like from the nose",
+            "tl": "Ang pagsinga ng tubig na ipinasok mula sa ilong"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "إدخال الماء في الفم وإدارته فيه، ثم إخراجه",
+            "en": "Letting water into the mouth, swirling it inside, then spitting it out",
+            "tl": "Ang pagpasok ng tubig sa bibig at pananatili sa loob nito at pagkatapos ay ilalabas ito"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "اجتذاب الماء بالنفس إلى أقصى الأنف",
+            "en": "Sniffing water deep into the nose",
+            "tl": "Ang pagsinghut ng tubig upang papasok sa ilong"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l3-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l3-o1"
+      ],
+      "cards": [
+        "u1-l3-c1"
+      ],
+      "prompt": {
+        "ar": "ما معنى النية؟",
+        "en": "What is the intention (Niyyah)?",
+        "tl": "Ano ang kahulugan ng intensyon?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "عزم القلب على فعل العبادة تقربًا إلى الله تعالى",
+            "en": "The resolve in the heart to perform the worship in order to get close to Allah",
+            "tl": "Ang hangarin ng puso na gawin ang isang pagsamba upang mapalapit sa Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إدخال الماء في الفم وإدارته فيه",
+            "en": "Letting water into the mouth and swirling it",
+            "tl": "Ang pagpasok ng tubig sa bibig"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "اجتذاب الماء بالنفس إلى أقصى الأنف",
+            "en": "Sniffing water deep into the nose",
+            "tl": "Ang pagsinghot ng tubig sa ilong"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l3-o2"
+      ],
+      "cards": [
+        "u1-l3-c2"
+      ],
+      "prompt": {
+        "ar": "ما الخطوة التي تأتي بعد النية مباشرة؟",
+        "en": "Which step comes right after the intention?",
+        "tl": "Anong hakbang ang kasunod agad ng intensyon?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "المضمضة",
+            "en": "Rinsing the mouth",
+            "tl": "Ang pagmumog"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "غسل الكفين",
+            "en": "Washing the two hands up to the wrists",
+            "tl": "Ang paghugas ng kamay"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الاستنشاق",
+            "en": "Sniffing water into the nose",
+            "tl": "Ang pagsinghot ng tubig"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u1-l3-o3"
+      ],
+      "cards": [
+        "u1-l3-c4"
+      ],
+      "prompt": {
+        "ar": "إخراج ما في الأنف بالنفس يسمّى:",
+        "en": "Blowing out what is in the nose is called:",
+        "tl": "Ang pagsinga ng tubig mula sa ilong ay tinatawag na:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "المضمضة",
+            "en": "Madmadah (rinsing the mouth)",
+            "tl": "Madmada (pagmumog)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "النية",
+            "en": "Niyyah (intention)",
+            "tl": "Intensyon"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الاستنثار",
+            "en": "Istinthār",
+            "tl": "Al-istinthar"
+          }
+        }
+      ],
+      "answer": "c"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": "u1-l3-c1",
+      "text": "الخطوة 1:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l3-c1",
+      "text": "Step 1:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l3-c2",
+      "text": "الخطوة 2:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l3-c2",
+      "text": "Step 2:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l3-c3",
+      "text": "الخطوة 3:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l3-c3",
+      "text": "Step 3:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l3-c4",
+      "text": "الخطوة 4:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l3-c4",
+      "text": "Step 4:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "أتعلم الوُضوء",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "I learn Wudu’ (Minor Ablution)",
+      "reason": "repeats the section title (shown as the lesson title)"
+    }
+  ],
+  "notes": "Steps 1–4 of the eight wudu steps. The Filipino text of step 2 says \"three times\" (tatlong beses); it stays inside the step card, not as an extra step (LRN-01 rule 3). The step label \"Step N:\" is not shown on the card (LRN-01 rule 3) and is listed in `dropped`."
+}

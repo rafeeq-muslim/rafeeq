@@ -1,0 +1,511 @@
+{
+  "id": "u5-l1",
+  "unit": "u5",
+  "order": 1,
+  "title": {
+    "ar": "المسح على الخفين والجوربين",
+    "en": "Wiping over Khuffs and Socks",
+    "tl": "Pagpahid sa Khuff at Medyas"
+  },
+  "source": {
+    "site_section": "المسح على الخفين والجوربين (intro + tab7_1…tab7_4)",
+    "steps": null,
+    "page_ar": "76–80",
+    "page": "p. 6",
+    "sheet_rows": "154–173"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u5-l1-c1",
+      "kind": "text",
+      "text": {
+        "ar": "في حالِ لُبس الخُفين أو الجوربين فيُمكن المسحُ عليهما دون الحاجةِ إلى غسلِ الرجلين، بشروط هي:\n1. أن يكونَ لُبسهما بعد طهارةٍ كاملةٍ من الحدث الأصغر والحدث الأكبر، غُسلت فيها الأرجل.\n2. أن يكونا طاهرين غير نجسين.\n3. أن يكون المسح في المدة المحدد له.\n4. أن يكونا حلالين، فلا يكونا مثلا مسروقين أو مغصوبين.",
+        "en": "When a person wears socks or Khuffs, he may wipe over them during ablution, without washing the feet, with the following conditions:\n1. Putting them on after entering a state of complete purification, with no minor or major impurity, and after washing his feet.\n2. The socks or Khuffs should be pure, not touched by impurity.\n3. The wiping should occur within the permissible time limit.\n4. The socks or Khuffs should be lawfully earned, not stolen or seized by force.",
+        "tl": "Maaari mong punasan ang iyong medyas o Khuff kapag isinasaalang-alang ang mga sumusunod na kundisyon:\n1 Dapat mong isuot ang mga ito pagkatapos magsagawa ng isang paghuhugas kung saan hugasan mo ang iyong mga paa.\n2 Ang medyas at Khuff ay dapat na maging malinis sa anumang karumihan.\n3 Ang oras ng pagpahid sa medyas at ang Khuff ay mayroong limitisyon.\n4 Ang medyas at Khuff ay dapat mula sa halal hindi ito ninakaw o kinuha ng sapilitan halimbawa."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "conditions"
+    },
+    {
+      "id": "u5-l1-c2",
+      "kind": "text",
+      "text": {
+        "ar": "الخفان هما: ما يُلبَس في الرِّجلِ مِن جلدٍ رقيقٍ ونحوه، ومثلها الأحذية التي تستر القدمين.\nالجوربان هما: ما يَلبسهُ الإنسانُ في قدميهِ من القماش ونحوه وهو ما يُعرف (بالشراب).",
+        "en": "Khuffs: are footwear made of thin leather; the same ruling applies to shoes that cover feet.\nSocks: are footwear made of fabric and the like.",
+        "tl": "Ang Khuff: bagay na sinusuot ng tao mula sa manipis na balat ng hayop o kahalintulad nito, tulad ng pagsuot ng sapatos na tumatakip sa dalawang paa.\nAng Jawrab: bagay na sinusuot ng tao sa kanyang paa mula sa tela o kapareho nito at ito at tinatawag na medyas."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "definitions"
+    },
+    {
+      "id": "u5-l1-c3",
+      "kind": "text",
+      "text": {
+        "ar": "حِكمةُ مشروعيَّة المسحِ على الخُفَّينِ:\nالحِكمةُ من المسحِ على الخُفَّين هي التيسيرُ والتَّخفيفُ عن المسلمين، الذين يشقُّ عليهم نزْعُ الخُفِّ أو الجورب وغَسلُ الرِّجلين، خاصَّةً في أوقاتِ الشِّتاء والبَردِ الشَّديد، وفي السَّفَر.",
+        "en": "Wisdom behind prescribing the wiping over Khuffs:\nWiping over the Khuffs is meant to make things easier for Muslims who find it hard to take the socks or Khuffs to wash their feet, especially during winter and severe cold as well as travel.",
+        "tl": "Ang karunungan sa likod ng pagsasabatas nito:\nUpang mapadali ang mga pagsamba para sa mga Muslim, gawing madali para sa mga hindi mahuhubad ang kanilang mga medyas at paghugas ng dalawang paa lalo na sa panahon ng taglamig, at sa oras ng paglalakbay."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "wisdom"
+    },
+    {
+      "id": "u5-l1-c4",
+      "kind": "text",
+      "text": {
+        "ar": "مدة المسح:\nالمقيم: يوم وليلة (24 ساعة).\nالمسافر: ثلاثة أيام بلياليها (72 ساعة).\nيبدأ حساب مدة المسح من أول مسح على الخفين أو الجوربين بعد الحدث.",
+        "en": "Permissible time limit for wiping:\nFor non-travelers: one day and one night (24 hours).\nFor travelers: three days and three nights (72 hours).\nThe permissible time limit for wiping over the socks or Khuffs begins from the first such wiping after breaking one's Wudū'.",
+        "tl": "Limitasyon o bisa ng pagpahid:\nIsang araw at gabi (24 na oras) para sa mga residente.\nTatlong araw at gabi (72 oras) para sa mga manlalakbay\nAng tagal ay nagsisimula mula sa unang pagpunas sa khuff o medyas pagkatapos na mawala ang estado ng ritwal na karumihan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "duration"
+    },
+    {
+      "id": "u5-l1-c5",
+      "kind": "text",
+      "text": {
+        "ar": "صفة المسح على الخفين أو الجوربين:\n1. تُبلُّ اليدين.\n2. تُمررُ اليدُ على ظاهرِ القدمِ (من أطرافِ الأصابع إلى أول الساق).\n3. تُمسحُ القدمُ اليمنى باليدِ اليمنى والقدمُ اليسرى باليدِ اليسرى.",
+        "en": "How to wipe over the socks or Khuffs:\n1. Get your hands wet.\n2. Pass your hand over the foot (from the toe to the shin).\n3. The right foot is wiped with the right hand and the left foot with the left hand.",
+        "tl": "Paraan ng pagpahid sa medyas at Kuff:\n1 Basain ang iyong mga kamay ng tubig.\n2 Ipahid ang iyong kamay sa ibabaw ng iyong mga paa na nagsisimula sa mga daliri sa paa at nagtatapos sa bukung-bukong.\n3 Gamitin ang iyong kanang kamay nang isang beses para sa iyong kanang paa at ang kaliwang kamay isang beses para sa kaliwang paa."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "how to wipe"
+    },
+    {
+      "id": "u5-l1-c6",
+      "kind": "text",
+      "text": {
+        "ar": "مبطلات المسح:\n01 ما يوجب الوضوء أو الغسل.\n02 انتهاء وقت مدة المسح.",
+        "en": "What makes the wiping invalid:\n1. What makes Wudū' or Ghusl obligatory.\n2. The expiration of the fixed time limit for wiping.",
+        "tl": "Mga bagay na nakakawala ng bisa nito:\n1 na magiging obligado ang paligo.\n2 Kapag natapos na ang limit o tagal ng pagpunas."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "what invalidates wiping"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u5-l1-o1",
+      "text": {
+        "ar": "يعرف متى يجوز المسح على الخفين والجوربين وشروطه",
+        "en": "Knows when wiping over khuffs and socks is allowed, and its conditions",
+        "tl": "Alam kung kailan maaaring magpahid sa khuff at medyas, at ang mga kondisyon nito"
+      },
+      "cards": [
+        "u5-l1-c1",
+        "u5-l1-c2",
+        "u5-l1-c3"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l1-o2",
+      "text": {
+        "ar": "يعرف مدة المسح للمقيم والمسافر",
+        "en": "Knows how long wiping lasts for a resident and for a traveller",
+        "tl": "Alam ang tagal ng pagpahid para sa residente at sa manlalakbay"
+      },
+      "cards": [
+        "u5-l1-c4"
+      ],
+      "key": true
+    },
+    {
+      "id": "u5-l1-o3",
+      "text": {
+        "ar": "يصف صفة المسح",
+        "en": "Describes how to wipe",
+        "tl": "Nailalarawan ang paraan ng pagpahid"
+      },
+      "cards": [
+        "u5-l1-c5"
+      ],
+      "key": false
+    },
+    {
+      "id": "u5-l1-o4",
+      "text": {
+        "ar": "يعرف ما يبطل المسح",
+        "en": "Knows what makes the wiping invalid",
+        "tl": "Alam ang nakasisira sa bisa ng pagpahid"
+      },
+      "cards": [
+        "u5-l1-c6"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u5-l1-e1",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o1"
+      ],
+      "cards": [
+        "u5-l1-c1"
+      ],
+      "prompt": {
+        "ar": "يُشترط أن يكون لبس الخفين أو الجوربين:",
+        "en": "The khuffs or socks must be put on:",
+        "tl": "Dapat isuot ang medyas o khuff:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بعد طهارة كاملة غُسلت فيها الرجلان",
+            "en": "after a complete purification in which the feet were washed",
+            "tl": "pagkatapos ng paghuhugas kung saan hinugasan ang mga paa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "قبل الوضوء",
+            "en": "before wudu",
+            "tl": "bago mag-wudhu"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l1-e2",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o1"
+      ],
+      "cards": [
+        "u5-l1-c1",
+        "u5-l1-c2"
+      ],
+      "prompt": {
+        "ar": "أيّ هذه من شروط المسح كما في الدرس؟",
+        "en": "Which of these is a condition for wiping, as the lesson says?",
+        "tl": "Alin dito ang kondisyon ng pagpahid ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يكون المسح بعد انتهاء المدة",
+            "en": "The wiping must be after the time limit has ended",
+            "tl": "Ang pagpahid ay dapat pagkatapos ng limitasyon ng oras"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن يكونا طاهرين، حلالين غير مسروقين ولا مغصوبين",
+            "en": "They must be pure, and lawfully owned — not stolen or seized",
+            "tl": "Dapat malinis ang mga ito at mula sa halal, hindi ninakaw o kinuha nang sapilitan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-l1-e3",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o1"
+      ],
+      "cards": [
+        "u5-l1-c3"
+      ],
+      "prompt": {
+        "ar": "الحكمة من المسح على الخفين:",
+        "en": "The wisdom behind wiping over khuffs:",
+        "tl": "Ang karunungan sa likod ng pagpahid:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "التيسير والتخفيف على المسلمين، خاصة في الشتاء والبرد الشديد والسفر",
+            "en": "to make things easier for Muslims, especially in winter and severe cold, and in travel",
+            "tl": "upang mapadali para sa mga Muslim, lalo na sa panahon ng taglamig at sa paglalakbay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "التشديد على المسلمين",
+            "en": "to make things harder for Muslims",
+            "tl": "upang pahirapan ang mga Muslim"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l1-e4",
+      "type": "match",
+      "objectives": [
+        "u5-l1-o2"
+      ],
+      "cards": [
+        "u5-l1-c4"
+      ],
+      "prompt": {
+        "ar": "صِل كل شخص بمدة المسح له",
+        "en": "Match each person with how long he may wipe",
+        "tl": "Itugma ang bawat tao sa tagal ng kanyang pagpahid"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "المقيم",
+            "en": "A non-traveller (resident)",
+            "tl": "Ang residente"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "المسافر",
+            "en": "A traveller",
+            "tl": "Ang manlalakbay"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "ثلاثة أيام بلياليها (72 ساعة)",
+            "en": "three days and three nights (72 hours)",
+            "tl": "tatlong araw at gabi (72 oras)"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "يوم وليلة (24 ساعة)",
+            "en": "one day and one night (24 hours)",
+            "tl": "isang araw at gabi (24 na oras)"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u5-l1-e5",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o2"
+      ],
+      "cards": [
+        "u5-l1-c4"
+      ],
+      "prompt": {
+        "ar": "كم مدة المسح للمسافر؟",
+        "en": "How long may a traveller wipe?",
+        "tl": "Gaano katagal maaaring magpahid ang manlalakbay?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ثلاثة أيام بلياليها (72 ساعة)",
+            "en": "Three days and three nights (72 hours)",
+            "tl": "Tatlong araw at gabi (72 oras)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يوم وليلة (24 ساعة)",
+            "en": "One day and one night (24 hours)",
+            "tl": "Isang araw at gabi (24 na oras)"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l1-e6",
+      "type": "order",
+      "objectives": [
+        "u5-l1-o3"
+      ],
+      "cards": [
+        "u5-l1-c5"
+      ],
+      "prompt": {
+        "ar": "رتّب صفة المسح",
+        "en": "Put the way of wiping in order",
+        "tl": "Isaayos ang paraan ng pagpahid"
+      },
+      "items": [
+        {
+          "id": "s3",
+          "text": {
+            "ar": "تُمسح اليمنى باليمنى واليسرى باليسرى",
+            "en": "The right foot with the right hand, the left foot with the left hand",
+            "tl": "Kanang kamay para sa kanang paa, kaliwang kamay para sa kaliwang paa"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "تُمرّر اليد على ظاهر القدم من أطراف الأصابع إلى أول الساق",
+            "en": "Pass your hand over the foot, from the toes to the shin",
+            "tl": "Ipahid ang kamay sa ibabaw ng paa mula sa mga daliri hanggang sa bukung-bukong"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "تُبلّ اليدان",
+            "en": "Get your hands wet",
+            "tl": "Basain ang mga kamay ng tubig"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    {
+      "id": "u5-l1-e7",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o3"
+      ],
+      "cards": [
+        "u5-l1-c5"
+      ],
+      "prompt": {
+        "ar": "تُمسح القدم اليمنى:",
+        "en": "The right foot is wiped:",
+        "tl": "Ang kanang paa ay pinapahiran:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "باليد اليمنى",
+            "en": "with the right hand",
+            "tl": "gamit ang kanang kamay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "باليد اليسرى",
+            "en": "with the left hand",
+            "tl": "gamit ang kaliwang kamay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-l1-e8",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o4"
+      ],
+      "cards": [
+        "u5-l1-c6"
+      ],
+      "prompt": {
+        "ar": "مما يبطل المسح كما في الدرس:",
+        "en": "Which of these invalidates the wiping, as the lesson says?",
+        "tl": "Alin dito ang nakasisira sa bisa ng pagpahid ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بلّ اليدين",
+            "en": "Getting the hands wet",
+            "tl": "Ang pagbasa ng mga kamay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "انتهاء مدة المسح",
+            "en": "The end of the time limit for wiping",
+            "tl": "Kapag natapos na ang tagal ng pagpunas"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-l1-e9",
+      "type": "choose",
+      "objectives": [
+        "u5-l1-o4"
+      ],
+      "cards": [
+        "u5-l1-c6"
+      ],
+      "prompt": {
+        "ar": "إذا وجب على الماسح الغسل:",
+        "en": "If ghusl becomes obligatory on the person who wiped:",
+        "tl": "Kapag naging obligado ang paligo sa nagpahid:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بطل المسح",
+            "en": "the wiping is invalid",
+            "tl": "nawawalan ng bisa ang pagpahid"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بقي المسح صحيحًا",
+            "en": "the wiping stays valid",
+            "tl": "may bisa pa rin ang pagpahid"
+          }
+        }
+      ],
+      "answer": "a"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "المسح على الخفين والجوربين",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "Wiping over Khuffs (leather socks) and socks",
+      "reason": "repeats the section title (shown as the lesson title)"
+    }
+  ],
+  "notes": "Section «المسح على الخفين والجوربين». What invalidates the wiping differs between sources: the spreadsheet and the printed Arabic book say «ما يوجب الوضوء أو الغسل» (English sheet: \"What makes Wudū' or Ghusl obligatory\"), while the Arabic site, the printed English book and the Filipino page say ghusl only. Cards follow the spreadsheet for ar/en and the site for tl; exercises use only what all three share (ghusl, end of the time limit). Sharia reviewer to decide (README). The site's tab images for this section are not used (no step cards here)."
+}

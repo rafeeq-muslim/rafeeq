@@ -1,0 +1,506 @@
+{
+  "id": "u1-l5",
+  "unit": "u1",
+  "order": 5,
+  "title": {
+    "ar": "أتهيأ للصلاة",
+    "en": "I Prepare for Prayer",
+    "tl": "Inihahanda Ko ang Sarili para sa Salah"
+  },
+  "source": {
+    "site_section": "أتعلم الصلاة (section intro, «أتهيأ للصلاة»)",
+    "steps": null,
+    "page_ar": "90–92",
+    "page": "p. 7",
+    "sheet_rows": "191–199"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l5-c1",
+      "kind": "text",
+      "text": {
+        "ar": "افترض الله على المسلم في اليوم والليلة خمس صلوات وهي: الفجر والظهر والعصر والمغرب والعشاء.",
+        "en": "Allah ordained upon the Muslim five prayers in the day and night; they are: Fajr (dawn) prayer, Dhuhr (noon) prayer, ‘Asr (afternoon) prayer, Maghrib (sunset) prayer and ‘Isha’ (night) prayer.",
+        "tl": "Inobliga ng Allah ang limang beses na pagdarasal sa bawat araw at ito ay ang mga sumusunod: Ang Fajr, Dhuhur, Asar, Maghrib at Isha."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "five prayers"
+    },
+    {
+      "id": "u1-l5-c2",
+      "kind": "text",
+      "text": {
+        "ar": "إذا دخل وقت الصلاة يتطهَّر المسلم من الحدث الأصغر والحدث الأكبر، إذا كان محدثًا حدثًا أكبر.\nالحدث الأكبر هو: ما يُوجب على المسلم الغُسل.\nالحدث الأصغر هو: ما يُوجب على المسلم الوضوء.",
+        "en": "When the time of prayer starts, the Muslim purifies himself from the state of minor impurity, and from major impurity if he is in a state of major impurity.\nMajor impurity is what requires Ghusl (ritual bath).\nMinor impurity is what requires Wudu’ (ablution).",
+        "tl": "Kapag pumasok ang oras ng salah marapat na maging malinis ang isang muslim mula sa estado ng maliit at malaking karumihan.\n(estado ng malaking karumihan): nangangailangan ng Ghusl (buong paghuhugas o pagligo).\n(estado ng maliit na karumihan): nangangailangan ng Wudhu."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "purification"
+    },
+    {
+      "id": "u1-l5-c3",
+      "kind": "text",
+      "text": {
+        "ar": "يصلي المسلم بملابسَ طاهرةً في مكان طاهر من النجاسات ساترًا عورته.\nيتزين المسلم بملابس لائقة وقت الصلاة ويستر جسده بها، ولا يجوز للرجل في الصلاة أن يبدي شيئًا مما بين السرة والركبة.\nيجب على المرأة أن تستر جميع بدنها في الصلاة إلا الوجه والكفين.",
+        "en": "The Muslim prays in a clean place free of impurities, wearing clean clothes that conceal his ‘Awra (a must covered body parts).\nA Muslim wears proper clothing which covers his body in prayer. A man is not allowed to pray with the area between his navel and knees uncovered.\nThe woman must cover her whole body in prayer except for her face and hands.",
+        "tl": "Ang isang Muslim ay nagdarasal sa dalisay na lugar na may dalisay na damit na natatakpan ang kanyang Awra (maseselang bahagi ng katawan). Ang isang Muslim ay nagsusuot nang mabuti at maayos na damit na tumatakip sa kanyang katawan sa salah, at hindi maari na ipakita sa salah ang bahagi ng kanyang awra at ito ay sa pagitan ng pusod at tuhod para sa mga kalalakihan.\nDapat takpan ng isang babae ang kanyang buong katawan maliban sa mukha at mga kamay."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "clothes and place"
+    },
+    {
+      "id": "u1-l5-c4",
+      "kind": "text",
+      "text": {
+        "ar": "لا يتحدث المسلم في الصلاة بغير الأقوال الخاصة بها، وينصت إلى الإمام، ولا يلتفت في صلاته، وإن عجز عن حفظ الأقوال الخاصة بالصلاة فإنه يذكر الله ويسبِّحه حتى ينتهي من الصلاة، ويلزمه المبادرة إلى تعلُّم الصلاة وأقوالها.",
+        "en": "While performing Salah, the Muslim only says the words relevant to Salah, he listens to the Imam (the person leading the congregational prayer), and he does not turn left or right in Salah. If he is unable to memorize the words of Salah, he should mention Allah and glorify Him until the prayer ends. He is required to hasten to learn Salah and its words.",
+        "tl": "Hindi marapat sa isang muslim na magsalita habang nagsasalah maliban sa mga salita na bibigkasin para sa salah, makinig sa Imam at hindi maaaring lumingon habang nagsasalah. Kung hindi pa kabisado an mga salita na bibigkasin sa salah, marapat na kanyang gawin na lamang ay magdhikr o alalahanin at luwalhatiin ang Allah hanngang sa matapos ang salah. Nararapat lamang na magmadali na pag-aralan ang paraan ng salah at mga salita na dapat bigkasin dito."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "manners in prayer"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l5-o1",
+      "text": {
+        "ar": "يعرف الصلوات الخمس التي افترضها الله في اليوم والليلة",
+        "en": "Knows the five prayers Allah ordained in the day and night",
+        "tl": "Alam ang limang Salah na inobliga ng Allah sa bawat araw"
+      },
+      "cards": [
+        "u1-l5-c1"
+      ],
+      "key": false
+    },
+    {
+      "id": "u1-l5-o2",
+      "text": {
+        "ar": "يفرّق بين الحدث الأكبر والحدث الأصغر",
+        "en": "Tells major impurity apart from minor impurity",
+        "tl": "Natutukoy ang pagkakaiba ng malaki at maliit na karumihan"
+      },
+      "cards": [
+        "u1-l5-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l5-o3",
+      "text": {
+        "ar": "يعرف ما يلبسه في الصلاة وأين يصلي وما يستره الرجل والمرأة",
+        "en": "Knows what to wear for prayer, where to pray, and what a man and a woman must cover",
+        "tl": "Alam ang dapat isuot sa Salah, kung saan magdarasal, at ang dapat takpan ng lalaki at babae"
+      },
+      "cards": [
+        "u1-l5-c3"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l5-o4",
+      "text": {
+        "ar": "يعرف آداب الصلاة، وما يفعله إن لم يحفظ أقوالها بعد",
+        "en": "Knows how to behave in prayer, and what to do if he has not yet memorised its words",
+        "tl": "Alam ang wastong asal sa Salah, at ang gagawin kung hindi pa kabisado ang mga salita nito"
+      },
+      "cards": [
+        "u1-l5-c4"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l5-e1",
+      "type": "order",
+      "objectives": [
+        "u1-l5-o1"
+      ],
+      "cards": [
+        "u1-l5-c1"
+      ],
+      "prompt": {
+        "ar": "رتّب الصلوات الخمس كما ذكرها الدرس",
+        "en": "Put the five prayers in the order the lesson gives",
+        "tl": "Isaayos ang limang Salah ayon sa pagkakasunod sa aralin"
+      },
+      "items": [
+        {
+          "id": "s4",
+          "text": {
+            "ar": "المغرب",
+            "en": "Maghrib (sunset)",
+            "tl": "Maghrib"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "العصر",
+            "en": "‘Asr (afternoon)",
+            "tl": "Asar"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "الظهر",
+            "en": "Dhuhr (noon)",
+            "tl": "Dhuhur"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "الفجر",
+            "en": "Fajr (dawn)",
+            "tl": "Fajr"
+          }
+        },
+        {
+          "id": "s5",
+          "text": {
+            "ar": "العشاء",
+            "en": "‘Isha’ (night)",
+            "tl": "Isha"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    {
+      "id": "u1-l5-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o1"
+      ],
+      "cards": [
+        "u1-l5-c1"
+      ],
+      "prompt": {
+        "ar": "كم صلاة افترض الله على المسلم في اليوم والليلة؟",
+        "en": "How many prayers did Allah ordain upon the Muslim in the day and night?",
+        "tl": "Ilang Salah ang inobliga ng Allah sa isang Muslim sa bawat araw?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ثلاث صلوات",
+            "en": "Three",
+            "tl": "Tatlo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "خمس صلوات",
+            "en": "Five",
+            "tl": "Lima"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "صلاة واحدة",
+            "en": "One",
+            "tl": "Isa"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l5-e3",
+      "type": "match",
+      "objectives": [
+        "u1-l5-o2"
+      ],
+      "cards": [
+        "u1-l5-c2"
+      ],
+      "prompt": {
+        "ar": "صِل كل حدث بما يوجبه",
+        "en": "Match each impurity with what it requires",
+        "tl": "Itugma ang bawat karumihan sa kailangan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الحدث الأكبر",
+            "en": "Major impurity",
+            "tl": "Ang malaking karumihan"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الحدث الأصغر",
+            "en": "Minor impurity",
+            "tl": "Ang maliit na karumihan"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "يوجب الوضوء",
+            "en": "requires Wudu’ (ablution)",
+            "tl": "nangangailangan ng Wudhu"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "يوجب الغسل",
+            "en": "requires Ghusl (ritual bath)",
+            "tl": "nangangailangan ng Ghusl (pagligo)"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l5-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o2"
+      ],
+      "cards": [
+        "u1-l5-c2"
+      ],
+      "prompt": {
+        "ar": "إذا دخل وقت الصلاة:",
+        "en": "When the time of prayer starts:",
+        "tl": "Kapag pumasok ang oras ng Salah:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يصلي المسلم دون أن يتطهّر",
+            "en": "the Muslim prays without purifying himself",
+            "tl": "magdarasal ang Muslim kahit hindi malinis"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يتطهّر المسلم من الحدث الأصغر، ومن الأكبر إن كان عليه",
+            "en": "the Muslim purifies himself from minor impurity, and from major impurity if he is in that state",
+            "tl": "dapat maging malinis ang Muslim mula sa maliit at malaking karumihan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l5-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o3"
+      ],
+      "cards": [
+        "u1-l5-c3"
+      ],
+      "prompt": {
+        "ar": "ما الذي تستره المرأة في الصلاة؟",
+        "en": "What must a woman cover in prayer?",
+        "tl": "Ano ang dapat takpan ng babae sa Salah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "جميع بدنها إلا الوجه والكفين",
+            "en": "her whole body except her face and hands",
+            "tl": "ang kanyang buong katawan maliban sa mukha at mga kamay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ما بين السرة والركبة فقط",
+            "en": "only the area between the navel and the knees",
+            "tl": "ang pagitan lamang ng pusod at tuhod"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l5-e6",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o3"
+      ],
+      "cards": [
+        "u1-l5-c3"
+      ],
+      "prompt": {
+        "ar": "أين يصلي المسلم وبأي ثياب؟",
+        "en": "Where does the Muslim pray, and in what clothes?",
+        "tl": "Saan at sa anong damit nagdarasal ang Muslim?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "في أي مكان ولو كانت فيه نجاسة",
+            "en": "anywhere, even where there is impurity",
+            "tl": "kahit saan, kahit may karumihan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "في مكان طاهر بثياب طاهرة ساترًا عورته",
+            "en": "in a clean place, in clean clothes that cover his ‘Awra",
+            "tl": "sa malinis na lugar, sa malinis na damit na tumatakip sa kanyang Awra"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l5-e7",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o4"
+      ],
+      "cards": [
+        "u1-l5-c4"
+      ],
+      "prompt": {
+        "ar": "إن لم يحفظ المسلم أقوال الصلاة بعد:",
+        "en": "If the Muslim has not yet memorised the words of the prayer:",
+        "tl": "Kung hindi pa kabisado ng Muslim ang mga salita ng Salah:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يذكر الله ويسبّحه حتى ينتهي من الصلاة، ويبادر إلى تعلّمها",
+            "en": "he mentions Allah and glorifies Him until the prayer ends, and hastens to learn them",
+            "tl": "aalalahanin at luluwalhatiin niya ang Allah hanggang matapos ang Salah, at magmamadaling pag-aralan ito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "يترك الصلاة حتى يحفظها",
+            "en": "he leaves the prayer until he has memorised them",
+            "tl": "hindi muna siya magdarasal hanggang makabisado niya"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l5-e8",
+      "type": "choose",
+      "objectives": [
+        "u1-l5-o4"
+      ],
+      "cards": [
+        "u1-l5-c4"
+      ],
+      "prompt": {
+        "ar": "في الصلاة، المسلم:",
+        "en": "During prayer, the Muslim:",
+        "tl": "Habang nagsasalah, ang Muslim ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "يتحدث بغير أقوال الصلاة",
+            "en": "talks with words other than the words of prayer",
+            "tl": "nagsasalita ng ibang salita bukod sa salita ng Salah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ينصت إلى الإمام ولا يلتفت",
+            "en": "listens to the Imam and does not turn left or right",
+            "tl": "nakikinig sa Imam at hindi lumilingon"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "tl",
+      "card": "u1-l5-c2",
+      "text": "Hadath Akbar",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l5-c2",
+      "text": "Hadath Asghar",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l5-c4",
+      "text": "(by saying 'Subhān Allah')",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "أتهيَّأُ للصلاة",
+      "reason": "sub-heading «أتهيأ للصلاة» = the lesson title"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "I prepare myself for Prayer",
+      "reason": "sub-heading = the lesson title"
+    },
+    {
+      "lang": "tl",
+      "card": null,
+      "text": "I prepare myself for Prayer",
+      "reason": "English heading on the Filipino page (not Filipino text)"
+    },
+    {
+      "lang": "tl",
+      "card": null,
+      "text": "Inihahanda ko ang aking sarili para sa Salah:",
+      "reason": "sub-heading = the lesson title"
+    }
+  ],
+  "notes": "The PRD gives pp. 90–92; the first card (the five daily prayers) is the opening sentence of the prayer section just before «أتهيأ للصلاة», included so no sentence is lost. Card 4 carries the book's reassurance used by LRN-01 rule 2/4 (remember and glorify Allah until the words are learned); in English the transliterated \"Subhān Allah\" was dropped. In Filipino the terms \"Hadath Akbar/Asghar\" (Arabic phrases in Latin letters) were dropped; the Filipino gloss in brackets stays."
+}

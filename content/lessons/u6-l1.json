@@ -1,0 +1,315 @@
+{
+  "id": "u6-l1",
+  "unit": "u6",
+  "order": 1,
+  "title": {
+    "ar": "حجاب المرأة المسلمة",
+    "en": "The Hijab of the Muslim Woman",
+    "tl": "Ang Hijab ng Babaeng Muslim"
+  },
+  "source": {
+    "site_section": "حجاب المرأة المسلمة",
+    "steps": null,
+    "page_ar": "109–111",
+    "page": "p. 8",
+    "sheet_rows": "215–223"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u6-l1-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 33,
+        "ayat": [
+          59,
+          59
+        ]
+      },
+      "source_ref": "hijab"
+    },
+    {
+      "id": "u6-l1-c2",
+      "kind": "text",
+      "text": {
+        "ar": "أوجب الله على المرأة المسلمة الحجاب وستر عورتها وجميع بدنها عن الرجال الأجانب عنها باللباس المعتاد في بلادها، ولا يجوز لها أن تخلع حجابها إلا أمام زوجها أو محارمها، وهم: الذين لا يجوز للمرأة المسلمة الزواج بهم بشكلٍ مؤبد، وهم: (الأب وإن علا، والابن وإن نزل، والأعمام والأخوال والأخ وابن الأخ وابن الأخت، وزوج الأم، وأبو الزوج وإن علا، وولد الزوج وإن نزل، والأخ من الرضاعة وزوج المرضعة، ويحرم من الرضاعة ما يحرم من النسب).",
+        "en": "Allah has commanded the Muslim woman to wear the Hijāb and conceal her ‘Awrah and her body by the traditional outfits available in her country in the presence of the men who are not directly related to her. She is not allowed to take off her Hijāb except before her husband and her Mahram males, who are the men she is permanently forbidden to marry. The Mahram males are the following: The father up to all levels (i.e. grandfather, great grandfather, etc.), the son down to all levels, paternal uncles, maternal uncles, brother, nephew, stepfather, father-in-law up to all levels, stepson down to all levels, milk-brother and husband of nursing mother, given that whoever becomes non-marriageable through lineage also becomes non-marriageable through breast-feeding.",
+        "tl": "Ang Allah (SWT) ay nag-utos sa mga kababaihang Muslim na magsuot ng Hijab at takpan ang kanilang awra mula sa mga kalalakihan na hindi direktang nauugnay sa kanila, sa pamamagitan ng pagsuot ng mga tradisyonal na kasuotan na ginagamit sa kanilang bansa, at hindi nila maaari alisin ang Hijab maliban na lamang kung sa harap ng kanilang mga asawa o mga Mahram (at sila ang mga tao na hindi maaring kailanman na pakasalan ng isang muslim na babae). Kasama sa mahram ang mga sumusunod: Ang ama hanggang sa pataas na antas nito (lolo pataas), anak na lalaki hanggang sa pababa na antas nito (apo pababa), tiyuhin, kapatid na lalaki, anak na lalaki ng kapatid na lalaki, anak na lalaki ng kapatid na babae, ama-amahan, biyenan hanggang sa lahat ng mga antas nito, anak na lalaki ng ama-amahan pababa sa lahat ng mga antas nito, kapatid na lalaki sa gatas ng ina na nagpasuso at asawa ng ina na nagpasuso. Ipinagbawal ang pagpapakasal mula sa iisang gatas ng ina sa pagpapasuso katulad ng pagbabawala mula sa iisang lipi o lahi."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "hijab"
+    },
+    {
+      "id": "u6-l1-c3",
+      "kind": "text",
+      "text": {
+        "ar": "وتراعي المرأة المسلمة في لباسها عدة ضوابط:\nأولًا: استيعاب جميع البدن.\nثانيًا: ألَّا يكون مما تلبسه المرأة لتتزين به.\nثالثًا: ألَّا يكون شفافًا يظهر بدنها.\nرابعًا: أنْ يكونَ فضفاضًا غير ضيقٍ فيصف شيئًا من جسمها.\nخامسًا: ألَّا يكون معطرًا.\nسادسًا: ألَّا يشبه لباس الرجل.\nسابعًا: ألَّا يشبه لباس غير المسلمات في عباداتهن أو أعيادهن.",
+        "en": "Rules of Wearing Hijab:\nFirst: It must cover the whole body.\nSecond: It must not be a garment destined for adornment.\nThird: It must not be transparent, showing her body.\nFourth: It must be loose and not tight that reveals her contours.\nFifth: It must not be perfumed.\nSixth: It must not resemble what men wear.\nSeventh: It must not resemble what non-Muslim women wear in their worship or festivals.",
+        "tl": "Mga Panuntunan sa Pagsusuot ng Hijab:\n1 Sinasaklaw ng Hijab ang buong katawan.\n2 Ang Hijab ay hindi dapat isuot bilang isang palamuti lamang.\n3 Ang Hijab ay hindi dapat manipis dahil maaaring lumitaw ang kanyang katawan.\n4 Ang Hijab ay hindi dapat manipis dahil maaaring lumitaw ang kanyang katawan.\n5 Ang hijab ay hindi dapat lagyan ng pabango.\n6 Ang Hijab ay hindi dapat katulad sa kasuotan ng kalalakihan.\n7 Ang Hijab ay hindi dapat maging katulad ng mga damit na isinusuot ng mga babaeng hindi Muslim sa kanilang pagsamba at pagdiriwang."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "rules of dress"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u6-l1-o1",
+      "text": {
+        "ar": "يعرف أن الله أوجب على المرأة المسلمة الحجاب وستر بدنها عن الرجال الأجانب",
+        "en": "Knows that Allah commanded the Muslim woman to wear the hijab and cover her body from men not related to her",
+        "tl": "Alam na inutusan ng Allah ang babaeng Muslim na magsuot ng Hijab at takpan ang kanyang awra mula sa mga lalaking hindi kaanu-ano"
+      },
+      "cards": [
+        "u6-l1-c2",
+        "u6-l1-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u6-l1-o2",
+      "text": {
+        "ar": "يعرف أمام مَن تخلع المرأة حجابها، ومَن هم المحارم",
+        "en": "Knows before whom a woman may take off her hijab, and who her mahram are",
+        "tl": "Alam kung kanino maaaring alisin ng babae ang Hijab, at kung sino ang mga Mahram"
+      },
+      "cards": [
+        "u6-l1-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u6-l1-o3",
+      "text": {
+        "ar": "يعدّد ضوابط لباس المرأة المسلمة",
+        "en": "Lists the rules for the Muslim woman’s dress",
+        "tl": "Naiisa-isa ang mga panuntunan sa pananamit ng babaeng Muslim"
+      },
+      "cards": [
+        "u6-l1-c3"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u6-l1-e1",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o1"
+      ],
+      "cards": [
+        "u6-l1-c2",
+        "u6-l1-c1"
+      ],
+      "prompt": {
+        "ar": "عمّن تستر المرأة المسلمة بدنها بالحجاب؟",
+        "en": "From whom does the Muslim woman cover her body with the hijab?",
+        "tl": "Mula kanino tinatakpan ng babaeng Muslim ang kanyang awra?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "عن الرجال الأجانب عنها",
+            "en": "From men who are not directly related to her",
+            "tl": "Mula sa mga lalaking hindi direktang kaugnay niya"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "عن زوجها",
+            "en": "From her husband",
+            "tl": "Mula sa kanyang asawa"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l1-e2",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o2"
+      ],
+      "cards": [
+        "u6-l1-c2"
+      ],
+      "prompt": {
+        "ar": "أمام مَن يجوز للمرأة أن تخلع حجابها؟",
+        "en": "Before whom may a woman take off her hijab?",
+        "tl": "Sa harap nino maaaring alisin ng babae ang kanyang Hijab?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أمام الرجال الأجانب عنها",
+            "en": "Before men not related to her",
+            "tl": "Sa harap ng mga lalaking hindi kaanu-ano"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أمام زوجها أو محارمها",
+            "en": "Before her husband or her mahram",
+            "tl": "Sa harap ng kanyang asawa o mga Mahram"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l1-e3",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o2"
+      ],
+      "cards": [
+        "u6-l1-c2"
+      ],
+      "prompt": {
+        "ar": "المحارم هم:",
+        "en": "The mahram are:",
+        "tl": "Ang mga Mahram ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الذين لا يجوز للمرأة المسلمة الزواج بهم بشكل مؤبد",
+            "en": "the men she is permanently forbidden to marry",
+            "tl": "ang mga taong hindi kailanman maaaring pakasalan ng babaeng Muslim"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الرجال الأجانب عنها",
+            "en": "men who are not related to her",
+            "tl": "mga lalaking hindi kaanu-ano"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l1-e4",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o1"
+      ],
+      "cards": [
+        "u6-l1-c2",
+        "u6-l1-c3"
+      ],
+      "prompt": {
+        "ar": "بأي لباس تستر المرأة المسلمة بدنها؟",
+        "en": "With what clothing does the Muslim woman cover her body?",
+        "tl": "Sa anong kasuotan tinatakpan ng babaeng Muslim ang kanyang katawan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بلباس الرجل",
+            "en": "With men’s clothing",
+            "tl": "Sa kasuotan ng kalalakihan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "باللباس المعتاد في بلادها",
+            "en": "With the traditional outfits of her country",
+            "tl": "Sa tradisyonal na kasuotan sa kanyang bansa"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-l1-e5",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o3"
+      ],
+      "cards": [
+        "u6-l1-c3"
+      ],
+      "prompt": {
+        "ar": "من ضوابط لباس المرأة المسلمة:",
+        "en": "One of the rules for the Muslim woman’s dress:",
+        "tl": "Isa sa mga panuntunan sa pananamit ng babaeng Muslim:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يستوعب جميع البدن، وألّا يكون معطرًا",
+            "en": "It must cover the whole body and must not be perfumed",
+            "tl": "Sinasaklaw nito ang buong katawan at hindi ito dapat lagyan ng pabango"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن يكون شفافًا يُظهر البدن",
+            "en": "It must be transparent, showing the body",
+            "tl": "Dapat itong manipis upang lumitaw ang katawan"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-l1-e6",
+      "type": "choose",
+      "objectives": [
+        "u6-l1-o3"
+      ],
+      "cards": [
+        "u6-l1-c3"
+      ],
+      "prompt": {
+        "ar": "هل يجوز أن يشبه لباسُ المرأة المسلمة لباسَ الرجل؟",
+        "en": "May the Muslim woman’s dress resemble what men wear?",
+        "tl": "Maaari bang maging katulad ng kasuotan ng lalaki ang Hijab?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "نعم",
+            "en": "Yes",
+            "tl": "Oo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "لا، من ضوابطه ألّا يشبه لباس الرجل",
+            "en": "No — one rule is that it must not resemble what men wear",
+            "tl": "Hindi — isa sa mga panuntunan ay hindi ito dapat katulad ng kasuotan ng kalalakihan"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [],
+  "notes": "Section «حجاب المرأة المسلمة». The Filipino list repeats rule 3 (\"not thin\") as rule 4 and lacks the rule \"loose, not tight\"; no exercise asks about rule 4 (reviewer). The list of mahram is shown as the book gives it but not tested (details of family relations are left to the card)."
+}

@@ -1,0 +1,368 @@
+{
+  "id": "u1-l1",
+  "unit": "u1",
+  "order": 1,
+  "title": {
+    "ar": "أشهد: معنى الشهادتين",
+    "en": "I Bear Witness: The Meaning of the Two Testimonies",
+    "tl": "Ako ay Sumasaksi: Ang Kahulugan ng Dalawang Pagsaksi"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإسلام › الركن الأول (tab5_1)",
+    "steps": null,
+    "page_ar": "30–31",
+    "page": "p. 2–3",
+    "sheet_rows": "50–53"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l1-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الأول: شهادة أنَّ لا إله إلا الله وأنَّ محمدًا رسول الله.\nقال تعالى:",
+        "en": "First Pillar: Shahādah (To bear witness that there is no god except Allah and that Muhammad is the Messenger of Allah).\nAllah Almighty says:",
+        "tl": "Ang Unang Haligi\nAng Shadatayn o pagsasaksi na walang diyos na karapat-dapat sambahin maliban sa Allah at si Muhammad ay Sugo ng Allah.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 47,
+        "ayat": [
+          19,
+          19
+        ]
+      },
+      "source_ref": "pillar 1"
+    },
+    {
+      "id": "u1-l1-c2",
+      "kind": "text",
+      "text": {
+        "ar": "وقال تعالى:",
+        "en": "He also says:",
+        "tl": "Sinabi pa ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 9,
+        "ayat": [
+          128,
+          128
+        ]
+      },
+      "source_ref": "pillar 1"
+    },
+    {
+      "id": "u1-l1-c3",
+      "kind": "text",
+      "text": {
+        "ar": "معنى شهادة أنَّ لا إله إلا الله: لا معبودَ حقٌّ إلا الله.",
+        "en": "The Shahādah that \"There is no god but Allah\" means that there is no deity worthy of worship except Allah.",
+        "tl": "Ang kahulugan ng pagsasaksi: Walang ibang diyos na karapat-dapat sambahin maliban sa Allah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 1"
+    },
+    {
+      "id": "u1-l1-c4",
+      "kind": "text",
+      "text": {
+        "ar": "معنى شهادة أنَّ محمدًا رسول الله: طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألا يُعَبد الله إلا بما شرع.",
+        "en": "The Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, avoid what he forbade and warned against, and worship Allah only in the manner he instructed.",
+        "tl": "Ang kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 1"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l1-o1",
+      "text": {
+        "ar": "يعرف معنى شهادة أن لا إله إلا الله: لا معبود حق إلا الله",
+        "en": "Knows the meaning of the testimony that there is no god but Allah: there is no deity worthy of worship except Allah",
+        "tl": "Alam ang kahulugan ng pagsaksi na walang diyos maliban sa Allah: walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+      },
+      "cards": [
+        "u1-l1-c3"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l1-o2",
+      "text": {
+        "ar": "يعرف معنى شهادة أن محمدًا رسول الله",
+        "en": "Knows the meaning of the testimony that Muhammad is the Messenger of Allah",
+        "tl": "Alam ang kahulugan ng pagsaksi na si Muhammad ay Sugo ng Allah"
+      },
+      "cards": [
+        "u1-l1-c4",
+        "u1-l1-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l1-o3",
+      "text": {
+        "ar": "يعرف أن الشهادتين هما الركن الأول من أركان الإسلام",
+        "en": "Knows that the two testimonies are the first pillar of Islam",
+        "tl": "Alam na ang dalawang pagsaksi ang unang haligi ng Islam"
+      },
+      "cards": [
+        "u1-l1-c1"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l1-e1",
+      "type": "choose",
+      "objectives": [
+        "u1-l1-o1"
+      ],
+      "cards": [
+        "u1-l1-c3"
+      ],
+      "prompt": {
+        "ar": "ما معنى شهادة أن لا إله إلا الله؟",
+        "en": "What does the testimony \"there is no god but Allah\" mean?",
+        "tl": "Ano ang kahulugan ng pagsaksi na walang diyos maliban sa Allah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لا معبودَ حقٌّ إلا الله",
+            "en": "There is no deity worthy of worship except Allah",
+            "tl": "Walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "طاعة النبي ﷺ فيما أمر",
+            "en": "Obeying the orders of the Prophet ﷺ",
+            "tl": "Ang pagsunod sa utos ng Propeta ﷺ"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أن محمدًا رسول الله",
+            "en": "That Muhammad is the Messenger of Allah",
+            "tl": "Na si Muhammad ay Sugo ng Allah"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l1-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l1-o2"
+      ],
+      "cards": [
+        "u1-l1-c4",
+        "u1-l1-c2"
+      ],
+      "prompt": {
+        "ar": "مما يدخل في معنى شهادة أن محمدًا رسول الله:",
+        "en": "Which of these is part of the meaning of the testimony that Muhammad is the Messenger of Allah?",
+        "tl": "Alin dito ang bahagi ng kahulugan ng pagsaksi na si Muhammad ay Sugo ng Allah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يُعبد الله بغير ما شرع",
+            "en": "Worshipping Allah in a way other than what he instructed",
+            "tl": "Ang pagsamba sa Allah sa paraang hindi niya itinuro"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "طاعته فيما أمر، وتصديقه فيما أخبر",
+            "en": "Obeying his orders and believing what he related",
+            "tl": "Ang pagsunod sa kanyang utos at paniniwala sa kanyang ibinalita"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "فعل ما نهى عنه وزجر",
+            "en": "Doing what he forbade and warned against",
+            "tl": "Ang paggawa ng kanyang ipinagbawal"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l1-e3",
+      "type": "match",
+      "objectives": [
+        "u1-l1-o1",
+        "u1-l1-o2"
+      ],
+      "cards": [
+        "u1-l1-c3",
+        "u1-l1-c4"
+      ],
+      "prompt": {
+        "ar": "صِل كل شهادة بمعناها",
+        "en": "Match each testimony with its meaning",
+        "tl": "Itugma ang bawat pagsaksi sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "شهادة أن لا إله إلا الله",
+            "en": "The testimony that there is no god but Allah",
+            "tl": "Ang pagsaksi na walang diyos maliban sa Allah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "شهادة أن محمدًا رسول الله",
+            "en": "The testimony that Muhammad is the Messenger of Allah",
+            "tl": "Ang pagsaksi na si Muhammad ay Sugo ng Allah"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه، وألا يُعبد الله إلا بما شرع",
+            "en": "Obeying his orders, believing what he related, avoiding what he forbade, and worshipping Allah only in the manner he instructed",
+            "tl": "Pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "لا معبود حق إلا الله",
+            "en": "There is no deity worthy of worship except Allah",
+            "tl": "Walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l1-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l1-o3"
+      ],
+      "cards": [
+        "u1-l1-c1"
+      ],
+      "prompt": {
+        "ar": "الشهادتان هما:",
+        "en": "The two testimonies are:",
+        "tl": "Ang dalawang pagsaksi ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الركن الأول من أركان الإسلام",
+            "en": "The first pillar of Islam",
+            "tl": "Ang unang haligi ng Islam"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الركن الثاني من أركان الإسلام",
+            "en": "The second pillar of Islam",
+            "tl": "Ang ikalawang haligi ng Islam"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "ليستا من أركان الإسلام",
+            "en": "Not one of the pillars of Islam",
+            "tl": "Hindi kabilang sa mga haligi ng Islam"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l1-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l1-o3",
+        "u1-l1-o1"
+      ],
+      "cards": [
+        "u1-l1-c1",
+        "u1-l1-c2"
+      ],
+      "prompt": {
+        "ar": "بماذا يشهد المسلم في الركن الأول؟",
+        "en": "In the first pillar, what does the Muslim bear witness to?",
+        "tl": "Sa unang haligi, ano ang pinapatotohanan ng isang Muslim?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن محمدًا رسول الله فقط",
+            "en": "Only that Muhammad is the Messenger of Allah",
+            "tl": "Ang pagiging Sugo ni Muhammad lamang"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن لا إله إلا الله، وأن محمدًا رسول الله",
+            "en": "That there is no god except Allah, and that Muhammad is the Messenger of Allah",
+            "tl": "Na walang diyos na karapat-dapat sambahin maliban sa Allah, at si Muhammad ay Sugo ng Allah"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أن لا إله إلا الله فقط",
+            "en": "Only that there is no god except Allah",
+            "tl": "Na walang diyos maliban sa Allah, iyon lamang"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "tl",
+      "card": "u1-l1-c3",
+      "text": "ng ‘’la ilaha illa Allah’’",
+      "reason": "transliteration"
+    }
+  ],
+  "notes": "Section «الركن الأول» of «أتعرف على أركان الإسلام». The two verses are shown from the Quran database (Muhammad 47:19, At-Tawbah 9:128). In Filipino the transliterated words of the testimony were dropped from card 3; the meaning sentence stays."
+}

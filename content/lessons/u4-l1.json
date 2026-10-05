@@ -1,0 +1,637 @@
+{
+  "id": "u4-l1",
+  "unit": "u4",
+  "order": 1,
+  "title": {
+    "ar": "الإيمان بالله",
+    "en": "Belief in Allah",
+    "tl": "Ang Paniniwala sa Allah"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإيمان (intro) + الركن الأول (tab6_1)",
+    "steps": null,
+    "page_ar": "42–47",
+    "page": "p. 3–4",
+    "sheet_rows": "73–83"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u4-l1-c1",
+      "kind": "text",
+      "text": {
+        "ar": "سُئل النبي ﷺ عن الإيمان فقال: (أنْ تؤمنَ باللهِ وملائكتِهِ وكتبِهِ ورسلِهِ واليومِ الآخرِ وتؤمنَ بالقدرِ خيرهِ وشرهِ).",
+        "en": "The Prophet (pbuh) was asked about Imān (faith), so he said: “It is to believe in Allah, His angels, His Books, His Messengers, and the Last Day, and to believe in preordainment (destiny), the good and the bad thereof.”",
+        "tl": "Tinanong ang Propeta ﷺ patungkol sa Iman (pananampalataya) at kanyang sinabi: “Ito ay: 1.) paniniwala sa kaisahan ng Allah, 2) sa Kanyang mga anghel, 3) sa Kanyang mga aklat, 4) sa Kanyang mga Sugo, 5) sa Huling Araw, at 6) paniniwala sa tadhana mabuti man o masama.”"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman intro"
+    },
+    {
+      "id": "u4-l1-c2",
+      "kind": "text",
+      "text": {
+        "ar": "أركان الإيمان هي العبادات القلبية التي تلزم كل مسلم، ولا يصح إسلام الإنسان إلا بالاعتقاد بها لذلك سُميت بأركانِ الإيمان، والفرق بينها وبين أركان الإسلام: أنَّ أركانَ الإسلامِ أعمالٌ ظاهرة يؤديها الإنسان بجوارحه كالنطق بالشهادتين والصلاة والزكاة، وأركان الإيمان أعمال قلبية يؤديها الإنسان بقلبه مثل: الإيمان بالله وكتبه ورسله.",
+        "en": "The pillars of Imān are the acts of worship of the heart that are required from every Muslim. In the absence of those pillars, the belief of a person is invalid, and it is for this reason that they are called the pillars of faith. The difference between the pillars of Imān and those of Islam is that the pillars of Islam are visible acts performed by the body parts, like Shahādah, prayer, and Zakah, while the pillars of Imān are acts of the heart, like belief in Allah, His Books, and His Messengers.",
+        "tl": "Ang mga haligi ng pananampalataya ay mga uri ng pagsamba na nasa puso at marapat lamang na paniwalaan ng bawat muslim. Hindi magiging sapat o wasto ang Islam ng isang tao hanggat ito ay kanyang paniwalaan, kaya’t ito ay tinawag na mga haligi ng pananampalataya. Ang kaibahan ng mga haligi ng pananampalataya at Islam: Ang mga haligi ng Iman ay mga gawain ng puso na isinasagawa ng tao sa pamamagitan ng kanyang puso tulad halimbawa ng paniniwala sa kaisahan ng Allah, sa Kanyang mga kasulatan, at sa Kanyang mga sugo. Samantala, ang mga haligi ng Islam ay mga gawaing lantad na isinasagawa ng tao sa pamamagitan ng pagkilos ng katawan tulad ng pagsambit ng Shahadatyn at pagtataguyod ng Salah at Zakah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman intro"
+    },
+    {
+      "id": "u4-l1-c3",
+      "kind": "text",
+      "text": {
+        "ar": "مفهوم الإيمان ومعناه: هو تصديق القلب الجازم بالله، وملائكته، وكتبه، ورسله، واليوم الآخر، والقدر خيره وشره، واتباع كل ما جاء به الرسول ﷺ وتطبيقه: قولًا باللسان، كقول لا إله إلا الله، وقراءة القرآن، والتسبيح والتهليل، والثناء على الله.\nوعملًا بالجوارح الظاهرة: كالصلاة، والحج، والصيام ... والجوارح الباطنة المتعلقة بالقلب كحب الله وخشيته، والتوكل عليه والإخلاص له.",
+        "en": "The concept of Imān and its meaning: It is the firm belief of the heart in Allah, His angels, His Books, His Messengers, the Day of Judgment, and destiny, the good and bad aspects thereof. This is in addition to following everything that Prophet Muhammad (pbuh) came with and applying it in the form of words spoken by the tongue, such as pronouncing the Shahādah (Testimony of faith), reading the Qur'an, and glorifying and praising Allah; and in the form of deeds done by the visible body parts, like prayer, Hajj, and fasting; or done by the heart, like loving Allah, fearing Him, relying on Him, and being sincere to Him.",
+        "tl": "Konsepto at kahulugan ng Iman:\nIto ay ang ganap na paniniwala ng puso sa kaisahan ng Allah, sa Kanyang mga anghel, sa Kanyang mga aklat, sa Kanyang mga sugo, sa Huling Araw, at sa Tadhana mabuti man o masama. Kasama na rito ang pagsunod sa lahat ng dumating na kapahayagan kay Propeta Muhammad ﷺ maging ito man ay pagsambit sa pamamagitan ng dila, tulad ng pagsabi ng walang diyos na marapat sambahin maliban sa Allah, pagbabasa ng maluwalhating Qur’an, pagluwalhati, pagdakila at pagpuri sa Allah; pagsagawa sa pamamagitan ng aksyon o pagkilos ng katawan nang lantaran tulad ng Salah, Hajj, at Pag-aayuno; at pagtaguyod sa pamamagitan ng patagong aksyon ng katawan na may koneksyon sa puso tulad ng pagmamahal sa Allah, pagkatakot sa Kanya, pagtitiwala sa Kanyan at pagiging dalisay o taus-puso sa lahat ng gawain para sa Kanya lamang."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman intro"
+    },
+    {
+      "id": "u4-l1-c4",
+      "kind": "text",
+      "text": {
+        "ar": "ويُعرِّفه المختصون اختصاراً بأنه: اعتقادٌ بالقلب، وقولٌ باللسان، وعملٌ بالجوارح، يزيدُ بالطاعة، وينقصُ بالمعصية.",
+        "en": "The scholars define Imān briefly as: belief of the heart, statement of the tongue, and action of the body parts; it increases by obedience to Allah and decreases by disobedience to Him.",
+        "tl": "Ang kahulugan nito sa maikling kataga ay ang ‘’paniniwala ng puso, pagsambit ng dila, at pagkilos ng katawan. Ang pananampalataya ay tumataas sa pamamagitan ng pagsunod kay Allah at bumababa sa pamamagitan ng pagsuway kay Allah.’’"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman intro"
+    },
+    {
+      "id": "u4-l1-c5",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الأول: الإيمانُ بالله\nقال تعالى:",
+        "en": "First Pillar: Belief in Allah\nAllah Almighty says:",
+        "tl": "Ang Unang Haligi\nAng Paniniwala sa Allah\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 24,
+        "ayat": [
+          62,
+          62
+        ]
+      },
+      "source_ref": "iman pillar 1"
+    },
+    {
+      "id": "u4-l1-c6",
+      "kind": "text",
+      "text": {
+        "ar": "الإيمان بالله يقتضي توحيده في ربوبيته وألوهيته وأسمائه وصفاته، وهو متضمِّن ما يلي:\nالإيمان بوجوده سبحانه وتعالى.\nالإيمان بربوبيته سبحانه وتعالى، وأنه مالك كل شيء وخالقة ورازقه ومدبِّر أمره.",
+        "en": "The belief in Allah requires the belief in His Oneness of Lordship, His Oneness of Worship, and the uniqueness of His Names and Attributes. This includes the following:\nThe belief in the existence of Allah (SWT)\nThe belief that Allah is the only Lord, and that He is the Owner, Creator, and Sustainer of everything, Who manages the affairs of everything.",
+        "tl": "Ang paniniwala kay Allah ay nangangailangan ng paniniwala sa Kanyang kaisahan sa pagka-Panginoon (Ruboobeeyah), sa Kanyang kaisahan sa pagsamba (Uluhiyah), sa Kanyang mga pangalan at katangian, at kabilang na dito ang mga sumusunod:\nAng paniniwala sa pagka-iral ng Allahﷻ.\nAng paniniwala sa Kanyang pagka-Panginoon, Siya ang nagmamay-ari sa lahat ng bagay, Siya ang lumikha, Siya ang nagbigay biyaya, at Siya ang nangangasiwa sa lahat."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 1"
+    },
+    {
+      "id": "u4-l1-c7",
+      "kind": "text",
+      "text": {
+        "ar": "الإيمان بألوهيته سبحانه وأنه المستحق العبادة وحدة لا شريك له في شيء منها: كالصلاة، والدعاء، والنذر، والذبح، والاستعانة، والاستعاذة، وجميع العبادات الأخرى.\nالإيمان بأسمائه الحسنى وصفاته العلا التي أثبتها لنفسه أو أثبتها له نبيه ﷺ، ونفي ما نفى عن نفسه أو نفاه عنه النبي ﷺ من الأسماء والصفات، وأن أسماءه وصفاته بلغت الغاية في الكمال والحُسن، وأنه ليس كمثله شيء وهو السميع البصير.",
+        "en": "The belief that Allah is the only God, and that He alone deserves to be worshiped. Acts of worship must be dedicated to Him alone without any partners, such as prayer, supplication, making vows, sacrificial animals, imploring for help and protection, and all other acts of worship.\nThe belief in His Names and Attributes that He affirmed for Himself or that His Prophet Muhammad (pbuh) affirmed for Him, and negating the names and attributes that He negated about Himself or negated by His Prophet about Him. This includes the belief that His Names and Attributes are the most superior in terms of perfection and beauty.",
+        "tl": "Ang paniniwala sa kaisahan ng Kanyang pagka-Diyos, sa pagsamba sa Kanya, sa Kanya lamang iaalay ang lahat ng uri ng pagsamba tulad ng pagdarasal, pananalangin, panata, pagkatay, paghingi ng tulong, at iba pang uri ng pagsamba.\nAng paniniwala sa Kanyang mga magagandang pangalan at mararangal na katangian na inilarawan Niya sa Kanyang sarili at ng Kanyang sugo, at pagwaksi sa kung ano ang iwinaksi Niya sa Kanyang sarili at ng Kanyang Propeta ﷺ na mga pangalan at katangian. Ang Kanyang mga pangalan at katangian ay naabot ang sukdulan ng pagka-perpekto at kagandahan. Siya ay walang kahalintulad na kahit anong bagay, Siya ang labis na nakakarinig, at ang labis na nakakakita."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "iman pillar 1"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u4-l1-o1",
+      "text": {
+        "ar": "يعدّد أركان الإيمان الستة",
+        "en": "Lists the six pillars of faith",
+        "tl": "Naiisa-isa ang anim na haligi ng Iman"
+      },
+      "cards": [
+        "u4-l1-c1",
+        "u4-l1-c3"
+      ],
+      "key": true
+    },
+    {
+      "id": "u4-l1-o2",
+      "text": {
+        "ar": "يفرّق بين أركان الإسلام وأركان الإيمان",
+        "en": "Tells the pillars of Islam apart from the pillars of faith",
+        "tl": "Natutukoy ang pagkakaiba ng mga haligi ng Islam at ng Iman"
+      },
+      "cards": [
+        "u4-l1-c2"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l1-o3",
+      "text": {
+        "ar": "يعرف تعريف الإيمان المختصر وأنه يزيد وينقص",
+        "en": "Knows the short definition of faith and that it increases and decreases",
+        "tl": "Alam ang maikling kahulugan ng Iman at na ito ay tumataas at bumababa"
+      },
+      "cards": [
+        "u4-l1-c4",
+        "u4-l1-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u4-l1-o4",
+      "text": {
+        "ar": "يعرف ما يتضمنه الإيمان بالله: وجوده وربوبيته وألوهيته وأسماؤه وصفاته",
+        "en": "Knows what belief in Allah includes: His existence, Lordship, sole right to worship, and Names and Attributes",
+        "tl": "Alam ang kasama sa paniniwala sa Allah: ang Kanyang pag-iral, pagka-Panginoon, pagka-Diyos, at mga pangalan at katangian"
+      },
+      "cards": [
+        "u4-l1-c5",
+        "u4-l1-c6",
+        "u4-l1-c7"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u4-l1-e1",
+      "type": "order",
+      "objectives": [
+        "u4-l1-o1"
+      ],
+      "cards": [
+        "u4-l1-c1",
+        "u4-l1-c3"
+      ],
+      "prompt": {
+        "ar": "رتّب أركان الإيمان كما في الحديث",
+        "en": "Put the pillars of faith in the order of the hadith",
+        "tl": "Isaayos ang mga haligi ng Iman ayon sa hadith"
+      },
+      "items": [
+        {
+          "id": "s5",
+          "text": {
+            "ar": "واليوم الآخر",
+            "en": "the Last Day",
+            "tl": "sa Huling Araw"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "ورسله",
+            "en": "His Messengers",
+            "tl": "sa Kanyang mga Sugo"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "وكتبه",
+            "en": "His Books",
+            "tl": "sa Kanyang mga aklat"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "وملائكته",
+            "en": "His angels",
+            "tl": "sa Kanyang mga anghel"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "الإيمان بالله",
+            "en": "Belief in Allah",
+            "tl": "Paniniwala sa Allah"
+          }
+        },
+        {
+          "id": "s6",
+          "text": {
+            "ar": "والقدر خيره وشره",
+            "en": "preordainment, the good and the bad thereof",
+            "tl": "sa tadhana, mabuti man o masama"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "u4-l1-e2",
+      "type": "choose",
+      "objectives": [
+        "u4-l1-o1"
+      ],
+      "cards": [
+        "u4-l1-c1"
+      ],
+      "prompt": {
+        "ar": "كم ركنًا للإيمان ذكر الحديث؟",
+        "en": "How many pillars of faith does the hadith name?",
+        "tl": "Ilang haligi ng Iman ang binanggit sa hadith?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "خمسة",
+            "en": "Five",
+            "tl": "Lima"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ستة",
+            "en": "Six",
+            "tl": "Anim"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أربعة",
+            "en": "Four",
+            "tl": "Apat"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l1-e3",
+      "type": "match",
+      "objectives": [
+        "u4-l1-o2"
+      ],
+      "cards": [
+        "u4-l1-c2"
+      ],
+      "prompt": {
+        "ar": "صِل كل نوع من الأركان بوصفه",
+        "en": "Match each kind of pillar with its description",
+        "tl": "Itugma ang bawat uri ng haligi sa paglalarawan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "أركان الإسلام",
+            "en": "The pillars of Islam",
+            "tl": "Ang mga haligi ng Islam"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "أركان الإيمان",
+            "en": "The pillars of faith",
+            "tl": "Ang mga haligi ng Iman"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "أعمال قلبية يؤديها الإنسان بقلبه، مثل الإيمان بالله وكتبه ورسله",
+            "en": "acts of the heart, like belief in Allah, His Books and His Messengers",
+            "tl": "mga gawain ng puso, tulad ng paniniwala sa Allah, sa Kanyang mga kasulatan at mga sugo"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "أعمال ظاهرة يؤديها الإنسان بجوارحه، كالنطق بالشهادتين والصلاة والزكاة",
+            "en": "visible acts done by the body parts, like the Shahādah, prayer and Zakah",
+            "tl": "mga gawaing lantad na isinasagawa ng katawan, tulad ng Shahadatyn, Salah at Zakah"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l1-e4",
+      "type": "choose",
+      "objectives": [
+        "u4-l1-o2"
+      ],
+      "cards": [
+        "u4-l1-c2"
+      ],
+      "prompt": {
+        "ar": "الصلاة والزكاة من:",
+        "en": "Prayer and Zakah are:",
+        "tl": "Ang Salah at Zakah ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أركان الإيمان، وهي أعمال قلبية",
+            "en": "pillars of faith: acts of the heart",
+            "tl": "mga haligi ng Iman: mga gawain ng puso"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أركان الإسلام، وهي أعمال ظاهرة",
+            "en": "pillars of Islam: visible acts",
+            "tl": "mga haligi ng Islam: mga gawaing lantad"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u4-l1-e5",
+      "type": "choose",
+      "objectives": [
+        "u4-l1-o3"
+      ],
+      "cards": [
+        "u4-l1-c4"
+      ],
+      "prompt": {
+        "ar": "الإيمان يزيد … وينقص …",
+        "en": "Faith increases by … and decreases by …",
+        "tl": "Ang Iman ay tumataas sa … at bumababa sa …"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بالطاعة / بالمعصية",
+            "en": "obedience / disobedience",
+            "tl": "pagsunod / pagsuway"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بالمعصية / بالطاعة",
+            "en": "disobedience / obedience",
+            "tl": "pagsuway / pagsunod"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u4-l1-e6",
+      "type": "match",
+      "objectives": [
+        "u4-l1-o3"
+      ],
+      "cards": [
+        "u4-l1-c4",
+        "u4-l1-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل جزء من تعريف الإيمان بموضعه",
+        "en": "Match each part of the definition of faith with where it is",
+        "tl": "Itugma ang bawat bahagi ng kahulugan ng Iman sa kinalalagyan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "اعتقاد",
+            "en": "Belief",
+            "tl": "Paniniwala"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "قول",
+            "en": "Statement",
+            "tl": "Pagsambit"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "عمل",
+            "en": "Action",
+            "tl": "Pagkilos"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "باللسان",
+            "en": "of the tongue",
+            "tl": "ng dila"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "بالجوارح",
+            "en": "of the body parts",
+            "tl": "ng katawan"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "بالقلب",
+            "en": "of the heart",
+            "tl": "ng puso"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l1-e7",
+      "type": "match",
+      "objectives": [
+        "u4-l1-o4"
+      ],
+      "cards": [
+        "u4-l1-c6",
+        "u4-l1-c7"
+      ],
+      "prompt": {
+        "ar": "صِل كل جانب من الإيمان بالله بمعناه",
+        "en": "Match each part of belief in Allah with its meaning",
+        "tl": "Itugma ang bawat bahagi ng paniniwala sa Allah sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الإيمان بربوبيته",
+            "en": "Belief that He is the only Lord",
+            "tl": "Paniniwala sa Kanyang pagka-Panginoon"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الإيمان بألوهيته",
+            "en": "Belief that He is the only God",
+            "tl": "Paniniwala sa Kanyang pagka-Diyos"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الإيمان بأسمائه وصفاته",
+            "en": "Belief in His Names and Attributes",
+            "tl": "Paniniwala sa Kanyang mga pangalan at katangian"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "التي أثبتها لنفسه أو أثبتها له نبيه ﷺ",
+            "en": "those He affirmed for Himself or His Prophet affirmed for Him",
+            "tl": "na inilarawan Niya sa Kanyang sarili at ng Kanyang sugo"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "أنه مالك كل شيء وخالقه ورازقه ومدبّر أمره",
+            "en": "He is the Owner, Creator and Sustainer of everything, Who manages its affairs",
+            "tl": "Siya ang nagmamay-ari, lumikha, nagbigay biyaya at nangangasiwa sa lahat"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "أنه المستحق للعبادة وحده لا شريك له",
+            "en": "He alone deserves to be worshiped, without partners",
+            "tl": "sa Kanya lamang iaalay ang lahat ng uri ng pagsamba"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u4-l1-e8",
+      "type": "choose",
+      "objectives": [
+        "u4-l1-o4"
+      ],
+      "cards": [
+        "u4-l1-c7",
+        "u4-l1-c5"
+      ],
+      "prompt": {
+        "ar": "أيّ العبادات تكون لله وحده كما في الدرس؟",
+        "en": "Which acts of worship are for Allah alone, as the lesson says?",
+        "tl": "Aling mga pagsamba ang para lamang sa Allah ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الصلاة وحدها",
+            "en": "Prayer only",
+            "tl": "Ang pagdarasal lamang"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الصلاة والدعاء والنذر والذبح، وجميع العبادات",
+            "en": "Prayer, supplication, vows, sacrifice — all acts of worship",
+            "tl": "Pagdarasal, pananalangin, panata, pagkatay — lahat ng uri ng pagsamba"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الدعاء وحده",
+            "en": "Supplication only",
+            "tl": "Ang pananalangin lamang"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "tl",
+      "card": "u4-l1-c6",
+      "text": "(Asmaa was sifaat)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "en",
+      "card": "u4-l1-c7",
+      "text": ", and that {there is nothing like unto Him and He is the All-Hearing, the All-Seeing}",
+      "reason": "Quran wording in braces inside the English translation (the Arabic states it as plain prose); verse text is never copied into cards"
+    }
+  ],
+  "notes": "Intro of «أتعرف على أركان الإيمان» and the first pillar. English card 7: the closing words were set in braces as a Quran quotation ({there is nothing like unto Him…}) and were dropped; the Arabic keeps the same words because it states them as prose (reviewer). Filipino card 6: the phrase \"(Asmaa was sifaat)\" (Arabic in Latin letters) was dropped; single-word terms (Ruboobeeyah, Uluhiyah) stay."
+}

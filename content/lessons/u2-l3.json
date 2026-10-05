@@ -1,0 +1,374 @@
+{
+  "id": "u2-l3",
+  "unit": "u2",
+  "order": 3,
+  "title": {
+    "ar": "نبيي محمد ﷺ",
+    "en": "My Prophet Is Muhammad ﷺ",
+    "tl": "Ang Aking Propeta ay si Muhammad ﷺ"
+  },
+  "source": {
+    "site_section": "نبيّي محمد ﷺ",
+    "steps": null,
+    "page_ar": "20–22",
+    "page": "p. 2",
+    "sheet_rows": "35–41"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u2-l3-c1",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "Sinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 9,
+        "ayat": [
+          128,
+          128
+        ]
+      },
+      "source_ref": "my prophet"
+    },
+    {
+      "id": "u2-l3-c2",
+      "kind": "text",
+      "text": {
+        "ar": "قال تعالى:",
+        "en": "Allah Almighty says:",
+        "tl": "At Kanyang pang sinabi:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 21,
+        "ayat": [
+          107,
+          107
+        ]
+      },
+      "source_ref": "my prophet"
+    },
+    {
+      "id": "u2-l3-c3",
+      "kind": "text",
+      "text": {
+        "ar": "مُحَمّد ﷺ الرحمة المهداة\nهو محمد بن عبدالله ﷺ خاتم الأنبياء والمرسلين، أرسله الله تعالى بدين الإسلام إلى الناس كافَّة، ليدلهم على الخير وأعظمه التوحيد، وينهاهم عن الشر وأعظمه الشرك.\nتجبُ طاعته فيما أمر وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألَّا يُعبد الله إلا بما شرع.\nرسالته ورسالة جميع الأنبياء من قبله الدعوة إلى عبادة الله وحده لا شريك له.",
+        "en": "Muhammad (pbuh), the Prophet of mercy\nHe is Muhammad ibn ‘Abdullāh, the final Prophet and Messenger. Allah Almighty sent him with the religion of Islam to all humankind to guide them to all that is good, the greatest of which is monotheism; and to warn them against all that is evil, the worst of which is polytheism.\nIt is an obligation to obey his orders, believe what he said, avoid what he forbade or warned against, and worship Allah only in the manner that he prescribed.\nHis message and the message of all the prophets before him was to call for the worship of Allah alone without a partner.",
+        "tl": "Si Muhammad ﷺ, Ang Habag\nSiya si Muhammad ﷺ na anak ni Abdullah, ang panghuling Propeta at Sugo. Ipinadala siya ng Allah na dala ang relihiyong Islam para sa buong sangkatauhan upang ituro sa kanila ang daan ng kabutihan, at ang pinakamainam dito ay ang Tawheed o ang kaisahan ng Allah; at upang ipagbawal sa kanila ang daan ng kasamaan, at ang pinakamasama dito ay ang pagtatambal sa Tunay na Nag-iisang Diyos, Allah."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "my prophet"
+    },
+    {
+      "id": "u2-l3-c4",
+      "kind": "text",
+      "text": {
+        "ar": "من صفاته ﷺ:\nالصدق، الرحمة، الحِلم، الصبر، الشجاعة، الكرم، حسن الخلق، العدل، التواضع، العفو.",
+        "en": "Some of his traits:\nHonesty, mercy, forbearance, patience, bravery, generosity, good manners, fairness, modesty, and forgiveness.",
+        "tl": "Kabilang sa kanyang mga katangian:\nMakatotohanan,\nmahabagin,\nmaunawain,\nmapagtimpi,\nmatapang,\nmapagbigay,\nmay magandang asal,\nmakatarungan,\nmapagkumbaba,\nmapagpatawad, at ibapa."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "his traits"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u2-l3-o1",
+      "text": {
+        "ar": "يعرف أن محمدًا ﷺ خاتم الأنبياء والمرسلين، أرسله الله بالإسلام إلى الناس كافة",
+        "en": "Knows that Muhammad ﷺ is the final Prophet and Messenger, sent with Islam to all humankind",
+        "tl": "Alam na si Muhammad ﷺ ang panghuling Propeta at Sugo, na ipinadala dala ang Islam para sa buong sangkatauhan"
+      },
+      "cards": [
+        "u2-l3-c3",
+        "u2-l3-c1",
+        "u2-l3-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u2-l3-o2",
+      "text": {
+        "ar": "يعرف أن أعظم الخير الذي دلّ عليه التوحيد، وأعظم الشر الذي نهى عنه الشرك",
+        "en": "Knows that the greatest good he guided to is monotheism and the worst evil he warned against is polytheism",
+        "tl": "Alam na ang pinakamainam na kabutihan na itinuro niya ay ang Tawheed at ang pinakamasamang kasamaan ay ang pagtatambal"
+      },
+      "cards": [
+        "u2-l3-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u2-l3-o3",
+      "text": {
+        "ar": "يذكر من صفات النبي ﷺ",
+        "en": "Names some of the traits of the Prophet ﷺ",
+        "tl": "Nasasabi ang ilan sa mga katangian ng Propeta ﷺ"
+      },
+      "cards": [
+        "u2-l3-c4"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u2-l3-e1",
+      "type": "choose",
+      "objectives": [
+        "u2-l3-o1"
+      ],
+      "cards": [
+        "u2-l3-c3"
+      ],
+      "prompt": {
+        "ar": "محمد ﷺ هو:",
+        "en": "Muhammad ﷺ is:",
+        "tl": "Si Muhammad ﷺ ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "خاتم الأنبياء والمرسلين",
+            "en": "the final Prophet and Messenger",
+            "tl": "ang panghuling Propeta at Sugo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أول الأنبياء",
+            "en": "the first of the prophets",
+            "tl": "ang unang Propeta"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l3-e2",
+      "type": "choose",
+      "objectives": [
+        "u2-l3-o1"
+      ],
+      "cards": [
+        "u2-l3-c3",
+        "u2-l3-c1",
+        "u2-l3-c2"
+      ],
+      "prompt": {
+        "ar": "إلى مَن أرسله الله تعالى بدين الإسلام؟",
+        "en": "To whom did Allah send him with the religion of Islam?",
+        "tl": "Para kanino siya ipinadala ng Allah dala ang relihiyong Islam?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "إلى قومه فقط",
+            "en": "To his own people only",
+            "tl": "Para sa kanyang angkan lamang"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إلى الناس كافة",
+            "en": "To all humankind",
+            "tl": "Para sa buong sangkatauhan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-l3-e3",
+      "type": "match",
+      "objectives": [
+        "u2-l3-o2"
+      ],
+      "cards": [
+        "u2-l3-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل كلمة بما ذكره الدرس عنها",
+        "en": "Match each word with what the lesson says about it",
+        "tl": "Itugma ang bawat salita sa sinabi ng aralin tungkol dito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الخير",
+            "en": "All that is good",
+            "tl": "Ang daan ng kabutihan"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الشر",
+            "en": "All that is evil",
+            "tl": "Ang daan ng kasamaan"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "وأعظمه الشرك",
+            "en": "the worst of which is polytheism",
+            "tl": "ang pinakamasama dito ay ang pagtatambal"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "وأعظمه التوحيد",
+            "en": "the greatest of which is monotheism",
+            "tl": "ang pinakamainam dito ay ang Tawheed"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l3-e4",
+      "type": "choose",
+      "objectives": [
+        "u2-l3-o2"
+      ],
+      "cards": [
+        "u2-l3-c3"
+      ],
+      "prompt": {
+        "ar": "أعظم الخير الذي دلّ عليه النبي ﷺ:",
+        "en": "The greatest good that the Prophet ﷺ guided people to:",
+        "tl": "Ang pinakamainam na kabutihan na itinuro ng Propeta ﷺ:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الشرك",
+            "en": "Polytheism",
+            "tl": "Ang pagtatambal"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "التوحيد",
+            "en": "Monotheism",
+            "tl": "Ang Tawheed o kaisahan ng Allah"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u2-l3-o3"
+      ],
+      "cards": [
+        "u2-l3-c4"
+      ],
+      "prompt": {
+        "ar": "أيّ مجموعة كلها من صفاته ﷺ المذكورة في الدرس؟",
+        "en": "Which group lists only traits of the Prophet ﷺ named in the lesson?",
+        "tl": "Aling grupo ang naglalaman lamang ng mga katangian ng Propeta ﷺ na binanggit sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الصدق، والرحمة، والحلم",
+            "en": "Honesty, mercy, forbearance",
+            "tl": "Makatotohanan, mahabagin, maunawain"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الناس، والخير، والأنبياء",
+            "en": "People, good, prophets",
+            "tl": "Sangkatauhan, kabutihan, propeta"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u2-l3-o3"
+      ],
+      "cards": [
+        "u2-l3-c4"
+      ],
+      "prompt": {
+        "ar": "وأيّ مجموعة أخرى كلها من صفاته ﷺ؟",
+        "en": "And which other group lists only his traits ﷺ?",
+        "tl": "At aling iba pang grupo ang naglalaman lamang ng kanyang mga katangian ﷺ?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الإسلام، والتوحيد، والرسالة",
+            "en": "Islam, monotheism, the message",
+            "tl": "Islam, Tawheed, mensahe"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "التواضع، والعفو، والعدل",
+            "en": "Modesty, forgiveness, fairness",
+            "tl": "Mapagkumbaba, mapagpatawad, makatarungan"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "نبيّي محمد ﷺ",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "My Prophet is Muhammad (pbuh)",
+      "reason": "repeats the section title (shown as the lesson title)"
+    }
+  ],
+  "notes": "Section «نبيّي محمد ﷺ». The Filipino page does not translate two Arabic/English sentences (the duty to obey him, and the message of all prophets); card 3 therefore has more text in Arabic/English than in Filipino, and no exercise asks about those two sentences."
+}

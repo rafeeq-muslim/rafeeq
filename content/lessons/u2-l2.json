@@ -1,0 +1,702 @@
+{
+  "id": "u2-l2",
+  "unit": "u2",
+  "order": 2,
+  "title": {
+    "ar": "من أسماء ربي الحسنى",
+    "en": "Some of My Lord’s Beautiful Names",
+    "tl": "Ilan sa Magagandang Pangalan ng Aking Panginoon"
+  },
+  "source": {
+    "site_section": "ربي الله › «من أسمائه الحسنى» and the 12 name tabs",
+    "steps": null,
+    "page_ar": "14–18",
+    "page": "p. 1–2",
+    "sheet_rows": "19–33"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u2-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "من أسمائِه الُحسنى:\nالرزاق، الرَّحْمن، القدير، المَلِك، السميع، السَّلَام، البصير، الوكيل، الخَالق، اللطيف، الكافي، الغفور.\nالرزّاق: المُتَكَفِّلُ بأرزاقِ العبادِ التي بِها قوامُ قُلوبِهِم وأبدانِهِم.\nالرحمن: ذو الرحمةِ الواسعةِ العظيمةِ التي وَسِعَتْ كلَّ شيء.\nالقَدِيْرُ: ذُو القُدرةِ الكامِلةِ الذي لا يَعتريْهِ عَجْزٌ ولا فُتُورٌ.\nالمَلِك: هو الموصوفُ بِصفاتِ العظمةِ والقهر والتدبير، المالك لجميع الأشياء المتصرف فيها.",
+        "en": "Some of His Names are:\nThe Provider, Who provides His creation with the sustenance necessary for their souls and bodies.\nThe Most Merciful, Whose mercy encompasses everything.\nThe All-Powerful, Who experiences neither inability nor languish.\nThe King and Sovereign, Who is described with all the attributes of greatness and dominance, Who owns and directs everything.",
+        "tl": "Ang Tagapanustos sa mga biyaya ng mga alipin, na siyang lakas ng kanilang mga puso at kanilang mga katawan.\nAng Pinaka Maawain at ang Kanyang Awa ay saklaw ang lahat ng bagay.\nAng ganap na Makapangyarihan at may Kakayahan na hindi nakakaranas ng pagkapagod o kawalan ng kakayahan.\nAng Nagtataglay ng mga katangian ng Kadakilaan, pagpigil o pagkontrol at pangagasiwa, ang Kataas-taasang Hari at Tagapanagasiwa ng lahat ng mga bagay."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "names 1-4"
+    },
+    {
+      "id": "u2-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "السَّمِيْع: الذي يُدْرِكُ جميعَ المَسموعات سرَّها وجهرها.\nالسَّلَام: السَّالِمُ مِن كلِّ نَقصٍ وآفَةٍ وعَيْب.\nالبَصِيرُ: الذي أحاطَ بَصَرُهُ بكلِّ شيءٍ وإِنْ دَقَّ وصَغُرَ، ذو البصيرة بالأشياء الخبير بها المطلع على بواطنها.\nالوَكِيْل: الكَفِيْلُ بأرزاقِ خلقِهِ، والقائمُ عليهم بمصالِحِهم، والذي تَوَلَّى أولياءَه فَيَسَّرَهُم لهم وكَفَاهم الأمور.",
+        "en": "The All-Hearing, Who hears every heard thing, the secret thereof and the revealed.\nThe Perfect, Who is free of every deficiency and defect.\nThe All-Seeing, Whose sight encompasses everything, regardless of how minute it is, Who has thorough knowledge of everything, the visible and the hidden thereof.\nThe Trustee, Who guarantees provision to His creation and manages their affairs in their best interests; the Ally of the believers, facilitating matters for them and protecting them.",
+        "tl": "Ang Nakakarinig at Nakakaalam ng lahat ng binibigkas o sinasabi lantaran man o palihim.\nAng Ligtas o Payapa sa lahat ng kakulangan, pagkababa at kapintasan ng Kanyang mga ganap na katangian.\nAng ganap na Nakakakita ng lahat, ito man ay malaki o maliit, ang lubos na Nakakakita at Nakakabatid ng lahat at walang anuman ang naiilihim sa Kanya.\nAng Ganap na Tagapagkupkop, Tagapangalaga ng mga biyaya ng ng mga nilikha, nasa Kanya ang Pangangasiwa sa Kanyang mga alipin, at Siya ang Nangangalaga sa Kanyang mga alipin na malapit sa Kanya."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "names 5-8"
+    },
+    {
+      "id": "u2-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "الخالق: مُوْجِدُ الأشياءِ ومُبْدِعُها على غَيرِ مِثالٍ سابِقٍ.\nاللطيف: الذي يكرم عباده ويرحمهم ويعطيهم سؤلهم.\nالكَافِي: الذي يَكفي عبادَه جميعَ ما يَحتاجون إليه، والذي يُكتَفَى بِمعونتِهِ عن غيرِهِ، ويُستغنى به عمَّن سِواه.\nالغَفُوْر: الذي يَقِي عِبادَه شَرَّ ذُنُوبِهِم، ولا يُعاقِبُهُم عليها.",
+        "en": "The Creator, Who creates things and brings them into existence in an unprecedented manner.\nThe Subtle and Kind, Who honors His servants, shows mercy to them and responds to their supplications.\nThe Sufficient, Who provides His servants with all their needs, and with Whose assistance there is no need for any help or anyone other than Him.\nThe All-Forgiving, Who protects His servants from the evil of their sins and spares them the punishment.",
+        "tl": "Ang Tagapaglikha ng lahat ng bagay at Siya ang imbentor nito ayon sa Kanyang kagustuhan na walang pinagbasihang mga bagay na nauna.\nAng Banayad at ang Mabait na pinarangalan ang Kanyang mga lingkod, nagpapakita ng awa sa kanila at tinatanggap ang kanilang mga pagsusumamo.\nAng Sapat na nagbibigay sa Kanyang mga alipin ng lahat ng kanilang mga pangangailangan, ang Kanyang mga biyaya ay sapat na at hindi kailangan ng anumang tulong ninuman.\nAng Nagpapatawad sa mga kasalanan ng Kanyang mga alipin at hindi na sila paparusahan sa kanilang mga kasalanang nagawa."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "names 9-12"
+    },
+    {
+      "id": "u2-l2-c4",
+      "kind": "text",
+      "text": {
+        "ar": "يتفكر المسلم في عجيب خلق الله وتيسيره، ومن ذلك عناية المخلوقات بصغارها من الحرص على إطعامها والعناية بها حتى تعتمد على نفسها، فسبحانه الخالق لها واللطيف بها ومن لطفه أن هيأ لها ما يعينها ويصلح حالها مع كامل ضعفها.",
+        "en": "A Muslim reflects upon Allah's wonderful creation and how He makes things easy for His servants, one aspect of which is the care all creatures give to their young until they grow up and become self-reliant. Glory be to the One Who created them and showed kindness to them as He provided them with that kind of help despite their total powerlessness.",
+        "tl": "Nararapat sa isang muslim ang pagninilay-nilayan ang kamangha-manghang nilikha ng Allah at Kanyang pagpapagaan sa mga ito, kabilang na dito ang kasipagan at pagpapahalaga ng mga nilikha (sa kabila ng kanilang pagiging mahina at maliit) sa paghahanap ng kanilang makakain at inaalagaan ang kanilang mga sarili hanggang sa nakayanang tumayo at mamuhay mag-isa,kaya ang kaluwalhatian ay sa Allah ang naglikha sa mga ito at naging banayad at puno ng kabaitan para sa mga ito,na kung saan kabilang sa Kanyang kabaitan ay binigay sa kanila at ipinahintulot na makinabang mula sa anumang nilikha ni Allah na makakatulong sa kanila at upang mapabuti ang kanilang kalagayan sa kabila ng kanilang pagiging mahina."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "reflection"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u2-l2-o1",
+      "text": {
+        "ar": "يعرف معاني: الرزّاق، الرحمن، القدير، الملك",
+        "en": "Knows the meanings of the Provider, the Most Merciful, the All-Powerful and the King",
+        "tl": "Alam ang kahulugan ng Tagapanustos, Pinaka Maawain, Makapangyarihan at Hari"
+      },
+      "cards": [
+        "u2-l2-c1"
+      ],
+      "key": true
+    },
+    {
+      "id": "u2-l2-o2",
+      "text": {
+        "ar": "يعرف معاني: السميع، السلام، البصير، الوكيل",
+        "en": "Knows the meanings of the All-Hearing, the Perfect, the All-Seeing and the Trustee",
+        "tl": "Alam ang kahulugan ng Nakakarinig, Ligtas o Payapa, Nakakakita at Tagapagkupkop"
+      },
+      "cards": [
+        "u2-l2-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u2-l2-o3",
+      "text": {
+        "ar": "يعرف معاني: الخالق، اللطيف، الكافي، الغفور",
+        "en": "Knows the meanings of the Creator, the Subtle and Kind, the Sufficient and the All-Forgiving",
+        "tl": "Alam ang kahulugan ng Tagapaglikha, Banayad at Mabait, Sapat at Nagpapatawad"
+      },
+      "cards": [
+        "u2-l2-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u2-l2-o4",
+      "text": {
+        "ar": "يتفكّر في خلق الله ولطفه بمخلوقاته كما وصف الدرس",
+        "en": "Reflects on Allah’s creation and His kindness to His creatures, as the lesson describes",
+        "tl": "Nagninilay sa nilikha ng Allah at sa Kanyang kabaitan sa mga ito, ayon sa aralin"
+      },
+      "cards": [
+        "u2-l2-c4"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u2-l2-e1",
+      "type": "match",
+      "objectives": [
+        "u2-l2-o1"
+      ],
+      "cards": [
+        "u2-l2-c1"
+      ],
+      "prompt": {
+        "ar": "صِل كل اسم بمعناه",
+        "en": "Match each name with its meaning",
+        "tl": "Itugma ang bawat pangalan sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الرزّاق",
+            "en": "The Provider",
+            "tl": "Ang Tagapanustos"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "الرحمن",
+            "en": "The Most Merciful",
+            "tl": "Ang Pinaka Maawain"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "القدير",
+            "en": "The All-Powerful",
+            "tl": "Ang ganap na Makapangyarihan"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "ar": "الملك",
+            "en": "The King and Sovereign",
+            "tl": "Ang Kataas-taasang Hari"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "ذو القدرة الكاملة الذي لا يعتريه عجز ولا فتور",
+            "en": "Who experiences neither inability nor languish",
+            "tl": "hindi nakakaranas ng pagkapagod o kawalan ng kakayahan"
+          }
+        },
+        {
+          "id": "r4",
+          "text": {
+            "ar": "المالك لجميع الأشياء المتصرف فيها",
+            "en": "Who owns and directs everything",
+            "tl": "Tagapangasiwa ng lahat ng mga bagay"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "المتكفّل بأرزاق العباد التي بها قوام قلوبهم وأبدانهم",
+            "en": "provides His creation with the sustenance necessary for their souls and bodies",
+            "tl": "sa mga biyaya ng mga alipin, na siyang lakas ng kanilang mga puso at katawan"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "ذو الرحمة الواسعة العظيمة التي وسعت كل شيء",
+            "en": "Whose mercy encompasses everything",
+            "tl": "ang Kanyang Awa ay saklaw ang lahat ng bagay"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l2-e2",
+      "type": "choose",
+      "objectives": [
+        "u2-l2-o1"
+      ],
+      "cards": [
+        "u2-l2-c1"
+      ],
+      "prompt": {
+        "ar": "ما معنى «الرحمن» كما في الدرس؟",
+        "en": "What does \"the Most Merciful\" mean, as in the lesson?",
+        "tl": "Ano ang kahulugan ng \"Ang Pinaka Maawain\" ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "الذي يدرك جميع المسموعات سرّها وجهرها",
+            "en": "The One Who hears every heard thing, the secret and the revealed",
+            "tl": "Nakakaalam ng lahat ng sinasabi, lantaran man o palihim"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ذو الرحمة الواسعة العظيمة التي وسعت كل شيء",
+            "en": "The One Whose mercy encompasses everything",
+            "tl": "Ang Kanyang Awa ay saklaw ang lahat ng bagay"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الذي يكفي عباده جميع ما يحتاجون إليه",
+            "en": "The One Who provides His servants with all their needs",
+            "tl": "Nagbibigay sa Kanyang mga alipin ng lahat ng kanilang pangangailangan"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-l2-e3",
+      "type": "match",
+      "objectives": [
+        "u2-l2-o2"
+      ],
+      "cards": [
+        "u2-l2-c2"
+      ],
+      "prompt": {
+        "ar": "صِل كل اسم بمعناه",
+        "en": "Match each name with its meaning",
+        "tl": "Itugma ang bawat pangalan sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "السميع",
+            "en": "The All-Hearing",
+            "tl": "Ang Nakakarinig"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "السلام",
+            "en": "The Perfect",
+            "tl": "Ang Ligtas o Payapa"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "البصير",
+            "en": "The All-Seeing",
+            "tl": "Ang ganap na Nakakakita"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "ar": "الوكيل",
+            "en": "The Trustee",
+            "tl": "Ang Ganap na Tagapagkupkop"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "السالم من كل نقص وآفة وعيب",
+            "en": "free of every deficiency and defect",
+            "tl": "sa lahat ng kakulangan, pagkababa at kapintasan"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "الذي أحاط بصره بكل شيء وإن دقّ وصغر",
+            "en": "Whose sight encompasses everything, however minute",
+            "tl": "ng lahat, ito man ay malaki o maliit"
+          }
+        },
+        {
+          "id": "r4",
+          "text": {
+            "ar": "الكفيل بأرزاق خلقه، والقائم عليهم بمصالحهم",
+            "en": "guarantees provision to His creation and manages their affairs",
+            "tl": "Tagapangalaga ng mga biyaya ng mga nilikha at Tagapangasiwa ng Kanyang mga alipin"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "الذي يدرك جميع المسموعات سرّها وجهرها",
+            "en": "hears every heard thing, the secret thereof and the revealed",
+            "tl": "nakakaalam ng lahat ng binibigkas, lantaran man o palihim"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l2-e4",
+      "type": "choose",
+      "objectives": [
+        "u2-l2-o2"
+      ],
+      "cards": [
+        "u2-l2-c2"
+      ],
+      "prompt": {
+        "ar": "ما معنى «السلام» كما في الدرس؟",
+        "en": "What does \"the Perfect\" mean, as in the lesson?",
+        "tl": "Ano ang kahulugan ng \"Ang Ligtas o Payapa\" ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "السالم من كل نقص وآفة وعيب",
+            "en": "The One free of every deficiency and defect",
+            "tl": "Ligtas sa lahat ng kakulangan, pagkababa at kapintasan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "ذو القدرة الكاملة الذي لا يعتريه عجز",
+            "en": "The One Who experiences no inability",
+            "tl": "Hindi nakakaranas ng kawalan ng kakayahan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "المالك لجميع الأشياء المتصرف فيها",
+            "en": "The One Who owns and directs everything",
+            "tl": "Ang Tagapangasiwa ng lahat ng bagay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l2-e5",
+      "type": "match",
+      "objectives": [
+        "u2-l2-o3"
+      ],
+      "cards": [
+        "u2-l2-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل اسم بمعناه",
+        "en": "Match each name with its meaning",
+        "tl": "Itugma ang bawat pangalan sa kahulugan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الخالق",
+            "en": "The Creator",
+            "tl": "Ang Tagapaglikha"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "اللطيف",
+            "en": "The Subtle and Kind",
+            "tl": "Ang Banayad at ang Mabait"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الكافي",
+            "en": "The Sufficient",
+            "tl": "Ang Sapat"
+          }
+        },
+        {
+          "id": "l4",
+          "text": {
+            "ar": "الغفور",
+            "en": "The All-Forgiving",
+            "tl": "Ang Nagpapatawad"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r4",
+          "text": {
+            "ar": "الذي يقي عباده شرّ ذنوبهم ولا يعاقبهم عليها",
+            "en": "protects His servants from the evil of their sins and spares them the punishment",
+            "tl": "sa mga kasalanan ng Kanyang mga alipin at hindi na sila paparusahan"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "موجد الأشياء ومبدعها على غير مثال سابق",
+            "en": "creates things and brings them into existence in an unprecedented manner",
+            "tl": "ng lahat ng bagay, nang walang pinagbasihang mga bagay na nauna"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "الذي يكرم عباده ويرحمهم ويعطيهم سؤلهم",
+            "en": "honors His servants, shows mercy to them and responds to their supplications",
+            "tl": "pinarangalan ang Kanyang mga lingkod at tinatanggap ang kanilang mga pagsusumamo"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "الذي يكفي عباده جميع ما يحتاجون إليه",
+            "en": "provides His servants with all their needs",
+            "tl": "nagbibigay sa Kanyang mga alipin ng lahat ng kanilang mga pangangailangan"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ],
+        [
+          "l4",
+          "r4"
+        ]
+      ]
+    },
+    {
+      "id": "u2-l2-e6",
+      "type": "choose",
+      "objectives": [
+        "u2-l2-o3"
+      ],
+      "cards": [
+        "u2-l2-c3"
+      ],
+      "prompt": {
+        "ar": "ما معنى «الغفور» كما في الدرس؟",
+        "en": "What does \"the All-Forgiving\" mean, as in the lesson?",
+        "tl": "Ano ang kahulugan ng \"Ang Nagpapatawad\" ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "المالك لجميع الأشياء المتصرف فيها",
+            "en": "The One Who owns and directs everything",
+            "tl": "Ang Tagapangasiwa ng lahat ng bagay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الذي أحاط بصره بكل شيء",
+            "en": "The One Whose sight encompasses everything",
+            "tl": "Ang Nakakakita ng lahat"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الذي يقي عباده شرّ ذنوبهم ولا يعاقبهم عليها",
+            "en": "The One Who protects His servants from the evil of their sins and spares them the punishment",
+            "tl": "Pinapatawad ang mga kasalanan ng Kanyang mga alipin at hindi na sila paparusahan"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u2-l2-e7",
+      "type": "choose",
+      "objectives": [
+        "u2-l2-o4"
+      ],
+      "cards": [
+        "u2-l2-c4"
+      ],
+      "prompt": {
+        "ar": "ماذا يدعو الدرس المسلمَ أن يفعل؟",
+        "en": "What does the lesson invite the Muslim to do?",
+        "tl": "Ano ang hinihikayat ng aralin na gawin ng isang Muslim?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أن يتفكر في عجيب خلق الله وتيسيره",
+            "en": "To reflect upon Allah’s wonderful creation and how He makes things easy",
+            "tl": "Magnilay-nilay sa kamangha-manghang nilikha ng Allah at sa Kanyang pagpapagaan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أن يمرّ بالمخلوقات دون تفكر",
+            "en": "To pass by the creatures without reflecting",
+            "tl": "Lampasan ang mga nilikha nang hindi nagninilay"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-l2-e8",
+      "type": "choose",
+      "objectives": [
+        "u2-l2-o4"
+      ],
+      "cards": [
+        "u2-l2-c4"
+      ],
+      "prompt": {
+        "ar": "مَن هيّأ للمخلوقات الضعيفة ما يعينها ويصلح حالها؟",
+        "en": "Who provided the weak creatures with what helps them?",
+        "tl": "Sino ang nagbigay sa mahihinang nilikha ng makakatulong sa kanila?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "المخلوقات نفسها دون الله",
+            "en": "The creatures themselves, without Allah",
+            "tl": "Ang mga nilikha mismo, nang wala ang Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الله، الخالق لها واللطيف بها",
+            "en": "Allah, Who created them and showed kindness to them",
+            "tl": "Si Allah, na naglikha sa mga ito at naging banayad sa mga ito"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "en",
+      "card": "u2-l2-c1",
+      "text": "Ar-Razzāq:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c1",
+      "text": "Ar-Rahmān:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c1",
+      "text": "Al-Qadeer:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c1",
+      "text": "Al-Malik:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c2",
+      "text": "As-Samee‘:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c2",
+      "text": "As-Salām:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c2",
+      "text": "Al-Baseer:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c2",
+      "text": "Al-Wakeel:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c3",
+      "text": "Al-Khāliq:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c3",
+      "text": "Al-Lateef:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c3",
+      "text": "Al-Kāfi:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c3",
+      "text": "Al-Ghafoor:",
+      "reason": "divine name written in Latin letters (transliteration); the English name and its meaning follow"
+    },
+    {
+      "lang": "en",
+      "card": "u2-l2-c1",
+      "text": "Ar-Razzāq (The Provider) - Ar-Rahmān (The All-Merciful) - Al-Qadeer (The All-Powerful) - Al-Malik (The King) - As-Samee‘ (The All-Hearing) - As-Salām (The Most Perfect; The Giver of peace) - Al-Baseer (The All-Seeing) - Al-Wakeel (The Trustee; The Disposer of affairs) Al-Khāliq (The Creator) - Al-Lateef (The All-Subtle) - Al-Kāfi (The Sufficient) - Al-Ghafoor (The Forgiving).",
+      "reason": "list of the names written in Latin letters (transliteration) with English names in brackets; the English names are given with their meanings in the cards"
+    }
+  ],
+  "notes": "The list of the twelve names and their meanings. The site splits name and meaning into tabs; the spreadsheet (and printed book) give \"name: meaning\", used here. English: every transliterated name (e.g. \"Ar-Razzāq:\") was dropped; the English name opening each meaning stays. Filipino: the page has no list; the tab labels are transliterated names (not used); each card shows the Filipino meanings, which begin with the Filipino name. The Filipino reflection paragraph (card 4) differs in detail from the Arabic (creatures caring for themselves rather than for their young); exercises use only what the three languages share. Arabic «الخالق»: the spreadsheet and printed book differ (مبدعها / مخترعها) — see README."
+}

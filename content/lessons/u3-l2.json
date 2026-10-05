@@ -1,0 +1,472 @@
+{
+  "id": "u3-l2",
+  "unit": "u3",
+  "order": 2,
+  "title": {
+    "ar": "الصلاة والزكاة",
+    "en": "Prayer and Zakah",
+    "tl": "Ang Salah at ang Zakah"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإسلام › الركن الثاني والثالث (tab5_2, tab5_3)",
+    "steps": null,
+    "page_ar": "32–36",
+    "page": "p. 3",
+    "sheet_rows": "54–65"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u3-l2-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الثاني :إقام الصلاة.\nقال تعالى:",
+        "en": "Second Pillar: Establishing Prayer (Salāh)\nAllah Almighty says:",
+        "tl": "Ang Ikalawang Haligi\nAng pagsagawa ng Salah o pagdarasal.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          110,
+          110
+        ]
+      },
+      "source_ref": "pillar 2"
+    },
+    {
+      "id": "u3-l2-c2",
+      "kind": "text",
+      "text": {
+        "ar": "إقامة الصلاة تكونُ بأدائها على الوجه الذي شرعه الله تعالى وعلَّمه لنا رسوله محمد ﷺ.",
+        "en": "Establishing prayer means performing prayer in the way prescribed by Allah and taught to us by His Messenger Muhammad (pbuh).",
+        "tl": "Ang pagtataguyod ng Salah ay isinasagawa ito sa paraang isinabatas ng Allah at itinuro sa atin ng Kanyang Sugo ﷺ."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 2"
+    },
+    {
+      "id": "u3-l2-c3",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الثالث :إيتاء الزكاة.\nقال تعالى:",
+        "en": "Third Pillar: Almsgiving (Zakat).\nAllah Almighty says:",
+        "tl": "Ang Ikatlong Haligi\nAng pagbibigay ng Zakah o obligadong kawang gawa.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          110,
+          110
+        ]
+      },
+      "source_ref": "pillar 3"
+    },
+    {
+      "id": "u3-l2-c4",
+      "kind": "text",
+      "text": {
+        "ar": "فرض الله تعالى الزكاة اختبارًا لصدقِ إيمان المسلم، وشكرًا لربه على ما منَّ عليه من نعمة المال، وإعانة للفقراء والمحتاجين.\nوإيتاء الزكاة يكون بإعطائها للمستحقين.",
+        "en": "Allah (SWT) made the Zakah obligatory to test the Muslim’s faith, and as a way to express gratitude to his Lord for the wealth He has given him, and as a means to help the poor and needy.\nThe obligation of Zakah is fulfilled by giving it to the categories of people who are eligible to receive it.",
+        "tl": "Inobliga ng Allah ang pagbibigay ng Zakah upang subukin ang pananampalataya ng isang Muslim, pasalamatan niya ang kanyang Panginoon sa mga biyayang kayamanan na ipinagkaloob sa kanya, at tulungan ang mga mahihirap at mga nangangailangan.\nAng Zakah ay ibinabahagi at ibinibigay sa mga pangkat o uri ng mga taong karapat-dapat bigyan nito."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 3"
+    },
+    {
+      "id": "u3-l2-c5",
+      "kind": "text",
+      "text": {
+        "ar": "وهي حق واجب في المال إذا بَلَغَ مقدارًا معينًا، يُعطى لأصنافٍ ثمانية ذكرهم الله في القرآن الكريم، منهم الفقير والمسكين.",
+        "en": "Giving Zakah is obligatory if the money reached a certain amount. Its eligible recipients are eight categories of people that are mentioned in the Noble Qur’an, including the poor and needy.",
+        "tl": "Ito ay obligado sa kayamanan kapag umabot sa sapat na na sukat o bilang. Ibibigay ito sa walong uri ng tao na binanggit ng Allah sa Maluwalhating Qur’an, kabilang dito ang mga dukha at mahihirap."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 3"
+    },
+    {
+      "id": "u3-l2-c6",
+      "kind": "text",
+      "text": {
+        "ar": "وفي أدائها اتصافٌ بالرحمة والعطف، وتطهيرٌ لأخلاقِ المسلمِ وأموالِهِ، وإرضاءٌ لنفوس الفقراء والمساكين، وتقويةٌ لأواصر المحبة والإخاء بين أفراد المجتمع المسلم، لذلك فإنَّ المسلم الصالح يخرجُها طيبة بها نفسه سعيدًا بأدائها، لما فيها من إسعادٍ لغيره من الناس.",
+        "en": "Giving Zakah is an act of mercy and compassion; it purifies the Muslim’s character and wealth, consoles the poor and needy, and strengthens the bonds of love and brotherhood in the Muslim community. Therefore, a good Muslim gives out Zakah wholeheartedly given the happiness he brings to other people by it.",
+        "tl": "Ang pagsasakatuparan nito ay nagpapakita ng habag at awa, nagdadalisay sa kayamanan at pag-uugali ng isang Muslim, nagpapasaya sa mga dukha at mahihirap, at nagpapalakas ng pagmamahalan at kapatiran sa pagitan ng bawat Muslim sa lipunan. Samakatwid, ang isang butihing Muslim ay nasisiyahan sa pagsasakatapuran nito, sapagka’t batid niya na ang pagbibigay ng Zakah ay magdudulot ng kasiyahan sa mga maralita at nangangailangan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 3"
+    },
+    {
+      "id": "u3-l2-c7",
+      "kind": "text",
+      "text": {
+        "ar": "ومقدار زكاة الأموال 2.5% من المال المدَّخِر من الذهب والفضة والأوراق النقدية والسلع التجارية المعدة للبيع والشراء من أجل الربح؛ إذا بلغتْ قيمتُها مقدارًا معينًا ومرَّ عليها سنةٌ كاملة.\nكما تجب الزكاة فيمن يملك عددًا معينًا من بهيمة الأنعامِ (الإبلِ والبقرِ والغنمِ)، إذا كانت تأكل من عشب الأرض أكثر السنة دون أن يطعمها صاحبها.\nوكذلك تجب الزكاة في الخارج من الأرض من الحبوب والثمار والمعادن والكنوز إذا بلغتْ مقدارًا معينًا.",
+        "en": "The amount of Zakah is 2.5% of the saved wealth, whether it is gold, silver, cash money, or trade goods allocated for buying and selling for profit. Zakah is given only when the value of the saved wealth reaches the threshold amount and one full lunar year passed while it is in the person’s possession.\nZakah is also obligatory on a certain amount of livestock such as camels, sheep, and goats, if these animals graze naturally most of the year without their owner providing them with fodder.\nZakah is also obligatory on what the land produces of grains, fruits, minerals, and treasure if the certain amount is reached.",
+        "tl": "Ang sukat na pagbibigay na Zakah ng pera Ay 2.5% sa kayamanan na naipon mula sa ginto, pilak, pera at negosyo sa pagbenta at pagbili na ang layunin ay upang kumita; kapag umabot na ang halaga nito sa tamang sukat at lumipas ang isang buong taon ay magiging obligado ang pagbibigay ng zakah nito.\nMagiging obligado din ang pagbibigay ng Zakah sa sinumang nagmamay-ari ng mga alagang hayop na may tiyak na bilang tulad ng baka, kamelyo, tupa at kambing, kapag ito ay kumakain ng damo ng mahigit sa isang taon at hindi ito pinapakain ng nagmamay-ari.\nMagiging obligado din ang Zakah mula mga yamang-lupa tulad ng butil, prutas, mineral at iba pang yaman kapag ito ay umabot sa tamang sukat."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 3"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u3-l2-o1",
+      "text": {
+        "ar": "يعرف أن إقامة الصلاة أداؤها على الوجه الذي شرعه الله وعلّمه رسوله ﷺ",
+        "en": "Knows that establishing prayer means performing it as Allah prescribed and His Messenger ﷺ taught",
+        "tl": "Alam na ang pagtataguyod ng Salah ay pagsasagawa nito ayon sa isinabatas ng Allah at itinuro ng Kanyang Sugo ﷺ"
+      },
+      "cards": [
+        "u3-l2-c1",
+        "u3-l2-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u3-l2-o2",
+      "text": {
+        "ar": "يعرف لماذا فرض الله الزكاة ولمن تُعطى، وما في أدائها من خير",
+        "en": "Knows why Allah made Zakah obligatory, to whom it is given, and the good in giving it",
+        "tl": "Alam kung bakit inobliga ng Allah ang Zakah, kanino ito ibinibigay, at ang kabutihan sa pagbibigay nito"
+      },
+      "cards": [
+        "u3-l2-c3",
+        "u3-l2-c4",
+        "u3-l2-c5",
+        "u3-l2-c6"
+      ],
+      "key": false
+    },
+    {
+      "id": "u3-l2-o3",
+      "text": {
+        "ar": "يعرف مقدار زكاة المال المدّخر ومتى تجب",
+        "en": "Knows the amount of Zakah on saved wealth and when it is due",
+        "tl": "Alam ang sukat ng Zakah sa naipong kayamanan at kung kailan ito obligado"
+      },
+      "cards": [
+        "u3-l2-c7"
+      ],
+      "key": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u3-l2-e1",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o1"
+      ],
+      "cards": [
+        "u3-l2-c2",
+        "u3-l2-c1"
+      ],
+      "prompt": {
+        "ar": "إقامة الصلاة تكون:",
+        "en": "Establishing prayer means:",
+        "tl": "Ang pagtataguyod ng Salah ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بأدائها على الوجه الذي شرعه الله وعلّمه لنا رسوله محمد ﷺ",
+            "en": "performing it in the way prescribed by Allah and taught to us by His Messenger Muhammad ﷺ",
+            "tl": "pagsasagawa nito sa paraang isinabatas ng Allah at itinuro sa atin ng Kanyang Sugo ﷺ"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بأدائها بأي طريقة يختارها المسلم",
+            "en": "performing it in any way the Muslim chooses",
+            "tl": "pagsasagawa nito sa anumang paraang gusto ng Muslim"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l2-e2",
+      "type": "match",
+      "objectives": [
+        "u3-l2-o1",
+        "u3-l2-o2"
+      ],
+      "cards": [
+        "u3-l2-c1",
+        "u3-l2-c3",
+        "u3-l2-c5"
+      ],
+      "prompt": {
+        "ar": "صِل كل عبارة بما يناسبها في الدرس",
+        "en": "Match each phrase with what fits it in the lesson",
+        "tl": "Itugma ang bawat parirala sa angkop dito ayon sa aralin"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "إقام الصلاة",
+            "en": "Establishing prayer",
+            "tl": "Ang pagsagawa ng Salah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "إيتاء الزكاة",
+            "en": "Giving Zakah",
+            "tl": "Ang pagbibigay ng Zakah"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "مستحقو الزكاة",
+            "en": "Those eligible for Zakah",
+            "tl": "Ang mga karapat-dapat sa Zakah"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "الركن الثالث",
+            "en": "the third pillar",
+            "tl": "ang ikatlong haligi"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "أصناف ثمانية ذكرهم الله في القرآن، منهم الفقير والمسكين",
+            "en": "eight categories mentioned in the Qur’an, including the poor and needy",
+            "tl": "walong uri ng tao na binanggit sa Qur’an, kabilang ang mga dukha at mahihirap"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "الركن الثاني",
+            "en": "the second pillar",
+            "tl": "ang ikalawang haligi"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u3-l2-e3",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o2"
+      ],
+      "cards": [
+        "u3-l2-c4"
+      ],
+      "prompt": {
+        "ar": "مما ذكره الدرس من أسباب فرض الزكاة:",
+        "en": "One of the reasons the lesson gives for making Zakah obligatory:",
+        "tl": "Isa sa mga dahilan ng pag-obliga ng Zakah ayon sa aralin:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "مرور سنة كاملة",
+            "en": "the passing of a full year",
+            "tl": "ang paglipas ng isang buong taon"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الذهب والفضة",
+            "en": "gold and silver",
+            "tl": "ginto at pilak"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "إعانة الفقراء والمحتاجين",
+            "en": "to help the poor and needy",
+            "tl": "upang tulungan ang mga mahihirap at nangangailangan"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u3-l2-e4",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o2"
+      ],
+      "cards": [
+        "u3-l2-c4",
+        "u3-l2-c5"
+      ],
+      "prompt": {
+        "ar": "لمن تُعطى الزكاة؟",
+        "en": "To whom is Zakah given?",
+        "tl": "Kanino ibinibigay ang Zakah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لأي أحد ولو لم يكن من المستحقين",
+            "en": "to anyone, even if not eligible",
+            "tl": "kahit kanino, kahit hindi karapat-dapat"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "للمستحقين، وهم أصناف ثمانية ذكرهم الله في القرآن",
+            "en": "to those eligible: eight categories mentioned in the Qur’an",
+            "tl": "sa mga karapat-dapat: walong uri ng tao na binanggit sa Qur’an"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u3-l2-e5",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o2"
+      ],
+      "cards": [
+        "u3-l2-c6"
+      ],
+      "prompt": {
+        "ar": "في أداء الزكاة:",
+        "en": "Giving Zakah:",
+        "tl": "Ang pagbibigay ng Zakah ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "تطهير لأخلاق المسلم وأمواله، وتقوية للمحبة بين أفراد المجتمع",
+            "en": "purifies the Muslim’s character and wealth, and strengthens love in the community",
+            "tl": "nagdadalisay sa kayamanan at pag-uugali ng Muslim, at nagpapalakas ng pagmamahalan sa lipunan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "إضعاف للمحبة بين أفراد المجتمع",
+            "en": "weakens the love between people in the community",
+            "tl": "nagpapahina ng pagmamahalan sa lipunan"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l2-e6",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o3"
+      ],
+      "cards": [
+        "u3-l2-c7"
+      ],
+      "prompt": {
+        "ar": "كم مقدار زكاة المال المدّخر؟",
+        "en": "What is the amount of Zakah on saved wealth?",
+        "tl": "Gaano kalaki ang Zakah sa naipong kayamanan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "25%",
+            "en": "25%",
+            "tl": "25%"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "50%",
+            "en": "50%",
+            "tl": "50%"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "2.5%",
+            "en": "2.5%",
+            "tl": "2.5%"
+          }
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u3-l2-e7",
+      "type": "choose",
+      "objectives": [
+        "u3-l2-o3"
+      ],
+      "cards": [
+        "u3-l2-c7"
+      ],
+      "prompt": {
+        "ar": "متى تجب زكاة المال المدّخر؟",
+        "en": "When is Zakah due on saved wealth?",
+        "tl": "Kailan nagiging obligado ang Zakah sa naipong kayamanan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "إذا بلغت قيمته مقدارًا معينًا ومرّت عليه سنة كاملة",
+            "en": "when it reaches a certain amount and a full year has passed",
+            "tl": "kapag umabot ito sa tamang sukat at lumipas ang isang buong taon"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "كلما ربح ولو لم تمرّ عليه سنة",
+            "en": "whenever there is profit, even before a year has passed",
+            "tl": "tuwing may kita, kahit hindi pa lumilipas ang isang taon"
+          }
+        }
+      ],
+      "answer": "a"
+    }
+  ],
+  "dropped": [],
+  "notes": "Pillars 2 and 3. Verse Al-Baqarah 2:110 is quoted for both pillars (one quran field each). The English livestock list omits cattle and the Filipino text says \"more than a year\" for grazing; exercises avoid the livestock and produce sentences (reviewer)."
+}

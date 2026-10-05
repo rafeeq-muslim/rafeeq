@@ -1,0 +1,667 @@
+{
+  "id": "u1-l6",
+  "unit": "u1",
+  "order": 6,
+  "title": {
+    "ar": "أصلي (1): الخطوات 1–6",
+    "en": "I Pray (1): Steps 1–6",
+    "tl": "Ako ay Nagsasalah (1): Mga Hakbang 1–6"
+  },
+  "source": {
+    "site_section": "أتعلم الصلاة › tabs 1–6",
+    "steps": "1-6",
+    "page_ar": "93–99",
+    "page": "p. 7–8",
+    "sheet_rows": "201–206"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l6-c1",
+      "kind": "step",
+      "text": {
+        "ar": "النيَّة للفريضة التي أريد أداءها، ومحلها القلب.\nبعد أن أتوضأ، أستقبل القبلة، وأصلي قائمًا إذا كنت قادرًا على ذلك.",
+        "en": "I make the intention in my heart for the prayer I intend to perform.\nAfter I perform ablution, I stand in the direction of the Qiblah (direction of the prayer towards Makkah), and I pray while standing if I am able to.",
+        "tl": "Pagkakaroon ng niyah o intensyon sa pagsasagawa ng uri ng obligadong salah na nais niyang itaguyod at ang lugar ng intension ay ang puso.\nPagkatapos kong mag-wudhu ako ay haharap sa Qibla (direksyon ng Salah) at magsasalah nang nakatayo kung ito ay kaya mong gawin."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "step 1"
+    },
+    {
+      "id": "u1-l6-c2",
+      "kind": "step",
+      "text": {
+        "ar": "أرفع يديَّ بمحاذاة المنكبين وأقول: (الله أكبر) ناويًا الدخول في الصلاة.",
+        "en": "I raise my hands to the level of my shoulders with the intention of beginning the prayer.",
+        "tl": "itataas ko ang aking kamay na nakahanay sa aking mga balikat na may kasamang hangarin na simulan ang salah."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820212734050.png",
+      "quran": null,
+      "source_ref": "step 2"
+    },
+    {
+      "id": "u1-l6-c3",
+      "kind": "step",
+      "text": {
+        "ar": "أقرأ دعاء الاستفتاح بما ورد، ومن ذلك قول: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ).",
+        "en": "I say an opening Du‘ā’ (supplication) as reported from the Prophet (pbuh).",
+        "tl": "Aking sasabihin ang pambungad na Duaa (pagsusumamo) na naiulat sa Sunnah"
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820210005050.png",
+      "quran": null,
+      "source_ref": "step 3"
+    },
+    {
+      "id": "u1-l6-c4",
+      "kind": "step",
+      "text": {
+        "ar": "أستعيذ بالله من الشيطان الرجيم فأقول: (أعوذُ باللهِ من الشيطان الرجيم).",
+        "en": "I seek refuge in Allah from the accursed Satan.",
+        "tl": "Humihingi ako ng kanlungan kay Allah mula sa isinumpa na Shaytan (Satanas)"
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820212105050.png",
+      "quran": null,
+      "source_ref": "step 4"
+    },
+    {
+      "id": "u1-l6-c5",
+      "kind": "step",
+      "text": {
+        "ar": "أقرأ سورة الفاتحة في كل ركعة وهي:",
+        "en": "I read Surat al-Fātihah (Ch. 1 of the Qur’an) in every Rak‘ah (unit of the prayer):",
+        "tl": "Babasahin ko ang Surah Al Fatiha sa bawat raka’a:"
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820214105050.png",
+      "quran": {
+        "sura": 1,
+        "ayat": [
+          1,
+          7
+        ]
+      },
+      "source_ref": "step 5"
+    },
+    {
+      "id": "u1-l6-c6",
+      "kind": "text",
+      "text": {
+        "ar": "أقرأ بعد الفاتحة ما تيسَّر من القرآن في الركعة الأولى والثانية فقط من كل صلاة، وهذا ليس بواجب ولكن في فعله أجر عظيم.",
+        "en": "After al-Fātihah, I recite verses from the Qur’an (other than al-Fātihah) only in the first and second Rak‘ah. This recitation is not obligatory but doing it yields a great reward.",
+        "tl": "Magbabasa ako ng isang surah o kabanata mula sa Qur’an pagkatapos ng Al-Fatiha sa una at ikalawang yunit lamang ng pagdarasal (rakaa). Ang nasabing pagbigkas ay hindi obligado ngunit nagdudulot ng malaking gantimpala."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "step 5"
+    },
+    {
+      "id": "u1-l6-c7",
+      "kind": "step",
+      "text": {
+        "ar": "أقول: (الله أكبر) ثم أركع حتى يكون ظهري مستويًا ويداي على ركبتيَّ مفرَّجة الأصابع، ثم أقول في الركوع: (سبحان ربي العظيم).",
+        "en": "I make Ruku‘ by bowing until my back is level, and my hands are on my knees with the fingers spread out.",
+        "tl": "ako ay yuyuko hanggang sa maging tuwid ang likod at nakalatag ang aking kamay sa aking tuhod na nakabukas ang mga daliri."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820211508050.png",
+      "quran": null,
+      "source_ref": "step 6"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l6-o1",
+      "text": {
+        "ar": "يرتّب خطوات الصلاة من الأولى إلى السادسة",
+        "en": "Puts prayer steps one to six in order",
+        "tl": "Naisasaayos ang mga hakbang isa hanggang anim ng Salah"
+      },
+      "cards": [
+        "u1-l6-c1",
+        "u1-l6-c2",
+        "u1-l6-c3",
+        "u1-l6-c4",
+        "u1-l6-c5",
+        "u1-l6-c7"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l6-o2",
+      "text": {
+        "ar": "يعرف أن نية الصلاة في القلب، وأنه يستقبل القبلة ويصلي قائمًا إن قدر",
+        "en": "Knows that the intention for prayer is in the heart, and that he faces the Qiblah and prays standing if able",
+        "tl": "Alam na ang intensyon ng Salah ay nasa puso, at haharap sa Qibla at magdarasal nang nakatayo kung kaya"
+      },
+      "cards": [
+        "u1-l6-c1"
+      ],
+      "key": false
+    },
+    {
+      "id": "u1-l6-o3",
+      "text": {
+        "ar": "يعرف أن الفاتحة تُقرأ في كل ركعة، وأن القراءة بعدها في الركعتين الأوليين ليست بواجب",
+        "en": "Knows that al-Fātihah is recited in every rak‘ah, and that reciting more after it in the first two is not obligatory",
+        "tl": "Alam na binabasa ang Al-Fatiha sa bawat raka’a, at hindi obligado ang pagbasa ng iba pa pagkatapos nito sa unang dalawang raka’a"
+      },
+      "cards": [
+        "u1-l6-c5",
+        "u1-l6-c6"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l6-o4",
+      "text": {
+        "ar": "يصف هيئة الركوع",
+        "en": "Describes the position of bowing (Ruku‘)",
+        "tl": "Nailalarawan ang tamang pagyuko"
+      },
+      "cards": [
+        "u1-l6-c7"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l6-e1",
+      "type": "order",
+      "objectives": [
+        "u1-l6-o1"
+      ],
+      "cards": [
+        "u1-l6-c1",
+        "u1-l6-c2",
+        "u1-l6-c3",
+        "u1-l6-c4",
+        "u1-l6-c5",
+        "u1-l6-c7"
+      ],
+      "prompt": {
+        "ar": "رتّب خطوات الصلاة من الأولى إلى السادسة",
+        "en": "Put prayer steps one to six in order",
+        "tl": "Isaayos ang mga hakbang isa hanggang anim ng Salah"
+      },
+      "items": [
+        {
+          "id": "s5",
+          "text": {
+            "ar": "قراءة الفاتحة",
+            "en": "Reciting al-Fātihah",
+            "tl": "Ang pagbasa ng Al-Fatiha"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "الاستعاذة بالله من الشيطان الرجيم",
+            "en": "Seeking refuge in Allah from the accursed Satan",
+            "tl": "Ang paghingi ng kanlungan kay Allah mula sa isinumpa na Shaytan"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "دعاء الاستفتاح",
+            "en": "The opening supplication",
+            "tl": "Ang pambungad na Duaa"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "رفع اليدين بمحاذاة المنكبين ناويًا الدخول في الصلاة",
+            "en": "Raising the hands to shoulder level to begin the prayer",
+            "tl": "Ang pagtaas ng kamay na nakahanay sa balikat upang simulan ang Salah"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "النية واستقبال القبلة",
+            "en": "The intention, and facing the Qiblah",
+            "tl": "Ang intensyon at pagharap sa Qibla"
+          }
+        },
+        {
+          "id": "s6",
+          "text": {
+            "ar": "الركوع",
+            "en": "Bowing (Ruku‘)",
+            "tl": "Ang pagyuko"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "u1-l6-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l6-o2"
+      ],
+      "cards": [
+        "u1-l6-c1"
+      ],
+      "prompt": {
+        "ar": "أين محل نية الصلاة؟",
+        "en": "Where is the intention for prayer made?",
+        "tl": "Saan ang lugar ng intensyon sa Salah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "على اللسان",
+            "en": "On the tongue",
+            "tl": "Sa dila"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "في القلب",
+            "en": "In the heart",
+            "tl": "Sa puso"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "في اليدين",
+            "en": "In the hands",
+            "tl": "Sa mga kamay"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l6-e3",
+      "type": "choose",
+      "objectives": [
+        "u1-l6-o2"
+      ],
+      "cards": [
+        "u1-l6-c1"
+      ],
+      "prompt": {
+        "ar": "بعد الوضوء، كيف أبدأ صلاتي؟",
+        "en": "After wudu, how do I begin my prayer?",
+        "tl": "Pagkatapos ng wudhu, paano ko sisimulan ang aking Salah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أستقبل القبلة، وأصلي قائمًا إذا كنت قادرًا",
+            "en": "I face the Qiblah and pray standing if I am able",
+            "tl": "Haharap ako sa Qibla at magdarasal nang nakatayo kung kaya ko"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أصلي جالسًا ولو كنت قادرًا على القيام",
+            "en": "I pray sitting even if I am able to stand",
+            "tl": "Magdarasal ako nang nakaupo kahit kaya kong tumayo"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l6-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l6-o3"
+      ],
+      "cards": [
+        "u1-l6-c5"
+      ],
+      "prompt": {
+        "ar": "متى أقرأ سورة الفاتحة؟",
+        "en": "When do I recite Surat al-Fātihah?",
+        "tl": "Kailan ko babasahin ang Surah Al-Fatiha?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "في كل ركعة",
+            "en": "In every rak‘ah",
+            "tl": "Sa bawat raka’a"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "في الركعة الأولى فقط",
+            "en": "Only in the first rak‘ah",
+            "tl": "Sa unang raka’a lamang"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "في الركعة الأخيرة فقط",
+            "en": "Only in the last rak‘ah",
+            "tl": "Sa huling raka’a lamang"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l6-e5",
+      "type": "choose",
+      "objectives": [
+        "u1-l6-o3"
+      ],
+      "cards": [
+        "u1-l6-c6"
+      ],
+      "prompt": {
+        "ar": "قراءة شيء من القرآن بعد الفاتحة في الركعتين الأولى والثانية:",
+        "en": "Reciting more of the Qur’an after al-Fātihah in the first and second rak‘ah is:",
+        "tl": "Ang pagbasa ng iba pang bahagi ng Qur’an pagkatapos ng Al-Fatiha sa una at ikalawang raka’a ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ليست بواجب، وفي فعلها أجر عظيم",
+            "en": "not obligatory, but it brings a great reward",
+            "tl": "hindi obligado ngunit nagdudulot ng malaking gantimpala"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "واجبة في كل ركعة",
+            "en": "obligatory in every rak‘ah",
+            "tl": "obligado sa bawat raka’a"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l6-e6",
+      "type": "choose",
+      "objectives": [
+        "u1-l6-o4"
+      ],
+      "cards": [
+        "u1-l6-c7"
+      ],
+      "prompt": {
+        "ar": "في الركوع يكون:",
+        "en": "In Ruku‘ (bowing):",
+        "tl": "Sa pagyuko:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "اليدان مرفوعتين بمحاذاة المنكبين",
+            "en": "the hands are raised to shoulder level",
+            "tl": "nakataas ang kamay na nakahanay sa balikat"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الظهر مستويًا، واليدان على الركبتين مفرّجة الأصابع",
+            "en": "the back is level, and the hands are on the knees with the fingers spread out",
+            "tl": "tuwid ang likod at nakalatag ang kamay sa tuhod na nakabukas ang mga daliri"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l6-e7",
+      "type": "match",
+      "objectives": [
+        "u1-l6-o1",
+        "u1-l6-o4"
+      ],
+      "cards": [
+        "u1-l6-c2",
+        "u1-l6-c5",
+        "u1-l6-c7"
+      ],
+      "prompt": {
+        "ar": "صِل كل فعل بما ذكره الدرس عنه",
+        "en": "Match each action with what the lesson says about it",
+        "tl": "Itugma ang bawat gawain sa sinabi ng aralin tungkol dito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "رفع اليدين في أول الصلاة",
+            "en": "Raising the hands at the start of prayer",
+            "tl": "Pagtaas ng kamay sa simula ng Salah"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "قراءة الفاتحة",
+            "en": "Reciting al-Fātihah",
+            "tl": "Pagbasa ng Al-Fatiha"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الركوع",
+            "en": "Bowing (Ruku‘)",
+            "tl": "Pagyuko"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "اليدان على الركبتين",
+            "en": "hands on the knees",
+            "tl": "kamay sa tuhod"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "بمحاذاة المنكبين",
+            "en": "to the level of the shoulders",
+            "tl": "nakahanay sa mga balikat"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "في كل ركعة",
+            "en": "in every rak‘ah",
+            "tl": "sa bawat raka’a"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": "u1-l6-c1",
+      "text": "الخطوة 1:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c1",
+      "text": "Step 1:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l6-c2",
+      "text": "الخطوة 2:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c2",
+      "text": "Step 2:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c2",
+      "text": "and say “Allahu Akbar” (Allah is the Most Great)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l6-c2",
+      "text": "at sasabihin ang katagang: Allahu Akbar (ang Allah ang Pinakadakila)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l6-c3",
+      "text": "الخطوة 3:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c3",
+      "text": "Step 3:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c3",
+      "text": "One of the opening supplications is the following: “Subhānak Allahumma wa bihamdika wa tabārak-asmuka wa ta‘āla jadduka, wa la ilaha ghayrak” (Glory and praise be to You O Allah. Blessed is Your Name and Exalted is Your Majesty, and there is none worthy of worship but You).",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l6-c4",
+      "text": "الخطوة 4:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c4",
+      "text": "Step 4:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c4",
+      "text": ", saying: \"A‘ūzu billāhi min ash-shaytān ar-rajeem\" (I seek refuge in Allah from the accursed Satan)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l6-c5",
+      "text": "الخطوة 5:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c5",
+      "text": "Step 5:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l6-c7",
+      "text": "الخطوة 6:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c7",
+      "text": "Step 6:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c7",
+      "text": "I say “Allahu Akbar” then",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l6-c7",
+      "text": ", then I say while in Ruku‘ “Subhana rabbiy-al-azeem” (Glory is to my Lord, the Great)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l6-c7",
+      "text": "Sasabihin ko: ‘’Allahuakbar ‘’ at",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l6-c7",
+      "text": ", at aking sasabihin: “subhana rabbiyal azeem” (Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": null,
+      "text": "أتعلم الصلاة",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "en",
+      "card": null,
+      "text": "I learn how to pray",
+      "reason": "repeats the section title (shown as the lesson title)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l6-c3",
+      "text": ", at kabilang dito ang pagsabi: (Subhanakallahumma wa bihamdika wa tabarakasmuka wa taala jadduka wala ilaha ghayruk.) “Ang kaluwalhatian ay sa Iyo O Allah, at papuri. Pinagpala ang Iyong Pangalan at Itinaas ang iyong Kamahalan. Walang karapat-dapat sambahin kundi Ikaw lamang.”",
+      "reason": "transliteration (opening supplication) and its meaning"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l6-c4",
+      "text": "sa pagsasabing: “auzu billahi minash shaitan rajeem”.",
+      "reason": "transliteration"
+    }
+  ],
+  "notes": "Steps 1–6 of the twelve prayer steps. Al-Fatiha (1:1–7) is shown from the Quran database with the audio of day-one-media.json; its Arabic text, its English transliteration+meaning and its Filipino meaning were all removed from the cards. In English and Filipino every dhikr written in Latin letters was dropped together with its meaning (see `dropped`); the Arabic cards keep the adhkar in Arabic. Where a dropped clause was \"I say Allahu Akbar and …\", the card now starts with the action."
+}

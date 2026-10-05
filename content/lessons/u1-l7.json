@@ -1,0 +1,841 @@
+{
+  "id": "u1-l7",
+  "unit": "u1",
+  "order": 7,
+  "title": {
+    "ar": "أصلي (2): الخطوات 7–12",
+    "en": "I Pray (2): Steps 7–12",
+    "tl": "Ako ay Nagsasalah (2): Mga Hakbang 7–12"
+  },
+  "source": {
+    "site_section": "أتعلم الصلاة › tabs 7–13",
+    "steps": "7-12",
+    "page_ar": "100–107",
+    "page": "p. 8",
+    "sheet_rows": "207–213"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u1-l7-c1",
+      "kind": "step",
+      "text": {
+        "ar": "أرفع من الركوع قائلًا: (سمع الله لمن حمده) رافعًا يديَّ إلى حذو المنكبين، وإذا اعتدل جسمي واقفًا أقولُ: (ربنا ولك الحمد).",
+        "en": "I rise from Ruku‘ and raising my hands to the level of my shoulders.",
+        "tl": "Ako ay tatayo mula sa pagkayuko. Itataas ko ang aking mga kamay sa antas ng balikat."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820212009050.png",
+      "quran": null,
+      "source_ref": "step 7"
+    },
+    {
+      "id": "u1-l7-c2",
+      "kind": "step",
+      "text": {
+        "ar": "أقولُ: (الله أكبر) وأسجد على اليدين والركبتين والقدمين والجبهة والأنف، وأقول في سجودي: (سبحان ربي الأعلى).",
+        "en": "prostrate on my hands, knees, feet, forehead and nose.",
+        "tl": "ako ay magpapatirapa gamit ang mga kamay, tuhod, paa, noo at ilong."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820214909050.png",
+      "quran": null,
+      "source_ref": "step 8"
+    },
+    {
+      "id": "u1-l7-c3",
+      "kind": "step",
+      "text": {
+        "ar": "أقولُ: (الله أكبر) وأرفع من السجود حتى أستوي مستقيم الظهر جالسًا على القدم اليسرى وناصبًا القدم اليمنى، وأقول: (ربي اغفر لي).",
+        "en": "rise from the Sujūd (prostration) to sit with my back straight, sitting on my left foot and keeping my right foot erect.",
+        "tl": "ako ay babangon mula sa pagkatirapa hanggang sa maging ganap na matuwid ang aking likod sa pagkakaupo sa kaliwang paa at nakataas ang kanang paa."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820213611050.png",
+      "quran": null,
+      "source_ref": "step 9"
+    },
+    {
+      "id": "u1-l7-c4",
+      "kind": "step",
+      "text": {
+        "ar": "أقولُ: (الله أكبر) وأسجد مرة أخرى مثل السجدة الأولى.",
+        "en": "prostrate again like the first time.",
+        "tl": "muli akong mag-sujud o magpatirapa tulad ng unang sujud."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820212012050.png",
+      "quran": null,
+      "source_ref": "step 10"
+    },
+    {
+      "id": "u1-l7-c5",
+      "kind": "step",
+      "text": {
+        "ar": "أرفع من السجود قائلًا: (الله أكبر) حتى أستقيم واقفًا، وأفعل في بقية ركعات الصلاة مثل ما فعلت في الركعة الأولى.",
+        "en": "I rise from the Sujūd to stand up straight, and I repeat the same steps in the remaining units of the prayer.",
+        "tl": "Ako ay tatayo mula sa sujud upang makatayo ako nang tuwid, at gawin ang natitirang mga rakaat ng panalangin tulad ng ginawa ko sa unang rak’ah."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820214534050.png",
+      "quran": null,
+      "source_ref": "step 11"
+    },
+    {
+      "id": "u1-l7-c6",
+      "kind": "text",
+      "text": {
+        "ar": "بعد الركعة الثانية من صلاة الظهر والعصر والمغرب والعشاء أجلس لقراءة التشهد الأول وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) ثم أقوم للركعة الثالثة بعد ذلك.",
+        "en": "After the second prostration in the second Rak‘ah of Dhuhr, ‘Asr, Maghrib and ‘Isha’ prayers, I sit to say the first Tashahhud (testimony of faith). Then I stand up for the third Rak‘ah.",
+        "tl": "Matapos ang pangalawang rakaa ng Dhuhr, Asr, Maghrib at Isha, ako ay uupo upang sabihin ang unang Tashahud.\nPagkatapos ay lilipat ako sa pangatlong rakaa,"
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820214116050.png",
+      "quran": null,
+      "source_ref": "step 11 (first tashahhud)"
+    },
+    {
+      "id": "u1-l7-c7",
+      "kind": "text",
+      "text": {
+        "ar": "بعد الركعة الأخيرة من كل صلاة أجلس لقراءة التشهد الأخير، وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد)",
+        "en": "After the second prostration in the last Rak‘ah of every prayer, I sit to say the last Tashahhud (the first Tashahhud plus sending peace and prayers upon the Prophet)",
+        "tl": "sa huling rakaa ng bawat pagdarasal at ako ay uupo upang sabihin ang unang Tashahud bilang karagdagan sa sumusunod na pagbigkas"
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "step 11 (last tashahhud)"
+    },
+    {
+      "id": "u1-l7-c8",
+      "kind": "step",
+      "text": {
+        "ar": "بعد ذلك أسلم عن يميني فأقول: (السلام عليكم ورحمة الله) وأسلم عن شمالي فأقول: (السلام عليكم ورحمة الله) ناويًا الخروج من الصلاة، وأكون بذلك قد أديت الصلاة.",
+        "en": "I intend to conclude the prayer and turn my head to the right. Then I turn my head to the left. Upon doing that, I have completed the performance of my prayer.",
+        "tl": "Nais kong tapusin ang salah isang beses habang nakaharap sa kanang direksyon at isang beses habang nakaharap sa kaliwang direksyon; sa ganoong paraan magtatapos ang salah."
+      },
+      "image_url": "https://newmuslimguideline.com/Areas/140820214715050.png",
+      "quran": null,
+      "source_ref": "step 12"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u1-l7-o1",
+      "text": {
+        "ar": "يرتّب خطوات الصلاة من السابعة إلى الثانية عشرة",
+        "en": "Puts prayer steps seven to twelve in order",
+        "tl": "Naisasaayos ang mga hakbang pito hanggang labindalawa ng Salah"
+      },
+      "cards": [
+        "u1-l7-c1",
+        "u1-l7-c2",
+        "u1-l7-c3",
+        "u1-l7-c4",
+        "u1-l7-c5",
+        "u1-l7-c8"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l7-o2",
+      "text": {
+        "ar": "يصف هيئة السجود والجلوس بين السجدتين",
+        "en": "Describes prostration and the sitting between the two prostrations",
+        "tl": "Nailalarawan ang pagpapatirapa at ang pag-upo sa pagitan ng dalawang pagpapatirapa"
+      },
+      "cards": [
+        "u1-l7-c2",
+        "u1-l7-c3"
+      ],
+      "key": false
+    },
+    {
+      "id": "u1-l7-o3",
+      "text": {
+        "ar": "يعرف متى يجلس للتشهد الأول ومتى يجلس للتشهد الأخير",
+        "en": "Knows when to sit for the first Tashahhud and when for the last",
+        "tl": "Alam kung kailan uupo para sa unang Tashahud at para sa huli"
+      },
+      "cards": [
+        "u1-l7-c6",
+        "u1-l7-c7"
+      ],
+      "key": true
+    },
+    {
+      "id": "u1-l7-o4",
+      "text": {
+        "ar": "يعرف كيف يختم الصلاة عن يمينه ثم عن شماله",
+        "en": "Knows how to end the prayer by turning to the right, then to the left",
+        "tl": "Alam kung paano tapusin ang Salah sa pagharap sa kanan at pagkatapos sa kaliwa"
+      },
+      "cards": [
+        "u1-l7-c8"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u1-l7-e1",
+      "type": "order",
+      "objectives": [
+        "u1-l7-o1"
+      ],
+      "cards": [
+        "u1-l7-c1",
+        "u1-l7-c2",
+        "u1-l7-c3",
+        "u1-l7-c4",
+        "u1-l7-c5",
+        "u1-l7-c8"
+      ],
+      "prompt": {
+        "ar": "رتّب خطوات الصلاة من السابعة إلى الثانية عشرة",
+        "en": "Put prayer steps seven to twelve in order",
+        "tl": "Isaayos ang mga hakbang pito hanggang labindalawa ng Salah"
+      },
+      "items": [
+        {
+          "id": "s5",
+          "text": {
+            "ar": "القيام لبقية ركعات الصلاة",
+            "en": "Standing up for the rest of the prayer",
+            "tl": "Ang pagtayo para sa natitirang mga raka’a"
+          }
+        },
+        {
+          "id": "s4",
+          "text": {
+            "ar": "السجدة الثانية",
+            "en": "The second prostration",
+            "tl": "Ang ikalawang pagpapatirapa"
+          }
+        },
+        {
+          "id": "s3",
+          "text": {
+            "ar": "الجلوس بين السجدتين",
+            "en": "Sitting between the two prostrations",
+            "tl": "Ang pag-upo pagkatapos ng unang pagpapatirapa"
+          }
+        },
+        {
+          "id": "s2",
+          "text": {
+            "ar": "السجود",
+            "en": "Prostration",
+            "tl": "Ang pagpapatirapa"
+          }
+        },
+        {
+          "id": "s1",
+          "text": {
+            "ar": "الرفع من الركوع",
+            "en": "Rising from Ruku‘",
+            "tl": "Ang pagtayo mula sa pagkayuko"
+          }
+        },
+        {
+          "id": "s6",
+          "text": {
+            "ar": "التسليم عن اليمين ثم عن الشمال",
+            "en": "Turning to the right, then to the left, to end the prayer",
+            "tl": "Ang pagtatapos ng Salah sa kanan at sa kaliwa"
+          }
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "id": "u1-l7-e2",
+      "type": "choose",
+      "objectives": [
+        "u1-l7-o2"
+      ],
+      "cards": [
+        "u1-l7-c2"
+      ],
+      "prompt": {
+        "ar": "على أي شيء يكون السجود؟",
+        "en": "On what does one prostrate?",
+        "tl": "Sa ano nagpapatirapa?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "على اليدين والركبتين فقط",
+            "en": "On the hands and knees only",
+            "tl": "Sa mga kamay at tuhod lamang"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "على اليدين والركبتين والقدمين والجبهة والأنف",
+            "en": "On the hands, knees, feet, forehead and nose",
+            "tl": "Sa mga kamay, tuhod, paa, noo at ilong"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "على الجبهة فقط",
+            "en": "On the forehead only",
+            "tl": "Sa noo lamang"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l7-e3",
+      "type": "choose",
+      "objectives": [
+        "u1-l7-o2"
+      ],
+      "cards": [
+        "u1-l7-c3"
+      ],
+      "prompt": {
+        "ar": "كيف أجلس بين السجدتين؟",
+        "en": "How do I sit between the two prostrations?",
+        "tl": "Paano ako uupo sa pagitan ng dalawang pagpapatirapa?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "على القدم اليسرى، ناصبًا القدم اليمنى، مستقيم الظهر",
+            "en": "On my left foot, with my right foot erect and my back straight",
+            "tl": "Nakaupo sa kaliwang paa, nakataas ang kanang paa, at tuwid ang likod"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "على القدم اليمنى، ناصبًا القدم اليسرى",
+            "en": "On my right foot, with my left foot erect",
+            "tl": "Nakaupo sa kanang paa, nakataas ang kaliwang paa"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l7-e4",
+      "type": "choose",
+      "objectives": [
+        "u1-l7-o3"
+      ],
+      "cards": [
+        "u1-l7-c6"
+      ],
+      "prompt": {
+        "ar": "متى أجلس للتشهد الأول؟",
+        "en": "When do I sit for the first Tashahhud?",
+        "tl": "Kailan ako uupo para sa unang Tashahud?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "بعد الركعة الأولى من كل صلاة",
+            "en": "After the first rak‘ah of every prayer",
+            "tl": "Pagkatapos ng unang raka’a ng bawat Salah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "بعد الركعة الثانية من الظهر والعصر والمغرب والعشاء",
+            "en": "After the second rak‘ah of Dhuhr, ‘Asr, Maghrib and ‘Isha’",
+            "tl": "Pagkatapos ng ikalawang raka’a ng Dhuhr, Asr, Maghrib at Isha"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l7-e5",
+      "type": "match",
+      "objectives": [
+        "u1-l7-o3",
+        "u1-l7-o4"
+      ],
+      "cards": [
+        "u1-l7-c6",
+        "u1-l7-c7",
+        "u1-l7-c8"
+      ],
+      "prompt": {
+        "ar": "صِل كل موضع بما أفعله فيه",
+        "en": "Match each point in the prayer with what I do there",
+        "tl": "Itugma ang bawat bahagi ng Salah sa gagawin ko roon"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "بعد الركعة الثانية من الظهر والعصر والمغرب والعشاء",
+            "en": "After the second rak‘ah of Dhuhr, ‘Asr, Maghrib and ‘Isha’",
+            "tl": "Pagkatapos ng ikalawang raka’a ng Dhuhr, Asr, Maghrib at Isha"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "بعد الركعة الأخيرة من كل صلاة",
+            "en": "After the last rak‘ah of every prayer",
+            "tl": "Sa huling raka’a ng bawat Salah"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "بعد التشهد الأخير",
+            "en": "After the last Tashahhud",
+            "tl": "Pagkatapos ng huling Tashahud"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r3",
+          "text": {
+            "ar": "أسلّم عن يميني ثم عن شمالي ناويًا الخروج من الصلاة",
+            "en": "I turn my head to the right, then to the left, to end the prayer",
+            "tl": "Haharap ako sa kanan at sa kaliwa upang tapusin ang Salah"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "أجلس للتشهد الأول، ثم أقوم للركعة الثالثة",
+            "en": "I sit for the first Tashahhud, then stand up for the third rak‘ah",
+            "tl": "Uupo ako para sa unang Tashahud, pagkatapos ay lilipat sa pangatlong raka’a"
+          }
+        },
+        {
+          "id": "r2",
+          "text": {
+            "ar": "أجلس للتشهد الأخير",
+            "en": "I sit for the last Tashahhud",
+            "tl": "Uupo ako para sa Tashahud ng huling raka’a"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u1-l7-e6",
+      "type": "choose",
+      "objectives": [
+        "u1-l7-o4"
+      ],
+      "cards": [
+        "u1-l7-c8"
+      ],
+      "prompt": {
+        "ar": "كيف أختم الصلاة؟",
+        "en": "How do I end the prayer?",
+        "tl": "Paano ko tatapusin ang Salah?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أسلّم عن يميني فقط",
+            "en": "I turn to the right only",
+            "tl": "Haharap lamang ako sa kanan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أسلّم عن يميني ثم عن شمالي ناويًا الخروج من الصلاة",
+            "en": "I turn my head to the right, then to the left, intending to end the prayer",
+            "tl": "Haharap ako sa kanan at pagkatapos sa kaliwa upang tapusin ang Salah"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-l7-e7",
+      "type": "choose",
+      "objectives": [
+        "u1-l7-o1"
+      ],
+      "cards": [
+        "u1-l7-c5",
+        "u1-l7-c4"
+      ],
+      "prompt": {
+        "ar": "بعد السجدة الثانية من الركعة الأولى في الفريضة:",
+        "en": "After the second prostration of the first rak‘ah of an obligatory prayer:",
+        "tl": "Pagkatapos ng ikalawang pagpapatirapa sa unang raka’a ng obligadong Salah:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "أقوم حتى أستقيم واقفًا، وأفعل في بقية الركعات مثل ما فعلت في الأولى",
+            "en": "I rise to stand up straight, and repeat the same steps in the remaining units",
+            "tl": "Tatayo ako nang tuwid at gagawin ang natitirang mga raka’a tulad ng ginawa ko sa unang raka’a"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أختم الصلاة مباشرة",
+            "en": "I end the prayer straight away",
+            "tl": "Tatapusin ko agad ang Salah"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-l7-e8",
+      "type": "match",
+      "objectives": [
+        "u1-l7-o2",
+        "u1-l7-o1"
+      ],
+      "cards": [
+        "u1-l7-c1",
+        "u1-l7-c2",
+        "u1-l7-c3"
+      ],
+      "prompt": {
+        "ar": "صِل كل حركة بوصفها",
+        "en": "Match each movement with its description",
+        "tl": "Itugma ang bawat galaw sa paglalarawan nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الرفع من الركوع",
+            "en": "Rising from Ruku‘",
+            "tl": "Pagtayo mula sa pagkayuko"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "السجود",
+            "en": "Prostration",
+            "tl": "Pagpapatirapa"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الجلوس بين السجدتين",
+            "en": "Sitting between the prostrations",
+            "tl": "Pag-upo sa pagitan ng pagpapatirapa"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "على اليدين والركبتين والقدمين والجبهة والأنف",
+            "en": "on the hands, knees, feet, forehead and nose",
+            "tl": "gamit ang mga kamay, tuhod, paa, noo at ilong"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "على القدم اليسرى ناصبًا اليمنى",
+            "en": "on the left foot, with the right foot erect",
+            "tl": "sa kaliwang paa, nakataas ang kanang paa"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "رافعًا يديّ إلى حذو المنكبين",
+            "en": "raising my hands to the level of my shoulders",
+            "tl": "itataas ko ang aking mga kamay sa antas ng balikat"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    }
+  ],
+  "dropped": [
+    {
+      "lang": "ar",
+      "card": "u1-l7-c1",
+      "text": "الخطوة 7:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c1",
+      "text": "Step 7:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c1",
+      "text": "while saying: “Sami‘ Allahu liman hamidah” (Allah hears the one who praises him)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c1",
+      "text": "When I stand straight, I say: “Rabbanā wa lak al-hamd” (Our Lord, and to You is all praise).",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c1",
+      "text": "at sasabihin: “Sami ‘Allahu liman hamidah” (dininig ng Allah ang sinumang pumuri sa kanya)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c1",
+      "text": ", at kung ang aking katawan ay ganap nang nakatayo, sasabihin ko: “Rabbana walakal hamdu” (Panginoon namin, tanging sa Iyo lamang ang papuri)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l7-c2",
+      "text": "الخطوة 8:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c2",
+      "text": "Step 8:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c2",
+      "text": "I say “Allahu Akbar” and",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c2",
+      "text": ", then I say while prostrating: “Subhāna rabbiy-al-a‘la” (Glory is to my Lord, the Most High)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c2",
+      "text": "Sasabihin ko ang ‘’Allahuakbar’’ at",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c2",
+      "text": ", at sasabihin ko sa aking pagpatirapa: ‘’Subhana rabbiyal A’lah ‘’ (Luwalhati sa aking Panginoon, ang Kataas-taasan)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l7-c3",
+      "text": "الخطوة 9:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c3",
+      "text": "Step 9:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c3",
+      "text": "I say “Allahu Akbar” and",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c3",
+      "text": "and say: “Rabbi ighfir lī” (My Lord, forgive my sins)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c3",
+      "text": "Sasabihin ko: ‘’Allahukbar’’ at",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c3",
+      "text": ", at bibigkasin ang katagang: “rabbi ighfir li” (Panginoon, patawarin mo ako)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l7-c4",
+      "text": "الخطوة 10:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c4",
+      "text": "Step 10:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c4",
+      "text": "I say “Allahu Akbar” and",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c4",
+      "text": "Sasabihin ko: ‘’Allahukbar’’ at",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l7-c5",
+      "text": "الخطوة 11:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c5",
+      "text": "Step 11:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c5",
+      "text": "while saying “Allahu Akbar”",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c5",
+      "text": "at sasabihin: ‘’Allahukbar’’",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c6",
+      "text": "whose wording is as follows: “At-tahiyyātu lillah was-salawātu wat-tayyibāt, as-salāmu ‘alayka ayyuha an-nabi wa rahmatullah wa barakātuh, as-salāmu ‘alayna wa ‘ala ‘ibādillah as-sāliheen, ashhadu alla ilaha illa Allah wa ashhadu anna Muhammadan ‘abduhu wa rasuluh” (All compliments, prayers, and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c6",
+      "text": ": (At-Tahiy-yatu lil-lahi was-salawatu wat-tay yibatu, As-Salamy ‘alika ay-yuhan-nabiy-yu wa rahma tullahi wa barakatu, As salamu’ alayna wa ‘ala’ ibadil-la his- saliheen, Ash hadu al la ilaha illal lahu, wa ash hadu an-na Muhammadan ‘abduhu wa rasuluh)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c7",
+      "text": "whose wording is as follows",
+      "reason": "words introducing the dropped dhikr"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c7",
+      "text": ": “At-tahiyyātu lillah was-salawātu wat-tayyibāt, as-salāmu ‘alayka ayyuha an-nabi wa rahmatullah wa baraāatuh, as-salāmu ‘alayna wa ‘ala ‘ibādillah as-sāliheen, ashhadu alla ilaha illa Allah wa ashhadu anna Muhammadan ‘abduhu wa rasuluh. Allahumma salli ‘ala Muhammad wa ‘ala āli Muhammad kama sallayta ‘ala Ibrāheem wa ‘ala āli Ibrāheem, innaka hameedun majeed. Allahumma bārik ‘ala Muhammad wa ‘ala āli Muhammad kama bārakta ‘ala Ibrāheem wa ‘ala āli Ibrāheem, innaka hameedun majeed” (All compliments, prayers and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger. O Allah, send prayers upon Muhammad and upon the family of Muhammad as You sent prayers upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory. O Allah, send blessings upon Muhammad and upon the family of Muhammad as You sent blessings upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory).",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "ar",
+      "card": "u1-l7-c8",
+      "text": "الخطوة 12:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c8",
+      "text": "Final Step:",
+      "reason": "step number label (LRN-01 rule 3: no step number on the card)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c8",
+      "text": ", saying: “As-salāmu ‘alaykum wa rahmatullāh” (Peace and blessings of Allah be upon you)",
+      "reason": "transliteration, dropped together with its meaning in brackets (rules 1.4; LRN-01 rule 4: adhkar are learned by listening)"
+    },
+    {
+      "lang": "en",
+      "card": "u1-l7-c8",
+      "text": ", saying: “As-salāmu ‘alaykum wa rahmatullāh\"",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c8",
+      "text": "sa pamamagitan ng pagsasabi ng: “As-salamu ʿalaikum wa rahmatu-llah,” ang kapayapaan at mga pagpapala ng Allah ay sumaiyo,",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": null,
+      "text": "Panglabing-isang hakbang: Ako ay tatayo mula sa sujud at sasabihin: ‘’Allahukbar’’ upang makatayo ako nang tuwid, at gawin ang natitirang mga rakaat ng panalangin tulad ng ginawa ko sa unang rak’ah.",
+      "reason": "duplicate of the step-11 text, wrongly repeated inside the step-12 tab of the Filipino page"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c6",
+      "text": "“Ang lahat ng kapangyarihan at kadakilaan ay para sa Allah, lahat ng mga panalangin, at lahat ng mabuting pagsasalita at pagkilos ay para sa Kanya. Ang kapayapaan ay sumaiyo O Propeta, at gayundin ang awa ng Allah at ang Kanyang mga pagpapala. Ang kapayapaan ay mapapa-saatin, at sa mga mabubuting lingkod ng Allah. Pinapatotohanan ko na walang sinumang may karapatang sambahin maliban sa Allah, at pinatototohanan ko na si Muhammad ay Kanyang lingkod at sugo.”",
+      "reason": "English/Filipino meaning of a dhikr whose Latin transliteration was dropped; dropped with it so the learner is not led to say a translation in prayer (adhkar are learned by listening, rules 1.4; LRN-01 rule 4)"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c7",
+      "text": ": (Allaahumma salli ‘ala Muhammad wa ‘ala aali Muhammad kama sallaita ‘ala Ibraaheem wa ‘ala aali Ibraaheem innaka Hameedun Majeed, wabaarik ‘ala Muhammad wa ‘ala aali Muhamaad kama baarakta ‘ala Ibraaheem wa ‘ala aali Ibraaheem innaka Hameedun Majeed).",
+      "reason": "transliteration"
+    },
+    {
+      "lang": "tl",
+      "card": "u1-l7-c7",
+      "text": "“O Allah! Puriin nawa si Muhammad, at ang pamilya ni Muhammad, tulad ng pagpuri Mo kay Ibraaheem, at ang pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat na puriin, at luwalhatiin. At Ikaw ang nagkaloob ng mga pagpapala kay Muhammad, at sa pamilya ni Muhammad, tulad ng pagpapadala mo ng mga pagpapala kay Ibraaheem, at sa pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat puruiin luwalhatiin.’’",
+      "reason": "English/Filipino meaning of a dhikr whose Latin transliteration was dropped; dropped with it so the learner is not led to say a translation in prayer (adhkar are learned by listening, rules 1.4; LRN-01 rule 4)"
+    }
+  ],
+  "notes": "Steps 7–12. As in the printed book, step 11 includes the two Tashahhud paragraphs (cards 6–7, source_ref \"step 11\"); the site shows them as a separate 12th tab, which is why the site has 13 tabs for 12 steps. English/Filipino adhkar (transliteration and their meaning) were dropped; the Arabic cards keep the full Tashahhud in Arabic. Filipino card 8 reads awkwardly after the drop and the Filipino last-Tashahhud card ends with \"…in addition to the following recitation\" (reviewer)."
+}

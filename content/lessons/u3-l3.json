@@ -1,0 +1,411 @@
+{
+  "id": "u3-l3",
+  "unit": "u3",
+  "order": 3,
+  "title": {
+    "ar": "الصوم والحج",
+    "en": "Fasting and Hajj",
+    "tl": "Ang Pag-aayuno at ang Hajj"
+  },
+  "source": {
+    "site_section": "أتعرف على أركان الإسلام › الركن الرابع والخامس (tab5_4, tab5_5)",
+    "steps": null,
+    "page_ar": "37–40",
+    "page": "p. 3",
+    "sheet_rows": "66–71"
+  },
+  "review_status": {
+    "ar": "in_review",
+    "en": "in_review",
+    "tl": "in_review"
+  },
+  "cards": [
+    {
+      "id": "u3-l3-c1",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الرابع :صومُ شهر رمضان.\nقال تعالى:",
+        "en": "Fourth Pillar: Fasting the month of Ramadan\nAllah Almighty says:",
+        "tl": "Ang Ikaapat na Haligi\nAng pag-aayuno sa buwan ng Ramadhan.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 2,
+        "ayat": [
+          183,
+          183
+        ]
+      },
+      "source_ref": "pillar 4"
+    },
+    {
+      "id": "u3-l3-c2",
+      "kind": "text",
+      "text": {
+        "ar": "رمضان هو: الشهر التاسع في السنة من التقويم الهجري، وهو شهرٌ معظَّم عند المسلمين، وله مكانةٌ خاصة عن باقي شهور السنة، وصيامُه كاملًا أحد أركان الإسلام الخمسة.",
+        "en": "Ramadan is the ninth month of the Hijri (Islamic) calendar. Muslims revere the month of Ramadan and give it a special place over all the other months of the year. Fasting the entire month of Ramadan is one of the five pillars of Islam.",
+        "tl": "Ang Ramadhan ay ika- siyam na buwan ng Hijri. Ito ang buwan na dinadakila ng mga muslim at binibigyan nila ito ng espesyal na katayuan kumpara sa ibang mga buwan. Ang pag-aayuno sa buwan ng Ramadhan ay kabilang sa mga haligi ng Islam."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 4"
+    },
+    {
+      "id": "u3-l3-c3",
+      "kind": "text",
+      "text": {
+        "ar": "صوم رمضان هو: التعبُّد لله تعالى بالإِمساك عن الطعام والشراب والجماع، وسائر المفطرات من طلوع الفجر إلى غروبِ الشمسِ طوالَ أيامِ شهر رمضان المبارك.",
+        "en": "Fasting Ramadan means worshiping Allah by abstaining from eating, drinking, and sexual intercourse from dawn to sunset during all days of the blessed month of Ramadan.",
+        "tl": "Ang Pag-aayuno sa Ramadhan: ito ay pagsamba sa Allah sa pamamagitan ng pag-iwas sa pagkain, inumin, pakikipagtalik at iba pang nakakasira mula sa pagsapit ng Fajr hanggang sa paglubog ng araw sa buong araw ng mabiyayang buwan ng Ramadhan."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "pillar 4"
+    },
+    {
+      "id": "u3-l3-c4",
+      "kind": "text",
+      "text": {
+        "ar": "الركن الخامس :حجُّ بيت الله الحرام.\nقال تعالى:",
+        "en": "Fifth Pillar: Pilgrimage to the Sacred House of Allah (Hajj)\nAllah Almighty says:",
+        "tl": "Ang Ikalimang Haligi\nAng Hajj o paglalakbay sa Makkah.\nSinabi ng Allah:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 3,
+        "ayat": [
+          97,
+          97
+        ]
+      },
+      "source_ref": "pillar 5"
+    },
+    {
+      "id": "u3-l3-c5",
+      "kind": "text",
+      "text": {
+        "ar": "الحجُّ يكونُ لمن استطاعَ إليه سبيلًا، مرةً واحدةً في العمر، وهو: قصد البيت الحرام والمشاعر المقدسة بمكة المكرمة لأداء عبادات معينة في زمنٍ معين، وقد حجَّ النبي ﷺ وحجَّ غيره من الأنبياء من قبله، وأمر الله إبراهيم عليه السلام أن ينادي في الناس بالحج، كما أخبر بذلك الله تعالى في القرآن الكريم فقال:",
+        "en": "Hajj is obligatory upon those who can afford the journey, once in a lifetime. Hajj is to go to the Sacred House and holy precincts in Makkah to perform certain acts of worship at certain times. Prophet Muhammad (pbuh) performed Hajj, and so did other prophets before him. Allah Almighty commanded Prophet Ibrāheem (pbuh) to proclaim Hajj to people, as revealed in the noble Qur'an:",
+        "tl": "Ang Hajj ay obligado sa sinumang may kakayahan, isang beses sa kanyang buhay. Para gawin ito, kinakailangan niyang magtungo sa Makkah at sa mga banal na lugar sa natatanging panahon upang isagawa ang mga natatanging mga gawaing pagsamba bilang pagsamba sa Allah ﷻ. Tunay na nagsagawa ng Hajj ang Propeta ﷺ at ang iba pang mga propeta na nauna sa kanya, at ipinag-utos ng Allah kay Ibrahim na manawagan sa sangkatauhan na magsagawa ng Hajj, tulad ng sinabi ng Allah sa Maluwalhating Qur’an:"
+      },
+      "image_url": null,
+      "quran": {
+        "sura": 22,
+        "ayat": [
+          27,
+          27
+        ]
+      },
+      "source_ref": "pillar 5"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "u3-l3-o1",
+      "text": {
+        "ar": "يعرف أن رمضان الشهر التاسع من التقويم الهجري، وأن صيامه كاملًا أحد أركان الإسلام",
+        "en": "Knows that Ramadan is the ninth month of the Hijri calendar and that fasting all of it is a pillar of Islam",
+        "tl": "Alam na ang Ramadhan ay ika-siyam na buwan ng Hijri at ang pag-aayuno rito ay haligi ng Islam"
+      },
+      "cards": [
+        "u3-l3-c1",
+        "u3-l3-c2"
+      ],
+      "key": true
+    },
+    {
+      "id": "u3-l3-o2",
+      "text": {
+        "ar": "يعرف معنى صوم رمضان ووقته من الفجر إلى غروب الشمس",
+        "en": "Knows what fasting Ramadan is, from dawn to sunset",
+        "tl": "Alam ang kahulugan ng pag-aayuno sa Ramadhan, mula Fajr hanggang paglubog ng araw"
+      },
+      "cards": [
+        "u3-l3-c3"
+      ],
+      "key": true
+    },
+    {
+      "id": "u3-l3-o3",
+      "text": {
+        "ar": "يعرف أن الحج على المستطيع مرة واحدة في العمر",
+        "en": "Knows that Hajj is due once in a lifetime on whoever is able",
+        "tl": "Alam na ang Hajj ay obligado nang isang beses sa buhay sa sinumang may kakayahan"
+      },
+      "cards": [
+        "u3-l3-c4",
+        "u3-l3-c5"
+      ],
+      "key": false
+    }
+  ],
+  "exercises": [
+    {
+      "id": "u3-l3-e1",
+      "type": "choose",
+      "objectives": [
+        "u3-l3-o1"
+      ],
+      "cards": [
+        "u3-l3-c2",
+        "u3-l3-c1"
+      ],
+      "prompt": {
+        "ar": "رمضان هو الشهر … من التقويم الهجري",
+        "en": "Ramadan is the … month of the Hijri calendar",
+        "tl": "Ang Ramadhan ay ang … na buwan ng Hijri"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "التاسع",
+            "en": "ninth",
+            "tl": "ika-siyam"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "الأول",
+            "en": "first",
+            "tl": "unang"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الثاني عشر",
+            "en": "twelfth",
+            "tl": "ika-labindalawang"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l3-e2",
+      "type": "choose",
+      "objectives": [
+        "u3-l3-o1"
+      ],
+      "cards": [
+        "u3-l3-c2"
+      ],
+      "prompt": {
+        "ar": "صيام رمضان كاملًا:",
+        "en": "Fasting the whole month of Ramadan:",
+        "tl": "Ang pag-aayuno sa buwan ng Ramadhan:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "ليس من أركان الإسلام",
+            "en": "is not one of the pillars of Islam",
+            "tl": "ay hindi kabilang sa mga haligi ng Islam"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "أحد أركان الإسلام الخمسة",
+            "en": "is one of the five pillars of Islam",
+            "tl": "ay kabilang sa mga haligi ng Islam"
+          }
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u3-l3-e3",
+      "type": "choose",
+      "objectives": [
+        "u3-l3-o2"
+      ],
+      "cards": [
+        "u3-l3-c3"
+      ],
+      "prompt": {
+        "ar": "يكون الصوم:",
+        "en": "The fast lasts:",
+        "tl": "Ang pag-aayuno ay:"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "من طلوع الفجر إلى غروب الشمس",
+            "en": "from dawn to sunset",
+            "tl": "mula sa pagsapit ng Fajr hanggang sa paglubog ng araw"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "من غروب الشمس إلى طلوع الفجر",
+            "en": "from sunset to dawn",
+            "tl": "mula sa paglubog ng araw hanggang sa Fajr"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l3-e4",
+      "type": "match",
+      "objectives": [
+        "u3-l3-o2",
+        "u3-l3-o3",
+        "u3-l3-o1"
+      ],
+      "cards": [
+        "u3-l3-c3",
+        "u3-l3-c5",
+        "u3-l3-c2"
+      ],
+      "prompt": {
+        "ar": "صِل كل وصف بما يناسبه",
+        "en": "Match each description with what it describes",
+        "tl": "Itugma ang bawat paglalarawan sa tinutukoy nito"
+      },
+      "left": [
+        {
+          "id": "l1",
+          "text": {
+            "ar": "الإمساك عن الطعام والشراب والجماع من الفجر إلى غروب الشمس",
+            "en": "Abstaining from eating, drinking and intercourse from dawn to sunset",
+            "tl": "Pag-iwas sa pagkain, inumin at pakikipagtalik mula Fajr hanggang paglubog ng araw"
+          }
+        },
+        {
+          "id": "l2",
+          "text": {
+            "ar": "قصد البيت الحرام والمشاعر المقدسة بمكة لأداء عبادات معينة",
+            "en": "Going to the Sacred House and holy places in Makkah for certain acts of worship",
+            "tl": "Pagtungo sa Makkah at sa mga banal na lugar upang isagawa ang mga natatanging pagsamba"
+          }
+        },
+        {
+          "id": "l3",
+          "text": {
+            "ar": "الشهر التاسع من التقويم الهجري",
+            "en": "The ninth month of the Hijri calendar",
+            "tl": "Ika-siyam na buwan ng Hijri"
+          }
+        }
+      ],
+      "right": [
+        {
+          "id": "r2",
+          "text": {
+            "ar": "الحج",
+            "en": "Hajj",
+            "tl": "Hajj"
+          }
+        },
+        {
+          "id": "r3",
+          "text": {
+            "ar": "رمضان",
+            "en": "Ramadan",
+            "tl": "Ramadhan"
+          }
+        },
+        {
+          "id": "r1",
+          "text": {
+            "ar": "صوم رمضان",
+            "en": "Fasting Ramadan",
+            "tl": "Pag-aayuno sa Ramadhan"
+          }
+        }
+      ],
+      "answer": [
+        [
+          "l1",
+          "r1"
+        ],
+        [
+          "l2",
+          "r2"
+        ],
+        [
+          "l3",
+          "r3"
+        ]
+      ]
+    },
+    {
+      "id": "u3-l3-e5",
+      "type": "choose",
+      "objectives": [
+        "u3-l3-o3"
+      ],
+      "cards": [
+        "u3-l3-c5",
+        "u3-l3-c4"
+      ],
+      "prompt": {
+        "ar": "كم مرة يجب الحج على مَن استطاع؟",
+        "en": "How often is Hajj due on whoever is able?",
+        "tl": "Ilang beses obligado ang Hajj sa may kakayahan?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "مرة واحدة في العمر",
+            "en": "Once in a lifetime",
+            "tl": "Isang beses sa buhay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "كل سنة",
+            "en": "Every year",
+            "tl": "Bawat taon"
+          }
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u3-l3-e6",
+      "type": "choose",
+      "objectives": [
+        "u3-l3-o3"
+      ],
+      "cards": [
+        "u3-l3-c5"
+      ],
+      "prompt": {
+        "ar": "مَن حجّ البيت كما ذكر الدرس؟",
+        "en": "Who performed Hajj, as the lesson mentions?",
+        "tl": "Sino ang nagsagawa ng Hajj ayon sa aralin?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": {
+            "ar": "لم يحجّ أحد من الأنبياء",
+            "en": "None of the prophets performed Hajj",
+            "tl": "Walang propeta na nagsagawa ng Hajj"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
+            "ar": "النبي ﷺ وغيره من الأنبياء من قبله",
+            "en": "The Prophet ﷺ, and other prophets before him",
+            "tl": "Ang Propeta ﷺ at ang iba pang mga propeta na nauna sa kanya"
+          }
+        }
+      ],
+      "answer": "b"
+    }
+  ],
+  "dropped": [],
+  "notes": "Pillars 4 and 5. The fasting verse is Al-Baqarah 2:183; the spreadsheet (Arabic and English) and the Filipino page cite it as \"2:110\" — the quran field uses 2:183 (as on the Arabic site). The English spreadsheet definition of fasting omits \"and other things that break the fast\"; exercises use only eating, drinking and intercourse, which all three languages state."
+}
