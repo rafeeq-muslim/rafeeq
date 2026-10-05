@@ -8,18 +8,24 @@
 
 | Source | What it gives us | Access | Terms (summary) | Mode now |
 | --- | --- | --- | --- | --- |
-| **QuranEnc** (ICSA) | Quran text + 76 translations in 56 languages incl. Tagalog (Rowwad) and Cebuano, footnotes, per-ayah translation audio | REST, no key; SQLite/PDF/EPUB downloads | No modification; cite QuranEnc.com; show version; keep updated; no inappropriate ads. Policy explicitly allows apps, offline storage, RAG and AI assistants | **Index** |
-| **HadeethEnc** (ICSA) | Hadith with grade, explanation, lessons; 72 languages incl. Tagalog | REST, no key | Same terms as QuranEnc | **Index** |
-| **IslamHouse** (ICSA) | Books, articles, audio, video for new Muslims; 147 languages (Tagalog: 227 books, 514 videos) | REST v3 with a public key; request our own key | Apps, commercial, offline, RAG/AI allowed; text unchanged; summaries must not be presented as their edition. Written confirmation: admin@islamhouse.com | **Index** |
+| **QuranEnc** (ICSA) | Quran text + 76 translations in 56 languages incl. Tagalog (Rowwad) and Cebuano, footnotes, per-ayah translation audio. Arabic tafsir keys `arabic_moyassar` and `arabic_mokhtasar` work but are not in the list API ✅ 2026-10-05 | REST, no key: `/api/v1/translation/{sura,aya}/{key}/…` returns `arabic_text` as well ✅; SQLite per key (no Arabic text inside) | No modification; cite QuranEnc.com; show version; keep updated; no inappropriate ads. Policy explicitly allows apps, offline storage, RAG and AI assistants | **Index**. Normalized 2026-10-05: Arabic text + 2 tafsirs, `english_saheeh` 1.1.2, `english_rwwad` 1.0.19, `tagalog_rwwad` 1.1.4, 6,236 ayahs each (`backend/app/knowledge/sources/quranenc.py`; `docs/domains/knowledge/research/sources-2026-10-05.md` §9) |
+| **HadeethEnc** (ICSA) | Hadith with grade, explanation, benefits (`hints`), word meanings; 72 languages incl. Tagalog. Unique hadith 2026-10-05: ar 3,574 · en 2,328 · tl 1,949 ✅ | REST, no key (docs: Postman 5211979/TVev3j7q): `languages`, `categories/{roots,list}`, `hadeeths/{list,one,multiple,search}`; official MCP endpoint `POST https://hadeethenc.com/mcp/` ✅ | API docs: "1. No modification, addition, or deletion of the content. 2. Clearly referring to the publisher and the source (HadeethEnc.com)." Also covered by the IslamHouse policy README (RAG/AI allowed) | **Index**. Normalized (`hadeethenc.py`; research note §1) |
+| **IslamHouse** (ICSA) | Books, articles, audio, video for new Muslims; 147 languages. Tagalog 2026-10-05: 970 items (226 books, 514 videos, 100 audios, 95 articles). New-Muslim categories 179666 (tl 12) and 221824 "New Muslims' Stories" (tl 8) ✅ | REST v3 (Postman 7929737/TzkyMfPc) with the documented public key ("It's free to use"); request our own key | Apps, commercial, offline, RAG/AI allowed; text unchanged; cite; keep version; summaries must not be presented as their edition (README of `IslamHouse-API/multilingual-quran-hadith-islamic-content-database-api-hub`). Written confirmation: admin@islamhouse.com | **Index** |
 | **Bayan al-Islam** (ICSA) | Content for new Muslims and non-Muslims; 131 languages (Tagalog 291 items) | REST, no key | Own terms unclear; files hosted on IslamHouse | **Index** for IslamHouse-hosted files; confirm terms |
 | **Quranpedia** | Mushaf text, tafsir, 142 translation books, versioned dumps | REST (120 req/min), dumps | Free inside apps; credit Quranpedia and dump version if republishing; no bulk scraping | **Index** |
 | **King Fahd Quran Complex** | Official Hafs text and fonts | Downloads | Font: use and distribute, no modification. Data redistribution in a public repo unclear | Index text; confirm repo redistribution |
-| **binbaz.org.sa** | Fatwas and articles of Sheikh Ibn Baz | Website, no API | "Copying is permitted for every Muslim provided the source is cited" | **Index** with citation; confirm for AI use |
-| **islamqa.info** | General Q&A and fatwas, 17 languages (no Tagalog) | No API | "Personal uses permitted"; no commercial use | **Link** until permission |
-| **dorar.net** | Tafsir, hadith, aqeeda, fiqh, history encyclopedias | Hadith-search JSONP only; bot-blocked | Copying and use not permitted | **Link** until permission |
+| **binbaz.org.sa** | Fatwas and articles of Sheikh Ibn Baz (Arabic; some English book PDFs) | Website, no API. Community dump `github.com/rn0x/binbaz_database` (MIT covers the scraper only; 19,727 fatwa records, last commit 2024-09-21) | Site footer ✅: «جميع الحقوق محفوظة والنقل متاح لكل مسلم بشرط ذكر المصدر» | **Index** with citation; confirm for AI use. Normalized from the dump: 19,229 fatwas (`binbaz.py`); ⚠️ third-party scrape, spot-check against the site |
+| **islamqa.info** | General Q&A and fatwas, 17 languages (no Tagalog). Offline dump 2026-10-04: ar 32,445 answers, en 15,801 answers ✅ | No API; the site's own "go offline" dumps: `files.zadapps.info/m.islamqa.info/dumps/manifest.json` → `<folder>/data.ndjson.gz` ✅ | Terms of Use ✅: "1. Personal Uses Permitted … You shall not post, publish, transmit, reproduce, distribute or in any way use or exploit any Information for commercial purposes" | ⚠️ **Index — owner decision 2026-10-05, permission request still to send.** Raw dump and corpus kept outside the repo; passages labelled `pending_permission`. Normalized ar 60,943 / en 35,568 passages (`islamqa.py`) |
+| **dorar.net** | Tafsir, hadith, aqeeda, fiqh, history encyclopedias (Arabic only) | Hadith-search API `dorar.net/dorar_api.json?skey=` (JSON/JSONP, HTML results, ≤15, no IDs); Cloudflare blocks bots | API page grants only «عرض نتائج البحث في الموسوعة الحديثية في مواقعهم» for website owners; FAQ ✅: «ولا يسمح بنسخها واستخدامها سواء على جهاز خاص أو أقراص» | **Link** until permission (re-checked 2026-10-05) |
 | **islamic-content.com** (Jamhara) | Encyclopedia and dictionary of Islamic terms (approved glossary) | No API | Personal non-commercial use only | **Link**; request data access for the glossary |
-| **dawa.center** (incl. Bayyinat Q&A) | Da'wa repository; Bayyinat answers to doubts | Feed and PDFs | No terms stated | **Link** until permission |
+| **dawa.center** (incl. Bayyinat Q&A) | Da'wa repository; Bayyinat answers to doubts; category 150 «المسلمون الجدد» (mostly material for da'wa workers); lists Tagalog as a language | Atom feed `/feed` (9,520 entries) and PDFs; downloads behind a Cloudflare challenge; robots.txt blocks `/*/download` and GPTBot | No terms (`/terms` 404); «© 2026 الحقوق محفوظة» | **Link** until permission; use the underlying Osoul/IslamHouse files instead |
 | **shamela.ws** | Classical books | API with key | No terms found | **Link** until permission |
+| **enc.islamhouse.com** (IslamHouse encyclopedia) | Books as phrase-aligned Arabic + translations; «المختصر المفيد للمسلم الجديد» first edition = book 160 (34 languages incl. en, **no tl**) | REST `https://cnt.islamhouse.com/api/v1/` (`books/book-info`, `books/page-data`) ✅ | IslamHouse policy ⚠️ coverage of the enc site to confirm in the same email | **Index**. Book 160 normalized: ar 18 / en 25 sections (`islamhouse_enc.py`) |
+| **islamcontent.com** (ICSA portal) | Catalogue of ICSA content, 130 languages; Tagalog 934 items, 132 in "Teaching the new Muslim" ✅ | REST (Postman from `/en/developers_api`): `{lang}/api/content`, `single-content`, `authors`… ; files on `d1.islamhouse.com` | No terms published (about page is a placeholder) ✅ | **Index** for IslamHouse-hosted files only; confirm portal terms |
+| **islamenc.com** («موسوعة المحتوى الإسلامي», probably ICSA ⚠️) | Quran, books, 12 encyclopedias (ar: 842 hadith, 341 Q&A for Muslims, 202 for non-Muslims, 58 terms); 110 languages; Tagalog: 673 hadith cards | No API; `llms.txt`, sitemaps; robots.txt welcomes AI crawlers (a crawl policy, not a licence) | «© 2026 جميع الحقوق محفوظة» only ✅ | **Link**; request data access (Ask, daily card, glossary) |
+| **Tanzil** | Quran Arabic text (Uthmani/simple) | Downloads | CC BY 3.0; "CHANGING IT IS NOT ALLOWED"; cite Tanzil and link tanzil.net; keep the notice (tanzil.net/docs/Text_License) ✅ | **Index** (backup Arabic text) |
+| **Osoul Center** (osoulstore.com) books | «الوجيز: تعليم صفي للمسلم الجديد» (Arabic + 10 languages, **no en/tl**); «لماذا أنا مسلم؟»; Filipino «influential stories of new Muslims» | PDF downloads | In the Wajeez PDF ✅: «يتيح المركز طباعة الإصدار ونشره بأي وسيلة مع الالتزام بالإشارة إلى المصدر، وعدم التغيير في النص». Other titles: check each PDF ⚠️ | **Index** (Wajeez, Arabic; PDF kept outside the repo, not normalized) |
+| **newmuslims.com**, **islamreligion.com**, **guidetoislam.com** (Osoul), **newmuslimguide.com** | New-Muslim lessons and articles; Tagalog/Filipino on the first three | Websites | "All rights reserved"; guidetoislam forbids copying; newmuslimguide «مملوك لشركة الدليل المعاصر» ✅ | **Link** |
 
 ## Learning path content (Learning domain, `LRN-01`)
 
@@ -55,7 +61,8 @@ Every video must be watched in full by the Sharia reviewer before use (no music 
 | `Intl` `islamic-umalqura` calendar | Hijri dates, built into browsers | Built in |
 | Amiri Quran, Scheherazade New | Arabic and Quran fonts | SIL OFL 1.1 |
 | GeoNames extract | Offline city picker | CC BY (credit link) |
-| ICSA MCP server (`islamic-content-mcp-server`) | Developer access to ICSA sources | ISC per repo; confirm official status |
+| ICSA MCP server (`islamic-content-mcp-server`, npm 1.1.11) | Developer access to ICSA sources; **development and ingestion only**, never in the answer path (`docs/engineering/ai-tools.md` §4) | Called official in ICSA docs (dev.islamiccontent.org/docs) ✅; licence inconsistent: README says ISC, repo LICENSE says MIT, package.json has none ⚠️; pin the version |
+| HadeethEnc MCP endpoint (`POST https://hadeethenc.com/mcp/`) | Official; tools `get_supported_languages`, `search_hadeeths`, `get_hadeeth_by_id`, `get_hadeeths_by_ids`; development and ingestion only | HadeethEnc terms (above) |
 | Thmanyah (Sans, Serif Display, Serif Text) | Brand typeface | Licence https://font.thmanyah.com/licenses: free for commercial use incl. embedding in web/mobile apps as part of the bundled product; **no redistribution, hosting for download, or modification**. Download only from font.thmanyah.com; files kept in git-ignored `frontend/public/fonts/thmanyah/`, never committed |
 | IBM Plex Sans Arabic, Noto Naskh Arabic (`@fontsource`) | Self-hosted fallback fonts for UI and reading | SIL OFL 1.1 |
 | Tabler Icons (`@tabler/icons-react`) | Icon set named in the brand guide | MIT |
@@ -69,4 +76,18 @@ Every video must be watched in full by the Sharia reviewer before use (no music 
 
 ## Permission requests to send (owner: Knowledge & Ask)
 
-islamqa.info · dorar.net · islamic-content.com (glossary data) · dawa.center (Bayyinat) · shamela.ws · King Fahd Complex (repo redistribution) · IslamHouse (own key + written confirmation, including: self-hosting the Osoul videos and the Al-Fatiha audio files) · mp3quran.net and EveryAyah (audio terms).
+**islamqa.info (urgent: already indexed on the owner's decision of 2026-10-05)** · dorar.net · islamic-content.com (glossary data) · islamenc.com / islamcontent.com (ICSA: data access and terms) · binbaz.org.sa (AI-assistant use) · dawa.center (Bayyinat) · shamela.ws · King Fahd Complex (repo redistribution) · IslamHouse (own key + written confirmation, including: self-hosting the Osoul videos and the Al-Fatiha audio files, and that enc.islamhouse.com is covered by the same policy) · Osoul Center (terms of titles other than الوجيز) · mp3quran.net and EveryAyah (audio terms).
+
+## Research reading list
+
+Source evaluation of 2026-10-05 (endpoints, quoted terms, decisions, normalizer counts): `docs/domains/knowledge/research/sources-2026-10-05.md`.
+
+Research on caring for new Muslims, with what it changes in Rafeeq: `docs/domains/knowledge/research/convert-research.md`. It covers:
+- رؤية شاملة عن المسلم الجديد (مركز أصول)
+- Becoming Muslim (Yaqeen Institute)
+- Religious and Social Empowerment of Muslim Converts (MCIP)
+- Convert Programming Tips (Mecca Center)
+- New Muslim Mentorship (iERA)
+- MCC East Bay Convert Care
+- تأليف المسلم الجديد (الألوكة)
+- النوازل العقدية للمسلمين الجدد (زياد العامر)
