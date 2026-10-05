@@ -58,3 +58,24 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 ## AI
 
 See `ai-agents.md` (written with the AI build): agents, models, measured prices, bake-off, budget guard at $10 cumulative.
+
+## Daily Practice (PRC-01, 02, 04, 05, 07)
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| PRC-02 (habits) and PRC-07 (adhkar) drafted as feature documents «مسودة من Claude للمراجعة» before building | Owner's process: no feature without a document; both had none | Edit the drafts; the code follows their rules and open questions |
+| Prayer-time rounding: compute unrounded, then Fajr ⌈t⌉+1, Sunrise ⌊t⌋, Dhuhr ⌈t⌉, Asr ⌈t⌉+1, Maghrib ⌈t⌉, Isha ⌈t⌉ | PRC-01 R3: never before the official time, sunrise never after. Checked on 40 official Umm al-Qura days in 5 cities: Dhuhr/Maghrib/Isha exact, Fajr/Asr 0–2 min later; Riyadh 5 Oct 2026 exact | `AFTER_CEIL` in `frontend/src/app/practice/times.ts` |
+| Suhoor end = unrounded Fajr rounded **down**; Fajr prayer rounded **up** | Caution runs in opposite directions for fasting and prayer; on 8 Feb 2027 the screen shows suhoor ends 5:12 and Fajr 5:14 (official 5:12). ⚠️ Mohannad to confirm this 2-minute gap is acceptable and not an «imsak» | `fastingTimes` in `times.ts` |
+| Kuwait, Qatar, UAE use `adhan`'s Kuwait/Qatar/Dubai methods; every other non-Saudi country uses MWL | research/05 §4 proposal; not yet verified against those timetables ⚠️ | `methodFor` |
+| City list: GeoNames, 1,201 cities (≥100k in persona countries, ≥500k elsewhere, capitals), none above 48°; suggestion = device time zone, capital first | PRC-01 R2 example (Riyadh first though Jeddah is larger); 48° owner decision; small enough to ship offline (147 KB, lazy) | `content/practice/build_cities.py` |
+| Optional geolocation only picks the nearest listed city, then is discarded | Location never leaves the device (rules §4) | — |
+| Prayer reminders on the web are in-app toasts while Rafeeq is open, silent, with an explicit note | Web cannot schedule offline notifications without a server holding the user's schedule (would break PRC-05 R6); no Rafeeq tone yet and adhan waits for permission | Native app wires `upcomingReminders()` to local notifications |
+| Sighting announcements: table `prc_sightings`, ±1-day rule, team-only POST as interim; the SPA reader is not built | No stable machine-readable source yet (PRC-04 open question). The POST carries the expected date because the server has no Umm al-Qura library (no new dependency added) | Build the reader; add a Hijri library to compute `expected` server-side |
+| Adhkar: one review item per dhikr per language (`dhikr`, 60 items); chapters in v1: 27, 25, 28, 1, 10, 11, 13, 14, 8, 9, 69, 70; dhikr 110 excluded | PRC-07 R1 (hide unapproved dhikr individually); 110 names whole surahs rather than quoting a verse | `content/practice/adhkar.json` |
+| Verses inside adhkar replaced by QuranEnc references; English Hisn text hidden where it is itself a Quran translation; a lone full stop left after a verse span is dropped | rules §1.3 (Quran only from the stored record) | `verses` map in `adhkar.json` |
+| **No tap counter** for adhkar although the build brief asked for one | `features.md` PRC-07 row, research/07 and `data/hisnmuslim/README.md` all say «no counter, no tracking» (Ibn Uthaymeen, IslamQA 109125). The repeat count is shown as text | Product owner + Sharia reviewer decision, then a rule change |
+| Adhkar audio served only from Rafeeq (`/api/practice/adhkar/audio/<id>.mp3`, files in git-ignored `data/hisnmuslim/audio/`); no file → no button | No third-party request reveals what the learner listens to | Copy the 397 MP3s to the server |
+| Tagalog adhkar: Arabic + audio, no meaning | Source has ar/en only; no machine translation | A licensed Tagalog Hisn al-Muslim |
+| Short Sharia lines (qibla reassurance, «follow your country's announcement») go through the review desk as `practice_line`; en/tl drafted by Claude | rules §1.4; nothing shown before approval per language | `content/practice/lines.json` |
+| Custom habits default to worship (private, no count); worship habits keep only today's mark, no history | Safest reading of rules §3; Ibn Uthaymeen's view on tracking tables is an open question for Mohannad | `habits.ts` |
+| No `HabitKept` event is sent | Nothing in Motivation consumes it and it would move habit data off the device | When MOT adds a consumer |

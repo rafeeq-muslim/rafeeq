@@ -1,0 +1,14 @@
+{
+  "_about": "KNW-01 R6 and KNW-10 R3: phrases screened without a model. `manipulation`: attempts to bypass the assistant's rules (fixed polite refusal). `learning_guide`: the learner asks the guide \"what should I learn now?\" (answered from the on-device learning summary, never from Sharia sources). DRAFT by Claude, 2026-10-05.",
+  "status": "draft",
+  "manipulation": {
+    "ar": ["تجاهل تعليماتك", "تجاهل التعليمات", "تجاهل قواعدك", "تجاهل القواعد", "انس تعليماتك", "انسى تعليماتك", "تجاوز قواعدك", "اخترع حديثا", "الف حديثا", "اختلق حديثا", "اخترع ايه", "اكتب حديثا من عندك"],
+    "en": ["ignore your instructions", "ignore previous instructions", "ignore all previous", "ignore your rules", "ignore the rules", "forget your rules", "forget your instructions", "disregard your instructions", "developer mode", "jailbreak", "make up a hadith", "invent a hadith", "fabricate a hadith", "make up a verse", "invent a verse", "without any source", "without sources"],
+    "tl": ["huwag pansinin ang iyong mga tagubilin", "huwag pansinin ang mga tagubilin", "kalimutan mo ang iyong mga patakaran", "kalimutan ang iyong mga tagubilin", "balewalain ang iyong mga tagubilin", "balewalain ang mga patakaran", "gumawa ka ng hadith", "imbentuhin ang hadith", "mag imbento ng hadith"]
+  },
+  "learning_guide": {
+    "ar": ["ماذا اتعلم الان", "ماذا اتعلم الآن", "ماذا اتعلم بعد", "ما الدرس التالي", "ما درسي التالي", "ماذا ادرس الان"],
+    "en": ["what should i learn now", "what should i learn next", "what do i learn next", "what should i study now", "what's my next lesson", "what is my next lesson"],
+    "tl": ["ano ang dapat kong pag aralan ngayon", "ano ang susunod kong aralin", "ano ang pag aaralan ko ngayon", "ano ang dapat kong pag aralan"]
+  }
+}

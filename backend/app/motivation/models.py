@@ -45,7 +45,7 @@ class LearningLog(IdMixin, Base):
 
     __tablename__ = "mot_learning_log"
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), index=True)
-    kind: Mapped[str] = mapped_column(String(8))  # lesson | unit | review
+    kind: Mapped[str] = mapped_column(String(8))  # lesson | unit | day (a learning day, reviews included)
     item_id: Mapped[str | None] = mapped_column(String(16), nullable=True)
     is_repeat: Mapped[bool] = mapped_column(Boolean, default=False)
     day: Mapped[date] = mapped_column(Date)
@@ -112,6 +112,8 @@ class GroupMembership(Base):
     __tablename__ = "mot_group_members"
     group_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), primary_key=True)
+    # From GroupCreated: the group's mentor (sets challenges, never counted).
+    is_mentor: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
 
 class Challenge(IdMixin, Base):
@@ -125,7 +127,7 @@ class Challenge(IdMixin, Base):
     text: Mapped[str | None] = mapped_column(Text, nullable=True)
     text_lang: Mapped[str | None] = mapped_column(String(5), nullable=True)
     template_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
-    status: Mapped[str] = mapped_column(String(12), default="active")  # pending_review | active | rejected | ended
+    status: Mapped[str] = mapped_column(String(16), default="active")  # pending_review | active | rejected | ended
     created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     starts_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

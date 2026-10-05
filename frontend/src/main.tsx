@@ -7,6 +7,8 @@ import "./index.css"
 import AppLayout from "@/app/AppLayout"
 import { refreshSession } from "@/app/lib/api"
 import { registerServiceWorker } from "@/app/lib/pwa"
+import "@/app/practice/start-reminders"
+import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
@@ -47,7 +49,7 @@ const router = createBrowserRouter([
       { path: "me/account", element: <Account /> },
       { path: "practice/*", element: <Practice /> },
       { path: "discover/*", element: <Discover /> },
-      { path: "inbox/*", element: <RequireRole roles={["mentor"]}><Inbox /></RequireRole> },
+      { path: "inbox/*", element: <RequireRole roles={["mentor", "team"]}><Inbox /></RequireRole> }, // team: urgent requests (CMP-01 R6) + report queue (CMP-04 R3)
       { path: "review-desk/*", element: <RequireRole roles={["sharia_reviewer", "team"]}><ReviewDesk /></RequireRole> },
       { path: "team", element: <RequireRole roles={["team"]}><Team /></RequireRole> },
       { path: "admin", element: <RequireRole roles={["admin"]}><Admin /></RequireRole> },

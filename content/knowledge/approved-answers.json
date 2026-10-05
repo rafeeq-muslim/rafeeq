@@ -1,0 +1,4 @@
+{
+  "_about": "Plan 4.8: answers approved by the Sharia reviewer for the most frequent questions, served when both models are down. Each entry: id, lang, questions (phrasings), answer (may contain {{q:passage id}} markers), sources (passage ids), status, reviewer, approved_at. Only status \"approved\" is ever served. Empty until the team writes and the reviewer approves them.",
+  "answers": []
+}

@@ -6,13 +6,23 @@ import uuid
 from datetime import datetime
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Index, Integer, String, Text, UniqueConstraint, func
-from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
+from sqlalchemy import Boolean, Computed, DateTime, Float, ForeignKey, Index, Integer, String, Text, UniqueConstraint, func
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, TSVECTOR, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, IdMixin
 
 EMBED_DIM = 1024  # baai/bge-m3
+
+# KNW-01 hybrid retrieval: full-text vector per passage. English is stemmed;
+# Arabic loses diacritics and tatweel and folds alef/ya/ta marbuta, the same
+# way app.knowledge.ai.textcheck.normalize treats the question.
+TSV_SQL = (
+    "to_tsvector(CASE WHEN lang = 'en' THEN 'english'::regconfig ELSE 'simple'::regconfig END, "
+    "translate(regexp_replace(left(quote_text || ' ' || coalesce(context_text, ''), 20000), "
+    "'[\\u0610-\\u061A\\u064B-\\u065F\\u0670\\u06D6-\\u06ED\\u0640]', '', 'g'), "
+    "'أإآٱىةؤئ', 'اااايهوي'))"
+)
 
 
 class Source(Base):
@@ -34,6 +44,7 @@ class Passage(Base):
     __table_args__ = (
         Index("ix_knw_passages_lang_kind", "lang", "kind"),
         Index("ix_knw_passages_embedding", "embedding", postgresql_using="hnsw", postgresql_ops={"embedding": "vector_cosine_ops"}),
+        Index("ix_knw_passages_tsv", "tsv", postgresql_using="gin"),
     )
     id: Mapped[str] = mapped_column(String(96), primary_key=True)
     source_id: Mapped[str] = mapped_column(String(32), ForeignKey("knw_sources.id"), index=True)
@@ -49,6 +60,7 @@ class Passage(Base):
     fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     text_hash: Mapped[str] = mapped_column(String(80))
     embedding = mapped_column(Vector(EMBED_DIM), nullable=True)
+    tsv = mapped_column(TSVECTOR, Computed(TSV_SQL, persisted=True), nullable=True)
 
 
 class AiCall(IdMixin, Base):

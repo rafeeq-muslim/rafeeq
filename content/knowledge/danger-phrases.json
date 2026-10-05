@@ -1,0 +1,33 @@
+{
+  "_about": "KNW-01 R5, plan 4.2: phrases that route a message to a human before any model is called. Matched after normalisation (lower case, no Arabic diacritics, folded alef/ya/ta marbuta). Over-matching is the accepted error (plan 2.6). DRAFT written by Claude on 2026-10-05; to be reviewed by the Sharia reviewer (مهند بن صالح الفوزان) and the Companion & Community owner before launch.",
+  "status": "draft",
+  "reviewed_by": [],
+  "phrases": {
+    "ar": [
+      "طردني", "طردوني", "طردتني", "طردت من البيت", "طردت من المنزل", "طردني اهلي", "طردتني عائلتي",
+      "بلا ماوى", "ليس لي ماوى", "لا مكان انام فيه", "لا اجد مكانا انام", "اصبحت في الشارع",
+      "يضربني", "يضربونني", "ضربني", "ضربوني", "يؤذيني", "يؤذونني", "اذوني", "يعتدي علي", "اعتدى علي", "اعتداء جنسي",
+      "يهددني", "يهددونني", "هددني", "هددوني", "سيقتلني", "سيقتلونني", "يريدون قتلي", "يريد قتلي",
+      "اقتل نفسي", "انتحر", "انتحار", "اؤذي نفسي", "اريد ان اموت", "اتمنى الموت", "لا اريد ان اعيش",
+      "حبسوني", "حبسني", "يحبسونني", "يجبرونني على الزواج", "اجبروني على الزواج", "اخذوا جوازي", "اخذ جوازي",
+      "لست بامان", "انا في خطر", "حياتي في خطر"
+    ],
+    "en": [
+      "kicked me out", "kicked out of", "threw me out", "thrown out of", "throw me out", "homeless", "nowhere to sleep", "nowhere to go",
+      "beat me", "beats me", "beating me", "hit me", "hits me", "hurting me", "hurt me", "abusing me", "abused me", "abuse me", "sexual abuse",
+      "threatened to kill", "threaten to kill", "threatening me", "want to kill me", "wants to kill me", "going to kill me", "will kill me",
+      "kill myself", "end my life", "suicide", "suicidal", "hurt myself", "harm myself", "self harm", "cutting myself", "want to die", "don't want to live",
+      "locked me", "locking me", "forced to marry", "forcing me to marry", "took my passport", "not safe at home", "i am in danger", "i'm in danger", "my life is in danger"
+    ],
+    "tl": [
+      "pinalayas ako", "pinalayas nila ako", "pinapalayas ako", "pinaalis ako sa bahay", "itinaboy ako", "pinagtabuyan ako",
+      "wala akong matirhan", "wala akong matutuluyan", "walang matutuluyan", "sa kalye na ako",
+      "sinasaktan ako", "sinaktan ako", "binubugbog ako", "binugbog ako", "sinasaktan nila ako", "inaabuso ako", "inabuso ako",
+      "pinagbantaan", "binabantaan ako", "papatayin ako", "papatayin daw ako", "gusto akong patayin",
+      "magpapakamatay", "magpakamatay", "patayin ang sarili", "patayin ko ang sarili", "saktan ang sarili", "sasaktan ko ang sarili",
+      "gusto ko nang mamatay", "ayoko nang mabuhay",
+      "kinulong ako", "ikinulong ako", "pinipilit akong magpakasal", "pinilit akong magpakasal", "kinuha ang passport ko",
+      "hindi ako ligtas", "nasa panganib ako", "nasa panganib ang buhay ko"
+    ]
+  }
+}

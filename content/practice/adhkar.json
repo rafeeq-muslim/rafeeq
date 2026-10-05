@@ -1,0 +1,29 @@
+{
+  "feature": "PRC-07",
+  "source": {
+    "name": {"ar": "حصن المسلم، سعيد بن علي بن وهف القحطاني", "en": "Hisn al-Muslim (Fortress of the Muslim), Sa'id bin Ali bin Wahf al-Qahtani", "tl": "Hisn al-Muslim, Sa'id bin Ali bin Wahf al-Qahtani"},
+    "publisher": "hisnmuslim.com",
+    "url": "https://www.hisnmuslim.com"
+  },
+  "note": "Chapters chosen for v1 (proposal by Claude, PRC-07 open question for the Sharia reviewer). Every Quran span (﴿…﴾) in a listed dhikr must be mapped below, in order, to stored QuranEnc references; a dhikr with an unmapped span is never offered for review. en_meaning=false: the English TRANSLATED_TEXT is itself a Quran translation, so the QuranEnc translation is shown with the verse instead.",
+  "groups": [
+    {"key": "morning_evening", "chapters": [27]},
+    {"key": "after_prayer", "chapters": [25]},
+    {"key": "sleep", "chapters": [28]},
+    {"key": "waking", "chapters": [1]},
+    {"key": "daily", "chapters": [10, 11, 13, 14, 8, 9, 69, 70]}
+  ],
+  "verses": {
+    "75": {"refs": [[2, 255, 255]], "en_meaning": false},
+    "76": {"refs": [[112, 1, 4], [113, 1, 5], [114, 1, 6]], "en_meaning": false},
+    "70": {"refs": [[112, 1, 4], [113, 1, 5], [114, 1, 6]], "en_meaning": true},
+    "71": {"refs": [[2, 255, 255]], "en_meaning": true},
+    "99": {"refs": [[112, 1, 4], [113, 1, 5], [114, 1, 6]], "en_meaning": true},
+    "100": {"refs": [[2, 255, 255]], "en_meaning": false},
+    "101": {"refs": [[2, 285, 286]], "en_meaning": false},
+    "4": {"refs": [[3, 190, 200]], "en_meaning": false}
+  },
+  "excluded": {
+    "110": "Names whole surahs (As-Sajdah, Al-Mulk) to recite; points to Quran listening (KNW-08) later instead of a verse span"
+  }
+}

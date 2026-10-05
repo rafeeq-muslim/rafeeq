@@ -1,0 +1,90 @@
+/**
+ * KNW-08 listening: one audio element for the whole screen, so a meaning
+ * never plays over the recitation (R3), and no other sound is added (R1).
+ * The stop position lives on this device only (R6).
+ */
+
+/** The part of HTMLAudioElement we use (lets tests pass a fake). */
+export type AudioLike = {
+  src: string
+  currentTime: number
+  paused: boolean
+  play: () => Promise<void> | void
+  pause: () => void
+}
+
+export type Track = { kind: "recitation"; sura: number } | { kind: "meaning"; sura: number; aya: number }
+
+export class ListeningPlayer {
+  track: Track | null = null
+  private recitationTime = 0
+  private recSura = 0
+  private el: AudioLike
+  constructor(el: AudioLike) {
+    this.el = el
+  }
+
+  /** Recitation of a whole surah, resuming from `from` seconds. */
+  playRecitation(sura: number, url: string, from = 0) {
+    this.el.pause()
+    const resuming = this.track?.kind === "recitation" && this.track.sura === sura
+    if (!resuming) {
+      // Coming back from a meaning of the same surah resumes the recitation where it stopped.
+      const time = this.recSura === sura ? this.recitationTime : from
+      this.el.src = url
+      this.el.currentTime = time
+    }
+    this.track = { kind: "recitation", sura }
+    this.recSura = sura
+    void this.el.play()
+  }
+
+  /** R3: the recitation stops first, then the meaning plays alone. */
+  playMeaning(sura: number, aya: number, url: string) {
+    if (this.track?.kind === "recitation") this.recitationTime = this.el.currentTime
+    this.el.pause()
+    this.el.src = url
+    this.el.currentTime = 0
+    this.track = { kind: "meaning", sura, aya }
+    void this.el.play()
+  }
+
+  pause() {
+    if (this.track?.kind === "recitation") this.recitationTime = this.el.currentTime
+    this.el.pause()
+  }
+
+  /** Seconds into the surah's recitation (for R6). */
+  recitationPosition(): number {
+    return this.track?.kind === "recitation" ? this.el.currentTime : this.recitationTime
+  }
+}
+
+/** QuranEnc per-ayah meaning audio. Only where the audio matches the text shown (Tagalog Rowwad). */
+export function meaningAudioUrl(locale: string, sura: number, aya: number): string | null {
+  if (locale !== "tl") return null
+  const p = (n: number) => String(n).padStart(3, "0")
+  return `https://d.quranenc.com/data/audio/tagalog_rwwad/${p(sura)}${p(aya)}.mp3`
+}
+
+// --- R6: stop position on this device only --------------------------------------
+
+export type Position = { time: number; aya: number }
+const KEY = (sura: number) => `rafeeq.quranPos.${sura}`
+
+export function loadPosition(sura: number, storage: Pick<Storage, "getItem"> = localStorage): Position | null {
+  try {
+    const raw = storage.getItem(KEY(sura))
+    return raw ? (JSON.parse(raw) as Position) : null
+  } catch {
+    return null
+  }
+}
+
+export function savePosition(sura: number, pos: Position, storage: Pick<Storage, "setItem"> = localStorage) {
+  try {
+    storage.setItem(KEY(sura), JSON.stringify(pos))
+  } catch {
+    /* storage blocked: start from the beginning next time */
+  }
+}

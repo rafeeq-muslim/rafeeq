@@ -36,7 +36,10 @@ class Settings(BaseSettings):
     knw_search_k: int = 8
     knw_min_similarity: float = 0.0  # calibrated by KNW-04 (plan §5.5)
     knw_quote_max_words: int = 6
-    knw_scripture_overlap_words: int = 5
+    knw_scripture_overlap_words: int = 6  # plan 4.6 check 7: 5 → 6 after the 2026-10-05 bake-off (docs/engineering/ai-agents.md)
+    # Sources the answer path may retrieve from (islamqa waits for the owner's decision on its pending permission).
+    knw_answer_sources: str = "quranenc,hadeethenc,islamhouse_enc,binbaz"
+    knw_embed_job_limit: int = 2000  # passages embedded per scheduler run (0 disables the job)
 
     # Web Push (VAPID).
     vapid_public_key: str = ""

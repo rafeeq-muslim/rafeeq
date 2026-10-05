@@ -1,0 +1,145 @@
+"""CMP-05 small groups: one test per example (R6 is in test_mot06_challenges.py)."""
+
+from sqlalchemy import select
+
+from app.core.db import SessionLocal
+from app.core.events import OutboxEvent
+from tests.cmp_helpers import bodies, group_with, person, say
+
+
+async def events(name: str) -> list[dict]:
+    async with SessionLocal() as s:
+        return [e.payload for e in await s.scalars(select(OutboxEvent).where(OutboxEvent.name == name))]
+
+
+async def abu(client):
+    return await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en", "ar"))
+
+
+# R1 -----------------------------------------------------------------------
+
+
+async def test_cmp05_r1_mentor_creates_group_in_his_gender_and_language(client):
+    mentor = await abu(client)
+    g = await group_with(client, mentor)
+    assert (g["gender"], g["lang"], g["capacity"], g["role"]) == ("m", "en", 10, "mentor")
+    assert len(g["join_code"]) == 8
+    assert await events("GroupCreated") == [{"group_id": g["id"], "mentor_id": str(mentor.id)}]
+    # a language he does not speak is refused
+    r = await client.post("/api/groups", json={"name": "Kapatid", "lang": "tl"}, headers=mentor.h)
+    assert r.status_code == 422
+
+
+async def test_cmp05_r1_learner_cannot_create_group(client):
+    joseph = await person(client, "joseph-1", gender="m")
+    r = await client.post("/api/groups", json={"name": "My group", "lang": "en"}, headers=joseph.h)
+    assert r.status_code == 403
+
+
+# R2 -----------------------------------------------------------------------
+
+
+async def test_cmp05_r2_join_by_code_emits_group_joined(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m", languages=("tl", "en"))
+    g = await group_with(client, mentor, joseph)
+    assert await events("GroupJoined") == [{"group_id": g["id"], "user_id": str(joseph.id)}]
+    mine = (await client.get("/api/groups/mine", headers=joseph.h)).json()
+    assert [(x["id"], x["role"], x["join_code"]) for x in mine] == [(g["id"], "member", None)]
+
+
+async def test_cmp05_r2_other_gender_gets_not_suitable_without_details(client):
+    mentor = await abu(client)
+    g = await group_with(client, mentor)
+    maria = await person(client, "maria-1", gender="f", languages=("en",))
+    r = await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=maria.h)
+    assert r.status_code == 403 and r.json() == {"detail": "group_not_suitable"}
+
+
+async def test_cmp05_r2_full_group_rejects(client):
+    mentor = await abu(client)
+    a = await person(client, "member-a", gender="m")
+    b = await person(client, "member-b", gender="m")
+    g = await group_with(client, mentor, a, b, capacity=2)
+    joseph = await person(client, "joseph-1", gender="m")
+    r = await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=joseph.h)
+    assert r.status_code == 409 and r.json()["detail"] == "group_full"
+
+
+async def test_cmp05_r2_one_group_at_a_time(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    await group_with(client, mentor, joseph)
+    r = await client.post("/api/groups", json={"name": "Second group", "lang": "en"}, headers=mentor.h)
+    r = await client.post("/api/groups/join", json={"code": r.json()["join_code"]}, headers=joseph.h)
+    assert r.status_code == 409 and r.json()["detail"] == "already_in_group"
+
+
+# R3 -----------------------------------------------------------------------
+
+
+async def test_cmp05_r3_members_show_display_names_only(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    daniel = await person(client, "daniel-1", gender="m", display_name="نخلة الهادئ")
+    g = await group_with(client, mentor, joseph, daniel)
+    detail = (await client.get(f"/api/groups/{g['id']}", headers=joseph.h)).json()
+    assert [m["display_name"] for m in detail["members"]] == ["Joseph-1", "نخلة الهادئ"]
+    assert set(detail["members"][0]) == {"id", "display_name", "is_me"}
+    assert "daniel-1" not in str(detail) and detail["join_code"] is None
+
+
+# R4 -----------------------------------------------------------------------
+
+
+async def test_cmp05_r4_member_message_is_seen_with_display_name(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    daniel = await person(client, "daniel-1", gender="m")
+    g = await group_with(client, mentor, joseph, daniel)
+    await say(client, joseph, g["id"], "I finished the wudu lesson today")
+    for who in (daniel, mentor):
+        msgs = (await client.get(f"/api/groups/{g['id']}/messages", headers=who.h)).json()
+        assert [(m["author_name"], m["body"]) for m in msgs] == [("Joseph-1", "I finished the wudu lesson today")]
+
+
+async def test_cmp05_r4_non_member_cannot_read_messages(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    daniel = await person(client, "daniel-1", gender="m")
+    assert (await client.get(f"/api/groups/{g['id']}/messages", headers=daniel.h)).status_code == 404
+    assert (await client.post(f"/api/groups/{g['id']}/messages", json={"body": "hi"}, headers=daniel.h)).status_code == 404
+
+
+async def test_cmp05_r4_messenger_link_is_rejected(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    r = await client.post(f"/api/groups/{g['id']}/messages", json={"body": "join https://t.me/+abcdef"}, headers=joseph.h)
+    assert r.status_code == 422 and r.json()["detail"] == {"code": "contact_not_allowed", "kind": "link"}
+    assert await bodies(client, mentor, g["id"]) == []
+
+
+# R5 -----------------------------------------------------------------------
+
+
+async def test_cmp05_r5_leaving_is_silent_and_emits_group_left(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    daniel = await person(client, "daniel-1", gender="m")
+    g = await group_with(client, mentor, joseph, daniel)
+    await say(client, daniel, g["id"], "salam")
+    assert (await client.post(f"/api/groups/{g['id']}/leave", headers=joseph.h)).status_code == 204
+    assert (await client.get(f"/api/groups/{g['id']}/messages", headers=joseph.h)).status_code == 404
+    assert await bodies(client, daniel, g["id"]) == ["salam"]  # no "Joseph left" line
+    assert await events("GroupLeft") == [{"group_id": g["id"], "user_id": str(joseph.id)}]
+
+
+async def test_cmp05_r5_mentor_removes_member(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    assert (await client.delete(f"/api/groups/{g['id']}/members/{joseph.id}", headers=mentor.h)).status_code == 204
+    assert (await client.get("/api/groups/mine", headers=joseph.h)).json() == []
+    assert await events("GroupLeft") == [{"group_id": g["id"], "user_id": str(joseph.id)}]

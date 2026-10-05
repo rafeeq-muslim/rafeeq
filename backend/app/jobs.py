@@ -14,7 +14,7 @@ def _register() -> None:
     if _registered:
         return
     _registered = True
-    for module in ("app.motivation.jobs", "app.platform.push_jobs"):
+    for module in ("app.motivation.jobs", "app.platform.push_jobs", "app.knowledge.jobs"):
         try:
             mod = __import__(module, fromlist=["register"])
             mod.register(scheduler)

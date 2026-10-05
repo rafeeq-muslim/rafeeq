@@ -1,0 +1,23 @@
+{
+  "note": "Short Sharia lines shown in Practice (PRC-01 R5, PRC-04 R2). Arabic from the feature documents; English and Tagalog drafted by Claude and must be checked by a fluent speaker before the Sharia reviewer approves them. Nothing here is shown before approval in that language.",
+  "lines": [
+    {
+      "id": "qibla_direction",
+      "feature": "PRC-01 R5",
+      "text": {
+        "ar": "يكفيك أن تستقبل جهة القبلة، والانحراف اليسير لا يضر، وفي المسجد اتبع قبلة المسجد.",
+        "en": "Facing the general direction of the qibla is enough; a slight deviation does no harm. In a mosque, follow the mosque's qibla.",
+        "tl": "Sapat na ang humarap sa direksiyon ng qiblah; hindi nakapipinsala ang bahagyang paglihis. Sa masjid, sundin ang qiblah ng masjid."
+      }
+    },
+    {
+      "id": "ramadan_local",
+      "feature": "PRC-04 R2",
+      "text": {
+        "ar": "يبدأ الصوم مع إعلان بلدك أو مسجدك عن دخول الشهر.",
+        "en": "Fasting begins when your country or your mosque announces the start of the month.",
+        "tl": "Nagsisimula ang pag-aayuno kapag inihayag ng iyong bansa o ng iyong masjid ang pagpasok ng buwan."
+      }
+    }
+  ]
+}

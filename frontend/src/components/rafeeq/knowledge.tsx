@@ -42,18 +42,21 @@ import {
 function SourceStrip({
   children,
   href,
+  label = "المصدر",
   className,
 }: {
   /** e.g. «سورة المائدة، الآية 6» */
   children: React.ReactNode
   href?: string
+  /** Localised «المصدر» (Source / Sanggunian). */
+  label?: string
   className?: string
 }) {
   const body = (
     <>
       <IconBook2 className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
       <span className="min-w-0">
-        <span className="font-bold">المصدر: </span>
+        <span className="font-bold">{label}: </span>
         {children}
       </span>
     </>
@@ -64,7 +67,7 @@ function SourceStrip({
     className
   )
   return href ? (
-    <a data-slot="source-strip" href={href} className={classes}>
+    <a data-slot="source-strip" href={href} target="_blank" rel="noopener noreferrer" className={classes}>
       {body}
     </a>
   ) : (
@@ -120,10 +123,15 @@ function UserMessage({
 function AssistantMessage({
   children,
   sources,
+  sourceLinks,
+  sourceLabel,
   footer,
 }: {
   children: React.ReactNode
   sources: React.ReactNode[]
+  /** Origin URL for each source, same order as `sources`. */
+  sourceLinks?: (string | undefined)[]
+  sourceLabel?: string
   footer?: React.ReactNode
 }) {
   return (
@@ -134,7 +142,9 @@ function AssistantMessage({
             <div className="flex flex-col gap-2">{children}</div>
             <div className="flex flex-col gap-1.5">
               {sources.map((s, i) => (
-                <SourceStrip key={i}>{s}</SourceStrip>
+                <SourceStrip key={i} href={sourceLinks?.[i]} label={sourceLabel}>
+                  {s}
+                </SourceStrip>
               ))}
             </div>
           </BubbleContent>
@@ -180,13 +190,19 @@ function ReferralCard({
   )
 }
 
-/** «اسأل رفيق بلغتك…»: the question composer (text or voice). */
+/**
+ * «اسأل رفيق بلغتك…»: the question composer. Enter sends (Shift+Enter adds a
+ * line). The microphone shows only when `onVoice` is given (voice questions
+ * are out of scope for KNW-01 today).
+ */
 function AskComposer({
   placeholder = "اسأل رفيق بلغتك…",
   value,
   onChange,
   onSend,
   onVoice,
+  disabled,
+  labels,
   className,
 }: {
   placeholder?: string
@@ -194,27 +210,40 @@ function AskComposer({
   onChange?: (value: string) => void
   onSend?: () => void
   onVoice?: () => void
+  disabled?: boolean
+  /** Localised accessible names. */
+  labels?: { input?: string; voice?: string; send?: string }
   className?: string
 }) {
   return (
     <InputGroup data-slot="ask-composer" className={cn("rounded-panel shadow-card", className)}>
       <InputGroupTextarea
-        aria-label="سؤالك"
+        aria-label={labels?.input ?? "سؤالك"}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+            e.preventDefault()
+            if (!disabled) onSend?.()
+          }
+        }}
         rows={1}
-        className="min-h-12 px-4 py-3 text-body"
+        dir="auto"
+        className="max-h-40 min-h-12 px-4 py-3 text-body"
       />
       <InputGroupAddon align="inline-end" className="gap-1 pe-2">
-        <InputGroupButton size="icon-sm" aria-label="اسأل بصوتك" onClick={onVoice}>
-          <IconMicrophone stroke={1.75} />
-        </InputGroupButton>
+        {onVoice && (
+          <InputGroupButton size="icon-sm" aria-label={labels?.voice ?? "اسأل بصوتك"} onClick={onVoice}>
+            <IconMicrophone stroke={1.75} />
+          </InputGroupButton>
+        )}
         <InputGroupButton
           size="icon-sm"
           variant="default"
-          aria-label="أرسل"
+          aria-label={labels?.send ?? "أرسل"}
           onClick={onSend}
+          disabled={disabled}
           className="rounded-full"
         >
           <IconSend2 stroke={1.75} className="rtl:-scale-x-100" />

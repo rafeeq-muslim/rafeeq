@@ -1,0 +1,46 @@
+{
+  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. DRAFT by Claude, 2026-10-05; the team writes the final wording and the Sharia reviewer approves it.",
+  "status": "draft",
+  "replies": {
+    "danger": {
+      "ar": "لست وحدك. سلامتك أهم شيء الآن. إن كنت في خطر مباشر فاتصل بالطوارئ في بلدك، واضغط «أريد إنسانًا» ليتواصل معك أحد فريقنا بلغتك.",
+      "en": "You are not alone. Your safety matters most right now. If you are in immediate danger, call your local emergency number, and tap \"I want a person\" so someone from our team can reach you in your language.",
+      "tl": "Hindi ka nag-iisa. Ang kaligtasan mo ang pinakamahalaga ngayon. Kung nasa agarang panganib ka, tumawag sa emergency number sa inyong bansa, at pindutin ang \"Gusto ko ng tao\" para may makausap ka mula sa aming team sa iyong wika."
+    },
+    "manipulation": {
+      "ar": "لا أستطيع ذلك. أجيب فقط من المصادر المعتمدة، ولا أكتب نصًا شرعيًا من عندي. يسعدني أن أجيبك عن سؤالك بمصدره.",
+      "en": "I can't do that. I answer only from approved sources, and I never write religious text of my own. I'm happy to answer your question with its source.",
+      "tl": "Hindi ko iyan magagawa. Sumasagot lamang ako mula sa mga aprubadong sanggunian, at hindi ako sumusulat ng relihiyosong teksto mula sa sarili ko. Masaya akong sagutin ang tanong mo kasama ang sanggunian nito."
+    },
+    "out_of_scope": {
+      "ar": "أنا رفيق، أجيب عن أسئلتك في الإسلام وحياتك مسلمًا جديدًا، من مصادر معتمدة. جرّب أن تسألني عن الصلاة أو الوضوء أو معنى الشهادتين.",
+      "en": "I'm Rafeeq. I answer questions about Islam and your life as a new Muslim, from approved sources. Try asking me about prayer, wudu or the meaning of the shahadah.",
+      "tl": "Ako si Rafeeq. Sinasagot ko ang mga tanong tungkol sa Islam at sa buhay mo bilang bagong Muslim, mula sa mga aprubadong sanggunian. Subukang magtanong tungkol sa salah, wudu o kahulugan ng shahadah."
+    },
+    "no_source": {
+      "ar": "لم أجد جوابًا موثّقًا في مصادري المعتمدة. لا أريد أن أجيبك بلا مصدر، فاسأل إنسانًا من فريقنا.",
+      "en": "I couldn't find a sourced answer in my approved sources. I don't want to answer you without a source, so please ask a person from our team.",
+      "tl": "Wala akong nakitang sagot na may sanggunian sa aking mga aprubadong sanggunian. Ayokong sumagot nang walang sanggunian, kaya magtanong ka sa isang tao mula sa aming team."
+    },
+    "unavailable": {
+      "ar": "المساعد غير متاح الآن. لا أريد أن أجيبك بلا تحقق، فحاول بعد قليل، أو اسأل إنسانًا من فريقنا.",
+      "en": "The assistant isn't available right now. I don't want to answer you without checking, so try again shortly, or ask a person from our team.",
+      "tl": "Hindi available ang assistant ngayon. Ayokong sumagot nang hindi sinusuri, kaya subukan muli mamaya, o magtanong sa isang tao mula sa aming team."
+    },
+    "personal_note": {
+      "ar": "الحكم في حالتك بعينها يحتاج إلى مختص يعرف تفاصيلها؛ تحدث مع مرشدك.",
+      "en": "A ruling on your own situation needs a qualified person who knows its details; talk to your mentor.",
+      "tl": "Ang hatol sa iyong sariling sitwasyon ay nangangailangan ng taong may kaalaman na nakakaalam ng mga detalye nito; kausapin ang iyong mentor."
+    },
+    "disputed_note": {
+      "ar": "للعلماء في هذه المسألة أقوال.",
+      "en": "Scholars hold more than one view on this matter.",
+      "tl": "May higit sa isang pananaw ang mga iskolar sa usaping ito."
+    },
+    "learning_guide": {
+      "ar": "سأرى أين وصلت في تعلّمك.",
+      "en": "Let me look at where you are in your learning.",
+      "tl": "Titingnan ko kung nasaan ka na sa iyong pag-aaral."
+    }
+  }
+}

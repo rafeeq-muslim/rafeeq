@@ -1,0 +1,849 @@
+{
+ "note": "KNW-07 daily cards. Proposed by Claude, to be approved by the Sharia reviewer (مقترح من Claude، يعتمده المراجع الشرعي). Text copied unchanged from HadeethEnc.com (normalized corpus); do not edit by hand, rebuild with `python -m app.knowledge.daily --build`.",
+ "previous": null,
+ "cards": [
+  {
+   "id": "hadeethenc-66511",
+   "kind": "benefit",
+   "hadith_id": 66511,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/66511",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى",
+     "text": "عَنْ أَمِيرِ المُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الخَطَّابِ رضي الله عنه قَالَ: سَمِعْتُ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «إنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوْ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إلَى مَا هَاجَرَ إلَيْهِ».",
+     "benefits": [
+      "الحث على الإخلاص، فإن الله لا يقبل من العمل إلا ما ابتُغي به وجهه.",
+      "الأعمال التي يُتَقَرَّبُ بها إلى الله عز وجل إذا فعلها المكلف على سبيل العادة ليس له ثواب عليها، حتى يقصِدَ بها التقرب إلى الله.",
+      "النية يفرق بها بين العبادات بعضها عن بعض وأيضًا العبادات عن العادات."
+     ],
+     "explanation": "يُبَيِّنُ النبيُّ صلى الله عليه وسلم أنَّ كل الأعمال معتبرة بالنية، وهذا الحكم عام في جميع الأعمال من العبادات والمعاملات، فمن قصد بعمله منفعةً لم يَنَلْ إلا تلك المنفعة ولا ثواب له، ومن قصد بعمله التقرب إلى الله تعالى نال من عمله المثوبة والأجر ولو كان عملًا عاديًّا، كالأكل والشرب.\n\nثم ضرب صلى الله عليه وسلم مثلًا لبيان تأثير النية في الأعمال مع تساويهما في الصورة الظاهرة، فبَيَّن أنَّ من قصد بهجرته وترك وطنه ابتغاء مرضات ربه، فهجرته هجرة شرعية مقبولة يثاب عليها لصدق نيته، ومن قصد بهجرته منفعةً دنيوية، من مال، أو جاه، أو تجارة، أو زوجة، فلا ينال من هجرته إلا تلك المنفعة التي نواها، ولا نصيب له من الأجر والثواب.",
+     "grade": "صحيح",
+     "attribution": "رواه إماما المحدثين أبو عبد الله محمد بن إسماعيل بن إبراهيم بن المغيرة بن بردزبه البخاري،  وأبو الحسين مسلم بن الحجاج بن مسلم القشيري النيسابوري في صحيحيهما اللذين هما أصح الكتب المصنفة",
+     "url": "https://hadeethenc.com/ar/browse/hadith/66511",
+     "passage_id": "hadeethenc:ar:66511"
+    },
+    "en": {
+     "title": "Verily, the reward of deeds depends on intentions, and each person will be rewarded according to what he intended",
+     "text": "The Commander of the Believers, Abu Hafs ‘Umar ibn al-Khattāb (may Allah be pleased with him) reported: I heard the Messenger of Allah (ﷺ) say: \"Verily, the reward of deeds depends on intentions, and each person will be rewarded according to what he intended. So, he whose emigration is for the sake of Allah and His Messenger, his emigration will be for the sake of Allah and His Messenger, and he whose emigration is to achieve some worldly gain or take some woman in marriage, his migration will be for what he has migrated for.\"",
+     "benefits": [
+      "The Hadīth urges us to be sincere, for Allah only accepts the deeds that are intended for His sake.",
+      "If a legally accountable person performs the deeds that are to be done to gain Allah's pleasure by way of habit, he will only be rewarded for them if he intends to draw close to Allah Almighty by doing them.",
+      "The intention serves to distinguish between acts of worship themselves and also separates acts of worship from habits."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) explains that all deeds are considered according to the intention behind them. This ruling generally applies to all deeds, including acts of worship and dealings. So, he who seeks by his deed some worldly benefit will attain that benefit and will not be rewarded for it. And he who performs a deed with the intention to draw close to Allah Almighty will be rewarded, even if his deed is an ordinary one, like eating and drinking.\n\nThen, the Prophet (may Allah's peace and blessings be upon him) provided an example to illustrate the impact of intention while both deeds apparently look equal. He pointed out that if a person migrates and leaves his homeland with the intention to win the pleasure of his Lord, his migration is a Shar‘i and accepted one, for which he will be rewarded, given his sincere intention; and if a person migrates to attain some worldly benefit, like wealth, high standing, business, or a wife, he will not attain anything from his migration except what benefit he intended, and no reward will be given to him.",
+     "grade": "Authentic",
+     "attribution": "It was narrated by the two Imāms of the scholars of Hadīth - Abu ‘Abdullāh Muhammad ibn Ismā‘īl ibn Ibrāhīm ibn al-Mughīrah ibn Bardizbah al-Bukhāri and Abu al-Husayn Muslim ibn al-Hajjāj ibn Muslim a",
+     "url": "https://hadeethenc.com/en/browse/hadith/66511",
+     "passage_id": "hadeethenc:en:66511"
+    },
+    "tl": {
+     "title": "Ang mga gawain ay ayon sa mga layunin lamang. Ukol sa bawat tao ang nilayon niya lamang",
+     "text": "Ayon sa Pinuno ng mga Mananampalataya na si Abū Ḥafṣ `Umar bin Al-Khaṭṭāb (malugod si Allāh sa kanya) na nagsabi: {Nakarinig ako sa Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan) na nagsasabi: \"Ang mga gawain ay ayon sa mga layunin lamang. Ukol sa bawat tao ang nilayon niya lamang. Kaya ang sinumang ang paglikas niya ay tungo kay Allāh at sa Sugo Niya, ang paglikas niya ay tungo kay Allāh at sa Sugo Niya. Ang sinumang ang paglikas niya ay para sa kamunduhan na tatamuhin niya o sa isang babaing pakakasalan niya, ang paglikas niya ay tungo sa inilikas niya.\"}",
+     "benefits": [
+      "Ang paghimok sa pagpapakawagas sapagkat tunay na si Allāh ay hindi tumatanggap mula sa gawain kundi ng gawaing hinangad dahil dito ang kaluguran ng mukha Niya.",
+      "Ang mga gawain na nagpapakalapit-loob sa pamamagitan ng mga ito kay Allāh (kamahal-mahalan Siya at kapita-pitagan), kapag gumawa ng mga ito ang naatangan bilang kaugalian, ay walang ukol sa kanya na gantimpala dahil sa mga ito hanggang sa magpakay siya sa mga ito ng pagpapakalapit-loob kay Allāh.",
+      "Ang layunin ay nagbubukod sa mga pagsamba sa isa't isa sa mga ito at gayundin [nagbubukod] sa mga pagsamba sa mga kinahiratian."
+     ],
+     "explanation": "Naglilinaw ang  Propeta (basbasan siya ni Allāh at pangalagaan) na ang lahat ng mga gawain ay isinasaalang-alang ayon sa layunin. Ang kahatulang ito ay panlahat sa lahat ng mga gawain kabilang sa mga pagsamba at mga pakikitungo. Kaya ang sinumang nagpakay sa gawain niya ng isang kapakinabangan, wala siyang tatamuhin kundi ang kapakinabangang iyon at walang gantimpala para sa kanya; at ang sinumang nagpakay sa gawain niya ng pagpapakalapit-loob kay Allāh, tatamuhin niya mula sa gawain niya ang gantimpala at ang pabuya kahit pa ito ay isang karaniwang gawain gaya ng pagkain at pag-inom.\n\nPagkatapos naglahad ang Propeta (basbasan siya ni Allāh at pangalagaan) ng isang paghahalintulad para sa paglilinaw sa pag-epekto ng layunin sa mga gawain sa kabila ng pagkakapantayan ng dalawang ito sa panlabas na anyo. Naglinaw siya na ang sinumang nagpakay sa paglikas niya at pag-iwan ng bayan niya ng paghahangad ng mga kaluguran ng Panginoon niya, ang paglikas niya ay isang paglikas na legal na tinatanggap, na ginagantimpalaan dahil sa katapatan ng layunin niya; samantalang ang sinumang nagpakay sa paglikas niya ng isang kapakinabangang pangmundo gaya ng yaman o reputasyon o kalakal o asawa, wala siyang tatamuhin mula sa paglikas niya kundi ang kapakinabangang iyon na nilayon niya at walang bahagi para sa kanya sa pabuya at gantimpala [sa Kabilang-buhay].",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito ang dalawang Imām ng mga Muḥaddith, sina Abū `Abdillāh Muḥammad bin Ismā`īl bin Ibrāhīm bin Al-Mughīrah bin Bardizbah Al-Bukhārīy at Abu Al-Ḥusayn Muslim bin Al-Ḥajjāj b",
+     "url": "https://hadeethenc.com/tl/browse/hadith/66511",
+     "passage_id": "hadeethenc:tl:66511"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5866",
+   "kind": "benefit",
+   "hadith_id": 5866,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5866",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "يسروا ولا تعسروا، وبشروا ولا تنفروا",
+     "text": "عن أنس بن مالك رضي الله عنه عن النبي صلى الله عليه وسلم قال: «يَسِّرُوا وَلَا تُعَسِّرُوا، وَبَشِّرُوا وَلَا تُنَفِّرُوا».",
+     "benefits": [
+      "واجب المؤمن أن يحبب الناس بالله ويُرغِّبهم في الخير.",
+      "ينبغي على الداعي إلى الله أن ينظر بحكمة إلى كيفية تبليغ دعوة الإسلام إلى الناس.",
+      "التبشير يُولِّدُ السرورَ والإقبالَ والاطمئنانَ للداعي ولِمَا يَعرِضه على الناس.",
+      "التعسير يولِّدُ النفورَ والإدبارَ والتشكيكَ في كلام الداعي.",
+      "سعة رحمة الله بعباده وأنه رضي لهم دينًا سمحًا وشريعة ميسرة.",
+      "التيسير المأمور به هو ما جاءت به الشريعة."
+     ],
+     "explanation": "يَأمُرُ النبيُّ صلى الله عليه وسلم بالتخفيف والتيسير على الناس وعدم التَّعْسِيْر عليهم في جميع أمور الدين والدنيا، وذلك في حدود ما أباح الله وشرع.\n\nويَحُثُّ على تَبْشِيرِهم بالخير، وعدم تَنْفِيرِهم منه.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5866",
+     "passage_id": "hadeethenc:ar:5866"
+    },
+    "en": {
+     "title": "Make matters easy and do not make them difficult, and give people glad tidings and do not drive them away",
+     "text": "Anas ibn Mālik (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) said: \"Make matters easy and do not make them difficult, and give people glad tidings and do not drive them away.\"",
+     "benefits": [
+      "A believer is required to lead people to love Allah and encourage them to do good.",
+      "A caller to Allah should wisely consider how to convey the call of Islam to the people.",
+      "Glad tidings inspire pleasure, acceptance, and reassurance about the caller and his message.",
+      "Making things difficult for people prompts aversion and makes them turn away from the caller and become doubtful about his speech.",
+      "Allah shows vast mercy towards His servants, as He approved for them an easy religion and easy Shariah.",
+      "The required facilitation is that which was prescribed by the Shariah."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) orders us to make things light and easy for people and not put them into difficulty in any religious or worldly matter - within the limits of what Allah made lawful and legislated.\n\nHe (may Allah's peace and blessings be upon him) also urges us to give people glad tidings and not drive them away.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/5866",
+     "passage_id": "hadeethenc:en:5866"
+    },
+    "tl": {
+     "title": "Magpadali kayo at huwag kayong magpahirap, at magpagalak kayo at huwag kayong magpalayo ng loob.\"}",
+     "text": "Ayon kay Anas bin Mālik (malugod si Allāh sa kanya): {Ayon sa Propeta (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"Magpadali kayo at huwag kayong magpahirap, at magpagalak kayo at huwag kayong magpalayo ng loob.\"}",
+     "benefits": [
+      "Ang kinakailangan sa mananampalataya ay na magpaibig siya sa mga tao kay Allāh at magpagusto siya sa kanila sa kabutihan.",
+      "Nararapat sa tagapag-anyaya tungo kay Allāh na tumingin nang may karunungan sa pamamaraan ng pagpapaabot ng paanyaya ng Islām sa mga tao.",
+      "Ang pagpapagalak ay nagbubunga ng tuwa, pag-aasikaso, at kapanatagan para sa tagapag-anyaya at para sa inaalok niya sa mga tao.",
+      "Ang pagpapahirap ay nagbubunga ng kalayuan ng loob, pagtalikod, at pagpapaduda sa pananalita ng tagapag-anyaya.",
+      "Ang lawak ng awa ni Allāh sa mga lingkod Niya at na Siya ay nalugod para sa kanila ng isang relihiyong maluwag at isang batas na pinadali.",
+      "Ang pagpapadaling ipinag-uutos ay ang isinaad ng Batas ng Islām."
+     ],
+     "explanation": "Nag-uutos ang Propeta (basbasan siya ni Allāh at pangalagaan) ng pagpapagaan at pagpapadali sa mga tao at hindi pagpapahirap sa kanila sa lahat ng mga nauukol sa Relihiyon at Mundo. Iyon ay sa mga hangganan ng ipinahintulot at isinabatas ni Allāh.\n\nHumihimok siya ng pagpapagalak sa kanila sa pamamagitan ng kabutihan at hindi pagpapalayo ng loob nila rito.",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5866",
+     "passage_id": "hadeethenc:tl:5866"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5795",
+   "kind": "benefit",
+   "hadith_id": 5795,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5795",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "إن الدين يسر، ولن يشاد الدين أحد إلا غلبه، فسددوا وقاربوا",
+     "text": "عَنْ أَبِي هُرَيْرَةَ رضي الله عنه عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «إِنَّ الدِّينَ يُسْرٌ، وَلَنْ يُشَادَّ الدِّينَ أَحَدٌ إِلَّا غَلَبَهُ، فَسَدِّدُوا وَقَارِبُوا، وَأَبْشِرُوا، وَاسْتَعِينُوا بِالْغَدْوَةِ وَالرَّوْحَةِ وَشَيْءٍ مِنَ الدُّلْجَةِ».",
+     "benefits": [
+      "يُسر وسماحة الشريعة الإسلامية وتوسُّطها بين الإفراط والتفريط.",
+      "على العبد أن يأتي بالأمر بقدر استطاعته، من دون تساهل أو تشديد.",
+      "على العبد أن يختار أوقات النشاط في العبادة، وهذه الأوقات الثلاثة بخصوصها هي أروح ما يكون فيها البدن للعبادة.",
+      "قال ابن حجر العسقلاني: كأنه صلى الله عليه وسلم خاطب مسافرًا إلى مقصدٍ، وهذه الأوقات الثلاثة أطيب أوقات المسافر، فنبهه على أوقات نشاطه؛ لأن المسافر إذا سافر الليل والنهار جميعًا عجز وانقطع، وإذا تحرَّى السير في هذه الأوقات المنشطة أمكنته المداومة من غير مشقة.",
+      "قال ابن حجر: الإشارة في هذا الحديث إلى الأخذ بالرخصة الشرعية، فإنّ الأخذ بالعزيمة في موضع الرخصة تَنَطُّعٌ، كمن يترك التيمم عند العجز عن استعمال الماء فيفضي به استعماله إلى حصول الضرر.",
+      "قال ابن المنير: في هذا الحديث عَلَمٌ من أعلام النبوة، فقد رأينا ورأى الناس قبلنا أن كل متنطع في الدين ينقطع، وليس المراد مَنْعِ طلب الأكمل في العبادة فإنه من الأمور المحمودة، بل منع الإفراط المؤدّي إلى الملال، أو المبالغة في التطوع المفضي إلى ترك الأفضل، أو إخراج الفرض عن وقته كمَن بات يصلي الليل كلَّه فنام عن صلاة الصبح في الجماعة، أو إلى أن طلعت الشمس فخرج وقت الفريضة."
+     ],
+     "explanation": "بَيَّنَ النبيُّ صلى الله عليه وسلم أنَّ دينَ الإسلامِ مبنيٌّ على التيسير والسهولة في كل شؤونه، ويتأكد التيسير عند وجود سبب العجز والحاجة، ولأنَّ التعمُّقَ في الأعمال الدينية وترك الرفق عاقبتُه العجز والانقطاع عن العمل كله أو بعضه،\n\nثم حث صلى الله عليه وسلم على التوسط من غير مبالغة؛ فلا يُقصِّر العبد فيما أُمر به، ولا يتحمل ما لا يطيقه، فإن عجز عن العمل بالأكمل؛ فالعمل على ما يَقْرُبُ منه.\n\nوبشَّر صلى الله عليه وسلم بالثواب الجزيل على العمل الدائم وإن قلَّ لمَن عجز عن العمل بالأكمل؛ لأن العجز إذا لم يكن من صنيعه فلا يستلزم نقص أجره.\n\nوحيث أن الدنيا في الحقيقة دار سفر ونُقْلة إلى الآخرة أمر صلى الله عليه وسلم بالاستعانة على مداومة العبادة بإيقاعها في الأوقات الثلاثية المنشطة:\n\nالأول: الغَدوة: بسير أول النهار؛ ما بين صلاة الفجر وطلوع الشمس.\n\nالثاني: الرَّوحة: بالسير بعد الزوال.\n\nالثالث: الدُّلْجة: بسير الليل كله أو بعضه، ولأن عمل الليل أشق من عمل النهار أمر ببعضه بقوله: وشيءٍ من الدلجة.",
+     "grade": "صحيح",
+     "attribution": "رواه البخاري",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5795",
+     "passage_id": "hadeethenc:ar:5795"
+    },
+    "en": {
+     "title": "Indeed, the religion is easy. No one overburdens himself in the religion except that he will be overwhelmed by it. So, seek uprightness (be moderate) and try to be close to it",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) said: \"Indeed, the religion is easy. No one overburdens himself in the religion except that he will be overwhelmed by it. So, seek uprightness (be moderate) and try to be close to it and receive the glad tidings. Seek help by worship in the Ghadwah (early morning), Rawhah (afternoon), and part of the Duljah (night).\"",
+     "benefits": [
+      "The Hadīth shows the ease and tolerance of Islamic Shariah and its middle position between excess and neglect.",
+      "A person should fulfill a command to the best of his ability, neither taking it lightly nor overburdening himself with it.",
+      "A person should choose the times of activeness for the performance of worship. In these three times in particular, one's body becomes most energetic for worship.",
+      "Ibn Hajar al-‘Asqalāni said: It is as if the Prophet (may Allah's peace and blessings be upon him) was addressing a traveler to a destination, and these three times are the best times for the traveler. So, he alerted him to the times in which he is active. If a traveler travels during both the night and day, he will become weak and cut off. But if he is keen to travel during these energetic times, he will be able to continue without difficulty.",
+      "Ibn Hajar said: There is a reference in the Hadīth to taking the Shar‘i dispensation, for choosing a determined course of action where a Shar‘i dispensation is available is regarded as immoderation. For example, a person refuses to perform Tayammum (dry ablution) when he is unable to use water, and his use of it leads to a harmful effect.",
+      "Ibn al-Munīr said: In this Hadīth is one of the signs that prove the Prophet's prophethood, for we have seen and the people before us have seen that every extremist in the religion will be cut off. The purpose is not to prevent the pursuit of the most perfect form of worship, which is commendable. Rather, it is to prevent excess that leads to boredom, or exaggeration in voluntary acts that lead to abandoning what is better or performing an obligatory act beyond its time, such as someone who spends the whole night praying and then sleeps and does not offer the Fajr prayer in congregation, or until the sun rises and the time for the obligatory prayer has passed."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) pointed out that the religion of Islam is built on facilitation and ease in all its affairs, and facilitation becomes more emphatic when there is an inability and need for it. Also, delving deeply into religious activities and abandoning moderateness finally leads to the inability and cessation of deeds, wholly or partially. Then, the Prophet (may Allah's peace and blessings be upon him) urged moderation and refraining from excessive. So, a person should neither neglect his duties nor be burdened with things beyond his capacity. If he is unable to do a certain deed altogether, he should perform what is close to it.\n\nThe Prophet (may Allah's peace and blessings be upon him) gave good tidings of a great reward for ongoing deeds, even if they are little, for those who are unable to perform the deeds completely. This is because if the inability is not due to their own fault, it does not entail a reduction in their reward.\n\nSince this world is in reality a place of travel and transfer to the Hereafter, the Prophet (may Allah's peace and blessings be upon him) commanded us to seek help, for the regular performance of worship, in the three times of activeness:\n\nFirst: Ghadwah: walking in the early morning - between the Fajr prayer and sunrise.\n\nSecond: Rawhah: walking in the afternoon.\n\nThird: Duljah: walking in the whole night or part of it. Since work at night is harder than the daytime, he enjoined part of it, saying: and part of the Duljah.",
+     "grade": "Authentic",
+     "attribution": "Narrated by Al-Bukhāri",
+     "url": "https://hadeethenc.com/en/browse/hadith/5795",
+     "passage_id": "hadeethenc:en:5795"
+    },
+    "tl": {
+     "title": "Ang Relihiyong Islām ay magaan. Hindi makikipagmatigasan sa Relihiyong Islām ang isa malibang mananaig ito sa kanya. Kaya magtama kayo, makipaglapit kayo,",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya): {Ayon sa Propeta (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"Ang Relihiyong Islām ay magaan. Hindi makikipagmatigasan sa Relihiyong Islām ang isa malibang mananaig ito sa kanya. Kaya magtama kayo, makipaglapit kayo, magalak kayo, at magpatulong kayo [kay Allāh] sa umaga, hapon, at isang bahagi ng gabi.\"}",
+     "benefits": [
+      "Ang kadalian at ang kaluwagan ng Batas ng Islām at ang pagpapakakatamtaman nito sa pagitan ng pagpapalabis at pagpapakulang.",
+      "Kailangan sa tao na magsagawa sa utos sa abot ng kakayahan niya, nang walang pagwawalang-bahala o pagpapatindi.",
+      "Kailangan sa tao na mamili ng mga oras ng kasiglahan sa pagsamba. Ang tatlong oras na ito, sa pagsasaalang-alang sa mga ito, ay ang pinakamaginhawang sandali ng katawan para sa pagsasamba.",
+      "Nagsabi si Ibnu Ḥajar Al-`Asqalānīy: Para bang siya (basbasan siya ni Allāh at pangalagaan) ay kumausap sa isang manlalakbay patungo sa isang pinapakay. Ang tatlong oras na ito ay ang pinakakaaya-aya sa mga oras ng manlalakbay kaya tumawag-pansin siya rito sa mga oras ng kasiglahan nito. Ito ay dahil ang manlalakbay, kapag naglakbay sa gabi at maghapon nang magkasama, ay nanghihina at nawawalay. Kapag hinangad niya ang maglakbay sa mga oras na nagpapasigla, magbibigay-kakayahan sa kanya ang pagpapamalagi nang walang hirap.",
+      "Nagsabi pa si Ibnu Ḥajar: Ang pahiwatig sa ḥadīth na ito ay ang paggamit ng permisong legal sapagkat tunay na ang paggamit ng pagmamatigas sa halip ng permiso ay pagpapakaselan, gaya ng sinumang nagwawaksi ng tayammum sa sandali ng kawalang-kakayahan sa paggamit ng tubig kaya nagpapahantong sa kanya ang paggamit ng tubig sa pagtamo ng pinsala.",
+      "Nagsabi si Ibnu Al-Munīr: Sa ḥadīth na ito ay may isang tanda kabilang sa mga tanda ng pagkapropeta sapagkat nakakita nga tayo at nakakita nga ang mga tao bago natin na ang bawat nagpapakaselan sa Relihiyon ay nalalagot. Ang tinutukoy ay hindi ang pagpigil sa paghahangad ng pinakakumpleto sa pagsamba sapagkat ito ay kabilang sa mga bagay na pinapupurihan; bagkus ang pagpigil sa pagpapalabis na nauuwi sa pagkasawa o ang pagpapasobra sa pagkukusang-loob na humahantong sa pagwaksi ng pinakamainam o ang pagpapalabas sa tungkulin lampas sa oras nito gaya ng sinumang magdamag na nagdarasal sa gabi sa kabuuan nito kaya nakatulog sa oras ng ṣalāh sa madaling-araw sa konggregasyon o hanggang sa sumikat ang araw kaya nakalampas ang oras ng tungkulin."
+     ],
+     "explanation": "Naglinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na ang Relihiyong Islām ay nakabatay sa pagpapagaan at kadalian sa lahat ng mga pumapatungkol dito. Nabibigyang-diin ang pagpapagaan sa sandali ng pag-iral ng kadahilanan ng kawalang-kakayahan at pangangailangan at dahil ang pagpapakalalim sa mga gawaing panrelihiyon at pagwaksi ng kalumayan ay magreresulta ng kawalang-kakayahan at pagkatigil sa paggawa sa kabuuan nito o isang bahagi nito. Pagkatapos humimok ang Propeta (basbasan siya ni Allāh at pangalagaan) sa pagpapakakatamtaman nang walang pagpapalabis-labis kaya naman hindi magkukulang ang tao sa ipinag-utos sa kanya at hindi siya magbabata ng hindi niya nakakayanan. Kung nawalang-kakayahan siya sa paggawa ayon sa pinakakumpleto, ang gagawan ay ayon sa nalalapit doon.\n\nNagbalita ang Propeta (basbasan siya ni Allāh at pangalagaan) ng nakagagalak hinggil sa masaganang gantimpala sa gawaing palagian, kahit pa kaunti, ng sinumang nawalang-kakayahan sa paggawa ayon sa pinakakumpleto dahil ang kawalang-kakayahan, kapag naging hindi mula sa kagagawan niya, ay hindi nag-oobliga ng pagkabawas sa pabuya sa kanya.\n\nYayamang ang Mundo sa reyalidad ay isang tahanan ng paglalakbay at isang paglipat tungo sa Kabilang-buhay, nag-utos ang Propeta (basbasan siya ni Allāh at pangalagaan) ng pagpapatulong sa pagpapamalagi ng pagsamba sa pamamagitan ng pagganap sa mga ito sa tatluhang nagpapasiglang oras:\n\nA. Ang Umaga: sa pamamagitan ng pagkilos sa unang bahagi ng maghapon, ang nasa pagitan ng ṣalāh sa madaling-araw hanggang sa pagsikat ng araw.\n\nB. Ang Hapon: sa pamamagitan ng pagkilos matapos ng katanghaliang-tapat.\n\nC. Ang Gabi: sa pamamagitan ng pagkilos sa gabi sa kabuuan nito o isang bahagi nito; at dahil ang paggawa sa gabi ay higit na mahirap kaysa sa paggawa sa maghapon, nag-utos siya ng isang bahagi nito sa pamamagitan ng pagsabi niya: \"at isang bahagi ng gabi.\"",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si  Imām Al-Bukhārīy",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5795",
+     "passage_id": "hadeethenc:tl:5795"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5348",
+   "kind": "benefit",
+   "hadith_id": 5348,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5348",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "لا تحقرن من المعروف شيئا، ولو أن تلقى أخاك بوجه طلق",
+     "text": "عن أبي ذر رضي الله عنه قال: قال لي النبي صلى الله عليه وسلم: «لَا تَحْقِرَنَّ مِنَ الْمَعْرُوفِ شَيْئًا، وَلَوْ أَنْ تَلْقَى أَخَاكَ بِوَجْهٍ طَلْقٍ».",
+     "benefits": [
+      "فضل التَّحابِّ بين المؤمنين، والابتسامة والبِشْر عند اللقاء.",
+      "كمال هذه الشريعة وشمولها، وأنها جاءت بكل ما فيه صلاح المسلمين وتوحيد كلمتهم.",
+      "الحث على فعل المعروف وإن قَلَّ.",
+      "استحباب إدخال السرور على  المسلمين؛ لما في ذلك من تحقيق الأُلْفَة بينهم."
+     ],
+     "explanation": "حَثَّ النبيُّ صلى الله عليه وسلم على فعل المعروف، وأن لا يحتقره ولو كان قليلًا، ومن ذلك طلاقة الوجه بالابتسامة عند اللقاء، فينبغي للمسلم أن يحرص عليه؛ لما فيه من إِيْنَاس الأخ المسلم وإدخال السرور عليه.",
+     "grade": "صحيح",
+     "attribution": "رواه مسلم",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5348",
+     "passage_id": "hadeethenc:ar:5348"
+    },
+    "en": {
+     "title": "Do not belittle any good deed, even if it be meeting your brother with a cheerful face",
+     "text": "Abu Dharr (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) said to me: \"Do not belittle any good deed, even if it be meeting your brother with a cheerful face.\"",
+     "benefits": [
+      "The Hadīth highlights the merit of mutual love among the believers and that they meet one another with cheerful and smiling faces.",
+      "It points to the perfection and comprehensiveness of this Shariah and that its teachings unite Muslims and set their affairs aright.",
+      "It urges us to do good deeds, even if little.",
+      "It is recommended to bring joy to Muslims, as it creates friendliness among them."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) urges us to do good and not belittle any act of goodness, even if it is simple. An example is meeting one another with a cheerful face. A Muslim should be keen on doing this, for it brings a sense of friendliness and joy to his Muslim brother.",
+     "grade": "Authentic",
+     "attribution": "Narrated by Muslim",
+     "url": "https://hadeethenc.com/en/browse/hadith/5348",
+     "passage_id": "hadeethenc:en:5348"
+    },
+    "tl": {
+     "title": "Huwag ka ngang magmamaliit mula sa nakabubuti ng anuman, kahit man lamang na sumalubong ka sa kapatid mo nang may maaliwalas na mukha.\"}",
+     "text": "Ayon kay Abū Dharr (malugod si Allāh sa kanya) na nagsabi: {Nagsabi sa akin ang Propeta (basbasan siya ni Allāh at pangalagaan): \"Huwag ka ngang magmamaliit mula sa nakabubuti ng anuman, kahit man lamang na sumalubong ka sa kapatid mo nang may maaliwalas na mukha.\"}",
+     "benefits": [
+      "Ang kainaman ng pag-iibigan sa pagitan ng mga mananampalataya, pagngiti, at pagkagalak sa sandali ng pagkikita.",
+      "Ang kalubusan ng Batas ng Islām at ang Kasaklawan nito, na ito ay naghatid ng bawat anumang may kaayusan ng mga Muslim at pagbubuklod ng saloobin nila.",
+      "Ang paghimok sa paggawa ng nakabubuti kahit pa man kaunti.",
+      "Ang pagsasakaibig-ibig ng pagpapasok ng tuwa sa mga Muslim dahil sa dulot niyon na pagsasakatotohanan ng pagkapalagayang-loob sa pagitan nila."
+     ],
+     "explanation": "Humimok ang Propeta (basbasan siya ni Allāh at pangalagaan) ng paggawa ng nakabubuti at na hindi magmaliit nito kahit pa man ito ay kaunti. Kabilang doon ang kaaliwalasan ng mukha sa pamamagitan ng pagngiti sa sandali ng pagkikita. Kaya naman nararapat sa Muslim na magsigasig dito dahil sa dulot nito na pagpapasaya sa kapatid na Muslim at pagpapasok ng galak sa kanya.",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si Imām Muslim",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5348",
+     "passage_id": "hadeethenc:tl:5348"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-4568",
+   "kind": "benefit",
+   "hadith_id": 4568,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/4568",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "كل سلامى من الناس عليه صدقة",
+     "text": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «كُلُّ سُلاَمَى مِنَ النَّاسِ عَلَيْهِ صَدَقَةٌ، كُلَّ يَوْمٍ تَطْلُعُ فِيهِ الشَّمْسُ يَعْدِلُ بَيْنَ الِاثْنَيْنِ صَدَقَةٌ، وَيُعِينُ الرَّجُلَ عَلَى دَابَّتِهِ فَيَحْمِلُ عَلَيْهَا أَوْ يَرْفَعُ عَلَيْهَا مَتَاعَهُ صَدَقَةٌ، وَالكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ، وَكُلُّ خُطْوَةٍ يَخْطُوهَا إِلَى الصَّلاَةِ صَدَقَةٌ، وَيُمِيطُ الأَذَى عَنِ الطَّرِيقِ صَدَقَةٌ».",
+     "benefits": [
+      "تركيب عظام الآدمي وسلامتها من أعظم نعم الله تعالى عليه، فيحتاج كل عظم منها إلى تصدق عنه بخصوصه ليتم شكر تلك النعمة.",
+      "الترغيب في تجديد الشكر كل يوم لدوام تلك النعم.",
+      "الترغيب في المداومة على النوافل والصدقات كل يوم.",
+      "فضل الإصلاح بين الناس.",
+      "الحث على معونة الرجل أخاه؛ لأن معونته إياه صدقة.",
+      "الحث على حضور الجماعات والمشي إليها، وعمارة المساجد بذلك.",
+      "وجوب احترام طرق المسلمين بتجنب ما يؤذيهم أو يضر بهم."
+     ],
+     "explanation": "بَيَّنَ النبيُّ صلى الله عليه وسلم أنَّ على كلِّ مسلم مُكلَّف كلّ يوم بعدد كل مفصل من مفاصل عظامه صدقة تطوع لله تعالى على سبيل الشكر له على العافية، وأن جعل عظامه مفاصل يتمكن بها من القبض والبسط،\nوأنّ تلك الصدقة تتأدّى بأعمال البر كلها ولا تتوقف على إعطاء مال، ومنها:\nعدلك وإصلاحك بيـن متخاصمين صدقةٌ،\nوفي إعانتك لعاجز في دابته فتحمله عليها أو ترفع له متاعه صدقةٌ،\nوالكلمة الطيبة من ذكر ودعاء وسلام وغيرها صدقةٌ،\nوبكل خطوةٍ تمشيها إلى الصلاة صدقةٌ،\nوإزالة ما يُتَأذّى به عن الطريق صدقةٌ.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/4568",
+     "passage_id": "hadeethenc:ar:4568"
+    },
+    "en": {
+     "title": "There is a charity to be given for each joint of the human body",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Messenger of Allah (may Allah's peace and blessings be upon him) said: \"There is a charity to be given for each joint of the human body every day on which the sun rises; judging justly between two is a charity, helping a man with his mount to ride on it or lift his luggage on it is a charity, the good word is a charity, every step that one takes to the prayer is a charity, and removing what is harmful from the way is a charity.\"",
+     "benefits": [
+      "The structure of the bones of human beings and their soundness are among the greatest blessings of Allah Almighty upon them. Hence, each bone needs charity to be given on its behalf to show due gratitude for such a blessing.",
+      "Encouraging the act of renewing gratitude daily to maintain such blessings.",
+      "Encouraging the constant observance of voluntary acts of worship and charity on a daily basis.",
+      "The merit of reconciling between people.",
+      "Encouraging a Muslim to help his fellow Muslim as this counts as a charity.",
+      "Encouraging the attendance of the congregational prayers and walking thereto and maintaining mosques.",
+      "It is obligatory to respect the Muslims' roads by avoiding what hurts or harms them."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) clarified that every religiously accountable Muslim should give every day a voluntary charity on behalf of every single one of his bone joints as a form of expressing gratitude to Allah Almighty for well-being and for creating his bones with joints that allow him to grasp and stretch. This charity can be fulfilled not through giving money alone but through all types of righteous acts, which include: Acting justly and reconciling between those in disagreement counts as a charity. Helping someone disabled with his mount by helping him ride on it or lifting his luggage on it counts as a charity. The good word, whether it is Dhikr (remembrance of Allah), supplication, greeting of peace, or otherwise counts as a charity. Every step you take to the prayer counts as a charity. Removing what is harmful from the way counts as a charity.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/4568",
+     "passage_id": "hadeethenc:en:4568"
+    },
+    "tl": {
+     "title": "Ang bawat kasukasuan mula sa mga tao ay may kailangan dito na isang kawanggawa",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya) na nagsabi: {Nagsabi ang Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan): \"Ang bawat kasukasuan mula sa mga tao ay may kailangan dito na isang kawanggawa sa bawat araw na sumisikat dito ang araw. Ang magmakatarungan sa pagitan ng dalawang [tao] ay isang kawanggawa. Ang tumulong sa tao sa sasakyang hayop niya saka bumuhat sa kanya sa ibabaw nito o mag-angat sa ibabaw nito ng dala-dalahan niya ay isang kawanggawa. Ang pangungusap na kaaya-aya ay isang kawanggawa. Ang bawat hakbang na inihahakbang papunta sa pagdarasal ay isang kawanggawa. Ang pag-alis ng perhuwisyo palayo sa daan ay isang kawanggawa.\"}",
+     "benefits": [
+      "Ang pagkakabuo ng mga buto ng tao at ang kaayusan ng mga ito ay kabilang sa pinakadakila sa mga biyaya ni Allāh (napakataas Siya) sa tao kaya naman nangangailangan ang bawat buto mula sa mga ito ng pagkakawanggawa para rito patungkol dito upang malubos ang pasasalamat sa biyayang iyon.",
+      "Ang pagpapaibig sa pagpapanibago ng pasasalamat sa bawat araw dahil sa pamamalagi ng mga biyayang iyon.",
+      "Ang pagpapaibig sa pagpapamalagi sa mga kusang-loob na pagsamba at mga kawanggawa sa bawat araw.",
+      "Ang kainaman ng pagsasaayos sa pagitan ng mga tao.",
+      "Ang paghimok sa pagtulong ng tao sa kapatid niya dahil ang pagtulong niya rito ay kawanggawa.",
+      "Ang paghimok sa pagdalo sa mga konggregasyon, ang paglalakad papunta sa mga iyon, at ang pagpuno sa mga masjid sa pamamagitan niyon.",
+      "Ang pagkakinakailangan ng paggalang sa mga daan ng mga Muslim sa pamamagitan ng pag-iwas sa anumang mamemerhuwisyo sa kanila o mamiminsala sa kanila."
+     ],
+     "explanation": "Naglinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na sa bawat araw ayon sa bilang ng bawat palahugpungan (joint) mula sa mga palahugpungan ng mga buto niya, kailangan sa bawat Muslim na naatangan ng tungkulin ang magbigay ng isang kawanggawa ng pagkukusang-loob para kay Allāh (napakataas Siya) bilang paraan ng pasasalamat sa Kanya sa kagalingan; na gumawa si Allāh sa mga buto niya ng mga palahugpungan na nakakakaya siya sa pamamagitan ng mga ito sa pagkuyom at pagbuka; at na ang kawanggawang iyon ay nagagampanan sa pamamagitan ng mga gawain ng pagsasamabuting-loob sa kalahatan ng mga ito at hindi dumedepende sa pagbibigay ng salapi. Kabilang sa mga ito: Ang katarungan mo at ang pagsasaayos mo sa pagitan ng magkaalitan ay kawanggawa. Sa pagtulong mo sa walang-kakayahan sa sasakyan niya para bumuhat sa kanya sa ibabaw nito o mag-angat para sa kanya ng dala-dalahan niya ay may kawanggawa. Ang pangungusap na kaaya-aya gaya ng dhikr, panalangin, pagbati, at iba pa sa mga ito ay kawanggawa. Sa bawat hakbang na nilalakad mo papunta sa ṣalāh ay kawanggawa. Ang pag-aalis sa daan ng nakapeperhuwisyo ay kawanggawa.",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/4568",
+     "passage_id": "hadeethenc:tl:4568"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5797",
+   "kind": "benefit",
+   "hadith_id": 5797,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5797",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "يا عائشة إن الله رفيق يحب الرفق، ويعطي على الرفق ما لا يعطي على العنف، وما لا يعطي على ما سواه",
+     "text": "عَنْ عَائِشَةَ أُمِّ المُؤْمِنين رضي الله عنها زَوْجِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «يَا عَائِشَةُ إِنَّ اللهَ رَفِيقٌ يُحِبُّ الرِّفْقَ، وَيُعْطِي عَلَى الرِّفْقِ مَا لَا يُعْطِي عَلَى الْعُنْفِ، وَمَا لَا يُعْطِي عَلَى مَا سِوَاهُ».",
+     "benefits": [
+      "الحث على الرفق والنهي عن العنف.",
+      "علو منزلة الرفق بين مكارم الأخلاق.",
+      "الرفيق يستحق الثناء الجميل والأجر الجزيل من الله تعالى.",
+      "قال السندي: العنف ضد الرفق أي من يدعو الناس إلى الهدى برفق وتلطف خير من الذي يدعو بعنف وشدة إذا كان المحل يقبل الأمرين، وإلا فيتعين ما يقبله المحل، والله أعلم بحقيقة الحال."
+     ],
+     "explanation": "حَثَّ النبي صلى الله عليه وسلم أم المؤمنين عائشة رضي الله عنها على الرفق، وأن الله رفيق لطيف بعباده يريد بهم اليسر ولا يريد بهم العسر، فلا يكلفهم فوق طاقتهم، ويحب أن يتصف عبده بلين الجانب والأخذ بالسهل؛ فلا يكون فظًّا ولا غليظًا، وأن الله تعالى يعطي على الرفق واللين في الدنيا من الثناء الجميل ونيل المطالب وتسهيل المقاصد، وفي الآخرة من الثواب الجزيل، أكثر مما يعطيه على العنف والشدة والغلظة، فالرفق يأتي معه ما لا يأتي مع غيره.",
+     "grade": "صحيح",
+     "attribution": "رواه مسلم",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5797",
+     "passage_id": "hadeethenc:ar:5797"
+    },
+    "en": {
+     "title": "O ‘Ā’ishah, indeed, Allah is gentle and He loves gentleness, and He gives for gentleness what He does not give for violence and what He does not give for anything else",
+     "text": "‘Ā’ishah, the Mother of the believers (may Allah be pleased with her) and wife of the Prophet (may Allah's peace and blessings be upon him), reported that the Messenger of Allah (may Allah's peace and blessings be upon him) said: \"O ‘Ā’ishah, indeed, Allah is gentle and He loves gentleness, and He gives for gentleness what He does not give for violence and what He does not give for anything else.\"",
+     "benefits": [
+      "Encouraging gentleness and prohibiting violence.",
+      "The high status of gentleness among the noble traits of character.",
+      "The gentle person deserves beautiful praise and great reward from Allah Almighty.",
+      "As-Sindi said: Harshness stands in opposition to gentleness. One who calls people to guidance with gentleness and kindness is better than one who calls with severity and harshness, as long as the situation responds equally to both approaches. But if the situation only responds to one of the two, then that which suits the situation becomes necessary. And Allah knows best the true reality of every situation."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) encouraged the Mother of the Believers, ‘Ā’ishah (may Allah be pleased with her), to be gentle, informing that Allah deals gently and kindly with His servants and wants ease for them, not hardship. He does not burden them beyond their capacity and loves that His servant adopts gentleness and ease in dealing with others, avoiding harshness or severity. He added that Allah Almighty grants for gentleness and kindness in this world a praiseworthy reputation, attainment of goals, and ease in pursuing one's affairs. And in the Hereafter, He grants a great reward, greater than what He gives for violence, harshness, or severity, because gentleness brings results that nothing else can bring.",
+     "grade": "Authentic",
+     "attribution": "Narrated by Muslim",
+     "url": "https://hadeethenc.com/en/browse/hadith/5797",
+     "passage_id": "hadeethenc:en:5797"
+    },
+    "tl": {
+     "title": "O `Ā’ishah, tunay na si Allāh ay Malumay na umiibig sa kalumayan at nagbibigay Siya dahil sa kalumayan ng hindi Niya ibinibigay dahil sa karahasan at ng hindi Niya ibinibigay dahil sa iba rito.\"}",
+     "text": "Ayon kay `Ā'ishah na Ina ng mga Mananampalataya (malugod si Allāh sa kanya), na maybahay ng Propeta (basbasan siya ni Allāh at pangalagaan): {Ang Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan) ay nagsabi: \"O `Ā’ishah, tunay na si Allāh ay Malumay na umiibig sa kalumayan at nagbibigay Siya dahil sa kalumayan ng hindi Niya ibinibigay dahil sa karahasan at ng hindi Niya ibinibigay dahil sa iba rito.\"}",
+     "benefits": [
+      "Ang paghimok sa kalumayan at ang pagsaway laban sa karahasan.",
+      "Ang kataasan ng antas ng kalumayan sa pagitan ng mararangal sa mga kaasalan.",
+      "Ang malumay ay nagiging karapat-dapat sa marikit na pagbubunyi at masaganang pabuya mula kay Allāh (napakataas Siya).",
+      "Nagsabi si As-Sindīy: Ang karahasan ay kontra sa kalumayan. Ibig sabihin: ang sinumang nag-aanyaya sa mga tao tungo sa patnubay nang may kalumayan at pagpapakabait ay higit na mabuti kaysa sa sinumang nag-aanyaya nang may karahasan at katindihan kapag ang lugar ay tumatanggap ng dalawang katangiang ito at kung hindi naman, naoobliga ang tinatanggap ng lugar. Si Allāh ay higit na maalam sa pagkatotoo ng kalagayan."
+     ],
+     "explanation": "Hinimok ng Propeta (basbasan siya ni Allāh at pangalagaan) sa Ina ng mga Mananampalataya na si `Ā'ishah (malugod si Allāh sa kanya) ang pagkamalumay yayamang si Allāh ay Malumay na Mabait sa mga lingkod Niya, na nagnanais sa kanila ng ginhawa at hindi nagnanais sa kanila ng hirap. Kaya naman hindi Siya nag-aatang sa kanila ng higit sa kakayahan nila. Nakaiibig Siya na magtaglay ang lingkod Niya ng katangian ng kabanayaran ng sarili at paggamit ng kadalian kaya ito ay hindi magiging isang mabagsik na magaspang. Si Allāh (napakataas Siya) ay nagbibigay dahil sa kalumayan at kabanayaran sa Mundo ng marikit na pagbubunyi, pagkatamo ng mga hinihiling, at pagpapadali ng mga pinapakay; at sa Kabilang-buhay ng masaganang gantimpala, higit kaysa ibinibigay Niya resulta ng karahasan, katindihan, at kagaspangan sapagkat ang kalumayan ay dumarating kasama nito sa hindi dumarating kasama ng iba pa rito.",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si Imām Muslim",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5797",
+     "passage_id": "hadeethenc:tl:5797"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-65004",
+   "kind": "benefit",
+   "hadith_id": 65004,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/65004",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "الطهور شطر الإيمان، والحمد لله تملأ الميزان، وسبحان الله والحمد لله تملآن أو تملأ ما بين السماوات والأرض",
+     "text": "عن أبي مالكٍ الأشعريِّ رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: «الطُّهُورُ شَطْرُ الْإِيمَانِ، وَالْحَمْدُ لِلهِ تَمْلَأُ الْمِيزَانَ، وَسُبْحَانَ اللهِ وَالْحَمْدُ لِلهِ تَمْلَآنِ -أَوْ تَمْلَأُ- مَا بَيْنَ السَّمَاوَاتِ وَالْأَرْضِ، وَالصَّلَاةُ نُورٌ، وَالصَّدَقَةُ بُرْهَانٌ، وَالصَّبْرُ ضِيَاءٌ، وَالْقُرْآنُ حُجَّةٌ لَكَ أَوْ عَلَيْكَ، كُلُّ النَّاسِ يَغْدُو، فَبَايِعٌ نَفْسَهُ فَمُعْتِقُهَا أَوْ مُوبِقُهَا».",
+     "benefits": [
+      "الطهارة طهارتان: طهارة الظاهر تكون بالوضوء والغسل، وطهارة الباطن تكون بالتوحيد والإيمان والعمل الصالح.",
+      "أهمية المحافظة على الصلاة فهي نور للعبد في الدنيا ويوم القيامة.",
+      "الصدقة دليل على صدق الإيمان.",
+      "أهمية العمل بالقرآن وتصديقه ليكون حجة لك لا عليك.",
+      "النفس إن لم تشغلها بالطاعة شغلتك بالمعصية.",
+      "كل إنسان لا بد أن يعمل؛ فإما أن يعتق نفسه بالطاعة، أو يوبقها بالمعصية.",
+      "الصبر يحتاج إلى تَحَمُّلٍ واحتسابٍ وفيه مشقة."
+     ],
+     "explanation": "يخبر النبي صلى الله عليه وسلم: أن طهارة الظاهر تكون بالوضوء والغسل وهي شرط في الصلاة.\nوأن قول: \" الحمد لله تملا الميزان\" وهو الثناء عليه سبحانه، ووصفه بصفات الكمال توزن يوم القيامة فتملأ ميزان الأعمال.\nوأن قول: \"سبحان الله والحمد لله\" وهو تنزيهه عن كل نَقْصٍ ووصفه بالكمال التام الذي يليق بجلاله مع محبته وتعظيمه تملأ ما بين السموات والأرض.\nوأن \"الصلاة نور\" للعبد في قلبه، وفي وجهه، وفي قبره، وفي حشره.\nوأن \"الصدقة برهان\" ودليل على صدق إيمان المؤمن، واختلافه عن المنافق الذي يمتنع منها لكونه لا يصدق بموعودها.\nوأن \"الصبر ضياء\" -وهو حبس النفس عن الجَزَع والتَّسَخُّط - نور يحصل معه حرارة وإحراق، كضياء الشمس؛ لأنه شاق ويحتاج إلى مجاهدة النفس وحبسها عما تهواه؛ فلا يزال صاحبه مستضيئًا مهتديًا مستمرًّا على الصواب. وهو صبر على طاعة الله، وعن معصيته، وصبر على المصائب وأنواع المكاره في الدنيا.\nوأن \"القرآن حجة لك\" بتلاوته والعمل به، أو \"حجة عليك\" بتركه دون عمل أو تلاوة.\nثم أخبر صلى الله عليه وسلم أن كل الناس يسعون وينتشرون ويقومون من نومهم ويخرجون من بيوتهم لأعمالهم المختلفة،\nفمنهم من يستقيم على طاعة الله فيُعْتِق نفسَه من النار، ومنهم من ينحرف عن ذلك ويقع في المعاصي فيهلكها بدخولها النار.",
+     "grade": "صحيح",
+     "attribution": "رواه مسلم",
+     "url": "https://hadeethenc.com/ar/browse/hadith/65004",
+     "passage_id": "hadeethenc:ar:65004"
+    },
+    "en": {
+     "title": "Purity is half of faith, al-hamdulillāh (praise be to Allah) fills the Scale, and subhān Allah wa al-hamdulillāh (glory and praise be to Allah) fills what is between the heavens and the earth",
+     "text": "Abu Mālik al-Ash‘ari (may Allah be pleased with him) reported: The Messenger of Allah (may Allah's peace and blessings be upon him) said: \"Purity is half of faith, al-hamdulillāh (praise be to Allah) fills the Scale, and subhān Allah wa al-hamdulillāh (glory and praise be to Allah) fills what is between the heavens and the earth. Prayer is light, charity is proof, patience is radiance, and the Qur’an is an argument either for you or against you. Every person goes out in the morning and sells his soul; he either saves it from doom or throws it into destruction.\"",
+     "benefits": [
+      "Purity is of two kinds: outward purity, which is attained by ablution and washing up, and inward purity, which is attained by Tawhīd (monotheism), faith, and righteous deeds.",
+      "It points out the significance of observing the prayer, as it is light for people in this world and on the Day of Judgment.",
+      "Charity is evidence of the sincerity of faith.",
+      "It is important for a person to act upon the Qur’an and believe in it, so that it will be proof for him, not against him.",
+      "If a person does not preoccupy himself with worship, he will preoccupy it with sin.",
+      "Everyone must work, and one either saves his soul with obedience to Allah or destroys it with sins.",
+      "Patience needs endurance and the pursuit of Allah's reward, and it involves hardship."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) says that outward purification is attained by ablution and washing up, and it is required for prayer. And saying \"al-hamdulillāh\" fills the Scale. This is to praise Allah and ascribe the attributes of perfection to Him. This will be weighed on the Day of Judgment and fill the Scale of deeds. Saying \"subhān Allah wa al-hamdulillāh\" - which exalts Allah far above all deficiencies and ascribes to Him the complete perfection that befits His majesty, along with loving and extolling Him - fills what is between the heavens and the earth. \"Prayer is light\" for a person within his heart, on his face, in his grave, and on the Day of Judgment. \"Charity is proof\" and evidence for the sincerity of a believer's faith and it sets him apart from the hypocrite, who refrains from giving charity because he does not believe in the reward promised in return for it. \"Patience is radiance,\" by refraining from exasperation and indignation, is radiance, which is light that comes with heat and burning, like the light of the sun. This is because patience is difficult and requires self-struggle and restraining oneself from one's desires. So, a patient person continues to have light and adhere to guidance and the right path. Patience is shown in observing Allah's commands, avoiding His prohibitions, and enduring afflictions and different forms of hardships in this world. And \"the Qur’an is proof either for you,\" by reciting and acting upon it, or \"against you,\" for abandoning it, without application or recitation. Then, the Prophet (may Allah's peace and blessings be upon him) mentioned that all people work and go about, and they get up from their sleep and go out for their different activities. Some of them hold onto obedience to Allah and thus save themselves from Hellfire. And some others deviate from that and commit sins, which ruin them by leading them to Hellfire.",
+     "grade": "Authentic",
+     "attribution": "Narrated by Muslim",
+     "url": "https://hadeethenc.com/en/browse/hadith/65004",
+     "passage_id": "hadeethenc:en:65004"
+    },
+    "tl": {
+     "title": "Ang pagkadalisay ay kalahati ng pananampalataya. Ang [pagsasabi ng:] alḥamdu lillāh (ang papuri ay ukol kay Allāh) ay pupuno sa timbangan [ng mga gawa]. Ang [pagsasabi ng:] subḥāna –llāh (kaluwalhatian kay Allāh) at alḥamdu lillāh (ang papuri ay ukol kay Allāh) ay pupuno sa nasa pagitan ng mga langit at lupa",
+     "text": "Ayon kay Abū Mālik Al-Ash`arīy (malugod si Allāh sa kanya) na nagsabi: {Nagsabi ang Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan): \"Ang pagkadalisay ay kalahati ng pananampalataya. Ang [pagsasabi ng:] alḥamdu lillāh (ang papuri ay ukol kay Allāh) ay pupuno sa timbangan [ng mga gawa]. Ang [pagsasabi ng:] subḥāna –llāh (kaluwalhatian kay Allāh) at alḥamdu lillāh (ang papuri ay ukol kay Allāh) ay pupuno sa nasa pagitan ng mga langit at lupa. Ang pagdarasal ay liwanag. Ang kawanggawa ay patotoo. Ang pagtitiis ay tanglaw. Ang Qur'ān ay katwiran para sa iyo o laban sa iyo. Ang bawat isa sa mga tao ay maagang lumilisan saka nagtitinda ng sarili niya kaya nagpapalaya nito o nagpapahamak nito.\"}",
+     "benefits": [
+      "Ang kadalisayan ay dalawang kadalisayan: kadalisayan ng nakalantad, na sa pamamagitan ng wuḍū' at ghusl; at kadalisayan ng nakakubli, na sa pamamagitan ng Tawḥīd, pananampalataya, at maayos na gawa.",
+      "Ang kahalagahan ng pangangalaga sa ṣalāh sapagkat ito ay isang liwanag para sa tao sa Mundo at Araw ng Pagbangon.",
+      "Ang kawanggawa ay patunay sa katapatan ng pananampalataya.",
+      "Ang kahalagahan ng pagsasagawa ayon sa Qur'ān at paniniwala rito upang ito ay maging isang katwiran para sa iyo hindi laban sa iyo.",
+      "Ang sarili, kung hindi ka nagpaabala rito sa pagsunod, ay magpapaabala sa iyo sa pagsuway.",
+      "Ang bawat tao ay hindi makaiiwas na gumawa sapagkat maaaring magpalaya siya sa sarili niya sa pamamagitan ng pagtalima o magpahamak nito sa pamamagitan ng pagsuway.",
+      "Ang pagtitiis ay nangangailangan ng pagbata at pag-asa na gantimpalaan. Dito ay may pahirap."
+     ],
+     "explanation": "Nagpapabatid ang Propeta (basbasan siya ni Allāh at pangalagaan) na ang kadalisayan ng nakalantad ay sa pamamagitan ng wuḍū' at ghusl at ito ay isang kundisyon sa ṣalāh. Ang pagsasabi ng: \"alḥamdu lillāh (ang papuri ay ukol kay Allāh)\" ay pumupuno ng timbangan. Ang pagbubunyi sa Kanya (kaluwalhatian sa Kanya) at ang paglalarawan sa Kanya ng kalubusan ay titimbangin sa Araw ng Pagbangon saka pupuno sa timbangan ng mga gawa. Ang pagsasabi ng: \"subḥāna –llāh (kaluwalhatian kay Allāh) at alḥamdu lillāh (ang papuri ay ukol kay Allāh)\" – ang pagpapawalang-kinalaman kay Allāh sa bawat kakulangan at ang paglalarawan sa Kanya ng ganap na pagkalubos na naaangkop sa kapitaganan sa Kanya kasama ng pag-ibig sa Kanya at pagdakila sa Kanya – pupuno sa nasa pagitan ng mga langit at lupa. \"Ang pagdarasal ay liwanag\" ay para sa tao sa puso niya, sa mukha niya, sa libingan niya, at sa pagkalap sa kanya. \"Ang kawanggawa ay patotoo\" at patunay sa katapatan ng pananampalataya ng mananampalataya at pagkakaiba niya sa mapagpaimbabaw na nagpipigil nito dahil sa pagiging siya ay hindi naniniwala sa ipinangako rito. \"Ang pagtitiis ay tanglaw\" – ang pagpipigil ng sarili laban sa pagkaligalig at pagkainis – at liwanag na nagtatamo rito ng kainitan at pagsunog, gaya ng tanglaw ng araw, dahil ito ay mahirap at nangangailangan ng pakikibaka sa sarili at pagpigil dito sa pinipithaya nito. Kaya naman hindi tumitigil ang nagtataglay nito na nagpapatanglaw, na napapatnubayan, na nagpapatuloy sa tama. Ito ay pagtitiis sa pagtalima kay Allāh at laban sa pagsuway sa Kanya, at pagtitiis sa mga kasawiang-palad at mga uri ng mga kinasusuklaman sa Mundo. \"Ang Qur'ān ay katwiran para sa iyo\" sa pamamagitan ng pagbigkas nito at paggawa ayon dito o \"laban sa iyo\" sa pamamagitan ng pag-iwan nito nang walang paggawa o pagbigkas. Pagkatapos nagpabatid siya (basbasan siya ni Allāh at pangalagaan) na ang lahat ng mga tao ay nagpupunyagi, naglilipana, bumabangon mula sa pagkatulog, at lumalabas ng mga bahay nila para sa mga magkakaiba-ibang gawain. Mayroon sa kanila na nagpapakatuwid sa pagtalima kay Allāh kaya naman magpapalaya siya sa sarili niya mula sa impiyerno at mayroon sa kanila na nalilihis palayo roon at nasasadlak sa mga pagsuway kaya naman magpapahamak siya sa sarili niya dahil sa pagpasok nito sa Impiyerno.",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si Imām Muslim",
+     "url": "https://hadeethenc.com/tl/browse/hadith/65004",
+     "passage_id": "hadeethenc:tl:65004"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-65255",
+   "kind": "benefit",
+   "hadith_id": 65255,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/65255",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "من حسن إسلام المرء تركه ما لا يعنيه",
+     "text": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «مِنْ حُسْنِ إِسْلَامِ المَرْءِ تَرْكُهُ مَا لَا يَعْنِيهِ».",
+     "benefits": [
+      "الناس يتفاوتون في الإسلام، وأنه يزداد حسنًا ببعض الأعمال.",
+      "ترك اللغو والفضول من الأقول والأفعال دليل على كمال إسلام المرء.",
+      "الحث على الاشتغال فيما يعني المرءَ من شؤون دِينه ودنياه، فإذا كان مِن حُسن إسلام المرء تركه ما لا يعنيه، فمِن حُسنه إذًا اشتغالُه فيما يعنيه.",
+      "قال ابن القيم رحمه الله : وقد جمع النبي صلى الله عليه وسلم الورع كله في كلمة واحدة، فقال: «من حسن إسلام المرء: تركُه ما لا يعنيه»، فهذا يعم الترك لما لا يعني: من الكلام، والنظر، والاستماع، والبطش، والمشي، والفكر، وسائر الحركات الظاهرة والباطنة، فهذه كلمة شافية في الورع.",
+      "قال ابن رجب: هذا الحديث أصل من أصول الأدب.",
+      "الحث على طلب العلم؛ لأن به بعرف الإنسان ما يعنيه مما لا يعنيه.",
+      "الأمر بالمعروف والنهي عن المنكر والنصيحة مما تعني الإنسان؛ لأنه مأمور بها.",
+      "يدخل في عموم معنى الحديث: الابتعاد عما لا يعني مما حرم الله عزوجل وما كرهه النبي صلى الله عليه وسلم، وكذلك ما لا يحتاج إليه من أمور أخروية كحقائق الغيب وتفاصيل الحكم في الخلق والأمر، ومنها السؤال والبحث عن مسائل مقدرة ومفترضة لم تقع، أو لا تكاد تقع، أو لا يتصور وقوعها."
+     ],
+     "explanation": "بين النبي صلى الله عليه وسلم: أن من كمال محاسن إسلام المسلم وتمام إيمانه، ابتعاده عما لا يعنيه ولا يخصه ولا يهمه وما لا يفيده من الأقوال والأفعال، أو مما لا يعنيه من أمور الدين والدنيا، فالاشتغال بما ليس للإنسان ربما شغله عما يعنيه، أو أداه إلى ما يلزمه اجتنابه؛ فإن الإنسان مسؤول عن أعماله يوم القيامة.",
+     "grade": "قال النووي: حديث حسن",
+     "attribution": "رواه الترمذي وغيره",
+     "url": "https://hadeethenc.com/ar/browse/hadith/65255",
+     "passage_id": "hadeethenc:ar:65255"
+    },
+    "en": {
+     "title": "Part of a person's excellence in Islam is his leaving what does not concern him",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Messenger of Allah (ﷺ) said: \"Part of a person's excellence in Islam is his leaving what does not concern him.\"",
+     "benefits": [
+      "People are of varying degrees in terms of their Islam, and it grows more excellent through some deeds.",
+      "Abandonment of idle and intrusive talk and action is a sign of the excellence of a person's Islam.",
+      "We are urged to preoccupy ourselves with religious and worldly matters that concern us. If it is part of the excellence of a person's Islam that he leaves what does not concern him, it is also part of its excellence that he gets preoccupied with what concerns him.",
+      "Ibn al-Qayyim (may Allah have mercy upon him) said: The Prophet (ﷺ) summarized Wara‘ (piety/caution) in one sentence, saying: \"Part of a person’s excellence in Islam is his leaving what does not concern him.\" This includes abandonment of what does not concern a person, like certain speech, looking, listening, striking, walking, thinking, and other movements, inward and outward. This is a sufficient and adequate statement on Wara‘.",
+      "Ibn Rajab said: This Hadīth is a fundamental principle of good manners.",
+      "We are urged to seek knowledge, for this is the means by which a person knows what concerns him and what does not.",
+      "Enjoining good and forbidding evil and rendering advice are among the things that should concern a person, for he is required to do them.",
+      "It falls under the general meaning of this Hadīth that we should keep away from what does not concern us among the things prohibited by Allah Almighty and disliked by the Prophet (ﷺ), and also those needless matters related to the Hereafter, like the facts of the unseen, and the details of the judgment among the creation; this also includes asking and searching about supposed issues that have not occurred, are unlikely to occur, or their occurrence is inconceivable."
+     ],
+     "explanation": "The Prophet (ﷺ) clarified that part of the perfection and beauty of a Muslim's Islam, and the completeness of his faith, is keeping away from what does not concern him, and what does not pertain to him, what does not benefit him of words and deeds, or matters of religion and worldly life that are of no relevance to him. Being preoccupied with what does not concern a person may distract him from what truly does, or may lead him to what he must avoid. For indeed, a person will be held accountable for his deeds on the Day of Judgment.",
+     "grade": "An-Nawawi said: It is a Hasan (sound) Hadīth",
+     "attribution": "Narrated by At-Tirmidhi and others",
+     "url": "https://hadeethenc.com/en/browse/hadith/65255",
+     "passage_id": "hadeethenc:en:65255"
+    },
+    "tl": {
+     "title": "Bahagi ng kagandahan ng pagkaanib sa Islām ng tao ang pag-iwan niya ng anumang hindi pumapatungkol sa kanya",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya) na nagsabi: {Nagsabi ang Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan): \"Bahagi ng kagandahan ng pagkaanib sa Islām ng tao ang pag-iwan niya ng anumang hindi pumapatungkol sa kanya.\"",
+     "benefits": [
+      "Ang mga tao ay nagkakaibahan sa [pagsasabuhay sa] Islām at ito ay nadaragdagan ng kagandahan sa pamamagitan ng ilan sa mga gawain.",
+      "Ang pagwaksi sa walang-kabuluhan at mga kalabisan sa mga sinasabi at mga ginagawa ay isang patunay sa kakumpletuhan ng pagkaanib sa Islām ng tao.",
+      "Ang paghimok sa pagpapakaabala sa anumang pumapatungkol sa tao kabilang sa mga nauukol sa panrelihiyong buhay niya at pangmundong buhay niya. Kaya kapag naging bahagi ng kagandahan ng pagkaanib sa Islām ng tao ang pag-iwan niya ng hindi pumapatungkol sa kanya, bahagi rin ng kagandahan nito, samakatuwid, ang pagpapakaabala niya sa anumang pumapatungkol sa kanya.",
+      "Nagsabi si Ibnu Al-Qayyim (kaawaan siya ni Allāh): Nagtipon nga ang Propeta (basbasan siya ni Allāh at pangalagaan) ng pagkamaiwas sa kasalanan sa kabuuan nito sa iisang pangungusap sapagkat nagsabi siya: \"Bahagi ng kagandahan ng pagkaanib sa Islām ng tao ang pag-iwan niya ng hindi pumapatungkol sa kanya.\" Ito ay lumalahat sa pag-iwan ng anumang hindi pumapatungkol gaya ng pagsasalita, pagtingin, pakikinig, pagsaling, paglalakad, pag-iisip, at nalalabi sa mga pagkilos na nakahayag at nakakubli. Kaya naman ito ay isang salitang nakatutugon sa pagkamaiwas sa kasalanan.",
+      "Nagsabi si Ibnu Rajab: Ang ḥadīth na ito ay isang saligan kabilang sa mga saligan ng etiketa.",
+      "Ang paghimok sa paghahanap ng kaalaman dahil sa pamamagitan nito nakakikilala ang tao ng pumapatungkol sa kanya sa hindi pumapatungkol sa kanya.",
+      "Ang pag-uutos ng nakabubuti at ang pagsaway sa nakasasama at ang pagpapayo ay kabilang sa pumapatungkol sa tao dahil siya ay inuutusan ng mga ito.",
+      "Napaloloob sa pagkapangkalahatan ng kahulugan ng ḥadīth ang paglayo sa anumang hindi pumapatungkol kabilang sa ipinagbawal ni Allāh (kamahal-mahalan Siya at kapita-pitagan) at kinasusuklaman ng Propeta (basbasan siya ni Allāh at pangalagaan) at gayon din ang hindi kinakailangan kabilang sa mga bagay-bagay na pangkabilang-buhay gaya ng mga reyalidad ng Nakalingid at mga detalye ng patakaran sa paglikha at pag-uutos. Kabilang sa mga ito ang pagtatanong at ang pagsasaliksik sa mga usaping tinataya at ipinagpapalagay, na hindi naganap, o hindi halos nagaganap o hindi naguguniguni ang pagkaganap ng mga ito."
+     ],
+     "explanation": "Naglinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na bahagi ng kakumpletuhan ng mga kagandahan ng pagkaanib sa Islām ng Muslim at kalubusan ng pananampalataya niya ang paglayo niya sa anumang hindi pumapatungkol sa kanya, hindi natatangi sa kanya, hindi minamahalaga sa kanya, at hindi nagbebenepisyo sa kanya na mga sinasabi at mga ginagawa, o kabilang sa anumang hindi pumapatungkol sa kanya mula sa mga nauukol sa buhay panrelihiyon at buhay o. Ang pagpapakaabala sa anumang hindi ukol sa tao ay marahil aabala sa kanya palayo sa nauukol sa kanya o magpapahantong sa kanya tungo sa kinakailangang iwasan. Tunay na ang tao ay tatanungin tungkol sa mga gawain niya sa Araw ng Pagbangon.",
+     "grade": "Nagsabi si An-Nawawīy: ḥadīth na maganda",
+     "attribution": "Nagsalaysay nito si Imām At-Tirmidhīy at ang iba pa sa kanya",
+     "url": "https://hadeethenc.com/tl/browse/hadith/65255",
+     "passage_id": "hadeethenc:tl:65255"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-4717",
+   "kind": "benefit",
+   "hadith_id": 4717,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/4717",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "لا يؤمن أحدكم، حتى يحب لأخيه ما يحب لنفسه",
+     "text": "عَنْ أَنَسٍ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قالَ: «لاَ يُؤْمِنُ أَحَدُكُمْ، حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ».",
+     "benefits": [
+      "وجوب محبة المرء لأخيه ما يحبُّ لنفسه؛ لأن نفي الإيمان عمن لا يحب لأخيه ما يحب لنفسه يدل على وجوب ذلك.",
+      "الأُخوّة في الله فوق أخوّة النسب، فحقُّها أوجب.",
+      "تحريم كل ما ينافي هذه المحبة من الأقوال والأفعال كالغش والغيبة والحسد والعدوان على نفس المسلم أو ماله أو عرضه.",
+      "استخدام بعض الألفاظ المحفِّزة على الفعل؛ لقوله \"لأخيه\".",
+      "قال الكِرْماني رحمه الله: ومن الإيمان أيضًا أنْ يُبغِضَ لأخيه ما يبغض لنفسه من الشر، ولم يذكره؛ لأنَّ حب الشيء مستلزم لبغض نقيضه، فترك التنصيص عليه اكتفاء."
+     ],
+     "explanation": "بَيَّنَ النبيُّ صلى الله عليه وسلم أنّه لا يَتَحقّق الإيمانُ الكامل لأحدٍ من المسلمين حتى يُحبَّ لأخيه ما يحب لنفسه من الطاعات وأنواع الخيرات في الدين والدنيا، ويكره له ما يكره لنفسه، فإن رأى في أخيه المسلم نقصًا في دينه، اجتهد في إصلاحه، وإنْ رأى فيه خيرًا سدَّده وأعانه، ونصحَه في أمر دينِه أو دنياه.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/4717",
+     "passage_id": "hadeethenc:ar:4717"
+    },
+    "en": {
+     "title": "None of you believes until he loves for his brother what he loves for himself",
+     "text": "Anas (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) said: \"None of you believes until he loves for his brother what he loves for himself.\"",
+     "benefits": [
+      "It is obligatory for a person to love for his brother what he loves for himself, as the negation of Imān from someone who does not love for his brother what he loves for himself indicates the obligation of doing that.",
+      "The bond of brotherhood for the sake of Allah is superior to biological brotherhood, and so its right is more worthy of fulfillment.",
+      "Anything that contradicts this love is prohibited, including words and deeds like cheating, backbiting, envy, and transgression against the life, property, or honor of a Muslim.",
+      "We should use some words of motivation, as he said: \"for his brother\".",
+      "Al-Kirmāni (may Allah have mercy upon him) said: It is also part of Imān that a person should dislike bad things for his brother as he dislikes them for himself. He did not mention it because the love of something entails dislike for its opposite. So, this was needless to say."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) pointed out that no Muslim attains complete Imān until he loves for his brother what he loves for himself, among the acts of worship and types of goodness in terms of the religion and the life of this world, and hates for his brother what he hates for himself. If he sees a deficiency in the religious commitment of his brother, he strives to reform it, and if he finds goodness in him, he guides and helps him and renders sincere advice to him as regards his religious and worldly matters.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/4717",
+     "passage_id": "hadeethenc:en:4717"
+    },
+    "tl": {
+     "title": "Hindi sumasampalataya ang isa sa inyo hanggang sa ibigin niya para sa kapatid niya ang iniibig niya para sa sarili niya.\"}",
+     "text": "Ayon kay Anas (malugod si Allāh sa kanya): {Ayon sa Propeta (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"Hindi sumasampalataya ang isa sa inyo hanggang sa ibigin niya para sa kapatid niya ang iniibig niya para sa sarili niya.\"}",
+     "benefits": [
+      "Ang pagkakinakailangan ng pag-ibig ng tao sa kapatid niya ng iniibig niya para sa sarili niya dahil ang pagkakaila ng pananampalataya sa sinumang hindi umiibig para sa kapatid niya ng iniibig niya para sa sarili niya ay nagpapahiwatig ng pagkakinakailangan niyon.",
+      "Ang kapatiran kay Allāh ay higit sa kapatiran ng kaangkanan sapagkat ang karapatan niyon ay higit na kinakailangan.",
+      "Ang pagbabawal sa anumang sumasalungat sa pag-ibig na ito kabilang sa mga sinasabi at mga ginagawa gaya ng pandaraya, panlilibak, pagkainggit, at paglabag sa sarili ng Muslim o ari-arian niya o dangal niya.",
+      "Ang paggamit ng ilan sa mga pananalitang nag-uudyok sa paggawa batay sa sabi ng Propeta: \"para sa kapatid niya.\"",
+      "Nagsabi si Al-Kirmānīy (kaawaan siya ni Allāh): Bahagi ng pananampalataya rin na mamuhi siya para sa kapatid niya ng kinamumuhian niya para sa sarili niya na kasamaan. Hindi siya bumanggit nito dahil ang pag-ibig sa anuman ay nag-oobliga ng pagkamuhi sa kabaliktaran nito kaya ang pag-iwan sa pagsasateksto nito ay may kasapatan."
+     ],
+     "explanation": "Naglinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na hindi naisasakatotohanan ang kumpletong pananampalataya para sa isa sa mga Muslim hanggang sa ibigin niya para sa kapatid niya ang iniibig niya para sa sarili niya na mga pagtalima at mga uri ng mga kabutihan sa buhay panrelihiyon at buhay pangmundo at kasuklaman niya para rito ang kinasusuklaman niya para sa sarili niya. Kaya kung nakakita siya sa kapatid niyang Muslim ng isang kakulangan sa buhay panrelihiyon nito, magsusumikap siya na magsaayos nito; at kung nakakita siya rito ng isang kabutihan, magtatama siya rito, tutulong siya rito, at magpapayo siya rito kaugnay sa nauukol sa buhay panrelihiyon nito o buhay pangmundo nito.",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/4717",
+     "passage_id": "hadeethenc:tl:4717"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5437",
+   "kind": "benefit",
+   "hadith_id": 5437,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5437",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "من كان يؤمن بالله واليوم الآخر فليقل خيرا أو ليصمت",
+     "text": "عن أبي هريرة رضي الله عنه عن رسول الله صلى الله عليه وسلم قال: «مَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ ضَيْفَهُ».",
+     "benefits": [
+      "الإيمان بالله واليوم الآخر أَصْلٌ لكلِّ خير، ويَبعث على فعل الخير.",
+      "التحذير من آفات اللسان.",
+      "دين الإسلام دين الأُلفة والكرم.",
+      "هذه الخصال من شُعَب الإيمان ومن الآداب المحمودة.",
+      "كثرة الكلام قد تَجُرُّ إلى المكروه أو المحرَّم، والسلامة في عدم الكلام إلا في الخير."
+     ],
+     "explanation": "بَيَّنَ النبيُّ صلى الله عليه وسلم أنَّ العبدَ المؤمن بالله واليوم الآخر الذي إليه معاده وفيه مجازاته بعمله، يَحُثُّه إيمانُه على فعل هذه الخصال:\n\nالأولى: القول الحسن: من التسبيح والتهليل، والأمر بالمعروف، والنهي عن المنكر، والإصلاح بين الناس، فإنْ لم يفعل فلْيلزم السكوت ويَكُف أذاه ويحفظ لسانه.\n\nالثاني: إكرام الجار: بالإحسان إليه وعدم إيذائه.\n\nالثالث: إكرام الضيف القادم لزيارتك: بطِيْبِ الكلام وإطعام الطعام ونحو ذلك.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5437",
+     "passage_id": "hadeethenc:ar:5437"
+    },
+    "en": {
+     "title": "Whoever believes in Allah and the Last Day should say what is good or keep silent",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Messenger of Allah (may Allah's peace and blessings be upon him) said: \"Whoever believes in Allah and the Last Day should say what is good or keep silent. Whoever believes in Allah and the Last Day should honor his neighbor. Whoever believes in Allah and the Last Day should honor his guest.\"",
+     "benefits": [
+      "Belief in Allah and the Last Day is the basis of all goodness, prompting people to do good.",
+      "The Hadīth warns against the bad use of the tongue.",
+      "Islam is a religion of cordiality and generosity.",
+      "These traits fall under the branches of faith and belong to sublime ethics.",
+      "Speaking a lot may lead one to what is disliked or prohibited. Safety lies in keeping silent unless one says something good."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) pointed out that a person who believes in Allah and the Last Day, that he will be resurrected and recompensed therein for his deeds, is driven by his belief to do these things:\n\nFirst: good words: Examples of good words include glorification of Allah and proclamation of His oneness, enjoining the right and forbidding the wrong, and reconciling between people. If a person does not say something good, he should then keep silent, restraining his tongue and sparing people from his harm.\n\nSecond: honoring the neighbors: by being benevolent to them and not causing them any harm.\n\nThird: honoring the guests: by speaking to them in a nice manner, presenting food to them, and so on.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/5437",
+     "passage_id": "hadeethenc:en:5437"
+    },
+    "tl": {
+     "title": "Ang sinumang sumasampalataya kay Allāh at sa Huling Araw ay magsabi siya ng mabuti o manahimik siya",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya): {Ayon sa Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"Ang sinumang sumasampalataya kay Allāh at sa Huling Araw ay magsabi siya ng mabuti o manahimik siya. Ang sinumang sumasampalataya kay Allāh at sa Huling Araw ay magparangal siya sa kapitbahay niya. Ang sinumang sumasampalataya kay Allāh at sa Huling Araw ay magparangal siya sa panauhin niya.\"}",
+     "benefits": [
+      "Ang pananampalataya kay Allāh at sa Huling Araw ay isang saligan ng bawat kabutihan at pumupukaw sa paggawa ng kabutihan.",
+      "Ang pagbibigay-babala sa mga salot ng dila.",
+      "Ang Relihiyong Islām ay Relihiyon ng Pagkapalagayang-loob at Karangalan.",
+      "Ang mga gawaing ito ay kabilang sa mga sangay ng pananampalataya at kabilang sa mga etiketang napapupurihan.",
+      "Ang dami ng pagsasalita ay maaaring humatak tungo sa kinasusuklaman o ipinagbabawal. Ang kaligtasan ay nasa hindi pagsasalita malibang kaugnay sa kabutihan."
+     ],
+     "explanation": "Naglinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na ang lingkod na mananampalataya kay Allāh at sa Huling Araw na tungo roon ang pangako sa kanya at naroon ang pagganti sa kanya sa gawa niya ay hinihimok ng pananampalataya niya sa paggawa ng mga gawaing ito:\n\nUNA: Ang Magandang Salita: gaya ng tasbīḥ at tahlīl, pag-uutos ng nakabubuti at pagsaway ng nakasasama, at pagsasaayos sa mga tao ngunit kung hindi siya makagagawa niyon ay manatili siya sa katahimikan, magpigil siya ng perhuwisyo niya, at mangalaga siya ng dila niya.\n\nIKALAWA: Ang Pagpaparangal sa Kapit-bahay: Sa pamamagitan ng paggawa ng maganda sa kanya at hindi pamemerhuwisyo sa kanya.\n\nIKATLO: Ang Pagpaparangal sa Panauhing Dumating Para sa Pagdalaw sa Iyo: Sa pamamagitan ng kaayahan ng pananalita, pagkakaloob ng pagkain, at tulad nito.",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5437",
+     "passage_id": "hadeethenc:tl:5437"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-4709",
+   "kind": "benefit",
+   "hadith_id": 4709,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/4709",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "لا تغضب",
+     "text": "عن أبي هريرة رضي الله عنه: أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: أَوْصِنِي، قَالَ: «لَا تَغْضَبْ» فَرَدَّدَ مِرَارًا قَالَ: «لَا تَغْضَبْ».",
+     "benefits": [
+      "التحذير من الغضب وأسبابه، فإنه جِماعُ الشر، والتحرُّزُ منه جماعُ الخير.",
+      "الغضب لله كالغضب عند انتهاك محارم الله من الغضب المحمود.",
+      "تَكرار الكلام عند الحاجة حتى يَعِيَه السامعُ ويُدرك أهميتَه.",
+      "فضيلة طلب الوصية من العالِم."
+     ],
+     "explanation": "طَلبَ أحدُ الصحابة رضوان الله عليهم من النبي صلى الله عليه وسلم أن يَدُلَّه على شيء ينفعه، فأمره ألّا يغضب، ومعنى ذلك أن يَجتنبَ الأسبابَ التي تحمله على الغضب، وأن يَضبطَ نفسَه إذا حَصَل له الغضب، فلا يَتَمادى مع غضبه بالقتل أوالضرب أوالسب ونحو ذلك.\n\nوردَّدَ الرجلُ طَلَبَ الوصيةِ مَرَّات، فلم يَزِدْه صلى الله عليه وسلم في الوصية على \"لا تغضب\".",
+     "grade": "صحيح",
+     "attribution": "رواه البخاري",
+     "url": "https://hadeethenc.com/ar/browse/hadith/4709",
+     "passage_id": "hadeethenc:ar:4709"
+    },
+    "en": {
+     "title": "Do not get angry",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: A man came to the Prophet (may Allah's peace and blessings be upon him) and said: \"Advise me.\" He said: \"Do not get angry.\" He repeated that several times, and every time, he would say: \"Do not get angry.\"",
+     "benefits": [
+      "The Hadīth warns against anger and its causes, for it combines all evil, and avoiding it leads to all goodness.",
+      "Anger for the sake of Allah, like getting angry when Allah's prohibitions are violated, is commendable.",
+      "If needed, one may repeat the speech so that the addressed person can understand it and realize its significance.",
+      "It shows the merit of seeking advice from a knowledgeable person."
+     ],
+     "explanation": "One of the Companions (may Allah be pleased with them) asked the Prophet (may Allah's peace and blessings be upon him) to direct him to something that would benefit him. He instructed him not to get angry. This means he should avoid the things that would make him angry and should restrain himself in case he becomes angry, not going to excess in his anger by killing, beating, cursing, and so on.\n\nThe man repeated his request for advice several times, and the Prophet (may Allah's peace and blessings be upon him) said no more in his advice than \"Do not get angry\".",
+     "grade": "Authentic",
+     "attribution": "Narrated by Al-Bukhāri",
+     "url": "https://hadeethenc.com/en/browse/hadith/4709",
+     "passage_id": "hadeethenc:en:4709"
+    },
+    "tl": {
+     "title": "Huwag kang magalit",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya): {May isang lalaking nagsabi sa Propeta (basbasan siya ni Allāh at pangalagaan): \"Magtagubilin ka po sa akin.\" Nagsabi siya: \"Huwag kang magalit.\" Kaya umulit ito nang makailan. Nagsabi siya: \"Huwag kang magalit.\"}",
+     "benefits": [
+      "Ang pagbibigay-babala laban sa pagkagalit at mga kadahilanan nito sapagkat tunay na ito ay ang kinasalalayan ng kasamaan at ang pag-iingat laban dito ay ang kinasalalayan ng kabutihan.",
+      "Ang pagkagalit alang-alang kay Allāh gaya ng pagkagalit sa sandali ng paglabag sa mga pinakababanal ni Allāh ay bahagi ng pagkagalit na napapupurihan.",
+      "Ang pag-uulit-ulit ng salita sa sandali ng pangangailangan ay nang sa gayon magkamalay rito ang nakaririnig at makatalos siya sa kahalagahan nito.",
+      "Ang kainaman ng paghiling ng tagubilin mula sa nakaaalam."
+     ],
+     "explanation": "Humiling ang isa sa mga Kasamahan (ang lugod ni Allāh ay sumakanila) sa Propeta (basbasan ito ni Allāh at pangalagaan) na gumabay ito sa kanya sa isang bagay na magpapakinabang sa kanya, kaya nag-utos ito sa kanya na huwag siyang magalit. Ang kahulugan niyon ay na umiwas siya sa mga kadahilanan na magdadala sa kanya sa pagkagalit at na magpigil siya sa sarili niya kapag nangyari sa kanya ang pagkagalit, kaya naman huwag siyang manatili sa galit niya sa pamamagitan ng pagpatay o pananakit o pag-alipusta at tulad niyon.\n\nNag-ulit-ulit ang lalaki sa paghiling ng tagubilin nang makailan ngunit hindi nagdagdag sa kanya ang Propeta (basbasan siya ni Allāh at pangalagaan) sa pagtatagubilin higit sa pagsabi ng: \"Huwag kang magalit.\"",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si  Imām Al-Bukhārīy",
+     "url": "https://hadeethenc.com/tl/browse/hadith/4709",
+     "passage_id": "hadeethenc:tl:4709"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-10101",
+   "kind": "benefit",
+   "hadith_id": 10101,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/10101",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "المسلم من سلم المسلمون من لسانه ويده، والمهاجر من هجر ما نهى الله عنه",
+     "text": "عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو رَضِيَ اللَّهُ عَنْهُمَا عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «المُسْلِمُ مَنْ سَلِمَ المُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ، وَالمُهَاجِرُ مَنْ هَجَرَ مَا نَهَى اللَّهُ عَنْهُ».",
+     "benefits": [
+      "كمال الإسلام لا يكون إلا بِعَدَم إِلْحاقِ الأذى بالآخرين ماديًّا كان أو معنويًّا.",
+      "خص اللسان واليد بالذكر؛ لكثرة أخطائهما وأضرارهما، فإنَّ معظم الشرور تصدر عنهما.",
+      "الحث على ترك المعاصي والتزام ما أمر الله تعالى به.",
+      "أفضل المسلمين مَن أدَّى حقوق الله تعالى وحقوق المسلمين.",
+      "الاعتداء قد يكون قولًا أو فعلًا.",
+      "الهجرة الكاملة هي هَجْرُ ما حرَّم الله تعالى."
+     ],
+     "explanation": "أَخْبَرَ النبيُّ صلى الله عليه وسلم أنَّ المسلمَ كاملَ الإسلامِ هو مَن سَلِم المسلمون من لسانه فلا يَسُبُّهم، ولا يَلعنُهم، ولا يغتابهم، ولا يسعى بينهم بأيِّ نوع من أنواع الأذى بلسانه،\nوسلِموا مِن يده فلا يَعتدي عليهم، ولا يأخذ أموالَهم بغير حق، وما أشبه ذلك،\nوالمهاجر من ترك ما حرَّم الله تعالى.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/10101",
+     "passage_id": "hadeethenc:ar:10101"
+    },
+    "en": {
+     "title": "A Muslim is the one from whose tongue and hand Muslims are safe, and a Muhājir (emigrant) is the one who abandons what Allah has forbidden",
+     "text": "‘Abdullah ibn ‘Amr (may Allah be pleased with him and his father) reported that the Prophet (may Allah's peace and blessings be upon him) said: \"A Muslim is the one from whose tongue and hand Muslims are safe, and a Muhājir (emigrant) is the one who abandons what Allah has forbidden.\"",
+     "benefits": [
+      "One's Islam is perfect only when he does not harm others physically or morally.",
+      "The tongue and the hand were mentioned in particular given their frequent mistakes and harms, as they are the source of most of  the evil.",
+      "Encouraging the abandonment of sins and adherence to the commands of Allah Almighty.",
+      "The best Muslims are those who fulfill the rights of Allah Almighty and the rights of the Muslims.",
+      "Assault could be verbal or physical.",
+      "The perfect emigration is abandoning what Allah Almighty has forbidden."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) informed that a true and perfect Muslim is the one from whose tongue Muslims are safe, so he does not insult, curse, or backbite them and does not hurt them with his tongue in any way. They are also safe from his hand, as he does not assault them or take their properties wrongfully, or the like. As for the emigrant, he is the one who abandons what Allah Almighty has prohibited.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/10101",
+     "passage_id": "hadeethenc:en:10101"
+    },
+    "tl": {
+     "title": "Ang Muslim ay ang sinumang naligtas ang mga Muslim mula sa dila niya at kamay niya. Ang tagalikas ay ang sinumang umiwan ng sinaway ni Allāh.\"}",
+     "text": "Ayon kay `Abdullāh bin `Amr (malugod si Allāh sa kanilang dalawa): {Ayon sa Propeta (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"Ang Muslim ay ang sinumang naligtas ang mga Muslim mula sa dila niya at kamay niya. Ang tagalikas ay ang sinumang umiwan ng sinaway ni Allāh.\"}",
+     "benefits": [
+      "Ang kakumpletuhan ng Islām ay hindi lamang dahil sa kawalan ng pagdudulot ng perhuwisyo sa mga ibang tao, pisikal man o moral.",
+      "Itinangi ang dila at ang kamay sa pagkabanggit dahil sa dami ng mga kamalian ng dalawang ito at mga pinsala ng dalawang ito sapagkat tunay na ang karamihan sa mga kasamaan ay namumutawi buhat sa dalawang ito.",
+      "Ang paghimok sa pagwaksi sa mga pagsuway at ang pagsunod sa ipinag-utos ni Allāh (napakataas Siya).",
+      "Ang pinakamainam sa mga Muslim ay ang sinumang gumaganap sa mga karapatan ni Allāh (napakataas Siya) at mga karapatan ng mga Muslim.",
+      "Ang pangangaway ay maaaring maging sa sinasabi o sa ginagawa.",
+      "Ang kumpletong paglikas ay ang pag-iwan sa ipinagbawal ni Allāh (napakataas Siya)."
+     ],
+     "explanation": "Nagpabatid ang Propeta (basbasan siya ni Allāh at pangalagaan) na ang Muslim na kumpleto ang pagkaanib sa Islām ay ang sinumang naligtas ang mga Muslim mula sa dila niya sapagkat hindi siya nang-aalipusta sa kanila, hindi siya sumusumpa sa kanila, hindi siya nanlilibak sa kanila, at hindi siya nagpupunyagi sa gitna nila ng alinmang uri kabilang sa mga uri ng perhuwisyo sa pamamagitan ng dila niya; at naligtas sila mula sa kamay niya sapagkat hindi siya nangangaway sa kanila, hindi siya kumukuha ng mga ari-arian nila nang walang katwiran, at anumang nakawangis niyon. Ang tagalikas ay ang sinumang nagwaksi ng ipinagbawal ni Allāh (napakataas Siya).",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/10101",
+     "passage_id": "hadeethenc:tl:10101"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-5507",
+   "kind": "benefit",
+   "hadith_id": 5507,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/5507",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن",
+     "text": "عن أبي هريرة رضي الله عنه عن النبي صلى الله عليه وسلم قال: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي الْمِيزَانِ، حَبِيبَتَانِ إِلَى الرَّحْمَنِ: سُبْحَانَ اللهِ الْعَظِيمِ، سُبْحَانَ اللهِ وَبِحَمْدِهِ».",
+     "benefits": [
+      "أعظم الذكر أن يُجْمَعَ فيه بين تنزيهِ الله والثناءِ عليه.",
+      "بيان سعة رحمة الله بعباده، فهو يجزي على العمل القليل بالثواب الجزيل."
+     ],
+     "explanation": "أَخبرَ النبيُّ صلى الله عليه وسلم عن كلمتين يَنطِقُهما الإنسان بلا مَشقَّة وعلى كل حال، وأنهما عظيم أجرهما في الميزان، وأنَّ ربَّنا الرحمن تبارك وتعالى يُحبُّهما:\n\nسبحان الله العظيم، سبحان الله وبحمده؛ لما تَضَمَّنتاه من وصف الله بالعظمة والكمال، وتنزيهه عن النقائص تبارك وتعالى.",
+     "grade": "صحيح",
+     "attribution": "متفق عليه",
+     "url": "https://hadeethenc.com/ar/browse/hadith/5507",
+     "passage_id": "hadeethenc:ar:5507"
+    },
+    "en": {
+     "title": "There are two words that are light on the tongue, heavy on the scale, and dear to the Most Merciful",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Prophet (may Allah's peace and blessings be upon him) said: \"There are two words that are light on the tongue, heavy on the scale, and dear to the Most Merciful: subhān Allah al-‘azhīm (glory be to Allah, the Majestic), subhān Allah wa bihamdih (glory and praise be to Allah).\"",
+     "benefits": [
+      "The best dhikr is that which combines the exaltation of Allah and praise of Him.",
+      "The Hadīth shows Allah's vast mercy to His servants, as He gives abundant rewards in return for simple deeds."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) told about two words that the tongue utters without effort and in any condition, they bring great reward when weighed on the scale, and the Most Merciful Lord loves them:\n\nGlory be to Allah, the Majestic; glory and praise be to Allah. This is because these two words contain attributes of greatness and perfection of Allah Almighty and exalting Him far above defects and imperfections.",
+     "grade": "Authentic",
+     "attribution": "Agreed upon",
+     "url": "https://hadeethenc.com/en/browse/hadith/5507",
+     "passage_id": "hadeethenc:en:5507"
+    },
+    "tl": {
+     "title": "May dalawang pangungusap na magaan sa dila, na mabigat sa timbangan [ang gantimpala], na kaibig-ibig sa Napakamaawain",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya): {Ayon sa Propeta (basbasan siya ni Allāh at pangalagaan) na nagsabi: \"May dalawang pangungusap na magaan sa dila, na mabigat sa timbangan [ang gantimpala], na kaibig-ibig sa Napakamaawain: Subḥana –llāhi –l-`aḍ̆īm (Kaluwalhatian kay Allāh, ang Sukdulan) at Subḥana –llāhi wa-biḥamdih (Kaluwalhatian kay Allāh at kalakip ng papuri sa Kanya).\"}",
+     "benefits": [
+      "Ang pinakasukdulang dhikr ay natitipon dito ang pagpapawalang-kinalaman kay Allāh sa kakulangan at ang pagbubunyi sa Kanya.",
+      "Ang paglilinaw sa lawak ng awa ni Allāh sa mga lingkod Niya sapagkat Siya ay gumaganti sa kaunting gawa ng masaganang gantimpala."
+     ],
+     "explanation": "Nagpabatid ang Propeta (basbasan siya ni Allāh at pangalagaan) tungkol sa dalawang pangungusap na mabibigkas ng tao nang walang hirap at sa bawat kalagayan, na ang dalawang ito ay sukdulan sa pabuya sa timbangan [ng mga gawa] at na ang Panginoon natin, ang Napakamaawain (napakamapagpala Siya at napakataas), ay nakaiibig sa dalawang ito:\n\nSubḥana –llāhi –l-`aḍ̆īm (Kaluwalhatian kay Allāh, ang Sukdulan) at Subḥana –llāhi wa-biḥamdih (Kaluwalhatian kay Allāh at kalakip ng papuri sa Kanya). Dahil naglalaman ang dalawang ito ng paglalarawan kay Allāh ng kasukdulan at kalubusan at ng pagpapawalang-kinalaman sa Kanya ng mga kakulangan (napakamapagpala Siya at napakataas).",
+     "grade": "Tumpak",
+     "attribution": "Nagkasang-ayon sa katumpakan nito",
+     "url": "https://hadeethenc.com/tl/browse/hadith/5507",
+     "passage_id": "hadeethenc:tl:5507"
+    }
+   }
+  },
+  {
+   "id": "hadeethenc-4555",
+   "kind": "benefit",
+   "hadith_id": 4555,
+   "source": {
+    "name": "HadeethEnc.com",
+    "url": "https://hadeethenc.com/ar/browse/hadith/4555",
+    "version": "api-v1@2026-10-05"
+   },
+   "langs": {
+    "ar": {
+     "title": "إن الله لا ينظر إلى صوركم وأموالكم، ولكن ينظر إلى قلوبكم وأعمالكم",
+     "text": "عن أبي هريرة رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: «إِنَّ اللهَ لَا يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ».",
+     "benefits": [
+      "الاعتناء بإصلاح القلب، وتطهيره عن كل وصف مذموم.",
+      "صلاح القلب بالإخلاص، وصلاح العمل بمتابعة النبي عليه الصلاة والسلام، وهما محل النظر والاعتبار عند الله تعالى.",
+      "لا يغتر الإنسان بماله ولا بجماله ولا ببدنه ولا بشيء من مظاهر هذه الدنيا.",
+      "التحذير من الركون إلى الظاهر دون إصلاح الباطن."
+     ],
+     "explanation": "يُبَِّنُ النبيُّ صلى الله عليه وسلم أنَّ اللهَ سبحانه وتعالى لا يَنظُرُ إلى صور العبادِ وأجسامِهم، هل هي جميلةٌ أو ذَميمةٌ؟ هلْ هي كَبيرةٌ أو صَغيرةٌ؟ أو صَحيحةٌ أو سَقيمةٌ؟\nولا يَنظُرُ إلى أموالهم، هل هي كثيرة أو قليلة؟ فالله عزَّ وجلَّ لا يُؤاخِذُ عبادَه ولا يُحاسبُهم على هذه الأمورِ وتَفاوُتِهم فيها، ولكنْ يَنظُرُ إلى قُلوبِهم وما فيها من التَّقْوى واليقينِ، والصدقِ والإخلاصِ، أو قصدِ الرياءِ والسُّمعةِ، وينظُرُ إلى أعمالِهم من حيثُ صلاحُها وفسادُها؛ فيثيبُ ويُجازي عليها.",
+     "grade": "صحيح",
+     "attribution": "رواه مسلم",
+     "url": "https://hadeethenc.com/ar/browse/hadith/4555",
+     "passage_id": "hadeethenc:ar:4555"
+    },
+    "en": {
+     "title": "Indeed, Allah does not look at your appearance and wealth, but He looks at your hearts and deeds.”",
+     "text": "Abu Hurayrah (may Allah be pleased with him) reported: The Messenger of Allah (may Allah's peace and blessings be upon him) said: \"Indeed, Allah does not look at your appearance and wealth, but He looks at your hearts and deeds.”",
+     "benefits": [
+      "We should be careful to mend our hearts and purify them of any bad traits.",
+      "Hearts become sound with sincerity, and deeds become sound by following the Prophet's example. It is both of them that Allah Almighty looks at and judges accordingly.",
+      "A person should not be deceived by wealth, beauty, body, or worldly appearances.",
+      "The Hadīth warns us against caring about outward appearance and failing to reform what is inside."
+     ],
+     "explanation": "The Prophet (may Allah's peace and blessings be upon him) points out that Allah Almighty does not look at the appearance and bodies of His servants, as to whether they are beautiful or ugly, big or small, and sound or sick. And He does not look at their wealth as to whether they possess much or little. Indeed, Allah Almighty does not punish His servants or hold them accountable for these matters and their different levels regarding them. But He looks at their hearts and the piety, certitude, truthfulness, and sincerity existing therein or their intention to show off and attain a good reputation among people. He looks at their deeds and sees whether they are righteous or evil, and He gives the recompense accordingly.",
+     "grade": "Authentic",
+     "attribution": "Narrated by Muslim",
+     "url": "https://hadeethenc.com/en/browse/hadith/4555",
+     "passage_id": "hadeethenc:en:4555"
+    },
+    "tl": {
+     "title": "Tunay na si Allāh ay hindi tumitingin sa mga anyo ninyo ni sa mga ari-arian ninyo subalit tumitingin Siya sa mga puso ninyo at mga gawa ninyo.\"}",
+     "text": "Ayon kay Abū Hurayrah (malugod si Allāh sa kanya) na nagsabi: {Nagsabi ang Sugo ni Allāh (basbasan siya ni Allāh at pangalagaan): \"Tunay na si Allāh ay hindi tumitingin sa mga anyo ninyo ni sa mga ari-arian ninyo subalit tumitingin Siya sa mga puso ninyo at mga gawa ninyo.\"}",
+     "benefits": [
+      "Ang pagmamalasakit sa pagsasaayos ng puso at ang pagdadalisay nito sa bawat paglalarawang napupulaan.",
+      "Ang kaayusan ng puso ay sa pamamagitan ng pagpapakawagas at ang kaayusan ng gawain ay sa pamamagitan ng pakikipagsunuran sa Propeta (sumakanya ang basbas at ang pangangalaga). Ang dalawang ito ay pokus ng pagtingin at pagsasaalang-alang sa ganang kay Allāh (napakataas Siya).",
+      "Huwag malinlang ang tao dahil sa yaman niya, ni dahil sa karikitan niya, ni dahil sa katawan niya, ni dahil sa isang anuman kabilang sa mga nakahayag sa Mundong ito.",
+      "Ang pagbibigay-babala laban sa pagdepende sa panlabas nang walang pagsasaayos ng panloob."
+     ],
+     "explanation": "Naglilinaw ang Propeta (basbasan siya ni Allāh at pangalagaan) na si Allāh (kaluwalhatian sa Kanya at napakataas Siya) ay hindi tumitingin sa mga anyo ng mga tao at mga katawan nila kung ito ba ay marikit o kapula-pula at kung ito ba ay malaki o maliit, o malusog o maysakit? Hindi Siya tumitingin sa mga ari-arian nila kung ang mga ito ba ay marami o kaunti? Si Allāh (kaluwalhatian sa Kanya at napakataas Siya) ay hindi nagpapanagot sa mga lingkod Niya at hindi nagtutuos sa kanila sa mga bagay na ito at pagkakaibahan nila sa mga ito. Subalit tumitingin Siya sa mga puso nila at nasa loob ng mga ito na pangingilag magkasala, katiyakan, katapatan, pagpapakawagas, o pagpapakay ng pagpapakitang-tao at pagpaparinig sa tao. Tumitingin Siya sa mga gawa nila sa punto ng kaayusan ng mga ito at kasiraan ng mga ito saka naggagantimpala Siya at gumaganti Siya sa mga ito.",
+     "grade": "Tumpak",
+     "attribution": "Nagsalaysay nito si Imām Muslim",
+     "url": "https://hadeethenc.com/tl/browse/hadith/4555",
+     "passage_id": "hadeethenc:tl:4555"
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,4594 @@
+{
+ "note": "KNW-06 library candidates from IslamHouse API v3 (metadata and file links only). Nothing is shown before the Sharia reviewer approves the item. Rebuild with `python -m app.knowledge.library --fetch`.",
+ "fetched": "2026-10-05",
+ "items": [
+  {
+   "id": "ih-2846818-ar",
+   "external_id": "2846818",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "لماذا أنا مسلم ؟",
+   "authors": [
+    "الفريق العلمي لمركز أصول"
+   ],
+   "description": "كتابٌ يحتوي على أسئلةٍ مهمةٍ لمن أراد أن يدعم إيمانه بالأدلة والبراهين، وتحتاج إلى كثيرٍ من الأجوبة الكافية الشافية التي تزيل الغبش عنها؛ لا سيما في هذا العصر الذي نعيش فيه؛ عصر الفضاءات المفتوحة، وكثرة المذاهب والأفكار الفلسفية المطروحة.",
+   "origin_url": "https://islamhouse.com/ar/books/2846818/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-why-am-i-a-muslim.pdf",
+     "ext": "pdf",
+     "size": "10.25 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2844479-ar",
+   "external_id": "2844479",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "المسائل والنوازل العقدية للمسلمين الجدد",
+   "authors": [
+    "زیاد بن حمد العامر"
+   ],
+   "description": "مع مرور الأزمنة حدثت للناس نوازل لم تكن عند أسلافهم، ونتيجة للإقبال الكبير على الدخول في دين الإسلام خصوصا في البلدان التي تكون السيادة أو الكثرة فيها لغير أهل الإسلام، وانتشار الجهل، وكثرة مخالطة غير المسلمين، مما جعل كثير من معالم الإسلام تذوب في نفوس المسلمين من أهل تلك البلدان، وبدأت شعائر الإسلام تذبل في مظاهر حياتهم، مما يستدعي التواصل المستمر مع إخواننا الذي أضعفتهم الغربة، ورفع الاعتزاز بالإسلام في نفوسهم، وتذكيرهم بمعالم دينهم، وبيان الحدود التي تضبط تعاملاتهم في مسائل الاعتقاد والفقه وسائر علوم الشريعة، ونتيجة لذلك كله حدثت نوازل عقدية مستجدة في صفوف المسلمين الجدد في تلك البلاد، فكان هذا البحث محاولة للمشاركة في حل بعض ما يترض له المسلم الجديد.",
+   "origin_url": "https://islamhouse.com/ar/books/2844479/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar-almasayil-walnawazil-aleaqdiat-lilmuslimin-aljudud.pdf",
+     "ext": "pdf",
+     "size": "9.63 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2842706-ar",
+   "external_id": "2842706",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "منهج المعرفين بالإسلام من المسلمين الجدد",
+   "authors": [
+    "جمعية وقت الحوار للدعوة الإلكترونية"
+   ],
+   "description": "منهج المعرِّفين بالإسلام من المسلمين الجدد” كتاب يضع إطارًا تربويًّا ودعويًّا متدرّجًا لتعريف الداخلين في الإسلام بأصول الدين ومقاصده الكبرى، مميّزًا بين الثوابت الشرعية والعادات الاجتماعية، وراعيًا لاختلاف الخلفيات الثقافية. وهو دليل عملي للدعاة يقدّم خطوات واضحة تُيسِّر على المسلمين الجدد فهم الإسلام والاندماج فيه بروح من الرحمة والحكمة",
+   "origin_url": "https://islamhouse.com/ar/books/2842706/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single4/ar-manhaj-almaerifin-bialaslam-1.pdf",
+     "ext": "pdf",
+     "size": "23.15 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single4/ar-manhaj-almaerifin-bialaslam-2.pdf",
+     "ext": "pdf",
+     "size": "9.39 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single5/ar-manhaj-almaerifin-bialaslam-3.pdf",
+     "ext": "pdf",
+     "size": "25.77 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single4/ar-manhaj-almaerifin-bialaslam-4.pdf",
+     "ext": "pdf",
+     "size": "13.84 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2840883-ar",
+   "external_id": "2840883",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "تسهيل العقيدة للعامة",
+   "authors": [
+    "عبد الله بن سليمان المهنا"
+   ],
+   "description": "كتاب نافع يهدف إلى تسهيل أصول العقيدة لعامة المسلمين.",
+   "origin_url": "https://islamhouse.com/ar/books/2840883/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-tashil-3a-edafat-p.pdf",
+     "ext": "pdf",
+     "size": "11.49 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2840435-ar",
+   "external_id": "2840435",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "مناسك الحج والعمرة",
+   "authors": [
+    "عبد اللطيف بن عبد الرحمن بن حسن آل الشيخ"
+   ],
+   "description": "كتاب قيم يتناول مناسك الحج و العمرة",
+   "origin_url": "https://islamhouse.com/ar/books/2840435/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar-the-rites-of-hajj-and-umra.pdf",
+     "ext": "pdf",
+     "size": "27.88 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838873-ar",
+   "external_id": "2838873",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "دليل المسلم الجديد",
+   "authors": [
+    "هيثم سرحان"
+   ],
+   "description": "كتاب مصور يتضمن إرشادات أساسية للمسلم الجديد تعينه على فهم الإسلام وتطبيقه، مع شرح موجز لأركان الإيمان والإسلام، مع بيان بعض محاسن الأخلاق التي يجب أن يتحلى بها المسلم.",
+   "origin_url": "https://islamhouse.com/ar/books/2838873/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-new-muslim-guide.pdf",
+     "ext": "pdf",
+     "size": "22.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838768-ar",
+   "external_id": "2838768",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "شرح الأربعين النووية",
+   "authors": [
+    "جمعية الدعوة والإرشاد وتوعية الجاليات بالربوة",
+    "الفريق العلمي بجمعية خدمة المحتوى الإسلامي باللغات"
+   ],
+   "description": "شرح وتعليق على كتاب الأربعين النووية للإمام النووي - رحمه الله تعالى -، والذي اشتمل على جملة عظيمة من الأحاديث النبوية، وكل حديث منها عبارة عن قاعدة عظيمة من قواعد الدين.",
+   "origin_url": "https://islamhouse.com/ar/books/2838768/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_01/ar-explanation-of-the-forty-hadeth-nawawy.pdf",
+     "ext": "pdf",
+     "size": "2.57 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_01/ar-explanation-of-the-forty-hadeth-nawawy.docx",
+     "ext": "docx",
+     "size": "3.08 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838542-ar",
+   "external_id": "2838542",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "ملف بيان الإسلام التفاعلي - باللغات",
+   "authors": [],
+   "description": "ملف تفاعلي للتعريف بالإسلام وتعليم المسلم الجديد - بلغات العالم",
+   "origin_url": "https://islamhouse.com/ar/books/2838542/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single2/bayan-islam.pdf",
+     "ext": "pdf",
+     "size": "19.21 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2836199-ar",
+   "external_id": "2836199",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "ما لا يسع المسلم جهله",
+   "authors": [
+    "خالد بن حمد الخريف"
+   ],
+   "description": "كتاب نافع اشتمل على بيان ما يجب على كل مسلم تعلُّمه من أمور دينه.",
+   "origin_url": "https://islamhouse.com/ar/books/2836199/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-what-a-muslim-cannot-be-ignorant-of.pdf",
+     "ext": "pdf",
+     "size": "1.92 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-what-a-muslim-cannot-be-ignorant-of.docx",
+     "ext": "docx",
+     "size": "151.86 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2836064-ar",
+   "external_id": "2836064",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "الإجابات على أسئلة الجاليات - ابن عثيمين",
+   "authors": [
+    "محمد بن صالح العثيمين"
+   ],
+   "description": "كتاب قيم تضمن إجابات الشيخ العلامة بن عثيمين -رحمه الله- على أسئلة الجاليات.",
+   "origin_url": "https://islamhouse.com/ar/books/2836064/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single/ar-al-ijabat.pdf",
+     "ext": "pdf",
+     "size": "1.75 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2834583-ar",
+   "external_id": "2834583",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "كيف أتوضأ؟ (صفة الوضوء كاملة)",
+   "authors": [
+    "الفريق العلمي لمركز أصول"
+   ],
+   "description": "الوضوء شعيرة جليلة من شعائر الإسلام وسبيل للتطهر من الذنوب والآثام، يحشر المسلمون يوم القيامة غرًّا محجلين من أثره، ولا تصح صلاة المؤمن المستطيع إلا به، وإن أعظم ما يحرص المؤمن على تعلمه وتعليمه عبادته التي عليها مدار سعادته في الدنيا والآخرة، وفي هذا المقطع شرح تفصيلي لكيفية الوضوء نأمل أن ينتفع به كل مشاهد.",
+   "origin_url": "https://islamhouse.com/ar/videos/2834583/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-sifat-alwoduo.mp4",
+     "ext": "mp4",
+     "size": "21.01 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833822-ar",
+   "external_id": "2833822",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "رؤية شاملة عن المسلم الجديد - دراسة استراتيجية علمية تعليمية",
+   "authors": [
+    "الفريق العلمي لمركز أصول"
+   ],
+   "description": "دراسة استراتيجية علمية تعليمية من إعداد الفريق العلمي في مركز أصول، وهي تحوي خلاصة عمل بحثي دؤوب استمر لعدة سنوات يُسلِّط الضوء على أوضاع المسلمين الجدد، ويقف على احتياجاتهم، مع تلَّمُس أوجه النقص فيما يُقدم لهم من أعمال، وتسعى الدراسة أن يكون لها أثر عظيم في الارتقاء بالجهود المبذولة في دعوة المسلمين الجدد ورعايتهم.",
+   "origin_url": "https://islamhouse.com/ar/books/2833822/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-a-comprehensive-vision.pdf",
+     "ext": "pdf",
+     "size": "25.58 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833797-ar",
+   "external_id": "2833797",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "المختصر في أحكام المسلم",
+   "authors": [],
+   "description": "كتاب نافع جُمع فيه أهم الأحكام والمسائل التي يحتاجها المسلم لمعرفة أحكام دينه وتعاليمه ومبادئه.",
+   "origin_url": "https://islamhouse.com/ar/books/2833797/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-almulakhas-almufid-brief.pdf",
+     "ext": "pdf",
+     "size": "1.28 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-almulakhas-almufid-brief.doc",
+     "ext": "doc",
+     "size": "1.43 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833796-ar",
+   "external_id": "2833796",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "الملخص المفيد في أحكام المسلم",
+   "authors": [
+    "وزارة الأوقاف الكويتية"
+   ],
+   "description": "كتاب نافع جُمع فيه أهم الأحكام والمسائل التي يحتاجها المسلم لمعرفة أحكام دينه وتعاليمه ومبادئه، وقد تم تقسيم موضوعات الكتاب إلى أربعة فصول: الفصل الأول يتناول تعريفاً مجملاً بدين الإسلام، والفصل الثاني يتناول أهم المسائل في باب الإيمان والتوحيد، أما الفصل الثالث فيتناول جملة من الأحكام الفقهية والواجبات التعبدية, والفصل الرابع والأخير يتناول أحكام العلاقات الاجتماعية والمالية للمسلم.",
+   "origin_url": "https://islamhouse.com/ar/books/2833796/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-almulakhas-almufid.pdf",
+     "ext": "pdf",
+     "size": "2.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-almulakhas-almufid.doc",
+     "ext": "doc",
+     "size": "2.49 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2832545-ar",
+   "external_id": "2832545",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أنا مسلم",
+   "authors": [
+    "محمد بن إبراهيم الحمد"
+   ],
+   "description": "رسالةٌ مختصرةٌ بيَّن فيها المُؤلِّف - أثابه الله - ما يأمرنا به الإسلام وأعظمها أركانَ الإيمان الستة وبعض العبادات والمعاملات التي يجب أن تتوفر في كل مسلم، وكل هذا بأسلوبٍ سهل، دقيق العبارة، مُبتعدًا عن التطويل والتفريع، وهو مفيد للناشئة والشباب ومن ليس عنده وقت للتوسُّع في كتب العقيدة والآداب الإسلامية.",
+   "origin_url": "https://islamhouse.com/ar/articles/2832545/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-2832545-ana-muslim-new.pdf",
+     "ext": "pdf",
+     "size": "1.33 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2832508-ar",
+   "external_id": "2832508",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "الملخص المفيد في أحكام المسلم الجديد",
+   "authors": [
+    "وحدة البحث العلمي بإدارة الإفتاء بالكويت"
+   ],
+   "description": "كتاب باللغة العربية؛ اشتمل على أهم المسائل التي تبصر المسلم الجديد بعقيدة الإسلام؛ مما لا يسعه جهله، وكذلك الأحكام التعبدية العملية المفروضة التي لا يسعه تركها.",
+   "origin_url": "https://islamhouse.com/ar/books/2832508/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single-03/ar-almulakhas-almufeed.pdf",
+     "ext": "pdf",
+     "size": "7.91 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2832089-ar",
+   "external_id": "2832089",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "كيف أصلي ؟ (الصلاة من التكبير إلى التسليم)",
+   "authors": [
+    "الفريق العلمي لمركز أصول"
+   ],
+   "description": "مقطع مرئي يحتوي على شرح تفصيلي لصفة الصلاة من التكبير إلى التسليم، نرجو الله عز وجل أن ينفع به كل من يشاهده.",
+   "origin_url": "https://islamhouse.com/ar/videos/2832089/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "25.28 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2832016-ar",
+   "external_id": "2832016",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أسورة اليقين في متابعة المسلمين",
+   "authors": [],
+   "description": "أسورة اليقين في متابعة المسلمين : كتيب نافع يعطي منهج علمى متكامل لمتابعة المسلمين الجدد، والخطة والآلية في المتابعة.",
+   "origin_url": "https://islamhouse.com/ar/books/2832016/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-asourat-alyaqeen.pdf",
+     "ext": "pdf",
+     "size": "3.78 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2831443-ar",
+   "external_id": "2831443",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "المختصر المفيد للمسلم الجديد",
+   "authors": [
+    "محمد بن الشيبة الشهري"
+   ],
+   "description": "كتاب نافع باللغة العربية، موجه خصيصًا إلى المسلم الجديد الذي يحتاج إلى معرفة أسس الإسلام معرفة صحيحة، والدليل مبني على طريقة الأدلة التعليمية، مُراعيًا جميع المسائل الفقهية والإشكالات العقدية والمصطلحات الشرعية التي تُعرض على المسلم الجديد منذ دخوله الإسلام، وعرضها بأسلوب سهل وميسر.",
+   "origin_url": "https://islamhouse.com/ar/books/2831443/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-almukhtasar-almufid-lilmuslim-aljadid-m-ashihriy-ppp.pdf",
+     "ext": "pdf",
+     "size": "23.19 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2829179-ar",
+   "external_id": "2829179",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "ما لا يسع أطفال المسلمين جهله",
+   "authors": [
+    "الفريق العلمي بجمعية خدمة المحتوى الإسلامي باللغات"
+   ],
+   "description": "كتاب نافع عبارة عن منهج بسيط متكامل للطفل المسلم في العقيدة والفقه والسيرة والآداب والتفسير، يصلح للصبيان ولكافة الأعمار، وقد رتَّب المؤلف أثابه الله كتابَه على حسب الفنون، وقد جعله على طريقة السؤال والجواب.",
+   "origin_url": "https://islamhouse.com/ar/books/2829179/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-what-muslim-children-must-know.pdf",
+     "ext": "pdf",
+     "size": "20.02 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2826708-ar",
+   "external_id": "2826708",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أحكام التعامل مع غير المسلمين",
+   "authors": [
+    "صالح بن فوزان الفوزان"
+   ],
+   "description": "أحكام التعامل مع غير المسلمين: كتاب عبارة عن محاضرة ألقاها فضيلة الشيخ صالح بن فوزان الفوزان - أثابه الله - بجامع خادم الحرمين الشريفين الملك فهد بن عبد العزيز، في أحكام التعامل مع غير المسلمين.",
+   "origin_url": "https://islamhouse.com/ar/books/2826708/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar_a7ham_alta3amol_ma3_gher_almoslmen.pdf",
+     "ext": "pdf",
+     "size": "320.5 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2808057-ar",
+   "external_id": "2808057",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "دليل المسلم: عقيدة - عبادات - معاملات",
+   "authors": [
+    "عبد الكريم عبد المجيد الديوان"
+   ],
+   "description": "دليل المسلم : رسالة قدم لها الشيخ ابن جبرين - رحمه الله - بين فيها مؤلفها - أثابه الله - ما ينبغي على المبتدئ والمسلم الجديد معرفته والعلم به في العقائد والعبادات والمعاملات.",
+   "origin_url": "https://islamhouse.com/ar/books/2808057/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar_Dleel_AlMuslim.pdf",
+     "ext": "pdf",
+     "size": "634.1 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2787491-ar",
+   "external_id": "2787491",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "فن التعامل مع المهتدي الجديد",
+   "authors": [
+    "محمد يحيى التوم"
+   ],
+   "description": "مقالة قيمة يٌقدم فيها المؤلف خمسين خطوة عملية في فن التعامل مع المهتدي الجديد، من إسلامه وحتى عودته لبلاده.",
+   "origin_url": "https://islamhouse.com/ar/articles/2787491/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single2/ar_fan_alta3amol_ma3_elmohtadeen.pdf",
+     "ext": "pdf",
+     "size": "569.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single2/ar_fan_alta3amol_ma3_elmohtadeen.doc",
+     "ext": "doc",
+     "size": "2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-460146-ar",
+   "external_id": "460146",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "التسامح والعدوانية بين الإسلام والغرب",
+   "authors": [
+    "صالح بن عبد الرحمن الحصين"
+   ],
+   "description": "كتاب يلقى الضوء على جانب علاقة التسامح\r\nوالعدوانية بين الإسلام والغرب لتكشف لنا جانبين مهمين في هذه\r\nالعلاقة أحدهما: عدوانية الغرب خاصة مع العالم الإسلامي وعنصريته\r\nوتجاوزاته عبر التاريخ وذلك بالوقائع التاريخية والأدلة العلمية.\r\nوالجانب الثاني تقدم تأصيلا علميا ورؤية واقعية وبرهانا واضحا\r\nلوسطية الإسلام وتسامحه في التعامل مع الآخر، كما تؤكد هذه\r\nالدراسة على أن الدين الإسلامي هي دين التسامح والرحمة، وأن\r\nالتسامح جزءٌ من طبيعة الإسلام ولم يكن ليغيب عن ثقافة الإسلام\r\nحتى في أحلك الظروف، تلك الظروف التي تُناقض مصالح الدول أو\r\nقيام الحرب فيما بينها.",
+   "origin_url": "https://islamhouse.com/ar/books/460146/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single8/ar_Tolerance_and_aggressive.pdf",
+     "ext": "pdf",
+     "size": "4.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-384385-ar",
+   "external_id": "384385",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "الدعوة إلى وجوب التمسك بتعاليم الإسلام",
+   "authors": [
+    "محمد سالم محيسن"
+   ],
+   "description": "الدعوة إلى وجوب التمسُّك بتعاليم الإسلام: قال المُصنِّف - رحمه الله -: «ومن نعمِ الله تعالى عليَّ التي لا تُحصَى أن شرحَ صدري لتأليفِ كتابٍ أُضمِّنُه الحديثَ عن وجوبِ التمسُّك بتعاليم الإسلام، فصنَّفتُ هذا الكتاب، وسمَّيتُه: «الدعوة إلى وجوب التمسُّك بتعاليم الإسلام».",
+   "origin_url": "https://islamhouse.com/ar/books/384385/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single5/ar_Adhere_to_the_teachings_of_Islam.pdf",
+     "ext": "pdf",
+     "size": "1.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334453-ar",
+   "external_id": "334453",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "التقليد في حياة المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "التقليد في حياة المسلم الجديد: ليس من هدْي الإسلام أن يفرض على الداخلين في الإسلام أن يجتهدوا في تحصيل العلوم الشرعية، ويعرفوا تفاصيل الشرع ودقيق مسائله. لذا فإن هذه المقالة تُبيِّن أن المسلم الجديد يُقلِّد في الأمور الشرعية إلى أن يستوي عُوده ويشتدَّ في دينه ويثبُت عليه، ويأخذ نصيبًا يُعينه على الاجتهاد بعد مجالسة العلماء والأخذ منهم.",
+   "origin_url": "https://islamhouse.com/ar/articles/334453/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Tradition_in_the_life_of_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "49.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Tradition_in_the_life_of_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1010 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334450-ar",
+   "external_id": "334450",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "من صور التيسير على المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "من صور التيسير على المسلم الجديد: تتعدَّد صور التيسير في الشرع، ولا تكاد تنحصر في باب أو لأحدٍ، والداخل في الإسلام له نصيبُه الوافر من هذا التيسير. وتضع أمامنا هذه المقالة بعض صور تيسير الشريعة على المسلم الجديد.",
+   "origin_url": "https://islamhouse.com/ar/articles/334450/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Photos_of_facilitation_to_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "42 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Photos_of_facilitation_to_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334449-ar",
+   "external_id": "334449",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "ماضي المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "ماضي المسلم الجديد: لا بُدَّ أن يترك المسلم الجديد عند دخوله الإسلام خلف ظهره آثامًا وأوزارًا، ولكنه يستبشِر بوعد الله له بمغفرة ما مضى وسلف من عمره في الشرك والعصيان. وفي هذه المقالة ذكر بعض الأدلة على ذلك.",
+   "origin_url": "https://islamhouse.com/ar/articles/334449/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Past_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "46.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Past_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334447-ar",
+   "external_id": "334447",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "تصورات خاطئة عن المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "تصورات خاطئة عن المسلم الجديد: أمرنا الإسلام بالعدل وعدم اتهام الناس بالباطل، وتشير هذه المقالة إلى ما يعتري بعض الدعاة من اتهامهم لبعض الداخلين في الإسلام أنهم كانوا على غير معرفة بالله ربًّا وخالقًا وغير ذلك من الأمور، وتُذكِّر بضرورة العدل في ذلك.",
+   "origin_url": "https://islamhouse.com/ar/articles/334447/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Misconceptions_about_the_Muslim_new.pdf",
+     "ext": "pdf",
+     "size": "53.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Misconceptions_about_the_Muslim_new.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334446-ar",
+   "external_id": "334446",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "التدرج في دعوة المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "التدرج في دعوة المسلم الجديد: إن الداخل في الإسلام مولود جديد، وحال المولود أحوج ما يكون إلى الرعاية والعناية. وفي هذه المقالة بيانٌ لكيفية عناية الإسلام بالمسلم الجديد من حيث التدرُّج معه في بداية التزامه بتعاليم الإسلام، مع النماذج الدالة على ذلك من سير الصحابة - رضي الله عنهم -.",
+   "origin_url": "https://islamhouse.com/ar/articles/334446/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Gradient_to_invite_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "44.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Gradient_to_invite_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334445-ar",
+   "external_id": "334445",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "من أحكام المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "من أحكام المسلم الجديد: لقد اعتنى الإسلام عنايةً بالغةً بالمسلم الجديد، فنصَّ على أحكامٍ عديدة له، بيَّنها العلماء وشرحوها في كتب الفقه. وهذه المقالة تذكر بعضًا من هذه الأحكام المهمة.",
+   "origin_url": "https://islamhouse.com/ar/articles/334445/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_From_the_provisions_of_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "46.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_From_the_provisions_of_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-334444-ar",
+   "external_id": "334444",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "رواسب الكفر عند المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "رواسب الكفر عند المسلم الجديد: قُرب عهد المسلم الجديد بالكفر يجعله يقع في بعض المخالفات القولية والفعلية. وهذه المقالة تعرِض شيئًا من الشواهد على ذلك، وتُبيِّن أن هذه الرواسب تظل مع المسلم الجديد وتزول عنه شيئا فشيئًا.",
+   "origin_url": "https://islamhouse.com/ar/articles/334444/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Deposits_of_disbelief_when_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "43.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Deposits_of_disbelief_when_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "1.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-320710-ar",
+   "external_id": "320710",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أحكام الداخل في الإسلام",
+   "authors": [
+    "سالم حمزة أمين مدني"
+   ],
+   "description": "أحكام الداخل في الإسلام : دراسة فقهية مقارنة، فيما عدا أحكام الأسرة، وهو بحث مقدم لنيل درجة الدكتوراة في الفقه الإسلامي من جامعة أم القرى بمكة المكرمة.",
+   "origin_url": "https://islamhouse.com/ar/books/320710/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Ruling_of_Entry_in_Islam/ar_01_Entry_in_Islam.pdf",
+     "ext": "pdf",
+     "size": "8.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Ruling_of_Entry_in_Islam/ar_02_Entry_in_Islam.pdf",
+     "ext": "pdf",
+     "size": "9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Ruling_of_Entry_in_Islam/ar_03_Entry_in_Islam.pdf",
+     "ext": "pdf",
+     "size": "6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-305086-ar",
+   "external_id": "305086",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أسلمت حديثًا... فماذا أتعلم؟",
+   "authors": [],
+   "description": "يزداد أعداد معتنقي الإسلام من مختلف الأجناس في كل يوم وفي كل مكان - ولله الحمد -، ومن المعلوم أن كثيرًا من التكاليف الشرعية يتحتم على المهتدي الجديد أن يؤديها فور اعتناقه للإسلام، مثل: الصلاة وما يتعلق بها من أحكام لا تصحُّ إلا بها.\r\nولما كان غالب الكتب التعليمية للمهتدي الجديد تخلو من الجانب التعليمي التربوي الذي يتضمن التطبيق والتدريب؛ قام مكتب توعية الجاليات في الأحساء بوضع هذا الكتاب، والذي يحتوي على طريقةٍ منظمة في تعليم المهتدي جملة من الأحكام والتكاليف الشرعية التي يجب أن يتعلمها في أقصر وقت ممكن، وبصورة مبسطة وواضحة.\r\n- وقد راجعه عدد من أهل العلم، وقدَّم له الدكتور علي بن سعد الضويحي.",
+   "origin_url": "https://islamhouse.com/ar/books/305086/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single3/ar_aslamt_hadethan.pdf",
+     "ext": "pdf",
+     "size": "13 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-301183-ar",
+   "external_id": "301183",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "اعتبار المصلحة في دعوة المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "في هذه المقالة بيان أن المصلحة أصلٌ في دعوة المسلم الجديد؛ وذلك لأن النبي صلى الله عليه وسلم قال لعائشة رضي الله عنها: «لولا أن حداثة قومك بالكفر لنقضتُ البيتَ ثم لبنيتُه على أساس إبراهيم عليه السلام ...» الحديث؛ رواه البخاري (1585)، لئلا يصدهم عن الإسلام.",
+   "origin_url": "https://islamhouse.com/ar/articles/301183/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Interest_in_the_new_Muslim_call.doc",
+     "ext": "doc",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Interest_in_the_new_Muslim_call.pdf",
+     "ext": "pdf",
+     "size": "388.1 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-301182-ar",
+   "external_id": "301182",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "التيسير في دعوة المسلم الجديد",
+   "authors": [
+    "عبد الله بن إبراهيم اللحيدان"
+   ],
+   "description": "مقالةٌ تُبيِّن مدى يُسر الدين في التعامل مع المسلمين الجُدد، وأنه لا بد للداعية من استخدام أسلوب الرفق واللين في دعوته المسلمين، كما كان النبي صلى الله عليه وسلم يؤلِّف قلوبَ المسلمين الجُدد.",
+   "origin_url": "https://islamhouse.com/ar/articles/301182/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Facilitation_of_the_new_Muslim_call.pdf",
+     "ext": "pdf",
+     "size": "362.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar_Facilitation_of_the_new_Muslim_call.doc",
+     "ext": "doc",
+     "size": "1.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-291717-ar",
+   "external_id": "291717",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "أحكام المسلم الجديد",
+   "authors": [
+    "وليد بن راشد السعيدان"
+   ],
+   "description": "هذا الكتاب في بيان أحكام المسلم الجديد، وقد ألَّفه المؤلف على طريقة السؤال والجواب، وجمع مائة وثلاثة وثلاثين سؤالًا في ذلك، منوعة لكثير من المسائل والأحكام، ومُجيبًا عليها بالتفصيل والإلمام.",
+   "origin_url": "https://islamhouse.com/ar/books/291717/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single3/ar_The_provisions_of_the_new_Muslim.pdf",
+     "ext": "pdf",
+     "size": "288 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single3/ar_The_provisions_of_the_new_Muslim.doc",
+     "ext": "doc",
+     "size": "428 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-234603-ar",
+   "external_id": "234603",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "مناهج تعليمية للمسلمين الجدد",
+   "authors": [],
+   "description": "تعليم المسلم الجديد من الأمور المهمة ليعبد الله على بصيرة، فالعلمُ قبل العمل؛ لذا كان من منهج النبي صلى الله عليه وسلم مع المسلم الجديد تعليمه بعد أن ينطق بالشهادتين، وبه كان يبدأ صلى الله عليه وسلم مع من أسلموا في مكة والمدينة، وكان من أصحابه القراء الذين يُعلِّمون الناسَ القرآن، ويُلقِّنونهم شرائع الإسلام.\r\nومن هذا المنطلق فقد قام قسم التعليم بمكتب الربوة بإعداد مناهج تعليمية مقسمة على عدة مراحل تناسب المسلمين الجدد، وتحتوي كل مرحلة على ثلاث مواد بالإضافة إلى منهج القرآن الكريم.\r\n- وقد قام المكتب بترجمة المناهج إلى عدة لغات عالمية، منها: الإنجليزية، والفلبينية، والأردية، وغيرها.",
+   "origin_url": "https://islamhouse.com/ar/books/234603/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Curricula_for_New_Muslims/ar_01_Curricula_for_New_Muslims.rar",
+     "ext": "rar",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Curricula_for_New_Muslims/ar_02_Curricula_for_New_Muslims.rar",
+     "ext": "rar",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Curricula_for_New_Muslims/ar_03_Curricula_for_New_Muslims.rar",
+     "ext": "rar",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/chain/Curricula_for_New_Muslims/ar_04_Curricula_for_New_Muslims.rar",
+     "ext": "rar",
+     "size": "1.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-1872-ar",
+   "external_id": "1872",
+   "type": "books",
+   "topic": "basics",
+   "lang": "ar",
+   "title": "العقيدة الصحيحة وما يضادها",
+   "authors": [
+    "عبد العزيز بن باز"
+   ],
+   "description": "العقيدة الصحيحة وما يضادها : كتيب باللغة العربية، للشيخ ابن باز - رحمه الله - بين فيه أصول عقيدة أهل السنة والجماعة وما يضادها.",
+   "origin_url": "https://islamhouse.com/ar/books/1872/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-authentic-creed.pdf",
+     "ext": "pdf",
+     "size": "502.63 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2843289-en",
+   "external_id": "2843289",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Learned the of Approach The Muslims New to Muslims",
+   "authors": [],
+   "description": "Learned the of Approach The Muslims New to Muslims",
+   "origin_url": "https://islamhouse.com/en/books/2843289/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/Approach_The_Muslim/en-the-approach-new-muslims-level-1.pdf",
+     "ext": "pdf",
+     "size": "23.54 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/Approach_The_Muslim/en-the-approach-new-muslims-level-2.pdf",
+     "ext": "pdf",
+     "size": "9.58 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/Approach_The_Muslim/en-the-approach-new-muslims-level-3.pdf",
+     "ext": "pdf",
+     "size": "25.52 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/Approach_The_Muslim/en-the-approach-new-muslims-level-4.pdf",
+     "ext": "pdf",
+     "size": "13.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2840882-en",
+   "external_id": "2840882",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Simplifying the Fundamentals of Creed for the Masses",
+   "authors": [],
+   "description": "Simplifying the Fundamentals of Creed for the Masses",
+   "origin_url": "https://islamhouse.com/en/books/2840882/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-simplifying-the-fundamentals-pp.pdf",
+     "ext": "pdf",
+     "size": "883.99 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-simplifying-the-fundamentals-w.docx",
+     "ext": "docx",
+     "size": "8.91 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2839969-en",
+   "external_id": "2839969",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "HOW CAN I PRAY? - brief",
+   "authors": [
+    "Osoul Center Team"
+   ],
+   "description": "HOW CAN I PRAY? - brief",
+   "origin_url": "https://islamhouse.com/en/videos/2839969/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en-pray-brief.mp4",
+     "ext": "mp4",
+     "size": "9.36 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2839968-en",
+   "external_id": "2839968",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "How to perform wudu' (ablution) - brief",
+   "authors": [
+    "Osoul Center Team"
+   ],
+   "description": "It is a mean to be purified from #sins and misdeeds.\r\n\r\nThe Muslims are to be summoned on the Day of Resurrection with white faces, hands and feet from the marks of wudu'.\r\n\r\nThe prayer of a capable #believer is not valid except with wudu'.\r\n\r\nThe greatest concern of a believer is to learn and teach the acts of worship because based on them his happiness in this worldly life and the afterlife is based.\r\n\r\nIn this clip, there is a detailed description of #how to perform wudu'. We hope the viewer benefits from watching it.",
+   "origin_url": "https://islamhouse.com/en/videos/2839968/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en-wudu-brief.mp4",
+     "ext": "mp4",
+     "size": "24.51 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838921-en",
+   "external_id": "2838921",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "HOW CAN I PRAY?",
+   "authors": [
+    "Osoul Center Team"
+   ],
+   "description": "HOW CAN I PRAY?",
+   "origin_url": "https://islamhouse.com/en/videos/2838921/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_Salah_With_al_Duaa.mp4",
+     "ext": "link",
+     "size": "0 B"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838874-en",
+   "external_id": "2838874",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "The New Muslim Guide",
+   "authors": [],
+   "description": "This is a gift for all the new Muslims who currently know the right path to Allah. This is a means to strengthen and preserve their belief. In this book, shows the fruits of becoming a Muslim, the excellent features of Islam and all aspects of Islam",
+   "origin_url": "https://islamhouse.com/en/books/2838874/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single3/en-new-muslim-guide-sarhan.pdf",
+     "ext": "pdf",
+     "size": "38.47 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838556-en",
+   "external_id": "2838556",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "New Muslim Guide",
+   "authors": [],
+   "description": "This series, consisting of 14 films with outstanding artistic direction, is specially designed to help new Muslims understand and learn the basics of Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/2838556/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-01-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "9.72 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-02-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "5.23 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-03-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "5.05 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-04-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "13.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-05-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "22.03 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-06-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "30.76 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-07-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "12.05 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-08-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "6.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-09-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "8.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-10-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "30.45 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-11-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "3.18 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-12-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "8.23 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-13-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "8.59 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/new_muslim_guide/en-14-new-muslim-guide-n.mp4",
+     "ext": "mp4",
+     "size": "26.14 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838391-en",
+   "external_id": "2838391",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "en",
+   "title": "discover Islam",
+   "authors": [],
+   "description": "discover Islam",
+   "origin_url": "https://islamhouse.com/en/articles/2838391/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en-article-english.pdf",
+     "ext": "pdf",
+     "size": "136.35 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2837377-en",
+   "external_id": "2837377",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "How to Pray series",
+   "authors": [
+    "Aziz Bin Farhan Al_Anazi"
+   ],
+   "description": "How to Pray series Sheikh Aziz bin Farhan Al Anizi",
+   "origin_url": "https://islamhouse.com/en/videos/2837377/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-01-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "6.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-02-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "11.51 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-03-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "10.87 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-04-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "14.41 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-05-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "28.46 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-06-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "15.49 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-07-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "15.55 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-08-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "13 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-09-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "5.24 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-10-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "10.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-11-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "24.42 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-12-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "8.01 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-13-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "18.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-14-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "13.53 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-15-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "11.96 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-16-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "9.85 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-17-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "12.53 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-18-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "10.94 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-19-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "11.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-20-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "2.78 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/How_to_Pray/en-21-how-to-pray.mp4",
+     "ext": "mp4",
+     "size": "12.91 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2836899-en",
+   "external_id": "2836899",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "en",
+   "title": "I Am a Muslim",
+   "authors": [
+    "Muhammad ibn Ibraheem al-Hamad"
+   ],
+   "description": "I Am a Muslim",
+   "origin_url": "https://islamhouse.com/en/articles/2836899/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/arc_en-2836899-en33-mm-ana-muslim-pp.pdf",
+     "ext": "pdf",
+     "size": "1.74 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en-2836899-en33-mm-ana-muslim-ww.docx",
+     "ext": "docx",
+     "size": "7.42 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2835693-en",
+   "external_id": "2835693",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "WHAT A MUSLIM CANNOT BE IGNORANT OF",
+   "authors": [
+    "Rowad Translation Center",
+    "Dr. Khalid ibn Hamad al-Khuraif"
+   ],
+   "description": "WHAT A MUSLIM CANNOT BE IGNORANT OF",
+   "origin_url": "https://islamhouse.com/en/books/2835693/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-ma-yalzam.pdf",
+     "ext": "pdf",
+     "size": "1.81 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single3/en-what-a-muslim-cannot-be-ignorant-of.docx",
+     "ext": "docx",
+     "size": "158.33 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2834695-en",
+   "external_id": "2834695",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "What Muslim Children Must Know",
+   "authors": [
+    "Rowad Translation Center"
+   ],
+   "description": "What Muslim Children Must Know",
+   "origin_url": "https://islamhouse.com/en/books/2834695/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-engliz-sartjhdg-erh-gnagc-ppstrp-pp.pdf",
+     "ext": "pdf",
+     "size": "5.25 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-engliz-sartjhdg-erh-gnagc-ppstrp-www.docx",
+     "ext": "docx",
+     "size": "6.54 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2834586-en",
+   "external_id": "2834586",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "How to perform wudu' (ablution)? (a complete guide of wudu')",
+   "authors": [
+    "Osoul Center Team"
+   ],
+   "description": "It is a mean to be purified from #sins and misdeeds.\r\n\r\nThe Muslims are to be summoned on the Day of Resurrection with white faces, hands and feet from the marks of wudu'.\r\n\r\nThe prayer of a capable #believer is not valid except with wudu'.\r\n\r\nThe greatest concern of a believer is to learn and teach the acts of worship because based on them his happiness in this worldly life and the afterlife is based.\r\n\r\nIn this clip, there is a detailed description of #how to perform wudu'. We hope the viewer benefits from watching it.",
+   "origin_url": "https://islamhouse.com/en/videos/2834586/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en-how-to-perform-wudu.mp4",
+     "ext": "mp4",
+     "size": "47.24 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833688-en",
+   "external_id": "2833688",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Tips upon Becoming a Muslim",
+   "authors": [
+    "Osoul Center Team"
+   ],
+   "description": "Tips upon Becoming a Muslim",
+   "origin_url": "https://islamhouse.com/en/books/2833688/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single3/en-tips-upon-becoming-a-muslim.pdf",
+     "ext": "pdf",
+     "size": "3.21 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2828615-en",
+   "external_id": "2828615",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "I Am a New Muslim .... What Do I Need to Learn?",
+   "authors": [],
+   "description": "A book in English confirms that lots of people embrace Islam daily everywhere. It is Islamically known that there are some Islamic acts of worship and manners that a new Muslim has to abide by once converting to Islam such as prayer. This book is an organized methodology to simply make these new Muslims learn about these acts and manners as soon as possible.",
+   "origin_url": "https://islamhouse.com/en/books/2828615/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en-iam-a-new-muslim-what-do-i-need-learn.pdf",
+     "ext": "pdf",
+     "size": "9.42 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2786361-en",
+   "external_id": "2786361",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Surviving Christmas: A Da'is Guide to Support Reverts during the Holidays",
+   "authors": [],
+   "description": "A short book in English in which the author discusses the internal conflict from which new Muslims suffer at Christmas time. They have been accustomed to celebrating this holiday with their families and friends for religious and cultural reasons for most of their lives. This book helps and guides new Muslims to understand and deal with this problem.",
+   "origin_url": "https://islamhouse.com/en/books/2786361/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en_Holiday_Guide.pdf",
+     "ext": "pdf",
+     "size": "6.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-898875-en",
+   "external_id": "898875",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "en",
+   "title": "New Muslim Ramadan Guide",
+   "authors": [],
+   "description": "An article in English provides our readers with some steps they should do before Ramadan along with clarifying its virtues and benefits.",
+   "origin_url": "https://islamhouse.com/en/articles/898875/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single2/en_New_Muslim_Ramadan_Guide.pdf",
+     "ext": "pdf",
+     "size": "13.4 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-803365-en",
+   "external_id": "803365",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Advice for New Muslims in Islam",
+   "authors": [
+    "Walid Basiony"
+   ],
+   "description": "An interesting episode in English of the program \"The Dean Show,\" in which the guest Sh. Waleed Basyouny gives advice to the new Muslims.",
+   "origin_url": "https://islamhouse.com/en/videos/803365/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/803365.mp4",
+     "ext": "mp4",
+     "size": "97.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-443194-en",
+   "external_id": "443194",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "New Muslims: Guide to Hajj and Umrah",
+   "authors": [],
+   "description": "A book in English contains an illustrated and simple explanation of the rites of pilgrimage and umrah in the light of the noble Quran and Prophetic tradition.",
+   "origin_url": "https://islamhouse.com/en/books/443194/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en_New_Muslims_Guide_Hajj_and_Umrah.pdf",
+     "ext": "pdf",
+     "size": "26.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-443133-en",
+   "external_id": "443133",
+   "type": "audios",
+   "topic": "basics",
+   "lang": "en",
+   "title": "The New Muslim Guide",
+   "authors": [
+    "Muhammad Abdurraouf"
+   ],
+   "description": "A series of lectures in English delivered by Sh. Fahd Salem Bahammam to guide the new Muslims who currently know their right path to Allah. This series is to strengthen and preserve their belief by clarifying the pillars of Islam and faith. It also shows the behavior that each Muslim has to follow when dealing with people whether they are old or young, Muslims or non-Muslims. Additionally, he provides some notes about the permissible and prohibited financial dealings. Besides, he mentions the factors that increase one’s belief and help Muslims to abide by Allah’s commands. Afterwards, he refers to the obstacles (e.g. lusts, misconceptions, and ignorance) in the path of the Muslims that prevent him from keeping on his way to Allah. He illustrates the prerequisites of sincere repentance which is between the person and Allah without a mediator. Finally, he gives a word for the new Muslim.",
+   "origin_url": "https://islamhouse.com/en/audios/443133/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_001_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_002_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_003_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "932.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_004_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_005_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_006_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_007_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "11.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_008_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_009_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_010_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "18.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_011_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "168.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_012_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "10.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_013_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_014_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_015_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "959.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_016_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_017_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "628.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_018_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_019_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_020_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_021_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_022_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_023_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_024_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_025_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "787.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_026_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_027_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "621.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_028_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_029_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_030_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_031_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_032_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "10.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_033_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_034_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_035_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_036_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "538.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_037_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "794.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_038_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_039_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_040_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_041_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_042_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_043_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_044_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_045_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_046_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_047_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "818.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_048_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "666.2 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_049_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "8.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_050_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_051_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "748 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_052_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_053_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "521.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_054_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_055_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "884 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_056_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_057_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "565.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_058_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "6.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_059_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_060_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_061_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "339.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_062_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_063_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_064_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_065_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "387.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_066_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "975.6 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_067_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_068_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_069_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_070_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "813.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_071_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_072_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "969.9 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_073_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "20.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_074_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_075_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_076_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_077_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_078_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_079_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_080_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_081_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_082_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "570.9 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_083_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_084_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_085_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "529.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_086_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "698.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_087_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_088_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "12.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_089_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "965.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_090_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_091_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_092_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_093_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_094_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_095_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_096_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_097_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_098_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_099_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_100_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_101_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_102_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "797.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_103_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_104_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_105_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_106_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_107_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_108_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_109_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "430.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_110_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_111_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "728.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_112_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "931.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_113_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_114_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_115_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_116_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "8.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_117_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_118_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_119_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "857.9 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_120_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_121_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "5.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_122_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_123_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "448.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_124_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "932.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_125_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "6.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_126_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_127_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_128_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "8.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_129_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_130_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_131_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_132_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "862.8 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_133_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_134_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "889.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_135_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_136_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_137_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_138_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_139_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_140_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_141_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_142_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_143_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_144_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_145_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_146_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "3.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_147_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_148_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_149_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_150_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_151_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_152_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_153_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_154_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_155_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "887.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_156_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "1.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_157_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "500.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/chain/en_The_New_Muslim_Guide/en_158_The_New_Muslim_Guide.mp3",
+     "ext": "mp3",
+     "size": "4.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-426286-en",
+   "external_id": "426286",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "The Final Message",
+   "authors": [
+    "Muhammad Abdurraouf"
+   ],
+   "description": "In this lecture shaikh Bilal Assad talks on the topic of ‘The Final Message’ in which he explains the importance of this message and what is obligatory on us and what we must do in our life, how we can practice this message and how to convey this final message to others.",
+   "origin_url": "https://islamhouse.com/en/videos/426286/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/426286.mp4",
+     "ext": "mp4",
+     "size": "59.93 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-408096-en",
+   "external_id": "408096",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Islamic Studies for New Muslims Curriculum (Second Edition)",
+   "authors": [],
+   "description": "This is the second edition course in English on Islamic studies for new Muslims. To act correctly, a Muslim has to first acquire authentic knowledge, change his mode of thought, and improve his practical ability. These changes have to result from the Muslims’ own decisions and efforts if they are to be educationally enduring, religiously sound, socially important, and physically permanent. It is with this aim and intention that the Islamic Teaching Center has prepared \"A Program of Studies for New Muslims\" It is an attempt to enable them to respond to their environment with an Islamic framework reflecting their beliefs, values, attitudes, and behavior which characterize them as a new breed of men enjoining right, eradicating evil, forbidding wrong, and believing in Allah.",
+   "origin_url": "https://islamhouse.com/en/books/408096/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_01_Cover_Version_2.pdf",
+     "ext": "pdf",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_01_Cover_Version_2.doc",
+     "ext": "doc",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_02_Evaluation_Test_Answers.pdf",
+     "ext": "pdf",
+     "size": "1.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_02_Evaluation_Test_Answers.doc",
+     "ext": "doc",
+     "size": "2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_03_Evaluation_Test_old_Questions.pdf",
+     "ext": "pdf",
+     "size": "2.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_03_Evaluation_Test_old_Questions.doc",
+     "ext": "doc",
+     "size": "3.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_04_Evaluation_Test_Questions.doc",
+     "ext": "doc",
+     "size": "2.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_04_Evaluation_Test_Questions.pdf",
+     "ext": "pdf",
+     "size": "2.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_05_Evaluation_Test_Student_Answer_Sheet.pdf",
+     "ext": "pdf",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_05_Evaluation_Test_Student_Answer_Sheet.doc",
+     "ext": "doc",
+     "size": "1.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_06_Evaluation_Test_old_Answers.pdf",
+     "ext": "pdf",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_06_Evaluation_Test_old_Answers.doc",
+     "ext": "doc",
+     "size": "3.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_07_Summary_of_Level_I_classes.pdf",
+     "ext": "pdf",
+     "size": "995.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_07_Summary_of_Level_I_classes.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_08_This_folder_belongs_to.doc",
+     "ext": "doc",
+     "size": "1.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_08_This_folder_belongs_to.pdf",
+     "ext": "pdf",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_09_Overview.pdf",
+     "ext": "pdf",
+     "size": "2.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_09_Overview.doc",
+     "ext": "doc",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_10_Tawheed_Level_I_lessons_1-7.pdf",
+     "ext": "pdf",
+     "size": "3.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_10_Tawheed_Level_I_lessons_1-7.doc",
+     "ext": "doc",
+     "size": "2.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_11_Copy_of_AA_Evaluation_Test_old_Answers.pdf",
+     "ext": "pdf",
+     "size": "2.5 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_11_Copy_of_AA_Evaluation_Test_old_Answers.doc",
+     "ext": "doc",
+     "size": "3.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_12_Tahaara_Level_I_lessons_1-6.doc",
+     "ext": "doc",
+     "size": "3.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_12_Tahaara_Level_I_lessons_1-6.pdf",
+     "ext": "pdf",
+     "size": "3.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_13_diagramstemp.pdf",
+     "ext": "pdf",
+     "size": "1.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_13_diagramstemp.doc",
+     "ext": "doc",
+     "size": "1.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_14_Salah_Level_I_lessons_1-7.pdf",
+     "ext": "pdf",
+     "size": "4.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_14_Salah_Level_I_lessons_1-7.doc",
+     "ext": "doc",
+     "size": "4.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_15_What_to_read_in_Salah_Level_I_lessons_1-6.pdf",
+     "ext": "pdf",
+     "size": "4.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_15_What_to_read_in_Salah_Level_I_lessons_1-6.doc",
+     "ext": "doc",
+     "size": "4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_16_Zakah_Level_I_lessons_1-2.doc",
+     "ext": "doc",
+     "size": "2.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_16_Zakah_Level_I_lessons_1-2.pdf",
+     "ext": "pdf",
+     "size": "2.9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_17_Siyam_Level_I_lessons_1-2.pdf",
+     "ext": "pdf",
+     "size": "2.7 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_17_Siyam_Level_I_lessons_1-2.doc",
+     "ext": "doc",
+     "size": "2.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_18_Hajj_Level_I_lessons_1-2.pdf",
+     "ext": "pdf",
+     "size": "3.2 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_18_Hajj_Level_I_lessons_1-2.doc",
+     "ext": "doc",
+     "size": "2.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_19_A_New_Way_of_Life_Lesson_1.pdf",
+     "ext": "pdf",
+     "size": "2.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_19_A_New_Way_of_Life_Lesson_1.doc",
+     "ext": "doc",
+     "size": "2.6 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_20_Lesson_Evaluation_Sheet.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_20_Lesson_Evaluation_Sheet.pdf",
+     "ext": "pdf",
+     "size": "910 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_21_Lesson_Preparation_Sheet.pdf",
+     "ext": "pdf",
+     "size": "924.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_21_Lesson_Preparation_Sheet.doc",
+     "ext": "doc",
+     "size": "1.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_22_Student_Attendance_Sheet.pdf",
+     "ext": "pdf",
+     "size": "973 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_22_Student_Attendance_Sheet.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_23_Student_Progress_Sheet.pdf",
+     "ext": "pdf",
+     "size": "976.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/chain/en_Islamic_Studies_for_New_Muslims_Curriculum/en_23_Student_Progress_Sheet.doc",
+     "ext": "doc",
+     "size": "1.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-309240-en",
+   "external_id": "309240",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Are you New to Islam? A Program for New Muslims",
+   "authors": [
+    "Omar Bin Muhammad Al-Subayel"
+   ],
+   "description": "Please share this with all your friends especially our new Muslim brothers and sisters in Islam. In this Show we will inshallah be going over some good things for our new Muslim brother and sisters in Islam with our Guest Dr sabeel from GainPeace.",
+   "origin_url": "https://islamhouse.com/en/videos/309240/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_309240.mp4",
+     "ext": "mp4",
+     "size": "116.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-51813-en",
+   "external_id": "51813",
+   "type": "books",
+   "topic": "basics",
+   "lang": "en",
+   "title": "What Does it Mean : You Are a Muslim ?",
+   "authors": [
+    "Suleiman Saoud Al Saqer"
+   ],
+   "description": "A book in English handles the following points: The faction represents Islam, time changing, Allah is the only characterized with absolute perfection, why Allah created the humankind, and reward and punishment concept in Islam.",
+   "origin_url": "https://islamhouse.com/en/books/51813/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_What_Does_it_Mean_You_Are_Muslim.pdf",
+     "ext": "pdf",
+     "size": "144 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_What_Does_it_Mean_You_Are_Muslim.doc",
+     "ext": "doc",
+     "size": "1.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-49590-en",
+   "external_id": "49590",
+   "type": "audios",
+   "topic": "basics",
+   "lang": "en",
+   "title": "Rulings concerning New Muslims",
+   "authors": [
+    "Students of Islamic University"
+   ],
+   "description": "A lecture in English in which the lecturer shows some important rules for new Muslims such as purification and prayer.",
+   "origin_url": "https://islamhouse.com/en/audios/49590/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/single/en_Rulings_concerning.mp3",
+     "ext": "mp3",
+     "size": "21.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2843352-tl",
+   "external_id": "2843352",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Pamamaraan ng mga Nagpapakilala sa Islam para sa mga Bagong Muslim",
+   "authors": [],
+   "description": "Pamamaraan ng mga Nagpapakilala sa Islam para sa mga Bagong Muslim",
+   "origin_url": "https://islamhouse.com/tl/books/2843352/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/chain/Approach_The_Muslim/tl-the-approach-new-muslims-level-1.pdf",
+     "ext": "pdf",
+     "size": "22.51 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-the-approach-new-muslims-level-2.pdf",
+     "ext": "pdf",
+     "size": "9.29 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-the-approach-new-muslims-level-3.pdf",
+     "ext": "pdf",
+     "size": "24.41 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-the-approach-new-muslims-level-4.pdf",
+     "ext": "pdf",
+     "size": "12.79 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838400-tl",
+   "external_id": "2838400",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Kilalanin ang Islam",
+   "authors": [],
+   "description": "Kilalanin ang Islam",
+   "origin_url": "https://islamhouse.com/tl/articles/2838400/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_articles/single/tl-tagalog.pdf",
+     "ext": "pdf",
+     "size": "151.99 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2836558-tl",
+   "external_id": "2836558",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Ang Kinakailangang Malaman ng mga Batang Muslim",
+   "authors": [],
+   "description": "Ang Kinakailangang Malaman ng mga Batang Muslim",
+   "origin_url": "https://islamhouse.com/tl/books/2836558/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-tagalug-sartjhdg-erh-gnagc-ppstrp-pp.pdf",
+     "ext": "pdf",
+     "size": "14.46 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-tagalug-sartjhdg-erh-gnagc-ppstrp-ww.docx",
+     "ext": "docx",
+     "size": "8.39 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2836189-tl",
+   "external_id": "2836189",
+   "type": "articles",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Ako ay Muslim",
+   "authors": [
+    "Muhammad bin Ibrahim Al-hamad"
+   ],
+   "description": "Ako ay Muslim",
+   "origin_url": "https://islamhouse.com/tl/articles/2836189/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_articles/single/arc_tl-2836189-tlll-222-mm-ana-muslim-pppp.pdf",
+     "ext": "pdf",
+     "size": "2.35 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_articles/single/tl-2836189-tlll-222-mm-ana-muslim-wwww.docx",
+     "ext": "docx",
+     "size": "8.75 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2835963-tl",
+   "external_id": "2835963",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Muhutasari wenye faida kwa muislamu mpya",
+   "authors": [
+    "Mohammed Ebnasheba Al-Shehri"
+   ],
+   "description": "Muhutasari wenye faida kwa muislamu mpya",
+   "origin_url": "https://islamhouse.com/tl/books/2835963/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-tatgalu-lilmu-aljad-pp.pdf",
+     "ext": "pdf",
+     "size": "1.51 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-tatgalu-lilmu-aljad-w.docx",
+     "ext": "docx",
+     "size": "8.4 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2832057-tl",
+   "external_id": "2832057",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Ang Hajj at ang ‘Umrah",
+   "authors": [],
+   "description": "Ang Hajj at ang ‘Umrah",
+   "origin_url": "https://islamhouse.com/tl/books/2832057/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-ang-hajj-at-ang-umrah.pdf",
+     "ext": "pdf",
+     "size": "449.08 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2828812-tl",
+   "external_id": "2828812",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "MGA KAHANGA-HANGANG KASAYSAYAN NG MGA KAPATID SA ISLAM",
+   "authors": [
+    "Muhammad Taha Ali"
+   ],
+   "description": "MGA KAHANGA-HANGANG KASAYSAYAN NG MGA KAPATID SA ISLAM",
+   "origin_url": "https://islamhouse.com/tl/books/2828812/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-influential-stories.pdf",
+     "ext": "pdf",
+     "size": "3.01 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-824769-tl",
+   "external_id": "824769",
+   "type": "videos",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Payo para sa Bagong Muslim",
+   "authors": [
+    "Salamuddin Casim"
+   ],
+   "description": "Mga ginintuang at mahahalagang payo para sa isang bagong yakap sa Islam sa wikang tagalog.",
+   "origin_url": "https://islamhouse.com/tl/videos/824769/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_videos/mp4/single/824769.mp4",
+     "ext": "mp4",
+     "size": "47.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-446455-tl",
+   "external_id": "446455",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Tunay na Pagsasaksi",
+   "authors": [
+    "Laurence Brown"
+   ],
+   "description": "Ang aklat na ito ay pinakahuli sa isang serye ng apat. Ang unang aklat sa seryeng ito, The Eighth\r\nScroll, ay isang obra ng kathang-isip sa kasaysayan—isang nobela ng\r\naksyon/pakikipagsapalarang naglalayong panabikin ang madla, at kasabay na ipanatag sila sa\r\npaksa ng hambingan sa relihiyon. Ang ikalawang aklat sa seryeng ito, The First and Final\r\nCommandment (mga lathalain ng Amana), ay muling naisulat at nahati sa dalawang tomo\r\n(kabuuan), NaDiyos’grasya (MisGod’ed) at NaDiyos’kubre (God’ed). Sa paglathala ng dalawang\r\ntomong ito—ngayon ay mga aklat bilang dalawa at tatlo sa seryeng ito—ang The First and Final\r\nCommandment ay nagiging kalabisan, at tatanggalin na sa pamilihan. Ang NaDiyos’grasya ay\r\nnagbibigay ng isang mapa ng landas ng paggabay at kawalang-gabay sa mga relihiyong\r\nAbrahamiko, at inilalantad ang pagpapatuloy ng rebelasyon mula sa Judaismo sa Kristiyanismo,\r\nat pagkatapos ay sa Islam. Pinupulot ng NaDiyos’kubre ang iniwanan ng NaDiyos’grasya, at\r\nipinaglalaban ang kapakanan ng Islam bilang kaganapan ng rebelasyon.",
+   "origin_url": "https://islamhouse.com/tl/books/446455/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl_Bearing_True_Witness.pdf",
+     "ext": "pdf",
+     "size": "377.6 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-381027-tl",
+   "external_id": "381027",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Isang Bukas na Liham para sa iyo",
+   "authors": [
+    "Khalid Evaristo"
+   ],
+   "description": "",
+   "origin_url": "https://islamhouse.com/tl/books/381027/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl_Isang_Bukas_na_Liham_para_sa_iyo.pdf",
+     "ext": "pdf",
+     "size": "2.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-368601-tl",
+   "external_id": "368601",
+   "type": "audios",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Panayam sa mga bagong muslim",
+   "authors": [
+    "Khalid Evaristo",
+    "Salamuddin Casim"
+   ],
+   "description": "Isang panayam sa ating mga kapatid na bagong yakap sa Islam,tungkol sa dahilan ng kanilang pagyakap sa Islam. ito\\’y isinagawa ni Bro. Khalid Evaristo. Ipinaliwanag di niya ang kahulugan ng Islam sa wikang tagalong.",
+   "origin_url": "https://islamhouse.com/tl/audios/368601/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_sounds/single/tl_Panayam_sa_mga_bagong_muslim.mp3",
+     "ext": "mp3",
+     "size": "3.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-367327-tl",
+   "external_id": "367327",
+   "type": "books",
+   "topic": "basics",
+   "lang": "tl",
+   "title": "Bagong Muslim ako, Ano ang pag-aaralan ko?",
+   "authors": [],
+   "description": "Isang aklat na nagpapaliwanag tungkol sa mga pangunahing dapat pag-aaralan ng bagong muslim, kabilang na dito ang Haligi ng Islam at Pananampalataya at gayundin, naipaliwanag nang malinaw dito ang tungkol sa pag-sasagawa ng wudu’ at Salah (dasal) nang may kasamang litrato.",
+   "origin_url": "https://islamhouse.com/tl/books/367327/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl_Newly_converted_to_Islam_teach_me.pdf",
+     "ext": "pdf",
+     "size": "12.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838541-ar",
+   "external_id": "2838541",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "آيات وسور قرآنية أثرت في مهتدين إلى الإسلام",
+   "authors": [
+    "ماجد بن سليمان الرسي"
+   ],
+   "description": "هذا الكتاب الصغير يتضمن ذكر قصص هدايات لأناس كانوا يهودا ونصارى وملاحدة، تأثروا بآيات معينة قرأوها، فكانت سببا في إسلامهم، فالكتاب يبين ما هي هذه الآيات من كلام المهتدي بنفسه.",
+   "origin_url": "https://islamhouse.com/ar/books/2838541/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-atharast-muhtadiin.pdf",
+     "ext": "pdf",
+     "size": "662.4 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838151-ar",
+   "external_id": "2838151",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة هداية القسيس جرجس إلى الإسلام",
+   "authors": [
+    "ماجد بن سليمان الرسي"
+   ],
+   "description": "هذه مقالة تتضمن قصة هداية مصطفى (القسيس جرجس سابقا) إلى الإسلام، والمراحل النفسية التي كانت تنازعه قبل وبعد الهداية، كما تتضمن المؤثرات الدعوية التي ساهمت في تحوله من الكفر إلى الإسلام.",
+   "origin_url": "https://islamhouse.com/ar/articles/2838151/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-qisat-hidayat-alqisis-jirjis-ila-al-islam.pdf",
+     "ext": "pdf",
+     "size": "259.95 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2838117-ar",
+   "external_id": "2838117",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة هداية مريم إلى الإسلام",
+   "authors": [
+    "ماجد بن سليمان الرسي"
+   ],
+   "description": "هذه قصة لطيفة تبين المراحل التي مرت بها الراهبة انطوانيت (سابقا) من حين كانت راهبة بالكنيسة إلى أن دخلت الإسلام، والكتب التي أثرت عليها، والشك الذي كان يصاحبها لما كانت راهبة.",
+   "origin_url": "https://islamhouse.com/ar/articles/2838117/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-qisat-hidaiat-mariam-ila-al-islam-ppp.pdf",
+     "ext": "pdf",
+     "size": "514.7 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-qisat-hidaiat-mariam-ila-al-islam-ddd.docx",
+     "ext": "docx",
+     "size": "41.92 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2837780-ar",
+   "external_id": "2837780",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة هداية (آيرم) من اليهودية إلى الإسلام",
+   "authors": [
+    "ماجد بن سليمان الرسي"
+   ],
+   "description": "هذا مقال يحكي قصة هداية شاب اسمه آيرم، كان يهوديا فأسلم على يد الداعية خليل أبو شهاب الأردني بعدما اهدى له كتابين من تأليف الشيخ ماجد بن سليمان الرسي وهما (تلاعب الشيطان بعقول اليهود) وكتاب (فضائل النبي موسى بن عمران عليه السلام).",
+   "origin_url": "https://islamhouse.com/ar/articles/2837780/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-qisat-hidayat-airim-majed-arrasi-dd.docx",
+     "ext": "docx",
+     "size": "32.19 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-qisat-hidayat-airim-majed-arrasi-ppp.pdf",
+     "ext": "pdf",
+     "size": "253.26 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2837779-ar",
+   "external_id": "2837779",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة هداية (جبارة) من الإلحاد إلى الإسلام",
+   "authors": [
+    "ماجد بن سليمان الرسي"
+   ],
+   "description": "هذا مقال يتناول قصة هداية رجل كان يسمى جبارة من الإلحاد إلى الإسلام.",
+   "origin_url": "https://islamhouse.com/ar/articles/2837779/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-kissat-jabbarah.pdf",
+     "ext": "pdf",
+     "size": "564.71 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single/ar-kissat-jabbarah.docx",
+     "ext": "docx",
+     "size": "34.26 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833535-ar",
+   "external_id": "2833535",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "حبي العظيم للمسيح قادني إلى الإسلام",
+   "authors": [
+    "سايمون الفريدو كاراباللو"
+   ],
+   "description": "هذا الكتاب يبين كيف أثر المسيح - عليه السلام - في اعتناق الكاتب لدين الإسلام، وكيف أثر الإسلام في حياته، وكيف تأثرت حياة الأخرين نتيجة إسلامه، وفي النهاية عقد مقارنة بين نصوص من القرآن الكريم والكتاب المقدس",
+   "origin_url": "https://islamhouse.com/ar/books/2833535/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_01/ar-my-great-love-for-jesus.pdf",
+     "ext": "pdf",
+     "size": "7.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2830583-ar",
+   "external_id": "2830583",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "لماذا ترك الكاردينال دانيال الكنيسة وغير دينه؟",
+   "authors": [],
+   "description": "مقالة باللغة العربية، اشتملت على بعض أسباب ترك الكاردينال دانيال الكنيسة، واعتناقه دين الإسلام",
+   "origin_url": "https://islamhouse.com/ar/articles/2830583/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single_02/ar-limadha-tarak-danial-alkanisa.pdf",
+     "ext": "pdf",
+     "size": "6.29 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_articles/single_02/ar-limadha-tarak-danial-alkanisa.doc",
+     "ext": "doc",
+     "size": "75 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2828800-ar",
+   "external_id": "2828800",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة إسلام الأخ كرم كيم، الداعية الكوري",
+   "authors": [
+    "كرم كيم الكوري"
+   ],
+   "description": "مقطع مترجم إلى اللغة العربية، يقص فيه الأخ الداعية كرم كيم الكوري قصة إسلامه.",
+   "origin_url": "https://islamhouse.com/ar/videos/2828800/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar_Story_of_a_Karam_conversion_to_Islam.mp4",
+     "ext": "mp4",
+     "size": "142.58 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2827948-ar",
+   "external_id": "2827948",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة إسلام قسيس ويليها أسباب الخير والسعادة في الدنيا والآخرة",
+   "authors": [
+    "عبد الرزاق بن عبد المحسن البدر"
+   ],
+   "description": "قصة إسلام قسيس ويليها أسباب الخير والسعادة في الدنيا والآخرة : كتاب باللغة العربية؛ اشتمل على رسالة مؤثرة من قسيس بعد إسلامه إلى الشيخ عبدالرزاق البدر، مع بيان بعض أسباب الخير والسعادة في الدنيا والآخرة.",
+   "origin_url": "https://islamhouse.com/ar/books/2827948/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_02/ar-qisat-islam-qasis.pdf",
+     "ext": "pdf",
+     "size": "4.16 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-551773-ar",
+   "external_id": "551773",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "لماذا اعتنقنا الإسلام دينًا؟",
+   "authors": [
+    "سفر أحمد الحمداني"
+   ],
+   "description": "كتاب يحتوي على أروع القصص لنخبةٍ من رجال الفكر والقانون والعلوم الأخرى في مختلف أقطار العالم، قديمًا وحديثًا، وسبب اعتناقهم الإسلام.",
+   "origin_url": "https://islamhouse.com/ar/books/551773/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single8/ar_Why_embraced_Islam_as_a_religion.pdf",
+     "ext": "pdf",
+     "size": "1.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-414112-ar",
+   "external_id": "414112",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "المنارات الساطعة في ظلمات الدنيا الحالكة [ كان نصرانيًّا وأسلم ]",
+   "authors": [
+    "محمد زكي الدين النجار"
+   ],
+   "description": "المنارات الساطعة في ظلمات الدنيا الحالكة: قال المُصنِّف - رحمه الله - تحت عنوان (كيف أسلمت؟): «فإن إسلامي لم يأتِ طفرةً واحدةً، ولم يكن ابن يومٍ وليلةً؛ بل كان نتيجة بحثٍ وتنقيبٍ؛ بُغيىةَ الوُصول إلى الحقيقة، فاطَّلعتُ على القرآن الكريم بعد دراستي للتوراة والإنجيل، وأردتُ أن أُدوِّن ما وصلتْ إليه أبحاثي في هذه الكتب من الحقائق التي هدَتني إلى الصراط المُستقيم؛ أرجو بها الرِّضوانَ من رب العالمين، وأقدمتُ على طبع هذه العُجالة خدمةً لغير المُسلمين قبل أن تكون للمُسلمين، عسى أن يهتَدوا بها الضَّالُّون، ولا يرتاب المُرتابُون».\r\nوأراد بهذه الرسالة بيان بعضَ الدلائل على نبوة محمدٍ وعيسى - عليهما الصلاة والسلام -، ودحض فِرية الصلب وردِّ الشُّبهات وتفنيدها. وكل ذلك من خلال كتب النصارى ومراجعهم.\r\n- دراسة وتعليق: الدكتور محمد بن عبد الله السحيم - حفظه الله -.",
+   "origin_url": "https://islamhouse.com/ar/books/414112/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single7/ar_Can_nsraneyn_waaslam.pdf",
+     "ext": "pdf",
+     "size": "6.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-380890-ar",
+   "external_id": "380890",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "كـيف قادني الإنجيـل إلى الإسلام ؟",
+   "authors": [
+    "جاشوا افنز"
+   ],
+   "description": "حلقة ماتعة عن جاشوا افنز - القس الأمريكي السابق - الذي أسلم بعد رحلة طويلة من البحث والتدقيق. يشرح الأخ جاشوا افنز الأمور التي جعلته يترك النصرانية ويعتنق الإسلام مثل: التناقضات الموجودة بالكتاب المقدس، وما اشتمل عليه من فقرات تسيء لأنبياء الله الذين هم أفضل خلق الله تعالى وتجعلهم في أسوأ الصور التي يأنف منها آحاد الناس. ويعطي الأخ برهانًا على أن عيسى عليه السلام ليس بإله. ويذكر الأخ أنه من خلال بحثه عن الدين الحق أنه قد استبعد ابتداء الإسلام من قائمة البحث بسبب كتابات أحد المستشرقين.",
+   "origin_url": "https://islamhouse.com/ar/videos/380890/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/380890.mp4",
+     "ext": "mp4",
+     "size": "331.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-341371-ar",
+   "external_id": "341371",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "هكذا أسلمت [ بحثٌ عن الحقيقة لمدة عام ]",
+   "authors": [],
+   "description": "هكذا أسلمت [ بحثٌ عن الحقيقة لمدة عام ]: بحثٌ طريفٌ كتبَتْه فتاةٌ مُثقَّفة قبطية تقلَّبَت في أعطاف النصرانية عشرين عامًا. ومع تعمُّقها في دراسة التوراة والإنجيل لم تجد راحة النفس ولا طُمأنينة الروح، واستولَت عليها حَيرةٌ مُؤلِمةٌ مُمِضَّة! إلى أن نهَضَت بعزيمةٍ مُتوثِّبة إلى دراسة القرآن دراسةً موضوعية مُدقّقة، مع مُوازَنة أحكامه وبيانه بما عرَفَته في الكتاب المُقدَّس. وفي أثناء رحلتها هذه سطَّرَت بعض الرُّؤَى والمُلاحظات والحقائق الجديرة بالاطِّلاع والتأمُّل!",
+   "origin_url": "https://islamhouse.com/ar/books/341371/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single4/ar_Thus_I_became_Muslim.pdf",
+     "ext": "pdf",
+     "size": "26.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-231784-ar",
+   "external_id": "231784",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "قصة إسلام عالِم أوروبي",
+   "authors": [],
+   "description": "فقرة قصيرة عن اعتناق أحد علماء أوروبا الإسلام بسبب ما وجده في القرآن من حقائق علمية شهد بصحتها العلم في القرن العشرين ، ولم تكن معروفة قبل ذلك. هذا العالم لم يكن مؤمناً في الأصل بوجود إله ، ولم يكن يعترف بصحة أية ديانة ، لكنه في النهاية أدرك أن الإسلام هو الدين الحق ، فاعتنقه ، وهو الآن يدعو ربه أن  يتوفاه على الإسلام.",
+   "origin_url": "https://islamhouse.com/ar/videos/231784/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar_231784.mp4",
+     "ext": "mp4",
+     "size": "42.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-172590-ar",
+   "external_id": "172590",
+   "type": "books",
+   "topic": "stories",
+   "lang": "ar",
+   "title": "الطريق إلى الإسلام",
+   "authors": [
+    "محمد بن إبراهيم الحمد"
+   ],
+   "description": "الطريق إلى الإسلام : هذا الكتاب يدعوك إلى السعادة العظمى؛ لأنه يهديك إلى الإيمان بربك الذي خلقك، ويدلك على الاعتقاد الحق الذي يؤيده عقلك السليم، وفطرتك السوية، والذي تعرف من خلاله بداية خلق الإنسان ونهايته، والحكمة من إيجاده، وغير ذلك.\r\n* هذا الكتاب كتب لتعريف غير المسلمين بالإسلام، ولهذا سوف يلاحظ القارئ قلة الحواشي والتفصيلات.",
+   "origin_url": "https://islamhouse.com/ar/books/172590/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-the-way-to-islam.pdf",
+     "ext": "pdf",
+     "size": "762.66 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/ar/ih_books/single_010/ar-the-way-to-islam.docx",
+     "ext": "docx",
+     "size": "837.08 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2842980-en",
+   "external_id": "2842980",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Real & Wonderful Stories",
+   "authors": [
+    "Khalid Ibrahim Al-Dossary"
+   ],
+   "description": "These are very touching real & wonderful stories of people whose innate nature led them to seek the Truth; then Allah guided them to revert to Islam.",
+   "origin_url": "https://islamhouse.com/en/audios/2842980/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_01_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "9.04 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_02_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "14.66 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_03_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "8.93 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_04_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "27.1 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_05_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "16.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_06_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "15.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_07_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "5.59 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_08_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "8.55 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_09_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "9 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_10_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "15.24 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_11_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "9.69 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_12_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "21.21 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_13_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "6.15 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_14_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "14.06 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_15_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "13.43 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_16_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "15.32 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_17_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "17.09 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_18_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "11.82 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_19_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "7.45 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_20_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "20.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_21_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "21.65 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_22_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "15.41 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_23_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "11.69 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_24_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "17.01 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_25_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "27.67 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_26_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "16.31 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_27_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "9.67 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_28_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "19.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/Real_Wonderful_Stories/en_29_Real_Wonderful_Stories.mp4",
+     "ext": "mp4",
+     "size": "20.88 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833682-en",
+   "external_id": "2833682",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "What Brought Them To Islam?",
+   "authors": [
+    "Majed S. Al-Rassi"
+   ],
+   "description": "Islam is growing rapidly in the West and around the world and is often called the fastest growing religion. In the U.S. alone, the number of Muslims has risen dramatically, from about ten thousand in the year 1900 to at least several million people today. Despite widespread misconceptions about women in Islam, a growing number of women are finding that Islam is the true religion and the best way of life. Each person who embraces Islam has a unique story and special reasons.\r\n\r\nThis booklet sheds light on the four main reasons for this rapid change in the West to Islam, and it recounts the stories of some thoughtful converts to show the reasons for their conversion.",
+   "origin_url": "https://islamhouse.com/en/books/2833682/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-to-islam.pdf",
+     "ext": "pdf",
+     "size": "1.06 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en-what-brought-them-to-islam.pdf",
+     "ext": "pdf",
+     "size": "396.91 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en-what-brought-them-to-islam.docx",
+     "ext": "docx",
+     "size": "89.38 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833481-en",
+   "external_id": "2833481",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Great Love for Jesus Led Me to Islam",
+   "authors": [
+    "Saimon Al-Fareedu Karaballow"
+   ],
+   "description": "My Great Love for Jesus Led Me to Islam",
+   "origin_url": "https://islamhouse.com/en/books/2833481/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-my-great-love-for-jesus.pdf",
+     "ext": "pdf",
+     "size": "12.13 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2828596-en",
+   "external_id": "2828596",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Story of a Korean conversion to Islam",
+   "authors": [
+    "Karm Keem"
+   ],
+   "description": "Karam  Kim a Korean student , tells us how he embraced Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/2828596/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_Story_of_a_Koreans_conversion_to_Islam.mp4",
+     "ext": "mp4",
+     "size": "152.16 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2776467-en",
+   "external_id": "2776467",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Intelligent Blind Man Sees with His Heart Accepts Islam",
+   "authors": [
+    "Osama Emara"
+   ],
+   "description": "An episode in English of the program \"the Deen Show\" in which the guest Mr. David Biang, who ended up blind after he was left with too much oxygen in his incubator as a baby, relates his journey of seeking the truth and putting the pieces together to know about the true religion.",
+   "origin_url": "https://islamhouse.com/en/videos/2776467/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/2776467.mp4",
+     "ext": "mp4",
+     "size": "103.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2776465-en",
+   "external_id": "2776465",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "After 10 Years, a Christian Accepts Islam and Fasts in Ramadan",
+   "authors": [
+    "Osama Emara"
+   ],
+   "description": "An episode in English of the program \"The Dean Show,\" in which Mr. Brett Mcfann relates his story of embracing Islam. The reason for searching for the true religion is the contradictions and inconsistencies he found in Christianity.",
+   "origin_url": "https://islamhouse.com/en/videos/2776465/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/2776465.mp4",
+     "ext": "mp4",
+     "size": "108.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2776461-en",
+   "external_id": "2776461",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why Latinos & Brazilians Are Coming to ISLAM?",
+   "authors": [
+    "Osama Emara"
+   ],
+   "description": "An episode in English of the program \"The Dean Show,\" in which Mr. Hernan Guadalupe shows the reasons that Brazilians and Latinos embrace Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/2776461/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/2776461.mp4",
+     "ext": "mp4",
+     "size": "116 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-803367-en",
+   "external_id": "803367",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "An Atheist and Three Christians Who Found Peace in Islam",
+   "authors": [
+    "Osama Emara"
+   ],
+   "description": "An episode in English of the program \"The Dean Show,\" in which four persons relate their stories of embracing Islam and finding peace in it. They are (1) Mr. Luqman, a former atheist from China, (2) Mr. Musa, a former Catholic from Filipino, (3) John Smithers, a former Catholic from the USA, and (4) Prof. Jeremiah, a former Catholic from the USA.",
+   "origin_url": "https://islamhouse.com/en/videos/803367/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/803367.mp4",
+     "ext": "mp4",
+     "size": "119.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-794332-en",
+   "external_id": "794332",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Journey from T.D Jakes & Benny Hinn to Islam",
+   "authors": [
+    "Osama Emara"
+   ],
+   "description": "An episode in English of the program \"The Dean Show,\" in which Mr. Hamid relates his story of embracing Islam. He told that he started attending evangelical conferences when being 7 years old. Later, when turning 17, he was asking about what he was doing in this life and why people fell down when these evangelists put their hands on them as a remedy. After all that madness, he decided to denounce religion altogether and just told himself \"I do not care who was the son of god, who was a messenger of god.\" He just told himself that I believe in one god and that is it. When he was 24, he started to research Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/794332/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/794332.mp4",
+     "ext": "mp4",
+     "size": "122.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-794326-en",
+   "external_id": "794326",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Christian Accepts Islam by Another Former Christian",
+   "authors": [],
+   "description": "An episode in English of the program \"The Dean Show,\" in which the guest Mr. John Fontain talks about the sad and tragic accident of the actor Paul Walker of \"Fast and Furious\" Series.",
+   "origin_url": "https://islamhouse.com/en/videos/794326/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/794326.mp4",
+     "ext": "mp4",
+     "size": "136.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775504-en",
+   "external_id": "775504",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "From Women, Alcohol, Partying to the Catholic Monastery to Islam",
+   "authors": [],
+   "description": "An episode in English of the program \"The Dean Show,\" in which the guest Mr. Michael Decero, from Philadelphia, Pennsylvania, relates his story of embracing Islam. He was born into a Sicilian family in South Philadelphia as a Roman Catholic Christian.",
+   "origin_url": "https://islamhouse.com/en/videos/775504/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775504.mp4",
+     "ext": "mp4",
+     "size": "117.6 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775502-en",
+   "external_id": "775502",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Women Are Converting to Islam More Than Men",
+   "authors": [],
+   "description": "An episode in English of the program \"The Dean Show,\" in which the guest mentions the reasons that women embrace Islam more than men and how they found true freedom and peace in Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/775502/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775502.mp4",
+     "ext": "mp4",
+     "size": "98.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775496-en",
+   "external_id": "775496",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Christian Preachers’ Son Accepts Islam",
+   "authors": [],
+   "description": "An episode in English of the program \"The Dean Show,\" in which the guest Dr. Jeremiah Abiade, whose parents were Christian preachers, relates his story of embracing Islam. As a Christian, he grew up in the Church. Along with his family, he used to go to church almost every day. He fasted, prayed, observed the Sabbath, and may have tried to memorize parts of the Bible. They stuck to the Bible literally in everything they did until he finally found Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/775496/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775496.mp4",
+     "ext": "mp4",
+     "size": "112.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775488-en",
+   "external_id": "775488",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "\"Happy\" of Pharrell Williams: Happy Muslims in Islam",
+   "authors": [
+    "Majid Mahmoud"
+   ],
+   "description": "An episode in English of the program \"The Deen Show\" in which Mr. Eddie hosts Mr. Majed Mahmoud who shows the Islamic perspective of happiness after the rapid spread of the song “Happy” by William Pharrell.",
+   "origin_url": "https://islamhouse.com/en/videos/775488/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775488.mp4",
+     "ext": "mp4",
+     "size": "121.4 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775480-en",
+   "external_id": "775480",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Catholic Christian Irish/English Now Muslim Explains the Real Message of Jesus Christ",
+   "authors": [],
+   "description": "An episode in English of the program \"The Dean Show,\" in which the guest Mr. John Fontain relates his story of being Muslim and explains the real message of Prophet Jesus (peace and blessings of Allah be upon him).",
+   "origin_url": "https://islamhouse.com/en/videos/775480/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775480.mp4",
+     "ext": "mp4",
+     "size": "124 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-775476-en",
+   "external_id": "775476",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "A Christian Scholar Who Accepted Islam",
+   "authors": [],
+   "description": "An episode in English of the program \"the Deen Show\" in which Mr. Eddie hosts Dr. Jerald Dirks who relates his story of embracing Islam although he was a Christian scholar.",
+   "origin_url": "https://islamhouse.com/en/videos/775476/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/775476.mp4",
+     "ext": "mp4",
+     "size": "89 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-695062-en",
+   "external_id": "695062",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "How I came to Islam From Darkness To Light",
+   "authors": [
+    "Bilal Philips"
+   ],
+   "description": "In this episode Dr Bilal Philips talks in detail on a very important topic of ‘How I Came to Islam from Darkness to Light’, Hear the exciting story of how he came to Islam in this great lecture.",
+   "origin_url": "https://islamhouse.com/en/videos/695062/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/695062.mp4",
+     "ext": "mp4",
+     "size": "216.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-442953-en",
+   "external_id": "442953",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Islam Story of Kenneth from England",
+   "authors": [],
+   "description": "A short video in English in which Mr. Kenneth from England relates his story of converting to Islam and how his life changed after he left Christianity.",
+   "origin_url": "https://islamhouse.com/en/videos/442953/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/442953.mp4",
+     "ext": "mp4",
+     "size": "52.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-430211-en",
+   "external_id": "430211",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Dr. Laurence Brown: My conversion to Islam",
+   "authors": [
+    "Laurence B. Brown MD"
+   ],
+   "description": "In this video, Briefings about Dr. Brown and How he came to Islam? his searching through different religions and debunking of certain biases against Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/430211/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/430211.mp4",
+     "ext": "mp4",
+     "size": "96.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-429787-en",
+   "external_id": "429787",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Islam Story of Dr. Laurence Brown",
+   "authors": [
+    "Laurence B. Brown MD"
+   ],
+   "description": "In this video, Islam Story of Dr. Laurence Brown and Why he rejected Christianity and embraced Islam?",
+   "origin_url": "https://islamhouse.com/en/videos/429787/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/429787.mp4",
+     "ext": "mp4",
+     "size": "39.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-427548-en",
+   "external_id": "427548",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "The Benefits of Converting to Islam",
+   "authors": [],
+   "description": "1- All your questions answered.\r\n2-Why you should convert to Islam without delay.\r\n3-  Continuing our discussion about the benefits of conversion.",
+   "origin_url": "https://islamhouse.com/en/articles/427548/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single2/en_The_Benefits_of_Converting_to_Islam.doc",
+     "ext": "doc",
+     "size": "3.4 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single2/en_The_Benefits_of_Converting_to_Islam.pdf",
+     "ext": "pdf",
+     "size": "194.1 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-425048-en",
+   "external_id": "425048",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Some Ladies Reverts Accounts",
+   "authors": [
+    "Khalid Ibrahim Al-Dossary"
+   ],
+   "description": "Some stories about how these ladies revert to Islam.",
+   "origin_url": "https://islamhouse.com/en/audios/425048/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/single/en_Some_Ladies_Reverts_Accounts.mp3",
+     "ext": "mp3",
+     "size": "29.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-424465-en",
+   "external_id": "424465",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Path To Islam",
+   "authors": [
+    "Khalid Ibrahim Al-Dossary"
+   ],
+   "description": "A story would help you understand how Huda Dodge came to be a Muslim. Whether it gives you ideas for da’wah, or just gives you some inspiration in your own faith, I hope it is worth your time to read it. It is just a story of a woman revert to Islam but a lot of others might see themselves in it.",
+   "origin_url": "https://islamhouse.com/en/audios/424465/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/single/en_My_Path_To_Islam.mp3",
+     "ext": "mp3",
+     "size": "24.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-409148-en",
+   "external_id": "409148",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Napoleon (Past Member of 2PAC Outlawz) Converting to Islam",
+   "authors": [
+    "Osama Emara",
+    "Mutah Wassin Shabazz Beale"
+   ],
+   "description": "In this short speech in English, Mr. Mutah Beale (Napoleon) shows how his life was before Islam and the motivation behind his embracing Islam. This speech contains nice meanings about one’s need to embrace Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/409148/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/409148.mp4",
+     "ext": "mp4",
+     "size": "16 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-396075-en",
+   "external_id": "396075",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Yes! I Converted to Islam and Here Is Why?",
+   "authors": [
+    "Muhammad Haneef Shahed"
+   ],
+   "description": "A book in English provides sample testimonies of those who studied Islam objectively and converted to it conscientiously. It is not that Islam needs such testimonies in order to verify its authenticity. Our intention is to let those who have not yet contemplated converting to Islam share the insights of those who already have by reading their testimonies and to know that Islam is a faith that is suitable for all ages and applicable until the end of time.",
+   "origin_url": "https://islamhouse.com/en/books/396075/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single2/en_Yes_I_Converted_to_Islam.pdf",
+     "ext": "pdf",
+     "size": "1.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-393376-en",
+   "external_id": "393376",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Journey to Islam",
+   "authors": [],
+   "description": "A lecture in English during which Mr. Mujahed Fletcher talks about his story of converting to Islam and his life after Islam compared to before Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/393376/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/393376.mp4",
+     "ext": "mp4",
+     "size": "156.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-384427-en",
+   "external_id": "384427",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Dr. Jeremiah’s Spiritual Journey",
+   "authors": [
+    "Dr. Jeremiah"
+   ],
+   "description": "A brief story in English of Dr. Jeremiah’s Spiritual Journey to know about Islam.",
+   "origin_url": "https://islamhouse.com/en/articles/384427/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single2/en-jeremiah-spiritual-journey.pdf",
+     "ext": "pdf",
+     "size": "1.31 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-380888-en",
+   "external_id": "380888",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "How the Bible Led Me to Islam?!",
+   "authors": [
+    "Joshua Evans"
+   ],
+   "description": "A very interesting lecture in English in which Mr. Joshua Evans, a former Christian youth minister who converted to Islam after studying a lot of religions as Christianity and Buddhism, explains the reasons made him leave Christianity and embrace Islam. these reasons are the contradictions in the Bible, the pornographic Biblical phrases, and Biblical verses that offend some Prophets and make them in the worst images. Mr. Evans also mentions a proof that confirms that Prophet Jesus is not a god. Finally, he tells that in the beginning of his research, he excluded Islam from studying due to writings of an orientalist about Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/380888/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/380888.mp4",
+     "ext": "mp4",
+     "size": "89.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-379006-en",
+   "external_id": "379006",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why I Ask People to Become Muslims: A Few of the Reasons",
+   "authors": [
+    "Muhammad Abdurraouf"
+   ],
+   "description": "A book in English whose author said at its end, \"The stories I have related are some of the true experiences of my life before and after I became a Muslim. These experiences are only a few of the more than three hundred people I have seen come to Islam.\"",
+   "origin_url": "https://islamhouse.com/en/articles/379006/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_Why_I_ask_people_to_embrace_Islam.pdf",
+     "ext": "pdf",
+     "size": "148 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_Why_I_ask_people_to_embrace_Islam.doc",
+     "ext": "doc",
+     "size": "1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-333576-en",
+   "external_id": "333576",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Incredible Discovery of Islam",
+   "authors": [],
+   "description": "An article in English relates a story of women who accepted Islam after spending seventy years of her life searching for truth.",
+   "origin_url": "https://islamhouse.com/en/articles/333576/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_My_Incredible_Discovery_of_Islam.pdf",
+     "ext": "pdf",
+     "size": "131.9 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_My_Incredible_Discovery_of_Islam.doc",
+     "ext": "doc",
+     "size": "2.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-324752-en",
+   "external_id": "324752",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Islam, Our Choice",
+   "authors": [],
+   "description": "A book in English confirms that Islam is Allah's guidance to humanity. It is not the religion of any particular people nor belongs to any specific land. All Allah's Prophets, in all ages and at all places, preached this very religion.",
+   "origin_url": "https://islamhouse.com/en/books/324752/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_Islam_is_our_choice.pdf",
+     "ext": "pdf",
+     "size": "5.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322138-en",
+   "external_id": "322138",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why a Former Buddhist then Christian Accepted Islam?",
+   "authors": [],
+   "description": "An episode in English of the program \"The Deen Show\" in which Mr. Hussain Yee explains why he converted to Islam after embracing Buddhism and Christianity.",
+   "origin_url": "https://islamhouse.com/en/videos/322138/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322138.mp4",
+     "ext": "mp4",
+     "size": "175.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322136-en",
+   "external_id": "322136",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Top Bible Scholar Leaves Christianity",
+   "authors": [],
+   "description": "A short interview with a renowned Bible scholar Bart D Ehrman, Professor of religious studies at the university of North Carolina at Chapel Hill who talks about why he left Christianity.",
+   "origin_url": "https://islamhouse.com/en/videos/322136/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322136.mp4",
+     "ext": "mp4",
+     "size": "49 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322132-en",
+   "external_id": "322132",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Thousands of Danish Converts to Islam",
+   "authors": [],
+   "description": "A lecture in English shows that the insult and distortion of the Prophet of Islam (may Allah be pleased with him) by that Danish newspaper was a reason for drawing the attention of many people of that country and others to search for the truth of Islam and then embracing it with conviction and faith.",
+   "origin_url": "https://islamhouse.com/en/videos/322132/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322132.mp4",
+     "ext": "mp4",
+     "size": "52.3 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322126-en",
+   "external_id": "322126",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Science Student in America Convert to Islam",
+   "authors": [],
+   "description": "A short videos relates the story of a science student's conversion to Islam after his knowledge of some scientific facts in the Quran which were only discovered in the twentieth century. This scientist had not believed in God nor any religion but he later realized that Islam is the true religion so he embraced it and is asking Allah to make him abide by Islam until his death.",
+   "origin_url": "https://islamhouse.com/en/videos/322126/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322126.mp4",
+     "ext": "mp4",
+     "size": "24.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322120-en",
+   "external_id": "322120",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "An Irish Converts to Islam",
+   "authors": [
+    "Muhammad Abdurraouf"
+   ],
+   "description": "An episode in English of the Deen Show Program in which an  Irish Muslim (ex-Christian) tells us what he loves about Islam and how his connection to Jesus is even better now.",
+   "origin_url": "https://islamhouse.com/en/videos/322120/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322120.mp4",
+     "ext": "mp4",
+     "size": "37.53 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322114-en",
+   "external_id": "322114",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Famous Singer Tells His Story on Why He Chose Islam",
+   "authors": [
+    "Muhammad Abdurraouf"
+   ],
+   "description": "An exciting episode from the program \"the Deen Show\" in which Mr. Abdullah Rolle (ex-singer) relates his story of embracing and converting to Islam. He worked with many famous artists then left the music business after a long time of feeling that he was missing something deeper in life. He had everything but was missing peace.",
+   "origin_url": "https://islamhouse.com/en/videos/322114/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322114.mp4",
+     "ext": "mp4",
+     "size": "34.24 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322112-en",
+   "external_id": "322112",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Every Day Many Germans Convert to Islam",
+   "authors": [],
+   "description": "A short valuable lecture shows the moment of some Germans' embracing and converting to Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/322112/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322112.mp4",
+     "ext": "mp4",
+     "size": "63.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-322110-en",
+   "external_id": "322110",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Dr. Ian Weber from England Converts to Islam",
+   "authors": [],
+   "description": "A lecture in English in which Dr. Ian Weber, a British doctor, relates his story of converting to Islam after knowing some scientific facts in the Quran only discovered in the twentieth century. He had neither believed in Allah nor any religion but he later realized that Islam is the true religion so he embraced it and now he asks Allah to make him abide by Islam until his death.",
+   "origin_url": "https://islamhouse.com/en/videos/322110/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_322110.mp4",
+     "ext": "mp4",
+     "size": "18.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-314369-en",
+   "external_id": "314369",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Priests Embracing Islam",
+   "authors": [
+    "Abu Karim Al-Marakshy"
+   ],
+   "description": "A book in English relates stories of a number of past priests who embraced Islam including well known speakers and authors like Yusuf Estes and Abu Yahya.",
+   "origin_url": "https://islamhouse.com/en/books/314369/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en-priests-embracing-islam-new.pdf",
+     "ext": "pdf",
+     "size": "1.7 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-290034-en",
+   "external_id": "290034",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Way to Islam",
+   "authors": [
+    "Bilal Philips",
+    "Muhammad Abdurraouf"
+   ],
+   "description": "Amongst the multitude of religions, ideologies and philosophies, only one can claim to follow the preserved revelation of the almighty God. \r\nThis is an inspiring account of one man’s search for the true meaning of life, and how he chose Islam at the end of his journey. Another insight into why Islam is the fastest growing religion in the world.",
+   "origin_url": "https://islamhouse.com/en/videos/290034/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_290034.mp4",
+     "ext": "mp4",
+     "size": "104.61 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-283493-en",
+   "external_id": "283493",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Stories of New Muslims",
+   "authors": [],
+   "description": "This book is published on the shoulders of those people who have volunteered their personal stories of how they entered Islam. If you, the reader, are open to the possibility that Allah, the Creator, has given you clear evidence to accept Him and His message of Islam, then read these stories. From different backgrounds, and different experiences, you just might find someone here who had the same questions and doubts that you may have. Many of these people have endured against tremendous obstacles, including parental opposition, despair with other religions, being blind, and being lied to about the true nature of Islam.",
+   "origin_url": "https://islamhouse.com/en/books/283493/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_stories_of_new_muslims.pdf",
+     "ext": "pdf",
+     "size": "870.9 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-264513-en",
+   "external_id": "264513",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Great Interview with ex-Christian Minister",
+   "authors": [
+    "Osama Emara",
+    "Joshua Evans"
+   ],
+   "description": "A lecture in English of the Program \"the Deen Show\" which hosts the former youth minister Joshua Evans who related how he embraced Islam after a deep search in the Bible. He advises those who criticize Islam to learn about it from its sources not from the orientalists’ writings. Afterwards, he confirms that Muslims should show they worship Allah, the creator, because some people think they worship something else.",
+   "origin_url": "https://islamhouse.com/en/videos/264513/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_264513.mp4",
+     "ext": "mp4",
+     "size": "91 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-255176-en",
+   "external_id": "255176",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why Minister Joshua Evans Chose Islam? (Part 2)",
+   "authors": [
+    "Joshua Evans"
+   ],
+   "description": "The second episode of the program of \"the Deen Show\" with the former Christian Youth Minister Joshua Evans who converted to Islam after studying a lot of religions as: Christianity and Buddhism. Mr. Evans mentioned some issues made him leave Christianity and embrace Islam such as: (1) The contradictions in the Bible and (2) The pornographic phrases in it and verses which offend some of Allah’s Prophets considered the best creation. These verses make them in the worst images. Also, Mr. Evans mentioned a proof that confirms Jesus is not a god. Finally he tells that in the beginning of his research, he excluded Islam from studying due to writings of an orientalist about Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/255176/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/en_Why_Josha_Evans_chose_Islam/en_255176.mp4",
+     "ext": "mp4",
+     "size": "120.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-255174-en",
+   "external_id": "255174",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why Minister Joshua Evans Chose Islam? (Part 1)",
+   "authors": [
+    "Joshua Evans"
+   ],
+   "description": "The first episode of the program of \"the Deen Show\" with the former Christian Youth Minister Joshua Evans who converted to Islam after studying a lot of religions as: Christianity and Buddhism. Mr. Evans mentioned some issues made him leave Christianity and embrace Islam such as: (1) The contradictions in the Bible and (2) The pornographic phrases in it and verses which offend some of Allah’s Prophets considered the best creation. These verses make them in the worst images. Also, Mr. Evans mentioned a proof that confirms Jesus is not a god. Finally he tells that in the beginning of his research, he excluded Islam from studying due to writings of an orientalist about Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/255174/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/chain/en_Why_Josha_Evans_chose_Islam/en_255174.mp4",
+     "ext": "mp4",
+     "size": "145.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-231792-en",
+   "external_id": "231792",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "How Dr. Laurence Brown Embraced Islam?",
+   "authors": [],
+   "description": "An episode in English of the program \"the Deen Show\" which hosts Dr. Laurence Brown who was an atheist and later studied Judaism and Christianity but he found a lot of contradictions in them. Finally, he embraced Islam and authored many books to show these contradictions.",
+   "origin_url": "https://islamhouse.com/en/videos/231792/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_231792.mp4",
+     "ext": "mp4",
+     "size": "126.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-231782-en",
+   "external_id": "231782",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "European Scientist Converts to Islam",
+   "authors": [],
+   "description": "A short episode in which a European scientist relates his story about embracing Islam after knowing about some scientific facts in the Quran which were only discovered in the twentieth century. This scientist did not believe in God or even any religion but later he realized that Islam is the true religion so he embraced it and now he is asking Allah to make him abide by Islam until his death.",
+   "origin_url": "https://islamhouse.com/en/videos/231782/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_231782.mp4",
+     "ext": "mp4",
+     "size": "42.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-191986-en",
+   "external_id": "191986",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "An 85 Year Old New Muslim",
+   "authors": [],
+   "description": "An episode in English of the famous program \"The Deen Show\" presents an 85-year-old guest narrating his story about embracing Islam on the tenth of June 2008. His story teaches us that a person should do his best and endeavor to get the truth way nevertheless his age or any other regard.",
+   "origin_url": "https://islamhouse.com/en/videos/191986/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_191986.mp4",
+     "ext": "mp4",
+     "size": "66.2 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-191941-en",
+   "external_id": "191941",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "en",
+   "title": "James Accepts Islam",
+   "authors": [],
+   "description": "A short episode in English of the famous program \"The Deen Show\" shows how Mr. James embraces Islam. Afterwards the host Mr. Eddie gives a piece of advice such as that Allah forgives all of the previous sins of a person as soon as s/he embraces Islam.",
+   "origin_url": "https://islamhouse.com/en/videos/191941/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_videos/mp4/single/en_191941.mp4",
+     "ext": "mp4",
+     "size": "16 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-185845-en",
+   "external_id": "185845",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Islam and Me",
+   "authors": [],
+   "description": "An article in English relates a story of a girl of 17 years old who lived in Maine State in USA. She did not see any women wearing hijab until September eleventh. In this article, she tells us about her story with Islam and hijab. It is a perfect lesson for every Muslim to take care of calling to Islam.",
+   "origin_url": "https://islamhouse.com/en/articles/185845/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_islam_and_me.pdf",
+     "ext": "pdf",
+     "size": "339.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_islam_and_me.doc",
+     "ext": "doc",
+     "size": "3.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-185767-en",
+   "external_id": "185767",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Major Canadian Christian Missionary Converts to Islam",
+   "authors": [],
+   "description": "A remarkable article in English about converting Mr. Garry Miller to Islam. This article contains the Quranic issues which lead him to embrace Islam.",
+   "origin_url": "https://islamhouse.com/en/articles/185767/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Major_Canadian_Christian_Missionary_Converts_to_Islam.pdf",
+     "ext": "pdf",
+     "size": "59.3 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Major_Canadian_Christian_Missionary_Converts_to_Islam.doc",
+     "ext": "doc",
+     "size": "1.4 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-185691-en",
+   "external_id": "185691",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Cat Stevens and His Journey to Islam",
+   "authors": [],
+   "description": "A good article shows the former singer Cat Stevens’s journey to Islam after several of questions. This article refers that when a person thinks hard about his life and his death, he should get to His God way.",
+   "origin_url": "https://islamhouse.com/en/articles/185691/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Cat_Stevens_and_His_Journey_to_Islam.pdf",
+     "ext": "pdf",
+     "size": "47.1 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Cat_Stevens_and_His_Journey_to_Islam.doc",
+     "ext": "doc",
+     "size": "1.9 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-185541-en",
+   "external_id": "185541",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why Mrs. Cecilla Cannoly Accepted Islam?",
+   "authors": [],
+   "description": "An article in English in which Mrs. Cecilla Cannoly tells her story of embracing Islam after suffering from her obscure faith.",
+   "origin_url": "https://islamhouse.com/en/articles/185541/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Why_Mrs_Cecilla_Cannoly_accepted_Islam.doc",
+     "ext": "doc",
+     "size": "1.8 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Why_Mrs_Cecilla_Cannoly_accepted_Islam.pdf",
+     "ext": "pdf",
+     "size": "42.5 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-185535-en",
+   "external_id": "185535",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "How Dr. Benoist Accepted Islam?",
+   "authors": [],
+   "description": "An article in English in which Dr. Benoist relates how he embraced Islam after reading Surat Al-Ikhlas. This is an article for anyone who wants to know the monotheism fact in Islam.",
+   "origin_url": "https://islamhouse.com/en/articles/185535/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_How_Dr_Benoist_accepted_Islam.pdf",
+     "ext": "pdf",
+     "size": "42.5 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_How_Dr_Benoist_accepted_Islam.doc",
+     "ext": "doc",
+     "size": "1.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-75468-en",
+   "external_id": "75468",
+   "type": "books",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Why I Chose Islam?",
+   "authors": [
+    "M. Emery"
+   ],
+   "description": "A book in English in which the author relates the journey and story of a priest and how he embraced Islam. The priest said in the beginning, \"I was born to staunch Catholic Christian parents. Even from my youngest days, my father sometimes took me along with him when he went to preach, it was quite obvious that he wanted me to succeed him in his profession. By the time I reached grade twelve, I could preach the Gospels in my own way. In college, I often met my Protestant classmates and discussed the differences in our faiths and the performance of rituals.",
+   "origin_url": "https://islamhouse.com/en/books/75468/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_books/single/en_why_i_chose_islam.pdf",
+     "ext": "pdf",
+     "size": "402.1 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-53028-en",
+   "external_id": "53028",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "Abdullah",
+   "authors": [],
+   "description": "An article in English in which its writer shows a fascinating story of the conversion of a man named Abdullah to Islam.",
+   "origin_url": "https://islamhouse.com/en/articles/53028/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Abdullah.pdf",
+     "ext": "pdf",
+     "size": "77.4 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_Abdullah.doc",
+     "ext": "doc",
+     "size": "1.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-53024-en",
+   "external_id": "53024",
+   "type": "articles",
+   "topic": "stories",
+   "lang": "en",
+   "title": "A Sister from the Gulf Embraces Islam",
+   "authors": [],
+   "description": "A short article in English in which its writer shows the arduous journey that every seeker of truth spends amidst that pile of confusing questions and answers in addition to his old convictions and new ideas until he takes the right decision based on the proofs he got.",
+   "origin_url": "https://islamhouse.com/en/articles/53024/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_A_sister_from_the_Gulf_embraces_Islam.pdf",
+     "ext": "pdf",
+     "size": "76 KB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_articles/single/en_A_sister_from_the_Gulf_embraces_Islam.doc",
+     "ext": "doc",
+     "size": "1.5 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-50696-en",
+   "external_id": "50696",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "en",
+   "title": "My Way to Islam",
+   "authors": [
+    "Bilal Philips"
+   ],
+   "description": "A lecture in English delivered by Sh. Bilal Philips in which he shows his path and story to embrace Islam.",
+   "origin_url": "https://islamhouse.com/en/audios/50696/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/en/ih_sounds/single/en-My-Way-to-Islam.mp3",
+     "ext": "mp3",
+     "size": "60.54 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2844510-tl",
+   "external_id": "2844510",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "Paano ako naging Muslim",
+   "authors": [],
+   "description": "Paano ako naging Muslim",
+   "origin_url": "https://islamhouse.com/tl/videos/2844510/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_videos/mp4/single/tl-paano-ako-naging-muslim.mp4",
+     "ext": "mp4",
+     "size": "38.97 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-2833480-tl",
+   "external_id": "2833480",
+   "type": "books",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "Ang Dakilang Pag-ibig ko kay Hesus Ang Naghatid sa Akin sa Islam",
+   "authors": [],
+   "description": "Ang Dakilang Pag-ibig ko kay Hesus Ang Naghatid sa Akin sa Islam",
+   "origin_url": "https://islamhouse.com/tl/books/2833480/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl-my-great-love-for-jesus.pdf",
+     "ext": "pdf",
+     "size": "8.64 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-603593-tl",
+   "external_id": "603593",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "Bakit Mo Ako Pinabayaan ?",
+   "authors": [
+    "Muwahhid Ruwas"
+   ],
+   "description": "Bakit Mo Ako Pinabayaan ?",
+   "origin_url": "https://islamhouse.com/tl/audios/603593/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_sounds/single/tl_Bakit_Mo_Ako_Pinabayaan.mp3",
+     "ext": "mp3",
+     "size": "48.8 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-583047-tl",
+   "external_id": "583047",
+   "type": "videos",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "BAKIT MO AKO PINABAYAAN?",
+   "authors": [
+    "Muwahhid Ruwas"
+   ],
+   "description": "BAKIT MO AKO PINABAYAAN?",
+   "origin_url": "https://islamhouse.com/tl/videos/583047/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_videos/mp4/single/583047.mp4",
+     "ext": "mp4",
+     "size": "218.1 MB"
+    }
+   ]
+  },
+  {
+   "id": "ih-230426-tl",
+   "external_id": "230426",
+   "type": "books",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "Islam, Bakit ko Ito Niyakap?",
+   "authors": [
+    "ZAINAB LUCERO"
+   ],
+   "description": "Ang mga kasaysayan ng ilang kababaihan natin na nagsikap makamit ang tunay na pananampalataya tungo sa kapayapaan. Nawa’y maging kapaki-pakinabang sa lahat ang aklat na ito.",
+   "origin_url": "https://islamhouse.com/tl/books/230426/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl_islam_bakit_ko_ito_niyakap.doc",
+     "ext": "doc",
+     "size": "2.3 MB"
+    },
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_books/single/tl_islam_bakit_ko_ito_niyakap.pdf",
+     "ext": "pdf",
+     "size": "367 KB"
+    }
+   ]
+  },
+  {
+   "id": "ih-12780-tl",
+   "external_id": "12780",
+   "type": "audios",
+   "topic": "stories",
+   "lang": "tl",
+   "title": "Panayam sa Isang Paring Pumasok sa Islam",
+   "authors": [
+    "Nuh Capariño"
+   ],
+   "description": "Panayam sa Isang Paring Pumasok sa Islam.",
+   "origin_url": "https://islamhouse.com/tl/audios/12780/",
+   "files": [
+    {
+     "url": "https://d1.islamhouse.com/data/tl/ih_sounds/single/tl_ISANG_PARING.mp3",
+     "ext": "mp3",
+     "size": "10.4 MB"
+    }
+   ]
+  }
+ ]
+}

@@ -6,15 +6,18 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from sqlalchemy import select, text
 
+from app.companion import router as companion
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.security import hash_password
-from app.knowledge import review, scripture
+from app.knowledge import ask, discover, review, scripture, tasks
+from app.knowledge.eval import router as knw_eval
 from app.learning import router as learning
-from app.motivation import indicators
+from app.motivation import challenges, indicators
 from app.motivation import router as motivation
 from app.platform import admin, auth, push
 from app.platform.models import User
+from app.practice import router as practice
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 log = logging.getLogger("rafeeq")
@@ -63,6 +66,13 @@ for r in (
     indicators.router,
     push.router,
     scripture.router,
+    discover.router,
+    practice.router,
+    companion.router,
+    challenges.router,
+    ask.router,  # KNW-01
+    tasks.router,  # KNW-10
+    knw_eval.router,  # KNW-04
 ):
     app.include_router(r)
 
