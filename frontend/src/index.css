@@ -7,6 +7,8 @@
 @import "@fontsource/ibm-plex-sans-arabic/500.css";
 @import "@fontsource/ibm-plex-sans-arabic/700.css";
 @import "@fontsource-variable/noto-naskh-arabic";
+/* Quran text (Uthmani marks as served by QuranEnc): Amiri Quran, SIL OFL 1.1. */
+@import "@fontsource/amiri-quran/400.css";
 
 /* Brand typeface (local files, not committed) */
 @import "./styles/fonts.css";
@@ -26,6 +28,7 @@
   --font-heading: var(--rf-font-display);
   --font-display: var(--rf-font-display);
   --font-reading: var(--rf-font-text);
+  --font-quran: "Amiri Quran", "Noto Naskh Arabic Variable", serif;
 
   /* Type scale (size / line-height) from the brand guide */
   --text-display: 56px;

@@ -213,6 +213,57 @@ function PetalRow({
   )
 }
 
+/**
+ * «زهرة الوحدة» (LRN-03 R4 completion): one petal per lesson of the unit,
+ * spaced evenly around the core. Completed petals carry the brand gradient;
+ * the lesson just finished (`fresh`) blooms in once, amber. Reduced motion
+ * shows the final state.
+ */
+function UnitBloom({
+  total,
+  done,
+  fresh,
+  size = 220,
+  className,
+  label,
+}: {
+  total: number
+  /** Petals completed, including the fresh one. */
+  done: number
+  /** Index of the petal that just bloomed. */
+  fresh?: number
+  size?: number
+  className?: string
+  label?: string
+}) {
+  const id = React.useId().replace(/:/g, "")
+  const n = Math.max(1, total)
+  return (
+    <svg viewBox="0 0 120 120" width={size} height={size} role="img" aria-label={label} className={className}>
+      <FlowerDefs id={id} />
+      {Array.from({ length: n }, (_, i) => {
+        const on = i < done
+        const isFresh = i === fresh
+        return (
+          <g key={i} transform={`rotate(${(360 / n) * i} 60 60)`}>
+            <g
+              className={isFresh ? "petal-pop" : undefined}
+              style={isFresh ? ({ transformBox: "fill-box", transformOrigin: "center", animationDelay: "250ms" } as React.CSSProperties) : undefined}
+            >
+              <ellipse
+                {...PETAL}
+                transform={PETAL.tilt}
+                fill={isFresh ? `url(#${id}a)` : on ? `url(#${id}v)` : "rgb(255 255 255 / 0.12)"}
+              />
+            </g>
+          </g>
+        )
+      })}
+      <circle cx="60" cy="60" r="9" fill={done >= n ? `url(#${id}a)` : "rgb(255 255 255 / 0.9)"} />
+    </svg>
+  )
+}
+
 type SpotKind = "saved" | "companion" | "offline" | "start"
 
 /**
@@ -286,5 +337,5 @@ function SpotIllustration({
   )
 }
 
-export { YearFlower, PetalPattern, CoreGlow, PetalConfetti, PetalRow, FlowerDefs, SpotIllustration }
+export { YearFlower, PetalPattern, CoreGlow, PetalConfetti, PetalRow, FlowerDefs, SpotIllustration, UnitBloom }
 export type { SpotKind }

@@ -13,6 +13,7 @@ const Home = lazy(() => import("@/app/pages/Home"))
 const Learn = lazy(() => import("@/app/pages/Learn"))
 const Lesson = lazy(() => import("@/app/pages/Lesson"))
 const Review = lazy(() => import("@/app/pages/Review"))
+const Next = lazy(() => import("@/app/pages/Next"))
 const Placement = lazy(() => import("@/app/pages/Placement"))
 const Ask = lazy(() => import("@/app/pages/Ask"))
 const Mentor = lazy(() => import("@/app/pages/Mentor"))
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
       { path: "learn/lesson/:lessonId", element: <Lesson /> },
       { path: "learn/review", element: <Review /> },
       { path: "learn/placement", element: <Placement /> },
+      { path: "next", element: <Next /> },
       { path: "ask", element: <Ask /> },
       { path: "mentor/*", element: <Mentor /> },
       { path: "me", element: <Me /> },

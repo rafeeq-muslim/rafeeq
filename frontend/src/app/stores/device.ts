@@ -20,6 +20,8 @@ type DeviceState = {
   city: City | null
   askConsent: boolean // KNW-10 R5: off until the learner turns it on
   dismissedSaveSheet: boolean
+  /** Team accounts: show lessons still in Sharia review (never for learners). */
+  preview: boolean
   set: (patch: Partial<Omit<DeviceState, "set">>) => void
 }
 
@@ -50,6 +52,7 @@ export const useDevice = create<DeviceState>()(
       city: null,
       askConsent: false,
       dismissedSaveSheet: false,
+      preview: false,
       set: (patch) => set(patch),
     }),
     { name: "rafeeq.device", version: 1 },

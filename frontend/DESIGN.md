@@ -234,7 +234,7 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - **Badge:** default, secondary, celebrate, success, warning, info, destructive, outline. Height 28.
 - **Card:** full composition (header, title, description, action, content, footer). The footer has no grey band.
 - **Chat:** shadcn `MessageScroller`, `Message`, `Bubble`, `Marker`. `AssistantMessage` requires at least one source and ends with `SourceStrip`.
-- **Path:** units are months (`PathUnitHeader` with the petal pattern). `PathNode` is a pebble with a lip and has exactly three states (done, current, locked); the current one carries the «ابدأ» bubble and the halo. Nodes zig-zag with logical offsets.
+- **Path:** units are months (`PathUnitHeader` with the petal pattern). `PathNode` is a pebble with a lip and has four states (done, current, open after placement, locked); the current one carries the «ابدأ» bubble and the halo. Nodes zig-zag with logical offsets.
 - **Exercise:** `ExerciseOption` is a real radio styled as a tactile tile; `ExerciseFeedback` is a bottom sheet in the result colour with the next action in thumb reach.
 - **Shell and graphics:** `AppShell`, `TopBar`, `JourneySky` + `JourneySheet`, `YearFlower`, `PetalPattern`, `CoreGlow`, `PetalConfetti`, `PetalRow`, `SpotIllustration`, `LessonMedallion`.
 - **Motivation:** points, streaks, badges and leaderboards count learning only. The streak pauses, it never resets. Worship habits are private and never rewarded.

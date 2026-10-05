@@ -3,40 +3,39 @@
  * R1 lessons are done / next / locked; R2 a lesson opens after the previous
  * one (placement unlocks whole units); R3 one clear next step.
  */
-import type { Locale } from "@/app/i18n"
 import type { Lesson, Unit } from "./types"
 
-export type LessonStatus = "done" | "next" | "open" | "locked" | "unavailable"
+export type LessonStatus = "done" | "next" | "open" | "locked"
 
 export type Progress = {
   completed: Record<string, { first: string; last: string; times: number }>
   unlockedUnits: string[]
 }
 
-/** Units visible to the learner: approved in their language (LRN-02 R1, LRN-09 R2). */
-export function visibleUnits(units: Unit[], locale: Locale): Unit[] {
-  return [...units].sort((a, b) => a.order - b.order).filter((u) => u.approved.includes(locale))
+/** Units in path order. The server sends only units approved in the
+ * learner's language (LRN-02 R1, LRN-09 R2); a team preview sends all. */
+export function visibleUnits(units: Unit[]): Unit[] {
+  return [...units].sort((a, b) => a.order - b.order)
 }
 
 /** Ordered lessons across visible units. */
-export function orderedLessons(units: Unit[], lessons: Record<string, Lesson>, locale: Locale): Lesson[] {
-  return visibleUnits(units, locale).flatMap((u) => u.lessons.map((id) => lessons[id]).filter(Boolean))
+export function orderedLessons(units: Unit[], lessons: Record<string, Lesson>): Lesson[] {
+  return visibleUnits(units).flatMap((u) => u.lessons.map((id) => lessons[id]).filter(Boolean))
 }
 
-export function lessonStatus(lesson: Lesson, all: Lesson[], p: Progress, locale: Locale): LessonStatus {
-  if (!lesson.approved.includes(locale)) return "unavailable"
+export function lessonStatus(lesson: Lesson, all: Lesson[], p: Progress): LessonStatus {
   if (p.completed[lesson.id]) return "done"
-  if (p.unlockedUnits.includes(lesson.unit)) return firstIncomplete(all, p, locale)?.id === lesson.id ? "next" : "open"
+  if (p.unlockedUnits.includes(lesson.unit)) return firstIncomplete(all, p)?.id === lesson.id ? "next" : "open"
   const idx = all.findIndex((l) => l.id === lesson.id)
   const prev = all[idx - 1]
   const prevOk = !prev || !!p.completed[prev.id] || p.unlockedUnits.includes(prev.unit)
   if (!prevOk) return "locked"
-  return firstIncomplete(all, p, locale)?.id === lesson.id ? "next" : "open"
+  return firstIncomplete(all, p)?.id === lesson.id ? "next" : "open"
 }
 
 /** R3: the first lesson not completed, in order. */
-export function firstIncomplete(all: Lesson[], p: Progress, locale: Locale): Lesson | undefined {
-  return all.find((l) => l.approved.includes(locale) && !p.completed[l.id])
+export function firstIncomplete(all: Lesson[], p: Progress): Lesson | undefined {
+  return all.find((l) => !p.completed[l.id])
 }
 
 export function unitDone(unit: Unit, p: Progress): boolean {

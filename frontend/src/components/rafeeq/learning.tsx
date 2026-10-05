@@ -182,7 +182,7 @@ function JourneyCard({
 
 /* ---------- Learning path (LRN-02): the year, month by month ---------- */
 
-type PathNodeState = "done" | "current" | "locked"
+type PathNodeState = "done" | "current" | "open" | "locked"
 
 function LearningPath({ className, ...props }: React.ComponentProps<"ol">) {
   return (
@@ -242,10 +242,12 @@ function PathNode({
   icon: Icon = IconStar,
   offset = 0,
   startLabel = "ابدأ",
+  stateLabels = { done: "مكتمل", current: "الدرس الحالي", open: "متاح", locked: "مقفل" },
   onSelect,
   className,
 }: {
   state: PathNodeState
+  stateLabels?: Record<PathNodeState, string>
   label: string
   icon?: TablerIcon
   offset?: -2 | -1 | 0 | 1 | 2
@@ -256,8 +258,7 @@ function PathNode({
   const shift = { "-2": "me-32", "-1": "me-16", "0": "", "1": "ms-16", "2": "ms-32" }[
     String(offset) as "-2" | "-1" | "0" | "1" | "2"
   ]
-  const stateLabel =
-    state === "done" ? "مكتمل" : state === "current" ? "الدرس الحالي" : "مقفل"
+  const stateLabel = stateLabels[state]
   return (
     <li
       data-slot="path-node"
@@ -283,6 +284,7 @@ function PathNode({
           state === "done" && "size-16 bg-primary text-primary-foreground [--lip:var(--primary-lip)]",
           state === "current" &&
             "size-20 bg-primary text-primary-foreground [--lip:var(--primary-lip)]",
+          state === "open" && "size-16 bg-secondary text-secondary-foreground [--lip:var(--secondary-lip)]",
           state === "locked" && "size-16 bg-muted text-muted-foreground [--lip:var(--outline-lip)]"
         )}
       >
@@ -325,10 +327,12 @@ function ExerciseOption({
   title,
   description,
   state = "idle",
+  correctLabel = "إجابة صحيحة",
   disabled,
   className,
 }: {
   value: string
+  correctLabel?: string
   title: string
   description?: string
   state?: ExerciseOptionState
@@ -355,7 +359,7 @@ function ExerciseOption({
         {description && <span className="block text-label text-muted-foreground">{description}</span>}
       </span>
       {state === "correct" ? (
-        <IconCircleCheckFilled className="size-7 shrink-0 text-success" aria-label="إجابة صحيحة" />
+        <IconCircleCheckFilled className="size-7 shrink-0 text-success" aria-label={correctLabel} />
       ) : (
         <RadioGroupItem value={value} id={id} disabled={disabled} className="size-6" />
       )}

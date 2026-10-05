@@ -120,10 +120,13 @@ function MilestoneBadge({
 function StreakChip({
   days,
   paused = false,
+  label,
   className,
 }: {
   days: number
   paused?: boolean
+  /** Localised text; defaults to Arabic. */
+  label?: string
   className?: string
 }) {
   return (
@@ -137,7 +140,7 @@ function StreakChip({
       ) : (
         <IconFlame data-icon="inline-start" stroke={1.75} />
       )}
-      {paused ? `سلسلتك ${days} أيام · متوقفة مؤقتًا` : `سلسلتك ${days} أيام`}
+      {label ?? (paused ? `سلسلتك ${days} أيام · متوقفة مؤقتًا` : `سلسلتك ${days} أيام`)}
     </Badge>
   )
 }

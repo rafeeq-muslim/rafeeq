@@ -20,6 +20,9 @@ function JourneySky({
   streakDays,
   streakPaused = false,
   greeting = "السلام عليكم",
+  dayLabel,
+  streakLabel,
+  label = "رحلتك مع رفيق",
   actions,
   className,
 }: {
@@ -34,6 +37,12 @@ function JourneySky({
   streakDays: number
   streakPaused?: boolean
   greeting?: string
+  /** Localised «يومك 42 مع رفيق». */
+  dayLabel?: string
+  /** Localised streak text (paused wording included). */
+  streakLabel?: string
+  /** Accessible name of the section. */
+  label?: string
   /** Top-end actions (e.g. avatar, language). */
   actions?: React.ReactNode
   className?: string
@@ -41,7 +50,7 @@ function JourneySky({
   return (
     <section
       data-slot="journey-sky"
-      aria-label="رحلتك مع رفيق"
+      aria-label={label}
       className={cn(
         "dark relative isolate overflow-hidden bg-[linear-gradient(180deg,var(--rf-ink)_0%,var(--rf-deep)_100%)] px-5 pt-[calc(env(safe-area-inset-top,0px)+1.25rem)] pb-14 text-foreground @min-[52.5rem]/shell:rounded-panel @min-[52.5rem]/shell:px-8 @min-[52.5rem]/shell:pb-8",
         className
@@ -51,8 +60,8 @@ function JourneySky({
 
       <div className="flex items-center gap-3">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-label text-white/70">{name ? `${greeting}، ${name}` : greeting}</p>
-          <p className="text-label font-medium text-white tabular-nums">{`يومك ${day} مع رفيق`}</p>
+          <p className="truncate text-label text-white/70">{name ? <>{greeting}، <bdi>{name}</bdi></> : greeting}</p>
+          <p className="text-label font-medium text-white tabular-nums">{dayLabel ?? `يومك ${day} مع رفيق`}</p>
         </div>
         {actions}
       </div>
@@ -68,7 +77,7 @@ function JourneySky({
             ) : (
               <IconFlame className="size-4 text-apricot" stroke={1.75} aria-hidden="true" />
             )}
-            {streakPaused ? `سلسلتك ${streakDays} أيام · متوقفة مؤقتًا` : `سلسلتك ${streakDays} أيام`}
+            {streakLabel ?? (streakPaused ? `سلسلتك ${streakDays} أيام · متوقفة مؤقتًا` : `سلسلتك ${streakDays} أيام`)}
           </p>
         </div>
         <div className="relative grid shrink-0 place-items-center">
