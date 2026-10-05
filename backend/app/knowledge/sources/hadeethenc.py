@@ -29,6 +29,7 @@ SOURCE_ID = "hadeethenc"
 API = "https://hadeethenc.com/api/v1"
 LANGS = ("ar", "en", "tl")
 RATE = 4.0  # requests per second, kept under the 5 req/s ceiling
+BATCH = 50  # ids per /hadeeths/multiple/ call (50 verified 2026-10-05)
 
 
 def fetch(raw_dir: Path, langs: tuple[str, ...] = LANGS) -> None:
@@ -71,13 +72,12 @@ def fetch(raw_dir: Path, langs: tuple[str, ...] = LANGS) -> None:
             uniq = sorted(set(ids), key=int)
             (d / "_ids.json").write_text(json.dumps(uniq))
             print(f"{lang}: {len(ids)} listed, {len(uniq)} unique")
-            for i, hid in enumerate(uniq, 1):
-                f = d / f"{hid}.json"
-                if f.exists():
-                    continue
-                f.write_text(json.dumps(get("/hadeeths/one/", language=lang, id=hid), ensure_ascii=False))
-                if i % 200 == 0:
-                    print(f"  {lang} {i}/{len(uniq)}")
+            # /hadeeths/multiple/ returns the same fields as /hadeeths/one/, BATCH ids per call
+            missing = [h for h in uniq if not (d / f"{h}.json").exists()]
+            for i in range(0, len(missing), BATCH):
+                for h in get("/hadeeths/multiple/", language=lang, ids=",".join(missing[i : i + BATCH])):
+                    (d / f"{h['id']}.json").write_text(json.dumps(h, ensure_ascii=False))
+                print(f"  {lang} {min(i + BATCH, len(missing))}/{len(missing)}", flush=True)
 
 
 def iter_passages(raw_dir: Path) -> Iterator[dict]:

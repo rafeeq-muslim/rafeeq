@@ -7,20 +7,20 @@ that opts out sends one `opt_out` event; its install ID is then removed
 from every stored event and it has no status any more.
 """
 
-from datetime import UTC, datetime, timedelta
-from typing import Literal
+from datetime import UTC, date, datetime, timedelta
+from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter
-from pydantic import BaseModel, Field
-from sqlalchemy import delete, update
+from pydantic import AwareDatetime, BaseModel, Field
+from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import publish
 from app.motivation.engagement import after_interaction, status_at
-from app.motivation.models import AnonEvent, EngagementState
+from app.motivation.models import AnonEvent, EarnedBadge, EngagementState, StreakDay
 
 RIYADH = ZoneInfo("Asia/Riyadh")
 LEARNING = {"lesson_completed", "review_completed"}  # MOT-07: the only learning interactions
@@ -132,3 +132,45 @@ async def link_install(body: InstallIn, session: Session, user: CurrentUser) -> 
     are the same learner, not a second new one."""
     await session.execute(update(EngagementState).where(EngagementState.install_id == body.install_id).values(user_id=user.id))
     await session.commit()
+
+
+# --- Account copy of streak days and badges -------------------------------
+
+
+class Badge(BaseModel):
+    id: str = Field(max_length=24)
+    earnedAt: AwareDatetime
+
+
+class MotivationSync(BaseModel):
+    days: list[date] = Field(default_factory=list, max_length=4000)
+    badges: dict[Annotated[str, Field(max_length=24)], Badge] = Field(default_factory=dict, max_length=100)
+
+
+async def _motivation_of(session: AsyncSession, user_id) -> MotivationSync:
+    days = await session.scalars(select(StreakDay.day).where(StreakDay.user_id == user_id).order_by(StreakDay.day))
+    badges = await session.scalars(select(EarnedBadge).where(EarnedBadge.user_id == user_id))
+    return MotivationSync(days=list(days), badges={b.badge_id: Badge(id=b.badge_id, earnedAt=b.earned_at) for b in badges})
+
+
+@router.get("/me/motivation")
+async def get_motivation(session: Session, user: CurrentUser) -> MotivationSync:
+    return await _motivation_of(session, user.id)
+
+
+@router.put("/me/motivation")
+async def merge_motivation(body: MotivationSync, session: Session, user: CurrentUser) -> MotivationSync:
+    """MOT-02: the larger set of learning days wins (no mixing two histories
+    into a streak neither had); MOT-03: badges are kept once, earliest date."""
+    have = await _motivation_of(session, user.id)
+    if len(set(body.days)) > len(have.days):
+        await session.execute(delete(StreakDay).where(StreakDay.user_id == user.id))
+        session.add_all(StreakDay(user_id=user.id, day=d) for d in sorted(set(body.days)))
+    for bid, b in body.badges.items():
+        row = await session.get(EarnedBadge, (user.id, bid))
+        if row is None:
+            session.add(EarnedBadge(user_id=user.id, badge_id=bid, earned_at=b.earnedAt))
+        elif b.earnedAt < row.earned_at:
+            row.earned_at = b.earnedAt
+    await session.commit()
+    return await _motivation_of(session, user.id)

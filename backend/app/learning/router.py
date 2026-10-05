@@ -1,12 +1,16 @@
 """Learning API: the path's content (LRN-01) for one language."""
 
-from typing import Literal
+from datetime import UTC, datetime
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Response, status
+from pydantic import AwareDatetime, BaseModel, Field
+from sqlalchemy import select
 
-from app.core.deps import OptionalUser, Session
+from app.core.deps import CurrentUser, OptionalUser, Session
 from app.knowledge.review import published
 from app.learning.content import build_content
+from app.learning.models import LessonCompletion, ObjectiveMastery, UnitUnlock
 
 router = APIRouter(prefix="/api", tags=["learning"])
 PREVIEW_ROLES = ("team", "sharia_reviewer", "admin")
@@ -23,3 +27,88 @@ async def content(
     # Guests cache it for offline use (the service worker revalidates); previews are personal.
     response.headers["Cache-Control"] = "private, no-store" if preview else "public, max-age=60"
     return build_content(lang, units_live, lessons_live, preview)
+
+
+# --- Account copy of progress (PLT-02: guests keep progress on the device;
+# signing in merges it into the account, never losing either side) ---------
+
+
+class Completion(BaseModel):
+    first: AwareDatetime
+    last: AwareDatetime
+    times: int = Field(ge=1, le=100_000)
+
+
+class Mastery(BaseModel):
+    p: float = Field(ge=0, le=1)
+    seen: bool = False
+    answered: bool = False
+    lastAnswerAt: AwareDatetime | None = None
+    masteredAt: AwareDatetime | None = None
+    lastExerciseId: str | None = Field(default=None, max_length=24)
+    checksDone: int = Field(default=0, ge=0, le=10)
+
+
+class LearningSync(BaseModel):
+    completed: dict[Annotated[str, Field(max_length=16)], Completion] = Field(default_factory=dict, max_length=500)
+    unlockedUnits: list[Annotated[str, Field(max_length=8)]] = Field(default_factory=list, max_length=50)
+    mastery: dict[Annotated[str, Field(max_length=24)], Mastery] = Field(default_factory=dict, max_length=2000)
+
+
+async def _learning_of(session, user_id) -> LearningSync:
+    comps = await session.scalars(select(LessonCompletion).where(LessonCompletion.user_id == user_id))
+    unlocks = await session.scalars(select(UnitUnlock.unit_id).where(UnitUnlock.user_id == user_id))
+    mast = await session.scalars(select(ObjectiveMastery).where(ObjectiveMastery.user_id == user_id))
+    return LearningSync(
+        completed={c.lesson_id: Completion(first=c.first_completed_at, last=c.last_completed_at, times=c.times) for c in comps},
+        unlockedUnits=list(unlocks),
+        mastery={
+            m.objective_id: Mastery(
+                p=m.p,
+                seen=m.seen,
+                answered=m.answered,
+                lastAnswerAt=m.last_answer_at,
+                masteredAt=m.mastered_at,
+                lastExerciseId=m.last_exercise_id,
+                checksDone=m.checks_done,
+            )
+            for m in mast
+        },
+    )
+
+
+@router.get("/me/learning")
+async def get_learning(session: Session, user: CurrentUser) -> LearningSync:
+    return await _learning_of(session, user.id)
+
+
+@router.put("/me/learning")
+async def merge_learning(body: LearningSync, session: Session, user: CurrentUser) -> LearningSync:
+    """Union of completions (earliest first, latest last, most times), union
+    of unlocks, and per objective the state with the latest answer."""
+    have = await _learning_of(session, user.id)
+    for lid, c in body.completed.items():
+        row = await session.get(LessonCompletion, (user.id, lid))
+        if row is None:
+            session.add(
+                LessonCompletion(user_id=user.id, lesson_id=lid, first_completed_at=c.first, last_completed_at=c.last, times=c.times)
+            )
+        else:
+            row.first_completed_at = min(row.first_completed_at, c.first)
+            row.last_completed_at = max(row.last_completed_at, c.last)
+            row.times = max(row.times, c.times)
+    for uid in set(body.unlockedUnits) - set(have.unlockedUnits):
+        session.add(UnitUnlock(user_id=user.id, unit_id=uid))
+    epoch = datetime.min.replace(tzinfo=UTC)
+    for oid, m in body.mastery.items():
+        mine = have.mastery.get(oid)
+        if mine is not None and (mine.lastAnswerAt or epoch) >= (m.lastAnswerAt or epoch):
+            continue
+        row = await session.get(ObjectiveMastery, (user.id, oid))
+        if row is None:
+            row = ObjectiveMastery(user_id=user.id, objective_id=oid)
+            session.add(row)
+        row.p, row.seen, row.answered, row.last_answer_at = m.p, m.seen, m.answered, m.lastAnswerAt
+        row.mastered_at, row.last_exercise_id, row.checks_done = m.masteredAt, m.lastExerciseId, m.checksDone
+    await session.commit()
+    return await _learning_of(session, user.id)
