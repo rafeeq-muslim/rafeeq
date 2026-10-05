@@ -41,4 +41,4 @@
 
 ## الميزات
 
-انظر قسم «المعرفة والأسئلة» في [features.md](../../features.md). مثال جاهز: [KNW-01 الإجابة الموثّقة](features/KNW-01-sourced-answer.md).
+انظر قسم «المعرفة والأسئلة» في [features.md](../../features.md). مثال جاهز: [KNW-01 الإجابة الموثّقة](features/KNW-01-sourced-answer.md). خطة التنفيذ: [implementation-plan.md](implementation-plan.md).
