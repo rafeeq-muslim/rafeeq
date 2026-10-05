@@ -38,6 +38,7 @@ Each example becomes at least one automated test, named in English after the rul
 - [ ] Privacy/permission example wherever another person could see user data
 - [ ] Refusal/referral examples wherever Sharia content or danger is involved
 - [ ] Open questions listed instead of assumptions; numbers only with sources (`evidence.md`)
+- [ ] Every question the team can answer is decided before «جاهزة». Each remaining open question names its owner and **what the developer does until it is answered** («حتى يُحسم: …»), so a coding agent never has to guess or stop. A question that blocks building is not allowed in a «جاهزة» feature
 - [ ] Listed in `../features.md` with priority and status
 
 If you can run code, check structure with `skills/rafeeq-prd/scripts/check_feature.py <file>`.

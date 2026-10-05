@@ -56,8 +56,12 @@ def check(text, personas=None):
         errors.append("القصة لا تتبع «بصفتي … أريد … حتى …»")
     elif personas:
         names = set(re.findall(r"^##\s*\d*\.?\s*([^\s(—:]+)", personas, re.M))
+        # Full multi-word names too (e.g. «عضو الفريق»), up to the dash or a note.
+        names |= {n.strip() for n in re.findall(r"^##\s*\d*\.?\s*([^—(*\n]+)", personas, re.M)}
         bold = re.search(r"بصفتي\s+\*\*([^*]+)\*\*", story)
-        if bold and names and bold.group(1).strip() not in names:
+        # «بصفتي أبي عبدالله» is the grammatical form of «أبو عبدالله».
+        who = re.sub(r"^(أبي|أبا)\s", "أبو ", bold.group(1).strip()) if bold else ""
+        if bold and names and who not in names:
             warnings.append(f"الشخصية «{bold.group(1).strip()}» غير موجودة في personas.md")
 
     why = section(text, "لماذا") or ""

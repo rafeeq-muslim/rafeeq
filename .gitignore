@@ -11,6 +11,11 @@
 *WhatsApp*
 private/
 
+# Learning source books (PDF/DOCX): kept locally for the domain owner and
+# Sharia reviewer; their terms and size keep them out of the public repo.
+# Each source is logged in docs/agents/sources.md instead.
+docs/domains/learning/learning sources/
+
 # Dependencies and builds
 node_modules/
 .venv/

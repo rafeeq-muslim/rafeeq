@@ -39,7 +39,7 @@ Sources: the challenge's Reference & Scientific Package (v. 1448/3/20) ✅, team
 - **No ads next to Quran or hadith** (QuranEnc/HadeethEnc terms).
 - **No transliteration of Al-Fatiha or adhkar in non-Arabic letters** (team decision after Muhannad's Sharia concern 💬). Teach pronunciation by listening and repetition.
 - **No content is shown to users before the Sharia reviewer approves it** (team rule 💬). Sharia reviewer: مهند بن صالح الفوزان.
-- **No madhhab is chosen silently.** Where practice differs by madhhab, say so (`research/01` §6).
+- **No madhhab is chosen silently.** Where practice differs by madhhab, say so (`research/01` §6). **Exception (product owner, 2026-10-05):** the day-one unit (LRN-01) shows wudu and prayer as its approved source describes them, without the note, to avoid planting doubt in the first hours; differences are taught in a later unit.
 
 ## 2. AI assistant rules (Knowledge & Ask domain)
 
@@ -60,8 +60,9 @@ Team decisions 💬, with the research position noted where it differs.
 | Rule | Status |
 | --- | --- |
 | No points, badges, streaks, levels or ranking for any act of worship (prayer, fasting, adhkar, Quran reading). Worship can be tracked **privately** for self-accounting, with no rewards and never visible to others | Decided |
-| XP points exist, for **learning only** (completed lessons and exercises) | Decided. `research/02` recommends against points (rewards can undermine intrinsic motivation, d = −0.28 to −0.40); revisit with data |
-| Individual leaderboard: **opt-in**, off by default, learning XP only, display name only | Decided. `research/02` recommends group progress instead, and some scholars oppose competitions as a route to riya'; revisit with data |
+| **No points (XP)** of any kind. Progress is shown as real learning progress (lessons and units done) and milestone badges | Decided 2026-10-05 by the product owner on the Motivation owner's research; replaces the earlier "XP for learning only" (`research/02`: rewards can undermine intrinsic motivation, d = −0.28 to −0.40) |
+| **No individual leaderboard or ranking of users.** Cooperation is shown as group progress counts, never who did or did not finish | Decided 2026-10-05 by the product owner; replaces the earlier opt-in leaderboard (`research/02`: some scholars oppose competitions as a route to riya') |
+| Principles: progress over points, consistency over perfection, cooperation over competition, encouragement over blame | Decided 2026-10-05 (Motivation owner's research) |
 | Streaks pause on a missed day and never reset to zero; return is welcomed, never blamed | Decided (supported by Silverman & Barasch 2023, `research/02` [25]) |
 | No hearts, lives or energy; mistakes are safe, retries unlimited, mistakes feed review | Decided |
 | No leagues, no shop, no currency, no purchases of motivation items | Decided |
