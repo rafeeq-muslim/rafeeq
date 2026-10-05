@@ -7,4 +7,6 @@ repo="$(cd "$here/../.." && pwd)"
 rm -rf "$here/references"
 mkdir -p "$here/references"
 cp -r "$repo/docs/." "$here/references/"
+# Source books are git-ignored and never part of the skill.
+rm -rf "$here/references/domains/learning/learning sources"
 echo "Synced docs/ into $here/references"
