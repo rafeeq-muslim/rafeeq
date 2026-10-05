@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Web fallback fonts, self-hosted (no third-party font CDN at runtime). */
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
+@import "@fontsource-variable/noto-naskh-arabic";
+
+/* Layer 1: brand primitives */
+@import "./styles/tokens.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================
+   Layer 3 → Tailwind utilities.
+   Semantic tokens (layer 2) are defined on :root / .dark below.
+   ========================================================== */
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--rf-font-sans);
+  --font-heading: var(--rf-font-display);
+  --font-display: var(--rf-font-display);
+  --font-reading: var(--rf-font-text);
+
+  /* Type scale (size / line-height) from the brand guide */
+  --text-display: 56px;
+  --text-display--line-height: 72px;
+  --text-h1: 40px;
+  --text-h1--line-height: 52px;
+  --text-h2: 28px;
+  --text-h2--line-height: 40px;
+  --text-h3: 22px;
+  --text-h3--line-height: 34px;
+  --text-reading: 19px;
+  --text-reading--line-height: 34px;
+  --text-body: 17px;
+  --text-body--line-height: 30px;
+  --text-label: 15px;
+  --text-label--line-height: 20px;
+  --text-caption: 13px;
+  --text-caption--line-height: 20px;
+
+  /* Brand palettes (replace Tailwind's violet and amber with Rafeeq's) */
+  --color-violet-50: var(--rf-violet-50);
+  --color-violet-100: var(--rf-violet-100);
+  --color-violet-200: var(--rf-violet-200);
+  --color-violet-300: var(--rf-violet-300);
+  --color-violet-400: var(--rf-violet-400);
+  --color-violet-500: var(--rf-violet-500);
+  --color-violet-600: var(--rf-violet-600);
+  --color-violet-700: var(--rf-violet-700);
+  --color-violet-800: var(--rf-violet-800);
+  --color-violet-900: var(--rf-violet-900);
+  --color-amber-50: var(--rf-amber-50);
+  --color-amber-100: var(--rf-amber-100);
+  --color-amber-300: var(--rf-amber-300);
+  --color-amber-500: var(--rf-amber-500);
+  --color-amber-700: var(--rf-amber-700);
+  --color-amber-900: var(--rf-amber-900);
+  --color-ink: var(--rf-ink);
+  --color-ink-2: var(--rf-text-2);
+  --color-ink-3: var(--rf-muted);
+  --color-mist: var(--rf-mist);
+  --color-line: var(--rf-line);
+  --color-deep: var(--rf-deep);
+  --color-lavender: var(--rf-lavender);
+  --color-orchid: var(--rf-orchid);
+  --color-apricot: var(--rf-apricot);
+  --color-dawn: var(--rf-dawn);
+  --color-glow: var(--rf-glow);
+
+  /* Semantic colors (shadcn contract + Rafeeq additions) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-celebrate: var(--celebrate);
+  --color-celebrate-foreground: var(--celebrate-foreground);
+  --color-celebrate-surface: var(--celebrate-surface);
+  --color-celebrate-surface-foreground: var(--celebrate-surface-foreground);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger-surface: var(--danger-surface);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radii: shadcn scale aligned to the brand (12 / 20 / 28 / pill) */
+  --radius-sm: 8px;
+  --radius-md: var(--rf-radius-sm);
+  --radius-lg: 16px;
+  --radius-xl: var(--rf-radius-card);
+  --radius-2xl: 24px;
+  --radius-3xl: var(--rf-radius-panel);
+  --radius-4xl: 32px;
+  --radius-card: var(--rf-radius-card);
+  --radius-panel: var(--rf-radius-panel);
+
+  /* Elevation */
+  --shadow-card: var(--rf-shadow-card);
+  --shadow-raised: var(--rf-shadow-raised);
+  --shadow-glow: var(--rf-shadow-glow);
+
+  --ease-rafeeq: var(--rf-ease);
+}
+
+/* ==========================================================
+   Layer 2: semantic tokens. Light (default).
+   ========================================================== */
+:root {
+  --radius: var(--rf-radius-sm);
+  --background: var(--rf-mist);
+  --foreground: var(--rf-ink);
+  --card: var(--rf-white);
+  --card-foreground: var(--rf-ink);
+  --popover: var(--rf-white);
+  --popover-foreground: var(--rf-ink);
+  --primary: var(--rf-violet);
+  --primary-foreground: var(--rf-white);
+  --secondary: var(--rf-violet-100);
+  --secondary-foreground: var(--rf-violet-700);
+  --muted: var(--rf-violet-50);
+  --muted-foreground: var(--rf-muted);
+  --accent: var(--rf-violet-50);
+  --accent-foreground: var(--rf-violet-700);
+  --destructive: var(--rf-error);
+  --border: var(--rf-line);
+  --input: var(--rf-line);
+  --ring: var(--rf-violet-400);
+  --celebrate: var(--rf-amber);
+  --celebrate-foreground: var(--rf-ink); /* never white on amber */
+  --celebrate-surface: var(--rf-amber-100);
+  --celebrate-surface-foreground: var(--rf-amber-900);
+  --success: var(--rf-success);
+  --success-surface: var(--rf-success-bg);
+  --warning: var(--rf-warning);
+  --warning-surface: var(--rf-warning-bg);
+  --danger-surface: var(--rf-error-bg);
+  --info: var(--rf-info);
+  --info-surface: var(--rf-info-bg);
+  --chart-1: var(--rf-violet);
+  --chart-2: var(--rf-amber);
+  --chart-3: var(--rf-orchid);
+  --chart-4: var(--rf-dawn);
+  --chart-5: var(--rf-lavender);
+  --sidebar: var(--rf-white);
+  --sidebar-foreground: var(--rf-ink);
+  --sidebar-primary: var(--rf-violet);
+  --sidebar-primary-foreground: var(--rf-white);
+  --sidebar-accent: var(--rf-violet-50);
+  --sidebar-accent-foreground: var(--rf-violet-700);
+  --sidebar-border: var(--rf-line);
+  --sidebar-ring: var(--rf-violet-400);
+}
+
+/* Dark: ink surfaces (brand "reverse" world). Values not in the brand
+   palette are derived with color-mix from brand colors. */
+.dark {
+  --background: var(--rf-ink);
+  --foreground: var(--rf-mist);
+  --card: color-mix(in oklab, var(--rf-violet-800) 55%, var(--rf-ink));
+  --card-foreground: var(--rf-mist);
+  --popover: color-mix(in oklab, var(--rf-violet-800) 70%, var(--rf-ink));
+  --popover-foreground: var(--rf-mist);
+  --primary: var(--rf-violet-300);
+  --primary-foreground: var(--rf-ink);
+  --secondary: color-mix(in oklab, var(--rf-violet-700) 60%, var(--rf-ink));
+  --secondary-foreground: var(--rf-violet-100);
+  --muted: rgb(255 255 255 / 0.06);
+  --muted-foreground: var(--rf-violet-300);
+  --accent: rgb(255 255 255 / 0.08);
+  --accent-foreground: var(--rf-mist);
+  --destructive: color-mix(in oklab, var(--rf-error) 65%, white);
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.14);
+  --ring: var(--rf-violet-400);
+  --celebrate: var(--rf-amber);
+  --celebrate-foreground: var(--rf-ink);
+  --celebrate-surface: rgb(245 162 58 / 0.18);
+  --celebrate-surface-foreground: var(--rf-apricot);
+  --success: color-mix(in oklab, var(--rf-success) 45%, white);
+  --success-surface: rgb(21 114 73 / 0.22);
+  --warning: var(--rf-apricot);
+  --warning-surface: rgb(245 162 58 / 0.16);
+  --danger-surface: rgb(178 58 67 / 0.22);
+  --info: var(--rf-violet-300);
+  --info-surface: rgb(90 72 214 / 0.22);
+  --sidebar: color-mix(in oklab, var(--rf-violet-800) 55%, var(--rf-ink));
+  --sidebar-foreground: var(--rf-mist);
+  --sidebar-primary: var(--rf-violet-300);
+  --sidebar-primary-foreground: var(--rf-ink);
+  --sidebar-accent: rgb(255 255 255 / 0.08);
+  --sidebar-accent-foreground: var(--rf-mist);
+  --sidebar-border: rgb(255 255 255 / 0.1);
+  --sidebar-ring: var(--rf-violet-400);
+}
+
+/* Brand gradients and graphic utilities */
+@utility bg-grad-main {
+  background-image: var(--rf-grad-main);
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    background-image: var(--rf-grad-main-rtl);
+  }
+}
+@utility bg-grad-violet {
+  background-image: var(--rf-grad-violet);
+  &:where([dir="rtl"], [dir="rtl"] *) {
+    background-image: var(--rf-grad-violet-rtl);
+  }
+}
+@utility bg-grad-amber {
+  background-image: var(--rf-grad-amber);
+}
+@utility bg-grad-glow {
+  background-image: var(--rf-grad-glow);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground text-body antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

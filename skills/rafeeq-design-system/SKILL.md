@@ -1,0 +1,64 @@
+---
+name: rafeeq-design-system
+description: Build, review or extend Rafeeq (رفيق) UI with its design system — shadcn/ui (radix-nova) + Tailwind v4, Arabic-first RTL, brand tokens, and the Rafeeq domain components (learning path, streak, source strip, referral, celebration, bottom nav, prayer times…). Use for ANY Rafeeq screen, component, style, copy or design review, even if the user only says "make the home screen", "add a button", "fix the layout in Arabic", "review this screen" or "write the error message".
+---
+
+# Rafeeq design system
+
+Rafeeq's UI lives in `design-system/` in the repo. Read these before writing UI:
+
+1. `design-system/DESIGN.md`: tokens and the rules (the contract).
+2. `docs/design-system.md`: the Arabic reference: component catalogue, which component to use when, and examples.
+3. `docs/agents/rules.md`: product rules that the UI must enforce (sources, safety, privacy, motivation).
+
+Run the gallery with `cd design-system && npm install && npm run dev`. It shows every token, primitive, Rafeeq component and composed screen, with code to copy. `?tab=screens&dir=ltr&theme=dark` deep-links a view.
+
+## How to build a screen
+
+1. **Use what exists, in this order:** a Rafeeq component (`@/components/rafeeq`), then a shadcn primitive (`@/components/ui`), then a new component. Check `docs/design-system.md` → «أيّ مكوّن أستعمل؟».
+2. **Compose, don't restyle.** `className` is for layout (gap, width, margin). Colours and type come from variants and tokens: `variant="celebrate"`, `bg-primary`, `text-muted-foreground`, `text-body`.
+3. **Write the copy with the patterns in `docs/design-system/copy.md`.** CTA = verb + outcome. Error = what happened + why + what to do. Empty = what this is + why empty + how to start.
+4. **Check both directions and both themes** in the gallery, then run `npm run check:design` and `npx tsc -b`.
+
+## Rules that are easy to break
+
+**Direction (RTL first)**
+- Logical properties only: `ms-* me-* ps-* pe-* start-* end-* text-start border-s`. Never `ml mr pl pr left right text-left text-right`.
+- Arrows and send icons mirror: `className="ltr:rotate-180"` for an arrow written for RTL, or `rtl:-scale-x-100` for icons drawn for LTR. Other icons never mirror.
+- Isolate mixed-direction user content: `<bdi>{name}</bdi>`, `dir="auto"` on free text, `dir="ltr"` on usernames, codes and OTP inputs.
+- Progress fills from the start edge in both directions (our `Progress` uses width, not translate).
+
+**Arabic typography**
+- No `tracking-*` on Arabic. No italics. Keep the scale's tall line heights (`text-body` = 17/30).
+- Latin digits always; add `tabular-nums` where numbers align.
+- Headings use `font-heading` (Thmanyah Serif Display); long reading uses `font-reading`.
+
+**Brand**
+- Violet = action. Amber (`celebrate`) = celebration and the source strip only, never hover or decoration.
+- No white text on amber, orchid, apricot or `bg-grad-amber`; use ink (`text-celebrate-foreground`).
+- `bg-grad-main` mirrors itself in RTL; put white text only on hero cards that use it.
+- Radii: buttons/chips pill, inputs 12 (`rounded-md`), cards 20 (`rounded-card`), sheets 28 (`rounded-panel`).
+- Touch targets ≥ 44px (`Button` default is h-11).
+
+**Product rules the UI enforces**
+- A Sharia answer renders with `AssistantMessage` and at least one source; it ends with `SourceStrip`. No source → `ReferralCard`, not an answer.
+- `HumanHelpButton` («أريد إنسانًا») is visible on Ask and lesson screens. Danger → `DangerHelpPanel` only, no AI text, no invented phone numbers.
+- Points, streaks, badges and leaderboards count learning only. `HabitItem worship` shows «خاص بك» and never points.
+- A broken streak is «متوقفة مؤقتًا», never a loss screen.
+- Display name only on leaderboards and groups; no images of prophets or companions; no music under recitation.
+
+## shadcn conventions (from the official shadcn skill in `.claude/skills/shadcn`)
+
+- Forms: `FieldGroup` + `Field` + `FieldLabel`; errors with `data-invalid` on `Field` and `aria-invalid` on the control.
+- Icons inside components: `data-icon="inline-start|inline-end"`, no size classes. Tabler icons, `stroke={1.75}`.
+- `gap-*` not `space-*`; `size-*` when width = height; `cn()` for conditional classes; no manual `dark:` colours.
+- Dialog, Sheet and Drawer always have a title (use `sr-only` if hidden). Chat uses `MessageScroller` / `Message` / `Bubble` / `Marker`.
+- Add primitives with `npx shadcn@latest add <name>` from `design-system/`, then replace any `from "cn"` import with `@/lib/utils`, check the icon library is Tabler, and re-theme sizes (inputs h-12, text-label/body).
+
+## Adding a new component
+
+Write its spec first in `docs/design-system.md` using the «مكوّن جديد» template: problem, related components and why they are not enough, props, variants (≤ 5), states (default, hover, focus, active, disabled, loading, error, empty), tokens used, accessibility, open questions. Put it in the file of the domain that owns it (`src/components/rafeeq/<domain>.tsx`), export it from `index.ts`, add a `Demo` to the gallery, then run the checks.
+
+## Reviews
+
+For a design review, critique or handoff, use the design skills in `.claude/skills/` (`design-critique`, `design-handoff`, `ux-copy`, `accessibility-review`, `design-system`, `interaction-design`, `ux-writing`), but apply Rafeeq's overrides above: they win over generic advice (for example "tracking-tight on headings" does not apply to Arabic). Before a demo, run `token-compliance` and `accessibility-per-component` on the five most-used components.

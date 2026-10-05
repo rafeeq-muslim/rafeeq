@@ -30,6 +30,11 @@
 | Amiri Quran, Scheherazade New | Arabic and Quran fonts | SIL OFL 1.1 |
 | GeoNames extract | Offline city picker | CC BY (credit link) |
 | ICSA MCP server (`islamic-content-mcp-server`) | Developer access to ICSA sources | ISC per repo; confirm official status |
+| Thmanyah (Sans, Serif Display, Serif Text) | Brand typeface | Free to use; **files may not be uploaded or hosted** outside the official source (https://ask.thmanyah.com/hc/en-001/articles/45993930027281-thmanyah-Font-for-Everyone). Used only when installed locally; web use needs Thmanyah's approval |
+| IBM Plex Sans Arabic, Noto Naskh Arabic (`@fontsource`) | Self-hosted fallback fonts for UI and reading | SIL OFL 1.1 |
+| Tabler Icons (`@tabler/icons-react`) | Icon set named in the brand guide | MIT |
+| shadcn/ui, Radix UI, Tailwind CSS, Vite, React, sonner, vaul, input-otp, `@shadcn/react` | Design-system code (`design-system/`) | MIT |
+| Agent skills in `.claude/skills/` | shadcn (MIT), Anthropic Design plugin (Apache-2.0), cuellarfr/design-skills (MIT), design-system-ops subset (MIT); licence file kept in each skill folder | As listed |
 
 ## Avoid
 

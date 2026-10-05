@@ -1,0 +1,98 @@
+/* ==========================================================
+   رفيق — متغيرات الهوية (Rafeeq brand tokens) · v1.0 · Oct 2026
+   Source of truth: rafeeq-logo-pack/rafeeq-tokens.css + brand guidelines.
+   Layer 1 (primitives). Components never use these directly:
+   they use the semantic tokens in index.css.
+   ========================================================== */
+:root {
+  /* Primary colors */
+  --rf-violet: #5a48d6; /* بنفسجي رفيق — actions, buttons, links */
+  --rf-amber: #f5a23a; /* كهرماني — celebration and badges, sparingly */
+  --rf-ink: #1d1645; /* حبري — text and dark surfaces */
+  --rf-mist: #f7f6fb; /* ضباب — app background */
+
+  /* Secondary colors (gradient stops) */
+  --rf-deep: #3b2d99;
+  --rf-lavender: #7a5ce0;
+  --rf-orchid: #c47ad0;
+  --rf-apricot: #ffc77d;
+  --rf-dawn: #f08a4b;
+  --rf-glow: #ffd38f;
+
+  /* Violet tints (500 = brand violet) */
+  --rf-violet-50: #f4f2ff;
+  --rf-violet-100: #ece9ff;
+  --rf-violet-200: #d6d0ff;
+  --rf-violet-300: #b4a9f5;
+  --rf-violet-400: #8b7ceb;
+  --rf-violet-500: #5a48d6;
+  --rf-violet-600: #4a39bd;
+  --rf-violet-700: #3b2d99;
+  --rf-violet-800: #2c2275;
+  --rf-violet-900: #1d1645;
+
+  /* Amber tints */
+  --rf-amber-50: #fff8ee;
+  --rf-amber-100: #fff1dc;
+  --rf-amber-300: #ffc77d;
+  --rf-amber-500: #f5a23a;
+  --rf-amber-700: #b86e12;
+  --rf-amber-900: #6b3a0a;
+
+  /* Neutrals */
+  --rf-white: #ffffff;
+  --rf-line: #e4e1f2; /* حدود */
+  --rf-muted: #6b6890; /* رمادي */
+  --rf-text-2: #46425f; /* نص ثانوي */
+
+  /* Functional colors — interface only (text on its bg passes WCAG AA) */
+  --rf-success: #157249;
+  --rf-success-bg: #e3f4ec;
+  --rf-warning: #8a4f0a;
+  --rf-warning-bg: #fff1dc;
+  --rf-error: #b23a43;
+  --rf-error-bg: #fbe7e8;
+  --rf-info: #5a48d6;
+  --rf-info-bg: #ece9ff;
+
+  /* Gradients */
+  --rf-grad-main: linear-gradient(120deg, #3b2d99 0%, #7a5ce0 45%, #c47ad0 72%, #f08a4b 100%);
+  --rf-grad-violet: linear-gradient(135deg, #3b2d99 0%, #7a5ce0 50%, #c47ad0 100%);
+  --rf-grad-amber: linear-gradient(135deg, #ffc77d 0%, #f08a4b 100%);
+  --rf-grad-glow: radial-gradient(circle, #ffd38f 0%, #f5a23a 70%);
+  /* Mirrored for RTL so the deep violet end sits under start-aligned text
+     (derived for the UI kit; same stops as the brand gradients). */
+  --rf-grad-main-rtl: linear-gradient(240deg, #3b2d99 0%, #7a5ce0 45%, #c47ad0 72%, #f08a4b 100%);
+  --rf-grad-violet-rtl: linear-gradient(225deg, #3b2d99 0%, #7a5ce0 50%, #c47ad0 100%);
+
+  /* Fonts — Thmanyah first (only where installed locally; its license
+     forbids hosting the files), then self-hosted Google Fonts fallbacks. */
+  --rf-font-sans: "thmanyah sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --rf-font-display: "thmanyah serif display", "thmanyah sans", "IBM Plex Sans Arabic", serif;
+  --rf-font-text: "thmanyah serif text", "Noto Naskh Arabic Variable", "Noto Naskh Arabic", serif;
+
+  /* Radii */
+  --rf-radius-sm: 12px;
+  --rf-radius-card: 20px;
+  --rf-radius-panel: 28px;
+  --rf-radius-pill: 999px;
+
+  /* Spacing (brand scale; maps to Tailwind 1, 2, 3, 4, 6, 8, 12, 16) */
+  --rf-space-1: 4px;
+  --rf-space-2: 8px;
+  --rf-space-3: 12px;
+  --rf-space-4: 16px;
+  --rf-space-5: 24px;
+  --rf-space-6: 32px;
+  --rf-space-7: 48px;
+  --rf-space-8: 64px;
+
+  /* Elevation (soft, ink-tinted; added for the UI kit) */
+  --rf-shadow-card: 0 1px 2px rgb(29 22 69 / 0.04), 0 6px 20px rgb(29 22 69 / 0.06);
+  --rf-shadow-raised: 0 2px 6px rgb(29 22 69 / 0.06), 0 16px 40px rgb(29 22 69 / 0.12);
+  --rf-shadow-glow: 0 0 0 6px rgb(245 162 58 / 0.18), 0 8px 28px rgb(245 162 58 / 0.35);
+
+  /* Motion */
+  --rf-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --rf-duration: 200ms;
+}
