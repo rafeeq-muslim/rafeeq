@@ -1,0 +1,10 @@
+{
+  "name": "rafeeq-landing-lab",
+  "version": "1.0.0",
+  "description": "Verification tooling for the Rafeeq landing (scrollcraft harness). The page itself lives in frontend/public/landing/.",
+  "scripts": {},
+  "dependencies": {
+    "playwright-core": "^1.63.0"
+  },
+  "private": true
+}

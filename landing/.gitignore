@@ -1,0 +1,3 @@
+# Raw harness frames are ~77 MB; keep the tiled sheet.png and report.json per run.
+lab/*/[0-9][0-9].png
+node_modules/

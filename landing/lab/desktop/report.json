@@ -1,0 +1,1624 @@
+{
+  "doc": {
+    "height": 9760,
+    "vh": 900,
+    "acts": [
+      "pin",
+      "flow",
+      "pin",
+      "flow",
+      "flow",
+      "flow",
+      "pin"
+    ],
+    "world": null
+  },
+  "report": [
+    {
+      "i": 0,
+      "y": 11,
+      "pct": 0,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك ال",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        }
+      ],
+      "cues": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك الأولى م",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2188,
+        6959
+      ],
+      "segs": [],
+      "custom": [
+        "0|0|0|0|0",
+        "0|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 1,
+      "y": 114,
+      "pct": 1,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك ال",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        }
+      ],
+      "cues": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك الأولى م",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2085,
+        6856
+      ],
+      "segs": [],
+      "custom": [
+        "4|0|0|0|0",
+        "4|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 2,
+      "y": 218,
+      "pct": 2,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك ال",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        }
+      ],
+      "cues": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك الأولى م",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1981,
+        6752
+      ],
+      "segs": [],
+      "custom": [
+        "8|0|0|0|0",
+        "8|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 3,
+      "y": 322,
+      "pct": 4,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك ال",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        }
+      ],
+      "cues": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك الأولى م",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1877,
+        6648
+      ],
+      "segs": [],
+      "custom": [
+        "12|0|0|0|0",
+        "12|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 4,
+      "y": 426,
+      "pct": 5,
+      "settled": true,
+      "contrast": [],
+      "cues": [
+        {
+          "t": "لست وحدك في رحلتك رفيق يرافقك في سنتك الأولى م",
+          "o": 0.79
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1773,
+        6544
+      ],
+      "segs": [],
+      "custom": [
+        "16|0|0|0|0",
+        "16|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 5,
+      "y": 529,
+      "pct": 6,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1670,
+        6441
+      ],
+      "segs": [],
+      "custom": [
+        "20|0|0|0|0",
+        "20|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 6,
+      "y": 573,
+      "pct": 6,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -33,
+        1626,
+        6397
+      ],
+      "segs": [],
+      "custom": [
+        "20|0|0|0|0",
+        "20|0|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 7,
+      "y": 892,
+      "pct": 10,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 85.21%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -352,
+        1307,
+        6078
+      ],
+      "segs": [],
+      "custom": [
+        "20|17|0|0|0",
+        "20|17|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 8,
+      "y": 1210,
+      "pct": 14,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 15.98%)",
+        "none"
+      ],
+      "act": "flow",
+      "stages": [
+        -670,
+        989,
+        5760
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 9,
+      "y": 1529,
+      "pct": 17,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "flow",
+      "stages": [
+        -989,
+        670,
+        5441
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 10,
+      "y": 1847,
+      "pct": 21,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختم",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختمها شري",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -1307,
+        352,
+        5123
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 11,
+      "y": 2166,
+      "pct": 24,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختم",
+          "dir": "dark-on-light",
+          "worst": 16.65,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختمها شري",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -1626,
+        33,
+        4804
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 12,
+      "y": 2226,
+      "pct": 25,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختم",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختمها شري",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -1686,
+        0,
+        4744
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 13,
+      "y": 2485,
+      "pct": 28,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختم",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "سؤال عام إجابة من المصادر المعتمدة، يختمها شري",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -1945,
+        0,
+        4485
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 14,
+      "y": 2745,
+      "pct": 31,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "مسألة فيها خلاف يذكر لك أن للعلماء فيها ",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "مسألة فيها خلاف يذكر لك أن للعلماء فيها أقوالً",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -2205,
+        0,
+        4225
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 15,
+      "y": 3004,
+      "pct": 34,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "سؤال عن حالتك لا يفتي المساعد في حالتك. ",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "سؤال عن حالتك لا يفتي المساعد في حالتك. يعطيك ",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -2464,
+        0,
+        3966
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 16,
+      "y": 3263,
+      "pct": 37,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول الذكا",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -2723,
+        0,
+        3707
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 17,
+      "y": 3522,
+      "pct": 40,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول الذكا",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(0% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -2982,
+        0,
+        3448
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 18,
+      "y": 3589,
+      "pct": 41,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول الذكا",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(0% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -3049,
+        -40,
+        3381
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 19,
+      "y": 3973,
+      "pct": 45,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول",
+          "dir": "dark-on-light",
+          "worst": 16.76,
+          "mean": 16.76
+        }
+      ],
+      "cues": [
+        {
+          "t": "إن كنت في خطر يصلك إنسان فورًا، ولا يقول الذكا",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(17.58% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -3433,
+        -424,
+        2997
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 20,
+      "y": 4356,
+      "pct": 49,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(77.36% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -3816,
+        -807,
+        2614
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 21,
+      "y": 4677,
+      "pct": 53,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4137,
+        -1128,
+        2293
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 22,
+      "y": 4739,
+      "pct": 53,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4199,
+        -1190,
+        2231
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 23,
+      "y": 4968,
+      "pct": 56,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4428,
+        -1419,
+        2002
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 24,
+      "y": 5123,
+      "pct": 58,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4583,
+        -1574,
+        1847
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 25,
+      "y": 5260,
+      "pct": 59,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4720,
+        -1711,
+        1710
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 26,
+      "y": 5300,
+      "pct": 60,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4760,
+        -1751,
+        1670
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 27,
+      "y": 5506,
+      "pct": 62,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -4966,
+        -1957,
+        1464
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 28,
+      "y": 5552,
+      "pct": 63,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5012,
+        -2003,
+        1418
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 29,
+      "y": 5627,
+      "pct": 64,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5087,
+        -2078,
+        1343
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 30,
+      "y": 5843,
+      "pct": 66,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5303,
+        -2294,
+        1127
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 31,
+      "y": 5954,
+      "pct": 67,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5414,
+        -2405,
+        1016
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 32,
+      "y": 6135,
+      "pct": 69,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5595,
+        -2586,
+        835
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|0|0|0",
+        "20|20|0|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 33,
+      "y": 6281,
+      "pct": 71,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -5741,
+        -2732,
+        689
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|1|0|0",
+        "20|20|1|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 34,
+      "y": 6608,
+      "pct": 75,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6068,
+        -3059,
+        362
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|16|0|0",
+        "20|20|16|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 35,
+      "y": 6935,
+      "pct": 78,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6395,
+        -3386,
+        35
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|0|0",
+        "20|20|20|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 36,
+      "y": 7008,
+      "pct": 79,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6468,
+        -3459,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|0|0",
+        "20|20|20|0|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 37,
+      "y": 7371,
+      "pct": 83,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6831,
+        -3822,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|4|0",
+        "20|20|20|4|0"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 38,
+      "y": 7733,
+      "pct": 87,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -7193,
+        -4184,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|8|10",
+        "20|20|20|8|10"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 39,
+      "y": 8096,
+      "pct": 91,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        }
+      ],
+      "cues": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "o": 1
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تب",
+          "o": 0.71
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية والتاغا",
+          "o": 0.23
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد برمز دعو",
+          "o": 0.02
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتو",
+          "o": 0.02
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -7556,
+        -4547,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|12|10",
+        "20|20|20|12|10"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 40,
+      "y": 8459,
+      "pct": 95,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأ",
+          "dir": "light-on-dark",
+          "worst": 12.41,
+          "mean": 12.41
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية و",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد بر",
+          "dir": "light-on-dark",
+          "worst": 10.7,
+          "mean": 10.7
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة ",
+          "dir": "light-on-dark",
+          "worst": 8.51,
+          "mean": 8.51
+        }
+      ],
+      "cues": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "o": 1
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تب",
+          "o": 1
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية والتاغا",
+          "o": 1
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد برمز دعو",
+          "o": 1
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتو",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -7919,
+        -4910,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|16|10",
+        "20|20|20|16|10"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 41,
+      "y": 8822,
+      "pct": 100,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأ",
+          "dir": "light-on-dark",
+          "worst": 12.41,
+          "mean": 12.41
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية و",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد بر",
+          "dir": "light-on-dark",
+          "worst": 10.7,
+          "mean": 10.7
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة ",
+          "dir": "light-on-dark",
+          "worst": 8.51,
+          "mean": 8.51
+        }
+      ],
+      "cues": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "o": 1
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تب",
+          "o": 1
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية والتاغا",
+          "o": 1
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد برمز دعو",
+          "o": 1
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتو",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8282,
+        -5273,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|20|10",
+        "20|20|20|20|10"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    },
+    {
+      "i": 42,
+      "y": 8860,
+      "pct": 100,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأ",
+          "dir": "light-on-dark",
+          "worst": 12.41,
+          "mean": 12.41
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية و",
+          "dir": "light-on-dark",
+          "worst": 15.71,
+          "mean": 15.71
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد بر",
+          "dir": "light-on-dark",
+          "worst": 10.7,
+          "mean": 10.7
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة ",
+          "dir": "light-on-dark",
+          "worst": 8.51,
+          "mean": 8.51
+        }
+      ],
+      "cues": [
+        {
+          "t": "وفي آخر السنة، تكتمل الزهرة",
+          "o": 1
+        },
+        {
+          "t": "كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تب",
+          "o": 1
+        },
+        {
+          "t": "ابدأ رحلتك مجاني، بالعربية والإنجليزية والتاغا",
+          "o": 1
+        },
+        {
+          "t": "للمرشدين والجهات الدعوية: ينضم المرشد برمز دعو",
+          "o": 1
+        },
+        {
+          "t": "بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتو",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)",
+        "circle(78% at 50% 50%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8320,
+        -5311,
+        0
+      ],
+      "segs": [],
+      "custom": [
+        "20|20|20|20|10",
+        "20|20|20|20|10"
+      ],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "#1d1645"
+    }
+  ],
+  "consoleErrors": [],
+  "failed": []
+}

@@ -1,0 +1,279 @@
+<!doctype html>
+<!--
+  Rafeeq (رفيق) landing page. FINAL SOURCE: edit these files directly.
+  Grammar "Sky and sheet": one fixed night world (built from the logo petal),
+  one mist sheet lifted over it, one companion flower that travels the page.
+  Brief and evidence: rafeeq/landing/builds/zahra/ (BRIEF.md, lab/).
+  Engine: scrollcraft.js / scrollcraft.css, copied unmodified.
+  Copy: Arabic below; English and Tagalog in landing.js (Tagalog needs native review).
+-->
+<html lang="ar" dir="rtl" class="i18n-pending">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رفيق · لست وحدك في رحلتك</title>
+<meta name="description" content="رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه. Rafeeq walks with you through your first year as a Muslim, in Arabic, English and Tagalog.">
+<meta name="theme-color" content="#1d1645">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="https://rafeeq.nan.sa/landing/">
+<link rel="alternate" hreflang="ar" href="https://rafeeq.nan.sa/landing/?lang=ar">
+<link rel="alternate" hreflang="en" href="https://rafeeq.nan.sa/landing/?lang=en">
+<link rel="alternate" hreflang="tl" href="https://rafeeq.nan.sa/landing/?lang=tl">
+<link rel="alternate" hreflang="x-default" href="https://rafeeq.nan.sa/landing/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="رفيق Rafeeq">
+<meta property="og:url" content="https://rafeeq.nan.sa/landing/">
+<meta property="og:title" content="رفيق · لست وحدك في رحلتك · Rafeeq: you are not alone on your journey">
+<meta property="og:description" content="رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه. A companion for your first year as a Muslim: short lessons, sourced answers, and a person when you need one.">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="tl_PH">
+<meta property="og:image" content="https://rafeeq.nan.sa/landing/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="زهرة رفيق في سماء الليل، وعبارة: لست وحدك في رحلتك">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="رفيق · Rafeeq">
+<meta name="twitter:description" content="لست وحدك في رحلتك. You are not alone on your journey.">
+<meta name="twitter:image" content="https://rafeeq.nan.sa/landing/og.png">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/brand/rafeeq-app-icon-180.png">
+<link rel="preload" href="/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/thmanyah/thmanyahsans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  /* Language before first paint: ?lang > saved choice > device language > Arabic.
+     Mirrors guessLocale() in frontend/src/app/stores/device.ts. */
+  (function () {
+    var d = document.documentElement, L = ["ar", "en", "tl"], q = null, s = null;
+    d.classList.add("js");
+    try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+    try { s = localStorage.getItem("rafeeq.landing.lang"); } catch (e) {}
+    var n = (navigator.language || "ar").toLowerCase();
+    var g = n.indexOf("ar") === 0 ? "ar" : (n.indexOf("tl") === 0 || n.indexOf("fil") === 0) ? "tl" : n.indexOf("en") === 0 ? "en" : "ar";
+    var lang = L.indexOf(q) > -1 ? q : L.indexOf(s) > -1 ? s : g;
+    d.lang = lang; d.dir = lang === "ar" ? "rtl" : "ltr";
+    if (lang === "ar") d.classList.remove("i18n-pending");
+    else setTimeout(function () { d.classList.remove("i18n-pending"); }, 1500);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("rm");
+  })();
+</script>
+<link rel="stylesheet" href="scrollcraft.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
+
+<!-- ============ the night world (decorative, aria-hidden) ============ -->
+<div class="sky" id="sky" aria-hidden="true">
+  <div class="sky__base"></div>
+  <div class="sky__far" id="skyFar"></div>
+  <div class="halo" id="halo"></div>
+  <div class="sky__dawn" id="dawn"></div>
+  <div class="sky__dusk" id="dusk"></div>
+  <div class="sky__core" id="core"></div>
+</div>
+<div class="companion" id="companion" aria-hidden="true"></div>
+<div class="near" id="near" aria-hidden="true"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<!-- ============ chrome ============ -->
+<header class="bar" id="bar">
+  <a class="bar__brand" href="#welcome" data-i18n-attr="aria-label:brand">
+    <img src="brand/rafeeq-wordmark-ar-reverse.svg" alt="" width="84" height="40" data-wordmark="reverse">
+    <img src="brand/rafeeq-wordmark-ar-ink.svg" alt="" width="84" height="40" data-wordmark="ink">
+  </a>
+  <div class="bar__dock" id="dockBar" aria-hidden="true"></div>
+  <div class="bar__end">
+    <nav class="lang" data-i18n-attr="aria-label:langNav">
+      <a href="?lang=ar" lang="ar" hreflang="ar" data-lang="ar" aria-label="العربية"><span class="short">ع</span><span class="long">العربية</span></a>
+      <a href="?lang=en" lang="en" hreflang="en" data-lang="en" aria-label="English"><span class="short">EN</span><span class="long">English</span></a>
+      <a href="?lang=tl" lang="tl" hreflang="tl" data-lang="tl" aria-label="Tagalog"><span class="short">TL</span><span class="long">Tagalog</span></a>
+    </nav>
+    <a class="btn btn--night btn--sm" href="/welcome" data-start data-i18n="cta">ابدأ رحلتك</a>
+  </div>
+</header>
+
+<nav class="rail" id="rail" data-i18n-attr="aria-label:chaptersNav">
+  <div class="rail__dock" id="dockRail" aria-hidden="true"></div>
+  <ol>
+    <li><a href="#learn"><svg viewBox="0 0 12 24" aria-hidden="true"><ellipse cx="6" cy="12" rx="5" ry="11"/></svg><span data-i18n="nav.learn">الدروس</span></a></li>
+    <li><a href="#ask"><svg viewBox="0 0 12 24" aria-hidden="true"><ellipse cx="6" cy="12" rx="5" ry="11"/></svg><span data-i18n="nav.ask">الأسئلة</span></a></li>
+    <li><a href="#people"><svg viewBox="0 0 12 24" aria-hidden="true"><ellipse cx="6" cy="12" rx="5" ry="11"/></svg><span data-i18n="nav.people">الرفقة</span></a></li>
+    <li><a href="#daily"><svg viewBox="0 0 12 24" aria-hidden="true"><ellipse cx="6" cy="12" rx="5" ry="11"/></svg><span data-i18n="nav.daily">يومك</span></a></li>
+    <li><a href="#mercy"><svg viewBox="0 0 12 24" aria-hidden="true"><ellipse cx="6" cy="12" rx="5" ry="11"/></svg><span data-i18n="nav.mercy">الاستمرار</span></a></li>
+  </ol>
+</nav>
+
+<main id="main">
+
+  <!-- 1 · RECOGNITION (night). pin + bespoke depth planes. -->
+  <section class="hero" id="welcome" data-sc-act="pin" data-sc-span="1.6" aria-labelledby="hero-title">
+    <div data-sc-stage class="hero__stage" id="heroStage">
+      <div class="hero__grid">
+        <div class="hero__copy" data-sc-cue="0 1 0 0.3">
+          <h1 id="hero-title" class="display" data-i18n-html="hero.title">لست وحدك في رحلتك</h1>
+          <p class="hero__sub" data-i18n="hero.sub">رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه.</p>
+          <div class="hero__actions">
+            <a class="btn btn--night" href="/welcome" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
+            <p class="hero__note" data-i18n="hero.note">مجاني، ولا يطلب منك حسابًا لتبدأ.</p>
+          </div>
+        </div>
+        <div class="hero__flower" id="anchorHero" aria-hidden="true"><div class="static-flower" data-flower="1"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ the day sheet ============ -->
+  <div class="sheet" id="sheet">
+
+    <!-- 2 · CAPABILITY. flow + in, path drawn by a reveal. -->
+    <section class="chapter learn" id="learn" data-sc-act="flow" aria-labelledby="learn-title">
+      <div class="wrap learn__grid">
+        <div class="learn__copy" data-sc-in data-sc-stagger="70">
+          <h2 id="learn-title" class="h2" data-i18n="learn.title">تبدأ من الأصل، خطوة بخطوة</h2>
+          <p class="reading soft" data-i18n-html="learn.lead">دروس قصيرة من كتاب <span class="book">«المختصر المفيد للمسلم الجديد»</span>، بالعربية والإنجليزية والتاغالوغية. تبدأ بما تحتاجه في يومك الأول: معنى الشهادتين، ثم الوضوء، ثم الصلاة الأولى.</p>
+          <ul class="petals">
+            <li data-i18n="learn.p1">لا يظهر درس لأحد قبل أن يعتمده المراجع الشرعي.</li>
+            <li data-i18n="learn.p2">الخطأ آمن: ترى الإجابة الصحيحة بكلمات الدرس نفسه، ثم تحاول من جديد. لا قلوب ولا محاولات تنفد.</li>
+            <li data-i18n="learn.p3">تتوقف متى شئت، وتعود إلى حيث توقفت.</li>
+          </ul>
+        </div>
+        <figure class="path" data-sc-reveal="up" data-sc-reveal-at="0.12 0.5" id="path" aria-hidden="true"></figure>
+      </div>
+    </section>
+
+    <!-- 3 · TRUST. pin: four routes cross over; buttons jump between them. -->
+    <section class="ask" id="ask" data-sc-act="pin" data-sc-span="2.5" aria-labelledby="ask-title">
+      <div data-sc-stage class="ask__stage">
+        <div class="wrap ask__grid">
+          <div class="ask__copy">
+            <h2 id="ask-title" class="h2" data-i18n="ask.title">لا مصدر، لا إجابة</h2>
+            <p class="reading soft" data-i18n="ask.lead">يجيبك مساعد رفيق بلغتك من المصادر المعتمدة وحدها، ويريك من أين جاءت كل إجابة. وإن لم يجد مصدرًا قال لك ذلك، وعرض عليك أن تسأل إنسانًا.</p>
+            <p class="ask__ai"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M14 18h-1l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5"/><path d="M19 22v.01"/><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"/></svg><span data-i18n="ask.ai">المساعد أداة ذكاء اصطناعي، ويخبرك بذلك دائمًا، وقد يخطئ.</span></p>
+            <p class="cases__label" id="cases-label" data-i18n="ask.which">ماذا يحدث لسؤالك؟</p>
+            <ul class="cases" aria-labelledby="cases-label">
+              <li><button type="button" data-case="0" aria-controls="case-0" data-i18n="ask.k0">سؤال عام</button></li>
+              <li><button type="button" data-case="1" aria-controls="case-1" data-i18n="ask.k1">مسألة فيها خلاف</button></li>
+              <li><button type="button" data-case="2" aria-controls="case-2" data-i18n="ask.k2">سؤال عن حالتك</button></li>
+              <li><button type="button" data-case="3" aria-controls="case-3" data-i18n="ask.k3">إن كنت في خطر</button></li>
+            </ul>
+          </div>
+          <div class="route">
+            <p class="route__q" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M14 18h-1l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5"/></svg><span data-i18n="ask.q">سؤالك</span></p>
+            <div class="route__line" aria-hidden="true"></div>
+            <div class="route__stack">
+              <div class="route__case" id="case-0" data-sc-cue="0 0.26 0 0.12">
+                <p class="route__kind" data-i18n="ask.k0">سؤال عام</p>
+                <p class="h3" data-i18n="ask.o0">إجابة من المصادر المعتمدة، يختمها شريط يذكر مصدرها.</p>
+                <p class="route__end route__end--source"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12"/><path d="M19 16h-12a2 2 0 0 0 -2 2"/><path d="M9 8h6"/></svg><span data-i18n="ask.e0">المصدر يظهر تحت كل إجابة</span></p>
+              </div>
+              <div class="route__case" id="case-1" data-sc-cue="0.255 0.51 0.12 0.12">
+                <p class="route__kind" data-i18n="ask.k1">مسألة فيها خلاف</p>
+                <p class="h3" data-i18n="ask.o1">يذكر لك أن للعلماء فيها أقوالًا، ولا يقدّم المختلف فيه على أنه محسوم، أو يحيلك إلى مختص.</p>
+                <p class="route__end route__end--differ"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20l10 0"/><path d="M6 6l6 -1l6 1"/><path d="M12 3l0 17"/><path d="M9 12l-3 -6l-3 6a3 3 0 0 0 6 0"/><path d="M21 12l-3 -6l-3 6a3 3 0 0 0 6 0"/></svg><span data-i18n="ask.e1">الأقوال كما هي، دون حسم</span></p>
+              </div>
+              <div class="route__case" id="case-2" data-sc-cue="0.505 0.755 0.12 0.12">
+                <p class="route__kind" data-i18n="ask.k2">سؤال عن حالتك</p>
+                <p class="h3" data-i18n="ask.o2">لا يفتي المساعد في حالتك. يعطيك معلومة عامة، ثم يكمل معك إنسان مؤهل.</p>
+                <p class="route__end route__end--person"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-3a8 8 0 1 1 16 0v3"/><path d="M18 19c0 1.657 -2.686 3 -6 3"/><path d="M4 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3"/><path d="M15 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3"/></svg><span data-i18n="ask.e2">إنسان مؤهل</span></p>
+              </div>
+              <div class="route__case" id="case-3" data-sc-cue="0.75 1 0.12 0">
+                <p class="route__kind" data-i18n="ask.k3">إن كنت في خطر</p>
+                <p class="h3" data-i18n="ask.o3">يصلك إنسان فورًا، ولا يقول الذكاء الاصطناعي شيئًا غير ذلك.</p>
+                <p class="route__end route__end--now"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M15 15l3.35 3.35"/><path d="M9 15l-3.35 3.35"/><path d="M5.65 5.65l3.35 3.35"/><path d="M18.35 5.65l-3.35 3.35"/></svg><span data-i18n="ask.e3">إنسان، الآن</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · COMPANY. reveal (iris, the only one on the page). -->
+    <section class="chapter people" id="people" data-sc-act="flow" aria-labelledby="people-title">
+      <div class="wrap">
+        <div class="ring">
+          <div class="ring__art" id="ringArt" data-sc-reveal="iris" data-sc-reveal-at="0.12 0.42" aria-hidden="true"></div>
+          <div class="ring__quote" data-sc-in data-sc-stagger="70">
+            <h2 id="people-title" class="display" data-i18n="people.title">«أريد إنسانًا»</h2>
+            <p data-i18n="people.caption">زرّ في الدروس والمراجعة والأسئلة.</p>
+          </div>
+        </div>
+        <div class="people__body" data-sc-in>
+          <p class="reading soft" style="margin-inline:auto" data-i18n="people.lead">اضغطه فيرد عليك أحد فريقنا بلغتك، ولا يرى رسالتك غيره. ولا تحتاج حسابًا لذلك.</p>
+        </div>
+        <div class="people__two" data-sc-in data-sc-stagger="80">
+          <div>
+            <h3 class="h3" data-i18n="people.mentorT">مرشد متطوع</h3>
+            <p class="body soft" data-i18n="people.mentor">تختار مرشدًا يتكلم لغتك، ولا يرى من تقدّمك إلا ما تأذن به.</p>
+          </div>
+          <div>
+            <h3 class="h3" data-i18n="people.groupT">مجموعة صغيرة</h3>
+            <p class="body soft" data-i18n="people.group">تنضم إليها برمز، ولا يظهر فيها إلا الاسم الذي تختاره. ويُحسب التقدّم فيها للجميع معًا، دون ذكر من لم يُتمّ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · SAFETY. parallax layers inside a dial, pointer tilt. -->
+    <section class="chapter daily" id="daily" data-sc-act="flow" aria-labelledby="daily-title">
+      <div class="wrap daily__grid">
+        <div class="dial" aria-hidden="true">
+          <div class="dial__tilt" data-sc-tilt="6">
+            <div class="dial__layer" data-sc-parallax="-1.1" id="dialRing"></div>
+            <div class="dial__layer" data-sc-parallax="0.5" id="dialNeedle"></div>
+          </div>
+        </div>
+        <div class="daily__copy" data-sc-in data-sc-stagger="70">
+          <h2 id="daily-title" class="h2" data-i18n="daily.title">صلاتك تُحسب على جهازك</h2>
+          <p class="reading soft" data-i18n="daily.lead">مواقيت الصلاة والقبلة تُحسب على هاتفك نفسه، وموقعك لا يغادره أبدًا. ومعها الأذكار اليومية.</p>
+          <p class="private body"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"/><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M8 11v-4a4 4 0 1 1 8 0v4"/></svg><span data-i18n="daily.private">العبادة بينك وبين الله: ما تتابعه منها خاص بك، لا يراه أحد، ولا يُكافأ عليه بوسام ولا تقدّم.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · MERCY (the quiet before the peak). flow, row drawn from progress. -->
+    <section class="chapter mercy" id="mercy" data-sc-act="flow" aria-labelledby="mercy-title">
+      <div class="wrap">
+        <div class="mercy__head" data-sc-in data-sc-stagger="70">
+          <h2 id="mercy-title" class="h2" data-i18n="mercy.title">إن غبت يومًا، ننتظرك</h2>
+          <p class="reading soft" data-i18n="mercy.lead">سلسلة أيام التعلّم تتوقف مؤقتًا حين تغيب، ولا تعود إلى الصفر. وحين ترجع، يستقبلك درس قصير واحد، لا قائمة بما فاتك.</p>
+        </div>
+        <ol class="days" id="days" aria-hidden="true"></ol>
+        <div class="mercy__foot" data-sc-in data-sc-stagger="80">
+          <p class="body soft" data-i18n="mercy.remind">والتذكير لا يأتي إلا إن طلبته: مرة في اليوم على الأكثر، في الوقت الذي تختاره، بنص محايد لا يكشف شيئًا.</p>
+          <p class="body soft" data-i18n="mercy.account">ولا تحتاج حسابًا لتبدأ: تقدّمك محفوظ على جهازك. وإن أردت حفظه، فحساب بسيط باسم تختاره أنت، دون بريد.</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /sheet -->
+
+  <!-- 7 · COMPLETION (night, the peak). Largest span. Last element on the page. -->
+  <section class="bloom" id="bloom" data-sc-act="pin" data-sc-span="3.1" aria-labelledby="bloom-title">
+    <div data-sc-stage class="bloom__stage" id="bloomStage">
+      <div class="bloom__col">
+        <div class="bloom__flower" id="anchorBloom" aria-hidden="true"><div class="static-flower" data-flower="12"></div></div>
+        <div class="bloom__copy">
+          <h2 id="bloom-title" class="display" data-sc-cue="0.4" data-sc-kinetic="lines" data-i18n="bloom.title">وفي آخر السنة، تكتمل الزهرة</h2>
+          <p class="bloom__p" data-sc-cue="0.48" data-i18n="bloom.lead">كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تبدأ اليوم.</p>
+          <div class="bloom__cta" data-sc-cue="0.54" data-sc-rise="0">
+            <a class="btn btn--celebrate" href="/welcome" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
+            <p class="hero__note" data-i18n="bloom.note">مجاني، بالعربية والإنجليزية والتاغالوغية.</p>
+          </div>
+          <p class="bloom__mentor" data-sc-cue="0.58"><span data-i18n="bloom.mentor">للمرشدين والجهات الدعوية: ينضم المرشد برمز دعوة من فريق رفيق.</span> <a href="/me/account" data-i18n="bloom.mentorLink">انضم مرشدًا</a></p>
+        </div>
+        <footer class="foot" data-sc-cue="0.58">
+          <p data-i18n="foot.made">بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتوى الإسلامي، المسار الثالث.</p>
+          <p data-i18n="foot.privacy">بلا إعلانات ولا متتبّعات.</p>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script src="landing.js"></script>
+</body>
+</html>

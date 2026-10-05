@@ -70,7 +70,15 @@ export default function AppLayout() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  if (!onboarded) return <Navigate to="/welcome" replace />
+  if (!onboarded) {
+    // First visit at the bare address: the public landing page, whose call to
+    // action opens /welcome. Any deeper link (QR codes use /welcome) goes on.
+    if (location.pathname === "/" && !location.search) {
+      window.location.replace("/landing/")
+      return null
+    }
+    return <Navigate to="/welcome" replace />
+  }
 
   const fullscreen = FULLSCREEN.some((r) => r.test(location.pathname))
   return (
