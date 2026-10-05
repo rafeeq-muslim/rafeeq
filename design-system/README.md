@@ -8,7 +8,10 @@ npm run dev            # gallery: tokens, primitives, Rafeeq components, screens
 npm run build          # typecheck + production build
 npm run check:design   # RTL and token guard (physical classes, raw colours, tracking)
 npm run lint:design-md # validate DESIGN.md (references + WCAG contrast)
+npm run build:review   # single-file review HTML (review/ committed without Thmanyah; dist-review/ local with it)
 ```
+
+Open `review/rafeeq-design-system.html` in any browser to review every component and leave notes (saved in the browser, copy all with «ملاحظاتك»).
 
 Deep links: `?tab=foundations|primitives|rafeeq|screens`, `&dir=ltr`, `&theme=dark`.
 
