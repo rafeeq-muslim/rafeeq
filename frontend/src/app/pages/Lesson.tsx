@@ -24,11 +24,11 @@ import {
 } from "@/components/ui/alert-dialog"
 import { ExerciseFeedback, HumanHelpButton } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
-import { sendEvent } from "@/app/lib/api"
 import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
 import { answer, current, isComplete, needsResumeChoice, nextCard, previousCard, progressOf, startSession } from "@/app/learning/session"
 import { completeLesson, type Completion } from "@/app/learning/complete"
+import { recordFirstAnswer } from "@/app/learning/answers"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
 import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
@@ -68,7 +68,6 @@ function Player({ lesson }: { lesson: LessonT }) {
   const saved = useLearning((s) => s.sessions[lesson.id])
   const saveSession = useLearning((s) => s.saveSession)
   const markSeen = useLearning((s) => s.markSeen)
-  const firstAnswer = useLearning((s) => s.firstAnswer)
 
   const [askResume, setAskResume] = React.useState(() => needsResumeChoice(saved))
   const session = saved ?? startSession(lesson)
@@ -98,11 +97,7 @@ function Player({ lesson }: { lesson: LessonT }) {
     if (!exercise || !ready(exercise, value)) return
     const correct = check(exercise, value)
     const { session: next, first } = answer(session, exercise.id, correct)
-    if (first) {
-      firstAnswer(exercise.objectives, exercise.id, exercise.type, correct)
-      for (const objective_id of exercise.objectives)
-        sendEvent({ type: "first_answer", objective_id, exercise_id: exercise.id, correct, context: "lesson" })
-    }
+    if (first) recordFirstAnswer(exercise, correct, "lesson")
     saveSession(next)
     setShown({ exercise, result: correct ? "correct" : "incorrect" })
   }

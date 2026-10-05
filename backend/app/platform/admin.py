@@ -56,5 +56,6 @@ async def set_roles(user_id: uuid.UUID, body: RolesIn, admin: Admin, session: Se
 
 @router.get("/users")
 async def find_users(admin: Admin, session: Session, username: str) -> list[dict]:
-    rows = (await session.scalars(select(User).where(User.username.ilike(f"{username.lower()}%")).limit(20))).all()
+    prefix = username.lower().replace("\\", "").replace("%", "").replace("_", "\\_")
+    rows = (await session.scalars(select(User).where(User.username.ilike(f"{prefix}%", escape="\\")).limit(20))).all()
     return [{"id": str(u.id), "username": u.username, "display_name": u.display_name, "roles": u.roles} for u in rows]

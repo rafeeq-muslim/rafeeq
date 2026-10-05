@@ -20,6 +20,7 @@ import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { levelOf } from "@/app/learning/bkt"
+import { recordFirstAnswer } from "@/app/learning/answers"
 import type { Exercise } from "@/app/learning/types"
 import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
 
@@ -61,10 +62,8 @@ export default function Review() {
     const correct = check(exercise, value)
     if (!tried.includes(exercise.id)) {
       const wasMastered = levelOf(learning.mastery[item.objectiveId]) === "mastered"
-      learning.firstAnswer(exercise.objectives, exercise.id, exercise.type, correct)
+      recordFirstAnswer(exercise, correct, "review")
       if (wasMastered && correct) learning.markChecked(item.objectiveId)
-      for (const objective_id of exercise.objectives)
-        sendEvent({ type: "first_answer", objective_id, exercise_id: exercise.id, correct, context: "review" })
       setTried((x) => [...x, exercise.id])
     }
     setResult(correct ? "correct" : "incorrect")

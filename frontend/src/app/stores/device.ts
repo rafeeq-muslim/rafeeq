@@ -22,6 +22,9 @@ type DeviceState = {
   dismissedSaveSheet: boolean
   /** Team accounts: show lessons still in Sharia review (never for learners). */
   preview: boolean
+  /** MOT-05: mirrors the server reminder for this device's push subscription. */
+  reminderOn: boolean
+  reminderTime: string
   set: (patch: Partial<Omit<DeviceState, "set">>) => void
 }
 
@@ -53,6 +56,8 @@ export const useDevice = create<DeviceState>()(
       askConsent: false,
       dismissedSaveSheet: false,
       preview: false,
+      reminderOn: false,
+      reminderTime: "20:00",
       set: (patch) => set(patch),
     }),
     { name: "rafeeq.device", version: 1 },

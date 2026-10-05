@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { api } from "@/app/lib/api"
-import { num, useT } from "@/app/i18n"
+import { num, useT, type Locale } from "@/app/i18n"
 import type { QuranRef } from "@/app/learning/types"
 import { suraName } from "./suras"
 
@@ -17,8 +17,9 @@ type Verses = {
   source: { name: string; translation: string | null; version: string }
 }
 
-export function VerseBlock({ quran }: { quran: QuranRef }) {
-  const { t, locale } = useT()
+export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk: the language under review. */ lang?: Locale }) {
+  const { t, locale: uiLocale } = useT()
+  const locale = lang ?? uiLocale
   const [from, to] = quran.ayat
   const q = useQuery({
     queryKey: ["quran", quran.sura, from, to, locale],

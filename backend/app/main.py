@@ -11,6 +11,7 @@ from app.core.db import SessionLocal
 from app.core.security import hash_password
 from app.knowledge import review, scripture
 from app.learning import router as learning
+from app.motivation import indicators
 from app.motivation import router as motivation
 from app.platform import admin, auth, push
 from app.platform.models import User
@@ -52,7 +53,17 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Rafeeq API", lifespan=lifespan, docs_url="/api/docs", openapi_url="/api/openapi.json")
 
-for r in (auth.router, auth.me, admin.router, learning.router, review.router, motivation.router, push.router, scripture.router):
+for r in (
+    auth.router,
+    auth.me,
+    admin.router,
+    learning.router,
+    review.router,
+    motivation.router,
+    indicators.router,
+    push.router,
+    scripture.router,
+):
     app.include_router(r)
 
 
