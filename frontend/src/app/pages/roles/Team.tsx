@@ -15,6 +15,7 @@ import { TopBar } from "@/components/rafeeq"
 import { num, useT, type Key } from "@/app/i18n"
 import { api } from "@/app/lib/api"
 import { useContent } from "@/app/learning/useContent"
+import { ReportsQueue } from "@/app/companion/mentor/ReportsQueue"
 
 type Rate = number | null
 type Indicators = {
@@ -160,6 +161,9 @@ export default function Team() {
             </section>
 
             <Markers markers={d.markers} />
+            <section className="flex flex-col gap-3 border-t pt-6">
+              <ReportsQueue />
+            </section>
           </>
         )}
       </div>

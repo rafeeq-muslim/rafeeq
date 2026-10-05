@@ -44,6 +44,7 @@ import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
+import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 
 export default function Me() {
   const { t } = useT()
@@ -88,6 +89,7 @@ export default function Me() {
 
         <Section title={t("me.privacy")}>
           <PrivacySettings />
+          {me && <ShareProgressToggle />}
         </Section>
 
         {roleLinks.some((r) => r.show) && (
