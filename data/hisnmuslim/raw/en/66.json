@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for the withholding of the rain": 
+	[
+		{
+			"ID": 174,
+			"ARABIC_TEXT": "((اللَّهُمَّ حَوَالَيْنَا وَلاَ عَلَيْنَا، اللَّهُمَّ عَلَى الآكَامِ وَالظِّرَابِ، وَبُطُونِ الْأَوْدِيَةِ، وَمَنَابِتِ الشَّجَرِ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma hawalayna wala AAalayna, allahumma AAalal-akami waththirab, wabutoonil-awdiyah, wamanabitish-shajar.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, let the rain fall around us and not upon us, O Allah, (let it fall) on the pastures, hills, valleys and the roots of trees.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/174.mp3" 
+ 		}
+	]
+}

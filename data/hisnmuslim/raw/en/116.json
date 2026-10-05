@@ -1,0 +1,13 @@
+﻿{
+	"Saying Allahu Akbar when passing the Black Stone": 
+	[
+		{
+			"ID": 234,
+			"ARABIC_TEXT": "((طَافَ النَّبيُّ صلى الله عليه وسلم بِالْبَيْتِ عَلَى بَعِيرٍ كُلَّمَا أَتَى الرُّكْنَ أَشَارَ إِلَيْهِ بِشَيْءٍ عِنْدَهُ وَكَبَّرَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(The Prophet  circled the KaAAbah on a camel, every time he reached the black stone he would point to it with his staff and say: (Allahu akbar))", 
+ 		    "TRANSLATED_TEXT":"(The Prophet  circled the KaAAbah on a camel, every time he reached the black stone he would point to it with his staff and say: (Allah is the greatest))", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/234.mp3" 
+ 		}
+	]
+}

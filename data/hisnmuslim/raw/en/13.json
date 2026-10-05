@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for entering the mosque": 
+	[
+		{
+			"ID": 20,
+			"ARABIC_TEXT": "(يَبْدَأُ بِرِجْلِهِ الْيُمْنَى) ، وَيَقُولُ: ((أَعُوذُ بِاللَّهِ العَظِيمِ، وَبِوَجْهِهِ الْكَرِيمِ، وَسُلْطَانِهِ الْقَدِيمِ، مِنَ الشَّيْطَانِ الرَّجِيمِ))  [بِسْمِ اللَّهِ، وَالصَّلَاةُ] [وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ]  ((اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(aAAoothu billahil-AAatheem wabiwajhihil-kareem wasultanihil-qadeem minash-shaytanir-rajeem, [bismil-lah, wassalatu] [wassalamu AAala rasoolil-lah] , allahumma iftah lee abwaba rahmatik.)", 
+ 		    "TRANSLATED_TEXT":"(I take refuge with Allah, The Supreme and with His Noble Face, and His eternal authority from the accursed devil. In the name of Allah, and prayers and peace be upon the Messenger of Allah.  O Allah, open the gates of Your mercy for me.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/20.mp3" 
+ 		}
+	]
+}

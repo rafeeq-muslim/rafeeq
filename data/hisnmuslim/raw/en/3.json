@@ -1,0 +1,13 @@
+﻿{
+	"Invocation when putting on new clothes": 
+	[
+		{
+			"ID": 6,
+			"ARABIC_TEXT": "( اللَّهُمَّ لَكَ الْحَمْدُ أَنْتَ كَسَوْتَنِيهِ، أَسْأَلُكَ مِنْ خَيْرِهِ وَخَيْرِ مَا صُنِعَ لَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّهِ وَشَرِّ مَا صُنِعَ لَهُ).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma lakal-hamdu anta kasawtaneeh, as-aluka min khayrihi wakhayri ma suniAAa lah, wa-aAAoothu bika min sharrihi washarri ma suniAAa lah.)",
+			"TRANSLATED_TEXT":"(O Allah, for You is all praise, You have clothed me with it (i.e. the garment), I ask You for the good of it and the good for which it was made, and I seek refuge with You from the evil of it and the evil for which it was made.)",
+			"REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/6.mp3" 
+ 		}
+	]
+}

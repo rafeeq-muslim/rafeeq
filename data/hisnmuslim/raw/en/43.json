@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for when you find something becoming difficult for you": 
+	[
+		{
+			"ID": 139,
+			"ARABIC_TEXT": "((اللَّهُمَّ لاَ سَهْلَ إِلاَّ مَا جَعَلْتَهُ سَهْلاً، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلاً)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma la sahla illa ma jaAAaltahu sahla, wa-anta tajAAalul- hazana in shi'ta sahla.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, there is no ease except in that which You have made easy, and You make the difficulty, if You wish, easy.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/139.mp3" 
+ 		}
+	]
+}

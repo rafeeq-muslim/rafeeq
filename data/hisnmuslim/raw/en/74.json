@@ -1,0 +1,12 @@
+﻿{
+	"Invocation for someone who offers you food when you are fasting, which you decline": 
+	[
+		{
+			"ID": 185,
+			"ARABIC_TEXT": "((إِذَا دُعِيَ أَحَدُكُمْ فَلْيُجِبْ، فَإِنْ كَانَ صَائِماً فَلْيُصَلِّ، وَإِنْ كَانَ مُفْطِراً فَلْيَطْعَمْ)) ، وَمَعْنَى فَلْيُصَلِّ أَيْ فَلْيَدْعُ.", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(If you are not invited (to a meal) then answer.  If  you happen to be fasting, then supplicate (for those present) and if you are not fasting, then eat.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/185.mp3" 
+ 		}
+	]
+}

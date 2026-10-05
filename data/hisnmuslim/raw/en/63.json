@@ -1,0 +1,29 @@
+﻿{
+	"Some invocations for rain": 
+	[
+		{
+			"ID": 169,
+			"ARABIC_TEXT": "((اللَّهُمَّ اسْقِنَا غَيْثاً مُغِيثاً مَرِيئاً مَرِيعاً، نَافِعاً غَيْرَ ضَارٍّ، عَاجِلاً غَيْرَ آجِلٍ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahummas-qina ghaythan mugheethan maree-an mureeAAan, nafiAAan, ghayra dar, AAajilan ghayra ajil.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, send upon us helpful, wholesome and healthy rain, beneficial not harmful rain, now, not later.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/169.mp3" 
+ 		},
+		{
+			"ID": 170,
+			"ARABIC_TEXT": "((اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا، اللَّهُمَّ أَغِثْنَا)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma aghithna, allahumma aghithna, allahumma aghithna.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, relieve us, O Allah, relieve us, O Allah, relieve us.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/170.mp3" 
+ 		},
+		{
+			"ID": 171,
+			"ARABIC_TEXT": "((اللَّهُمَّ اسْقِ عِبَادَكَ، وَبَهَائِمَكَ، وَانْشُرْ رَحْمَتَكَ، وَأَحْيِي بَلَدَكَ الْمَيِّتَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahummas-qi AAibadak, wabaha-imak, wanshur rahmatak, wa-ahyi baladakal-mayyit.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, provide water for Your servants and Your cattle, spread out Your mercy and resurrect Your dead land.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/171.mp3" 
+ 		}
+	]
+}

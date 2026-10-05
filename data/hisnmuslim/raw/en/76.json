@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for when you see the first dates of the season": 
+	[
+		{
+			"ID": 187,
+			"ARABIC_TEXT": "((اللَّهُمَّ بَارِكْ لَنَا فِي ثَمَرِنَا، وَبَارِكْ لَنَا فِي مَدِينَتِنَا، وَبَارِكْ لَنَا فِي صَاعِنَا، وَبَارِكْ لَنَا فِي مُدِّنَا)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma barik lana fee thamarina, wabarik lana fee madeenatina, wabarik lana fee saAAina wabarik lana fee muddina.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, bless our fruit for us, bless our town for us, bless our saAA for us and bless our mudd for us.)(A saAA is equivalent to four mudds and a mudd is equivalent to a dry measure of an average man’s two palms.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/187.mp3" 
+ 		}
+	]
+}

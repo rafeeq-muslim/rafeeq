@@ -1,0 +1,21 @@
+﻿{
+	"Invocations for someone who has put on new clothes": 
+	[
+		{
+			"ID": 7,
+			"ARABIC_TEXT": "(تُبْلِي وَيُخْلِفُ اللَّهُ تَعَالَى)",
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Tublee wayukhliful-lahu taAAala.)",
+			"TRANSLATED_TEXT":"(May you wear it out and Allah تعالى replace it (with another).’ The intended meaning: A supplication for long life.)",
+			"REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/7.mp3" 
+ 		},
+		{
+			"ID": 8,
+			"ARABIC_TEXT": "(اِلْبَسْ جَدِيداً وَعِشْ حَمِيداً وَمُتْ شَهِيداً).",
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Ilbas jadeedan waAAish hameedan wamut shaheedan.)",
+			"TRANSLATED_TEXT":"(Wear anew, live commendably and die a shaheed.)(shaheed:One who dies fighting the kuffar in order to make the word of Allah superior or in defense of Islam.  It also has other meanings found in the Sunnah such as: the one who dies defending his life, wealth or family; the woman who passes away due to childbirth; one who drowns…etc.)",
+			"REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/8.mp3" 
+ 		}
+	]
+}

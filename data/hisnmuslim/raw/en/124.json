@@ -1,0 +1,13 @@
+﻿{
+	"What to say when you feel a pain in your body": 
+	[
+		{
+			"ID": 243,
+			"ARABIC_TEXT": "((ضَعْ يَدَكَ عَلَى الَّذِي تَألَّمَ مِنْ جَسَدِكَ وَقُلْ: بِسْمِ اللَّهِ، ثَلاَثاً، وَقُلْ سَبْعَ مَرَّاتٍ: أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Place your hand at the site of the pain and say: (Bismil-lah (three times)) the supplicate seven times: (aAAoothu billahi waqudratih min sharri ma ajidu wa-ohathir.))", 
+ 		    "TRANSLATED_TEXT":"(Place your hand at the site of the pain and say: (In the name of Allah(three times)) the supplicate seven times: (I take refuge in Allah and within His omnipotence from the evil that I feel and am wary of.))", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/243.mp3" 
+ 		}
+	]
+}

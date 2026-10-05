@@ -1,0 +1,13 @@
+﻿{
+	"What to say if something happens to please you or to displease you": 
+	[
+		{
+			"ID": 218,
+			"ARABIC_TEXT": "كَانَ النَّبِيُّ صلى الله عليه وسلم إِذَا أَتَاهُ الْأَمْرُ يَسُرُّهُ قَالَ: ((الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ)) وَإِذَا أَتَاهُ الْأَمْرُ يَكْرَهُهُ قَالَ: ((الْحَمْدُ لِلَّهِ عَلَى كُلِّ حَالٍ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"When something happened that pleased him, the Prophet used to say:((Alhamdu lillaahil-lathee bini'matihi tatimmuus-saalihaat)).And if something happened that displeased him, he used to say:((Alhamdulillaahi 'alaa kulli haal)).", 
+ 		    "TRANSLATED_TEXT":"When something happened that pleased him, the Prophet used to say:((Alhamdu lillaahil-lathee bini'matihi tatimmuus-saalihaat)). Praise is to Allah Who by His blessings all good things are perfected. And if something happened that displeased him, he used to say:((Alhamdulillaahi 'alaa kulli haal)).Praise is to Allah in all circumstances.", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/218.mp3" 
+ 		}
+	]
+}

@@ -1,0 +1,13 @@
+﻿{
+	"What to say when entering the home": 
+	[
+		{
+			"ID": 18,
+			"ARABIC_TEXT": "(بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا، ثُمَّ لِيُسَلِّمْ عَلَى أَهْلِهِ).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Bismil-lahi walajna, wabismil-lahi kharajna, waAAala rabbina tawakkalna.)", 
+ 		    "TRANSLATED_TEXT":"(In the name of Allah we enter and in the name of Allah we leave, and upon our Lord we place our trust.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/18.mp3" 
+ 		}
+	]
+}

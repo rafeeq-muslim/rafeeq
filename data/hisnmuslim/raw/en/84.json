@@ -1,0 +1,13 @@
+﻿{
+	"What to say while sitting in an assembly": 
+	[
+		{
+			"ID": 195,
+			"ARABIC_TEXT": "((عَنِ ابْنِ عُمَرَ رضي الله عنه قَاَلَ: كَانَ يُعَدُّ لِرَسُولِ اللَّهِ صلى الله عليه وسلم فِي الْمَجْلِسِ الوَاحِدِ مِائَةُ مَرَّةٍ مِنْ قَبْلِ أَنْ يَقُومَ: ((رَبِّ اغْفِرْ لِي، وَتُبْ عَلَيَّ، إِنَّكَ أَنْتَ التَّوَّابُ الغَفُورُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Ibn AAumar  said: It would be counted that the Messenger of Allah  would say one hundred times at any one sitting before getting up: (Rabbigh-fir lee watub AAalay, innaka antat-tawwabul-ghafoor.))", 
+ 		    "TRANSLATED_TEXT":"(Ibn AAumar  said: It would be counted that the Messenger of Allah  would say one hundred times at any one sitting before getting up: (O my Lord, forgive me and turn towards me (to accept my repentance). Verily You are The Oft-Returning. The Oft-Forgiving.))", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/195.mp3" 
+ 		}
+	]
+}

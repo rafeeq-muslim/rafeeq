@@ -1,0 +1,29 @@
+﻿{
+	"What to say upon completing ablution": 
+	[
+		{
+			"ID": 13,
+			"ARABIC_TEXT": "(أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ..).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Ashhadu an la ilaha illal-lahu wahdahu la shareeka lah, wa-ashhadu anna Muhammadan AAabduhu warasooluh.)", 
+ 		    "TRANSLATED_TEXT":"(I bear witness that none has the right to be worshipped except Allah, alone without partner, and I bear witness that Muhammad is His slave and Messenger.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/13.mp3" 
+ 		},
+		{
+			"ID": 14,
+			"ARABIC_TEXT": "(اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ)", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahummaj-AAalnee minat-tawwabeena wajAAalnee minal-mutatahhireen.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, make me of those who return to You often in repentance and make me of those who remain clean and pure.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/14.mp3" 
+ 		},
+		{
+			"ID": 15,
+			"ARABIC_TEXT": "(سُبْحانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ أَنْتَ، أَسْتَغْفِرُكَ وَأَتوبُ إِلَيْكَ).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Subhanakal-lahumma wabihamdika ashhadu an la ilaha illa anta astaghfiruka wa-atoobu ilayk.)", 
+ 		    "TRANSLATED_TEXT":"(How perfect You are O Allah, and I praise You, I bear witness that none has the right to be worshipped except You, I seek Your forgiveness and turn in repentance to You.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/15.mp3" 
+ 		}
+	]
+}

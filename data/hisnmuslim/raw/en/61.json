@@ -1,0 +1,21 @@
+﻿{
+	"Invocations for when the wind blows": 
+	[
+		{
+			"ID":166,
+			"ARABIC_TEXT": "((اللَّهُمَّ إِنِّي أَسْــــــأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma innee as-aluka khayraha wa-aAAoothu bika min sharriha.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, I ask You for it’s goodness and I take refuge with You from it’s evil.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/166.mp3" 
+ 		},
+		{
+			"ID": 167,
+			"ARABIC_TEXT": "((اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَخَيْرَ مَا فِيهَا، وَخَيْرَ مَا أُرْسِلَتْ بِهِ، وَأَعُوذُ بِكَ مِنْ شَرِّهَا، وَشَرِّ مَا فِيهَا، وَشَرِّ مَا أُرْسِلَتْ بِهِ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Allahumma innee as-aluka khayraha wakhayra ma feeha, wakhayra ma orsilat bih, wa-aAAoothu bika min sharriha, washarri ma feeha washarri ma orsilat bih.)", 
+ 		    "TRANSLATED_TEXT":"(O Allah, I ask You for it’s goodness, the good within it, and the good it was sent with, and I take refuge with You from it’s evil, the evil within it, and from the evil it was sent with.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/167.mp3" 
+ 		}
+	]
+}

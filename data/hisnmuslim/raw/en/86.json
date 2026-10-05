@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for someone who does good to you": 
+	[
+		{
+			"ID": 198,
+			"ARABIC_TEXT": "((جَزَاكَ اللَّهُ خَيْراً)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(If someone does you a favour and you say: (Jazakal-lahu khayran.) then you have indeed excelled in praising him.)", 
+ 		    "TRANSLATED_TEXT":"(If someone does you a favour and you say: (May Allah reward you with goodness.) then you have indeed excelled in praising him.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/198.mp3" 
+ 		}
+	]
+}

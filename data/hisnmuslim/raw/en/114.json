@@ -1,0 +1,13 @@
+﻿{
+	"What a Muslim should say when he is praised": 
+	[
+		{
+			"ID": 232,
+			"ARABIC_TEXT": "((اللَّهُمَّ لاَ تُؤَاخِذْنِي بِمَا يَقُولُونَ، وَاغْفِرْ لِي مَا لاَ يَعْلَمُونَ، [وَاجْعَلْنِي خَيْراً مِمَّا يَظُّنُّونَ])).", 
+			"LANGUAGE_ARABIC_TRANSLATED_TEXT":"Allaahumma laa tu'aakhithnee bimaa yaqooloona, waghfir lee maa laa ya'lamoona [waj'alnee khayram-mimmaa yadhunnoon]", 
+ 		    "TRANSLATED_TEXT":"O Allah, do not call me to account for what they say and forgive me for what they have no knowledge of [and make me better than they imagine].",
+  		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/232.mp3" 
+ 		}
+	]
+}

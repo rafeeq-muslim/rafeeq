@@ -1,0 +1,13 @@
+﻿{
+	"Invocation (upon receipt of the loan) for someone who lends you money": 
+	[
+		{
+			"ID": 202,
+			"ARABIC_TEXT": "((بارَكَ اللَّهُ لَكَ فِي أَهْلِكَ وَمَالِكَ، إِنَّمَا جَزَاءُ السَّلَفِ الْحَمْدُ وَالأَدَاءُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Barakal-lahu laka fee ahlika wamalik, innama jaza-os-salafil-hamdu wal-ada'.)", 
+ 		    "TRANSLATED_TEXT":"(May Allah bless for you, your family and wealth. Surely commendation and payment are the reward for a loan.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/202.mp3" 
+ 		}
+	]
+}

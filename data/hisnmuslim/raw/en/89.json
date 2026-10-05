@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for someone who tells you I love you for the sake of Allah": 
+	[
+		{
+			"ID": 200,
+			"ARABIC_TEXT": "((أَحَبَّكَ الَّذِي أَحْبَبْتَنِي لَهُ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Ahabbakal-lathee ahbabtanee lah.)", 
+ 		    "TRANSLATED_TEXT":"(May He, for whom you have loved me, love you.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/200.mp3" 
+ 		}
+	]
+}

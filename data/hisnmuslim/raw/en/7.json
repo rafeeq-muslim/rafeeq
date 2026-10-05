@@ -1,0 +1,13 @@
+﻿{
+	"Invocation for leaving the restroom": 
+	[
+		{
+			"ID": 11,
+			"ARABIC_TEXT": "(غُفْرَانَكَ).",
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Ghufranak.)",
+			"TRANSLATED_TEXT":"(I ask You (Allah) for forgiveness.)",
+			"REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/11.mp3" 
+ 		}
+	]
+}

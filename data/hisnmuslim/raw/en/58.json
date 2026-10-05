@@ -1,0 +1,13 @@
+﻿{
+	"Invocation to be recited when placing the dead in his grave": 
+	[
+		{
+			"ID": 163,
+			"ARABIC_TEXT": "((بِسْمِ اللَّهِ وَعَلَى سُنَّةِ رَسُولِ اللَّهِ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"(Bismil-lahi waAAala sunnati rasoolil-lah.)", 
+ 		    "TRANSLATED_TEXT":"(In the name of Allah and upon the sunnah of the Messenger of Allah.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/163.mp3" 
+ 		}
+	]
+}

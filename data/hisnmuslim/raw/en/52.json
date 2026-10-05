@@ -1,0 +1,13 @@
+﻿{
+	"What to encourage the dying person to say": 
+	[
+		{
+			"ID": 153,
+			"ARABIC_TEXT": "((مَنْ كَانَ آخِرُ كَلاَمِهِ لاَ إِلَهَ إِلاَّ اللَّهُ دَخَلَ الْجَنَّةَ)).", 
+  		    "LANGUAGE_ARABIC_TRANSLATED_TEXT":"i.e. those around the sick should instruct and encourage him to say the shahadah. (He whose last words are: (La ilaha illal-lah.) will enter Paradise.)", 
+ 		    "TRANSLATED_TEXT":"i.e. those around the sick should instruct and encourage him to say the shahadah. (He whose last words are: (None has the right to be worshipped except Allah.) will enter Paradise.)", 
+ 		    "REPEAT": 1, 
+            "AUDIO":"http://www.hisnmuslim.com/audio/ar/153.mp3" 
+ 		}
+	]
+}
