@@ -16,7 +16,8 @@
 - MentorApproved (ORG-02 R1): `{mentor_id}`. The mentor's profile exists and
   is not suspended; the inbox still waits for the mentor rules (ORG-02 R2).
 - MentorSuspended (ORG-02 R5): `{mentor_id}`. The mentor loses the inbox and
-  is no longer suggested; each mentee's link ends (thread closed) and they get
+  is no longer suggested; each mentee's link ends (thread closed, and it never
+  reopens to him, even after MentorApproved: CMP-03 R4) and they get
   a neutral notice to choose another mentor (no reason, no organisation); the
   mentor's open requests return to the pool, where the same-gender rule
   (CMP-01 R3) applies as always.

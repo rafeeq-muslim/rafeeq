@@ -603,6 +603,8 @@ export const ar = {
   "cmp.thread.blockDone": "حظرته. سيرد عليك غيره.",
   "cmp.thread.more": "خيارات",
   "cmp.thread.closedNote": "انتهت هذه المحادثة. اكتب لتفتحها من جديد.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "انتهت هذه المحادثة مع مرشدك السابق، وتبقى لك لتقرأها. ما تكتبه هنا يصل إلى مرشدك الحالي، أو إلى من يرد من فريقنا إن لم يكن لك مرشد.",
   "cmp.thread.hidden": "أُخفيت هذه الرسالة للمراجعة.",
   "cmp.report.title": "بلّغ عن رسالة",
   "cmp.report.body": "لن يعرف صاحب الرسالة من بلّغ. يراجعها فريقنا.",

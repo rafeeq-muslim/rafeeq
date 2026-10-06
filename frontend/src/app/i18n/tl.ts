@@ -605,6 +605,8 @@ export const tl: Dict = {
   "cmp.thread.blockDone": "Na-block. Iba ang sasagot sa iyo.",
   "cmp.thread.more": "Mga opsyon",
   "cmp.thread.closedNote": "Sarado na ang usapang ito. Sumulat para buksan muli.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "Tapos na ang usapang ito sa dati mong mentor; nananatili ito para mabasa mo. Ang isusulat mo rito ay mapupunta sa kasalukuyan mong mentor, o sa isang tao sa aming team kung wala kang mentor.",
   "cmp.thread.hidden": "Nakatago ang mensaheng ito para sa pagsusuri.",
   "cmp.report.title": "Mag-report ng mensahe",
   "cmp.report.body": "Hindi malalaman ng nagpadala kung sino ang nag-report. Susuriin ito ng aming team.",
