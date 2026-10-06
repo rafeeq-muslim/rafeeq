@@ -933,7 +933,7 @@ export const en: Dict = {
   "policy.contact.title": "What we keep when you talk to a person",
   "policy.contact.body": "Your messages with the person who answers you, your messages in your group, your reports and whom you blocked. Your gender with each request for a person, so someone of your own gender answers. As a guest, your conversations are tied to a random code kept on your device only.",
   "policy.notifications.title": "If you turn on notifications",
-  "policy.notifications.body": "The notification address your browser gives us, your language, your time zone, the reminder time you chose, and the date you last learned so we don't remind you on a day you already learned. The notification text is always neutral. Prayer reminders are worked out on your device and never reach us.",
+  "policy.notifications.body": "The notification address your browser gives us, a random number for your device, your language, your time zone, the reminder time you chose, and the date you last learned so we don't remind you on a day you already learned. The notification text is always neutral. Prayer reminders are worked out on your device and never reach us.",
   "policy.ai.title": "Your questions to the assistant",
   "policy.ai.body": "Only the text of the question is sent to the AI provider through OpenRouter, without your name or anything that points to you, and we ask that no provider that keeps or trains on questions is used. We don't keep the text of your question, unless you save the answer and choose to save the question with it.",
   "policy.stats.title": "Usage statistics",

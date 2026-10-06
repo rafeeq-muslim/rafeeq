@@ -934,7 +934,7 @@ export const tl: Dict = {
   "policy.contact.title": "Ang itinatago namin kapag nakipag-usap ka sa isang tao",
   "policy.contact.body": "Ang mga mensahe mo sa sumasagot sa iyo, ang mga mensahe mo sa grupo, ang iyong mga ulat at ang mga hinarang mo. Ang kasarian mo sa bawat kahilingan para sa isang tao, para kapareho mong kasarian ang sumagot. Bilang bisita, nakatali ang mga usapan mo sa isang random na code na nasa device mo lamang.",
   "policy.notifications.title": "Kung i-on mo ang mga abiso",
-  "policy.notifications.body": "Ang address ng abiso na ibinibigay ng browser mo, ang iyong wika, time zone, ang oras ng paalala na pinili mo, at ang petsa ng huling araw na nag-aral ka para hindi ka namin paalalahanan sa araw na nag-aral ka na. Laging neutral ang teksto ng abiso. Ang paalala sa dasal ay kinakalkula sa device mo at hindi umaabot sa amin.",
+  "policy.notifications.body": "Ang address ng abiso na ibinibigay ng browser mo, isang random na numero para sa device mo, ang iyong wika, time zone, ang oras ng paalala na pinili mo, at ang petsa ng huling araw na nag-aral ka para hindi ka namin paalalahanan sa araw na nag-aral ka na. Laging neutral ang teksto ng abiso. Ang paalala sa dasal ay kinakalkula sa device mo at hindi umaabot sa amin.",
   "policy.ai.title": "Ang mga tanong mo sa assistant",
   "policy.ai.body": "Ang teksto lamang ng tanong ang ipinapadala sa AI provider sa pamamagitan ng OpenRouter, nang walang pangalan mo o anumang tumuturo sa iyo, at hinihiling namin na walang provider na nagtatago o nagsasanay gamit ang mga tanong ang gamitin. Hindi namin itinatago ang teksto ng tanong mo, maliban kung i-save mo ang sagot at piliing i-save ang tanong kasama nito.",
   "policy.stats.title": "Mga istatistika ng paggamit",

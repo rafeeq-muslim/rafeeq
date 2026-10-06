@@ -4,6 +4,8 @@ Rule → where it lives → the test that proves it. Written before each feature
 
 ## PLT-02 optional account
 
+Updated for the PR #25 documents in `PLT-02.md` (and PLT-01, 03, 05, 06, 07 in their own files).
+
 | Rule | Code | Tests |
 | --- | --- | --- |
 | R1 no account needed | guest-first stores (`frontend/src/app/stores/*`), offer on Home after the first lesson and in Me | `test_plt02_r1_guest_needs_no_account` |
