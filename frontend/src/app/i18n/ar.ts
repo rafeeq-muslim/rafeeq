@@ -1211,6 +1211,21 @@ export const ar = {
   "home.org.library.title": "من المكتبة",
   "home.org.library.cta": "افتح المادة",
   "home.org.openSaved": "افتح محفوظاتي",
+  // PLT-15 «رفيق دون اتصال» (plt-15-offline-build)
+  "offline.indicator": "دون اتصال",
+  "offline.firstTime.title": "هذه الشاشة تحتاج اتصالًا أول مرة",
+  "offline.firstTime.body": "لم تنزل إلى جهازك بعد. افتحها مرة واحدة وأنت متصل، وبعدها تعمل دون اتصال.",
+  "offline.loadFailed.title": "تعذّر فتح هذه الشاشة",
+  "offline.loadFailed.body": "ربما صدر إصدار أحدث من رفيق. أعد المحاولة لتفتح.",
+  "offline.home": "إلى الرئيسية",
+  "offline.video": "المقطع يحتاج اتصالًا أو تنزيل الوحدة. أكمل درسك، وشاهده حين تتصل.",
+  "offline.cityList": "قائمة المدن تحتاج اتصالًا أول مرة. اتصل مرة واحدة لتختار مدينتك، وبعدها تعمل المواقيت دون اتصال.",
+  "offline.savedItem": "تعذّر عرض هذا المحفوظ الآن. سيظهر حين يعود الاتصال.",
+  "offline.libraryList": "المكتبة تحتاج اتصالًا أول مرة. ستظهر حين يعود الاتصال.",
+  "offline.libraryFile": "فتح الملف يحتاج اتصالًا أو تنزيلًا.",
+  "offline.mentor": "المرشد والمجموعات تحتاج اتصالًا، فقد لا يظهر هنا آخر ما وصل.",
+  "offline.human": "طلب إنسان يحتاج اتصالًا. إن كنت في خطر فاتصل بأحد أرقام المساعدة الرسمية.",
+  "offline.humanForm": "إرسال الطلب يحتاج اتصالًا. اكتب رسالتك، وأرسلها حين تتصل.",
 
   // PLT-05 R7: sign-out saves progress, then erases this device
   "acct.signOut.saving": "نحفظ تقدّمك…",

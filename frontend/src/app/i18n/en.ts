@@ -1212,6 +1212,21 @@ export const en: Dict = {
   "home.org.library.title": "From the library",
   "home.org.library.cta": "Open it",
   "home.org.openSaved": "Open my saved items",
+  // PLT-15 «رفيق دون اتصال» (plt-15-offline-build)
+  "offline.indicator": "Offline",
+  "offline.firstTime.title": "This screen needs a connection the first time",
+  "offline.firstTime.body": "It isn't on your device yet. Open it once while connected, and after that it works offline.",
+  "offline.loadFailed.title": "This screen didn't open",
+  "offline.loadFailed.body": "A newer version of Rafeeq may be out. Try again to open it.",
+  "offline.home": "Go to Home",
+  "offline.video": "This video needs a connection or the unit downloaded. Carry on with your lesson and watch it when you're connected.",
+  "offline.cityList": "The city list needs a connection the first time. Connect once to choose your city; after that prayer times work offline.",
+  "offline.savedItem": "This saved item can't be shown right now. It will appear when you're back online.",
+  "offline.libraryList": "The library needs a connection the first time. It will appear when you're back online.",
+  "offline.libraryFile": "Opening the file needs a connection or a download.",
+  "offline.mentor": "Your mentor and groups need a connection, so the latest messages may not show here.",
+  "offline.human": "Reaching a person needs a connection. If you are in danger, call one of the official helplines.",
+  "offline.humanForm": "Sending the request needs a connection. Write your message and send it when you're connected.",
 
   // PLT-05 R7: sign-out saves progress, then erases this device
   "acct.signOut.saving": "Saving your progress…",

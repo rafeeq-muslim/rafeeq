@@ -102,3 +102,8 @@ export async function onSignedIn() {
   await claimGuestRequests()
   await syncNow()
 }
+
+// PLT-15 R6: lessons, reviews and placement done offline were kept on the
+// device; send them once the connection is back (the server merges as a
+// union, so a repeat never counts twice). Learned days: push.ts.
+if (typeof window !== "undefined") window.addEventListener("online", () => void syncNow())

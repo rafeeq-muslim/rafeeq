@@ -9,6 +9,7 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
+import "./sw/plt15-offline" // PLT-15: adhkar text, glossary and saved-item lists kept for offline use
 import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
 import { registerPushHandler } from "./sw/plt13-push"
 

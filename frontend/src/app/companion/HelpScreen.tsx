@@ -37,6 +37,8 @@ import { TOPICS, type Gender, type Source, type ThreadSummary, type Topic, creat
 import { useSendError } from "./Chat"
 import { ago } from "./format"
 import { Helplines } from "./Helplines"
+import { OfflineNote, OfflineOnly } from "@/app/offline/NeedsConnection"
+import { useOnline } from "@/app/offline/online"
 import { ScreenBar, SectionTitle } from "./Screen"
 import { PrivacyLink } from "@/app/pages/Privacy"
 import { useCompanion } from "./store"
@@ -72,6 +74,19 @@ export function UrgentNotice() {
         <AlertTitle>{t("human.danger.title")}</AlertTitle>
         <AlertDescription>{t("human.danger.body")}</AlertDescription>
       </Alert>
+      <Helplines />
+    </div>
+  )
+}
+
+/** PLT-15 R5 (error): offline, the verified helplines (bundled in the app)
+ * come first, with the note that a person needs a connection. */
+function OfflineHelp() {
+  const online = useOnline()
+  if (online) return null
+  return (
+    <div className="flex flex-col gap-3" data-slot="offline-help">
+      <OfflineNote text="offline.human" />
       <Helplines />
     </div>
   )
@@ -154,6 +169,7 @@ function UrgentStart({ source, askId }: { source: Source; askId: string | null }
   return (
     <div className="flex flex-col gap-5 px-4 pt-4 pb-4">
       <UrgentNotice />
+      <OfflineOnly text="offline.human" />{/* PLT-15 R5: the numbers above work offline */}
       {failed ? (
         <Button size="lg" onClick={() => void start()}>
           {t("human.danger.cta")}
@@ -231,6 +247,7 @@ export default function HelpScreen() {
     <>
       <ScreenBar title={t("human.title")} back={-1} />
       <div className="flex flex-col gap-6 px-4 pt-5">
+        <OfflineHelp />
         <section className="flex items-center gap-4">
           <SpotIllustration kind="companion" size={72} />
           <div className="flex min-w-0 flex-col gap-1">
@@ -314,6 +331,7 @@ export default function HelpScreen() {
           </Field>
         </FieldGroup>
 
+        <OfflineOnly text="offline.humanForm" />{/* PLT-15 R5 */}
         <Button size="lg" className="w-full" disabled={pending} onClick={() => void send()}>
           {pending ? <Spinner data-icon="inline-start" /> : <IconHeadset data-icon="inline-start" stroke={1.75} />}
           {t("human.send")}

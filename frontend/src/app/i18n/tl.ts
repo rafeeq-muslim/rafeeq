@@ -1213,6 +1213,21 @@ export const tl: Dict = {
   "home.org.library.title": "Mula sa aklatan",
   "home.org.library.cta": "Buksan",
   "home.org.openSaved": "Buksan ang mga na-save ko",
+  // PLT-15 «رفيق دون اتصال» (plt-15-offline-build)
+  "offline.indicator": "Offline",
+  "offline.firstTime.title": "Kailangan ng koneksyon ang screen na ito sa unang pagkakataon",
+  "offline.firstTime.body": "Wala pa ito sa iyong device. Buksan ito nang isang beses habang may koneksyon, at pagkatapos ay gagana ito kahit offline.",
+  "offline.loadFailed.title": "Hindi nabuksan ang screen na ito",
+  "offline.loadFailed.body": "Baka may mas bagong bersyon ng Rafeeq. Subukang muli para mabuksan ito.",
+  "offline.home": "Pumunta sa Home",
+  "offline.video": "Kailangan ng koneksyon o ng na-download na unit para sa video na ito. Ituloy ang aralin at panoorin ito kapag may koneksyon na.",
+  "offline.cityList": "Kailangan ng koneksyon ang listahan ng mga lungsod sa unang pagkakataon. Kumonekta nang isang beses para piliin ang iyong lungsod; pagkatapos ay gagana ang oras ng dasal kahit offline.",
+  "offline.savedItem": "Hindi maipakita ang naka-save na ito ngayon. Lalabas ito kapag may koneksyon ka na ulit.",
+  "offline.libraryList": "Kailangan ng koneksyon ang aklatan sa unang pagkakataon. Lalabas ito kapag may koneksyon ka na ulit.",
+  "offline.libraryFile": "Kailangan ng koneksyon o download para mabuksan ang file.",
+  "offline.mentor": "Kailangan ng koneksyon ang iyong mentor at mga grupo, kaya baka hindi makita rito ang pinakabagong mensahe.",
+  "offline.human": "Kailangan ng koneksyon para makausap ang isang tao. Kung nasa panganib ka, tawagan ang isa sa mga opisyal na helpline.",
+  "offline.humanForm": "Kailangan ng koneksyon para maipadala ang kahilingan. Isulat ang iyong mensahe at ipadala ito kapag may koneksyon ka na.",
 
   // PLT-05 R7: sign-out saves progress, then erases this device
   "acct.signOut.saving": "Sine-save ang progreso mo…",
