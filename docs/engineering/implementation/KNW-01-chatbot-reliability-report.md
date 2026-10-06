@@ -192,3 +192,57 @@ Local AI spend of this session (development database, `knw_ai_calls`): **$0.0346
 - Result de-duplication by `client_request_id` across workers (§6) is not built: the app never re-sends an attempt automatically and production runs one backend instance; the id is recorded for tracing.
 - Relevance of full-text candidates is judged by the composer and verifier; a calibrated relevance gate waits for the full KNW-04 set (`KNW_MIN_SIMILARITY` stays 0).
 - The host router in front of nginx (outside the repo) may have its own timeout; nginx `proxy_read_timeout` is 120 s, above both deadlines.
+
+## 12. Answer rate (branch `knw-01-answer-rate`, 2026-10-06 evening)
+
+**Report from the product owner:** simple questions such as «ما هو الحجاب؟» are not answered, and the assistant tells the user to ask a person.
+
+### 12.1 Evidence (production, read-only)
+
+- **Live asks (7, no personal data).** «ما هو الحجاب؟» `ec7b0f78` was answered. "What is hijab?" `5d062ba5` was `verification_failed`: `scripture_copied_outside_marker` on the first composition and again after the repair. "How many prayers a day?" `d83234b4`, "What is zakat?" `037651f9` (only after a repair for `malformed_marker`) and "What is wudu?" `67bcc7ed` (only after a repair for `malformed_marker` and scripture copying) were answered. «من هو النبي محمد ﷺ؟» `927a54de` was answered. «ما هو الوضوء؟» `5953ac8c` was served the approved «ما فضل الوضوء؟» answer: the approximate match counted 3 of 4 shared words, so the answer was about the virtue of wudu, not what wudu is.
+- **Answer log with traces since the tracing deploy (15:50 UTC).** 22 composed attempts: 18 answered and 4 `verification_failed`. Arabic: 14 of 14 answered. English: 4 of 8.
+  - All 4 failures were code checks: `malformed_marker` on 2 asks (one also `repair_not_affordable` after a 33 s composer call), and `scripture_copied_outside_marker` on 2.
+  - 7 of the 18 answered attempts needed the repair, for the same two codes.
+  - The support-check model rejected nothing.
+- **Not the cause:**
+  - budget: $0.066 spent on answers today, against a daily cap of $0.75 and a total cap of $10 ($0.40 spent in all);
+  - provider outages: 0 failed answer calls;
+  - retrieval: every attempt was `complete`, with 24 vector and 24 text hits;
+  - the threshold: `KNW_MIN_SIMILARITY` is 0.
+- **Causes:**
+  1. **Markers missing «q:».** The composer writes `{{islamhouse_enc:160:en:s5:p2}}`. The check rejects it as `malformed_marker`, which costs the repair round. Reproduced on the development database.
+  2. **English honorifics counted as copied scripture.** 1,875 of the 2,328 English HadeethEnc passages contain «may Allah's peace and blessings be upon him», and 1,895 contain «may Allah be pleased with him». These are the most common 6-word runs in all 14,800 English scripture passages. An answer that honours the Prophet ﷺ the way the source does therefore "repeats 6 words of a hadith". The Arabic forms (صلى الله عليه وسلم, رضي الله عنه) were already exempt; the English and Tagalog forms were not.
+  3. **A repair that knew only the code.** The repair was told only "the answer repeated words of a verse or hadith", not which sentence did it, so it often wrote the same sentence again.
+  4. **The FAQ topic.** See «ما هو الوضوء؟» above.
+  5. **The failure screen.** `verification_failed` and `unavailable` were shown as a `ReferralCard` whose only big button was «أريد إنسانًا». `verification_rejected` was not retryable, although a new composition often passes.
+  6. **The router, measured on fixtures with the real fast model.** "Can I pray in jeans?", «هل يجوز أن أصلي بالجينز؟», "Can I keep my non-Muslim name?" and «هل أغير اسمي بعد الإسلام؟» were routed `personal`, which adds a referral card. "What should I eat at a work party?", «ماذا آكل في حفلة العمل؟» and "How do I find a mosque near me?" were routed `out_of_scope`. The 13 `out_of_scope` routes in production cannot be checked, because question text is never stored.
+- **Coverage.** islamqa English had 0 of 35,568 passages embedded. After the interleaving deploy it had 1,280 at 20:20 UTC, and Arabic had 28,416 of 60,943. The rate is about 6,000 passages an hour, so the remaining 66,800 passages need about 11 hours and about $0.35 (about 500 tokens a passage at bge-m3's $0.01 per million tokens), inside the $1 daily embedding cap. Until then, English islamqa is reached through the full-text channel, and the answers above already cite it.
+
+### 12.2 Fix (small helpers; the live-source path uses the same functions)
+
+| Change | Where | Rule kept |
+| --- | --- | --- |
+| A braced marker becomes `{{q:ID}}` only when **every** id inside it was retrieved in this attempt (`{{ID}}`, `{{q: ID}}`, `{{Q:ID}}`, `{{q:A, q:B}}`). Any other form is left as written, and every check still runs on it. «q:»-prefixed `sources` entries are cleaned the same way | `textcheck.fix_markers`, `agents._composer_out` | §1.3 (never invents an id; an unretrieved id is still refused) |
+| English and Tagalog honorifics are exempt from the overlap check, in the same way the Arabic formulae already were. Latin accents and apostrophes are folded on **both** sides, so «Allāh» and «Allah» count as the same word, which can only find more copying. n stays 6 in every language: with the honorifics removed, the most common remaining runs are narration openers and verse phrases, which should still be rejected | `textcheck.LATIN_FORMULAE`, `latin_fold` | §1.3: a model-written rendering of a verse or hadith outside a marker is still rejected (tested) |
+| On `scripture_copied_outside_marker`, the repair receives the sentences that copied, as sentences to reword or remove | `verify.copied_sentences`, `REPAIR_HINTS` | Same passages, one repair, every check again |
+| An approximate FAQ match needs the same topic words, so only function words may differ | `approved.matches` / `_topic` | R7 |
+| `verification_rejected` is retryable. Retry and edit come first; «أريد إنسانًا» stays as a quiet button (and in the top bar). `no_source` keeps the `ReferralCard`. Danger is unchanged | `ask.RETRYABLE`, `ask/parts.tsx` `FailureCard`, i18n `ask.fail.*`, `fixed-replies.json` | No automatic retry loop: only the user's tap retries |
+| Router: `personal` only when the ruling depends on facts of the asker's own case. A general question phrased with "I" or "can I" is `general` (or `disputed`). Everyday Muslim life (food, clothing, work, names, mosques…) is in scope | `prompts/router.md` | §2.1 classification; danger first is unchanged |
+
+### 12.3 Measured after the fix (development database, real models, investigation only, about $0.04)
+
+- **Router**, 31 fixture questions. "Can I pray in jeans?" and the name questions in both languages became `general`; the work-party and mosque questions became `general`. Real personal cases stayed `personal` (triple divorce, a year of prayer without wudu: 3 of 3). The eviction threats stayed `danger` (2 of 2). Greetings and «شكرا» stayed `out_of_scope`.
+- **English compositions**, 11:
+  - 8 passed every code check on the first composition: hijab, zakat, prayers, jeans, shahada, Eid, Quran, pork;
+  - 3 copied hadith wording (the Prophet's names, the gates of Paradise in Ramadan). These were correct rejections, and all 3 passed the code checks and the support check after one repair once the copied sentences were named. Before this change the Prophet question failed its repair twice.
+- **Expected answer rate** for simple, well-sourced questions: Arabic about 100 % (14 of 14 before, unchanged), English from 50 % (4 of 8) to about 90 % or more. The samples are small; the live check list in the branch report measures it in production.
+
+### 12.4 For the knowledge owner (مسلّم) and the Sharia reviewer
+
+1. **PRD §5 R4 table, `verification_failed` row.** The listed actions are «تعديل السؤال / أريد إنسانًا؛ دون حلقة إعادة تلقائية». The code now also offers a **user-initiated** retry, as the first action, and no automatic loop exists. Please confirm, or ask for it to be reverted (one line in `ask.RETRYABLE`, one in `parts.tsx`).
+2. **Router `personal`** was narrowed to cases whose ruling depends on the asker's own facts, consistent with rules.md level D («حكم على حالة فردية»). Please confirm the examples in `prompts/router.md`.
+3. **Honorific list** (`LATIN_FORMULAE`): please confirm that these honorifics are not scripture text. The list holds only honorifics, never a phrase of a verse or hadith.
+4. **Content seen while testing (not changed):**
+   - «ما هو الحجاب؟» (`ec7b0f78`) was routed `general`/A, and its answer defines hijab as covering the face. Scholars differ on covering the face, so by rules.md §1.2 this should be presented as disputed.
+   - "How many prayers a day?" (`d83234b4`) was answered «There are five daily prayers» with Quran 76:25 as the only source. The support check accepted this weak support.
+   Both need the reviewer's attention, and possibly an approved answer.

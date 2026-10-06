@@ -23,14 +23,14 @@
       "tl": "Wala akong nakitang sapat sa mga available na sanggunian para masagot ang tanong na ito. Hindi ako sumasagot nang walang sanggunian, kaya magtanong ka sa isang tao mula sa aming team."
     },
     "verification_failed": {
-      "ar": "لم أتمكن من التحقق من إجابة موثوقة لهذا السؤال. يمكنك تعديل السؤال، أو سؤال إنسان من فريقنا.",
-      "en": "I couldn't verify a reliable answer to this question. You can rephrase it, or ask a person from our team.",
-      "tl": "Hindi ko ma-verify ang isang maaasahang sagot sa tanong na ito. Maaari mong baguhin ang tanong, o magtanong sa isang tao mula sa aming team."
+      "ar": "لم تجتز الإجابة فحص المصادر، فلم أعرضها. المحاولة من جديد تكتب إجابة جديدة، وكثيرًا ما تنجح.",
+      "en": "The answer didn't pass the source check, so I'm not showing it. Trying again writes a new answer, and that often works.",
+      "tl": "Hindi pumasa ang sagot sa pagsusuri ng sanggunian, kaya hindi ko ito ipinapakita. Ang muling pagsubok ay gagawa ng bagong sagot, at madalas itong gumagana."
     },
     "unavailable": {
-      "ar": "تعذر إكمال الإجابة الآن. حاول بعد قليل، أو تواصل مع إنسان من فريقنا.",
-      "en": "I couldn't complete the answer right now. Try again shortly, or contact a person from our team.",
-      "tl": "Hindi ko natapos ang sagot ngayon. Subukan muli mamaya, o makipag-ugnayan sa isang tao mula sa aming team."
+      "ar": "تعذّر إكمال الإجابة الآن، ولا أجيب دون تحقق. حاول مرة أخرى بعد قليل.",
+      "en": "I couldn't finish the answer right now, and I don't answer without checking. Please try again in a moment.",
+      "tl": "Hindi ko natapos ang sagot ngayon, at hindi ako sumasagot nang hindi sinusuri. Pakisubukan muli maya-maya."
     },
     "personal_note": {
       "ar": "الحكم في حالتك بعينها يحتاج إلى مختص يعرف تفاصيلها؛ تحدث مع مرشدك.",

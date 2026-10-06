@@ -7,6 +7,7 @@ from typing import Any
 
 from app.knowledge.ai import client
 from app.knowledge.ai.client import prompt
+from app.knowledge.ai.textcheck import fix_marker_id, fix_markers
 
 ROUTES = ("general", "disputed", "personal", "sensitive", "danger", "manipulation", "out_of_scope")
 LEVELS = ("A", "B", "C", "D")
@@ -52,7 +53,10 @@ REPAIR_HINTS = {
     "unretrieved_reference": "The answer cited an id that is not among the PASSAGES. Cite only ids given in PASSAGES.",
     "no_citation": "The answer cited no passage. Cite the passage ids you used in sources.",
     "long_quote_outside_marker": "The answer quoted a long span. Use your own short words, or a marker.",
-    "scripture_copied_outside_marker": "The answer repeated words of a verse or hadith. Use a marker instead of its words.",
+    "scripture_copied_outside_marker": (
+        "The answer repeated words of a verse or hadith (the sentences listed below). Rewrite each in a few words of"
+        " your own saying what the passage teaches, or remove it; the marker shows the text."
+    ),
     "unsupported_sentence": "Some sentences were not supported by the passages. Remove them; add nothing new.",
     "empty": "The answer was empty.",
 }
@@ -71,8 +75,16 @@ def _composer_ok(d: dict) -> bool:
     return isinstance(d.get("sufficient"), bool) and isinstance(d.get("answer", ""), str) and isinstance(d.get("sources", []), list)
 
 
-def _composer_out(d: dict) -> dict[str, Any]:
-    return {"sufficient": d["sufficient"], "answer": d.get("answer") or "", "sources": [str(s) for s in d.get("sources") or []]}
+def _composer_out(d: dict, passages: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """The parsed output. With `passages`, malformed markers and «q:»-prefixed
+    source ids that name one of these passages are written in the one valid
+    form (textcheck.fix_markers); every check still runs on the result."""
+    answer, sources = d.get("answer") or "", [str(s) for s in d.get("sources") or []]
+    if passages is not None:
+        ids = {p["id"] for p in passages}
+        answer = fix_markers(answer, ids)
+        sources = [fix_marker_id(s, ids) or s for s in sources]
+    return {"sufficient": d["sufficient"], "answer": answer, "sources": sources}
 
 
 async def compose_answer(
@@ -80,7 +92,7 @@ async def compose_answer(
 ) -> dict[str, Any]:
     user = _compose_input(question, lang, route, level, passages, glossary)
     r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=_composer_ok)
-    return _composer_out(r.data)
+    return _composer_out(r.data, passages)
 
 
 async def repair_answer(
@@ -109,7 +121,7 @@ async def repair_answer(
         + (f"\nUNSUPPORTED SENTENCES:{flagged}" if flagged else "")
     )
     r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=_composer_ok)
-    return _composer_out(r.data)
+    return _composer_out(r.data, passages)
 
 
 async def support_check(agent: str, text: str, sources: list[str]) -> dict[str, Any]:

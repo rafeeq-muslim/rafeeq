@@ -61,7 +61,7 @@ EXPANSION_NEW = 4  # passages an expansion round may add to the context
 RETRYABLE = {
     "retrieval_empty": False,
     "insufficient_evidence": False,
-    "verification_rejected": False,
+    "verification_rejected": True,  # a new composition often passes (prod 2026-10-06); the user taps retry, never automatic
     "temporarily_unavailable": True,
     "deadline_exceeded": True,
     "service_limit": False,  # budget used up or service not configured: a retry cannot help today
