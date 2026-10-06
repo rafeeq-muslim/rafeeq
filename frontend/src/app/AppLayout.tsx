@@ -14,6 +14,7 @@ import { useGuideTracker } from "@/app/guide/useGuide"
 import { flushEvents } from "@/app/lib/api"
 import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
+import { applyTheme } from "@/app/lib/theme"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
@@ -31,22 +32,18 @@ const FULLSCREEN = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placeme
 export function useDocumentLocale() {
   const { locale, dir } = useT()
   const discreet = useDevice((s) => s.discreet)
+  const theme = useDevice((s) => s.theme)
   React.useEffect(() => {
     document.documentElement.lang = locale
     document.documentElement.dir = dir
     document.title = discreet ? "Notes" : locale === "ar" ? "رفيق" : "Rafeeq"
   }, [locale, dir, discreet])
+  // PLT-04: the learner's choice, not the device's setting.
+  React.useEffect(() => applyTheme(theme), [theme])
   React.useEffect(() => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)")
-    const apply = () => document.documentElement.classList.toggle("dark", dark.matches)
-    apply()
-    dark.addEventListener("change", apply)
     const online = () => void flushEvents()
     window.addEventListener("online", online)
-    return () => {
-      dark.removeEventListener("change", apply)
-      window.removeEventListener("online", online)
-    }
+    return () => window.removeEventListener("online", online)
   }, [])
 }
 
@@ -97,6 +94,7 @@ export default function AppLayout() {
   useDocumentLocale()
   const { t, dir } = useT()
   const onboarded = useDevice((s) => s.onboarded)
+  const theme = useDevice((s) => s.theme)
   const location = useLocation()
   const navigate = useNavigate()
   useGuideTracker(location.pathname) // PLT-08 R3
@@ -134,7 +132,7 @@ export default function AppLayout() {
             </React.Suspense>
           </AppShell>
         </div>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" theme={theme} />
       </TooltipProvider>
     </DirectionProvider>
   )

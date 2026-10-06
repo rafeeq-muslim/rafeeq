@@ -3,8 +3,10 @@ import {
   IconDoorExit,
   IconHome,
   IconMessageCircle,
+  IconMoon,
   IconSchool,
   IconShieldLock,
+  IconSun,
   IconUser,
   IconUserHeart,
   type TablerIcon,
@@ -17,7 +19,7 @@ import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { RafeeqSymbol } from "./brand"
 
-/* Platform (PLT): shell, language, privacy. */
+/* Platform (PLT): shell, language, appearance, privacy. */
 
 type NavKey = "home" | "learn" | "ask" | "mentor" | "account"
 
@@ -30,8 +32,9 @@ const NAV: { key: NavKey; label: string; icon: TablerIcon }[] = [
 ]
 
 /**
- * Five-tab bottom navigation. Inactive icons are ink; the active tab is
- * violet with the amber dot (brand guide, p. 28). The mentor tab is always
+ * Five-tab bottom navigation. Inactive icons are ink; the active icon sits
+ * in a violet gradient pill with the amber dot (brand guide, p. 28), and
+ * its label turns violet and bold. The mentor tab is always
  * present: a human is never more than one tap away.
  */
 function BottomNav({
@@ -65,16 +68,21 @@ function BottomNav({
                 aria-current={on ? "page" : undefined}
                 onClick={() => onNavigate?.(key)}
                 className={cn(
-                  "relative flex min-h-14 w-full flex-col items-center justify-center gap-0.5 rounded-md text-caption font-medium transition-colors",
-                  on ? "text-primary" : "text-foreground hover:bg-muted"
+                  "relative flex min-h-14 w-full flex-col items-center justify-center gap-0.5 rounded-md text-caption transition-colors",
+                  on ? "font-bold text-primary" : "font-medium text-foreground hover:bg-muted"
                 )}
               >
-                <span className="relative">
+                <span
+                  className={cn(
+                    "relative grid h-8 w-14 place-items-center rounded-full",
+                    on && "bg-primary bg-grad-action text-primary-foreground"
+                  )}
+                >
                   <Icon className="size-6" stroke={on ? 2 : 1.75} aria-hidden="true" />
                   {on && (
                     <span
                       aria-hidden="true"
-                      className="absolute -top-0.5 -end-1 size-2 rounded-full bg-celebrate"
+                      className="absolute -top-0.5 -end-0.5 size-2.5 rounded-full border-2 border-card bg-celebrate"
                     />
                   )}
                 </span>
@@ -162,6 +170,50 @@ function LanguageSwitcher({
   )
 }
 
+type ThemeCode = "light" | "dark"
+
+/**
+ * Appearance choice (PLT-04): light (the default) or dark. Kept on the
+ * device; the device's own light/dark setting is not followed.
+ */
+function ThemeSwitcher({
+  value,
+  onValueChange,
+  labels = { light: "فاتح", dark: "داكن" },
+  label = "المظهر",
+  className,
+}: {
+  value: ThemeCode
+  onValueChange?: (theme: ThemeCode) => void
+  labels?: Record<ThemeCode, string>
+  /** Accessible name of the group. */
+  label?: string
+  className?: string
+}) {
+  return (
+    <ToggleGroup
+      data-slot="theme-switcher"
+      type="single"
+      variant="outline"
+      value={value}
+      onValueChange={(v) => {
+        if (v === "light" || v === "dark") onValueChange?.(v)
+      }}
+      aria-label={label}
+      className={className}
+    >
+      <ToggleGroupItem value="light" className="px-4">
+        <IconSun data-icon="inline-start" stroke={1.75} aria-hidden="true" />
+        {labels.light}
+      </ToggleGroupItem>
+      <ToggleGroupItem value="dark" className="px-4">
+        <IconMoon data-icon="inline-start" stroke={1.75} aria-hidden="true" />
+        {labels.dark}
+      </ToggleGroupItem>
+    </ToggleGroup>
+  )
+}
+
 /**
  * «خروج سريع» (PLT-05): one tap replaces the screen with a neutral page and
  * clears the back history. For users hiding their faith from family.
@@ -209,5 +261,5 @@ function PrivacyNote({
   )
 }
 
-export { BottomNav, AppHeader, LanguageSwitcher, QuickExitButton, PrivacyNote, LOCALES, NAV }
-export type { NavKey, LocaleCode }
+export { BottomNav, AppHeader, LanguageSwitcher, ThemeSwitcher, QuickExitButton, PrivacyNote, LOCALES, NAV }
+export type { NavKey, LocaleCode, ThemeCode }

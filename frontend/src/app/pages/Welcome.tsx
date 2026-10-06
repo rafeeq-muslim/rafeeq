@@ -18,6 +18,7 @@ import { Halo, PetalPattern, RafeeqSymbol, YearFlower } from "@/components/rafee
 import { LOCALES, dirOf, translate, useT, type Locale } from "@/app/i18n"
 import { guessLocale, useDevice } from "@/app/stores/device"
 import { useDocumentLocale } from "@/app/AppLayout"
+import { BAR_COLOR, setBarColor } from "@/app/lib/theme"
 import { PrivacyLink } from "@/app/pages/Privacy"
 
 type Step = "lang" | "intro" | "placement"
@@ -30,6 +31,8 @@ export function linkLocale(search: URLSearchParams): Locale | null {
 
 export default function Welcome() {
   useDocumentLocale()
+  // A night moment in both themes: the browser bar matches the sky.
+  React.useEffect(() => setBarColor(BAR_COLOR.dark), [])
   const { t, dir } = useT()
   const set = useDevice((s) => s.set)
   const locale = useDevice((s) => s.locale)

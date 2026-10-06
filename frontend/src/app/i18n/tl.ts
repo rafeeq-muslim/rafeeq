@@ -166,6 +166,9 @@ export const tl: Dict = {
   "me.badges": "Ang iyong mga badge",
   "me.delete": "Burahin ang aking account at data",
   "me.tools": "Pang-araw-araw na kasangkapan",
+  "me.theme": "Hitsura",
+  "theme.light": "Maliwanag",
+  "theme.dark": "Madilim",
 
   "acct.create": "Gumawa ng account",
   "acct.displayName": "Pangalang ipapakita",

@@ -5,7 +5,7 @@ import { IconArrowRight, IconBook2, IconChevronLeft, type TablerIcon } from "@ta
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { TopBar } from "@/components/rafeeq"
+import { IconTile, TopBar } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
 import type { PrayerKey, TimeKey } from "./times"
 
@@ -54,9 +54,7 @@ export function NavRow({
       )}
     >
       {Icon && (
-        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-          <Icon className="size-5" stroke={1.75} aria-hidden="true" />
-        </span>
+        <IconTile icon={Icon} />
       )}
       <span className="min-w-0 flex-1">
         <span className="block text-body font-bold">{title}</span>

@@ -86,7 +86,7 @@ function PrayerTimesCard({
                 aria-current={isNext ? "time" : undefined}
                 className={cn(
                   "flex flex-col items-center gap-1 rounded-md px-1 py-2.5",
-                  isNext ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                  isNext ? "bg-primary bg-grad-action text-primary-foreground" : "bg-muted text-foreground"
                 )}
               >
                 <P.icon className="size-5" stroke={1.75} aria-hidden="true" />
