@@ -395,7 +395,11 @@ function ExerciseFeedback({
       role="status"
       className={cn(
         "sheet-up flex flex-col gap-4 rounded-t-panel px-5 pt-5 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]",
-        ok ? "bg-success-surface text-success" : "bg-warning-surface text-warning",
+        // Opaque (LRN-03 R3): the result tint is laid over the page background,
+        // since the dark-mode surfaces are translucent.
+        ok
+          ? "[background:linear-gradient(var(--success-surface),var(--success-surface)),var(--background)] text-success"
+          : "[background:linear-gradient(var(--warning-surface),var(--warning-surface)),var(--background)] text-warning",
         className
       )}
     >

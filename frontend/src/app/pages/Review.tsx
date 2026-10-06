@@ -23,7 +23,7 @@ import { levelOf } from "@/app/learning/bkt"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { GuideNote, noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise } from "@/app/learning/types"
-import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
+import { check, emptyValue, ExerciseView, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 
 export default function Review() {
   const { t } = useT()
@@ -36,6 +36,7 @@ export default function Review() {
   const [value, setValue] = React.useState<Value>(null)
   const [result, setResult] = React.useState<Result>(null)
   const [attempt, setAttempt] = React.useState(0)
+  const [footer, footerHeight] = useFooterSpace<HTMLElement>()
   const [finished, setFinished] = React.useState<string[] | null>(null)
   React.useEffect(() => noteGuideFollowed("/learn/review"), [])
 
@@ -106,7 +107,7 @@ export default function Review() {
         <Progress value={(done / items.length) * 100} aria-label={t("review.title")} className="h-3.5 flex-1" />
         <HumanHelpButton label={t("ask.human")} onClick={() => navigate("/mentor/help?from=review")} className="hidden min-[380px]:inline-flex" />
       </header>
-      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40">
+      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         {exercise && (
           <>
             <Badge variant="secondary" className="w-fit">
@@ -117,12 +118,12 @@ export default function Review() {
           </>
         )}
       </main>
-      <footer className="fixed inset-x-0 bottom-0 z-20">
+      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20">
         {result ? (
           <ExerciseFeedback
             result={result}
-            title={t(result === "correct" ? "lesson.correct" : "lesson.incorrect")}
-            explanation={result === "incorrect" ? `${t("lesson.cardText")}: ${cardText}` : undefined}
+            title={t(result === "correct" ? "lesson.correct" : exercise ? incorrectKey(exercise) : "lesson.incorrect")}
+            explanation={result === "incorrect" && exercise && quotesCard(exercise) ? `${t("lesson.cardText")}: ${cardText}` : undefined}
             actionLabel={t("common.continue")}
             onContinue={onContinue}
             className="mx-auto max-w-xl"

@@ -33,7 +33,7 @@ import { recordFirstAnswer } from "@/app/learning/answers"
 import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
 import { firstIncomplete, lessonStatus } from "@/app/learning/path"
-import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
+import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
 import { askWhy, type Why } from "@/app/lesson/why"
@@ -94,6 +94,7 @@ function Player({ lesson }: { lesson: LessonT }) {
   const [why, setWhy] = React.useState<Why | "loading" | null>(null)
   const [done, setDone] = React.useState<Completion | null>(null)
   const [attempt, setAttempt] = React.useState(0)
+  const [footer, footerHeight] = useFooterSpace<HTMLElement>()
 
   const exercise = shown?.exercise ?? (screen.kind === "exercise" ? screen.exercise : null)
   React.useEffect(() => {
@@ -142,7 +143,7 @@ function Player({ lesson }: { lesson: LessonT }) {
         <HumanHelpButton label={t("ask.human")} onClick={() => navigate("/mentor/help?from=lesson")} className="hidden min-[380px]:inline-flex" />
       </header>
 
-      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40">
+      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         {!lesson.approved && (
           <Badge variant="warning" className="w-fit">
             {t("lesson.preview")}
@@ -164,11 +165,11 @@ function Player({ lesson }: { lesson: LessonT }) {
         )}
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 z-20">
+      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20">
         {shown ? (
           <ExerciseFeedback
             result={shown.result === "correct" ? "correct" : "incorrect"}
-            title={t(shown.result === "correct" ? "lesson.correct" : "lesson.incorrect")}
+            title={t(shown.result === "correct" ? "lesson.correct" : incorrectKey(shown.exercise))}
             actionLabel={t("common.continue")}
             onContinue={onContinue}
             className="mx-auto max-w-xl"
@@ -181,9 +182,27 @@ function Player({ lesson }: { lesson: LessonT }) {
                       <span className="font-bold">{t("lesson.aiLabel")}:</span> {why.text}
                     </p>
                   )}
-                  <p className="whitespace-pre-line">
-                    <span className="font-bold">{t("lesson.cardText")}:</span> {cardText(shown.exercise.cards)}
-                  </p>
+                  {quotesCard(shown.exercise) && (
+                    <p className="whitespace-pre-line">
+                      <span className="font-bold">{t("lesson.cardText")}:</span> {cardText(shown.exercise.cards)}
+                    </p>
+                  )}
+                  {/* LRN-03 R3: «لماذا؟» sits in the panel, never on the exercise */}
+                  {why === null && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-fit"
+                      onClick={async () => {
+                        setWhy("loading")
+                        setWhy(await askWhy(lesson.id, shown.exercise, locale, value))
+                      }}
+                    >
+                      <IconHelpCircle data-icon="inline-start" stroke={1.75} />
+                      {t("lesson.why")}
+                    </Button>
+                  )}
+                  {why === "loading" && <IconSparkles className="size-4 animate-pulse text-muted-foreground" aria-hidden="true" />}
                 </>
               ) : undefined
             }
@@ -207,27 +226,6 @@ function Player({ lesson }: { lesson: LessonT }) {
                 {t("lesson.check")}
               </Button>
             )}
-          </div>
-        )}
-        {shown?.result === "incorrect" && why === null && (
-          <div className="pointer-events-none absolute -top-14 inset-x-0 mx-auto flex max-w-xl justify-end px-5">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="pointer-events-auto"
-              onClick={async () => {
-                setWhy("loading")
-                setWhy(await askWhy(lesson.id, shown.exercise, locale, value))
-              }}
-            >
-              <IconHelpCircle data-icon="inline-start" stroke={1.75} />
-              {t("lesson.why")}
-            </Button>
-          </div>
-        )}
-        {why === "loading" && (
-          <div className="pointer-events-none absolute -top-12 inset-x-0 mx-auto flex max-w-xl justify-end px-5 text-label text-muted-foreground">
-            <IconSparkles className="size-4 animate-pulse" aria-hidden="true" />
           </div>
         )}
       </footer>
