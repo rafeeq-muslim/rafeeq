@@ -44,7 +44,8 @@ export type ThreadSummary = {
   /** CMP-01 R3 ex3: nobody of this gender is free in this language now; it waits, never routed to the other gender. */
   awaiting_same_gender: boolean
 }
-export type ThreadMessage = { id: string; author: "me" | "mentor" | "scholar" | "system"; name: string | null; body: string; created_at: string }
+/** `hidden`: only ever true on the learner's own message, hidden for review (CMP-04 R5). */
+export type ThreadMessage = { id: string; author: "me" | "mentor" | "scholar" | "system"; name: string | null; body: string; created_at: string; hidden?: boolean }
 export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean }
 
 export type InboxRow = {
@@ -63,7 +64,16 @@ export type InboxRow = {
   assigned_to_me: boolean
   can_reply: boolean
 }
-export type InboxMessage = { id: string; author: "learner" | "mentor" | "scholar" | "system"; name: string | null; mine: boolean; body: string; created_at: string }
+/** `hidden`: only ever true on the responder's own message, hidden for review (CMP-04 R5). */
+export type InboxMessage = {
+  id: string
+  author: "learner" | "mentor" | "scholar" | "system"
+  name: string | null
+  mine: boolean
+  body: string
+  created_at: string
+  hidden?: boolean
+}
 export type InboxThread = InboxRow & { messages: InboxMessage[]; referred: string[] }
 export type Referral = {
   id: string
@@ -350,8 +360,22 @@ export function useMentorProfile(enabled = true) {
   return useQuery({ queryKey: ["cmp", "profile"], queryFn: () => api<MentorProfile>("/api/inbox/profile"), enabled })
 }
 
-export function useReportQueue(enabled: boolean) {
-  return useQuery({ queryKey: ["cmp", "reports"], queryFn: () => api<QueueItem[]>("/api/team/reports"), enabled, refetchInterval: POLL.list })
+/** CMP-04 R4: open reports by default; `history` adds reviewed ones and mentors' hides (R4 ex3), so the team can undo them. */
+export function useReportQueue(enabled: boolean, history = false) {
+  return useQuery({
+    queryKey: ["cmp", "reports", history],
+    queryFn: () => api<QueueItem[]>(history ? "/api/team/reports?include_closed=true" : "/api/team/reports"),
+    enabled,
+    refetchInterval: POLL.list,
+  })
+}
+
+/** CMP-01 open question «أخت بكل لغة»: who can answer each language × gender, counts only (team). */
+export type CoverageCell = { lang: string; gender: Gender; responders: number; available: number; covered: boolean }
+export type Coverage = { cells: CoverageCell[]; uncovered: number; without_gender: number }
+
+export function useCoverage(enabled: boolean) {
+  return useQuery({ queryKey: ["cmp", "coverage"], queryFn: () => api<Coverage>("/api/team/coverage"), enabled, refetchInterval: POLL.list })
 }
 
 export const inboxApi = {

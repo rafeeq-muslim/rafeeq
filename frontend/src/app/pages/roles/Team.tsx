@@ -1,7 +1,8 @@
 /**
  * MOT-08 / MOT-09 for the team: aggregate numbers only, last 7 or 30 days,
  * "not enough data" below 10 people, release markers. No names, no device
- * ids, nothing per user.
+ * ids, nothing per user. Also the CMP-04 report queue and the CMP-01
+ * reminder of languages without a sister or a brother to answer.
  */
 import * as React from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -16,6 +17,7 @@ import { num, useT, type Key } from "@/app/i18n"
 import { api } from "@/app/lib/api"
 import { useContent } from "@/app/learning/useContent"
 import { ReportsQueue } from "@/app/companion/mentor/ReportsQueue"
+import { ResponderCoverage } from "@/app/companion/mentor/ResponderCoverage"
 
 type Rate = number | null
 type Indicators = {
@@ -166,6 +168,10 @@ export default function Team() {
             </section>
           </>
         )}
+        {/* CMP-01 open question: a sister and a brother per language (shown even without indicators). */}
+        <div className="border-t pt-6">
+          <ResponderCoverage />
+        </div>
       </div>
     </>
   )

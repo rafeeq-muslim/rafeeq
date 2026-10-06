@@ -36,6 +36,7 @@ export function learnerChatItem(m: ThreadMessage, t: ReturnType<typeof useT>["t"
     name: m.author === "scholar" ? t("cmp.referral.scholars") : m.author === "mentor" ? m.name : null,
     body: m.author === "system" && m.body === REFERRAL_NOTICE ? t("cmp.referral.notice") : m.body,
     at: m.created_at,
+    hidden: m.hidden, // CMP-04 R5: their own message, hidden for review, stays visible to them, marked
     actions: reply ? [{ label: t("cmp.thread.report"), onSelect: onReport }] : undefined,
   }
 }

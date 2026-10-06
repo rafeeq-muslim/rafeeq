@@ -3,6 +3,7 @@
  * (union of lessons, latest answer per objective, larger set of learning
  * days) and the device takes the merged result. Guests never call this. */
 import { api } from "@/app/lib/api"
+import { claimGuestRequests } from "@/app/companion/api"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
@@ -55,10 +56,12 @@ export function scheduleSync(ms = 1500) {
   timer = setTimeout(() => void syncNow(), ms)
 }
 
-/** After sign-in or sign-up: link this device's engagement status (MOT-07 R4)
+/** After sign-in or sign-up: link this device's engagement status (MOT-07 R4),
+ * move this device's guest help conversations to the account (CMP-01 R2 ex3)
  * and merge progress both ways. */
 export async function onSignedIn() {
   const install_id = useDevice.getState().installId
   await api("/api/me/install", { method: "POST", body: { install_id } }).catch(() => undefined)
+  await claimGuestRequests()
   await syncNow()
 }

@@ -23,6 +23,7 @@ from app.companion.common import Gender, Lang, is_blocked, not_found, now
 from app.companion.inbox import MENTEE_CAP_DEFAULT, profile_of
 from app.companion.models import Block, HelpRequest, MentorLink, MentorProfile
 from app.core.deps import CurrentUser, Session
+from app.platform.auth import set_own_gender
 from app.platform.models import User
 
 router = APIRouter(prefix="/api/mentors", tags=["companion"])
@@ -131,8 +132,9 @@ async def end_link(session, link: MentorLink) -> None:
 
 @router.put("/me/match", response_model=MineOut)
 async def set_match(body: MatchIn, session: Session, user: CurrentUser) -> MineOut:
-    """R2: asked here only, to find a mentor of the same gender who speaks your language."""
-    user.gender = body.gender
+    """R2: asked here only, to find a mentor of the same gender who speaks your language.
+    A mentor's or team member's gender, once set, changes only by an admin (security)."""
+    set_own_gender(user, body.gender)
     user.languages = list(dict.fromkeys(body.languages))
     await session.commit()
     return await mine(session, user)

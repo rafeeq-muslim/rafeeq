@@ -88,6 +88,7 @@ class MessageOut(BaseModel):
     name: str | None
     body: str
     created_at: datetime
+    hidden: bool = False  # only ever true on the learner's own message, hidden for review (CMP-04 R5)
 
 
 class ThreadOut(ThreadSummary):
@@ -312,23 +313,28 @@ async def my_requests(session: Session, owner: CurrentOwner) -> list[ThreadSumma
 async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -> ThreadOut:
     req = await owned(session, owner, request_id)
     hidden_for_me = await _reported_by_owner(session, owner)
-    msgs = list(
-        await session.scalars(
-            select(HelpMessage).where(HelpMessage.request_id == req.id, HelpMessage.hidden.is_(False)).order_by(HelpMessage.created_at)
-        )
-    )
+    msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
     names: dict[uuid.UUID, str] = {}
     out: list[MessageOut] = []
     for m in msgs:
-        if m.id in hidden_for_me:
-            continue
+        if m.id in hidden_for_me or (m.hidden and m.author != "learner"):
+            continue  # CMP-04 R5: the learner's own hidden message stays, marked for review
         name = None  # a scholar's answer is signed «أهل العلم» by the app, never by name
         if m.author == "mentor" and m.author_id:
             if m.author_id not in names:
                 u = await session.get(User, m.author_id)
                 names[m.author_id] = u.display_name if u else ""
             name = names[m.author_id]
-        out.append(MessageOut(id=m.id, author="me" if m.author == "learner" else m.author, name=name, body=m.body, created_at=m.created_at))  # type: ignore[arg-type]
+        out.append(
+            MessageOut(
+                id=m.id,
+                author="me" if m.author == "learner" else m.author,  # type: ignore[arg-type]
+                name=name,
+                body=m.body,
+                created_at=m.created_at,
+                hidden=m.hidden,
+            )
+        )
     await session.execute(
         update(HelpMessage)
         .where(HelpMessage.request_id == req.id, HelpMessage.author.in_(REPLY_AUTHORS), HelpMessage.read_at.is_(None))

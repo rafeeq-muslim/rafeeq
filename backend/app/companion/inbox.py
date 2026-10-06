@@ -24,7 +24,7 @@ from sqlalchemy import and_, case, func, not_, or_, select, update
 
 from app.companion import notify
 from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
-from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, ScholarReferral
+from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, Report, ScholarReferral
 from app.companion.text import clean_body
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
@@ -104,6 +104,7 @@ class ThreadMessage(BaseModel):
     mine: bool
     body: str
     created_at: datetime
+    hidden: bool = False  # only ever true on the responder's own message (CMP-04 R5)
 
 
 class InboxThread(RequestRow):
@@ -142,7 +143,7 @@ async def _row(session, req: HelpRequest, me: User) -> RequestRow:
     )
 
 
-async def _visible(session, me: User, request_id: uuid.UUID) -> HelpRequest:
+async def visible_request(session, me: User, request_id: uuid.UUID) -> HelpRequest:
     paused = await is_paused(session, me)
     req = await session.scalar(
         select(HelpRequest).where(
@@ -175,20 +176,25 @@ async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
 
 @router.get("/requests/{request_id}", response_model=InboxThread)
 async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -> InboxThread:
-    req = await _visible(session, me, request_id)
+    req = await visible_request(session, me, request_id)
     msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
+    # CMP-04 R2: a message this responder reported is hidden for him at once.
+    reported = set(await session.scalars(select(Report.target_id).where(Report.reporter_id == me.id, Report.target_type == "help_message")))
     names: dict[uuid.UUID, str] = {}
     out = []
     for m in msgs:
-        if m.hidden:
-            continue
+        mine = m.author_id == me.id
+        if m.id in reported or (m.hidden and not mine):
+            continue  # CMP-04 R5: the author still sees his own hidden message, marked for review
         name = None
         if m.author == "mentor" and m.author_id:
             if m.author_id not in names:
                 u = await session.get(User, m.author_id)
                 names[m.author_id] = u.display_name if u else ""
             name = names[m.author_id]
-        out.append(ThreadMessage(id=m.id, author=m.author, name=name, mine=m.author_id == me.id, body=m.body, created_at=m.created_at))  # type: ignore[arg-type]
+        out.append(
+            ThreadMessage(id=m.id, author=m.author, name=name, mine=mine, body=m.body, created_at=m.created_at, hidden=m.hidden)  # type: ignore[arg-type]
+        )
     await session.execute(
         update(HelpMessage)
         .where(HelpMessage.request_id == req.id, HelpMessage.author == "learner", HelpMessage.read_at.is_(None))
@@ -206,7 +212,7 @@ class ReplyIn(BaseModel):
 
 @router.post("/requests/{request_id}/messages", status_code=201, response_model=RequestRow)
 async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Responder) -> RequestRow:
-    req = await _visible(session, me, request_id)
+    req = await visible_request(session, me, request_id)
     if req.learner_id is None and req.guest_token_hash is None:
         raise HTTPException(status.HTTP_409_CONFLICT, "no_owner_yet")  # an alert nobody opened yet
     ratelimit.hit(f"inbox-reply:{me.id}", 60, 60)
@@ -233,7 +239,7 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
 
 @router.post("/requests/{request_id}/close", response_model=RequestRow)
 async def close(request_id: uuid.UUID, session: Session, me: Responder) -> RequestRow:
-    req = await _visible(session, me, request_id)
+    req = await visible_request(session, me, request_id)
     req.status = "closed"
     await session.commit()
     return await _row(session, req, me)
@@ -242,7 +248,7 @@ async def close(request_id: uuid.UUID, session: Session, me: Responder) -> Reque
 @router.post("/requests/{request_id}/urgent", response_model=RequestRow)
 async def make_urgent(request_id: uuid.UUID, session: Session, me: Responder) -> RequestRow:
     """R4 ex2: a mentor hands a harmful situation to the team and all mentors."""
-    req = await _visible(session, me, request_id)
+    req = await visible_request(session, me, request_id)
     if req.kind != "urgent":
         req.kind = "urgent"
         req.status = "open" if req.status == "closed" else req.status

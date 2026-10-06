@@ -6,6 +6,7 @@ Importing this module also registers the domain's event handlers."""
 from fastapi import APIRouter
 
 from app.companion import (
+    coverage,
     events,  # noqa: F401  (registers DangerDetected / EngagementStatusChanged)
     groups,
     help,
@@ -16,5 +17,5 @@ from app.companion import (
 )
 
 router = APIRouter()
-for _r in (help.router, inbox.router, referrals.router, mentors.router, groups.router, safety.router):
+for _r in (help.router, inbox.router, referrals.router, mentors.router, groups.router, safety.router, coverage.router):
     router.include_router(_r)

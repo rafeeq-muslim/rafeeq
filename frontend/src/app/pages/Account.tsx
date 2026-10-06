@@ -376,6 +376,71 @@ function SignIn({ onCreate }: { onCreate: () => void }) {
   )
 }
 
+/**
+ * CMP gaps: mentors and team members see help requests of their own gender
+ * only (CMP-01 R3, CMP-02 R1), so they set it here once. After that only an
+ * admin changes it (security: no switching to read the other gender's requests).
+ */
+const RESPONDER_ROLES = ["mentor", "team", "admin"]
+
+export function ResponderGender({ me }: { me: Me }) {
+  const { t } = useT()
+  const setAuth = useAuth((s) => s.set)
+  const [gender, setGender] = React.useState<"m" | "f" | "">("")
+  const [error, setError] = React.useState<Key | null>(null)
+  const [busy, setBusy] = React.useState(false)
+  if (!me.roles.some((r) => RESPONDER_ROLES.includes(r))) return null
+  const save = async () => {
+    if (!gender) return
+    setBusy(true)
+    setError(null)
+    try {
+      setAuth({ me: await api<Me>("/api/me", { method: "PATCH", body: { gender } }) })
+    } catch (e) {
+      setError(e instanceof ApiError && e.code === "gender_locked" ? "cmp.gaps.gender.lockedErr" : errorKey(e))
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <section className="flex flex-col gap-3 border-t pt-6" aria-labelledby="gender-title" data-slot="responder-gender">
+      <h2 id="gender-title" className="font-heading text-h3 font-bold">
+        {t("cmp.gaps.gender.title")}
+      </h2>
+      <p className="text-label text-muted-foreground">{t("cmp.gaps.gender.hint")}</p>
+      {me.gender ? (
+        <p className="text-body">
+          <span className="font-bold">{t(me.gender === "f" ? "acct.female" : "acct.male")}</span>
+          {". "}
+          <span className="text-muted-foreground">{t("cmp.gaps.gender.locked")}</span>
+        </p>
+      ) : (
+        <>
+          <ToggleGroup
+            type="single"
+            variant="outline"
+            value={gender}
+            onValueChange={(v) => setGender(v as "m" | "f" | "")}
+            aria-label={t("cmp.gaps.gender.title")}
+            className="justify-start"
+          >
+            <ToggleGroupItem value="m">{t("acct.male")}</ToggleGroupItem>
+            <ToggleGroupItem value="f">{t("acct.female")}</ToggleGroupItem>
+          </ToggleGroup>
+          <Button variant="secondary" className="w-fit" disabled={!gender || busy} onClick={() => void save()}>
+            {t("cmp.gaps.gender.save")}
+          </Button>
+        </>
+      )}
+      {error && (
+        <p role="alert" className="text-label text-destructive">
+          {t(error)}
+        </p>
+      )}
+    </section>
+  )
+}
+
 function Settings({ me }: { me: Me }) {
   const { t } = useT()
   const setAuth = useAuth((s) => s.set)
@@ -420,6 +485,8 @@ function Settings({ me }: { me: Me }) {
           {t("acct.username")}: <bdi dir="ltr">{me.username}</bdi>
         </p>
       </section>
+
+      <ResponderGender me={me} />
 
       <section className="flex flex-col gap-3 border-t pt-6" aria-labelledby="pw-title">
         <h2 id="pw-title" className="font-heading text-h3 font-bold">

@@ -14,6 +14,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "@/components/ui/input-group"
 import { Message, MessageContent, MessageFooter, MessageHeader } from "@/components/ui/message"
 import { useT } from "@/app/i18n"
+import { ApiError } from "@/app/lib/api"
 import { errorCode } from "./api"
 import { time } from "./format"
 
@@ -87,12 +88,15 @@ export function ChatList({ items, empty, className }: { items: ChatItem[]; empty
   )
 }
 
+/** CMP-01 R5: which contact detail was refused (email | link | handle | phone). */
+const contactKind = (e: unknown) => (e instanceof ApiError ? (e.detail as { kind?: string } | null)?.kind : undefined)
+
 /** Friendly copy for a refused send (copy.md: what happened + what to do). */
 export function useSendError() {
   const { t } = useT()
   return (e: unknown) => {
     const code = errorCode(e)
-    if (code === "contact_not_allowed") return t("cmp.err.contact")
+    if (code === "contact_not_allowed") return contactKind(e) === "handle" ? t("cmp.gaps.err.handle") : t("cmp.err.contact")
     if (code === "empty_message") return t("cmp.err.empty")
     if (code === "rate_limited") return t("cmp.err.rate")
     if (code === "gender_required") return t("cmp.err.gender")

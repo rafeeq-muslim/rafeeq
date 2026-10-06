@@ -19,7 +19,7 @@ from sqlalchemy import case, select
 
 from app.companion import notify
 from app.companion.common import not_found, now
-from app.companion.inbox import RequestRow, Responder, _row, _visible
+from app.companion.inbox import RequestRow, Responder, _row, visible_request
 from app.companion.models import HelpMessage, HelpRequest, ScholarReferral
 from app.companion.text import clean_body
 from app.core import ratelimit
@@ -38,7 +38,7 @@ class ReferIn(BaseModel):
 
 @router.post("/inbox/requests/{request_id}/refer", status_code=201, response_model=RequestRow)
 async def refer(request_id: uuid.UUID, body: ReferIn, session: Session, me: Responder) -> RequestRow:
-    req = await _visible(session, me, request_id)
+    req = await visible_request(session, me, request_id)
     msg = await session.get(HelpMessage, body.message_id)
     if msg is None or msg.request_id != req.id or msg.author != "learner" or msg.hidden:
         raise not_found()
