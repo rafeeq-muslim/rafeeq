@@ -1492,4 +1492,7 @@ export const en: Dict = {
   "ask.lesson.back": "Back to the lesson",
   "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
   "ask.review.back": "Back to the review",
+  // --- PLT-17 R1/R2 (plt-17-staff-links): role screens at the top of «حسابي» ---
+  "me.myWork": "My work in Rafeeq",
+  "cmp.inbox.teamTitle": "Urgent requests and reports",
 }

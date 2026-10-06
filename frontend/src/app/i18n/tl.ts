@@ -1493,4 +1493,7 @@ export const tl: Dict = {
   "ask.lesson.back": "Bumalik sa aralin",
   "ask.review.from": "Galing ka sa pagbabalik-aral ng araling “{name}”. Itanong ang anumang hindi malinaw dito.",
   "ask.review.back": "Bumalik sa pagbabalik-aral",
+  // --- PLT-17 R1/R2 (plt-17-staff-links): role screens at the top of «حسابي» ⚠️ Tagalog needs native review ---
+  "me.myWork": "Ang gawain ko sa Rafeeq",
+  "cmp.inbox.teamTitle": "Mga agarang kahilingan at ulat",
 }

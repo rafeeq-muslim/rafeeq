@@ -1491,4 +1491,7 @@ export const ar = {
   "ask.lesson.back": "ارجع إلى الدرس", // LRN-03 R5 (lrn-03-r5-return-to-lesson-build): the feature document's wording
   "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
   "ask.review.back": "عُد إلى المراجعة",
+  // --- PLT-17 R1/R2 (plt-17-staff-links): role screens at the top of «حسابي» ---
+  "me.myWork": "عملي في رفيق",
+  "cmp.inbox.teamTitle": "الطلبات العاجلة والبلاغات",
 } as const
