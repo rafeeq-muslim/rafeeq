@@ -1,12 +1,17 @@
 """CMP-02 mentor inbox.
 
-A mentor sees open requests in their languages (and gender, when the learner
-asked for a brother or a sister); urgent ones go to every mentor and team
-member whatever the language (R1). Urgent first, then the longest wait (R2).
-The first reply claims a request; a learner's own mentor gets it first and
-the pool sees it after 24 h without a reply (R3). A request shows a display
-name or guest number, language, topic and source only (R5). Mentees' status
-is shown only while they share progress with this mentor (R6, MOT-07 R6).
+A responder (mentor, or team member with a gender) sees ordinary requests in
+their languages whose requester is of their own gender, and every urgent
+request whatever its language: in danger the first available person answers
+(R1, README). Urgent first, then the longest wait (R2). The first reply
+claims a request; a learner's own mentor gets it first and the pool sees it
+after a day without a reply (R3). The mentor writes when he is available,
+caps his personal mentees (8 by default, at most 10) and can pause: paused,
+he is not suggested to new learners and takes no new requests from the pool
+(R4). He gives no fatwa: he refers a personal Sharia question to the Sharia
+reviewer (`referrals.py`) and turns danger into an urgent request (R5). A
+request shows a display name or guest number, language, topic and source
+only; a mentee's status only while they share progress (R6, MOT-07 R6).
 """
 
 import uuid
@@ -18,8 +23,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy import and_, case, func, not_, or_, select, update
 
 from app.companion import notify
-from app.companion.common import blocked_by_owner_clause, not_found, now
-from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile
+from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
+from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, ScholarReferral
 from app.companion.text import clean_body
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
@@ -30,12 +35,8 @@ OWN_MENTOR_FIRST = timedelta(hours=24)
 ALERT_LIFETIME = timedelta(hours=24)
 
 
-def _is_team(u: User) -> bool:
-    return u.has("team") or u.has("admin")
-
-
 async def responder(user: CurrentUser) -> User:
-    if not (user.has("mentor") or _is_team(user)):
+    if not (user.has("mentor") or is_team(user)):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")  # R6 ex3
     return user
 
@@ -50,7 +51,7 @@ Responder = Annotated[User, Depends(responder)]
 Mentor = Annotated[User, Depends(mentor_only)]
 
 
-def visible_clause(user: User, t: datetime):
+def visible_clause(user: User, t: datetime, *, paused: bool = False):
     has_owner = or_(HelpRequest.learner_id.is_not(None), HelpRequest.guest_token_hash.is_not(None))
     urgent = and_(
         HelpRequest.kind == "urgent",
@@ -58,23 +59,24 @@ def visible_clause(user: User, t: datetime):
         or_(has_owner, HelpRequest.created_at > t - ALERT_LIFETIME),  # unopened alerts fade after 24 h
     )
     conds = [urgent]
-    if user.has("mentor"):
-        langs = user.languages or [user.locale]
+    if user.gender and not paused and (user.has("mentor") or is_team(user)):
         matches = and_(
-            HelpRequest.lang.in_(langs),
-            or_(HelpRequest.prefer_gender.is_(None), HelpRequest.prefer_gender == user.gender),
+            HelpRequest.lang.in_(langs_of(user)),
+            # R1, CMP-01 R3: same gender only. Null = a request from before the rule.
+            or_(HelpRequest.requester_gender.is_(None), HelpRequest.requester_gender == user.gender),
         )
-        pool = and_(
-            HelpRequest.kind.in_(("human", "escalation")),
-            HelpRequest.status != "closed",
-            matches,
-            or_(
-                HelpRequest.mentor_id.is_(None),
-                and_(HelpRequest.first_reply_at.is_(None), HelpRequest.created_at < t - OWN_MENTOR_FIRST),
-            ),
+        conds.append(
+            and_(
+                HelpRequest.kind.in_(("human", "escalation")),
+                HelpRequest.status != "closed",
+                matches,
+                or_(
+                    HelpRequest.mentor_id.is_(None),
+                    and_(HelpRequest.first_reply_at.is_(None), HelpRequest.created_at < t - OWN_MENTOR_FIRST),
+                ),
+            )
         )
-        mine = and_(HelpRequest.mentor_id == user.id, HelpRequest.status != "closed")
-        conds += [pool, mine]
+    conds.append(and_(HelpRequest.mentor_id == user.id, HelpRequest.status != "closed"))  # claimed, or own mentee
     return and_(or_(*conds), not_(blocked_by_owner_clause(user.id)))
 
 
@@ -97,7 +99,7 @@ class RequestRow(BaseModel):
 
 class ThreadMessage(BaseModel):
     id: uuid.UUID
-    author: Literal["learner", "mentor", "system"]
+    author: Literal["learner", "mentor", "scholar", "system"]
     name: str | None
     mine: bool
     body: str
@@ -106,6 +108,7 @@ class ThreadMessage(BaseModel):
 
 class InboxThread(RequestRow):
     messages: list[ThreadMessage]
+    referred: list[uuid.UUID] = []  # learner messages already referred to the Sharia reviewer (R5)
 
 
 async def _row(session, req: HelpRequest, me: User) -> RequestRow:
@@ -140,13 +143,14 @@ async def _row(session, req: HelpRequest, me: User) -> RequestRow:
 
 
 async def _visible(session, me: User, request_id: uuid.UUID) -> HelpRequest:
+    paused = await is_paused(session, me)
     req = await session.scalar(
         select(HelpRequest).where(
             HelpRequest.id == request_id,
             # Security review #2: an assigned mentor keeps access only while the
             # request is not closed (ending a mentor link closes its thread).
             or_(
-                visible_clause(me, now()),
+                visible_clause(me, now(), paused=paused),
                 and_(HelpRequest.mentor_id == me.id, HelpRequest.status != "closed", not_(blocked_by_owner_clause(me.id))),
             ),
         )
@@ -164,7 +168,8 @@ async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
         case((HelpRequest.status == "open", HelpRequest.last_activity_at), else_=None).asc().nulls_last(),
         HelpRequest.last_activity_at.desc(),
     )
-    rows = await session.scalars(select(HelpRequest).where(visible_clause(me, t)).order_by(*order).limit(100))
+    clause = visible_clause(me, t, paused=await is_paused(session, me))
+    rows = await session.scalars(select(HelpRequest).where(clause).order_by(*order).limit(100))
     return [await _row(session, r, me) for r in rows]
 
 
@@ -191,7 +196,8 @@ async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -
     )
     await session.commit()
     row = await _row(session, req, me)
-    return InboxThread(**row.model_dump(), messages=out)
+    referred = list(await session.scalars(select(ScholarReferral.message_id).where(ScholarReferral.request_id == req.id)))
+    return InboxThread(**row.model_dump(), messages=out, referred=referred)
 
 
 class ReplyIn(BaseModel):
@@ -305,11 +311,15 @@ async def mentee_thread(learner_id: uuid.UUID, session: Session, me: Mentor) -> 
 # --- profile -------------------------------------------------------------
 
 
+MENTEE_CAP_DEFAULT = 8  # R4: personal mentees; group members have their own cap (CMP-05)
+MENTEE_CAP_MAX = 10
+
+
 class ProfileIn(BaseModel):
     about: str = Field(default="", max_length=400)
     availability: str = Field(default="", max_length=120)
     accepting: bool = True
-    capacity: int = Field(default=8, ge=1, le=10)
+    capacity: int = Field(default=MENTEE_CAP_DEFAULT, ge=1, le=MENTEE_CAP_MAX)
 
 
 class ProfileOut(ProfileIn):
@@ -321,7 +331,7 @@ class ProfileOut(ProfileIn):
 async def profile_of(session, user_id: uuid.UUID) -> MentorProfile:
     prof = await session.get(MentorProfile, user_id)
     if prof is None:
-        prof = MentorProfile(user_id=user_id, capacity=8, about="", availability="", accepting=True)
+        prof = MentorProfile(user_id=user_id, capacity=MENTEE_CAP_DEFAULT, about="", availability="", accepting=True)
         session.add(prof)
         await session.flush()
     return prof
@@ -347,6 +357,7 @@ async def get_profile(session: Session, me: Mentor) -> ProfileOut:
 async def put_profile(body: ProfileIn, session: Session, me: Mentor) -> ProfileOut:
     prof = await profile_of(session, me.id)
     clean_body(body.about, required=False)  # no contact details in the public card either
+    clean_body(body.availability, required=False)
     prof.about, prof.availability, prof.accepting, prof.capacity = (
         body.about.strip(),
         body.availability.strip(),

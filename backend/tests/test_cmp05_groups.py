@@ -1,4 +1,4 @@
-"""CMP-05 small groups: one test per example (R6 is in test_mot06_challenges.py)."""
+"""CMP-05 small groups (rewrite, PR #21): one test per example (R6 is in test_mot06_challenges.py)."""
 
 from sqlalchemy import select
 
@@ -34,6 +34,39 @@ async def test_cmp05_r1_learner_cannot_create_group(client):
     joseph = await person(client, "joseph-1", gender="m")
     r = await client.post("/api/groups", json={"name": "My group", "lang": "en"}, headers=joseph.h)
     assert r.status_code == 403
+
+
+async def test_cmp05_r1_capacity_defaults_to_ten_and_is_at_most_fifteen(client):
+    mentor = await abu(client)
+    r = await client.post("/api/groups", json={"name": "Big group", "lang": "en", "capacity": 16}, headers=mentor.h)
+    assert r.status_code == 422
+    r = await client.post("/api/groups", json={"name": "Default group", "lang": "en"}, headers=mentor.h)
+    assert r.json()["capacity"] == 10
+
+
+async def test_cmp05_r1_mentor_holds_at_most_25_group_members(client):
+    mentor = await abu(client)
+    first = (await client.post("/api/groups", json={"name": "Fifteen", "lang": "en", "capacity": 15}, headers=mentor.h)).json()
+    await client.post("/api/groups", json={"name": "Ten", "lang": "en", "capacity": 10}, headers=mentor.h)
+    r = await client.post("/api/groups", json={"name": "Third", "lang": "en", "capacity": 2}, headers=mentor.h)
+    assert r.status_code == 409 and r.json()["detail"] == {"code": "mentor_member_limit", "limit": 25, "remaining": 0}
+    r = await client.put(f"/api/groups/{first['id']}/capacity", json={"capacity": 15}, headers=mentor.h)
+    assert r.status_code == 200  # unchanged is fine
+    second = [g for g in (await client.get("/api/groups/mine", headers=mentor.h)).json() if g["name"] == "Ten"][0]
+    r = await client.put(f"/api/groups/{second['id']}/capacity", json={"capacity": 11}, headers=mentor.h)
+    assert r.status_code == 409 and r.json()["detail"]["code"] == "mentor_member_limit"
+
+
+async def test_cmp05_r1_mentor_lowers_and_raises_capacity_within_limits(client):
+    mentor = await abu(client)
+    a = await person(client, "member-a", gender="m")
+    b = await person(client, "member-b", gender="m")
+    g = await group_with(client, mentor, a, b, capacity=10)
+    assert (await client.put(f"/api/groups/{g['id']}/capacity", json={"capacity": 12}, headers=mentor.h)).json()["capacity"] == 12
+    r = await client.put(f"/api/groups/{g['id']}/capacity", json={"capacity": 2}, headers=mentor.h)
+    assert r.status_code == 200
+    r = await client.put(f"/api/groups/{g['id']}/capacity", json={"capacity": 3}, headers=a.h)
+    assert r.status_code == 403  # members do not change it
 
 
 # R2 -----------------------------------------------------------------------

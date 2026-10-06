@@ -1,12 +1,16 @@
 """CMP-04 report and block.
 
-One-tap report with a reason on any group message or help-thread message
-(R1). Marriage, money and recruitment hide the message for everyone at once
+One-tap report with a reason on any group message or on a message from the
+person answering a help request or from one's mentor (R1). Marriage, money
+and recruitment («الأسباب الخطرة») hide the message for everyone at once
 until the team reviews it; other reasons hide it for the reporter only (R2).
-The team reviews high priority first, then oldest, and keeps it hidden,
-restores it or removes the author from the group (R3). Nobody learns who
-reported or who blocked them (R4). Blocks: a group member, one's mentor
-(mentors.py) or the mentor answering a request (help.py) (R5).
+«خطر على أحد» goes to the top of the team's queue and alerts the team at
+once with a neutral push (R3); dangerous reports alert the team too (open
+question default). The team reviews «خطر على أحد» first, then dangerous,
+then the oldest, and keeps it hidden, restores it or removes the author from
+the group (R4). Nobody learns who reported or who blocked them (R5). Blocks:
+a group member, one's mentor (mentors.py) or the person answering a request
+(help.py) (R6).
 """
 
 import uuid
@@ -17,6 +21,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy import and_, case, delete, select
 
+from app.companion import notify
 from app.companion.common import CurrentOwner, not_found
 from app.companion.groups import access, remove
 from app.companion.models import Block, Group, GroupMessage, HelpMessage, HelpRequest, Report
@@ -25,9 +30,10 @@ from app.core.deps import CurrentUser, Session
 from app.platform.models import User
 
 router = APIRouter(prefix="/api", tags=["companion"])
-DANGEROUS = {"marriage", "money", "recruitment"}
+DANGEROUS = {"marriage", "money", "recruitment"}  # hidden for everyone (R2)
+DANGER_TO_SOMEONE = "danger"  # «خطر على أحد»: top of the queue, team alerted (R3)
 
-Reason = Literal["marriage", "money", "recruitment", "abuse", "other"]
+Reason = Literal["marriage", "money", "recruitment", "danger", "abuse", "other"]
 
 
 class ReportIn(BaseModel):
@@ -56,10 +62,11 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
     else:
         hm = await session.get(HelpMessage, body.target_id)
         req = await session.get(HelpRequest, hm.request_id) if hm else None
-        if hm is None or req is None or not owner.owns(req) or hm.author != "mentor":
+        if hm is None or req is None or not owner.owns(req) or hm.author not in ("mentor", "scholar"):
             raise not_found()
         msg = hm
     high = body.reason in DANGEROUS
+    priority = "danger" if body.reason == DANGER_TO_SOMEONE else "high" if high else "normal"
     session.add(
         Report(
             reporter_id=owner.user.id if owner.user else None,
@@ -68,17 +75,19 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
             target_id=body.target_id,
             group_id=group_id,
             reason=body.reason,
-            priority="high" if high else "normal",
+            priority=priority,
             note=(body.note or "").strip() or None,
         )
     )
     if high:
         msg.hidden = True  # R2: hidden for everyone until the team reviews it
     await session.commit()
+    if priority != "normal":
+        notify.later(notify.to_role, ["team", "admin"], "report_danger" if priority == "danger" else "report", "/inbox?tab=reports")
     return {"ok": True, "hidden_for_all": high}
 
 
-# --- team queue (R3) -----------------------------------------------------
+# --- team queue (R3, R4) -------------------------------------------------
 
 
 async def team_only(user: CurrentUser) -> User:
@@ -112,7 +121,7 @@ async def queue(session: Session, team: Team, include_closed: bool = False) -> l
     q = select(Report)
     if not include_closed:
         q = q.where(Report.status == "open")
-    q = q.order_by(case((Report.priority == "high", 0), else_=1), Report.created_at).limit(200)
+    q = q.order_by(case((Report.priority == "danger", 0), (Report.priority == "high", 1), else_=2), Report.created_at).limit(200)
     out = []
     for r in await session.scalars(q):
         body = author_name = place = None
@@ -187,7 +196,7 @@ async def act(report_id: uuid.UUID, body: ActionIn, session: Session, team: Team
     return items[0]
 
 
-# --- blocks (R5) -----------------------------------------------------------
+# --- blocks (R6) -----------------------------------------------------------
 
 
 class BlockIn(BaseModel):
