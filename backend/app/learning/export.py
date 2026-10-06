@@ -31,6 +31,7 @@ async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
                 "last_answer_at": m.last_answer_at,
                 "mastered_at": m.mastered_at,
                 "checks_done": m.checks_done,
+                "exercises_answered": list(m.seen_exercises or []),
             }
             for m in mastery
         ],

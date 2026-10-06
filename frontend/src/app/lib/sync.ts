@@ -34,10 +34,9 @@ export async function syncNow(): Promise<void> {
       L.replaceAll({
         completed: l.completed,
         unlockedUnits: l.unlockedUnits,
-        // seenExercises lives on the device only: keep it across the merge
-        mastery: Object.fromEntries(
-          Object.entries(l.mastery).map(([k, v]) => [k, { ...(noNulls(v) as ObjectiveState), seenExercises: L.mastery[k]?.seenExercises }]),
-        ),
+        // LRN-04 R2: seenExercises is in the account copy too (a union of both
+        // sides), so "prefer an unseen exercise" holds on every device.
+        mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
       })
       M.replaceAll({ days: m.days, badges: m.badges })
     } catch {
