@@ -65,6 +65,7 @@ import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 // ORG-01 R3/R4 (org-01-03-organizations-build)
 import { OrgSection } from "@/app/org/OrgSection"
+import { SignOutButton } from "@/app/privacy/SignOutButton" // PLT-05 R7
 import { unlinkOrg } from "@/app/org/api"
 import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
 
@@ -76,15 +77,8 @@ export default function Me() {
     if (hash === "#privacy") document.getElementById("privacy")?.scrollIntoView?.()
   }, [hash])
   const me = useAuth((s) => s.me)
-  const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
   const organized = useOrganizedHomeCached() // PLT-09 R2: «أدوات يومية» leaves «حسابي» (unless PLT-09 is switched off)
-
-  const signOut = async () => {
-    await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
-    setAuth({ token: null, me: null })
-    toast(t("acct.signedOut"))
-  }
 
   const roleLinks: { to: string; key: Key; icon: TablerIcon; show: boolean }[] = [
     { to: "/inbox", key: "role.mentorInbox", icon: IconInbox, show: has("mentor") },
@@ -149,9 +143,7 @@ export default function Me() {
           <Section title={t("acct.settings")}>
             <LinkRow icon={IconChecklist} title={t("me.account")} onClick={() => navigate("/me/account")} />
             <div className="flex flex-wrap gap-2 pt-2">
-              <Button variant="outline" onClick={signOut}>
-                {t("me.signout")}
-              </Button>
+              <SignOutButton />
               <DeleteAccount />
             </div>
           </Section>
