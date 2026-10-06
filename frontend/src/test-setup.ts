@@ -6,3 +6,20 @@
 import { configure } from "@testing-library/react"
 
 configure({ asyncUtilTimeout: 5000 })
+
+// jsdom has no matchMedia. The theme follows the device by default (PLT-04), so
+// any test that mounts the app layout reads it; a test that needs a dark
+// device replaces this with its own.
+if (typeof window !== "undefined" && typeof window.matchMedia !== "function") {
+  window.matchMedia = (query: string) =>
+    ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      addListener: () => {},
+      removeListener: () => {},
+      dispatchEvent: () => false,
+    }) as MediaQueryList
+}

@@ -25,6 +25,7 @@ import { TopBar } from "@/components/rafeeq"
 import { LOCALES, dirOf, num, useT, type Key, type Locale } from "@/app/i18n"
 import { ApiError, api } from "@/app/lib/api"
 import { useAuth } from "@/app/stores/auth"
+import { useFooterSpace } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import type { QuranRef } from "@/app/learning/types"
 import { ReciterSample } from "@/app/discover/ReciterSample" // KNW-08 R4
@@ -254,6 +255,7 @@ function ItemView() {
   const [returning, setReturning] = React.useState(false)
   const [note, setNote] = React.useState("")
   const [showLive, setShowLive] = React.useState(false)
+  const [footer, footerHeight] = useFooterSpace<HTMLElement>() // the fixed decision bar never hides the last content
   const detail = useQuery({ queryKey: ["review-item", type, id], queryFn: () => api<Detail>(`/api/review/items/${type}/${id}`) })
   const queue = useQueue()
 
@@ -294,7 +296,7 @@ function ItemView() {
         title={<span dir="ltr">{id}</span>}
         end={l && <span className={cn("rounded-full px-2.5 py-1 text-caption font-bold", STATUS_STYLE[l.status])}>{t(`desk.${l.status}` as Key)}</span>}
       />
-      <div className="flex flex-1 flex-col gap-5 px-4 pt-4 pb-48">
+      <div className="flex flex-1 flex-col gap-5 px-4 pt-4 pb-48" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         <ToggleGroup type="single" variant="outline" value={lang} onValueChange={(v) => v && setLang(v as Locale)} className="w-full">
           {LOCALES.map((x) => (
             <ToggleGroupItem key={x.code} value={x.code} lang={x.code} disabled={!detail.data?.langs[x.code]} className="flex-1">
@@ -344,7 +346,7 @@ function ItemView() {
         )}
       </div>
 
-      <footer className="fixed inset-x-0 bottom-0 z-20 border-t bg-background/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] backdrop-blur">
+      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20 border-t bg-card px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
         <div className="mx-auto flex max-w-xl flex-col gap-2">
           {!reviewer ? (
             <p className="text-label text-muted-foreground">{t("desk.readOnly")}</p>
