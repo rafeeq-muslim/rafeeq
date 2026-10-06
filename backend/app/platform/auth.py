@@ -173,6 +173,7 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     if await session.scalar(select(User.id).where(User.username == body.username)):
         raise HTTPException(status.HTTP_409_CONFLICT, {"code": "username_taken", "suggestions": [generate.username() for _ in range(3)]})
     roles = ["learner"]
+    gender = body.gender
     invite: Invite | None = None
     if body.invite_code:
         invite = await session.get(Invite, body.invite_code.strip())
@@ -186,15 +187,20 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         # MOT-08: the team role is granted only in the database; an invite made
         # for it before that decision still opens a normal account and is used up.
         roles = ["learner"] if invite.role == "team" else [invite.role]
-        if invite.role == "mentor" and not body.gender:
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
+        if invite.role == "mentor":
+            # Security review B-H1: the gender staff approved wins over what the
+            # registrant sends. Only a code made before invites carried one
+            # still takes the registrant's word.
+            gender = invite.gender or body.gender
+            if not gender:
+                raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
     user = User(
         username=body.username,
         display_name=body.display_name,
         password_hash=hash_password(body.password),
         roles=roles,
         locale=body.locale,
-        gender=body.gender,
+        gender=gender,
         languages=body.languages or [body.locale],
     )
     session.add(user)

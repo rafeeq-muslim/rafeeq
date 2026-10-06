@@ -10,8 +10,8 @@
 | R1 form | `app/companion/applications.py::apply` (`POST /api/mentor-applications`, no auth) | `ApplyIn`: display name ≤ 40, gender, 1–3 languages, optional place ≤ 80, about 1–600, contact (email, or phone normalised to `+digits`, 7–15 digits), `rules_accepted` must be true, optional `org_code`. `422` otherwise. Signed in: contact optional, the account's own gender wins |
 | R2 one answer, anti-abuse | same | Always `201 {received, keep_days: 90}`. A pending row with the same contact or account is replaced. `ratelimit.hit("mentor-apply:<ip>", 5, 3600)` in memory, IP never stored. Honeypot `website`: same answer, nothing stored. No captcha |
 | R3 staff only | `staff` router, `require_role("team")` (admins pass) | `GET /api/admin/mentor-applications`. `GET /api/mentor-applications/mine` returns status and date only |
-| R4 decide | `_approve`, `_reject`, `remove` | Approve without an account: `platform/admin.py::new_invite` (the existing `invites` row; with `org_id` and 7 days when the application named an organisation). Reject: `contact = about = NULL`, optional `note`. `409 already_decided` on a second decision |
-| R5 account | `_approve` → `organizations/public.py::approve_mentor` | Adds `mentor` to the roles, sets gender if unset, merges languages, adds the `org_members` row when an organisation was named, publishes `MentorApproved {mentor_id, user_id}`. `409 already_mentor` on apply. Neutral push to the applicant |
+| R4 decide | `_approve`, `_reject`, `remove` | Approve without an account: `platform/admin.py::new_invite` (the existing `invites` row; with `org_id` and 7 days when the application named an organisation; with `gender` = the application's gender, which `register` enforces: security review B-H1). Reject: `contact = about = NULL`, optional `note`. `409 already_decided` on a second decision |
+| R5 account | `_approve` → `organizations/public.py::approve_mentor` | Adds `mentor` to the roles, sets the account's gender to the application's (`409 gender_mismatch`, nothing changed, when the account now has the other gender: security review B-H1), merges languages, adds the `org_members` row when an organisation was named, publishes `MentorApproved {mentor_id, user_id}`. `409 already_mentor` on apply. Neutral push to the applicant |
 | R6 retention | `applications.py::purge`, `companion/jobs.py` (00:20 Asia/Riyadh daily) | Deletes pending rows older than 90 days and decided rows 90 days after `decided_at` |
 | R7 rights | `companion/events.py` (AccountDeleted), `companion/export.py`, `DELETE /api/mentor-applications/mine` | FK `ON DELETE CASCADE` plus the handler; the export has the application without `note` and `invite_code` |
 | R8 coordinator | `org` router, `organizations/manage.py::coordinator_of` | `GET/POST /api/org/{org_id}/mentor-applications[/{id}/approve|reject]`: only rows with that `org_id` (`404` otherwise), `note` always null, no delete |
@@ -30,5 +30,7 @@ Table `cmp_mentor_applications` (migration `d4e5f6a7b8c9`, on `1a9e0d5c3b7f`): d
 i18n: `cmp.apply.*`, `cmp.apps.*`, `org.tab.applications`, `policy.apply.*`, `policy.revisedApply`. English and Tagalog written by Claude from the Arabic.
 
 ## 4. Tests
+
+Security review B-H1: `tests/test_sec_b_h1_mentor_gender.py` (8).
 
 Backend `tests/test_cmp08_mentor_application.py` (36): `test_cmp08_r1_*` … `test_cmp08_r9_*`, one or more per example. Frontend `src/app/companion/cmp08.rules.test.tsx` (28): the form, the confirmation, the honeypot, the applicant's status, the four entry points, the team list and the coordinator mode, the policy section.

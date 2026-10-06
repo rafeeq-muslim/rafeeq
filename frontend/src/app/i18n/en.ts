@@ -1579,4 +1579,8 @@ export const en: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "End this conversation?",
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
+  // --- SEC-B (sec-companion-access): security review B; Tagalog needs native review ---
+  "sec.invite.gender": "Mentor's gender",
+  "sec.invite.genderHint": "Saved with the code. The account created with it gets this gender, and its owner cannot change it.",
+  "sec.apps.genderMismatch": "The account's gender today differs from the one on the application, so it was not approved. Check with the applicant or reject it.",
 }

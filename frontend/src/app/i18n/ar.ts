@@ -1578,4 +1578,8 @@ export const ar = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "أتُنهي هذه المحادثة؟",
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
+  // --- SEC-B (sec-companion-access): security review B ---
+  "sec.invite.gender": "جنس المرشد",
+  "sec.invite.genderHint": "يُحفظ مع الرمز، ويكون جنس الحساب الذي يُنشأ به، ولا يغيّره صاحبه.",
+  "sec.apps.genderMismatch": "جنس الحساب اليوم يخالف الجنس المكتوب في الطلب، فلم يُقبل. راجع صاحب الطلب أو ارفضه.",
 } as const

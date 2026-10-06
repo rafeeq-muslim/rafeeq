@@ -135,3 +135,30 @@ describe("PLT-17 R13: search says when nothing matches", () => {
     expect(await screen.findByText(en("admin.noUsers"))).toBeTruthy()
   })
 })
+
+describe("Security review B-H1: a mentor's invite carries the gender the admin approved", () => {
+  const createBtn = () => screen.getByRole("button", { name: en("admin.create") }) as HTMLButtonElement
+
+  it("sec b h1 a mentor code waits for a gender and sends it", async () => {
+    show()
+    await screen.findByText("MEN-AVAIL001")
+    expect(createBtn().disabled).toBe(true)
+    fireEvent.click(screen.getByRole("radio", { name: en("acct.female") }))
+    expect(createBtn().disabled).toBe(false)
+    fireEvent.click(createBtn())
+    await waitFor(() =>
+      expect(calls.find((c) => c.path === "/api/admin/invites" && c.method === "POST")?.body).toEqual({ role: "mentor", count: 1, gender: "f" }),
+    )
+  })
+
+  it("sec b h1 other roles ask for no gender", async () => {
+    show()
+    await screen.findByText("MEN-AVAIL001")
+    fireEvent.click(screen.getByRole("radio", { name: en("role.sharia_reviewer") }))
+    expect(screen.queryByText(en("sec.invite.gender"))).toBeNull()
+    fireEvent.click(createBtn())
+    await waitFor(() =>
+      expect(calls.find((c) => c.path === "/api/admin/invites" && c.method === "POST")?.body).toEqual({ role: "sharia_reviewer", count: 1 }),
+    )
+  })
+})

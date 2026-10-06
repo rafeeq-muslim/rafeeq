@@ -265,16 +265,22 @@ async def _approve(session: AsyncSession, row: MentorApplication, by: User) -> N
     account = await session.get(User, row.user_id) if row.user_id else None
     if account is not None:
         # R5: the account becomes a mentor as it is; nothing to send.
+        # Security review B-H1: staff approve the gender written on the
+        # application. An account whose gender differs from it now (changed
+        # after applying) is not approved, so staff see it; nothing changes.
+        if account.gender and account.gender != row.gender:
+            raise HTTPException(status.HTTP_409_CONFLICT, "gender_mismatch")
         if not account.has("mentor"):
             account.roles = [*(account.roles or []), "mentor"]
-        account.gender = account.gender or row.gender
+        account.gender = row.gender
         account.languages = list(dict.fromkeys([*(account.languages or []), *row.languages]))
         await approve_mentor(session, account.id, row.org_id)
         notify.later(notify.to_user, account.id, "notice", "/mentor-apply")
     else:
         # R4: the existing one-time invite, sent by hand.
         expires = now + timedelta(days=INVITE_DAYS) if row.org_id else None
-        row.invite_code = new_invite(session, "mentor", by.id, org_id=row.org_id, expires_at=expires).code
+        # B-H1: the code carries the approved gender; sign-up uses it, not the registrant's answer.
+        row.invite_code = new_invite(session, "mentor", by.id, org_id=row.org_id, expires_at=expires, gender=row.gender).code
     row.status, row.decided_at, row.decided_by = "approved", now, by.id
     await session.commit()
 

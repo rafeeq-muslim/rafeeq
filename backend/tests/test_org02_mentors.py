@@ -22,7 +22,7 @@ def pushes(monkeypatch):
 
 
 async def org_mentor(client, org, username: str, gender="f", languages=("tl",), accept=True) -> Person:
-    r = await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)
+    r = await client.post(f"/api/org/{org.id}/invites", json={"gender": gender}, headers=org.coordinator.h)
     assert r.status_code == 201, r.text
     ratelimit.reset()
     data = await register(
@@ -42,7 +42,7 @@ async def mentors(client, org) -> dict:
 
 async def test_org02_r1_a_volunteer_signs_up_with_the_offices_code_and_becomes_its_mentor(client):
     org = await make_org(client)
-    r = await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)
+    r = await client.post(f"/api/org/{org.id}/invites", json={"gender": "f"}, headers=org.coordinator.h)
     assert r.status_code == 201
     expires = datetime.fromisoformat(r.json()["expires_at"])
     assert timedelta(days=6, hours=23) < expires - datetime.now(UTC) <= timedelta(days=7)  # open question default: 7 days
@@ -54,7 +54,7 @@ async def test_org02_r1_a_volunteer_signs_up_with_the_offices_code_and_becomes_i
 
 async def test_org02_r1_a_used_or_expired_code_is_refused(client):
     org = await make_org(client)
-    code = (await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)).json()["code"]
+    code = (await client.post(f"/api/org/{org.id}/invites", json={"gender": "f"}, headers=org.coordinator.h)).json()["code"]
     await register(client, username="maria-1", invite_code=code, gender="f")
     ratelimit.reset()
     r = await client.post(
@@ -62,7 +62,7 @@ async def test_org02_r1_a_used_or_expired_code_is_refused(client):
         json={"display_name": "X", "username": "other-1", "password": "pass-1234-word", "invite_code": code, "gender": "m"},
     )
     assert r.status_code == 400 and r.json()["detail"] == "invite_invalid"
-    old = (await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)).json()["code"]
+    old = (await client.post(f"/api/org/{org.id}/invites", json={"gender": "f"}, headers=org.coordinator.h)).json()["code"]
     async with SessionLocal() as s:
         await s.execute(update(Invite).where(Invite.code == old).values(expires_at=datetime.now(UTC) - timedelta(minutes=1)))
         await s.commit()
@@ -198,6 +198,6 @@ async def test_org02_only_the_offices_coordinator_manages_its_mentors(client):
     abu = await org_mentor(client, org, "abu-abdullah", gender="m", languages=("ar",))
     for h in (other.coordinator.h, abu.h):
         assert (await client.get(f"/api/org/{org.id}/mentors", headers=h)).status_code == 403
-        assert (await client.post(f"/api/org/{org.id}/invites", headers=h)).status_code == 403
+        assert (await client.post(f"/api/org/{org.id}/invites", json={"gender": "m"}, headers=h)).status_code == 403
         assert (await client.post(f"/api/org/{org.id}/mentors/{abu.id}/suspend", headers=h)).status_code == 403
     assert (await client.post(f"/api/org/{org.id}/mentors/{uuid.uuid4()}/suspend", headers=org.coordinator.h)).status_code == 404

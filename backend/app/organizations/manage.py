@@ -200,23 +200,33 @@ class InviteOut(BaseModel):
     code: str
     expires_at: datetime | None
     used: bool = False
+    gender: str | None = None  # a mentor's code: the gender the coordinator approved
 
 
-async def _invite(session, org_id: uuid.UUID, role: str, by: uuid.UUID) -> InviteOut:
+class MentorInviteIn(BaseModel):
+    gender: Literal["m", "f"]
+
+
+async def _invite(session, org_id: uuid.UUID, role: str, by: uuid.UUID, gender: str | None = None) -> InviteOut:
     if role not in ("mentor", "org_coordinator"):  # MOT-08: never a team invite (granted only in the database)
         raise HTTPException(status.HTTP_403_FORBIDDEN, "team_role_db_only" if role == "team" else "role_not_allowed")
+    if role == "mentor" and gender not in ("m", "f"):
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")  # security review B-H1
     code = f"{'MEN' if role == 'mentor' else 'ORG'}-{secrets.token_hex(4).upper()}"
     expires = datetime.now(UTC) + timedelta(days=INVITE_DAYS)
-    session.add(Invite(code=code, role=role, created_by=by, org_id=org_id, expires_at=expires))
+    gender = gender if role == "mentor" else None
+    session.add(Invite(code=code, role=role, created_by=by, org_id=org_id, expires_at=expires, gender=gender))
     await session.commit()
-    return InviteOut(code=code, expires_at=expires)
+    return InviteOut(code=code, expires_at=expires, gender=gender)
 
 
 @router.post("/{org_id}/invites", response_model=InviteOut, status_code=201)
-async def create_invite(org_id: uuid.UUID, session: Session, user: CurrentUser) -> InviteOut:
-    """R1: a one-time code for one volunteer, valid 7 days."""
+async def create_invite(org_id: uuid.UUID, body: MentorInviteIn, session: Session, user: CurrentUser) -> InviteOut:
+    """R1: a one-time code for one volunteer, valid 7 days. The coordinator
+    states the volunteer's gender; the code carries it and the account gets
+    it at sign-up (security review B-H1)."""
     await coordinator_of(session, user, org_id)
-    return await _invite(session, org_id, "mentor", user.id)
+    return await _invite(session, org_id, "mentor", user.id, body.gender)
 
 
 @router.get("/{org_id}/invites", response_model=list[InviteOut])
@@ -225,7 +235,7 @@ async def list_invites(org_id: uuid.UUID, session: Session, user: CurrentUser) -
     rows = await session.scalars(
         select(Invite).where(Invite.org_id == org_id, Invite.role == "mentor").order_by(Invite.created_at.desc()).limit(50)
     )
-    return [InviteOut(code=i.code, expires_at=i.expires_at, used=i.used_by is not None) for i in rows]
+    return [InviteOut(code=i.code, expires_at=i.expires_at, used=i.used_by is not None, gender=i.gender) for i in rows]
 
 
 async def _org_mentor(session, org_id: uuid.UUID, mentor_id: uuid.UUID) -> OrgMember:
