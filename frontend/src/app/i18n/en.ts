@@ -1179,6 +1179,9 @@ export const en: Dict = {
   "desk.cite.missing": "Hadith {id} is not in the stored record in this language",
   "desk.glossary.title": "Spellings the glossary does not approve",
   "desk.glossary.flag": "“{found}” instead of the approved term “{term}”",
+  // KNW-01 answer rate: failure copy that leads with retry, not with a person
+  "ask.fail.verificationFailed.body": "The answer didn't pass the source check, so I'm not showing it. Trying again writes a new answer, and that often works.",
+  "ask.fail.unavailable.body": "I couldn't finish the answer right now, and I don't answer without checking. Please try again in a moment.",
   // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
   "me.theme": "Appearance",
   "theme.light": "Light",

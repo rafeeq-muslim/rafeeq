@@ -282,6 +282,45 @@ function FailureCard({
 }) {
   const { t } = useT()
   const navigate = useNavigate()
+  if (kind !== "noSource") {
+    // KNW-01 answer rate: a failed check or a technical failure is not a
+    // reason to hand the question to a person. Retry (or edit) comes first;
+    // the person stays one quiet tap away (and in the top bar). Only danger
+    // leads with a person.
+    return (
+      <Message align="start">
+        <MessageContent>
+          <Bubble variant="outline" align="start" className="max-w-[92%]">
+            <BubbleContent className="flex flex-col gap-2">
+              <p dir="auto" className="text-label font-medium">
+                {t(`ask.${kind}.title`)}
+              </p>
+              <p dir="auto" className="text-body text-muted-foreground">
+                {t(`ask.fail.${kind}.body`)}
+              </p>
+              <LiveSearchNote entries={live} />
+              <div className="flex flex-wrap items-center gap-2">
+                {onRetry && (
+                  <Button size="sm" onClick={onRetry}>
+                    <IconRefresh data-icon="inline-start" stroke={1.75} />
+                    {t("common.retry")}
+                  </Button>
+                )}
+                {onEdit && (
+                  <Button variant={onRetry ? "ghost" : "outline"} size="sm" onClick={onEdit}>
+                    {t("ask.editQuestion")}
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => navigate(helpUrl("escalation", askId))}>
+                  {t("ask.human")}
+                </Button>
+              </div>
+            </BubbleContent>
+          </Bubble>
+        </MessageContent>
+      </Message>
+    )
+  }
   return (
     <div className="flex flex-col gap-2">
       <ReferralCard
@@ -331,8 +370,10 @@ export function ResponseTurn({ response, onRetry, onEdit }: { response: AskRespo
     case "no_source":
       return <FailureCard kind="noSource" askId={response.ask_id} onEdit={onEdit} live={response.live_search} />
     case "verification_failed":
-      // No automatic retry loop (R4): rephrase or ask a person.
-      return <FailureCard kind="verificationFailed" askId={response.ask_id} onEdit={onEdit} />
+      // No automatic retry loop (R4): the user may retry (a new composition), rephrase or ask a person.
+      return (
+        <FailureCard kind="verificationFailed" askId={response.ask_id} onRetry={response.retryable ? onRetry : undefined} onEdit={onEdit} />
+      )
     case "unavailable":
       return (
         <FailureCard
