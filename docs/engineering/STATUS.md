@@ -41,7 +41,7 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 - PR #15 (draft starter answers and reference set) waits for مهند and Musallam; not self-merged.
 
 ## State
-All features in the PRDs are built, tested (247 backend, 131 frontend) and deployed. Content merged to `main` is shown directly (rules.md §1.4, changed 2026-10-06); the review desk withdraws a version by returning it. What remains needs people: PR #15, the five postponed items, and the server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
+All features in the PRDs are built, tested (335 backend, 131 frontend) and deployed. Content merged to `main` is shown directly (rules.md §1.4, changed 2026-10-06); the review desk withdraws a version by returning it. What remains needs people: PR #15, the five postponed items, and the server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
 
 ## Credentials and access (never in git)
 - Secrets: `/home/naser/.config/rafeeq/secrets.env` (OpenRouter key, DB, JWT, VAPID, bootstrap admin `rafeeq-admin`).
