@@ -5,7 +5,8 @@
  * was refused (R5). On an iPhone, push reaches only an app added to the
  * Home Screen (R4). The third type, the prayer reminder, stays on the device
  * (practice/reminders.ts). */
-import { api } from "@/app/lib/api"
+import { ApiError, api } from "@/app/lib/api"
+import { saveLocale } from "@/sw/plt13-push"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { localDay } from "@/app/motivation/streak"
@@ -13,7 +14,8 @@ import { localDay } from "@/app/motivation/streak"
 export const pushSupported = () =>
   typeof window !== "undefined" && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window
 
-export type PushState = "ok" | "ios-home-screen" | "unsupported" | "denied"
+/** PLT-13 R1: "ios-update" = an iPhone app on the Home Screen whose iOS is older than 16.4 (no web push there). */
+export type PushState = "ok" | "ios-home-screen" | "ios-update" | "unsupported" | "denied"
 
 type Env = { userAgent: string; platform: string; maxTouchPoints: number; standalone: boolean; supported: boolean; permission: string }
 
@@ -38,7 +40,7 @@ export const isIOS = (e: Pick<Env, "userAgent" | "platform" | "maxTouchPoints">)
 /** What this device can do with push right now (R4, R5). */
 export function pushState(env: Env = currentEnv()): PushState {
   if (isIOS(env) && !env.standalone) return "ios-home-screen"
-  if (!env.supported) return "unsupported"
+  if (!env.supported) return isIOS(env) ? "ios-update" : "unsupported"
   if (env.permission === "denied") return "denied"
   return "ok"
 }
@@ -64,19 +66,106 @@ export async function askPermission(): Promise<boolean> {
   return (await Notification.requestPermission()) === "granted"
 }
 
-/** Subscribe (asks permission the first time). Returns the endpoint, or null if refused or unsupported. */
+// --- PLT-13 R1/R4: iPhone-safe permission and silent renewal -----------------
+
+/** The last endpoint this device registered with the server (Safari never
+ * fires pushsubscriptionchange, so a change is noticed by comparing). */
+const ENDPOINT_KEY = "rafeeq.push.endpoint"
+/** Set when a switch was on and the device's permission is gone (PLT-06 R5). */
+const REVOKED_KEY = "rafeeq.push.revoked"
+
+function store(key: string, value: string | null) {
+  try {
+    if (value === null) localStorage.removeItem(key)
+    else localStorage.setItem(key, value)
+  } catch {
+    /* storage blocked */
+  }
+}
+function read(key: string): string | null {
+  try {
+    return localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+export const lastEndpoint = () => read(ENDPOINT_KEY)
+export const permissionRevoked = () => read(REVOKED_KEY) === "1"
+
+let vapidKey: string | null = null
+
+/** R1: fetched ahead (when Rafeeq or «حسابي» opens), so nothing waits on the
+ * network between the tap and the permission request. */
+export async function prefetchPublicKey(): Promise<string | null> {
+  if (vapidKey) return vapidKey
+  try {
+    vapidKey = (await api<{ key: string | null }>("/api/push/public-key")).key
+  } catch {
+    /* fetched again when needed */
+  }
+  return vapidKey
+}
+
+const timezone = () => Intl.DateTimeFormat().resolvedOptions().timeZone
+
+/** Subscribe (asks permission the first time). Returns the endpoint, or null if refused or unsupported.
+ * PLT-13 R1: the permission request comes first, synchronously inside the person's tap;
+ * the key (if not prefetched) is fetched only after it. */
 export async function subscribe(): Promise<string | null> {
   if (!(await askPermission())) return null
-  const { key } = await api<{ key: string | null }>("/api/push/public-key")
+  const key = vapidKey ?? (vapidKey = (await api<{ key: string | null }>("/api/push/public-key")).key)
   if (!key) return null
   const reg = await navigator.serviceWorker.ready
   const sub = (await reg.pushManager.getSubscription()) ?? (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(key) }))
   const { installId, locale } = useDevice.getState()
   await api("/api/push/subscribe", {
     method: "POST",
-    body: { install_id: installId, subscription: sub.toJSON(), locale, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    body: { install_id: installId, subscription: sub.toJSON(), locale, timezone: timezone() },
   })
+  store(ENDPOINT_KEY, sub.endpoint)
+  store(REVOKED_KEY, null)
+  void saveLocale(locale)
   return sub.endpoint
+}
+
+type ServerSwitches = { subscribed: boolean; reminder: boolean; time: string | null; replies: boolean }
+
+/** PLT-13 R4: permission is already granted, so this never prompts. The server
+ * moves this device's switches (and reminder time) to the new endpoint. */
+async function renew(sub: PushSubscription | null, old: string | null): Promise<ServerSwitches | null> {
+  const key = await prefetchPublicKey()
+  if (!key) return null
+  const reg = await navigator.serviceWorker.ready
+  const fresh = sub ?? (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(key) }))
+  const { installId, locale, reminderOn, reminderTime, repliesOn } = useDevice.getState()
+  const s = await api<ServerSwitches>("/api/push/resubscribe", {
+    method: "POST",
+    body: {
+      install_id: installId,
+      subscription: fresh.toJSON(),
+      locale,
+      timezone: timezone(),
+      old_endpoint: old,
+      reminder: reminderOn,
+      time: reminderOn ? reminderTime : null,
+      replies: repliesOn,
+    },
+  })
+  store(ENDPOINT_KEY, fresh.endpoint)
+  return s
+}
+
+/** PLT-13 R5: one neutral test notification to this device only. */
+export async function sendTestPush(): Promise<"sent" | "limit" | "failed"> {
+  const sub = await currentSubscription().catch(() => null)
+  if (!sub) return "failed"
+  try {
+    const r = await api<{ sent: boolean }>("/api/push/test", { method: "POST", body: { endpoint: sub.endpoint } })
+    return r.sent ? "sent" : "failed"
+  } catch (e) {
+    return e instanceof ApiError && e.status === 429 ? "limit" : "failed"
+  }
 }
 
 /** Minimum data: with both push types off, the subscription is removed here and on the server. */
@@ -87,6 +176,7 @@ async function dropIfUnused() {
   if (!sub) return
   await api("/api/push/unsubscribe", { method: "POST", body: { endpoint: sub.endpoint } }).catch(() => undefined)
   await sub.unsubscribe().catch(() => undefined)
+  store(ENDPOINT_KEY, null)
 }
 
 export async function setReminder(enabled: boolean, time?: string) {
@@ -114,19 +204,41 @@ export async function setReplies(enabled: boolean) {
   return r
 }
 
-/** Show the switches as the server holds them (a refused or revoked permission shows them off). */
-export async function syncPushSwitches() {
-  const sub = await currentSubscription().catch(() => null)
-  if (!sub || pushState() !== "ok") {
-    useDevice.getState().set({ reminderOn: false, repliesOn: false })
-    return
+/** Show the switches as the server holds them (a refused or revoked permission shows them off).
+ * Runs whenever Rafeeq opens or comes back (lib/pwa.ts) and when «حسابي» opens.
+ * PLT-13 R4: with a switch on and permission granted, a lost or changed
+ * subscription is renewed silently; with the permission gone, the switches go
+ * off and «حسابي» says why, and nothing is asked here (PLT-06 R5). */
+export async function syncPushSwitches(): Promise<"ok" | "revoked"> {
+  const device = useDevice.getState()
+  const hadOn = device.reminderOn || device.repliesOn
+  const off = (revoked = false): "ok" | "revoked" => {
+    device.set({ reminderOn: false, repliesOn: false })
+    if (revoked) store(REVOKED_KEY, "1")
+    return revoked ? "revoked" : "ok"
   }
-  const s = await api<{ subscribed: boolean; reminder: boolean; time: string | null; replies: boolean }>("/api/push/state", {
+  const state = pushState()
+  if (state !== "ok" && state !== "denied") return off()
+  if (Notification.permission !== "granted") return off(hadOn)
+  void prefetchPublicKey() // R1: ready before the next tap
+  void saveLocale(device.locale) // R2: the worker's fallback text follows the app's language
+  const sub = await currentSubscription().catch(() => null)
+  const last = lastEndpoint()
+  if (hadOn && (!sub || (last !== null && sub.endpoint !== last))) {
+    const s = await renew(sub, last).catch(() => null)
+    // Offline or no key: the switches stay as they are and the next opening tries again.
+    if (s) useDevice.getState().set({ reminderOn: s.reminder, reminderTime: s.time ?? device.reminderTime, repliesOn: s.replies })
+    return "ok"
+  }
+  if (!sub) return off()
+  if (last === null) store(ENDPOINT_KEY, sub.endpoint)
+  const s = await api<ServerSwitches>("/api/push/state", {
     method: "POST",
     body: { endpoint: sub.endpoint },
   })
   const time = s.time ?? useDevice.getState().reminderTime
   useDevice.getState().set({ reminderOn: s.reminder, reminderTime: time, repliesOn: s.replies })
+  return "ok"
 }
 
 /** MOT-05 R2: tell the server only the date this device learned on, so no

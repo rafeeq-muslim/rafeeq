@@ -15,6 +15,8 @@ import { stripBase } from "@/app/lib/base"
 
 const LEARNING_FLOW = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placement/]
 const HOUR = 60 * 60 * 1000
+export const SW_URL = "/sw.js"
+export const SW_SCOPE = "/"
 
 export const inLearningFlow = (path = stripBase(location.pathname)) => LEARNING_FLOW.some((r) => r.test(path))
 
@@ -55,9 +57,17 @@ export function registerServiceWorker() {
   })
 
   window.addEventListener("load", () => {
-    void navigator.serviceWorker.register("/sw.js", { scope: "/" }).then((reg) => {
+    // PLT-13 R6: one worker, /sw.js with scope "/", wherever the app's pages live, so push subscriptions survive moves.
+    void navigator.serviceWorker.register(SW_URL, { scope: SW_SCOPE }).then((reg) => {
+      // PLT-13 R4: Safari never reports a changed subscription; check on every opening and return.
+      const renewPush = () => void import("./push").then((m) => m.syncPushSwitches()).catch(() => undefined)
       const check = () => void reg.update().catch(() => undefined)
-      document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && check())
+      renewPush()
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState !== "visible") return
+        check()
+        renewPush()
+      })
       setInterval(check, HOUR)
     })
   })

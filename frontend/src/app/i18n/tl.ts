@@ -1284,4 +1284,15 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+
+  // PLT-13 notifications on iPhone
+  "plt13.iosUpdateTitle": "Kailangang i-update ang iPhone mo para sa mga abiso",
+  "plt13.iosUpdateBody": "Sa iPhone, kailangan ng iOS 16.4 o mas bago para sa mga abiso. Mag-update sa Settings, General, Software Update, at buksan ang Rafeeq mula sa icon nito sa Home Screen.",
+  "plt13.revokedTitle": "Pinatay ang pahintulot sa abiso sa iyong device",
+  "plt13.revokedBody": "Pinatay namin dito ang mga switch ng abiso at hindi kami kusang magtatanong muli. Para ibalik, payagan ang mga abiso para sa Rafeeq sa settings ng device, saka buksan dito ang gusto mo.",
+  "plt13.test": "Subukan ang abiso",
+  "plt13.testHint": "May neutral na abisong pansubok na darating sa device na ito lamang.",
+  "plt13.testSent": "Naipadala ang pansubok na abiso. Darating ito sa loob ng isang minuto.",
+  "plt13.testLimit": "Tatlong beses ka nang sumubok ngayong araw. Puwede ulit bukas.",
+  "plt13.testFailed": "Hindi naipadala ang pansubok na abiso. Patayin at buksan muli ang switch, saka subukan.",
 }

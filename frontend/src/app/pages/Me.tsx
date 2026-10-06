@@ -52,6 +52,7 @@ import { IconTile, LanguageSwitcher, MilestoneBadge, ThemeSwitcher, TopBar, Year
 import { num, useT, type Key, type Locale } from "@/app/i18n"
 import { api, sendEvent } from "@/app/lib/api"
 import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
+import { permissionRevoked, sendTestPush } from "@/app/lib/push" // PLT-13
 import { downloadMyData, wipeDevice } from "@/app/lib/privacy"
 import { usableTone } from "@/app/lib/tone"
 import { usePrayerReminderSwitch } from "@/app/practice/PrayerNameAsk" // PLT-06 R3 / PRC-05 R2 ask once (approvals-ui)
@@ -364,9 +365,21 @@ function NotificationSettings() {
       </div>
     )
 
+  // PLT-13 R4: a permission taken back in the device's settings is explained, never re-asked.
+  const [revoked, setRevoked] = React.useState(permissionRevoked)
   React.useEffect(() => {
-    void syncPushSwitches().catch(() => undefined)
+    void syncPushSwitches()
+      .then((r) => setRevoked(r === "revoked" || permissionRevoked()))
+      .catch(() => undefined)
   }, [])
+  // PLT-13 R5: «جرّب الإشعار», three times a day at most (the server counts).
+  const tryPush = () =>
+    run(async () => {
+      const r = await sendTestPush()
+      if (r === "sent") toast(t("plt13.testSent"))
+      else if (r === "limit") toast(t("plt13.testLimit"))
+      else toast.error(t("plt13.testFailed"))
+    })
 
   const run = async (fn: () => Promise<void>) => {
     setBusy(true)
@@ -419,6 +432,20 @@ function NotificationSettings() {
         </Alert>
       )}
       {state === "unsupported" && <p className="text-label text-muted-foreground">{t("reminder.unsupported")}</p>}
+      {state === "ios-update" && (
+        <Alert variant="info" data-slot="ios-update-note">
+          <IconDeviceMobile stroke={1.75} />
+          <AlertTitle>{t("plt13.iosUpdateTitle")}</AlertTitle>
+          <AlertDescription>{t("plt13.iosUpdateBody")}</AlertDescription>
+        </Alert>
+      )}
+      {revoked && state !== "denied" && !d.reminderOn && !d.repliesOn && (
+        <Alert variant="warning" data-slot="revoked-note">
+          <IconBellOff stroke={1.75} />
+          <AlertTitle>{t("plt13.revokedTitle")}</AlertTitle>
+          <AlertDescription>{t("plt13.revokedBody")}</AlertDescription>
+        </Alert>
+      )}
 
       <div className="flex flex-col divide-y rounded-card border-2 bg-card">
         <SwitchRow
@@ -506,6 +533,14 @@ function NotificationSettings() {
           <SwitchRow id="notif-tone" label={t("notif.tone")} hint={t("notif.toneHint")} checked={d.toneOn} onChange={(v) => d.set({ toneOn: v })} />
         )}
       </div>
+      {pushOk && (d.reminderOn || d.repliesOn) && (
+        <div className="flex flex-col gap-1" data-slot="plt13-test">
+          <Button variant="outline" className="self-start" disabled={busy} onClick={() => void tryPush()}>
+            {t("plt13.test")}
+          </Button>
+          <p className="text-label text-muted-foreground">{t("plt13.testHint")}</p>
+        </div>
+      )}
       <p className="text-label text-muted-foreground">{t("notif.neutral")}</p>
     </div>
   )
