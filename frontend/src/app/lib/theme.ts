@@ -1,6 +1,6 @@
 /**
- * PLT-04 appearance. Light is the default; dark when the learner picks it in
- * «حسابي», or the device's own setting when they pick «حسب الجهاز» ("system").
+ * PLT-04 appearance. The default follows the device («حسب الجهاز», "system");
+ * the learner can pick light or dark instead in «حسابي».
  * Night moments (welcome, celebrations, the Home sky) stay night in all
  * three, through their own `dark` class. public/theme.js applies a saved
  * choice before the first paint.
