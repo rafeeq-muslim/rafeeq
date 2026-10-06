@@ -33,6 +33,7 @@ import { ListeningPlayer, loadPosition, meaningAudioUrl, nextAya, savePosition }
 import { useRecitation } from "./queries"
 import { followVerse, loadReciterChoice, pickReciter, saveReciterChoice, verseUrl } from "./reciters"
 import { meaningLines, useSuraText } from "./verses"
+import { DownloadControl, OnlineOnlyNote } from "@/app/downloads/DownloadControl" // PLT-12
 import { PlayButton, VerseControls } from "./VerseControls"
 
 const normalize = (s: string) => s.toLowerCase().replace(/[ً-ْٰ'\-\s]/g, "").replace(/^(ال|al|an|ar|as|at|ad|adh|az|ash)/, "")
@@ -90,7 +91,8 @@ export function SuraPage() {
   // R4: approved Quranpedia reciters replace al-Muaiqly once there is one.
   const reciters = recData?.reciters ?? []
   const [chosen, setChosen] = React.useState(() => loadReciterChoice())
-  const reciter = pickReciter(reciters, chosen)
+  // PLT-12 R6: al-Muaiqly (IslamHouse) stays selectable: the one recitation that can be downloaded.
+  const reciter = rec && chosen === rec.id ? null : pickReciter(reciters, chosen)
   const recUrl = reciter ? null : rec?.suras[String(sura)]
   const canRecite = reciter ? count > 0 : !!(rec && recUrl)
 
@@ -221,10 +223,10 @@ export function SuraPage() {
 
         {!rec && !reciter && <p className="rounded-card bg-muted p-4 text-label text-muted-foreground">{t("discover.quran.noAudio")}</p>}
 
-        {reciters.length > 1 && reciter && (
+        {(reciters.length > 1 || (reciters.length > 0 && rec)) && (reciter || rec) && (
           <div className="flex flex-col gap-2">
             <span className="text-label font-bold">{t("discover.quran.reciterPick")}</span>
-            <Select value={reciter.id} onValueChange={chooseReciter}>
+            <Select value={reciter?.id ?? rec?.id} onValueChange={chooseReciter}>
               <SelectTrigger className="w-full" aria-label={t("discover.quran.reciterPick")}>
                 <SelectValue />
               </SelectTrigger>
@@ -234,10 +236,18 @@ export function SuraPage() {
                     <bdi>{r.reciter}</bdi>
                   </SelectItem>
                 ))}
+                {rec && (
+                  <SelectItem value={rec.id}>
+                    <bdi>{t("downloads.downloadable", { name: rec.reciter })}</bdi>
+                  </SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>
         )}
+
+        {/* PLT-12 R1/R6: download this surah with the IslamHouse recitation; Quranpedia reciters play online only. */}
+        {reciter ? <OnlineOnlyNote /> : rec && recUrl && <DownloadControl itemId={`surah:${sura}:${locale}`} lang={locale} />}
 
         {text.isLoading ? (
           <div className="flex flex-col gap-3">

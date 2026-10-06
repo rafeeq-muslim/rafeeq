@@ -19,6 +19,8 @@ import type { LibraryItemData } from "./types"
 import { OfflineNote, OfflineOnly } from "@/app/offline/NeedsConnection"
 import { unreachable } from "@/app/offline/online"
 
+import { DownloadControl } from "@/app/downloads/DownloadControl" // PLT-12 R1
+
 const typeKey = (type: string) => `discover.lib.type.${type}` as Key
 const langLabel = (code: string) => LOCALES.find((l) => l.code === code)?.label ?? code
 
@@ -196,6 +198,8 @@ export function LibraryItemPage() {
                   </a>
                 </Button>
               ))}
+              {/* PLT-12 R1: keep this item on the device; offline it opens from the download */}
+              <DownloadControl itemId={`lib:${item.id}`} lang={item.lang} openable />
               <Button asChild variant="ghost">
                 <a href={item.origin_url} target="_blank" rel="noopener noreferrer">
                   <IconExternalLink data-icon="inline-start" stroke={1.75} />

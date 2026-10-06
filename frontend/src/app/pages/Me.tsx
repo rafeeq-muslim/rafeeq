@@ -105,6 +105,11 @@ export default function Me() {
           <ThemePicker />
         </Section>
 
+        {/* PLT-12 R1: the download center (plt-12-download-center-build); shown with and without PLT-09 */}
+        <Section title={t("downloads.title")}>
+          <LinkRow icon={IconDownload} title={t("downloads.title")} hint={t("downloads.meHint")} onClick={() => navigate("/downloads")} />
+        </Section>
+
         {organized ? (
           <OrganizedSaved />
         ) : (
