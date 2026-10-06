@@ -60,5 +60,6 @@
 | PLT-13 | وصول الإشعارات على الآيفون | [PLT-13](features/PLT-13-notifications-on-iphone.md) |
 | PLT-14 | صفحة التعريف والشعار | [PLT-14](features/PLT-14-landing-page.md) |
 | PLT-15 | رفيق دون اتصال | [PLT-15](features/PLT-15-works-offline.md) |
+| PLT-16 | تثبيت رفيق على الجهاز | [PLT-16](features/PLT-16-install-rafeeq.md) |
 
 القائمة بأولوياتها في قسم «المنصة» من [features.md](../../features.md). المصادر والتحقق في [research/09](../../agents/research/09-platform-privacy-and-notifications.md).

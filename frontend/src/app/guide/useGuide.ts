@@ -3,6 +3,8 @@
  */
 import * as React from "react"
 
+import { openedBy } from "@/app/home/layout"
+import { useHome } from "@/app/home/store"
 import { useNow, useRamadan } from "@/app/practice/api"
 import { ymdKey } from "@/app/practice/times"
 import { useLearning } from "@/app/stores/learning"
@@ -58,5 +60,7 @@ export function useGuideTracker(pathname: string) {
     if (keys.length) markUsed(keys)
     const quiet = quietKeys(pathname, ctx)
     if (quiet.length) switchOff(quiet)
+    const home = openedBy(pathname) // PLT-09 optional components opened outside the guide's moments
+    if (home.length) useHome.getState().markOpened(home)
   }, [pathname, ctx, markUsed, switchOff])
 }

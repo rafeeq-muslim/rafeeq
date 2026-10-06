@@ -19,7 +19,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import ARRAY, String, and_, cast, delete, func, select, update
 
 from app.companion import notify
-from app.companion.common import Gender, Lang, is_blocked, not_found, now
+from app.companion.common import Gender, Lang, is_blocked, langs_of, not_found, now
 from app.companion.inbox import MENTEE_CAP_DEFAULT, profile_of
 from app.companion.models import Block, HelpRequest, MentorEnded, MentorLink, MentorProfile
 from app.core.deps import CurrentUser, Session
@@ -125,12 +125,42 @@ async def get_or_create_thread(session, link: MentorLink) -> HelpRequest:
     return req
 
 
-async def end_link(session, link: MentorLink) -> None:
+def can_take(mentor: User | None, req: HelpRequest) -> bool:
+    """CMP-01 R3: the requester's own gender, in the request's language."""
+    if mentor is None:
+        return False
+    same_gender = req.requester_gender is None or req.requester_gender == mentor.gender
+    return same_gender and req.lang in langs_of(mentor)
+
+
+async def end_link(session, link: MentorLink, new_mentor_id: uuid.UUID | None = None) -> None:
+    """R4: the link ends (changed, ended, blocked, suspended or approval
+    withdrawn) and the old mentor no longer sees this learner. Their private
+    thread closes and stays readable for the learner only; it never reopens
+    to the old mentor (help.post_message, inbox.visible_clause). The learner's
+    human/escalation requests he held move to the new mentor when he can take
+    them (same gender, the request's language), otherwise back to the pool;
+    closed ones too, so writing in them later never reaches the old mentor.
+    Urgent requests keep their danger routing (rules.md §2.8).
+    The pair's thread is kept (created closed if they never wrote) as the
+    record that he was this learner's mentor: the pool hides the learner's
+    requests from him (inbox.former_mentor_clause) until they choose him again."""
+    await get_or_create_thread(session, link)
     await session.execute(
         update(HelpRequest)
         .where(HelpRequest.learner_id == link.learner_id, HelpRequest.kind == "mentor", HelpRequest.mentor_id == link.mentor_id)
         .values(status="closed")
     )
+    new_mentor = await session.get(User, new_mentor_id) if new_mentor_id else None
+    held = await session.scalars(
+        select(HelpRequest).where(
+            HelpRequest.learner_id == link.learner_id,
+            HelpRequest.mentor_id == link.mentor_id,
+            HelpRequest.kind.in_(("human", "escalation")),
+        )
+    )
+    for req in held:
+        req.mentor_id = new_mentor.id if new_mentor is not None and can_take(new_mentor, req) else None
     await session.delete(link)
 
 
@@ -167,7 +197,7 @@ async def choose(body: ChooseIn, session: Session, user: CurrentUser) -> MineOut
     if old is not None:
         if old.mentor_id == body.mentor_id:
             return await mine(session, user)
-        await end_link(session, old)  # R4: one at a time; the old mentor stops seeing them
+        await end_link(session, old, body.mentor_id)  # R4: one at a time; the old mentor stops seeing them
         await session.flush()
     session.add(MentorLink(learner_id=user.id, mentor_id=body.mentor_id, share_progress=False, chosen_at=now()))
     await session.execute(delete(MentorEnded).where(MentorEnded.learner_id == user.id))  # ORG-02 R5: notice done

@@ -198,7 +198,8 @@ export default function HelpScreen() {
   const deviceGender = useCompanion((s) => s.helpGender)
   const knownGender: Gender | null = accountGender ?? deviceGender
   const askId = params.get("ask")
-  const askQuestion = useAsk((s) => (source === "ask" ? questionOf(s.turns, askId) : null))
+  // `ask` only ever comes from the assistant, also when it was opened from a lesson or a review (CMP-01 R1).
+  const askQuestion = useAsk((s) => questionOf(s.turns, askId))
 
   const [topic, setTopic] = React.useState<Topic | "">("")
   const [gender, setGender] = React.useState<Gender | "">("")

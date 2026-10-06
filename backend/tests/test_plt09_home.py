@@ -139,3 +139,23 @@ def test_plt09_r4_partial_optional_list_is_completed_in_table_order():
     out = check_order({"main": ["ask", "daily", "card"], "optional": ["library"]})
     assert out == {"main": ["ask", "daily", "card"], "optional": ["library", *[o for o in OPTIONAL if o != "library"]]}
     assert set(MAIN) == {"daily", "card", "ask"}
+
+
+# --- PLT-16: «ثبّت رفيق» is one more optional id ---------------------------------
+
+
+def test_plt16_r3_install_is_a_known_optional_id_last_in_the_fixed_order():
+    """PLT-16 R3: «ثبّت رفيق» joins the optional list, after the others."""
+    assert OPTIONAL[-1] == "install"
+    out = check_order({"main": list(MAIN), "optional": ["install", "library"]})
+    assert out is not None and out["optional"][:2] == ["install", "library"]
+    # A model answer that leaves it out is completed with it at the end.
+    assert check_order(MODEL_ORDER)["optional"][-1] == "install"
+
+
+@pytest.mark.parametrize("extra", [{"installed": True}, {"install_shown": 2}, {"install_hidden": True}])
+async def test_plt16_r6_nothing_about_installing_enters_the_order_request(client, ai, seed, on, extra):
+    """PLT-16 R6 / PLT-09 R4: what was shown, hidden or installed is refused as input."""
+    r = await client.post("/api/home/order", json={**SUMMARY, **extra})
+    assert r.status_code == 422
+    assert ai.calls == []

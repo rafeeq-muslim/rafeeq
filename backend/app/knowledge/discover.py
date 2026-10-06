@@ -33,11 +33,11 @@ async def cards(session: Session, response: Response, lang: Lang = "ar") -> dict
 
 @router.get("/discover/library")
 async def library_list(session: Session, response: Response, lang: Lang = "ar") -> dict:
-    """KNW-06 R1/R2: approved items of one language by topic, dead links hidden."""
+    """KNW-06 R1/R2: approved items of one language by path unit, then «عام», dead links hidden."""
     live = await published(session, library.ITEM_TYPE, lang)
     hidden = await library.hidden_ids(session)
     response.headers["Cache-Control"] = PUBLIC
-    return {"lang": lang, "topics": library.learner_topics(live, hidden)}
+    return {"lang": lang, "topics": library.learner_topics(live, hidden, lang)}
 
 
 @router.get("/discover/recitations")

@@ -198,9 +198,9 @@
       "islamhouse_id": 2838921,
       "title": "HOW CAN I PRAY?",
       "mp4_url": "https://ih-download.islamenc.com/data/en/ih_videos/mp4/single/en_Salah_With_al_Duaa.mp4",
-      "size": "0 B",
+      "size": "32.76 MB (34346548 bytes; the API lists 0 B)",
       "type": "LINK",
-      "error": null
+      "error": "HEVC video (hev1) only, the item's one attachment (checked 2026-10-06): most browsers load it with no picture. Not used: English prayer lessons show no video until a playable copy of this same item is approved (LRN-01 open question)."
     },
     {
       "topic": "wudu+prayer",

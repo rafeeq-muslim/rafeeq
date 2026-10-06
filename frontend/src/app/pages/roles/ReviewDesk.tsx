@@ -5,7 +5,8 @@
  * cited hadith beside its stored text, grade and reference (R2), the
  * text learners currently see when it changed after approval (R3), and the
  * full decision history. Approving binds to the version read (hash); a
- * return needs a written reason (R4).
+ * return needs a written reason (R4). Mentors' free-text weekly goals
+ * (MOT-06 R3) have their own list under «نصوص التحديات».
  */
 import * as React from "react"
 import { Route, Routes, useNavigate, useParams } from "react-router"
@@ -14,6 +15,7 @@ import { IconArrowLeft, IconCheck, IconCornerUpLeft, IconKey } from "@tabler/ico
 import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
@@ -26,6 +28,7 @@ import { VerseBlock } from "@/app/lesson/VerseBlock"
 import type { QuranRef } from "@/app/learning/types"
 import { ReciterSample } from "@/app/discover/ReciterSample" // KNW-08 R4
 import { ExplanationSamples } from "./ExplanationSamples"
+import { ChallengeTexts, useIsShariaReviewer, usePendingTexts } from "./ChallengeTexts" // MOT-06 R3
 
 import { GlossaryFlags, HadithCitations, type GlossaryFlag, type HadithRecord } from "./DeskCitations"
 
@@ -64,6 +67,7 @@ export default function ReviewDesk() {
     <Routes>
       <Route index element={<QueueView />} />
       <Route path="explanations" element={<ExplanationSamples />} />
+      <Route path="challenges" element={<ChallengeTexts />} />
       <Route path=":type/:id" element={<ItemView />} />
     </Routes>
   )
@@ -80,6 +84,8 @@ function QueueView() {
   const [lang, setLang] = React.useState<Locale>(locale)
   const [status, setStatus] = React.useState<Status>("in_review")
   const reviewer = useAuth((s) => s.has("sharia_reviewer")) // LRN-03 R6: explanation samples are the reviewer's
+  const shariaReviewer = useIsShariaReviewer() // MOT-06 R3: mentors' challenge texts, the role itself only
+  const texts = usePendingTexts(shariaReviewer)
 
   const rows = (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === status)
   const count = (s: Status) => (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === s).length
@@ -116,6 +122,19 @@ function QueueView() {
         {reviewer && (
           <Button variant="secondary" className="w-full justify-between" onClick={() => navigate("explanations")}>
             {t("desk.explain.open")}
+            <IconArrowLeft data-icon="inline-end" className="ltr:rotate-180" />
+          </Button>
+        )}
+        {shariaReviewer && (
+          <Button variant="secondary" className="w-full justify-between" onClick={() => navigate("challenges")}>
+            <span className="flex items-center gap-2">
+              {t("desk.ch.open")}
+              {!!texts.data?.length && (
+                <Badge variant="warning" className="tabular-nums" aria-label={t("desk.ch.waiting", { n: num(texts.data.length) })}>
+                  {num(texts.data.length)}
+                </Badge>
+              )}
+            </span>
             <IconArrowLeft data-icon="inline-end" className="ltr:rotate-180" />
           </Button>
         )}

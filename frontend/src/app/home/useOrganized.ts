@@ -19,14 +19,19 @@ import { useMine } from "@/app/companion/api"
 import { lastSura } from "@/app/discover/player"
 import { loadReciterChoice } from "@/app/discover/reciters"
 import { useLibrary } from "@/app/discover/queries"
-import type { LibraryItemData, RecitationResponse } from "@/app/discover/types"
+import type { LibraryItemData, LibraryTopic, RecitationResponse } from "@/app/discover/types"
+import { useGuide } from "@/app/guide/store"
 import { useGuideContext } from "@/app/guide/useGuide"
+import { nextLesson } from "@/app/learning/path"
 import type { Lesson } from "@/app/learning/types"
+import { useContent } from "@/app/learning/useContent"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { checkOrder, daySlots, eligible, FIXED_ORDER, LESSON_LAST_DAY_ONE, timeBucket, visibleOptional, type Eligibility, type OptionalId, type Order } from "./layout"
 import { useHome } from "./store"
+import { localDay } from "@/app/guide/suggest"
+import { useInstallCardEligible } from "@/app/install/useInstall" // PLT-16 R3, R4
 
 export const ORDER_URL = "/api/home/order"
 /** R4 ex3 spirit: a slow model never holds Home back for long. */
@@ -83,12 +88,13 @@ export function useDayOrder(lessons: Lesson[] | null, today: string): Order | nu
 const reciterChosen = () => loadReciterChoice() != null
 
 /**
- * KNW-06: «كتاب أو مقطع معتمد يناسب وحدته». The library has no unit tags
- * yet, so the pick is the first approved item of the new-Muslim basics
- * topic in the learner's language (a decision for the PLT owner).
+ * PLT-09 R3 «كتاب أو مقطع معتمد يناسب وحدته», with KNW-06 R2 topics = path
+ * units: the first approved item of the learner's current unit; a unit with
+ * no library item yet falls back to the first «عام» item.
  */
-export function libraryPick(topics: { id: string; items: LibraryItemData[] }[] | undefined): LibraryItemData | null {
-  return topics?.find((t) => t.id === "basics")?.items[0] ?? null
+export function libraryPick(topics: LibraryTopic[] | undefined, unit: string | undefined): LibraryItemData | null {
+  const ofUnit = unit ? topics?.find((t) => t.unit === unit)?.items[0] : undefined
+  return ofUnit ?? topics?.find((t) => t.id === "general")?.items[0] ?? null
 }
 
 export function useEligibility(): { ctx: Eligibility; library: LibraryItemData | null } {
@@ -106,7 +112,19 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
     staleTime: 60 * 60_000,
   })
   const library = useLibrary(locale, Boolean(completed[LESSON_LAST_DAY_ONE]))
-  const pick = libraryPick(library.data?.topics)
+  const { lessons } = useContent()
+  const unlockedUnits = useLearning((s) => s.unlockedUnits)
+  const pick = libraryPick(library.data?.topics, nextLesson(lessons, { completed, unlockedUnits })?.unit)
+  // PLT-08 R3: the guide records Ramadan and «لست وحدك» openings; Home records the others.
+  const used = useGuide((s) => s.used)
+  const homeOpened = useHome((s) => s.opened)
+  const ramadanKey = ramadan ? `ramadan-${ramadan.start.slice(0, 4)}` : null
+  const install = useInstallCardEligible(localDay(new Date())) // PLT-16: device memory only; not in orderBody (R6)
+  const opened: Eligibility["opened"] = {
+    ...homeOpened,
+    ...(ramadanKey && used[ramadanKey] ? { ramadan: true as const } : {}),
+    ...(used.human ? { human: true as const } : {}),
+  }
   return {
     ctx: {
       completed,
@@ -118,18 +136,22 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
       reciterChosen: reciterChosen(),
       recitersAvailable: Array.isArray(recitations.data?.reciters) ? recitations.data.reciters.length : 0,
       libraryPick: pick != null,
+      opened,
+      install,
     },
     library: pick,
   }
 }
 
-/** R1, R5, R6: the optional components to show now, in their places. */
+/** R1, R5, R6 and PLT-08 R3: the optional components to show now, in their places. */
 export function useOptional(order: Order | null, ctx: Eligibility): OptionalId[] {
   const slots = useHome((s) => s.slots)
   const hidden = useHome((s) => s.hidden)
+  const shown = useHome((s) => s.shown)
+  const day = useHome((s) => s.day)
   const setSlots = useHome((s) => s.setSlots)
   const isEligible = React.useCallback((id: OptionalId) => eligible(id, ctx), [ctx])
-  const next = order ? daySlots(slots, order.optional, isEligible, hidden) : slots
+  const next = order ? daySlots(slots, order.optional, isEligible, hidden, shown, day ?? "") : slots
   const key = next.join(",")
   React.useEffect(() => {
     if (order) setSlots(key ? (key.split(",") as OptionalId[]) : [])

@@ -52,9 +52,11 @@ export function expectedStartOf(year: number, month: number, near: YMD): YMD {
   throw new Error(`no start for ${year}/${month}`)
 }
 
-/** R2: day 1 of a month — the announced date in Saudi Arabia when published, else the calendar's. */
+/** R2: day 1 of a month — the country's own announcement when published, else
+ * Saudi Arabia's (owner's decision 2026-10-06), else the calendar's (expected). */
 export function monthStart(year: number, month: number, near: YMD, sightings: Sighting[], country: string): { date: YMD; announced: boolean } {
-  const s = country === "SA" ? sightings.find((x) => x.country === "SA" && x.hijri_year === year && x.hijri_month === month) : undefined
+  const of = (c: string) => sightings.find((x) => x.country === c && x.hijri_year === year && x.hijri_month === month)
+  const s = of(country) ?? of("SA")
   return s ? { date: parseYmd(s.start), announced: true } : { date: expectedStartOf(year, month, near), announced: false }
 }
 
@@ -75,4 +77,10 @@ export function ramadanState(today: YMD, sightings: Sighting[], country: string)
   return { kind: "upcoming", start: next.date, daysLeft: daysBetween(today, next.date), announced: next.announced }
 }
 
-export const isRamadan = (today: YMD, sightings: Sighting[], country: string) => ramadanState(today, sightings, country).kind === "ramadan"
+/** R2: Ramadan mode (Isha +30 under Umm al-Qura, suhoor and iftar, fasting
+ * reminders) starts only with an announced sighting, never from the
+ * calculation alone; until then the day is shown as expected. */
+export function isRamadan(today: YMD, sightings: Sighting[], country: string): boolean {
+  const s = ramadanState(today, sightings, country)
+  return s.kind === "ramadan" && s.announced
+}

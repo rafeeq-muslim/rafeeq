@@ -103,7 +103,7 @@ export function LibraryList() {
                 <section key={topic.id} aria-labelledby={`topic-${topic.id}`} className="flex flex-col gap-2">
                   <h2 id={`topic-${topic.id}`} className="flex items-center gap-2 font-heading text-h3 font-bold">
                     <PetalBullet />
-                    {t(`discover.lib.topic.${topic.id}` as Key)}
+                    {topic.title ?? t(`discover.lib.topic.${topic.id}` as Key)}
                   </h2>
                   {topic.items.length > 0 ? (
                     <ul className="divide-y">

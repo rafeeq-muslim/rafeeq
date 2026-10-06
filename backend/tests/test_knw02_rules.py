@@ -8,10 +8,10 @@ import json
 import pytest
 from sqlalchemy import func, select
 
-from app.core.config import get_settings
+from app.core.config import Settings, get_settings
 from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
-from app.knowledge import cards, embed, load
+from app.knowledge import cards, embed, jobs, load, search, source_policy
 from app.knowledge.models import Passage, Source
 from app.knowledge.sources._common import make_passage, write_jsonl
 from app.learning import content
@@ -258,7 +258,7 @@ async def test_knw02_r6_approved_card_enters_the_index_with_its_source_and_learn
     # merged and approved cards with text, per language; the verse-only card is indexed from QuranEnc instead
     assert set(rows) == {"rafeeq_cards:ar:u1-l1-c1", "rafeeq_cards:en:u1-l1-c1"}
     card = rows["rafeeq_cards:ar:u1-l1-c1"]
-    assert (card.kind, card.quote_text, card.origin_url) == ("approved_card", "TEST اغسل وجهك", "/learn/lesson/u1-l1")
+    assert (card.kind, card.quote_text, card.origin_url) == ("approved_card", "TEST اغسل وجهك", "/app/learn/lesson/u1-l1")
     async with SessionLocal() as s:
         src = await s.get(Source, cards.SOURCE_ID)
         events = list(await s.scalars(select(OutboxEvent).where(OutboxEvent.name == "ContentApproved")))
@@ -285,6 +285,31 @@ async def test_knw02_r6_cards_are_never_loaded_from_a_file_and_a_full_load_refre
         await load.load_source("rafeeq_cards", corpus / "rafeeq_cards.jsonl")
     assert await load.main([]) == 0
     assert {p.id for p in await _rows(cards.SOURCE_ID)} == {"rafeeq_cards:ar:u1-l1-c1", "rafeeq_cards:en:u1-l1-c1"}
+
+
+def test_knw02_r6_ex1_approved_cards_are_a_default_answer_source(monkeypatch):
+    monkeypatch.delenv("KNW_ANSWER_SOURCES", raising=False)
+    assert cards.SOURCE_ID in source_policy.parse_sources(Settings(_env_file=None).knw_answer_sources)[0]
+
+
+async def test_knw02_r6_ex1_embedding_job_embeds_approved_cards_and_skips_returned_ones(client, store, ai):
+    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
+    await cards.refresh()
+    await withdraw(client, reviewer, "lesson", "u1-l1", "ar")  # returned by the reviewer: leaves the index
+    await jobs.embed_batch()  # the scheduled job, with the default answer sources
+    rows = {p.id: p for p in await _rows(cards.SOURCE_ID)}
+    assert set(rows) == {"rafeeq_cards:en:u1-l1-c1"}
+    assert rows["rafeeq_cards:en:u1-l1-c1"].embedding is not None
+
+
+async def test_knw02_r6_ex1_a_question_matching_an_approved_card_retrieves_it(store, ai):
+    await cards.refresh()
+    await embed.run(sources=[cards.SOURCE_ID])
+    source_policy.reset_readiness_cache()
+    async with SessionLocal() as s:
+        res = await search.retrieve(s, "TEST wash the face", "en")
+    card = next(p for p in res.passages if p.get("source_id") == cards.SOURCE_ID)
+    assert (card["kind"], card["origin_url"]) == ("approved_card", "/app/learn/lesson/u1-l1")
 
 
 # --- SC3: the embedding job shares its batches across sources and languages ----------

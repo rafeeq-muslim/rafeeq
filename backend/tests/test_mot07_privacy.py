@@ -62,6 +62,6 @@ async def test_mot07_r4_guest_who_signs_up_fills_the_mentor_copy(client):
     await client.post("/api/me/install", json={"install_id": "guest-joseph-1"}, headers=auth(token))
     async with SessionLocal() as s:
         sent = [e.payload for e in await s.scalars(select(OutboxEvent).where(OutboxEvent.name == "EngagementStatusChanged"))]
-        assert {"install_id": "guest-joseph-1", "user_id": uid, "status": "new"} in sent
+        assert {"user_id": uid, "status": "new"} in sent  # the account's one status (MOT-07 R6), no device id
         row = await s.get(MenteeStatus, uuid.UUID(uid))
         assert row is not None and row.status == "new"  # shown to the mentor only while shared (CMP-02 R6)

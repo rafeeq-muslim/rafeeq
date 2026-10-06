@@ -68,6 +68,7 @@ import { OrgSection } from "@/app/org/OrgSection"
 import { SignOutButton } from "@/app/privacy/SignOutButton" // PLT-05 R7
 import { unlinkOrg } from "@/app/org/api"
 import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
+import { InstallEntry } from "@/app/install/InstallEntry" // PLT-16 R1
 
 export default function Me() {
   const { t } = useT()
@@ -119,6 +120,9 @@ export default function Me() {
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
         )}
+
+        {/* PLT-16 R1: «ثبّت رفيق», always here while not installed */}
+        <InstallEntry />
 
         <Section title={t("me.notifications")}>
           <NotificationSettings />
