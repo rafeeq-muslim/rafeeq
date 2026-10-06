@@ -185,3 +185,24 @@ Branch `plt-01-07-platform-rules`. Notes in `implementation/PLT-01.md`, `PLT-02.
 **Pending a human:** the policy text (product owner, and a legal read against PDPL), the data controller's name and contact for the policy (PLT-05 open question), the tone (design: ناصر بن خالد; approval: مهند), native Tagalog review of the new strings, the first glossary terms, and the notification domain question above.
 
 **Feature documents:** not edited (no factual mismatch with the code). research/09 §7 was left as the proposal; the corrected wording lives in the app and `implementation/PLT-05.md`.
+
+## CMP audit gaps (cmp-audit-gaps)
+
+Branch `cmp-audit-gaps`. Notes in `implementation/CMP-01.md` and `CMP-04.md` («Audit gaps» sections) and the new `implementation/danger-handling.md`. No migration.
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| «أريد إنسانًا» on lesson and review headers is an icon (44px, label for screen readers) below 380px instead of being hidden | CMP-01 R1: visible on every lesson and review screen; safety | `HumanHelpButton compact` |
+| The contact filter also refuses handles next to a network name («snap: …», «سناب …», «@name») and **any** URL or bare domain, including Islamic sites. A handle without «:» must look like one (digit, «_», «.» or «@»), so «a telegram group» passes; a 7-digit number passes alone (often an amount) but not with a separator («555-1234») | CMP-01 R5 «روابط تواصل خارج رفيق»; the audit asked for general URLs. Quran references and dates must never be refused | `companion/text.py`. If mentors need to share links to sources, allow a list of approved domains there |
+| The sister/brother-per-language reminder is a card on the team screen (counts only, no names): per language × gender, how many can answer and how many take requests now (a paused mentor does not count); also how many responders have no gender (they see urgent requests only) | CMP-01 open question default «يُذكَّر الفريق بحاجته إلى مرشدة بكل لغة» | `coverage.py`, `ResponderCoverage.tsx`. A push to the team when a slot empties was not built |
+| A responder (mentor or team member who can open the request) can report the learner's message with the same reasons; marriage, money and recruitment hide it from everyone but its author until the team reviews it (the learner sees it marked «أُخفيت للمراجعة»); other reasons hide it for the reporter only | CMP-04 R1 «ومن يرد على الطلب», R2, R5 | `safety.py::report` |
+| A mentor's or team member's **gender is locked once set**; only an admin changes it (Admin screen → user → gender). Mentors and team members without a gender set it once in «حسابي» → account settings. Learners can still change theirs in the choose-mentor form | Security: gender decides which same-gender requests a responder sees | `platform/auth.py::set_own_gender`. Admin-only today; let the team change it too if the product owner prefers |
+| Danger handling has no feature document since PR #21; a factual note (`implementation/danger-handling.md`) lists where it lives and its tests. No feature document was written | Asked by the audit; feature documents need an owner | ⚠️ **Decision needed: who owns danger handling** (domain owner and a feature document) |
+
+**Not built, need a decision:**
+- **Referral consent step** (CMP-02 R5): ask «أتسمح بإرسال سؤالك إلى أهل العلم؟» before a mentor refers a learner's question? (see «CMP-01..06 rewrite» above).
+- **A female scholar for sisters' referrals** (same section).
+- **Request retention** (CMP-01 open question «هل يُحذف الطلب بعد مدة؟»; product owner). Until then requests stay until the account is deleted or the device is erased.
+- **Who watches urgent requests at night** (postponed item 2), and the copy «سيتواصل معك أحد فريقنا بلغتك» in the danger panel while nobody is on call.
+- **Group message notifications** (CMP-05 open question; product owner): until then no push for group messages.
+- **An encrypted copy of the notebook in the account** (CMP-06 open question «حفظ الدفتر مشفّرًا في الحساب»; product owner): until then the notebook stays on the device only.

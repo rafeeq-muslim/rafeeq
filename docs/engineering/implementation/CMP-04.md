@@ -50,3 +50,13 @@ Rules renumbered: R3 is new («خطر على أحد»), old R3–R5 became R4–
 | R6 ex3 | Blocking the sister who answered returns the request to other sisters only (same-gender pool) |
 
 Tests: `backend/tests/test_cmp04_safety.py`, vitest `cmp04_r3_*`.
+
+## Audit gaps (branch `cmp-audit-gaps`, 2026-10-06)
+
+| Rule | Change |
+| --- | --- |
+| R1 | `POST /api/reports` also accepts a `help_message` written by the learner when the reporter is a responder who can open that request in his inbox (`inbox.visible_request`): a help thread or the mentor thread. Same reasons, hiding and queue. The inbox thread offers «بلّغ عن هذه الرسالة» on the learner's messages; a message the responder reported for a non-dangerous reason is hidden for him only |
+| R4 ex3 | The team's queue has «السجل» (`include_closed=true`): reviewed reports and the group mentor's `mentor_hidden` records, with «تراجع عن الإخفاء» (`restore`) on a message still hidden |
+| R5 | Help threads (learner and responder side) keep the author's own hidden message, flagged `hidden` and shown as «أُخفيت هذه الرسالة للمراجعة»; nobody else sees it and the reporter is never named |
+
+Tests: `backend/tests/test_cmp_audit_gaps.py` (`test_cmp04_*`), vitest `companion/cmp-audit-gaps.test.tsx`.

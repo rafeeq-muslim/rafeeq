@@ -65,3 +65,17 @@ Danger left CMP-01 (still in the companion domain: README fixed rule). Rules ren
 | R6 | Scholar answers count as replies (unread, neutral push) |
 
 Tests: `backend/tests/test_cmp01_help.py` (R1–R6), `test_cmp_danger.py` (danger, incl. first-available across genders), vitest `companion.rules.test.tsx` (`cmp01_*`, `cmp_danger_*`).
+
+## Audit gaps (branch `cmp-audit-gaps`, 2026-10-06)
+
+Danger handling now has its own factual note: `danger-handling.md`.
+
+| Rule | Change |
+| --- | --- |
+| R1 | `HumanHelpButton compact` on the lesson and review headers: below 380px it is a 44px icon with the label kept for screen readers (it used to be hidden below 380px) |
+| R2 ex3 | `lib/sync.ts::onSignedIn` (called by sign-up, sign-in and 2FA sign-in) calls `claimGuestRequests`; opening «مرشدي» still does too |
+| R5 | `text.py::contact_violation` returns `email`, `link`, `handle` or `phone`: e-mails with spaces or «at/dot», any URL or bare domain (x.com, linkedin, threads, kik, lnkd.in…), a network name with a handle («snap: …», «سناب …», «@handle»), phone numbers with separators and 7-digit local numbers with a separator. Quran references (`2:255`, `255-257`), dates, times and lists of verse numbers pass. The client words a refused handle with `cmp.gaps.err.handle` |
+| Open question «أخت بكل لغة» | `GET /api/team/coverage` (team/admin, `coverage.py`): per language × gender, how many can answer and how many take requests now, plus responders without a gender. Shown on the team screen (`ResponderCoverage`) with uncovered slots marked |
+| Security | A mentor's or team member's gender, once set, changes only by an admin (`PUT /api/admin/users/{id}/gender`, Admin screen); `PUT /api/mentors/me/match` and `PATCH /api/me` answer `403 gender_locked`. Mentors and team members set it once in the account settings (`Account.tsx::ResponderGender`) |
+
+Tests: `backend/tests/test_cmp_audit_gaps.py`, vitest `companion/cmp-audit-gaps.test.tsx`.
