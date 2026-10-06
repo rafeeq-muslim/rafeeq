@@ -196,6 +196,8 @@ describe("KNW-08 R4: reciters", () => {
     renderSura()
     await waitFor(() => expect(verse(1)).toBeTruthy())
     fireEvent.click(screen.getByRole("button", { name: "استمع إلى التلاوة" }))
+    expect(played).toEqual([]) // PLT-11 R5: the size first
+    fireEvent.click(await screen.findByRole("button", { name: "استمع (غير معروف)" }))
     expect(played).toEqual([MUAIQLY.suras["112"]])
     expect(document.querySelector("[aria-current]")).toBeNull()
     expect(document.body.textContent).toContain("بصوت ماهر بن حمد المعيقلي")

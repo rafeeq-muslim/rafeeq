@@ -31,7 +31,8 @@ import { AYA_COUNT } from "./ayaCount"
 import { DiscoverBar, SourceLine } from "./parts"
 import { ListeningPlayer, loadPosition, meaningAudioUrl, nextAya, savePosition } from "./player"
 import { useRecitation } from "./queries"
-import { followVerse, loadReciterChoice, pickReciter, saveReciterChoice, verseUrl } from "./reciters"
+import { followVerse, loadReciterChoice, pickReciter, saveReciterChoice, surahMegabytes, verseUrl } from "./reciters"
+import { SurahSizeAsk } from "./SurahSizeAsk"
 import { meaningLines, useSuraText } from "./verses"
 import { PlayButton, VerseControls } from "./VerseControls"
 
@@ -88,11 +89,14 @@ export function SuraPage() {
   const recData = useRecitation(locale).data
   const rec = recData?.recitation ?? null
   // R4: approved Quranpedia reciters replace al-Muaiqly once there is one.
+  // PLT-11 R5: they are the default; al-Muaiqly's whole-surah files stay a choice.
   const reciters = recData?.reciters ?? []
   const [chosen, setChosen] = React.useState(() => loadReciterChoice())
-  const reciter = pickReciter(reciters, chosen)
+  const reciter = pickReciter(reciters, chosen, rec?.id)
   const recUrl = reciter ? null : rec?.suras[String(sura)]
   const canRecite = reciter ? count > 0 : !!(rec && recUrl)
+  const wholeSurahOption = !!(rec?.suras[String(sura)] && reciters.length)
+  const [sizeAsk, setSizeAsk] = React.useState(false)
 
   const audioRef = React.useRef<HTMLAudioElement>(null)
   const playerRef = React.useRef<ListeningPlayer | null>(null)
@@ -146,9 +150,9 @@ export function SuraPage() {
     if (el) followVerse(el)
   }, [current])
 
-  const playVerse = (aya: number, fromStart = false) => {
-    if (!reciter) return
-    player().playVerse(sura, aya, verseUrl(reciter, sura, aya), fromStart)
+  const playVerse = (aya: number, fromStart = false, r = reciter) => {
+    if (!r) return
+    player().playVerse(sura, aya, verseUrl(r, sura, aya), fromStart)
     setCurrent(aya)
     setPlaying("recitation")
   }
@@ -161,9 +165,27 @@ export function SuraPage() {
     } else if (reciter) {
       playVerse(at)
     } else if (recUrl) {
-      player().playRecitation(sura, recUrl, saved?.time ?? 0)
-      setPlaying("recitation")
+      // PLT-11 R5: every time, the size first; nothing loads before the learner chooses.
+      setSizeAsk(true)
     }
+  }
+
+  // PLT-11 R5: the learner accepted the size of the whole-surah file.
+  const listenWhole = () => {
+    setSizeAsk(false)
+    if (!recUrl) return
+    player().playRecitation(sura, recUrl, saved?.time ?? 0)
+    setPlaying("recitation")
+  }
+
+  // PLT-11 R5: switch to the first approved per-verse reciter and listen verse by verse.
+  const listenPerVerse = () => {
+    setSizeAsk(false)
+    const r = reciters[0]
+    if (!r) return
+    setChosen(r.id)
+    saveReciterChoice(r.id)
+    playVerse(at, false, r)
   }
 
   const chooseReciter = (id: string) => {
@@ -209,6 +231,15 @@ export function SuraPage() {
       <DiscoverBar title={suraName(sura, locale)} back="/discover/quran" />
       {/* One element for every sound on this screen (R3); no controls of our own add sound (R1). */}
       <audio ref={audioRef} preload="none" onEnded={onEnded} onPause={() => setPlaying((p) => (p === "recitation" ? null : p))} />
+      <SurahSizeAsk
+        open={sizeAsk}
+        onOpenChange={setSizeAsk}
+        sura={sura}
+        megabytes={surahMegabytes(rec?.sizes, sura)}
+        perVerseName={reciters[0]?.reciter ?? null}
+        onListen={listenWhole}
+        onPerVerse={listenPerVerse}
+      />
 
       <div className="flex flex-col gap-5 px-4 pt-5 pb-4">
         <header className="flex flex-col items-center gap-1 rounded-panel bg-secondary/60 px-5 py-6 text-center text-secondary-foreground">
@@ -221,10 +252,10 @@ export function SuraPage() {
 
         {!rec && !reciter && <p className="rounded-card bg-muted p-4 text-label text-muted-foreground">{t("discover.quran.noAudio")}</p>}
 
-        {reciters.length > 1 && reciter && (
+        {reciters.length + (wholeSurahOption ? 1 : 0) > 1 && (
           <div className="flex flex-col gap-2">
             <span className="text-label font-bold">{t("discover.quran.reciterPick")}</span>
-            <Select value={reciter.id} onValueChange={chooseReciter}>
+            <Select value={reciter?.id ?? rec?.id} onValueChange={chooseReciter}>
               <SelectTrigger className="w-full" aria-label={t("discover.quran.reciterPick")}>
                 <SelectValue />
               </SelectTrigger>
@@ -234,6 +265,12 @@ export function SuraPage() {
                     <bdi>{r.reciter}</bdi>
                   </SelectItem>
                 ))}
+                {/* PLT-11 R5: one file per surah, named as such; it asks before playing. */}
+                {wholeSurahOption && rec && (
+                  <SelectItem value={rec.id}>
+                    <bdi>{rec.reciter}</bdi> · {t("plt11.wholeSurah")}
+                  </SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>

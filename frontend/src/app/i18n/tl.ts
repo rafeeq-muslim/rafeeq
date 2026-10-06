@@ -1281,4 +1281,14 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+  // PLT-11 R5: the whole-surah file never plays before its size is shown and accepted
+  "plt11.wholeSurah": "Buong sūrah sa isang file",
+  "plt11.mb": "{n} MB",
+  "plt11.size.title": "Ang laki ng pagbigkas na ito: {size}",
+  "plt11.size.unknown": "hindi alam",
+  "plt11.size.body": "Ang Sūrah {sura} ay isang buong file, kaya halos ganito karami ang magagamit sa iyong data. Walang mada-download hangga't hindi ka pumipili.",
+  "plt11.size.listen": "Makinig ({size})",
+  "plt11.size.download": "I-download sa download center",
+  "plt11.size.perVerse": "Makinig bawat talata ({name})",
+  "plt11.size.cancel": "Hindi muna",
 }

@@ -61,6 +61,11 @@ def load() -> list[dict[str, Any]]:
     return json.loads(f.read_text(encoding="utf-8"))["recitations"]
 
 
+def sizes(recitation_id: str) -> dict[str, int]:
+    """PLT-11 R5: surah -> bytes of its file (content/tools/recitation_sizes.py)."""
+    return next((r.get("sizes", {}) for r in load() if r["id"] == recitation_id), {})
+
+
 # --- R2/R4: Quranpedia per-verse reciters -----------------------------------------
 
 QURANPEDIA_IDS = (248, 249, 251, 253, 254, 255)  # decision 2026-10-06 (KNW-08 R4)

@@ -80,6 +80,8 @@ async function startRecitation() {
   renderSura()
   await screen.findByText(/TEST_ARABIC_4/)
   fireEvent.click(await screen.findByRole("button", { name: translate(lc(), "discover.quran.play") }))
+  // PLT-11 R5: the whole-surah file plays only after its size is shown and accepted.
+  fireEvent.click(await screen.findByRole("button", { name: translate(lc(), "plt11.size.listen", { size: translate(lc(), "plt11.size.unknown") }) }))
   const audios = document.querySelectorAll("audio")
   return audios
 }
