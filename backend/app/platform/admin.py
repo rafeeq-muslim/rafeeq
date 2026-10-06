@@ -3,12 +3,12 @@ and role changes. Admin only."""
 
 import secrets
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import select
+from sqlalchemy import ARRAY, String, cast, func, select
 
 from app.core.deps import Session, require_role
 from app.platform.models import ROLES, Invite, User
@@ -26,6 +26,25 @@ class InviteIn(BaseModel):
 # the database, never from the app; holding or revoking it still works.
 TEAM_ROLE_DB_ONLY = "team_role_db_only"
 
+# PLT-17 R11: an admin never drops their own admin role, and Rafeeq always
+# keeps at least one admin.
+OWN_ADMIN_ROLE = "cannot_remove_own_admin"
+LAST_ADMIN = "last_admin"
+
+# PLT-17 R12: codes made here end after seven days (open question default,
+# like an organisation's codes); an unused one can be revoked.
+ADMIN_INVITE_DAYS = 7
+
+
+def invite_status(i: Invite, now: datetime | None = None) -> str:
+    if i.used_by is not None:
+        return "used"
+    if i.revoked_at is not None:
+        return "revoked"
+    if i.expires_at is not None and i.expires_at < (now or datetime.now(UTC)):
+        return "expired"
+    return "available"
+
 
 def new_invite(session, role: str, created_by: uuid.UUID, org_id: uuid.UUID | None = None, expires_at: datetime | None = None) -> Invite:
     """One one-time code for `role`, added to the session (the caller commits).
@@ -41,16 +60,42 @@ async def create_invites(body: InviteIn, admin: Admin, session: Session) -> dict
     if body.role == "team":
         raise HTTPException(403, TEAM_ROLE_DB_ONLY)
     codes = []
+    ends = datetime.now(UTC) + timedelta(days=ADMIN_INVITE_DAYS)
     for _ in range(max(1, min(body.count, 50))):
-        codes.append(new_invite(session, body.role, admin.id).code)
+        codes.append(new_invite(session, body.role, admin.id, expires_at=ends).code)
     await session.commit()
-    return {"codes": codes}
+    return {"codes": codes, "expires_at": ends}
 
 
 @router.get("/invites")
 async def list_invites(admin: Admin, session: Session) -> list[dict]:
     rows = (await session.scalars(select(Invite).order_by(Invite.created_at.desc()).limit(200))).all()
-    return [{"code": i.code, "role": i.role, "used": i.used_by is not None, "created_at": i.created_at} for i in rows]
+    now = datetime.now(UTC)
+    return [
+        {
+            "code": i.code,
+            "role": i.role,
+            "used": i.used_by is not None,
+            "status": invite_status(i, now),
+            "expires_at": i.expires_at,
+            "created_at": i.created_at,
+        }
+        for i in rows
+    ]
+
+
+@router.post("/invites/{code}/revoke")
+async def revoke_invite(code: str, admin: Admin, session: Session) -> dict:
+    """PLT-17 R12: an unused code is cancelled; it is then refused at sign-up."""
+    invite = await session.get(Invite, code)
+    if invite is None:
+        raise HTTPException(404, "not_found")
+    if invite.used_by is not None:
+        raise HTTPException(409, "invite_used")
+    if invite.revoked_at is None:
+        invite.revoked_at = datetime.now(UTC)
+        await session.commit()
+    return {"code": invite.code, "status": "revoked"}
 
 
 class RolesIn(BaseModel):
@@ -66,6 +111,14 @@ async def set_roles(user_id: uuid.UUID, body: RolesIn, admin: Admin, session: Se
         raise HTTPException(404, "not_found")
     if "team" in body.roles and "team" not in (user.roles or []):
         raise HTTPException(403, TEAM_ROLE_DB_ONLY)
+    if "admin" in (user.roles or []) and "admin" not in body.roles:
+        if user.id == admin.id:
+            raise HTTPException(409, OWN_ADMIN_ROLE)
+        others = await session.scalar(
+            select(func.count()).select_from(User).where(User.roles.op("&&")(cast(["admin"], ARRAY(String(20)))), User.id != user.id)
+        )
+        if not others:
+            raise HTTPException(409, LAST_ADMIN)
     user.roles = body.roles or ["learner"]
     await session.commit()
     return {"id": str(user.id), "roles": user.roles}

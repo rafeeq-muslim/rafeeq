@@ -68,6 +68,8 @@ class Invite(TimestampMixin, Base):
     # ORG-02 R1: the organisation that approves the person, and the code's end.
     org_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True, index=True)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # PLT-17 R12: an unused code the admin cancelled.
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class PushSubscription(IdMixin, TimestampMixin, Base):

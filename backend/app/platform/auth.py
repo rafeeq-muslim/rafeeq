@@ -176,8 +176,13 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     invite: Invite | None = None
     if body.invite_code:
         invite = await session.get(Invite, body.invite_code.strip())
-        if invite is None or invite.used_by is not None or (invite.expires_at is not None and invite.expires_at < datetime.now(UTC)):
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")  # ORG-02 R1 ex2: used or expired
+        if (
+            invite is None
+            or invite.used_by is not None
+            or invite.revoked_at is not None  # PLT-17 R12
+            or (invite.expires_at is not None and invite.expires_at < datetime.now(UTC))
+        ):
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")  # ORG-02 R1 ex2: used, revoked or expired
         # MOT-08: the team role is granted only in the database; an invite made
         # for it before that decision still opens a normal account and is used up.
         roles = ["learner"] if invite.role == "team" else [invite.role]

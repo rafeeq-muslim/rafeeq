@@ -1491,4 +1491,23 @@ export const ar = {
   "ask.lesson.back": "ارجع إلى الدرس", // LRN-03 R5 (lrn-03-r5-return-to-lesson-build): the feature document's wording
   "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
   "ask.review.back": "عُد إلى المراجعة",
+  // --- PLT-17 R11-R13 (plt-17-admin): admin safety and invite codes ---
+  "role.org_coordinator": "منسّق جهة",
+  "admin.expiryHint": "ينتهي كل رمز بعد سبعة أيام إن لم يُستعمل.",
+  "admin.status.available": "متاح",
+  "admin.status.used": "مستعمل",
+  "admin.status.expired": "منتهٍ",
+  "admin.status.revoked": "ملغى",
+  "admin.expiresOn": "حتى {date}",
+  "admin.revoke": "ألغِ",
+  "admin.revoked": "أُلغي الرمز",
+  "admin.createFailed": "لم يُنشأ الرمز. حاول مرة أخرى.",
+  "admin.noUsers": "لا مستخدم بهذا الاسم",
+  "admin.confirm.title": "تغيير صفات {name}",
+  "admin.confirm.add": "تُضاف: {roles}",
+  "admin.confirm.remove": "تُزال: {roles}",
+  "admin.confirm.ok": "احفظ التغيير",
+  "admin.confirm.cancel": "تراجع",
+  "admin.err.ownAdmin": "لا تستطيع إسقاط صفة الإدارة عن نفسك.",
+  "admin.err.lastAdmin": "هذا آخر مدير في رفيق، فلا تُسقط عنه صفة الإدارة.",
 } as const
