@@ -997,4 +997,11 @@ export const ar = {
   "guide.suggest.discover.title": "اكتشف",
   "guide.suggest.discover.body": "فائدة قصيرة كل يوم، وتلاوة مع معانيها بلغتك، ومكتبة موثوقة.",
   "guide.suggest.discover.cta": "افتح اكتشف",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "حديث من السجل المخزَّن",
+  "desk.cite.grade": "الدرجة",
+  "desk.cite.reference": "التخريج",
+  "desk.cite.missing": "الحديث {id} غير موجود في السجل المخزَّن بهذه اللغة",
+  "desk.glossary.title": "ألفاظ غير معتمدة في المعجم",
+  "desk.glossary.flag": "«{found}» بدل اللفظ المعتمد «{term}»",
 } as const

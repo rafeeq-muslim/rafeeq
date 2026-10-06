@@ -998,4 +998,11 @@ export const en: Dict = {
   "guide.suggest.discover.title": "Discover",
   "guide.suggest.discover.body": "A short benefit each day, recitation with its meanings in your language, and a trusted library.",
   "guide.suggest.discover.cta": "Open Discover",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "Hadith from the stored record",
+  "desk.cite.grade": "Grade",
+  "desk.cite.reference": "Reference",
+  "desk.cite.missing": "Hadith {id} is not in the stored record in this language",
+  "desk.glossary.title": "Spellings the glossary does not approve",
+  "desk.glossary.flag": "“{found}” instead of the approved term “{term}”",
 }

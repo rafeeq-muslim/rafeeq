@@ -999,4 +999,11 @@ export const tl: Dict = {
   "guide.suggest.discover.title": "Tuklasin",
   "guide.suggest.discover.body": "Isang maikling aral bawat araw, pagbigkas na may kahulugan sa iyong wika, at mapagkakatiwalaang aklatan.",
   "guide.suggest.discover.cta": "Buksan ang Tuklasin",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "Hadith mula sa nakatalang record",
+  "desk.cite.grade": "Antas",
+  "desk.cite.reference": "Sanggunian",
+  "desk.cite.missing": "Wala sa nakatalang record ang hadith {id} sa wikang ito",
+  "desk.glossary.title": "Mga baybay na hindi aprubado ng glosaryo",
+  "desk.glossary.flag": "“{found}” sa halip na aprubadong termino na “{term}”",
 }

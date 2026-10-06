@@ -28,6 +28,7 @@ KINDS = {
     "story",
     "benefit",
     "glossary",
+    "approved_card",  # KNW-02 R6: the team's approved lesson cards (app.knowledge.cards)
 }
 LANGS = {"ar", "en", "tl"}
 KEYS = (

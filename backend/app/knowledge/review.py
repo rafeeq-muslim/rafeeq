@@ -31,7 +31,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Session, require_role
 from app.core.events import publish
-from app.knowledge.models import ContentApproval, ContentReview
+from app.knowledge.models import ContentApproval, ContentReview, Passage
 from app.platform.models import User
 
 LANGS = ("ar", "en", "tl")
@@ -163,6 +163,10 @@ async def item_detail(item_type: str, item_id: str, session: Session, _: Desk) -
             "hash": it.hash(lg),
             "current": view,
             "live": None,  # since 2026-10-06 learners see the merged text itself (rules.md §1.4)
+            # KNW-05 R2: each cited hadith from its stored record (null: not loaded)
+            "hadith": await _hadith_citations(session, view, lg),
+            # KNW-03 R3 ex2: glossary concepts written with a non-approved spelling
+            "glossary_flags": _glossary.spelling_flags(_texts(view), lg),
         }
     return {
         "item_type": item_type,
@@ -181,6 +185,59 @@ async def item_detail(item_type: str, item_id: str, session: Session, _: Desk) -
             for h in history
         ],
     }
+
+
+def _texts(view: Any) -> str:
+    """Every string of a learner view, for the glossary spelling check."""
+    if isinstance(view, str):
+        return view
+    if isinstance(view, dict):
+        return "\n".join(_texts(v) for k, v in view.items() if k not in ("id", "kind", "image_url", "audio"))
+    if isinstance(view, list):
+        return "\n".join(_texts(v) for v in view)
+    return ""
+
+
+async def _hadith_citations(session: AsyncSession, view: Any, lang: str) -> dict[str, Any]:
+    """KNW-05 R2: {hadith id: stored text, grade, reference, url | None} for
+    every `hadith_ids` entry of the view's cards, in the view's language."""
+    ids = sorted({int(h) for c in (view.get("cards") or [] if isinstance(view, dict) else []) for h in c.get("hadith_ids") or []})
+    if not ids:
+        return {}
+    rows = {
+        p.ref_key: p
+        for p in await session.scalars(
+            select(Passage).where(
+                Passage.source_id == "hadeethenc",
+                Passage.kind == "hadith",
+                Passage.lang == lang,
+                Passage.ref_key.in_([str(i) for i in ids]),
+            )
+        )
+    }
+    out: dict[str, Any] = {}
+    for i in ids:
+        p = rows.get(str(i))
+        meta = (p.meta or {}) if p else {}
+        out[str(i)] = (
+            {
+                "text": p.quote_text,
+                "grade": meta.get("grade") or None,
+                "attribution": meta.get("attribution") or None,
+                "reference": meta.get("reference") or None,
+                "url": p.origin_url,
+                "version": p.version,
+            }
+            if p
+            else None
+        )
+    return out
+
+
+@router.get("/glossary/missing")
+async def glossary_missing(session: Session, _: Desk) -> dict:
+    """KNW-03 R5: concepts recorded with no approved term in a language."""
+    return {"items": await _glossary.missing_terms(session)}
 
 
 class Decision(BaseModel):
@@ -222,5 +279,14 @@ async def decide(item_type: str, item_id: str, lang: str, body: Decision, sessio
         a.status, a.content_hash, a.snapshot, a.reviewer_id, a.decided_at, a.note = "approved", current, it.views[lang], user.id, now, note
         await session.flush()
         await publish(session, "ContentApproved", "KNW", {"item_type": item_type, "item_id": item_id, "lang": lang, "hash": current})
+    elif item_type in ("lesson", "unit"):
+        # KNW-02 R6: a returned version is withdrawn, so its cards leave the search index.
+        await _cards.refresh_in(session)
     await session.commit()
     return {"status": body.decision}
+
+
+# Imported last: both modules register with (and read) this desk.
+# KNW-02 R6: approved cards follow the desk (subscribes to ContentApproved).
+from app.knowledge import cards as _cards  # noqa: E402
+from app.knowledge import glossary as _glossary  # noqa: E402

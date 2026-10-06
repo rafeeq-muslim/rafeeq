@@ -20,6 +20,10 @@ KNW-02 SC2 (a load never succeeds on missing or broken data):
   intended large removal needs `--allow-shrink`.
 A refusal rolls the transaction back, so the previous corpus stays whole.
 
+R6 approved team cards (`rafeeq_cards`, kind `approved_card`) are not a
+   corpus file: a full load also refreshes them from the review desk
+   (app.knowledge.cards), as do approvals, returns and every app start.
+
 Usage: python -m app.knowledge.load [source_id ...] [--allow-shrink]   (default: every file)
 """
 
@@ -69,7 +73,17 @@ SOURCES: dict[str, dict[str, str]] = {
         "url": "https://islamhouse.com",
         "license": "ICSA: apps, offline and AI use allowed; text unchanged",
     },
+    # KNW-02 R6: the team's own lesson cards, once the Sharia reviewer approved
+    # them (merged and not returned, rules.md §1.4). Built from the review desk
+    # by app.knowledge.cards, never from a corpus file.
+    "rafeeq_cards": {
+        "name": "بطاقات رفيق المعتمدة",
+        "url": "/learn",
+        "license": "Rafeeq team content, approved by the Sharia reviewer (KNW-05)",
+    },
 }
+# Sources built inside the app rather than loaded from a corpus file.
+APP_SOURCES = ("rafeeq_cards",)
 
 BATCH = 1000
 MAX_SHRINK = 0.10  # refuse a file with more than 10% fewer rows than the database holds
@@ -89,6 +103,27 @@ COLUMNS = (
     "fetched_at",
     "text_hash",
 )
+
+
+async def upsert(session, rows: list[dict]) -> None:
+    """Insert or update passages by id (one statement). A row whose text is
+    unchanged keeps its vector; changed text loses it so the embedder
+    recomputes it (R5)."""
+    if not rows:
+        return
+    stmt = insert(Passage).values(rows)
+    changed = stmt.excluded.text_hash != Passage.text_hash
+    await session.execute(
+        stmt.on_conflict_do_update(
+            index_elements=[Passage.id],
+            set_={
+                **{c: stmt.excluded[c] for c in COLUMNS if c != "id"},
+                # keep the vector only when the text is identical
+                "embedding": case((Passage.text_hash == stmt.excluded.text_hash, Passage.embedding), else_=None),
+            },
+            where=changed | (stmt.excluded.version != Passage.version) | (stmt.excluded.meta != Passage.meta),
+        )
+    )
 
 
 def corpus_dir() -> Path:
@@ -131,6 +166,8 @@ async def load_source(source_id: str, path: Path, *, allow_shrink: bool = False)
     meta = SOURCES.get(source_id)
     if meta is None:
         raise SystemExit(f"{source_id}: not an indexed source (KNW-02 R1)")
+    if source_id in APP_SOURCES:
+        raise LoadRefused(f"{source_id}: built from approved content (app.knowledge.cards), never from a file")
     manifest = _manifest(path)
     if manifest is not None and manifest.get("complete") is False:
         raise LoadRefused(f"{source_id}: the export is marked incomplete in its manifest")
@@ -144,19 +181,7 @@ async def load_source(source_id: str, path: Path, *, allow_shrink: bool = False)
         batch: list[dict] = []
 
         async def flush() -> None:
-            stmt = insert(Passage).values(batch)
-            changed = stmt.excluded.text_hash != Passage.text_hash
-            await session.execute(
-                stmt.on_conflict_do_update(
-                    index_elements=[Passage.id],
-                    set_={
-                        **{c: stmt.excluded[c] for c in COLUMNS if c != "id"},
-                        # keep the vector only when the text is identical
-                        "embedding": case((Passage.text_hash == stmt.excluded.text_hash, Passage.embedding), else_=None),
-                    },
-                    where=changed | (stmt.excluded.version != Passage.version) | (stmt.excluded.meta != Passage.meta),
-                )
-            )
+            await upsert(session, batch)
             batch.clear()
 
         for row in _rows(path):
@@ -217,11 +242,11 @@ def _plan(root: Path, ids: list[str]) -> tuple[list[Path], int]:
 async def main(ids: list[str], allow_shrink: bool = False) -> int:
     """Load the requested sources (default: every file). Returns the number of
     sources that failed; each failure leaves that source as it was."""
-    files, failed = _plan(corpus_dir(), ids)
+    files, failed = _plan(corpus_dir(), [i for i in ids if i not in APP_SOURCES])
     for f in files:
         sid = f.stem
-        if sid not in SOURCES:
-            log.warning("skip %s: not an indexed source", sid)
+        if sid not in SOURCES or sid in APP_SOURCES:
+            log.warning("skip %s: not an indexed corpus source", sid)
             continue
         log.info("loading %s", f)
         try:
@@ -229,6 +254,11 @@ async def main(ids: list[str], allow_shrink: bool = False) -> int:
         except LoadRefused as e:
             log.error("refused, %s kept as it was: %s", sid, e)
             failed += 1
+    if not ids or any(i in APP_SOURCES for i in ids):
+        # KNW-02 R6: a full load (and so every corpus deploy) also refreshes the approved team cards.
+        from app.knowledge import cards
+
+        log.info("%s", await cards.refresh())
     return failed
 
 
