@@ -217,6 +217,32 @@ describe("knw-01 r4/r6 outcomes and errors", () => {
     }
   })
 
+  it("knw-01 answer rate: a rejected or unfinished answer leads with retry; the person is a secondary choice", async () => {
+    const cases: Partial<AskResponse>[] = [
+      { outcome: "verification_failed", reason_code: "verification_rejected", retryable: true },
+      { outcome: "unavailable", reason_code: "temporarily_unavailable", retryable: true },
+    ]
+    for (const over of cases) {
+      cleanup()
+      useAsk.getState().reset()
+      stubFetch(async () => json({ ...base, ...over, answer: "FIXED_REPLY" }))
+      replies = [async () => json({ ...base, ...over, answer: "FIXED_REPLY" })]
+      renderAsk()
+      fireEvent.click(screen.getByRole("button", { name: "ما معنى الشهادتين؟" }))
+      const retry = await screen.findByRole("button", { name: t("ar", "common.retry") })
+      const humans = screen.getAllByRole("button", { name: t("ar", "ask.human") })
+      const inThread = humans.find((h) => retry.parentElement?.contains(h))
+      expect(inThread).toBeTruthy() // still offered, in the same row
+      expect(retry.compareDocumentPosition(inThread!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy() // after retry
+      expect(inThread!.getAttribute("data-variant")).toBe("ghost") // secondary, not the main button
+      expect(screen.queryByText(t("ar", "ask.personal.title"))).toBeNull()
+      fireEvent.click(retry)
+      await settle()
+      expect(askBodies).toHaveLength(2) // the user's tap sends the same question again
+      expect(askBodies[1].question).toBe("ما معنى الشهادتين؟")
+    }
+  })
+
   it("t31: an unknown outcome is a safe failure, never its text", async () => {
     stubFetch(async () => json({ ...base, outcome: "something_new", answer: "UNVERIFIED_TEXT" }))
     renderAsk()

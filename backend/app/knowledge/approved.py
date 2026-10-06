@@ -70,6 +70,20 @@ PERSONAL = {
 }
 
 
+# Question and function words: the only words an approximate match may add,
+# drop or change. Everything else is a topic word.
+FUNCTION_WORDS = {
+    *("ما", "ماذا", "هو", "هي", "هل", "كيف", "لماذا", "متى", "اين", "من", "في", "عن", "على", "الى", "ان"),
+    *("what", "what's", "whats", "is", "are", "the", "a", "an", "of", "does", "do", "how", "why", "can", "in", "about"),
+    *("ano", "ang", "ng", "ba", "po", "paano", "bakit", "sa"),
+}
+
+
+def _topic(ws: list[str]) -> set[str]:
+    """Topic words, with the Arabic article dropped («الوضوء» = «وضوء»)."""
+    return {w[2:] if w.startswith("ال") and len(w) > 3 else w for w in ws if w not in FUNCTION_WORDS}
+
+
 def _jaccard(a: set[str], b: set[str]) -> float:
     return len(a & b) / len(a | b) if a and b else 0.0
 
@@ -85,6 +99,10 @@ def matches(question: str, phrasing: str, *, exact_only: bool) -> bool:
     if PERSONAL & (set(qw) - set(pw)):
         return False  # a personal detail turns a general question into a personal case
     if len(qw) > len(pw) + 2:
+        return False
+    if _topic(qw) != _topic(pw):
+        # KNW-01 answer rate: «ما هو الوضوء؟» shares 3 of 4 words with «ما هو
+        # فضل الوضوء؟» but asks another thing; it was served the virtue answer.
         return False
     return _jaccard(set(qw), set(pw)) >= FUZZY_MIN
 

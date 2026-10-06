@@ -1178,6 +1178,9 @@ export const ar = {
   "desk.cite.missing": "الحديث {id} غير موجود في السجل المخزَّن بهذه اللغة",
   "desk.glossary.title": "ألفاظ غير معتمدة في المعجم",
   "desk.glossary.flag": "«{found}» بدل اللفظ المعتمد «{term}»",
+  // KNW-01 answer rate: failure copy that leads with retry, not with a person
+  "ask.fail.verificationFailed.body": "لم تجتز الإجابة فحص المصادر، فلم أعرضها. المحاولة من جديد تكتب إجابة جديدة، وكثيرًا ما تنجح.",
+  "ask.fail.unavailable.body": "تعذّر إكمال الإجابة الآن، ولا أجيب دون تحقق. حاول مرة أخرى بعد قليل.",
   // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
   "me.theme": "المظهر",
   "theme.light": "فاتح",

@@ -1180,6 +1180,9 @@ export const tl: Dict = {
   "desk.cite.missing": "Wala sa nakatalang record ang hadith {id} sa wikang ito",
   "desk.glossary.title": "Mga baybay na hindi aprubado ng glosaryo",
   "desk.glossary.flag": "“{found}” sa halip na aprubadong termino na “{term}”",
+  // KNW-01 answer rate: failure copy that leads with retry, not with a person
+  "ask.fail.verificationFailed.body": "Hindi pumasa ang sagot sa pagsusuri ng sanggunian, kaya hindi ko ito ipinapakita. Ang muling pagsubok ay gagawa ng bagong sagot, at madalas itong gumagana.",
+  "ask.fail.unavailable.body": "Hindi ko natapos ang sagot ngayon, at hindi ako sumasagot nang hindi sinusuri. Pakisubukan muli maya-maya.",
   // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
   "me.theme": "Hitsura",
   "theme.light": "Maliwanag",
