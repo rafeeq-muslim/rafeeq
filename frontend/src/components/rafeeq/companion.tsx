@@ -29,26 +29,34 @@ import {
  * the app bundles them so they work offline). Never an unverified number.
  */
 
-/** «أريد إنسانًا»: always visible on Ask and lesson screens. */
+/**
+ * «أريد إنسانًا»: always visible on Ask and lesson screens. `compact` (CMP-01
+ * R1, cmp-audit-gaps): on screens narrower than 380px it shows the icon
+ * alone in a 44px target and keeps the label for screen readers, so it is
+ * never hidden from a crowded header.
+ */
 function HumanHelpButton({
   label = "أريد إنسانًا",
   onClick,
   className,
+  compact = false,
 }: {
   label?: string
   onClick?: () => void
   className?: string
+  compact?: boolean
 }) {
   return (
     <Button
       data-slot="human-help-button"
+      data-compact={compact || undefined}
       variant="outline"
       size="sm"
       onClick={onClick}
-      className={className}
+      className={cn(compact && "max-[380px]:size-11 max-[380px]:p-0!", className)}
     >
       <IconHeadset data-icon="inline-start" stroke={1.75} />
-      {label}
+      {compact ? <span className="max-[380px]:sr-only">{label}</span> : label}
     </Button>
   )
 }

@@ -288,11 +288,24 @@ async def logout(session: Session, response: Response, rafeeq_refresh: Annotated
 
 me = APIRouter(prefix="/api/me", tags=["me"])
 
+# CMP-01 R3 / CMP-02 R1: responders see requests of their own gender only, so
+# once a mentor or team member has a gender, only an admin changes it
+# (PUT /api/admin/users/{id}/gender); otherwise one could switch to read the
+# other gender's requests.
+GENDER_LOCKED_ROLES = ("mentor", "team", "admin")
+
+
+def set_own_gender(user: User, gender: str) -> None:
+    if user.gender and gender != user.gender and any(user.has(r) for r in GENDER_LOCKED_ROLES):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "gender_locked")
+    user.gender = gender
+
 
 class MePatch(BaseModel):
     display_name: str | None = Field(default=None, min_length=1, max_length=40)
     locale: Locale | None = None
     languages: list[Locale] | None = None
+    gender: Literal["m", "f"] | None = None  # mentors and team members set theirs in «حسابي»
 
 
 class PasswordIn(BaseModel):
@@ -322,6 +335,8 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
         user.locale = body.locale
     if body.languages is not None:
         user.languages = body.languages
+    if body.gender is not None:
+        set_own_gender(user, body.gender)
     await session.commit()
     return me_out(user)
 

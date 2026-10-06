@@ -3,7 +3,7 @@
  * claims it (R3). The mentor gives no fatwa: he refers a learner's personal
  * Sharia question to the Sharia reviewer, or hands danger to everyone as
  * urgent (R5). Shows only display name or guest number, language, topic and
- * source (R6).
+ * source (R6). The learner's messages can be reported too (CMP-04 R1).
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
@@ -18,16 +18,44 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
-import { type InboxRow, REFERRAL_NOTICE, inboxApi, useInboxThread } from "../api"
-import { type ChatItem, ChatList, Composer } from "../Chat"
+import { type InboxMessage, type InboxRow, REFERRAL_NOTICE, inboxApi, useInboxThread } from "../api"
+import { type ChatAction, type ChatItem, ChatList, Composer } from "../Chat"
 import { Confirm } from "../Confirm"
 import { langName } from "../format"
+import { ReportSheet, type ReportTarget } from "../ReportSheet"
 import { ScreenBar } from "../Screen"
 
 /** CMP-02 R6: a guest is «زائر» / «زائرة» and a short number; a sister's request reaches sisters only (CMP-01 R3). */
 export function requesterName(t: ReturnType<typeof useT>["t"], row: Pick<InboxRow, "is_guest" | "handle" | "kind">, myGender: string | null) {
   if (!row.is_guest) return row.handle
   return t(row.kind !== "urgent" && myGender === "f" ? "cmp.inbox.guestF" : "cmp.inbox.guest", { n: row.handle })
+}
+
+/**
+ * One message as the responder sees it. A learner's message can be referred
+ * to scholars once (CMP-02 R5) and reported with the same reasons and queue
+ * as any other (CMP-04 R1); the responder's own hidden message stays, marked
+ * for review (CMP-04 R5).
+ */
+export function inboxChatItem(
+  m: InboxMessage,
+  t: ReturnType<typeof useT>["t"],
+  o: { name: string; canRefer: boolean; onRefer: () => void; onReport: () => void },
+): ChatItem {
+  const actions: ChatAction[] = []
+  if (m.author === "learner") {
+    if (o.canRefer) actions.push({ label: t("cmp.referral.action"), onSelect: o.onRefer })
+    actions.push({ label: t("cmp.thread.report"), onSelect: o.onReport, destructive: true })
+  }
+  return {
+    id: m.id,
+    mine: m.mine,
+    name: m.author === "learner" ? o.name : m.author === "scholar" ? t("cmp.referral.scholars") : m.name,
+    body: m.author === "system" && m.body === REFERRAL_NOTICE ? t("cmp.referral.noticeMentor") : m.body,
+    at: m.created_at,
+    hidden: m.hidden,
+    actions: actions.length > 0 ? actions : undefined,
+  }
 }
 
 export default function InboxThread() {
@@ -38,6 +66,7 @@ export default function InboxThread() {
   const thread = useInboxThread(id)
   const [confirmUrgent, setConfirmUrgent] = React.useState(false)
   const [referring, setReferring] = React.useState<string | null>(null)
+  const [report, setReport] = React.useState<ReportTarget | null>(null)
   const myGender = useAuth((s) => s.me?.gender ?? null)
   const r = thread.data
 
@@ -71,18 +100,15 @@ export default function InboxThread() {
   }
 
   const name = r ? requesterName(t, r, myGender) : ""
-  const items: ChatItem[] = (r?.messages ?? []).map((m) => ({
-    id: m.id,
-    mine: m.mine,
-    name: m.author === "learner" ? name : m.author === "scholar" ? t("cmp.referral.scholars") : m.name,
-    body: m.author === "system" && m.body === REFERRAL_NOTICE ? t("cmp.referral.noticeMentor") : m.body,
-    at: m.created_at,
-    // R5: a learner's personal Sharia question goes to scholars, once.
-    actions:
-      m.author === "learner" && r?.can_reply && !r.referred.includes(m.id)
-        ? [{ label: t("cmp.referral.action"), onSelect: () => setReferring(m.id) }]
-        : undefined,
-  }))
+  const items: ChatItem[] = (r?.messages ?? []).map((m) =>
+    inboxChatItem(m, t, {
+      name,
+      // R5: a learner's personal Sharia question goes to scholars, once.
+      canRefer: !!r?.can_reply && !r.referred.includes(m.id),
+      onRefer: () => setReferring(m.id),
+      onReport: () => setReport({ type: "help_message", id: m.id }),
+    }),
+  )
 
   return (
     <>
@@ -146,6 +172,7 @@ export default function InboxThread() {
           </>
         )}
       </div>
+      <ReportSheet target={report} onClose={() => setReport(null)} />
       <Confirm
         open={referring !== null}
         onOpenChange={(o) => !o && setReferring(null)}

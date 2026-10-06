@@ -1,6 +1,7 @@
 /**
  * Admin: invite codes for mentors, the Sharia reviewer and team members
- * (plan §5: codes stand in for organisation approval), and role changes.
+ * (plan §5: codes stand in for organisation approval), role changes, and
+ * a mentor's or team member's gender (CMP security: only an admin changes it).
  */
 import * as React from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -21,7 +22,7 @@ const ALL_ROLES = ["learner", ...INVITE_ROLES] as const
 const roleKey = (r: string): Key => (r === "team" ? "role.teamRole" : r === "admin" ? "role.adminRole" : (`role.${r}` as Key))
 
 type Invite = { code: string; role: string; used: boolean; created_at: string }
-type U = { id: string; username: string; display_name: string; roles: string[] }
+type U = { id: string; username: string; display_name: string; roles: string[]; gender?: string | null }
 
 export default function Admin() {
   const { t } = useT()
@@ -127,6 +128,30 @@ function UserRoles({ user }: { user: U }) {
       <Button variant="secondary" className="w-fit" disabled={save.isPending} onClick={() => save.mutate()}>
         {t("admin.saveRoles")}
       </Button>
+      <UserGender user={user} />
     </li>
+  )
+}
+
+/** CMP gaps (security): a mentor's or team member's gender, once set, changes only here. */
+function UserGender({ user }: { user: U }) {
+  const { t } = useT()
+  const [gender, setGender] = React.useState(user.gender ?? "")
+  const save = useMutation({
+    mutationFn: () => api(`/api/admin/users/${user.id}/gender`, { method: "PUT", body: { gender } }),
+    onSuccess: () => toast.success(t("admin.saved")),
+    onError: () => toast.error(t("common.error")),
+  })
+  return (
+    <div className="flex flex-wrap items-center gap-3 border-t pt-3">
+      <span className="text-label font-bold">{t("cmp.gaps.admin.gender")}</span>
+      <ToggleGroup type="single" variant="outline" value={gender} onValueChange={(v) => setGender(v)} aria-label={t("cmp.gaps.admin.gender")}>
+        <ToggleGroupItem value="m">{t("acct.male")}</ToggleGroupItem>
+        <ToggleGroupItem value="f">{t("acct.female")}</ToggleGroupItem>
+      </ToggleGroup>
+      <Button variant="secondary" disabled={!gender || gender === (user.gender ?? "") || save.isPending} onClick={() => save.mutate()}>
+        {t("cmp.gaps.admin.saveGender")}
+      </Button>
+    </div>
   )
 }

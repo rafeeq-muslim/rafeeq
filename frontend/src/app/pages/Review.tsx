@@ -130,7 +130,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
           <IconX />
         </Button>
         <Progress value={(done / items.length) * 100} aria-label={t("review.title")} className="h-3.5 flex-1" />
-        <HumanHelpButton label={t("ask.human")} onClick={() => navigate("/mentor/help?from=review")} className="hidden min-[380px]:inline-flex" />
+        <HumanHelpButton compact label={t("ask.human")} onClick={() => navigate("/mentor/help?from=review")} />
       </header>
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         {exercise && (

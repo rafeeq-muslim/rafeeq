@@ -1,7 +1,8 @@
 """CMP-04 report and block.
 
-One-tap report with a reason on any group message or on a message from the
-person answering a help request or from one's mentor (R1). Marriage, money
+One-tap report with a reason on any group message, on a message from the
+person answering a help request or from one's mentor, and, for that person,
+on the learner's message in the same conversation (R1). Marriage, money
 and recruitment («الأسباب الخطرة») hide the message for everyone at once
 until the team reviews it; other reasons hide it for the reporter only (R2).
 «خطر على أحد» goes to the top of the team's queue and alerts the team at
@@ -22,8 +23,9 @@ from pydantic import BaseModel, Field
 from sqlalchemy import and_, case, delete, select
 
 from app.companion import notify
-from app.companion.common import CurrentOwner, not_found
+from app.companion.common import CurrentOwner, is_team, not_found
 from app.companion.groups import access, remove
+from app.companion.inbox import visible_request
 from app.companion.models import Block, Group, GroupMessage, HelpMessage, HelpRequest, Report
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
@@ -62,7 +64,13 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
     else:
         hm = await session.get(HelpMessage, body.target_id)
         req = await session.get(HelpRequest, hm.request_id) if hm else None
-        if hm is None or req is None or not owner.owns(req) or hm.author not in ("mentor", "scholar"):
+        if hm is None or req is None:
+            raise not_found()
+        learner_reports_reply = owner.owns(req) and hm.author in ("mentor", "scholar")
+        # R1: the person answering a request (or a mentor in his mentee's
+        # thread) reports the learner's message, with the same reasons and queue.
+        responder_reports_learner = owner.user is not None and hm.author == "learner" and await _answers(session, owner.user, req)
+        if not (learner_reports_reply or responder_reports_learner):
             raise not_found()
         msg = hm
     high = body.reason in DANGEROUS
@@ -85,6 +93,17 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
     if priority != "normal":
         notify.later(notify.to_role, ["team", "admin"], "report_danger" if priority == "danger" else "report", "/inbox?tab=reports")
     return {"ok": True, "hidden_for_all": high}
+
+
+async def _answers(session, user: User, req: HelpRequest) -> bool:
+    """Whether `user` is a responder who can open this request in his inbox."""
+    if not (user.has("mentor") or is_team(user)):
+        return False
+    try:
+        await visible_request(session, user, req.id)
+    except HTTPException:
+        return False
+    return True
 
 
 # --- team queue (R3, R4) -------------------------------------------------
