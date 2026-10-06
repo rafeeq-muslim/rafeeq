@@ -239,6 +239,16 @@ describe("cmp-08-r2 one neutral answer; no third party against abuse", () => {
     expect(document.querySelectorAll("iframe, script[src]")).toHaveLength(0)
   })
 
+  it("cmp08_r3_a_closed_form_says_applications_are_not_open_now", async () => {
+    // The server answers 503 while the contact encryption keys are not set.
+    stubFetch(() => json({ detail: "applications_closed" }, 503))
+    wrap(<MentorApply />)
+    fill()
+    fireEvent.click(submitButton())
+    expect(await screen.findByText(ar_("cmp.apply.closed"))).toBeTruthy()
+    expect(screen.queryByText(ar_("cmp.apply.done.title"))).toBeNull()
+  })
+
   it("cmp08_r2_too_many_attempts_and_a_wrong_organisation_code_say_so", async () => {
     stubFetch(() => json({ detail: "rate_limited" }, 429))
     wrap(<MentorApply />)

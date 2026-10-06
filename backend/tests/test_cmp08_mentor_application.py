@@ -73,12 +73,12 @@ async def test_cmp08_r1_a_visitor_applies_without_an_account(client):
     assert r.json() == {"received": True, "keep_days": 90}
     (row,) = await rows()
     assert (row.status, row.display_name, row.gender, row.languages, row.place) == ("pending", "أم يوسف", "f", ["ar", "tl"], "الرياض")
-    assert row.contact == EMAIL and row.user_id is None and row.org_id is None
+    assert row.readable_contact() == EMAIL and row.user_id is None and row.org_id is None
 
 
 async def test_cmp08_r1_a_phone_number_is_a_contact_too(client):
     assert (await apply(client, contact="+1 (555) 555-0100")).status_code == 201
-    assert (await rows())[0].contact == "+15555550100"
+    assert (await rows())[0].readable_contact() == "+15555550100"
 
 
 @pytest.mark.parametrize(
@@ -104,7 +104,7 @@ async def test_cmp08_r1_a_signed_in_applicant_needs_no_contact(client):
     r = await apply(client, p.h, contact=None)
     assert r.status_code == 201, r.text
     (row,) = await rows()
-    assert row.user_id == p.id and row.contact is None
+    assert row.user_id == p.id and row.readable_contact() is None
 
 
 # --- R2: one answer, and no third party against abuse ---------------------------
@@ -245,7 +245,7 @@ async def test_cmp08_r4_rejection_deletes_the_contact_and_the_text_at_once(clien
         None,
     )
     (row,) = await rows()
-    assert row.contact is None and row.about is None
+    assert (row.contact, row.contact_enc, row.contact_hmac, row.about) == (None, None, None, None)
     mine = (await client.get(f"{URL}/mine", headers=p.h)).json()
     assert mine["status"] == "rejected" and "note" not in mine  # the note is the team's own
 
@@ -366,7 +366,7 @@ async def test_cmp08_r7_deleting_the_account_removes_its_application(client):
     await apply(client, p.h)
     await apply(client, contact="someone-else@example.com")
     assert (await client.delete("/api/me", headers=p.h)).status_code == 204
-    assert [r.contact for r in await rows()] == ["someone-else@example.com"]
+    assert [r.readable_contact() for r in await rows()] == ["someone-else@example.com"]
 
 
 async def test_cmp08_r7_the_data_export_has_the_application_without_the_teams_note(client):

@@ -8,6 +8,7 @@ dependencies = [
     "apscheduler>=3.11.3",
     "argon2-cffi>=25.1.0",
     "asyncpg>=0.31.0",
+    "cryptography>=46",
     "fastapi[standard]>=0.115",
     "httpx>=0.28.1",
     "orjson>=3.12.0",

@@ -1579,4 +1579,6 @@ export const en: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "End this conversation?",
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
+  // --- CMP-08 R3 (sec-cmp-08-contact-encryption): the form is closed while the contact keys are not set ---
+  "cmp.apply.closed": "Applications are not open right now. Please come back later.",
 }

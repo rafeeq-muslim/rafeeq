@@ -1580,4 +1580,6 @@ export const tl: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
   "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
+  // --- CMP-08 R3 (sec-cmp-08-contact-encryption): the form is closed while the contact keys are not set ⚠️ Tagalog needs native review ---
+  "cmp.apply.closed": "Hindi bukas ang aplikasyon sa ngayon. Bumalik sa ibang pagkakataon.",
 }

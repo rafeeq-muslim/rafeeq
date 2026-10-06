@@ -1,6 +1,7 @@
 """Companion & Community (CMP): help requests to a human, mentors, groups,
 reports and blocks. A mentor sees only what the learner allows."""
 
+import logging
 import uuid
 from datetime import datetime
 
@@ -8,7 +9,10 @@ from sqlalchemy import ARRAY, Boolean, DateTime, ForeignKey, Integer, String, Te
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.core import crypto
 from app.core.db import Base, IdMixin
+
+log = logging.getLogger(__name__)
 
 _user_fk = lambda: ForeignKey("users.id", ondelete="CASCADE")  # noqa: E731
 
@@ -197,8 +201,12 @@ class MentorApplication(IdMixin, Base):
     """CMP-08: someone asks to become a mentor; the team (or the coordinator
     of the organisation whose code they entered) decides. `contact` is the
     single place Rafeeq keeps a contact detail for a mentor, and only staff
-    read it (R3). `about` and `contact` go on rejection; the whole row goes
-    90 days after a decision, or after 90 days unanswered (R6)."""
+    read it (R3). It is stored encrypted in `contact_enc` with a keyed digest
+    in `contact_hmac` for the "same contact" lookup (app/core/crypto.py); the
+    plain `contact` column is the earlier storage, emptied row by row once
+    encrypted and dropped in a later release. `about` and the contact go on
+    rejection; the whole row goes 90 days after a decision, or after 90 days
+    unanswered (R6)."""
 
     __tablename__ = "cmp_mentor_applications"
     display_name: Mapped[str] = mapped_column(String(40))
@@ -207,7 +215,9 @@ class MentorApplication(IdMixin, Base):
     locale: Mapped[str] = mapped_column(String(5), default="ar")  # the form's language, to answer in it
     place: Mapped[str | None] = mapped_column(String(80), nullable=True)
     about: Mapped[str | None] = mapped_column(Text, nullable=True)
-    contact: Mapped[str | None] = mapped_column(String(254), nullable=True)
+    contact: Mapped[str | None] = mapped_column(String(254), nullable=True)  # legacy plain text; new rows never fill it
+    contact_enc: Mapped[str | None] = mapped_column(Text, nullable=True)
+    contact_hmac: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
     # Applied while signed in: approval grants the role to this account.
     user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), _user_fk(), nullable=True, index=True)
     # The organisation whose ORG-01 code was entered (no FK across domains, like invites.org_id).
@@ -218,3 +228,22 @@ class MentorApplication(IdMixin, Base):
     decided_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     note: Mapped[str | None] = mapped_column(Text, nullable=True)  # the team's own note on a rejection; never shown to the applicant
     invite_code: Mapped[str | None] = mapped_column(String(32), nullable=True)  # issued on approval, sent by hand
+
+    def readable_contact(self) -> str | None:
+        """The contact for staff and for the applicant's own export. Empty when it
+        cannot be decrypted (wrong or missing key); a row not encrypted yet is
+        still read from the plain column."""
+        if self.contact_enc:
+            value = crypto.decrypt(self.contact_enc)
+            if value is None:
+                log.warning("mentor application %s: the contact cannot be decrypted with the configured keys", self.id)
+            return value
+        return self.contact
+
+    def set_contact(self, normalized: str | None) -> None:
+        """Store the contact encrypted, or clear it everywhere (raises CryptoUnavailable without keys)."""
+        if normalized is None:
+            self.contact = self.contact_enc = self.contact_hmac = None
+            return
+        self.contact_enc, self.contact_hmac = crypto.encrypt(normalized), crypto.contact_digest(normalized)
+        self.contact = None

@@ -50,11 +50,11 @@ A new section «ما نحفظه إن قدّمت لتكون مرشدًا» (`poli
 | --- | --- |
 | Kept: display name, gender, languages, country and city if written, the text about yourself, one contact (email or mobile) | `cmp_mentor_applications` columns (`companion/models.py::MentorApplication`); also the form's language, the status and its dates, and no IP address |
 | Seen only by the Rafeeq team, and the organisation's coordinator if an organisation's code was entered; used only to tell the result | `applications.py`: `staff` router (`require_role("team")`), `org` router (`coordinator_of`, rows of that `org_id` only); `mine` returns the status only |
-| Not accepted: contact and text deleted at once | `_reject` sets `contact` and `about` to NULL |
+| Not accepted: contact and text deleted at once | `_reject` sets the contact (`contact_enc`, `contact_hmac`, and the earlier plain `contact`) and `about` to NULL |
 | Whole application deleted 90 days after the decision, or after 90 days undecided | `purge` (`KEEP_DAYS = 90`), daily job `companion/jobs.py` |
 | Signed in: no contact asked, the application is in the data copy and goes with the account | `apply` (contact optional with an account), `companion/export.py` (`mentor_application`, without the team's note), FK cascade + `AccountDeleted` handler |
 
-Not said in the policy: the contact is stored unencrypted, like the 2FA email (see `implementation/CMP-08.md` §2).
+Not said in the policy: the contact is stored encrypted (security audit 2026-10-07, M4; limits in `implementation/CMP-08.md` §2.1), and backups made before a row was encrypted keep it in plain text for up to 7 days. The 2FA email is still stored unencrypted.
 
 ### 2.3 Added with KNW-01 R7 (2026-10-06, branch `knw-01-r7-ask-update-wording`)
 

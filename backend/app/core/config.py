@@ -131,6 +131,13 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_from: str = "Rafeeq <no-reply@rafeeq.nan.sa>"
 
+    # CMP-08 R3: the mentor applicant's contact is encrypted at rest (app/core/crypto.py).
+    # Fernet keys, comma-separated, newest first; and the key of the lookup digest.
+    # Empty outside production = a public development key. Empty in production =
+    # the application form answers 503 and the rest of the app runs as usual.
+    application_contact_keys: str = ""
+    application_contact_hmac_key: str = ""
+
     # Bootstrap admin (created once if no admin exists).
     bootstrap_admin_username: str = ""
     bootstrap_admin_password: str = ""

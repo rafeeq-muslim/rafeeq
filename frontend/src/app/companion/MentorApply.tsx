@@ -42,7 +42,7 @@ export const validContact = (v: string) => EMAIL.test(v.trim()) || PHONE.test(v.
 
 type Mine = { status: "pending" | "approved" | "rejected"; applied_at: string } | null
 type Sent = { received: boolean; keep_days: number }
-type ErrorKey = "acct.rateLimited" | "welcome.code.invalid" | "cmp.apply.contactBad" | "cmp.apply.alreadyMentor" | "common.error"
+type ErrorKey = "acct.rateLimited" | "welcome.code.invalid" | "cmp.apply.contactBad" | "cmp.apply.alreadyMentor" | "cmp.apply.closed" | "common.error"
 
 export default function MentorApply() {
   useDocumentLocale()
@@ -96,7 +96,7 @@ export default function MentorApply() {
       const code = err instanceof ApiError ? err.code : ""
       const status = err instanceof ApiError ? err.status : 0
       setError(
-        status === 429 ? "acct.rateLimited" : code === "code_invalid" ? "welcome.code.invalid" : code === "already_mentor" ? "cmp.apply.alreadyMentor" : status === 422 ? "cmp.apply.contactBad" : "common.error",
+        status === 429 ? "acct.rateLimited" : code === "code_invalid" ? "welcome.code.invalid" : code === "already_mentor" ? "cmp.apply.alreadyMentor" : code === "applications_closed" ? "cmp.apply.closed" : status === 422 ? "cmp.apply.contactBad" : "common.error",
       )
     } finally {
       setBusy(false)

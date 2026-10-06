@@ -94,7 +94,7 @@ async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
                 "languages": application.languages,
                 "place": application.place,
                 "about": application.about,
-                "contact": application.contact,
+                "contact": application.readable_contact(),
                 "status": application.status,
                 "applied_at": application.created_at,
                 "decided_at": application.decided_at,

@@ -1578,4 +1578,6 @@ export const ar = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "أتُنهي هذه المحادثة؟",
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
+  // --- CMP-08 R3 (sec-cmp-08-contact-encryption): the form is closed while the contact keys are not set ---
+  "cmp.apply.closed": "التقديم غير متاح الآن. عُد في وقت لاحق.",
 } as const

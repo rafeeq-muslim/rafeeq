@@ -11,12 +11,16 @@ the coordinator of the organisation whose code they entered) decides.
   from the same account) replaces the first. Anti-abuse without third
   parties: a per-IP limit kept in memory only (the IP is never stored) and
   a hidden field that only a script fills.
-- R3: `contact` is the single exception to "no contact details" in
+- R3: the contact is the single exception to "no contact details" in
   Companion: it is read only through the staff endpoints below, never by a
-  learner or a mentor. Stored as plain text like the 2FA email (PLT-02): the
-  codebase has no data-encryption key, and deriving one from the sign-in
-  secret would lose every contact when that secret rotates. Protection is
-  access control plus short retention.
+  learner or a mentor. It is encrypted at rest (`contact_enc`, Fernet) with
+  a keyed digest (`contact_hmac`) for the "same contact" lookup; the keys
+  are their own settings (app/core/crypto.py), not the sign-in secret.
+  Without keys in production the form answers 503 `applications_closed`
+  and everything else keeps working; a contact that cannot be decrypted
+  shows empty. Rows written before encryption stay readable from the plain
+  `contact` column until `encrypt_plaintext` moves them (at start, daily,
+  or `python -m app.core.crypto migrate`).
 - R4/R5: approve issues a one-time mentor invite through the existing
   mechanism (`invites`: the organisation's 7-day code when the application
   named one, a team code otherwise), shown to staff to send by hand; Rafeeq
@@ -45,7 +49,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion import notify
 from app.companion.models import MentorApplication
-from app.core import ratelimit
+from app.core import crypto, ratelimit
 from app.core.deps import CurrentUser, OptionalUser, Session, require_role
 from app.organizations.manage import INVITE_DAYS, coordinator_of
 from app.organizations.public import approve_mentor, org_id_of_code, org_names
@@ -128,6 +132,9 @@ async def apply(body: ApplyIn, session: Session, request: Request, user: Optiona
     ratelimit.hit(f"mentor-apply:{request.client.host if request.client else '-'}", LIMIT, WINDOW_S)  # in memory only
     if body.website:
         return ApplyOut()  # a script filled the hidden field: same answer, nothing kept
+    if not crypto.available():
+        # The contact keys are not set (production only): nothing is stored in plain text.
+        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "applications_closed")
     if user is None and body.contact is None:
         raise HTTPException(422, "contact_required")
     if user is not None and user.has("mentor"):
@@ -139,6 +146,8 @@ async def apply(body: ApplyIn, session: Session, request: Request, user: Optiona
             raise HTTPException(status.HTTP_404_NOT_FOUND, "code_invalid")  # as ORG-01 R3: «تحقق من الرمز»
     same = [MentorApplication.user_id == user.id] if user is not None else []
     if body.contact:
+        # The keyed digest; the plain column only matches a row not encrypted yet.
+        same.append(MentorApplication.contact_hmac == crypto.contact_digest(body.contact))
         same.append(MentorApplication.contact == body.contact)
     row = await session.scalar(select(MentorApplication).where(MentorApplication.status == "pending", or_(*same)).limit(1))
     is_new = row is None
@@ -152,7 +161,7 @@ async def apply(body: ApplyIn, session: Session, request: Request, user: Optiona
     row.locale = body.locale
     row.place = body.place
     row.about = body.about
-    row.contact = body.contact
+    row.set_contact(body.contact)
     row.user_id = user.id if user is not None else row.user_id
     row.org_id = org_id
     row.created_at = datetime.now(UTC)
@@ -222,7 +231,7 @@ async def _out(session: AsyncSession, rows: list[MentorApplication], with_note: 
             locale=r.locale,
             place=r.place,
             about=r.about,
-            contact=r.contact,
+            contact=r.readable_contact(),
             has_account=r.user_id is not None,
             organization=names.get(r.org_id) if r.org_id else None,
             status=r.status,
@@ -283,7 +292,8 @@ async def _reject(session: AsyncSession, row: MentorApplication, by: User, note:
     _pending(row)
     row.status, row.decided_at, row.decided_by = "rejected", datetime.now(UTC), by.id
     row.note = (note or "").strip() or None
-    row.contact = row.about = None  # R4: gone at once
+    row.about = None  # R4: gone at once
+    row.set_contact(None)  # the ciphertext, the digest and any plain text left
     await session.commit()
 
 
@@ -360,3 +370,40 @@ async def purge(session: AsyncSession, now: datetime | None = None) -> int:
     )
     await session.commit()
     return done.rowcount or 0
+
+
+# --- R3: contact encryption at rest ------------------------------------------------
+
+
+async def encrypt_plaintext(session: AsyncSession) -> int:
+    """Encrypt contacts still stored as plain text (rows from before the
+    encryption, or written by the previous image during a rollback). Safe to
+    run any number of times; does nothing without keys. The plain column is
+    emptied in the same statement that stores the ciphertext."""
+    if not crypto.available():
+        return 0
+    rows = await session.scalars(select(MentorApplication).where(MentorApplication.contact.is_not(None)).with_for_update(skip_locked=True))
+    count = 0
+    for row in rows:
+        row.set_contact(row.contact)
+        count += 1
+    await session.commit()
+    return count
+
+
+async def rotate(session: AsyncSession) -> tuple[int, int]:
+    """Re-encrypt every contact with the newest key and recompute its digest
+    (so the digest key can change in the same run). Returns (re-encrypted,
+    unreadable); an unreadable row is left as it is."""
+    await encrypt_plaintext(session)
+    rows = await session.scalars(select(MentorApplication).where(MentorApplication.contact_enc.is_not(None)).with_for_update())
+    done = unreadable = 0
+    for row in rows:
+        value = crypto.decrypt(row.contact_enc)
+        if value is None:
+            unreadable += 1
+            continue
+        row.set_contact(value)
+        done += 1
+    await session.commit()
+    return done, unreadable
