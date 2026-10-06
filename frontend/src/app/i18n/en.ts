@@ -1176,4 +1176,9 @@ export const en: Dict = {
   "desk.cite.missing": "Hadith {id} is not in the stored record in this language",
   "desk.glossary.title": "Spellings the glossary does not approve",
   "desk.glossary.flag": "“{found}” instead of the approved term “{term}”",
+  // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
+  "me.theme": "Appearance",
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "theme.system": "Device setting",
 }
