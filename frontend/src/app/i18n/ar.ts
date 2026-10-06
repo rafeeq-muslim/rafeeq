@@ -997,4 +997,8 @@ export const ar = {
   "guide.suggest.discover.title": "اكتشف",
   "guide.suggest.discover.body": "فائدة قصيرة كل يوم، وتلاوة مع معانيها بلغتك، ومكتبة موثوقة.",
   "guide.suggest.discover.cta": "افتح اكتشف",
+  // KNW-09 saved answers
+  "discover.saved.kind.answer": "إجابة",
+  "discover.saved.answerOn": "حُفظت في {d}",
+  "discover.saved.answerOffline": "تعذّر عرض هذه الإجابة الآن. ستظهر حين يعود الاتصال.",
 } as const

@@ -138,40 +138,59 @@ function SaveAnswer({ response }: { response: AskResponse }) {
   )
 }
 
-export function AnswerTurn({ response }: { response: AskResponse }) {
+/**
+ * Rafeeq's wording with the stored scripture in place of every marker, then
+ * the source strips. Also shows a saved answer (KNW-09 R2), whose `sources`
+ * are fetched again by id, never kept with the answer.
+ */
+export function AnswerMessage({
+  answer,
+  sources,
+  footer,
+  children,
+}: {
+  answer: string
+  sources: SourceCard[]
+  footer?: React.ReactNode
+  children?: React.ReactNode
+}) {
   const { t, locale } = useT()
-  const navigate = useNavigate()
   const refLabel = useRefLabel()
-  const segs = segments(response.answer, response.sources)
-  const groups = groupSources(response.sources)
+  const segs = segments(answer, sources)
+  const groups = groupSources(sources)
   const strips = groups.map((g) => `${sourceLabel(g.first, locale)} — ${refLabel(g.first)}`)
   return (
+    <AssistantMessage sources={strips} sourceLinks={groups.map((g) => g.first.origin_url)} sourceLabel={t("ask.source")} footer={footer}>
+      <p className="flex items-center gap-1.5 text-caption text-muted-foreground">
+        <IconSparkles className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
+        {t("ask.wording")}
+      </p>
+      {segs.map((s, i) =>
+        s.type === "text" ? (
+          <p key={i} dir="auto" className="text-body whitespace-pre-line">
+            {s.text}
+          </p>
+        ) : (
+          <ScriptureQuote key={i} source={s.source} />
+        ),
+      )}
+      {children}
+    </AssistantMessage>
+  )
+}
+
+export function AnswerTurn({ response }: { response: AskResponse }) {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
     <div className="flex flex-col gap-3">
-      <AssistantMessage
-        sources={strips}
-        sourceLinks={groups.map((g) => g.first.origin_url)}
-        sourceLabel={t("ask.source")}
-        footer={<SaveAnswer response={response} />}
-      >
-        <p className="flex items-center gap-1.5 text-caption text-muted-foreground">
-          <IconSparkles className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
-          {t("ask.wording")}
-        </p>
-        {segs.map((s, i) =>
-          s.type === "text" ? (
-            <p key={i} dir="auto" className="text-body whitespace-pre-line">
-              {s.text}
-            </p>
-          ) : (
-            <ScriptureQuote key={i} source={s.source} />
-          ),
-        )}
+      <AnswerMessage answer={response.answer} sources={response.sources} footer={<SaveAnswer response={response} />}>
         {response.notes.map((n, i) => (
           <p key={`n${i}`} dir="auto" className="text-body font-medium text-secondary-foreground">
             {n}
           </p>
         ))}
-      </AssistantMessage>
+      </AnswerMessage>
       {response.route === "personal" && (
         <ReferralCard
           title={t("ask.personal.title")}
