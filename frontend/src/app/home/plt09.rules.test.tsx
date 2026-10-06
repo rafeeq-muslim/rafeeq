@@ -312,6 +312,7 @@ describe("plt-09-r3 the fixed optional list, eligibility on the device", () => {
     expect(eligible("ramadan", ctx({ ramadan: { kind: "upcoming", daysLeft: 14 } }))).toBe(true)
     expect(eligible("ramadan", ctx({ ramadan: { kind: "upcoming", daysLeft: 15 } }))).toBe(false)
     expect(eligible("reciter", ctx({ openedListening: true, recitersAvailable: 6 }))).toBe(true)
+    expect(eligible("reciter", ctx({ openedListening: true, recitersAvailable: 1 }))).toBe(false) // nothing to choose from
     expect(eligible("reciter", ctx({ openedListening: true, recitersAvailable: 6, reciterChosen: true }))).toBe(false)
     expect(eligible("library", ctx({ completed: { "u01-l7": DONE }, libraryPick: true }))).toBe(true)
     expect(eligible("library", ctx({ completed: { "u01-l6": DONE }, libraryPick: true }))).toBe(false)
@@ -342,7 +343,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
     localStorage.setItem("rafeeq.quranLast", "1") // opened listening
     useLearning.setState({ completed: { "u01-l1": DONE, "u01-l7": DONE } })
     routes["/api/home/order"] = () => ({ body: { order: { main: ["daily", "card", "ask"], optional: ["library", "reciter", "human", "save", "ramadan"] } } })
-    routes["/api/discover/recitations"] = () => ({ body: { lang: "ar", recitation: null, reciters: [{ id: "quranpedia-255" }] } })
+    routes["/api/discover/recitations"] = () => ({ body: { lang: "ar", recitation: null, reciters: [{ id: "quranpedia-255" }, { id: "quranpedia-250" }] } })
     routes["/api/discover/library"] = () => ({ body: { lang: "ar", topics: [{ id: "basics", items: [{ id: "lib-1", title: "كتاب المسلم الجديد", topic: "basics" }] }] } })
     wrap("/")
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "library", "reciter"]))
@@ -460,7 +461,7 @@ describe("plt-09-r6 the learner owns Home: hide with one tap, no reward or blame
     localStorage.setItem("rafeeq.quranLast", "2")
     useLearning.setState({ completed: { "u01-l1": DONE } })
     useAuth.setState({ me: { id: "l", display_name: "ليلى", username: "layla", roles: ["learner"] } as never, token: "x" })
-    routes["/api/discover/recitations"] = () => ({ body: { reciters: [{ id: "quranpedia-250" }] } })
+    routes["/api/discover/recitations"] = () => ({ body: { reciters: [{ id: "quranpedia-250" }, { id: "quranpedia-255" }] } })
     routes["/api/mentors/mine"] = () => ({ body: { mentor: null } })
     useHome.setState({ day: localDay(new Date()), order: { main: ["daily", "card", "ask"], optional: order } })
     wrap("/")

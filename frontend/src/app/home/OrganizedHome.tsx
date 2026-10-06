@@ -318,7 +318,14 @@ export function OptionalCard({ id, library }: { id: OptionalId; library: Library
   const copy =
     id === "library"
       ? { icon: IconBooks, title: t("home.org.library.title"), body: library?.title ?? "", cta: t("home.org.library.cta"), route: library ? `/discover/library/${library.id}` : "/discover/library" }
-      : { ...OPTIONAL_COPY[id], title: t(OPTIONAL_COPY[id].title), body: t(OPTIONAL_COPY[id].body), cta: t(OPTIONAL_COPY[id].cta) }
+      : {
+          ...OPTIONAL_COPY[id],
+          title: t(OPTIONAL_COPY[id].title),
+          body: t(OPTIONAL_COPY[id].body),
+          cta: t(OPTIONAL_COPY[id].cta),
+          // KNW-08: the reciter picker is on the surah page; open the one last listened to.
+          route: id === "reciter" ? `/discover/quran/${lastSura() ?? 1}` : OPTIONAL_COPY[id].route,
+        }
   const Icon = copy.icon
   const titleId = React.useId()
   return (

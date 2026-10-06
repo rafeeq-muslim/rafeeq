@@ -69,7 +69,7 @@ export type Eligibility = {
   /** KNW-08: the learner listened to a surah on this device. */
   openedListening: boolean
   reciterChosen: boolean
-  /** KNW-08 R4: approved reciters to choose from. */
+  /** KNW-08 R4: approved per-verse reciters (a choice needs two or more). */
   recitersAvailable: number
   /** KNW-06: an approved book or clip for the learner's unit, in their language. */
   libraryPick: boolean
@@ -85,7 +85,7 @@ export function eligible(id: OptionalId, c: Eligibility): boolean {
     case "save":
       return !c.signedIn && firstLessonDone && !c.saveDismissed
     case "reciter":
-      return c.openedListening && !c.reciterChosen && c.recitersAvailable > 0
+      return c.openedListening && !c.reciterChosen && c.recitersAvailable > 1 // a choice exists (the picker shows from two)
     case "library":
       return Boolean(c.completed[LESSON_LAST_DAY_ONE]) && c.libraryPick
   }

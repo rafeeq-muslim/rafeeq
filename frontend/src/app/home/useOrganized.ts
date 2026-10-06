@@ -17,8 +17,9 @@ import { api } from "@/app/lib/api"
 import { buildSummary } from "@/app/ask/guide"
 import { useMine } from "@/app/companion/api"
 import { lastSura } from "@/app/discover/player"
+import { loadReciterChoice } from "@/app/discover/reciters"
 import { useLibrary } from "@/app/discover/queries"
-import type { LibraryItemData } from "@/app/discover/types"
+import type { LibraryItemData, RecitationResponse } from "@/app/discover/types"
 import { useGuideContext } from "@/app/guide/useGuide"
 import type { Lesson } from "@/app/learning/types"
 import { useAuth } from "@/app/stores/auth"
@@ -78,15 +79,8 @@ export function useDayOrder(lessons: Lesson[] | null, today: string): Order | nu
   return fresh ? order : null
 }
 
-/** KNW-08 R4: the reciter the learner chose (knw-08's discover/reciters.ts stores it under this key). */
-export const RECITER_KEY = "rafeeq.quranReciter"
-function reciterChosen(): boolean {
-  try {
-    return localStorage.getItem(RECITER_KEY) != null
-  } catch {
-    return false
-  }
-}
+/** KNW-08 R4: the learner chose a reciter (stored on this device by discover/reciters.ts). */
+const reciterChosen = () => loadReciterChoice() != null
 
 /**
  * KNW-06: «كتاب أو مقطع معتمد يناسب وحدته». The library has no unit tags
@@ -107,7 +101,7 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
   const openedListening = lastSura() != null
   const recitations = useQuery({
     queryKey: ["discover-recitation", locale],
-    queryFn: () => api<{ reciters?: unknown[] }>(`/api/discover/recitations?lang=${locale}`),
+    queryFn: () => api<RecitationResponse>(`/api/discover/recitations?lang=${locale}`),
     enabled: openedListening,
     staleTime: 60 * 60_000,
   })

@@ -216,7 +216,7 @@ Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No 
 | One next-step card = the short review when it is due, else the next lesson | R1 «أو للمراجعة القصيرة حين تستحق، لا بطاقتان» | `NextStep` in `home/OrganizedHome.tsx` |
 | On the first opening of the day (online) the main components wait up to 4 s for the model's order behind a skeleton; offline the fixed order shows at once | R5: positions must not move once shown; R4 ex3: offline without waiting | `ORDER_TIMEOUT_MS` in `home/useOrganized.ts` |
 | «من المكتبة» picks the first approved item of the basics topic | Library items have no unit tags («يناسب وحدته») | `libraryPick` in `home/useOrganized.ts` |
-| «اختر قارئك»: "opened listening" = a surah was played on this device; only when approved reciters exist | R3; KNW-08 R4 reciters are gated by the reviewer | `eligible()` in `home/layout.ts` |
+| «اختر قارئك»: "opened listening" = a surah was played on this device; only when two or more approved reciters exist | R3; KNW-08 R4 reciters are gated by the reviewer and the picker shows from two | `eligible()` in `home/layout.ts` |
 | Time-of-day bucket from the clock hour (04–06 fajr … 21–04 night), never from prayer times | R4: the location never reaches the model | `timeBucket()` |
 | The model is the guide's (fast tier) with its own prompt `home_order.md`; same budget and spend guard | Open question 2's proposal; until decided the fixed order stays the fallback | `agents.order_home` |
 | An optional component that stops being eligible leaves an empty slot for the rest of the day; a hidden one is replaced in its slot | R5 «يُحذف في مكانه دون أن يتحرك ما سواه»; R6 «يأخذ مكانه الاختياري التالي» | `daySlots()` |
