@@ -32,7 +32,7 @@ export default function Home() {
   const setDevice = useDevice((s) => s.set)
   const learning = useLearning()
   const days = useMotivation((s) => s.days)
-  const { content, lessons, isLoading } = useContent()
+  const { content, lessons, isError, refetch } = useContent()
 
   const day = Math.max(1, Math.floor((Date.now() - new Date(firstOpenedAt).getTime()) / DAY) + 1)
   const month = Math.min(12, Math.floor((day - 1) / 30) + 1)
@@ -62,7 +62,17 @@ export default function Home() {
       <JourneySheet className="pb-8">
         {streak.paused && <p className="text-body text-muted-foreground">{t("home.welcomeBack")}</p>}
 
-        {isLoading && !content ? (
+        {/* Issue #9 item 19: until the content is here (loading, paused offline,
+            or retrying) a skeleton, never the "lessons are with the reviewer"
+            message; that one is only for loaded content with no lesson. */}
+        {!content && isError ? (
+          <section className="flex flex-col items-start gap-3 rounded-card bg-card p-5">
+            <p className="text-body text-muted-foreground">{t(navigator.onLine ? "common.error" : "common.offline")}</p>
+            <Button variant="outline" onClick={() => void refetch()}>
+              {t("common.retry")}
+            </Button>
+          </section>
+        ) : !content ? (
           <Skeleton className="h-52 rounded-card" />
         ) : next && unit ? (
           <LessonCard

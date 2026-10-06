@@ -33,7 +33,7 @@ export default function Learn() {
   const team = useAuth((s) => s.has("team") || s.has("sharia_reviewer"))
   const previewOn = useDevice((s) => s.preview)
   const setDevice = useDevice((s) => s.set)
-  const { content, lessons, isLoading, preview } = useContent()
+  const { content, lessons, preview } = useContent()
   const nextRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
@@ -68,7 +68,7 @@ export default function Learn() {
           </div>
         )}
 
-        {isLoading && !content && <Skeleton className="h-96 rounded-card" />}
+        {!content && <Skeleton className="h-96 rounded-card" />}
 
         {content && units.length === 0 && (
           <section className="flex flex-col items-center gap-3 py-10 text-center">
