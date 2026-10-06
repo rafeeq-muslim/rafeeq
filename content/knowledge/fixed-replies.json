@@ -1,6 +1,8 @@
 {
-  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. DRAFT by Claude, 2026-10-05; the team writes the final wording and the Sharia reviewer approves it. 2026-10-06 (KNW-01 reliability R4): no_source, verification_failed and unavailable reworded from the PRD's table so a failure is never shown as a lack of sources.",
-  "status": "draft",
+  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. Drafted by Claude, 2026-10-05; approved on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر), not reviewed by the Sharia reviewer; the team can still revise the wording. 2026-10-06 (KNW-01 reliability R4): no_source, verification_failed and unavailable reworded from the PRD's table so a failure is never shown as a lack of sources.",
+  "status": "approved",
+  "approved_by": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
+  "approved_on": "2026-10-06",
   "replies": {
     "danger": {
       "ar": "لست وحدك. سلامتك أهم شيء الآن. إن كنت في خطر مباشر فاتصل بالطوارئ في بلدك، واضغط «أريد إنسانًا» ليتواصل معك أحد فريقنا بلغتك.",
