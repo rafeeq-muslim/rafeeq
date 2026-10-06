@@ -37,7 +37,7 @@ from app.companion.common import (
     same_gender_available,
 )
 from app.companion.models import Block, HelpMessage, HelpRequest, MentorLink, Report
-from app.companion.text import clean_body
+from app.companion.text import clean_body_async
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.security import sha256
@@ -282,7 +282,7 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
     if owner.user is None and owner.token_hash is None:
         token = new_guest_token()
         owner = Owner(user=None, token_hash=sha256(token))
-    text = clean_body(body.body, required=body.kind != "urgent")  # urgent needs no words
+    text = await clean_body_async(body.body, required=body.kind != "urgent")  # urgent needs no words
     gender = None if body.kind == "urgent" else await _requester_gender(session, owner, body.gender)  # danger: first available
     t = now()
 
@@ -398,7 +398,7 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
 async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session, owner: CurrentOwner) -> ThreadSummary:
     req = await owned(session, owner, request_id)
     ratelimit.hit(f"help-msg:{req.id}", 30, 60)
-    text = clean_body(body.body)
+    text = await clean_body_async(body.body)
     if owner.user is not None and await _link_ended(session, req):
         req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went
     t = now()

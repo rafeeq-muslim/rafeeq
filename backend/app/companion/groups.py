@@ -22,7 +22,7 @@ from sqlalchemy import delete, func, select
 
 from app.companion.common import Lang, not_found, now
 from app.companion.models import Block, Group, GroupMember, GroupMessage, GroupRemoval, Report
-from app.companion.text import clean_body
+from app.companion.text import clean_body_async
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import publish
@@ -172,7 +172,7 @@ async def create(body: GroupIn, session: Session, me: Mentor) -> GroupOut:
         raise HTTPException(status.HTTP_409_CONFLICT, "match_profile_required")
     if body.lang not in (me.languages or [me.locale]):
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "language_not_spoken")
-    clean_body(body.name)
+    await clean_body_async(body.name)
     await _check_member_limit(session, me.id, body.capacity)
     g = Group(
         name=" ".join(body.name.split()), lang=body.lang, gender=me.gender, mentor_id=me.id, capacity=body.capacity, join_code=_code()
@@ -297,7 +297,7 @@ async def messages(group_id: uuid.UUID, session: Session, me: CurrentUser, after
 async def post(group_id: uuid.UUID, body: MessageIn, session: Session, me: CurrentUser) -> GroupMessageOut:
     g, is_mentor = await access(session, group_id, me)
     ratelimit.hit(f"group-msg:{me.id}", 20, 60)
-    text = clean_body(body.body)
+    text = await clean_body_async(body.body)
     m = GroupMessage(group_id=g.id, author_id=me.id, body=text, created_at=now())
     session.add(m)
     await session.commit()
