@@ -9,4 +9,4 @@ Sharia reviewer: مهند بن صالح الفوزان. Reviewed in conversation
 
 **Lessons u2-l3 to u6-l4** were not reviewed lesson by lesson (reviewer's decision, 2026-10-06): they were restyled and double-checked by Claude, and the reviewer will test them on the live site and send any changes for this pull request. Known items for a native Tagalog speaker: the AUTHORED Tagalog in `tools/edits.py` and the restyle options, and some Tagalog meaning fragments in the u2-l2 matching exercises (e.g. «sa lahat ng kakulangan…»).
 
-**Verses quoted in part (2026-10-06, reviewer's decision):** 12 cards in units 2–6 show only the words the book quotes, from the stored verse, with the book's translation of that part (`content/quran_excerpts.json`). Al-Hashr 22 shows in full in Filipino, because the Filipino edition quotes the whole verse.
+**Verses quoted in part (2026-10-06, reviewer's decision):** 10 cards in units 2–6 show only the words the book quotes, from the stored verse, with the book's translation of that part (`content/quran_excerpts.json`). Al-Hashr 22 shows in full in Filipino, because the Filipino edition quotes the whole verse.

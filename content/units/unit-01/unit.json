@@ -321,9 +321,9 @@
           "pairs": [
             {
               "left": {
-                "ar": "لا إله إلا الله",
-                "en": "There is no god but Allah",
-                "tl": "لا إله إلا الله"
+                "ar": "أشهد أن لا إله إلا الله",
+                "en": "I bear witness that there is no god but Allah",
+                "tl": "Sumasaksi ako na walang diyos maliban kay Allah"
               },
               "right": {
                 "ar": "لا معبودَ حقٌّ إلا الله",
@@ -333,9 +333,9 @@
             },
             {
               "left": {
-                "ar": "محمد رسول الله",
-                "en": "Muhammad is the Messenger of Allah",
-                "tl": "Si Muhammad ay Sugo ng Allah"
+                "ar": "أشهد أنّ محمدًا رسول الله",
+                "en": "I bear witness that Muhammad is the Messenger of Allah",
+                "tl": "Sumasaksi ako na si Muhammad ay Sugo ng Allah"
               },
               "right": {
                 "ar": "طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه، وألا يُعبد الله إلا بما شرع",
