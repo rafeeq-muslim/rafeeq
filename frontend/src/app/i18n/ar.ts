@@ -812,6 +812,8 @@ export const ar = {
   "lesson.locked": "يُفتح هذا الدرس بعد «{name}». الدروس تأتي بالترتيب ليبني كل درس على ما قبله.",
   "ask.guide.nextLesson": "خطوتك التالية «{step}»، لأنه الدرس التالي في مسارك.",
   "ask.guide.nextReview": "خطوتك التالية مراجعة قصيرة، لتثبيت ما تعلّمته.",
+  "ask.guide.masteredCount": "أتقنتَ {n} أفكار.",
+  "ask.guide.reviewCount": "{n} أفكار تحتاج مراجعة قصيرة.",
   "lesson.bookTranslation": "ترجمة الكتاب للجزء المقتبس",
   "app.updateReady": "تحديث جاهز. تقدّمك في الدرس محفوظ.",
   "app.updateNow": "حدّث الآن",

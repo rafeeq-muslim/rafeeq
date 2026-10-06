@@ -149,7 +149,7 @@ async def test_knw10_r3_what_next_in_chat_asks_for_summary(client, ai):
 
 async def test_knw10_r3_guide_message_from_summary_only(client, ai, seed):
     seed(("t1", LESSON), ("t2", LESSON_TWO))
-    text = "You mastered «Knows where the intention is made». Next, «TEST_LESSON_TWO» builds on it."
+    text = "You mastered “Knows where the intention is made”. Next, “TEST_LESSON_TWO” builds on it."
     ai.on("guide", {"text": text}).on("support", SUPPORTED)
     r = await client.post("/api/learning/guide", json={"lang": "en", "mastered": ["t1-o1"], "next": {"lesson_id": "t2"}})
     assert r.json() == {"text": text}
@@ -161,7 +161,7 @@ async def test_knw10_r3_guide_message_from_summary_only(client, ai, seed):
 
 async def test_knw10_r3_guide_with_ruling_is_rejected(client, ai, seed):
     seed(("t1", LESSON), ("t2", LESSON_TWO))
-    ai.on("guide", {"text": "You mastered «Knows where the intention is made». Remember that wudu without intention is invalid."})
+    ai.on("guide", {"text": "You mastered “Knows where the intention is made”. Remember that wudu without intention is invalid."})
     ai.on("support", {"supported": False, "unsupported": ["wudu without intention is invalid"]})
     r = await client.post("/api/learning/guide", json={"lang": "en", "mastered": ["t1-o1"], "next": {"lesson_id": "t2"}})
     assert r.json() == {"text": None}
@@ -169,7 +169,7 @@ async def test_knw10_r3_guide_with_ruling_is_rejected(client, ai, seed):
 
 async def test_knw10_r3_guide_with_unknown_name_is_rejected(client, ai, seed):
     seed(("t1", LESSON), ("t2", LESSON_TWO))
-    ai.on("guide", {"text": "You mastered «The rulings of fasting». Next is «TEST_LESSON_TWO»."})
+    ai.on("guide", {"text": "You mastered “The rulings of fasting”. Next is “TEST_LESSON_TWO”."})
     r = await client.post("/api/learning/guide", json={"lang": "en", "mastered": ["t1-o1"], "next": {"lesson_id": "t2"}})
     assert r.json() == {"text": None}
     assert "support" not in ai.agents_called()
@@ -182,12 +182,33 @@ async def test_knw10_r3_guide_outage_returns_null(client, ai, seed):
     assert r.status_code == 200 and r.json() == {"text": None}
 
 
+def test_lrn07_r1_guide_limits():
+    """PR #18: at most two names a sentence, about 25 words, each language's own quote marks."""
+    from app.knowledge.tasks import check_guide
+
+    names = {"A", "B", "C", "Next"}
+    assert check_guide("You mastered “A” and “B”. Next: “Next”, the next lesson on your path.", "en", names) == []
+    assert "too_many_names" in check_guide("You mastered “A”, “B” and “C”.", "en", names)
+    assert "wrong_quote_marks" in check_guide("You mastered «A». Next: «Next».", "en", names)
+    assert check_guide("أتقنتَ «A». خطوتك التالية «Next».", "ar", names) == []
+    assert "too_long" in check_guide("You mastered “A”, " + "and that is good " * 8 + "work.", "en", names)
+    assert check_guide("You mastered 3 ideas from this lesson. Next: “Next”.", "en", names) == []
+
+
+async def test_lrn07_r4_guide_over_limits_falls_back(client, ai, seed):
+    seed(("t1", LESSON), ("t2", LESSON_TWO))
+    ai.on("guide", {"text": "You mastered «Knows where the intention is made». Next is «TEST_LESSON_TWO»."})
+    r = await client.post("/api/learning/guide", json={"lang": "en", "mastered": ["t1-o1"], "next": {"lesson_id": "t2"}})
+    assert r.json() == {"text": None}  # the app shows the fixed message
+    assert "support" not in ai.agents_called()
+
+
 # --- R4 -----------------------------------------------------------------------
 
 
 async def test_knw10_r4_summary_is_not_stored(client, ai, seed):
     seed(("t1", LESSON), ("t2", LESSON_TWO))
-    ai.on("guide", {"text": "Well done on «Knows where the intention is made»."}).on("support", SUPPORTED)
+    ai.on("guide", {"text": "Well done on “Knows where the intention is made”."}).on("support", SUPPORTED)
     await client.post("/api/learning/guide", json={"lang": "en", "mastered": ["t1-o1"], "next": {"lesson_id": "t2"}, "returning": True})
     assert await rows(ExplanationLog) == [] and await rows(AnswerLog) == [] and await rows(OutboxEvent) == []
     calls = await rows(AiCall)

@@ -26,12 +26,22 @@ export const PLURALS: Partial<Record<Locale, Record<string, Forms>>> = {
     "lesson.streakBadge": { one: "يوم واحد من التعلّم", two: "يومان من التعلّم", few: "{n} أيام من التعلّم", many: "{n} يومًا من التعلّم", other: "{n} يوم من التعلّم" },
     "lesson.streakTitle": { one: "تعلّمت يومًا واحدًا", two: "تعلّمت يومين", few: "تعلّمت {n} أيام", many: "تعلّمت {n} يومًا", other: "تعلّمت {n} يوم" },
     "path.lessonsCount": { one: "درس واحد", two: "درسان", few: "{n} دروس", many: "{n} درسًا", other: "{n} درس" },
+    "ask.guide.masteredCount": { one: "أتقنتَ فكرة واحدة.", two: "أتقنتَ فكرتين.", few: "أتقنتَ {n} أفكار.", many: "أتقنتَ {n} فكرة.", other: "أتقنتَ {n} فكرة." },
+    "ask.guide.reviewCount": {
+      one: "فكرة واحدة تحتاج مراجعة قصيرة.",
+      two: "فكرتان تحتاجان مراجعة قصيرة.",
+      few: "{n} أفكار تحتاج مراجعة قصيرة.",
+      many: "{n} فكرة تحتاج مراجعة قصيرة.",
+      other: "{n} فكرة تحتاج مراجعة قصيرة.",
+    },
   },
   en: {
     "home.reviewBody": { one: "1 objective to strengthen" },
     "lesson.streakBadge": { one: "1 day of learning" },
     "lesson.streakTitle": { one: "You learned on 1 day" },
     "path.lessonsCount": { one: "1 lesson" },
+    "ask.guide.masteredCount": { one: "You mastered 1 idea." },
+    "ask.guide.reviewCount": { one: "1 idea needs a short review." },
   },
 }
 

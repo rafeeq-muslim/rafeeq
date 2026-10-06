@@ -86,3 +86,41 @@ describe("knw-10-r3 learning guide summary", () => {
     expect(s.reviewing).toEqual([])
   })
 })
+
+describe("lrn-07-r1 shorter guide message (PR #18)", () => {
+  const lessons = [lesson("l1", ["o1", "o2", "o3", "o4"]), lesson("l2", ["o5"]), lesson("l3", ["o6"])]
+  const m = { p: 0.99, seen: true, answered: true, masteredAt: "2026-10-01", checksDone: 0 }
+  const progress = {
+    completed: { l1: { first: "2026-10-01", last: "2026-10-01", times: 1 }, l2: { first: "2026-10-01", last: "2026-10-01", times: 1 } },
+    unlockedUnits: [],
+    mastery: { o1: m, o2: m, o3: m, o4: m, o5: m },
+  }
+  const t = (k: string, v?: Record<string, string>) => `${k}:${JSON.stringify(v ?? {})}`
+
+  it("names only the objectives of the lesson just finished", () => {
+    const s = buildSummary("en", lessons, progress as never, new Date(), ["o5"])
+    expect(s.mastered).toEqual(["o5"])
+  })
+
+  it("gives a count instead of more than two names", () => {
+    const named = lessons.map((l) => ({ ...l, objectives: l.objectives.map((o) => ({ ...o, label: `LABEL_${o.id}` })) }))
+    const msg2 = fixedMessage(buildSummary("en", named, progress as never, new Date(), ["o1", "o2", "o3"]), named, t as never)
+    expect(msg2).toContain('ask.guide.masteredCount:{"n":"3"}')
+    expect(msg2).not.toContain("LABEL_")
+  })
+
+  it("keeps up to two names", () => {
+    const named = lessons.map((l) => ({ ...l, objectives: l.objectives.map((o) => ({ ...o, label: `LABEL_${o.id}` })) }))
+    const msg = fixedMessage(buildSummary("en", named, progress as never, new Date(), ["o1", "o2"]), named, t as never)
+    expect(msg).toContain("LABEL_o1, LABEL_o2")
+  })
+
+  it("falls back to counts when the names make it too long", () => {
+    const long = "word ".repeat(20).trim()
+    const named = lessons.map((l) => ({ ...l, title: long, objectives: l.objectives.map((o) => ({ ...o, label: `${long} ${o.id}` })) }))
+    const real = (k: string, v?: Record<string, string>) =>
+      ({ "ask.guide.mastered": `You mastered: ${v?.list}.`, "ask.guide.masteredCount": `You mastered ${v?.n} ideas.`, "ask.guide.nextLesson": `Next: “${v?.step}”.` })[k] ?? k
+    const msg = fixedMessage(buildSummary("en", named, progress as never, new Date(), ["o1", "o2"]), named, real as never)
+    expect(msg.startsWith("You mastered 2 ideas.")).toBe(true)
+  })
+})

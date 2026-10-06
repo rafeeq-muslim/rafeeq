@@ -47,7 +47,7 @@ export default function Review() {
     if (exercise) setValue(emptyValue(exercise))
   }, [exercise?.id, attempt]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (finished) return <ReviewDone badges={finished} />
+  if (finished) return <ReviewDone badges={finished} objectives={items.map((i) => i.objectiveId)} />
 
   if (!content || items.length === 0) {
     return (
@@ -139,7 +139,7 @@ export default function Review() {
   )
 }
 
-function ReviewDone({ badges: initial }: { badges: string[] }) {
+function ReviewDone({ badges: initial, objectives }: { badges: string[]; objectives: string[] }) {
   const { t } = useT()
   const { lessons } = useContent()
   const navigate = useNavigate()
@@ -168,7 +168,7 @@ function ReviewDone({ badges: initial }: { badges: string[] }) {
     <section className="dark flex min-h-dvh flex-col items-center bg-[radial-gradient(120%_70%_at_50%_25%,var(--rf-deep)_0%,var(--rf-ink)_72%)] px-6 pt-[calc(env(safe-area-inset-top,0px)+4rem)] pb-[calc(env(safe-area-inset-bottom,0px)+1.5rem)] text-center">
       <UnitBloom total={5} done={5} size={180} />
       <h1 className="mt-8 font-heading text-h1 font-bold text-white">{t("review.done")}</h1>
-      <GuideNote lessons={lessons} />
+      <GuideNote lessons={lessons} objectives={objectives} />
       <Button size="lg" variant="celebrate" className="mt-auto w-full max-w-sm" onClick={() => navigate("/", { replace: true })}>
         {t("lesson.backHome")}
       </Button>

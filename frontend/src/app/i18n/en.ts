@@ -813,6 +813,8 @@ export const en: Dict = {
   "lesson.locked": "This lesson opens after “{name}”. Lessons come in order so each builds on the one before.",
   "ask.guide.nextLesson": "Your next step is “{step}”, the next lesson on your path.",
   "ask.guide.nextReview": "Your next step is a short review, to make what you learned stick.",
+  "ask.guide.masteredCount": "You mastered {n} ideas.",
+  "ask.guide.reviewCount": "{n} ideas need a short review.",
   "lesson.bookTranslation": "The book's translation of the quoted part",
   "app.updateReady": "An update is ready. Your place in the lesson is saved.",
   "app.updateNow": "Update now",

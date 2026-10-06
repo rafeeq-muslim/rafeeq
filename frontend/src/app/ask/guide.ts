@@ -28,9 +28,12 @@ export function buildSummary(
   lessons: Lesson[],
   progress: Progress & { mastery: Record<string, ObjectiveState> },
   now = new Date(),
+  /** LRN-07 R1: after a lesson or review session, only that lesson's or session's objectives. */
+  scope?: string[],
 ): Summary {
   // Only lessons the learner has completed (issue #9: no review of lessons not yet studied).
   const known = new Set(lessons.filter((l) => progress.completed[l.id]).flatMap((l) => l.objectives.map((o) => o.id)))
+  if (scope) for (const id of [...known]) if (!scope.includes(id)) known.delete(id)
   const entries = Object.entries(progress.mastery).filter(([id]) => known.has(id))
   const mastered = entries
     .filter(([, s]) => levelOf(s) === "mastered")
@@ -50,25 +53,40 @@ export function buildSummary(
 /** The fixed message (LRN-07 R1, R4): what was mastered, what needs a short
  * review, and the next step with its reason, written with the objectives'
  * learner names (LRN-10 R1), never their team-facing text; an empty
- * sentence is dropped. */
+ * sentence is dropped. Same limits as the AI message: at most two names in a
+ * sentence (more become a count) and about 25 words (else counts only). */
 export type GuideKey =
   | "ask.guide.mastered"
+  | "ask.guide.masteredCount"
   | "ask.guide.review"
+  | "ask.guide.reviewCount"
   | "ask.guide.nextLesson"
   | "ask.guide.nextReview"
   | "ask.guide.start"
+
+export const GUIDE_MAX_NAMES = 2
+export const GUIDE_MAX_WORDS = 30
 
 export function fixedMessage(s: Summary, lessons: Lesson[], t: (key: GuideKey, vars?: Record<string, string>) => string): string {
   const sep = s.lang === "ar" ? "، " : ", "
   const label = new Map(lessons.flatMap((l) => l.objectives.map((o) => [o.id, o.label || l.title] as const)))
   const titles = new Map(lessons.map((l) => [l.id, l.title]))
-  const list = (ids: string[]) => [...new Set(ids.map((id) => label.get(id)).filter(Boolean))].join(sep)
-  const parts: string[] = []
-  if (s.mastered.length) parts.push(t("ask.guide.mastered", { list: list(s.mastered) }))
-  if (s.reviewing.length) parts.push(t("ask.guide.review", { list: list(s.reviewing) }))
-  if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.nextLesson", { step: titles.get(s.next.lesson_id) ?? "" }))
-  else if (s.next) parts.push(t("ask.guide.nextReview"))
-  return parts.length ? parts.join(" ") : t("ask.guide.start")
+  const names = (ids: string[]) => [...new Set(ids.map((id) => label.get(id)).filter((n): n is string => !!n))]
+  const build = (countsOnly: boolean) => {
+    const sentence = (ids: string[], key: "ask.guide.mastered" | "ask.guide.review", countKey: GuideKey) => {
+      const n = names(ids)
+      return countsOnly || n.length > GUIDE_MAX_NAMES ? t(countKey, { n: String(n.length) }) : t(key, { list: n.join(sep) })
+    }
+    const parts: string[] = []
+    if (names(s.mastered).length) parts.push(sentence(s.mastered, "ask.guide.mastered", "ask.guide.masteredCount"))
+    if (names(s.reviewing).length) parts.push(sentence(s.reviewing, "ask.guide.review", "ask.guide.reviewCount"))
+    if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.nextLesson", { step: titles.get(s.next.lesson_id) ?? "" }))
+    else if (s.next) parts.push(t("ask.guide.nextReview"))
+    return parts.join(" ")
+  }
+  const msg = build(false)
+  if (!msg) return t("ask.guide.start")
+  return msg.split(/\s+/).length > GUIDE_MAX_WORDS ? build(true) : msg
 }
 
 export function nextHref(s: Summary): string | null {

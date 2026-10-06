@@ -1,7 +1,8 @@
 /**
  * LRN-07 R1: after each lesson, unit and review session, one guide message
- * of at most three sentences: what was mastered, what needs review, and the
- * next step with its reason. R4: the fixed message from the same summary is
+ * of at most three short sentences (about 25 words) about that lesson or
+ * session only: what was mastered, what needs review, and the next step with
+ * its reason. R4: the fixed message from the same summary is
  * shown at once (offline or outage included); the checked AI wording
  * replaces it when it arrives. R2: it suggests, never forces. R5: no missed
  * days, no worship, no comparison. MOT-09 R5: "followed" means the learner
@@ -19,10 +20,10 @@ import type { Lesson } from "./types"
 const KEY = "rafeeq.guideSuggestion"
 const DAY = 86_400_000
 
-export function GuideNote({ lessons, returning = false }: { lessons: Lesson[]; returning?: boolean }) {
+export function GuideNote({ lessons, objectives, returning = false }: { lessons: Lesson[]; objectives: string[]; returning?: boolean }) {
   const { t, locale } = useT()
   const progress = useLearning()
-  const [summary] = React.useState(() => buildSummary(locale, lessons, progress))
+  const [summary] = React.useState(() => buildSummary(locale, lessons, progress, new Date(), objectives))
   const fixed = fixedMessage(summary, lessons, t)
   const [text, setText] = React.useState<string | null>(null)
 

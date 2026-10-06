@@ -31,6 +31,8 @@ router = APIRouter(prefix="/api/learning", tags=["learning-assistant"])
 Lang = Literal["ar", "en", "tl"]
 EXPLAIN_MAX_WORDS = 60  # LRN-03 R6
 GUIDE_MAX_SENTENCES = 3  # LRN-07 R1
+GUIDE_MAX_WORDS = 30  # LRN-07 R1 "about 25 words"; R4: a longer message falls back to the fixed one
+GUIDE_MAX_NAMES_PER_SENTENCE = 2  # LRN-07 R1 (PR #18)
 _BLAME = re.compile(
     r"\b(missed|absence|away for|days ago|been away|skipped|fell behind|nawala ka|hindi ka nakapag|lumiban)\b|غبت|غيابك|فاتك|انقطعت|تأخرت|قصّرت|قصرت",
     re.I,
@@ -186,13 +188,17 @@ async def approved_names(session, lang: str, learner: bool = False) -> tuple[dic
 def check_guide(text: str, lang: str, allowed: set[str]) -> list[str]:
     fails = []
     sentences = [s for s in re.split(r"[.!?؟。]+\s*", text) if s.strip()]
-    if len(sentences) > GUIDE_MAX_SENTENCES:
+    if len(sentences) > GUIDE_MAX_SENTENCES or len(text.split()) > GUIDE_MAX_WORDS:
         fails.append("too_long")
+    if any(len(quoted_spans(sent)) > GUIDE_MAX_NAMES_PER_SENTENCE for sent in sentences):
+        fails.append("too_many_names")
+    if lang != "ar" and ("«" in text or "»" in text):
+        fails.append("wrong_quote_marks")  # LRN-07 R1: each language uses its own quote marks
     for span in quoted_spans(text):
         if span.strip() not in allowed:
             fails.append("unknown_name")
             break
-    outside = re.sub(r"«[^»]*»", " ", text)
+    outside = re.sub(r"«[^»]*»|“[^”]*”|\"[^\"]*\"", " ", text)
     if ATTRIBUTION.search(outside) or TRANSLIT.search(outside):
         fails.append("religious_content")
     if lang != "ar" and has_arabic(outside):
