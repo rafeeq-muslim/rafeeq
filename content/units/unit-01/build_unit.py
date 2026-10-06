@@ -164,7 +164,7 @@ L2 = {
     "title": T("قبل الوضوء", "Before Wudu’", "Bago ang Wudhu"),
     "objectives": [
         {"id": "u01-l2-o1", "text": T("يعرف أن الطهارة شرط لصحة الصلاة", "Knows that purification is a condition for the validity of prayer",
-                                      "Alam na ang paglilinis ay kondisyon upang tanggapin ang salah")},
+                                      "Alam na ang paglilinis ay kondisyon upang maging tama (balido) ang salah")},
         {"id": "u01-l2-o2", "text": T("يعرف ما يجب له الوضوء", "Knows the acts for which wudu’ is obligatory", "Alam kung kailan obligado ang wudhu")},
         {"id": "u01-l2-o3", "text": T("يعرف الماء الطهور وأوصافه الثلاثة", "Knows what purifying water is and its three characteristics",
                                       "Alam kung ano ang malinis na tubig at ang tatlo nitong katangian")},
@@ -196,7 +196,7 @@ L2["cards"][0]["note"] = "The Filipino page cites this verse as (Qur’an 2:22);
 L2["exercises"] = [
     ex("u01-l2-e1", "choice", ["u01-l2-o1"],
        T("الطهارة بالنسبة للصلاة:", "For prayer, purification is:", "Para sa salah, ang paglilinis ay:"), "u01-l2-c2b",
-       options=[opt("a", "شرط لصحتها", "A condition for its validity", "Kondisyon upang tanggapin ito"),
+       options=[opt("a", "شرط لصحتها", "A condition for its validity", "Kondisyon upang maging tama (balido) ito"),
                 opt("b", "تكون بعد الصلاة", "Done after the prayer", "Ginagawa pagkatapos ng salah"),
                 opt("c", "لا علاقة لها بالصلاة", "Unrelated to the prayer", "Walang kaugnayan sa salah")], answer="a"),
     ex("u01-l2-e2", "choice", ["u01-l2-o1"],
@@ -638,7 +638,10 @@ PRINTED = {
 ARABIC_GOVERNS = {
     "u01-l3-c2": {"tl": [("Ang paghugas ng kamay ng tatlong beses.", "Ang paghugas ng kamay.")]},
     "u01-l3-c3": {"tl": [("Ang pagmumog ng tatlong beses", "Ang pagmumog")]},
+    "u01-l2-c2b": {"tl": [("kondisyon upang tanggaapin ang salah", "kondisyon upang maging tama (balido) ang salah")]},
 }
+VALIDITY_NOTE = "«tanggapin» (accepted) replaced with validity: the Arabic says «شرطًا لصحتها», and صحة is not قبول; the Arabic edition governs (reviewer, 2026-10-06)."
+ARABIC_NOTES = {"u01-l2-c2b": VALIDITY_NOTE}
 ARABIC_NOTE = "“Three times” removed: the Arabic edition does not say it, and the Arabic edition governs (reviewer, 2026-10-06)."
 PRINTED_NOTE = "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
 for lesson in (L6, L7):
@@ -660,7 +663,7 @@ for lesson in (L1, L2, L3, L4, L5):
             for a, b in pairs:
                 assert a in c["text"][lang], (c["id"], a)
                 c["text"][lang] = c["text"][lang].replace(a, b)
-            c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + ARABIC_NOTE).strip()
+            c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + ARABIC_NOTES.get(c["id"], ARABIC_NOTE)).strip()
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
 
