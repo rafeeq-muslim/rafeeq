@@ -84,9 +84,10 @@ export default function Me() {
 
   const roleLinks: { to: string; key: Key; icon: TablerIcon; show: boolean }[] = [
     { to: "/inbox", key: "role.mentorInbox", icon: IconInbox, show: has("mentor") },
+    { to: "/inbox", key: "cmp.inbox.teamTitle", icon: IconInbox, show: has("team") && !has("mentor") }, // PLT-17 R2: urgent requests and reports
     { to: "/review-desk", key: "role.review", icon: IconShieldCheck, show: has("sharia_reviewer") || has("team") },
     { to: "/referrals", key: "role.referrals", icon: IconHelpCircle, show: has("sharia_reviewer") },
-    { to: "/team", key: "role.team", icon: IconUsersGroup, show: has("team") },
+    { to: "/team", key: "team.title", icon: IconUsersGroup, show: has("team") },
     { to: "/admin", key: "role.admin", icon: IconSettings, show: has("admin") },
     { to: "/mentor-applications", key: "cmp.apps.title", icon: IconHeartHandshake, show: has("team") || has("admin") }, // CMP-08 R3
     { to: "/org", key: "org.role.link", icon: IconBuildingCommunity, show: !!me?.roles.includes("org_coordinator") }, // ORG-02, ORG-03
@@ -97,6 +98,17 @@ export default function Me() {
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3">{t("me.title")}</span>} />
       <div className="flex flex-col gap-8 px-4 pt-5 pb-12">
         <Identity />
+
+        {/* PLT-17 R1/R2: a staff member's own screens come first, under a title that fits every role */}
+        {roleLinks.some((r) => r.show) && (
+          <Section title={t("me.myWork")}>
+            {roleLinks
+              .filter((r) => r.show)
+              .map((r) => (
+                <LinkRow key={r.to} icon={r.icon} title={t(r.key)} onClick={() => navigate(r.to)} />
+              ))}
+          </Section>
+        )}
 
         <Badges />
 
@@ -144,16 +156,6 @@ export default function Me() {
         {!has("mentor") && (
           <Section title={t("cmp.apply.entry")}>
             <LinkRow icon={IconHeartHandshake} title={t("cmp.apply.entry")} hint={t("cmp.apply.entryHint")} onClick={() => navigate("/mentor-apply")} />
-          </Section>
-        )}
-
-        {roleLinks.some((r) => r.show) && (
-          <Section title={t("me.team")}>
-            {roleLinks
-              .filter((r) => r.show)
-              .map((r) => (
-                <LinkRow key={r.to} icon={r.icon} title={t(r.key)} onClick={() => navigate(r.to)} />
-              ))}
           </Section>
         )}
 

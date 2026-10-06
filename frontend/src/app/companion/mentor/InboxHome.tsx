@@ -145,7 +145,7 @@ export default function InboxHome() {
   return (
     <>
       <ScreenBar
-        title={t("cmp.inbox.title")}
+        title={t(isMentor ? "cmp.inbox.title" : "cmp.inbox.teamTitle")}
         end={
           isMentor && (
             <Button variant="ghost" size="icon" aria-label={t("cmp.inbox.profile")} onClick={() => navigate("/inbox/profile")}>
