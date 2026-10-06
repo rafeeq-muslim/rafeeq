@@ -128,6 +128,34 @@ async def test_mot06_r3_rejected_free_text_is_never_shown(client, pushes):
     assert (await client.get("/api/challenges/templates", headers=mentor.h)).json() == []
 
 
+async def test_mot06_r3_review_desk_lists_text_only_and_return_reason_reaches_mentor_only(client, pushes):
+    mentor, (joseph,), g = await brothers(client, 1)
+    reviewer = await person(client, "muhannad-r", roles=("sharia_reviewer",))
+    pending = await set_challenge(client, mentor, g, type="free_text", text="Pray fajr in the mosque every day", text_lang="en")
+    listed = (await client.get("/api/challenges/pending", headers=reviewer.h)).json()
+    assert listed == [
+        {"id": pending["id"], "text": "Pray fajr in the mosque every day", "text_lang": "en", "created_at": listed[0]["created_at"]}
+    ]
+    r = await client.post(
+        f"/api/challenges/{pending['id']}/review",
+        json={"approve": False, "reason": "  An act of worship;\n pick a learning goal "},
+        headers=reviewer.h,
+    )
+    assert r.status_code == 200, r.text
+    assert (await client.get("/api/challenges/pending", headers=reviewer.h)).json() == []
+    assert (await view(client, mentor, g))["review_note"] == "An act of worship; pick a learning goal"
+    assert await view(client, joseph, g) is None
+
+
+async def test_mot06_r3_only_the_sharia_reviewer_reads_or_decides_free_texts(client):
+    mentor, _, g = await brothers(client, 1)
+    team = await person(client, "team-1", roles=("team",))
+    pending = await set_challenge(client, mentor, g, type="free_text", text="Get to know a mosque near where you live")
+    assert (await client.get("/api/challenges/pending", headers=team.h)).status_code == 403
+    r = await client.post(f"/api/challenges/{pending['id']}/review", json={"approve": True}, headers=team.h)
+    assert r.status_code == 403 and r.json()["detail"] == "reviewers_only"
+
+
 async def test_mot06_r3_template_is_shown_immediately(client):
     async with SessionLocal() as s:
         tpl = ChallengeTemplate(text="Get to know a mosque near where you live", lang="en")

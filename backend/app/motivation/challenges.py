@@ -185,6 +185,7 @@ class ChallengeOut(BaseModel):
     mine: bool | None = None  # the asking member's own state
     my_lessons: int | None = None  # group_total: what I added
     shared_done: list[uuid.UUID] | None = None  # mentor only (R4 ex3)
+    review_note: str | None = None  # mentor only: why the reviewer returned the free text (R3)
 
 
 async def _progress(session: AsyncSession, c: Challenge, members: list[uuid.UUID]) -> tuple[set[uuid.UUID], int, dict[uuid.UUID, int]]:
@@ -248,6 +249,7 @@ async def challenge_out(session: AsyncSession, c: Challenge, viewer: User, role:
 
         shared = await shared_learner_ids(session, viewer.id)
         out.shared_done = sorted(done & shared, key=str)
+        out.review_note = c.review_note if c.status == "rejected" else None
     return out
 
 
@@ -391,6 +393,9 @@ Reviewer = Annotated[User, Depends(reviewer)]
 
 
 class PendingOut(BaseModel):
+    """What the reviewer reads: the text, its language and date. Never the
+    mentor or the group (the decision is about the words alone)."""
+
     id: uuid.UUID
     text: str | None
     text_lang: str | None
@@ -405,6 +410,7 @@ async def pending(session: Session, user: Reviewer) -> list[PendingOut]:
 
 class ReviewIn(BaseModel):
     approve: bool
+    reason: str | None = Field(default=None, max_length=300)  # a return's reason, shown to the mentor only
 
 
 @router.post("/challenges/{challenge_id}/review", response_model=PendingOut)
@@ -420,6 +426,7 @@ async def review(challenge_id: uuid.UUID, body: ReviewIn, session: Session, user
         _start(c)  # its seven days start when members see it
     else:
         c.status = "rejected"  # R3 ex2: never shown to members
+        c.review_note = " ".join((body.reason or "").split()) or None
     await session.commit()
     if body.approve:
         await _announce(session, c.group_id, "started")

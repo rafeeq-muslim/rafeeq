@@ -603,6 +603,8 @@ export const ar = {
   "cmp.thread.blockDone": "حظرته. سيرد عليك غيره.",
   "cmp.thread.more": "خيارات",
   "cmp.thread.closedNote": "انتهت هذه المحادثة. اكتب لتفتحها من جديد.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "انتهت هذه المحادثة مع مرشدك السابق، وتبقى لك لتقرأها. ما تكتبه هنا يصل إلى مرشدك الحالي، أو إلى من يرد من فريقنا إن لم يكن لك مرشد.",
   "cmp.thread.hidden": "أُخفيت هذه الرسالة للمراجعة.",
   "cmp.report.title": "بلّغ عن رسالة",
   "cmp.report.body": "لن يعرف صاحب الرسالة من بلّغ. يراجعها فريقنا.",
@@ -657,6 +659,7 @@ export const ar = {
   "cmp.group.err.notSuitable": "هذا الرمز لا يناسبك. اطلب من مرشدك رمز مجموعة أخرى.",
   "cmp.group.err.full": "المجموعة مكتملة. اطلب من مرشدك مجموعة أخرى.",
   "cmp.group.err.already": "أنت في مجموعة الآن. غادرها أولًا لتنضم إلى غيرها.",
+  "cmp.group.err.unavailable": "لا يمكنك الانضمام إلى هذه المجموعة. اطلب من مرشدك مجموعة أخرى.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "الأعضاء",
   "cmp.group.membersCount": "الأعضاء: {n}",
   "cmp.group.ledBy": "بإشراف {name}",
@@ -1408,4 +1411,17 @@ export const ar = {
   "install.browser.safari": "سفاري",
   "install.browser.chrome": "Chrome",
   "install.browser.chromeEdge": "Chrome أو Edge",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "نصوص التحديات",
+  "desk.ch.title": "نصوص التحديات",
+  "desk.ch.waiting": "{n} بانتظار الاعتماد",
+  "desk.ch.hint": "أهداف أسبوعية كتبها المرشدون لمجموعاتهم. لا يراها الأعضاء قبل اعتمادها، ولا يُعتمد ما كان عبادة. كل نص تعتمده يصير قالبًا يستعمله المرشدون.",
+  "desk.ch.approve": "اعتمد",
+  "desk.ch.return": "أعِده",
+  "desk.ch.reason": "سبب الإعادة، يراه المرشد وحده",
+  "desk.ch.approvedToast": "اعتُمد، وبدأ هدف الأسبوع لأعضاء المجموعة",
+  "desk.ch.returnedToast": "أُعيد إلى المرشد مع السبب",
+  "desk.ch.gone": "قُرّر في هذا النص من قبل أو سحبه المرشد",
+  "desk.ch.empty": "لا نصوص تنتظر الاعتماد الآن.",
+  "cmp.ch.reason": "سبب المراجع:",
 } as const

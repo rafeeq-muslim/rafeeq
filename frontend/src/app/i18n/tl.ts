@@ -605,6 +605,8 @@ export const tl: Dict = {
   "cmp.thread.blockDone": "Na-block. Iba ang sasagot sa iyo.",
   "cmp.thread.more": "Mga opsyon",
   "cmp.thread.closedNote": "Sarado na ang usapang ito. Sumulat para buksan muli.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "Tapos na ang usapang ito sa dati mong mentor; nananatili ito para mabasa mo. Ang isusulat mo rito ay mapupunta sa kasalukuyan mong mentor, o sa isang tao sa aming team kung wala kang mentor.",
   "cmp.thread.hidden": "Nakatago ang mensaheng ito para sa pagsusuri.",
   "cmp.report.title": "Mag-report ng mensahe",
   "cmp.report.body": "Hindi malalaman ng nagpadala kung sino ang nag-report. Susuriin ito ng aming team.",
@@ -659,6 +661,7 @@ export const tl: Dict = {
   "cmp.group.err.notSuitable": "Hindi para sa iyo ang code na ito. Humingi sa mentor mo ng code ng ibang grupo.",
   "cmp.group.err.full": "Puno na ang grupo. Humingi sa mentor mo ng ibang grupo.",
   "cmp.group.err.already": "Nasa isang grupo ka na. Umalis muna para sumali sa iba.",
+  "cmp.group.err.unavailable": "Hindi ka makakasali sa grupong ito. Humingi sa mentor mo ng ibang grupo.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "Mga miyembro",
   "cmp.group.membersCount": "Mga miyembro: {n}",
   "cmp.group.ledBy": "Pinangungunahan ni {name}",
@@ -1410,4 +1413,17 @@ export const tl: Dict = {
   "install.browser.safari": "Safari",
   "install.browser.chrome": "Chrome",
   "install.browser.chromeEdge": "Chrome o Edge",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "Mga teksto ng hamon",
+  "desk.ch.title": "Teksto ng hamon",
+  "desk.ch.waiting": "{n} naghihintay ng pag-apruba",
+  "desk.ch.hint": "Mga lingguhang layunin na isinulat ng mga mentor para sa kanilang grupo. Hindi ito nakikita ng mga miyembro bago maaprubahan, at hindi inaaprubahan ang anumang gawaing pagsamba. Bawat tekstong inaprubahan mo ay nagiging template na magagamit ng mga mentor.",
+  "desk.ch.approve": "Aprubahan",
+  "desk.ch.return": "Ibalik",
+  "desk.ch.reason": "Dahilan ng pagbabalik, ang mentor lang ang makakakita",
+  "desk.ch.approvedToast": "Naaprubahan; nagsimula na ang lingguhang layunin ng grupo",
+  "desk.ch.returnedToast": "Ibinalik sa mentor kasama ang dahilan",
+  "desk.ch.gone": "Napagpasyahan na ang tekstong ito o binawi ng mentor",
+  "desk.ch.empty": "Walang tekstong naghihintay ng pag-apruba ngayon.",
+  "cmp.ch.reason": "Dahilan ng tagasuri:",
 }

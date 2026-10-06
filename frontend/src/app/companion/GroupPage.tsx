@@ -36,6 +36,7 @@ const JOIN_ERRORS: Record<string, string> = {
   group_not_suitable: "cmp.group.err.notSuitable",
   group_full: "cmp.group.err.full",
   already_in_group: "cmp.group.err.already",
+  group_unavailable: "cmp.group.err.unavailable", // R5: removed by the mentor or the team
 }
 
 /** Join by the code a mentor gave you. */

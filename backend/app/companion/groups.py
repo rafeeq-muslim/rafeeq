@@ -5,7 +5,9 @@ languages, 10 members by default and at most 15; all of a mentor's groups
 together hold at most 25 places, apart from his personal mentees' cap (R1). Joining is by code, with an account, for the
 group's gender and language, one group at a time (R2). Members see display
 names only (R3). The chat is text, members and mentor only, with reporting,
-and refuses contact details (R4). Leaving and removal are silent (R5).
+and refuses contact details (R4). Leaving and removal are silent (R5); a
+member the mentor or the team removed cannot rejoin that group with its code
+(R5 ex2, CMP-04 R4 ex2), while one who left on their own can.
 Membership changes are published as GroupJoined / GroupLeft for MOT-06.
 """
 
@@ -19,7 +21,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import delete, func, select
 
 from app.companion.common import Lang, not_found, now
-from app.companion.models import Block, Group, GroupMember, GroupMessage, Report
+from app.companion.models import Block, Group, GroupMember, GroupMessage, GroupRemoval, Report
 from app.companion.text import clean_body
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
@@ -152,7 +154,11 @@ async def _check_member_limit(session, mentor_id: uuid.UUID, capacity: int, *, b
         )
 
 
-async def remove(session, g: Group, user_id: uuid.UUID) -> bool:
+async def remove(session, g: Group, user_id: uuid.UUID, *, removed: bool = False) -> bool:
+    """Ends a membership. `removed` (the mentor or the team, not leaving) also
+    records the removal, so the same code does not let them back (R5 ex2)."""
+    if removed and await session.get(GroupRemoval, (g.id, user_id)) is None:
+        session.add(GroupRemoval(group_id=g.id, user_id=user_id))
     res = await session.execute(delete(GroupMember).where(GroupMember.group_id == g.id, GroupMember.user_id == user_id))
     if res.rowcount:  # type: ignore[attr-defined]
         await publish(session, "GroupLeft", "CMP", {"group_id": str(g.id), "user_id": str(user_id)})
@@ -202,6 +208,8 @@ async def join(body: JoinIn, session: Session, me: CurrentUser) -> GroupOut:
         return await _out(session, g, me, with_members=True)
     if current is not None:
         raise HTTPException(status.HTTP_409_CONFLICT, "already_in_group")
+    if await session.get(GroupRemoval, (g.id, me.id)) is not None:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "group_unavailable")  # R5 ex2: neutral, no reason given (CMP-04 R5)
     if await _count(session, g.id) >= g.capacity:
         raise HTTPException(status.HTTP_409_CONFLICT, "group_full")
     session.add(GroupMember(group_id=g.id, user_id=me.id, joined_at=now()))
@@ -245,7 +253,7 @@ async def remove_member(group_id: uuid.UUID, user_id: uuid.UUID, session: Sessio
     g, is_mentor = await access(session, group_id, me)
     if not is_mentor:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
-    if not await remove(session, g, user_id):
+    if not await remove(session, g, user_id, removed=True):
         raise not_found()
     await session.commit()
 

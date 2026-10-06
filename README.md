@@ -14,6 +14,9 @@
 | --- | --- |
 | Landing page | https://rafeeq.nan.sa |
 | The app | https://rafeeq.nan.sa/app |
+| Demo video (1:25) | https://youtube.com/shorts/NN3KVPgEf-4 |
+| Presentation (problem, solution, how it works) | [PDF](docs/submission/rafeeq-deck.pdf) · [PPTX](docs/submission/rafeeq-deck.pptx) |
+| Submission answers and criteria checklist | [submission-form.ar.md](docs/submission/submission-form.ar.md) · [criteria-checklist.ar.md](docs/submission/criteria-checklist.ar.md) |
 
 No account is needed to start. On a phone, "Add to Home Screen" installs it as an app.
 

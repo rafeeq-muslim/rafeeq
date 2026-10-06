@@ -5,7 +5,10 @@
   a mentor is announced to Companion as MentorApproved.
 - EngagementStatusChanged (MOT-07): kept only for linked learners, matched
   by the device's install ID (ORG-03 counts linked learners only). A status
-  of None (MOT-07 R4 opt-out) is kept as "no status".
+  of None (MOT-07 R4 opt-out) is kept as "no status". Links are per device and
+  Organisations never learns the account, so it reads the device events
+  `{install_id, status}`; the account events `{user_id, status}` (for the
+  mentor, MOT-07 R6) have no install ID and are ignored.
 """
 
 import uuid

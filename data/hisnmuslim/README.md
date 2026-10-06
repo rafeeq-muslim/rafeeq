@@ -28,7 +28,7 @@ Pulled 2026-10-05: Arabic 132 chapters, English 132 chapters, 398 audio links.
 
 ## Rules before anything reaches users
 
-- **Sharia review first:** no dhikr is shown until the Sharia reviewer (مهند بن صالح الفوزان) approves it (`docs/agents/rules.md` §1.4).
+- **Sharia review before merge:** the Sharia reviewer (مهند بن صالح الفوزان) reviews the adhkar before they are merged; merged adhkar are shown directly, and a version he returns in the review desk is withdrawn in that language until corrected (`docs/agents/rules.md` §1.4, product owner's decision 2026-10-06).
 - **Quran text from the Quran database:** items that contain verses (e.g. Ayat al-Kursi in chapter 27) must render the verses from stored Quran records by surah and ayah, not from this text (`rules.md` §1.3).
 - **No transliteration on screen:** the English `LANGUAGE_ARABIC_TRANSLATED_TEXT` field holds Latin transliteration (e.g. «La ilaha illal-lah») or a short instruction (e.g. «Then recite Soorah al-Ikhlaas…»). Never show the transliteration: the team does not show adhkar in non-Arabic letters, and pronunciation is taught with the audio.
 - **No counter and no tracking:** `REPEAT` is shown as text («3 مرات»), never as a tap counter.

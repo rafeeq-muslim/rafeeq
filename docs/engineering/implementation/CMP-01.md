@@ -44,13 +44,13 @@ Polling with TanStack Query: 10 s while a thread is open, 30 s for lists, paused
 | R2 ex1 guest gets a token and sees the reply | `test_cmp01_r2_guest_request_returns_token_and_sees_reply` |
 | R2 ex2 other device sees nothing | `test_cmp01_r2_other_device_cannot_open_guest_request` |
 | R2 ex3 guest → account | `test_cmp01_r2_guest_requests_move_to_new_account` |
-| R3 ex1 phone rejected | `test_cmp01_r3_phone_number_is_rejected_and_not_stored` |
-| R4 ex1 topic reaches mentor | `test_cmp01_r4_topic_is_shown_to_mentor` |
-| R5 ex1 neutral push | `test_cmp01_r5_reply_push_is_neutral` |
-| R5 ex2 unread without push | `test_cmp01_r5_unread_reply_shows_in_threads` |
-| R6 ex1 danger event → urgent first + push | `test_cmp01_r6_danger_event_creates_urgent_alert_first_in_inbox` |
-| R6 ex2 no question text | `test_cmp01_r6_urgent_request_carries_no_question_text` |
-| R6 ex3 same request, not a second | `test_cmp01_r6_opening_urgent_reuses_the_alert` |
+| R5 ex1 phone rejected (was R3) | `test_cmp01_r5_contact_details_are_not_sent` |
+| R4 ex1 topic reaches the responder | `test_cmp01_r4_topic_is_shown_to_responder` |
+| R6 ex1 neutral push (was R5) | `test_cmp01_r6_reply_push_is_neutral` |
+| R6 ex2 unread without push (was R5) | `test_cmp01_r6_unread_reply_shows_in_threads` |
+| Danger (was R6 ex1; now `danger-handling.md`) event → urgent first + push | `test_cmp_danger.py::test_cmp_danger_event_creates_urgent_alert_first_in_every_inbox` |
+| Danger (was R6 ex2) no question text | `test_cmp_danger.py::test_cmp_danger_urgent_request_carries_no_question_text` |
+| Danger (was R6 ex3) same request, not a second | `test_cmp_danger.py::test_cmp_danger_opening_urgent_reuses_the_alert` |
 | R6 ex4 emergency guidance first, no invented numbers | `cmp01_r6_urgent_screen_shows_emergency_guidance_first` (vitest) |
 
 ## Rewrite (PR #21, 2026-10-06)

@@ -143,6 +143,19 @@ class GroupMember(Base):
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class GroupRemoval(Base):
+    """CMP-05 R5 ex2 / CMP-04 R4 ex2: a member the mentor or the team removed
+    cannot rejoin that group with its code. One row per (group, person), no
+    reason and no remover (minimum data); it goes with the group or with the
+    person's account (PLT-05 R5, cascade on users.id). Leaving on one's own
+    writes nothing."""
+
+    __tablename__ = "cmp_group_removals"
+    group_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cmp_groups.id", ondelete="CASCADE"), primary_key=True)
+    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), primary_key=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class GroupMessage(IdMixin, Base):
     __tablename__ = "cmp_group_messages"
     group_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cmp_groups.id", ondelete="CASCADE"), index=True)

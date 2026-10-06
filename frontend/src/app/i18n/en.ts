@@ -604,6 +604,8 @@ export const en: Dict = {
   "cmp.thread.blockDone": "Blocked. Someone else will reply to you.",
   "cmp.thread.more": "Options",
   "cmp.thread.closedNote": "This conversation was closed. Write to open it again.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "This conversation with your former mentor has ended; it stays here for you to read. What you write here goes to your current mentor, or to someone on our team if you have no mentor.",
   "cmp.thread.hidden": "This message is hidden for review.",
   "cmp.report.title": "Report a message",
   "cmp.report.body": "The sender won't know who reported. Our team will review it.",
@@ -658,6 +660,7 @@ export const en: Dict = {
   "cmp.group.err.notSuitable": "This code isn't for you. Ask your mentor for another group's code.",
   "cmp.group.err.full": "The group is full. Ask your mentor for another group.",
   "cmp.group.err.already": "You're in a group now. Leave it first to join another.",
+  "cmp.group.err.unavailable": "You can't join this group. Ask your mentor for another group.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "Members",
   "cmp.group.membersCount": "Members: {n}",
   "cmp.group.ledBy": "Led by {name}",
@@ -1409,4 +1412,17 @@ export const en: Dict = {
   "install.browser.safari": "Safari",
   "install.browser.chrome": "Chrome",
   "install.browser.chromeEdge": "Chrome or Edge",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "Challenge texts",
+  "desk.ch.title": "Challenge texts",
+  "desk.ch.waiting": "{n} waiting for approval",
+  "desk.ch.hint": "Weekly goals mentors wrote for their groups. Members don't see them before approval, and anything that is an act of worship is not approved. Each text you approve becomes a template mentors can reuse.",
+  "desk.ch.approve": "Approve",
+  "desk.ch.return": "Return",
+  "desk.ch.reason": "Reason for returning it, seen by the mentor only",
+  "desk.ch.approvedToast": "Approved; the group's weekly goal has started",
+  "desk.ch.returnedToast": "Returned to the mentor with the reason",
+  "desk.ch.gone": "This text was already decided or withdrawn by its mentor",
+  "desk.ch.empty": "No texts are waiting for approval right now.",
+  "cmp.ch.reason": "Reviewer's reason:",
 }

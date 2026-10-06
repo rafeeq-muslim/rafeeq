@@ -1,6 +1,6 @@
-/** PLT-04 appearance: light by default whatever the device says; dark or
- * «حسب الجهاز» only by the learner's choice, kept on the device; night
- * moments stay night. */
+/** PLT-04 appearance: follows the device («حسب الجهاز») by default; light or
+ * dark only by the learner's choice, kept on the device; night moments stay
+ * night. */
 import { createElement } from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { cleanup, fireEvent, render, screen } from "@testing-library/react"
@@ -23,12 +23,12 @@ afterEach(() => {
 })
 
 describe("plt-04 appearance", () => {
-  it("is light by default, even when the device is set to dark", () => {
+  it("follows the device by default: dark on a dark device", () => {
     vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("dark"), media: q, addEventListener() {}, removeEventListener() {} }))
-    expect(useDevice.getInitialState().theme).toBe("light")
+    expect(useDevice.getInitialState().theme).toBe("system")
     applyTheme(useDevice.getInitialState().theme)
-    expect(root.classList.contains("dark")).toBe(false)
-    expect(bar()).toBe(BAR_COLOR.light)
+    expect(root.classList.contains("dark")).toBe(true)
+    expect(bar()).toBe(BAR_COLOR.dark)
   })
 
   it("turns dark when the learner picks dark, and keeps the choice on the device", () => {
@@ -53,7 +53,7 @@ describe("plt-04 appearance", () => {
     expect(bar()).toBe(BAR_COLOR.dark)
   })
 
-  it("stays light before the app loads when nothing is saved or storage is unreadable", () => {
+  it("stays light before the app loads when storage is unreadable and the device can't be asked", () => {
     localStorage.setItem("rafeeq.device", "{not json")
     new Function(themeScript)()
     expect(root.classList.contains("dark")).toBe(false)
@@ -131,5 +131,43 @@ describe("plt-04-r2 follow the device («حسب الجهاز»)", () => {
     localStorage.setItem("rafeeq.device", JSON.stringify({ state: { theme: "system" }, version: 1 }))
     new Function(themeScript)()
     expect(root.classList.contains("dark")).toBe(false)
+  })
+})
+
+describe("plt-04 default follows the device (owner, 2026-10-06)", () => {
+  it("theme.js follows a dark device when nothing is saved yet", () => {
+    stubDevice(true)
+    localStorage.removeItem("rafeeq.device")
+    new Function(themeScript)()
+    expect(root.classList.contains("dark")).toBe(true)
+  })
+
+  it("theme.js treats the old default (v1 \"light\") as «حسب الجهاز»", () => {
+    stubDevice(true)
+    localStorage.setItem("rafeeq.device", JSON.stringify({ state: { theme: "light" }, version: 1 }))
+    new Function(themeScript)()
+    expect(root.classList.contains("dark")).toBe(true)
+  })
+
+  it("theme.js keeps an explicit light choice (v2) on a dark device", () => {
+    stubDevice(true)
+    localStorage.setItem("rafeeq.device", JSON.stringify({ state: { theme: "light" }, version: 2 }))
+    new Function(themeScript)()
+    expect(root.classList.contains("dark")).toBe(false)
+  })
+
+  it("theme.js keeps an explicit dark choice on a light device", () => {
+    stubDevice(false)
+    localStorage.setItem("rafeeq.device", JSON.stringify({ state: { theme: "dark" }, version: 2 }))
+    new Function(themeScript)()
+    expect(root.classList.contains("dark")).toBe(true)
+  })
+
+  it("the store migrates the old default to «حسب الجهاز» and keeps dark and system", async () => {
+    const migrate = useDevice.persist.getOptions().migrate!
+    expect(((await migrate({ theme: "light" }, 1)) as { theme: string }).theme).toBe("system")
+    expect(((await migrate({ theme: "dark" }, 1)) as { theme: string }).theme).toBe("dark")
+    expect(((await migrate({ theme: "system" }, 1)) as { theme: string }).theme).toBe("system")
+    expect(((await migrate({}, 1)) as { theme: string }).theme).toBe("system")
   })
 })
