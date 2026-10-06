@@ -25,7 +25,7 @@ The pattern follows the repo's existing flags: a typed boolean in `Settings` wit
 | R3 fixed optional list, eligibility on the device | `home/layout.ts::OPTIONAL, eligible`, `home/useOrganized.ts::useEligibility` | ramadan (14 days before to its end, PRC-04 data on the device); human (after the first lesson, no mentor: `/api/mentors/mine` when signed in); save (guest after the first lesson, not closed with «لاحقًا» nor hidden); reciter (listened on this device, no reciter chosen (`discover/reciters.ts::loadReciterChoice`), two or more approved reciters from `/api/discover/recitations`, as the surah page shows its picker from two; it opens the last surah's page, where the picker is); library (after `u01-l7`, an approved basics item in the learner's language) |
 | R4 the model orders | `backend/app/platform/home.py` (`POST /api/home/order`), `knowledge/ai/agents.py::order_home`, prompt `knowledge/ai/prompts/home_order.md`; `home/useOrganized.ts::useDayOrder, orderBody` | Body = the guide's learning summary (`ask/guide.ts::buildSummary`: mastered, reviewing, next) + `bucket` + `lang`; the request model forbids any other field (422). Same model tier as the guide (fast). Output ids only, checked on the server and again on the device (`check_order` / `checkOrder`): every main id once, known optional ids, nothing else (so no next step). Refused, failed, slow (> 4 s) or offline → the fixed order (يومي، بطاقة اليوم، اسأل، then the table order). Offline: at once, no request |
 | R5 once a day | `home/store.ts` (`rafeeq.home`: day, order, slots), `layout.ts::daySlots, visibleOptional` | The order is set on the first opening of the device day and kept until the next. Optional slots placed today keep their places: one no longer eligible disappears in place and its slot is not refilled that day; the contents of «يومي» and the next step change with time |
-| R6 hide; no reward or blame | `OrganizedHome.tsx::OptionalCard`, `store.ts::hide` | One tap hides an optional component for good; the next eligible takes its slot. Kept on this device only (never sent, the model included). Copy introduces tools only |
+| R6 hide; no reward or blame | `OrganizedHome.tsx::OptionalCard`, `store.ts::hide` | One tap hides an optional component for good; its slot stays empty that day and the next eligible takes it the next day (§4). Kept on this device only (never sent, the model included). Copy introduces tools only |
 
 Time-of-day bucket: from the device clock hour only (04–06 fajr, 06–11 morning, 11–15 dhuhr, 15–18 asr, 18–21 evening, else night), never from prayer times, which come from the location.
 
@@ -59,7 +59,7 @@ Frontend `frontend/src/app/home/plt09.rules.test.tsx`:
 | R5 ex1 | `plt09_r5_morning_then_afternoon_same_places_and_the_next_prayer_is_now_asr` |
 | R5 ex2 | `plt09_r5_asr_in_40_minutes_is_highlighted_then_evening_adhkar_nothing_moves` |
 | R5 (removed in place) | `plt09_r5_an_optional_component_no_longer_eligible_is_removed_in_place` |
-| R6 ex1 | `plt09_r6_hidden_choose_reciter_does_not_return_and_the_next_eligible_takes_its_place` |
+| R6 ex1 | `plt09_r6_hidden_choose_reciter_does_not_return_and_the_next_eligible_takes_its_place_the_next_day` |
 | R6 ex2 | `plt09_r6_days_without_adhkar_show_evening_adhkar_as_a_tool_without_blame` |
 
 ## 3. Defaults chosen where the document is silent (for the PLT owner)
@@ -72,3 +72,14 @@ Frontend `frontend/src/app/home/plt09.rules.test.tsx`:
 - **Hiding «احفظ تقدّمك»** on the organized home is separate from the current Home's «لاحقًا»; either one keeps it away.
 - **Ramadan optional component** opens the prayer-times screen, where the Ramadan card is.
 - PLT-08 tests of rules 1 and 5 (`platform.gaps.rules.test.tsx`) now run on the previous Home (setting off), which is what those rules describe since PLT-09 replaced them.
+
+## 4. Reconciliation with PLT-08 (2026-10-06)
+
+PLT-09 replaces PLT-08 rules 1, 4 and 5, not rule 3, so on the organized home PLT-09 decides the layout and PLT-08 R3 still limits what is new (the audit `prd-audit-2026-10-06` found the two in conflict; PLT-09 is the newer, approved document and wins wherever they truly differ):
+
+- **One new optional component a day** (PLT-08 R3): `home/layout.ts::daySlots` fills up to two slots (PLT-09 R1) but at most one component never shown before; `store.ts::shown` keeps the day each was first shown. So day one shows one, the next day two.
+- **Hiding frees nothing until tomorrow** (PLT-08 R3 «the next one waits until tomorrow»): the hidden component keeps its slot, shown as nothing, for the rest of the day; the next eligible takes it the next day (PLT-09 R6 ex1, read as «after that», not «at once»).
+- **Never offered after the feature was opened** (PLT-08 R3 ex3): `eligible()` checks `opened`: Ramadan and «لست وحدك» from the guide's `used` keys, save progress (`/me/account`) and the library (`/discover/library`) from `layout.ts::openedBy`, recorded by `useGuideTracker`.
+- **Save progress in Ramadan** (PLT-02 R1): Ramadan holds a slot all month, so while it is eligible `keepSaveInReach` keeps the save-progress offer within the first two eligible; outside Ramadan the day's order stands (PLT-09 R4).
+
+Tests: `plt08_r3_ex2_day_one_shows_one_new_optional_component_not_two`, `plt08_r3_ex2_hiding_today_brings_no_replacement_until_tomorrow`, `plt08_r3_ex3_a_feature_already_opened_is_not_offered`, `plt08_r3_ex3_opening_the_library_or_the_mentor_screen_ends_its_component_on_home`, `plt02_r1_save_progress_is_not_crowded_out_in_ramadan`, and `plt09_r6_hidden_choose_reciter_does_not_return_and_the_next_eligible_takes_its_place_the_next_day` (renamed).

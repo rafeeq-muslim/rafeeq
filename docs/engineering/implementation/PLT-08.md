@@ -29,3 +29,7 @@ Frontend `src/app/platform.gaps.rules.test.tsx` (added on `plt-audit-gaps`):
 ## 3. Open questions kept at their defaults
 
 Discover after three learning days; no «جديد» label; after the first lesson the «لست وحدك» suggestion and the save-progress offer show together, the suggestion first.
+
+## 4. Reconciliation with PLT-09 (2026-10-06)
+
+PLT-09 (the organized home, approved and on by default) replaces this feature's rules 1, 4 and 5; where the two documents differ, PLT-09 wins. Rule 3 is not replaced and now also governs the organized home's optional components: at most one new a day, a hidden one is not replaced until the next day, and nothing is offered for a feature already opened. The classic Home above keeps its own one-card behaviour. Details and tests: `PLT-09.md` §4.
