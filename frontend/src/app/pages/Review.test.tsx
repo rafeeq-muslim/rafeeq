@@ -1,7 +1,7 @@
 /** Issue #9 item 17 (LRN-04): the review opened by its link or after a reload
  * shows the objectives that are due, not «nothing to review». */
 import { afterEach, describe, expect, it, vi } from "vitest"
-import { cleanup, render, screen } from "@testing-library/react"
+import { act, cleanup, render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
 
 import { translate } from "@/app/i18n"
@@ -10,7 +10,13 @@ import type { Content } from "@/app/learning/types"
 
 const state: { content: Content | undefined; isLoading: boolean } = { content: undefined, isLoading: true }
 vi.mock("@/app/learning/useContent", () => ({
-  useContent: () => ({ content: state.content, isLoading: state.isLoading, lessons: state.content ? Object.values(state.content.lessons) : [], preview: false }),
+  useContent: () => ({
+    content: state.content,
+    isLoading: state.isLoading,
+    isError: false,
+    lessons: state.content ? Object.values(state.content.lessons) : [],
+    preview: false,
+  }),
 }))
 const { default: Review } = await import("./Review")
 
@@ -53,6 +59,38 @@ describe("lrn-04 review opened by its link (issue #9 item 17)", () => {
       <MemoryRouter>
         <Review />
       </MemoryRouter>,
+    )
+    expect(screen.getByText("PROMPT_E1")).toBeTruthy()
+  })
+
+  it("waits for content even when the request is paused (not 'loading', e.g. offline)", () => {
+    useLearning.setState({ completed: {}, mastery: {} } as never)
+    state.content = undefined
+    state.isLoading = false
+    const view = render(
+      <MemoryRouter>
+        <Review />
+      </MemoryRouter>,
+    )
+    expect(screen.queryByText(translate("ar", "review.empty"))).toBeNull()
+    view.unmount()
+  })
+
+  it("follows progress that arrives after the first render, until the first answer", () => {
+    const twoHoursAgo = new Date(Date.now() - 2 * 3_600_000).toISOString()
+    useLearning.setState({ completed: {}, mastery: {} } as never)
+    state.content = content
+    state.isLoading = false
+    render(
+      <MemoryRouter>
+        <Review />
+      </MemoryRouter>,
+    )
+    act(() =>
+      useLearning.setState({
+        completed: { l1: { first: twoHoursAgo, last: twoHoursAgo, times: 1 } },
+        mastery: { o1: { p: 0.4, seen: true, answered: true, lastAnswerAt: twoHoursAgo, checksDone: 0 } },
+      } as never),
     )
     expect(screen.getByText("PROMPT_E1")).toBeTruthy()
   })
