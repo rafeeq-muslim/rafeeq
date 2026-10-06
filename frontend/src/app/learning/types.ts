@@ -5,7 +5,9 @@
  * stored Arabic (split on single spaces) and, for en/tl, the book's own
  * translation of that part. */
 export type QuranExcerpt = { words: [number, number]; translation?: string }
-export type QuranRef = { sura: number; ayat: [number, number]; excerpt?: QuranExcerpt | null }
+/** `recite`: LRN-01 R4 / LRN-09 R2 — set by the server only on a whole-verse
+ * card whose recitation file the Sharia reviewer approved. */
+export type QuranRef = { sura: number; ayat: [number, number]; excerpt?: QuranExcerpt | null; recite?: boolean }
 
 export type Card = {
   id: string

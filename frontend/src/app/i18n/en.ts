@@ -236,6 +236,9 @@ export const en: Dict = {
   "home.ask": "Ask anything about your faith",
   "lesson.verseRef": "Surah {s}, verse {a}",
   "lesson.verseOffline": "The verse text appears when you are back online.",
+  // LRN-01 R4 / LRN-09 R2: recitation under whole-verse cards
+  "lesson.recite.stop": "Stop the recitation",
+  "lesson.recite.offline": "The recitation plays when you are back online.",
   "lesson.translation": "Translation of the meanings: {name}",
   "lesson.orderHint": "Tap the steps in order",
   "lesson.matchHint": "Pick a word, then pick its meaning",

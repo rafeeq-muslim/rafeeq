@@ -14,7 +14,7 @@ from typing import Any
 from app.core.config import get_settings
 from app.knowledge import review
 from app.knowledge.review import ReviewItem
-from app.learning import team_units
+from app.learning import recitation, team_units
 
 LANGS = ("ar", "en", "tl")
 
@@ -122,7 +122,7 @@ def build_content(lang: str, units_live: dict[str, Any], lessons_live: dict[str,
         if view is None:
             continue
         lessons[lid] = {
-            **view,
+            **recitation.mark(view),  # LRN-01 R4: approved whole-verse recitation, outside the review view
             "id": lid,
             "unit": lesson.get("unit"),
             "order": lesson.get("order", 0),

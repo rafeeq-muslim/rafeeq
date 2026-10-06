@@ -16,10 +16,13 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { denylist: [/^\/api\//, /^\/landing(\/|$)/] }))
 
-// Approved lesson content and Quran passages: usable offline.
-registerRoute(({ url }) => url.pathname.startsWith("/api/content") || url.pathname.startsWith("/api/scripture"), new NetworkFirst({ cacheName: "rafeeq-content", networkTimeoutSeconds: 4 }))
+// Approved lesson content and Quran passages: usable offline. Same origin only.
+registerRoute(
+  ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content") || url.pathname.startsWith("/api/scripture")),
+  new NetworkFirst({ cacheName: "rafeeq-content", networkTimeoutSeconds: 4 }),
+)
 // Images from Rafeeq itself only (issue #9 item 12). Audio and video bypass the
-// worker: other origins (IslamHouse) are loaded by the browser under media-src
+// worker: other origins (IslamHouse, Quranpedia verse recitations) are loaded by the browser under media-src
 // (the worker's connect-src 'self' cannot fetch them), and cached responses
 // would break the range requests players need for seeking.
 registerRoute(
