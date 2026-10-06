@@ -79,3 +79,31 @@ Danger handling now has its own factual note: `danger-handling.md`.
 | Security | A mentor's or team member's gender, once set, changes only by an admin (`PUT /api/admin/users/{id}/gender`, Admin screen); `PUT /api/mentors/me/match` and `PATCH /api/me` answer `403 gender_locked`. Mentors and team members set it once in the account settings (`Account.tsx::ResponderGender`) |
 
 Tests: `backend/tests/test_cmp_audit_gaps.py`, vitest `companion/cmp-audit-gaps.test.tsx`.
+
+## R1: lesson and review help open the assistant first (branch `cmp-01-r1-lesson-help-ai-first-build`, 2026-10-07)
+
+Docs PR #79 (learning owner's decision 2026-10-07). Frontend only; no endpoint, model or migration changed.
+
+| Part of R1 | Module | Behaviour |
+| --- | --- | --- |
+| Help button in the lesson and the review | `frontend/src/app/lesson/LessonHelpButton.tsx` (used by `pages/Lesson.tsx`, `pages/Review.tsx`) | Named «مساعدة» (`lesson.help`). Opens `/ask` with the route state `{lessonHelp: {from: "lesson" \| "review", topic}}` built by `ask/lessonHelp.ts`. `topic` is the lesson's title (in a review: the title of the lesson the exercise on screen belongs to). Nothing in the URL. Below 380px it is a 44px icon with the label kept for screen readers |
+| Topic only, never the answers | `ask/lessonHelp.ts::readLessonHelp` | Reads only `from` and `topic` (≤ 120 characters); any other field is dropped. The topic is shown in the assistant (`pages/Ask.tsx`, `data-slot="lesson-topic"`, with «عُد إلى الدرس») and stays on the device: `POST /api/ask` is unchanged (open question in the feature document) |
+| «تحتاج إنسانًا؟» | `ask/parts.tsx` (`FailureCard` for `no_source`, `AnswerTurn` for `route=personal`), `ReferralCard question` | The card asks «تحتاج إنسانًا؟» (`ask.needHuman`) above its one button, which opens `/mentor/help?kind=escalation&from=<origin>&ask=<ask_id>`. `verification_failed` and `unavailable` still lead with retry (KNW-01 answer rate), with «أريد إنسانًا» beside it |
+| «أريد إنسانًا» always visible in the assistant | `pages/Ask.tsx` top bar (sticky) | Opens `/mentor/help?from=<origin>` |
+| Where the request came from | `ask/parts.tsx::HelpOriginContext` | `origin` is `lesson` or `review` when the assistant was opened from there, else `ask`. The request stores that source only: no lesson name, no answers. For `lesson`/`review` no `ask_id` is sent either (it is sent for `ask`, as before) |
+| Assistant question attached only if chosen | `companion/HelpScreen.tsx` | The «أرفق سؤالي للمساعد» box (off by default) now shows whenever the `ask` id's question is still in memory, whatever the origin |
+| Danger | unchanged | `DangerHelpPanel` only; its button opens `kind=urgent&from=<origin>&ask=<ask_id>` |
+
+Tests (vitest, `frontend/src/app/companion/cmp01.r1.rules.test.tsx`):
+
+| Example | Test |
+| --- | --- |
+| R1 ex1 «أتوضأ (1)», no sourced answer → «تحتاج إنسانًا؟», one tap | `cmp01_r1_ex1_wudu_1_no_sourced_answer_asks_need_human_and_opens_the_request_in_one_tap` |
+| R1 ex2 request from a lesson says «درس», no lesson name, no answers | `cmp01_r1_ex2_request_from_a_lesson_says_lesson_without_its_name_or_any_answer` (server: `test_cmp01_r1_request_from_lesson_keeps_only_the_source`) |
+| R1 ex3 assistant question only if chosen | `cmp01_r1_ex3_assistant_question_is_attached_only_if_the_learner_chooses`, `cmp01_r1_ex3_assistant_question_travels_when_chosen` (and the earlier `cmp01_r1_question_*` in `companion.rules.test.tsx`) |
+| Topic only, never the answers | `cmp01_r1_lesson_help_carries_the_topic_only_never_the_learners_answers`, `cmp01_r1_hand_over_keeps_only_origin_and_topic` |
+| Review | `cmp01_r1_review_help_opens_the_assistant_with_the_lesson_topic_only` |
+| Personal matter | `cmp01_r1_personal_matter_asks_need_human_and_opens_the_request_in_one_tap` |
+| Always visible in the assistant | `cmp01_r1_i_want_a_person_is_visible_in_the_assistant_at_every_moment` |
+| Danger at once | `cmp01_r1_danger_goes_to_a_human_at_once_without_an_answer` |
+| Narrow screens | `cmp01_r1_help_button_stays_reachable_and_named_below_380px`, `cmp01_r1_lesson_human_button_visible_below_380px`, `cmp01_r1_review_human_button_visible_below_380px` (`cmp-audit-gaps.test.tsx`, now on the «مساعدة» button) |

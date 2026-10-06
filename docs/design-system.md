@@ -234,7 +234,7 @@ import { IconDroplet } from "@tabler/icons-react"
 | `CelebrationScreen` | شاشة الاحتفال على السطح الحبري | `icon`، `badgeLabel`، `title`، `stats`، `primaryLabel` |
 | `UserMessage`، `AssistantMessage` | فقاعتا السؤال والإجابة، ولا تُقبل إجابة بلا مصدر | `sources` إلزامية |
 | `SourceStrip`، `AiDisclosure` | شريط المصدر، والتنبيه الدائم إلى الذكاء الاصطناعي | `href` |
-| `ReferralCard`، `AskComposer` | الإحالة إلى المرشد، وخانة السؤال بالنص أو الصوت | `onRefer` / `onSend`، `onVoice` |
+| `ReferralCard`، `AskComposer` | الإحالة إلى المرشد، وخانة السؤال بالنص أو الصوت | `onRefer`، `question` (سطر «تحتاج إنسانًا؟» فوق الزر، CMP-01) / `onSend`، `onVoice` |
 | `HumanHelpButton`، `DangerHelpPanel` | «أريد إنسانًا»، ولوحة حالة الخطر | `onPrimary`، `onSecondary` (يظهر الزر الثاني إن مُرّر فقط)، `children` لأرقام المساعدة |
 | `HelpRequestItem`، `MentorCard` | طلب في صندوق المرشد، ومرشد مقترح | `status`: new أو waiting أو answered أو urgent |
 | `PrayerTimesCard`، `HijriDate`، `HabitItem` | المواقيت، والتاريخ الهجري، والعادة | `next`، `times` / `worship` |
