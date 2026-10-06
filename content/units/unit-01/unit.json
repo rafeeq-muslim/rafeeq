@@ -401,7 +401,7 @@
           "text": {
             "ar": "يعرف أن الطهارة شرط لصحة الصلاة",
             "en": "Knows that purification is a condition for the validity of prayer",
-            "tl": "Alam na ang paglilinis ay kondisyon upang tanggapin ang salah"
+            "tl": "Alam na ang paglilinis ay kondisyon upang maging tama (balido) ang salah"
           },
           "label": {
             "ar": "الطهارة شرط للصلاة",
@@ -432,7 +432,7 @@
           "label": {
             "ar": "الماء الطهور",
             "en": "Purifying water",
-            "tl": "Ang tubig na naglilinis"
+            "tl": "Ang malinis na tubig"
           }
         }
       ],
@@ -501,7 +501,7 @@
           "text": {
             "ar": "من عظيم شأن الصلاة أنْ شرع الله الطهارة قبلها، وجعلها شرطًا لصحتها، فهي مفتاح الصلاة، واستشعار فضلها يجعل القلب مشتاقًا لأداء الصلاة، قال ﷺ : (الطهور شطر الإيمان .. والصلاة نور) . وقال ﷺ : (من توضأ فأحسن الوضوء خرجت خطاياه من جسده) . فيُقْدِم العبد إلى ربه متطهرًا طهارة حسية بالوضوء، ومعنوية بأداء هذه العبادة، مخلصًا لله تعالى، مقتديًا بهدي النبي ﷺ .",
             "en": "Because of the immense status of Salah (prayer), Allah prescribed purification before it and made purification a condition for the validity of the prayer. It is the key to prayer (the first step towards performing it). The consciousness of its merit makes the heart long to perform prayer. The Prophet (Allah’s prayers and peace be upon him) said: \"Purification is half of Imān… and prayer is light.\"\nHe (Allah’s prayers and peace be upon him) also said: \"He who performs the Wudu’ perfectly, his sins come out from his body.”\nSo, a Muslim stands before his Lord in a state of physical purification through ablution and spiritual purification through performing this act of worship sincerely to Allah Almighty and in compliance with the guidance of the Prophet (Allah’s prayers and peace be upon him).",
-            "tl": "Kabilang sa pagiging dakila ng antas ng salah ay isinabatas ng Allah ang taharah o paglilinis bago ito isagawa, ito ay ginawang kondisyon upang tanggaapin ang salah, at ito ang susi ng Salah. Ang pagpapahalaga sa kainaman ng salah ang nagtutulak sa puso upang mas lalong manabik sa pagtataguyod nito. Sinabi ng Propeta ﷺ: “Ang kalinisan ay bahagi ng pananampalataya; at ang Salah ay liwanag.”\nSinabi pa ng Propeta ﷺ: “Sinuman ang nagsagawa ng wudhu at ito ay kanyang pinabuti, tiyak na maaalis ang kanyang mga kasalanan mula sa kanyang katawan.”\nHaharap ang isang alipin sa kanyang Panginoon na malinis ang kanyang panlabas na anyo dahil sa wudhu; gayundin ang kanyang kalooban sa pagsasagawa ng pagsamba na dalisay sa Allah, at alinsunod sa kapamaraanan ng Propeta ﷺ."
+            "tl": "Kabilang sa pagiging dakila ng antas ng salah ay isinabatas ng Allah ang taharah o paglilinis bago ito isagawa, ito ay ginawang kondisyon upang maging tama (balido) ang salah, at ito ang susi ng Salah. Ang pagpapahalaga sa kainaman ng salah ang nagtutulak sa puso upang mas lalong manabik sa pagtataguyod nito. Sinabi ng Propeta ﷺ: “Ang kalinisan ay bahagi ng pananampalataya; at ang Salah ay liwanag.”\nSinabi pa ng Propeta ﷺ: “Sinuman ang nagsagawa ng wudhu at ito ay kanyang pinabuti, tiyak na maaalis ang kanyang mga kasalanan mula sa kanyang katawan.”\nHaharap ang isang alipin sa kanyang Panginoon na malinis ang kanyang panlabas na anyo dahil sa wudhu; gayundin ang kanyang kalooban sa pagsasagawa ng pagsamba na dalisay sa Allah, at alinsunod sa kapamaraanan ng Propeta ﷺ."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -511,7 +511,10 @@
             "u01-l2-o1"
           ],
           "contains_hadith": true,
-          "verify": "The paragraph quotes two hadiths: link them to HadeethEnc (source and grade) and check the wording before release."
+          "verify": "The paragraph quotes two hadiths: link them to HadeethEnc (source and grade) and check the wording before release.",
+          "edited": {
+            "tl": "«tanggapin» (accepted) replaced with validity: the Arabic says «شرطًا لصحتها», and صحة is not قبول; the Arabic edition governs (reviewer, 2026-10-06)."
+          }
         },
         {
           "id": "u01-l2-c3",
@@ -568,7 +571,7 @@
               "text": {
                 "ar": "شرط لصحتها",
                 "en": "A condition for its validity",
-                "tl": "Kondisyon upang tanggapin ito"
+                "tl": "Kondisyon upang maging tama (balido) ito"
               }
             },
             {
