@@ -33,8 +33,9 @@ describe("PRC-04 R2: Ramadan is expected until announced", () => {
     expect(ramadanState(day("2027-02-09"), announced, "SA")).toMatchObject({ kind: "ramadan", day: 1, announced: true })
   })
 
-  it("in Manila the Saudi announcement is not applied: the expected date stays", () => {
-    expect(ramadanState(day("2027-02-08"), announced, "PH")).toMatchObject({ kind: "ramadan", day: 1, announced: false })
+  it("in Manila, with no announcement of its own, the Saudi announcement is followed", () => {
+    expect(ramadanState(day("2027-02-08"), announced, "PH").kind).toBe("upcoming")
+    expect(ramadanState(day("2027-02-09"), announced, "PH")).toMatchObject({ kind: "ramadan", day: 1, announced: true })
   })
 })
 
