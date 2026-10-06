@@ -3,7 +3,8 @@
  *
  * - Quick exit (R2), as GOV.UK's «Exit this page»: the page is covered at
  *   once (so nothing shows on a slow connection), then replaced by a neutral
- *   weather page. Pressing Shift three times does the same. A page cannot
+ *   weather page. Pressing Shift three times does the same. The Ask
+ *   conversation kept for the visit goes with it (KNW-01 R7). A page cannot
  *   erase browser history, so the setting says how to (privacy.historyNote).
  * - Erase this device (R4): everything Rafeeq keeps in this browser, plus a
  *   guest's conversations with a person and the push subscription on the
@@ -22,11 +23,13 @@ import { useAuth } from "@/app/stores/auth"
 import { helpHeaders } from "@/app/companion/store"
 import { linkState, unlinkOrg } from "@/app/org/api"
 import { useOrgLink } from "@/app/org/store"
+import { clearSession as clearAskSession } from "@/app/ask/session"
 
 export const EXIT_URL = "https://www.bbc.com/weather"
 const PREFIX = "rafeeq."
 
 export function exitNow(go: (url: string) => void = (url) => window.location.replace(url)) {
+  clearAskSession() // KNW-01 R7: «رجوع» after a quick exit never brings the conversation back
   if (typeof document !== "undefined") {
     const cover = document.createElement("div")
     cover.setAttribute("data-quick-exit", "")

@@ -1,7 +1,9 @@
 /**
- * The Ask thread for this visit. Kept in memory only: remembering
- * conversations across sessions is out of scope (KNW-01), and no question
- * text is written to the device or the server.
+ * The Ask thread for this visit. Remembering conversations across sessions
+ * is out of scope (KNW-01) and no question text goes to the server; within
+ * the visit the thread and the draft survive a reload through the tab's
+ * session storage (KNW-01 R7, ask/session.ts), and an app update waits
+ * while a conversation is open (lib/pwa.ts).
  *
  * KNW-01 reliability R1, R6, §14.3:
  * - one submission contract for typed questions and suggestions
@@ -19,6 +21,8 @@
 import { create } from "zustand"
 import { ApiError, api } from "@/app/lib/api"
 import { useDevice } from "@/app/stores/device"
+import { holdUpdateWhile } from "@/app/lib/pwa"
+import { clearSession, keepsOnDevice, loadSession, saveDraft, saveThread } from "./session"
 import type { AskResponse, AskSnapshot, Entrypoint, ErrorCode, Turn } from "./types"
 
 /**
@@ -45,8 +49,8 @@ type AskState = {
   cancel: () => void
   put: (id: string, turn: Turn) => void
   reset: () => void
-  /** PLT-15 R5: the typed question stays here (memory only, like the thread)
-   * while offline or on another screen, until its owner sends it. */
+  /** PLT-15 R5: the typed question stays here (kept like the thread) while
+   * offline or on another screen, until its owner sends it. */
   draft: string
   setDraft: (v: string | ((d: string) => string)) => void
 }
@@ -139,11 +143,12 @@ export const useAsk = create<AskState>()((set, get) => {
     })()
   }
 
+  const kept = loadSession() // KNW-01 R7: what this visit already held before a reload
   return {
-    turns: [],
+    turns: kept.turns,
     busy: false,
     active: null,
-    draft: "",
+    draft: kept.draft,
     setDraft: (v) => set({ draft: typeof v === "function" ? v(get().draft) : v }),
     put: (id, turn) => set({ turns: get().turns.map((t) => (t.id === id ? turn : t)) }),
 
@@ -199,6 +204,31 @@ export const useAsk = create<AskState>()((set, get) => {
       for (const r of running.values()) r.abort("cancelled")
       running.clear()
       set({ turns: [], busy: false, active: null, draft: "" })
+      clearSession()
     },
   }
 })
+
+// KNW-01 R7: keep the visit's copy in step with the thread and the draft.
+useAsk.subscribe((s, prev) => {
+  if (s.turns !== prev.turns) saveThread(s.turns)
+  if (s.draft !== prev.draft) saveDraft(s.draft)
+})
+// Quick exit or discreet mode turned on: the copy goes at once; turned off: it is written again.
+useDevice.subscribe((d, prev) => {
+  if (d.quickExit === prev.quickExit && d.discreet === prev.discreet) return
+  const { turns, draft } = useAsk.getState()
+  saveThread(turns)
+  saveDraft(draft)
+})
+
+const ON_ASK = /^\/ask(\/|$)/
+/** KNW-01 R7: an app update never reloads the page under an open conversation
+ * (on the Ask screen, while an answer is on its way, or when the conversation
+ * lives in memory only); the update bar offers it instead. */
+export function conversationHoldsUpdate(path: string): boolean {
+  const { turns, draft, busy } = useAsk.getState()
+  if (turns.length === 0 && !draft.trim()) return false
+  return busy || ON_ASK.test(path) || !keepsOnDevice()
+}
+holdUpdateWhile(conversationHoldsUpdate)
