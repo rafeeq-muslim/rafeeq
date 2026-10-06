@@ -163,12 +163,15 @@ function ReferralCard({
   title = "تحدث مع مرشدك",
   description = "هذا سؤال يحتاج إلى من يعرف حالك. مرشدك يرد عليك بلغتك، ورسالتك لا يراها غيره.",
   actionLabel = "أرسل السؤال إلى مرشدك",
+  question,
   onRefer,
   className,
 }: {
   title?: string
   description?: string
   actionLabel?: string
+  /** CMP-01 R1: «تحتاج إنسانًا؟», asked right above the one-tap action. */
+  question?: string
   onRefer?: () => void
   className?: string
 }) {
@@ -181,7 +184,12 @@ function ReferralCard({
         </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardFooter>
+      <CardFooter className="flex-col items-stretch">
+        {question && (
+          <p data-slot="referral-question" className="text-label font-medium text-foreground">
+            {question}
+          </p>
+        )}
         <Button className="w-full" onClick={onRefer}>
           {actionLabel}
         </Button>
