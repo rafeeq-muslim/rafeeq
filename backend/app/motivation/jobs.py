@@ -7,10 +7,15 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import SessionLocal
-from app.core.events import publish
 from app.motivation.engagement import STATUSES, status_at
 from app.motivation.models import DailySnapshot, EngagementState
-from app.motivation.router import RIYADH
+from app.motivation.router import (
+    RIYADH,
+    account_status_of,
+    announce_account_status,
+    publish_device_status,
+    published_account_statuses,
+)
 
 
 async def refresh_and_snapshot(session: AsyncSession, now: datetime | None = None) -> DailySnapshot | None:
@@ -20,29 +25,31 @@ async def refresh_and_snapshot(session: AsyncSession, now: datetime | None = Non
         new = status_at(now, st.first_at, st.last_at, st.returned_at)
         if new != st.status:
             st.status = new
-            await publish(
-                session,
-                "EngagementStatusChanged",
-                "MOT",
-                {"install_id": st.install_id, "user_id": str(st.user_id) if st.user_id else None, "status": new},
-            )
+            await publish_device_status(session, st.install_id, new)
 
-    # One subject per learner: an account with several devices counts once,
-    # with the status of its most recently used device.
-    subjects: dict[str, EngagementState] = {}
+    # One subject per learner: a guest device on its own, an account once
+    # with its one status across its devices (MOT-07 R2/R6), the same status
+    # the mentor's copy gets.
+    accounts: dict[str, list[EngagementState]] = {}
+    subjects: dict[str, str | None] = {}
     for st in states:
-        if st.status is None or st.last_at is None:
-            continue
-        key = f"u:{st.user_id}" if st.user_id else f"i:{st.install_id}"
-        if key not in subjects or st.last_at > subjects[key].last_at:  # type: ignore[operator]
-            subjects[key] = st
+        if st.user_id is not None:
+            accounts.setdefault(str(st.user_id), []).append(st)
+        else:
+            subjects[f"i:{st.install_id}"] = st.status
+    published = await published_account_statuses(session)
+    for uid, rows in accounts.items():
+        subjects[f"u:{uid}"] = account_status_of(now, rows)
+        await announce_account_status(session, rows[0].user_id, subjects[f"u:{uid}"], published)  # type: ignore[arg-type]
+    statuses = {k: v for k, v in subjects.items() if v is not None}
+
     day = now.astimezone(RIYADH).date()
     snap = None
     if await session.get(DailySnapshot, day) is None:  # R2: a day's snapshot is never recomputed
         counts = {s: 0 for s in STATUSES}
-        for st in subjects.values():
-            counts[st.status] += 1  # type: ignore[index]
-        snap = DailySnapshot(day=day, counts=counts, transitions={k: st.status for k, st in subjects.items()})
+        for status in statuses.values():
+            counts[status] += 1
+        snap = DailySnapshot(day=day, counts=counts, transitions=statuses)
         session.add(snap)
     await session.commit()
     return snap
