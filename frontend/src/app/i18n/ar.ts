@@ -281,7 +281,6 @@ export const ar = {
   "acct.enable2fa": "فعّل التحقق بخطوتين",
   "acct.disable2fa": "أوقف التحقق بخطوتين وامسح البريد",
   "acct.2faOn": "مفعّل، والرموز تصل إلى {email}",
-  "acct.signedOut": "خرجت من حسابك. تقدّمك باقٍ على هذا الجهاز.",
   "acct.saveDisplay": "احفظ الاسم",
   "acct.inviteBad": "رمز الدعوة غير صالح أو مستعمل.",
   "acct.genderNeeded": "اختر الجنس ليطابقك مع المجموعات المناسبة.",
@@ -1200,4 +1199,11 @@ export const ar = {
   "home.org.library.title": "من المكتبة",
   "home.org.library.cta": "افتح المادة",
   "home.org.openSaved": "افتح محفوظاتي",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "نحفظ تقدّمك…",
+  "acct.signOut.unsavedTitle": "تقدّمك على هذا الجهاز لم يُحفظ في حسابك",
+  "acct.signOut.unsavedBody": "لم نستطع الوصول إلى حسابك الآن، وقد يكون الاتصال منقطعًا. إن خرجت، يُمسح من هذا الجهاز ما تعلّمته منذ آخر حفظ ولا يصل إلى حسابك. وإن انتظرت حتى يعود الاتصال، يُحفظ أولًا ثم تخرج.",
+  "acct.signOut.anyway": "اخرج وامسح",
+  "acct.signOut.wait": "انتظر حتى يعود الاتصال",
 } as const

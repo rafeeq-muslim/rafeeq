@@ -22,31 +22,60 @@ const noNulls = (o: Record<string, unknown>) => Object.fromEntries(Object.entrie
 let timer: ReturnType<typeof setTimeout> | undefined
 let running: Promise<void> | null = null
 
+const offline = () => typeof navigator !== "undefined" && !navigator.onLine
+
+/** One merge with the account copy; true when the server has the device's progress. */
+async function pushAndMerge(): Promise<boolean> {
+  try {
+    const L = useLearning.getState()
+    const M = useMotivation.getState()
+    const [l, m] = await Promise.all([
+      api<LearningCopy>("/api/me/learning", { method: "PUT", body: { completed: L.completed, unlockedUnits: L.unlockedUnits, mastery: L.mastery } }),
+      api<MotivationCopy>("/api/me/motivation", { method: "PUT", body: { days: M.days, badges: M.badges } }),
+    ])
+    L.replaceAll({
+      completed: l.completed,
+      unlockedUnits: l.unlockedUnits,
+      // LRN-04 R2: seenExercises is in the account copy too (a union of both
+      // sides), so "prefer an unseen exercise" holds on every device.
+      mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
+    })
+    M.replaceAll({ days: m.days, badges: m.badges })
+    return true
+  } catch {
+    return false /* next change or sign-in retries */
+  }
+}
+
 export async function syncNow(): Promise<void> {
-  if (!useAuth.getState().token || (typeof navigator !== "undefined" && !navigator.onLine)) return
-  running ??= (async () => {
-    try {
-      const L = useLearning.getState()
-      const M = useMotivation.getState()
-      const [l, m] = await Promise.all([
-        api<LearningCopy>("/api/me/learning", { method: "PUT", body: { completed: L.completed, unlockedUnits: L.unlockedUnits, mastery: L.mastery } }),
-        api<MotivationCopy>("/api/me/motivation", { method: "PUT", body: { days: M.days, badges: M.badges } }),
-      ])
-      L.replaceAll({
-        completed: l.completed,
-        unlockedUnits: l.unlockedUnits,
-        // LRN-04 R2: seenExercises is in the account copy too (a union of both
-        // sides), so "prefer an unseen exercise" holds on every device.
-        mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
-      })
-      M.replaceAll({ days: m.days, badges: m.badges })
-    } catch {
-      /* next change or sign-in retries */
-    } finally {
-      running = null
-    }
-  })()
+  if (!useAuth.getState().token || offline()) return
+  running ??= pushAndMerge().then(() => {
+    running = null
+  })
   return running
+}
+
+/** PLT-05 R7: progress kept on this device that the account would hold
+ * (lessons, mastery, learning days, badges). There is no "dirty" mark: any of
+ * it counts as possibly unsaved until a merge succeeds. */
+export function hasLocalProgress(): boolean {
+  const L = useLearning.getState()
+  const M = useMotivation.getState()
+  return (
+    Object.keys(L.completed).length > 0 ||
+    L.unlockedUnits.length > 0 ||
+    Object.keys(L.mastery).length > 0 ||
+    M.days.length > 0 ||
+    Object.keys(M.badges).length > 0
+  )
+}
+
+/** PLT-05 R7: save this device's progress to the account before signing out.
+ * True when it is saved now; false offline or when the server is unreachable. */
+export async function flushProgress(): Promise<boolean> {
+  if (!useAuth.getState().token || offline()) return false
+  if (running) await running
+  return pushAndMerge()
 }
 
 /** Debounced: lessons finish in bursts of answers. */

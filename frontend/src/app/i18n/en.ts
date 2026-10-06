@@ -282,7 +282,6 @@ export const en: Dict = {
   "acct.enable2fa": "Turn on two-step sign-in",
   "acct.disable2fa": "Turn off two-step sign-in and remove the email",
   "acct.2faOn": "On. Codes go to {email}",
-  "acct.signedOut": "You signed out. Your progress stays on this device.",
   "acct.saveDisplay": "Save the name",
   "acct.inviteBad": "This invite code is not valid or was already used.",
   "acct.genderNeeded": "Choose a gender to match you with the right groups.",
@@ -1201,4 +1200,11 @@ export const en: Dict = {
   "home.org.library.title": "From the library",
   "home.org.library.cta": "Open it",
   "home.org.openSaved": "Open my saved items",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "Saving your progress…",
+  "acct.signOut.unsavedTitle": "Progress on this device isn't saved to your account",
+  "acct.signOut.unsavedBody": "We couldn't reach your account just now; you may be offline. If you sign out now, what you learned since the last save is erased from this device and never reaches your account. If you wait until you're connected, it is saved first.",
+  "acct.signOut.anyway": "Sign out and erase",
+  "acct.signOut.wait": "Wait until I'm connected",
 }

@@ -283,7 +283,6 @@ export const tl: Dict = {
   "acct.enable2fa": "I-on ang two-step sign-in",
   "acct.disable2fa": "I-off ang two-step sign-in at alisin ang email",
   "acct.2faOn": "Naka-on. Pupunta ang mga code sa {email}",
-  "acct.signedOut": "Nag-sign out ka. Mananatili ang progreso mo sa device na ito.",
   "acct.saveDisplay": "I-save ang pangalan",
   "acct.inviteBad": "Hindi valid o nagamit na ang invite code na ito.",
   "acct.genderNeeded": "Pumili ng kasarian para maitugma ka sa tamang grupo.",
@@ -1202,4 +1201,11 @@ export const tl: Dict = {
   "home.org.library.title": "Mula sa aklatan",
   "home.org.library.cta": "Buksan",
   "home.org.openSaved": "Buksan ang mga na-save ko",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "Sine-save ang progreso mo…",
+  "acct.signOut.unsavedTitle": "Hindi pa naka-save sa account mo ang progreso sa device na ito",
+  "acct.signOut.unsavedBody": "Hindi namin maabot ang account mo ngayon; baka offline ka. Kung mag-sign out ka ngayon, mabubura sa device na ito ang natutunan mo mula sa huling save at hindi ito aabot sa account mo. Kung maghihintay ka hanggang maka-connect, mase-save muna ito.",
+  "acct.signOut.anyway": "Mag-sign out at burahin",
+  "acct.signOut.wait": "Maghintay hanggang maka-online",
 }
