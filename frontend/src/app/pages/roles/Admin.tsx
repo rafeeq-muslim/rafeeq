@@ -18,8 +18,11 @@ import { useT, type Key } from "@/app/i18n"
 import { api } from "@/app/lib/api"
 import { AdminOrgs } from "@/app/org/AdminOrgs" // ORG-01: organisations made by the team
 
-const INVITE_ROLES = ["mentor", "sharia_reviewer", "team", "admin"] as const
+// MOT-08: the team role is granted only in the database, so it is never offered
+// here; a person who already holds it keeps a box to revoke it.
+const INVITE_ROLES = ["mentor", "sharia_reviewer", "admin"] as const
 const ALL_ROLES = ["learner", ...INVITE_ROLES] as const
+export const rolesOffered = (held: string[]): string[] => (held.includes("team") ? [...ALL_ROLES, "team"] : [...ALL_ROLES])
 const roleKey = (r: string): Key => (r === "team" ? "role.teamRole" : r === "admin" ? "role.adminRole" : (`role.${r}` as Key))
 
 type Invite = { code: string; role: string; used: boolean; created_at: string }
@@ -120,7 +123,7 @@ function UserRoles({ user }: { user: U }) {
         <bdi className="font-bold">{user.display_name}</bdi> <span dir="ltr" className="text-label text-muted-foreground">@{user.username}</span>
       </p>
       <div className="flex flex-wrap gap-4">
-        {ALL_ROLES.map((r) => (
+        {rolesOffered(user.roles).map((r) => (
           <Label key={r} className="flex items-center gap-2 text-label">
             <Checkbox checked={roles.includes(r)} onCheckedChange={(v) => setRoles((x) => (v ? [...x, r] : x.filter((y) => y !== r)))} />
             {t(roleKey(r))}

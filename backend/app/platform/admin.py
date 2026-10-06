@@ -21,8 +21,15 @@ class InviteIn(BaseModel):
     count: int = 1
 
 
+# MOT-08 (open question decided 2026-10-06): the team role is granted only in
+# the database, never from the app; holding or revoking it still works.
+TEAM_ROLE_DB_ONLY = "team_role_db_only"
+
+
 @router.post("/invites")
 async def create_invites(body: InviteIn, admin: Admin, session: Session) -> dict:
+    if body.role == "team":
+        raise HTTPException(403, TEAM_ROLE_DB_ONLY)
     codes = []
     for _ in range(max(1, min(body.count, 50))):
         code = f"{body.role[:3].upper()}-{secrets.token_hex(4).upper()}"
@@ -49,6 +56,8 @@ async def set_roles(user_id: uuid.UUID, body: RolesIn, admin: Admin, session: Se
     user = await session.get(User, user_id)
     if user is None:
         raise HTTPException(404, "not_found")
+    if "team" in body.roles and "team" not in (user.roles or []):
+        raise HTTPException(403, TEAM_ROLE_DB_ONLY)
     user.roles = body.roles or ["learner"]
     await session.commit()
     return {"id": str(user.id), "roles": user.roles}
