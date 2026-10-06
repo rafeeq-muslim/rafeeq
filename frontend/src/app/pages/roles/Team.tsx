@@ -18,6 +18,7 @@ import { api } from "@/app/lib/api"
 import { useContent } from "@/app/learning/useContent"
 import { ReportsQueue } from "@/app/companion/mentor/ReportsQueue"
 import { ResponderCoverage } from "@/app/companion/mentor/ResponderCoverage"
+import { TeamSightings } from "@/app/pages/roles/TeamSightings"
 
 type Rate = number | null
 type Indicators = {
@@ -235,6 +236,10 @@ export default function Team() {
             </section>
           </>
         )}
+        {/* PLT-17 R5: month-start announcements (Ramadan mode depends on them); shown even without indicators. */}
+        <div className="border-t pt-6">
+          <TeamSightings />
+        </div>
         {/* CMP-01 open question: a sister and a brother per language (shown even without indicators). */}
         <div className="border-t pt-6">
           <ResponderCoverage />

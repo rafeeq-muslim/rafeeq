@@ -133,3 +133,19 @@ async def sightings_publish(body: SightingIn, session: Session, _: Annotated[Use
         source_url=str(body.source_url),
     )
     return {"start": row.start_date.isoformat()}
+
+
+@router.get("/sightings/expected")
+async def sightings_expected(hijri_year: int, hijri_month: int, _: Annotated[User, Depends(require_role("team"))]) -> dict:
+    """PLT-17 R5: the team's entry screen shows the Umm al-Qura date the ±1 day rule checks against."""
+    d = sightings.expected_start(hijri_year, hijri_month)
+    return {"expected": d.isoformat() if d else None, "countries": list(sightings.COUNTRIES)}
+
+
+@router.delete("/sightings/{country}/{hijri_year}/{hijri_month}", status_code=status.HTTP_204_NO_CONTENT)
+async def sightings_remove(
+    country: str, hijri_year: int, hijri_month: int, session: Session, _: Annotated[User, Depends(require_role("team"))]
+) -> None:
+    """PLT-17 R5: a wrong announcement is removed; the month is shown as expected again."""
+    if not await sightings.remove(session, country=country, hijri_year=hijri_year, hijri_month=hijri_month):
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")

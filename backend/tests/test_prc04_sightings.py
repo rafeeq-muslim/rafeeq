@@ -107,3 +107,41 @@ async def test_prc04_r2_returned_local_line_withdrawn_until_corrected(client, lo
 async def test_prc01_r5_merged_qibla_line_shown(client):
     lines = (await client.get("/api/practice/lines?lang=ar")).json()["lines"]
     assert lines["qibla_direction"].startswith("يكفيك أن تستقبل جهة القبلة")
+
+
+# --- PLT-17 R5: the team's sighting screen (list, expected date, remove) ----
+
+
+async def test_plt17_r5_team_adds_saudi_sighting_and_it_is_announced(client):
+    team = await with_roles(client, "nasser-1", "team")
+    exp = (await client.get("/api/practice/sightings/expected?hijri_year=1448&hijri_month=9", headers=auth(team))).json()
+    assert exp == {"expected": "2027-02-08", "countries": ["SA"]}
+    r = await client.post("/api/practice/sightings", json={**BODY, "start": "2027-02-08"}, headers=auth(team))
+    assert r.status_code == 201, r.text
+    assert [i["start"] for i in (await client.get("/api/practice/sightings")).json()["items"]] == ["2027-02-08"]
+
+
+async def test_plt17_r5_source_link_is_required(client):
+    team = await with_roles(client, "nasser-1", "team")
+    body = {k: v for k, v in BODY.items() if k != "source_url"}
+    r = await client.post("/api/practice/sightings", json={**body, "start": "2027-02-08"}, headers=auth(team))
+    assert r.status_code == 422
+    assert (await client.get("/api/practice/sightings")).json()["items"] == []
+
+
+async def test_plt17_r5_non_team_cannot_enter_or_remove(client):
+    team = await with_roles(client, "nasser-1", "team")
+    mentor = await with_roles(client, "abu-abdullah-1", "mentor")
+    assert (await client.post("/api/practice/sightings", json={**BODY, "start": "2027-02-08"}, headers=auth(mentor))).status_code == 403
+    assert (await client.get("/api/practice/sightings/expected?hijri_year=1448&hijri_month=9", headers=auth(mentor))).status_code == 403
+    await client.post("/api/practice/sightings", json={**BODY, "start": "2027-02-08"}, headers=auth(team))
+    assert (await client.delete("/api/practice/sightings/SA/1448/9", headers=auth(mentor))).status_code == 403
+    assert len((await client.get("/api/practice/sightings")).json()["items"]) == 1
+
+
+async def test_plt17_r5_team_removes_a_wrong_announcement(client):
+    team = await with_roles(client, "nasser-1", "team")
+    await client.post("/api/practice/sightings", json={**BODY, "start": "2027-02-09"}, headers=auth(team))
+    assert (await client.delete("/api/practice/sightings/SA/1448/9", headers=auth(team))).status_code == 204
+    assert (await client.get("/api/practice/sightings")).json()["items"] == []
+    assert (await client.delete("/api/practice/sightings/SA/1448/9", headers=auth(team))).status_code == 404
