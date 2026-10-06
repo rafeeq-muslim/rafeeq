@@ -604,6 +604,8 @@ export const en: Dict = {
   "cmp.thread.blockDone": "Blocked. Someone else will reply to you.",
   "cmp.thread.more": "Options",
   "cmp.thread.closedNote": "This conversation was closed. Write to open it again.",
+  // CMP-03 R4 (cmp-03-r4-ended-link): a former mentor's thread never reopens to him
+  "cmp.thread.endedNote": "This conversation with your former mentor has ended; it stays here for you to read. What you write here goes to your current mentor, or to someone on our team if you have no mentor.",
   "cmp.thread.hidden": "This message is hidden for review.",
   "cmp.report.title": "Report a message",
   "cmp.report.body": "The sender won't know who reported. Our team will review it.",
