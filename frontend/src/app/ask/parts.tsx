@@ -298,6 +298,7 @@ function FailureCard({
               <p dir="auto" className="text-body text-muted-foreground">
                 {t(`ask.fail.${kind}.body`)}
               </p>
+              <LiveSearchNote entries={live} />
               <div className="flex flex-wrap items-center gap-2">
                 {onRetry && (
                   <Button size="sm" onClick={onRetry}>
