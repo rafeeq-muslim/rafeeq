@@ -38,7 +38,7 @@ Sources: the challenge's Reference & Scientific Package (v. 1448/3/20) ✅, team
 - **No music or sound effects under Quran recitation** (IslamQA 145931).
 - **No ads next to Quran or hadith** (QuranEnc/HadeethEnc terms).
 - **No transliteration of Al-Fatiha or adhkar in non-Arabic letters** (team decision after Muhannad's Sharia concern 💬). Teach pronunciation by listening and repetition.
-- **No content is shown to users before the Sharia reviewer approves it** (team rule 💬). Sharia reviewer: مهند بن صالح الفوزان.
+- **Content is reviewed by the Sharia reviewer before it is merged into the repository; merged content is shown to learners directly** (product owner's decision, 2026-10-06; replaces "no content is shown before in-app approval"). Each review is recorded (`content/units/*/review.md`, `content/lessons/REVIEW.md`); the in-app review desk stays for later corrections. Sharia reviewer: مهند بن صالح الفوزان.
 - **No madhhab is chosen silently.** Where practice differs by madhhab, say so (`research/01` §6). **Exception (product owner, 2026-10-05):** the day-one unit (LRN-01) shows wudu and prayer as its approved source describes them, without the note, to avoid planting doubt in the first hours; differences are taught in a later unit.
 
 ## 2. AI assistant rules (Knowledge & Ask domain)
