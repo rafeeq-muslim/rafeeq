@@ -1493,4 +1493,8 @@ export const tl: Dict = {
   "ask.lesson.back": "Bumalik sa aralin",
   "ask.review.from": "Galing ka sa pagbabalik-aral ng araling “{name}”. Itanong ang anumang hindi malinaw dito.",
   "ask.review.back": "Bumalik sa pagbabalik-aral",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty. ⚠️ Tagalog needs native review ---
+  "plt17.org.none": "Walang aktibong organisasyong naka-link sa iyong account",
+  "plt17.org.noneBody": "Maaaring nasuspinde ang link mo sa iyong organisasyon. Makipag-ugnayan sa team ng Rafeeq para ma-link muli.",
+  "plt17.org.loadError": "Hindi namin ma-load ang datos ng iyong organisasyon.",
 }

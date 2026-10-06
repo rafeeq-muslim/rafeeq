@@ -14,7 +14,7 @@ import { toast } from "sonner"
 import { renderSVG } from "uqr"
 
 import { cn } from "@/lib/utils"
-import { Alert, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -48,6 +48,14 @@ export default function Org() {
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3"><bdi>{org?.name ?? t("org.title")}</bdi></span>} />
       <div className="px-4 pt-4 pb-12">
         {orgs.isLoading && <Skeleton className="h-64 rounded-card" />}
+        {orgs.isError && <LoadFailed onRetry={() => void orgs.refetch()} />}
+        {orgs.isSuccess && !org && (
+          // PLT-17 R15: no active organisation (link ended or suspended) is said, not a blank page.
+          <Alert variant="info" data-slot="org-none">
+            <AlertTitle>{t("plt17.org.none")}</AlertTitle>
+            <AlertDescription>{t("plt17.org.noneBody")}</AlertDescription>
+          </Alert>
+        )}
         {org && (
           <Tabs defaultValue="dashboard" className="gap-6">
             <TabsList className="w-full">
@@ -73,6 +81,21 @@ export default function Org() {
         )}
       </div>
     </>
+  )
+}
+
+/** PLT-17 R15: a failed load says so and offers a retry. */
+function LoadFailed({ onRetry }: { onRetry: () => void }) {
+  const { t } = useT()
+  return (
+    <div className="flex flex-col items-start gap-3" data-slot="org-load-error">
+      <Alert variant="destructive">
+        <AlertTitle>{t("plt17.org.loadError")}</AlertTitle>
+      </Alert>
+      <Button size="sm" variant="outline" onClick={onRetry}>
+        {t("common.retry")}
+      </Button>
+    </div>
   )
 }
 
@@ -332,6 +355,7 @@ export function OrgCodes({ orgId }: { orgId: string }) {
       </h2>
       <p className="text-label text-muted-foreground">{t("org.codes.hint")}</p>
       {q.isLoading && <Skeleton className="h-64 rounded-card" />}
+      {q.isError && <LoadFailed onRetry={() => void q.refetch()} />}
       <CodeList codes={q.data ?? []} />
     </section>
   )
@@ -340,25 +364,26 @@ export function OrgCodes({ orgId }: { orgId: string }) {
 /** The full link for a code: this site + `/welcome?lang=xx&org=CODE`, nothing else. */
 export const fullLink = (c: CodeRow, origin = typeof window !== "undefined" ? window.location.origin : "") => origin + c.path
 
-function CodeList({ codes }: { codes: CodeRow[] }) {
+export function CodeList({ codes }: { codes: CodeRow[] }) {
   const { t } = useT()
   return (
-    <ul className="grid gap-4 sm:grid-cols-2">
+    // PLT-17 R14: grid cells may shrink (min-w-0), so a long link is cut with an ellipsis instead of widening the page.
+    <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {codes.map((c) => {
         const link = fullLink(c)
         // White modules on a light card in both themes: scanners need the contrast.
         const svg = renderSVG(link, { border: 2, whiteColor: "white", blackColor: "black" })
         const src = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
         return (
-          <li key={c.code} className="flex flex-col items-center gap-3 rounded-card border-2 bg-card p-4" data-code={c.code}>
+          <li key={c.code} className="flex min-w-0 flex-col items-center gap-3 rounded-card border-2 bg-card p-4" data-code={c.code}>
             <p className="text-body font-bold" lang={c.lang}>
               {langName(c.lang)}
             </p>
             <img src={src} alt={t("org.codes.qrAlt", { lang: langName(c.lang) })} className="size-44 rounded-md bg-white" />
-            <code dir="ltr" className="font-mono text-h3 font-bold">
+            <code dir="ltr" className="max-w-full font-mono text-h3 font-bold break-all">
               {c.code}
             </code>
-            <p dir="ltr" className="max-w-full truncate text-caption text-muted-foreground">
+            <p dir="ltr" className="w-full min-w-0 truncate text-center text-caption text-muted-foreground" title={link}>
               {link}
             </p>
             <div className="flex flex-wrap justify-center gap-2">

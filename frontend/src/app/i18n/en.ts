@@ -1492,4 +1492,8 @@ export const en: Dict = {
   "ask.lesson.back": "Back to the lesson",
   "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
   "ask.review.back": "Back to the review",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty ---
+  "plt17.org.none": "No active organisation is linked to your account",
+  "plt17.org.noneBody": "Your link to your organisation may have been suspended. Contact the Rafeeq team to be linked again.",
+  "plt17.org.loadError": "We couldn't load your organisation's data.",
 }

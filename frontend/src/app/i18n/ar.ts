@@ -1491,4 +1491,8 @@ export const ar = {
   "ask.lesson.back": "ارجع إلى الدرس", // LRN-03 R5 (lrn-03-r5-return-to-lesson-build): the feature document's wording
   "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
   "ask.review.back": "عُد إلى المراجعة",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty ---
+  "plt17.org.none": "لا جهة نشطة مرتبطة بحسابك",
+  "plt17.org.noneBody": "ربما أُوقف ارتباطك بجهتك. تواصل مع فريق رفيق ليعيد ربطك بها.",
+  "plt17.org.loadError": "تعذّر تحميل بيانات الجهة.",
 } as const
