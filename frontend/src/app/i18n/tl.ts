@@ -1008,4 +1008,10 @@ export const tl: Dict = {
   "discover.saved.kind.answer": "Sagot",
   "discover.saved.answerOn": "Na-save noong {d}",
   "discover.saved.answerOffline": "Hindi maipakita ang sagot na ito ngayon. Lalabas ito kapag may koneksyon ka na.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "Hinanap ngayon mismo sa: {names}",
+  "ask.live.unreachable": "Hindi naabot ngayon: {names}",
+  "ask.live.fetchedAt": "Binasa mula sa pinagmulan noong {d}",
+  "ask.live.openSource": "Buksan ang buong teksto sa pinagmulan",
+  "ask.live.savedNote": "Hindi naka-save sa iyong device ang teksto ng pinagmulan; buksan ito sa pinagmulan.",
 }

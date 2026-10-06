@@ -1006,4 +1006,10 @@ export const ar = {
   "discover.saved.kind.answer": "إجابة",
   "discover.saved.answerOn": "حُفظت في {d}",
   "discover.saved.answerOffline": "تعذّر عرض هذه الإجابة الآن. ستظهر حين يعود الاتصال.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "بحثنا الآن مباشرة في: {names}",
+  "ask.live.unreachable": "تعذّر الوصول الآن إلى: {names}",
+  "ask.live.fetchedAt": "قُرئ من المصدر في {d}",
+  "ask.live.openSource": "افتح النص كاملًا في المصدر",
+  "ask.live.savedNote": "لا يُحفظ نص المصدر على جهازك؛ افتحه في موقعه.",
 } as const

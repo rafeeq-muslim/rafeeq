@@ -109,7 +109,7 @@ describe("knw-01 r1 one submission contract", () => {
 })
 
 describe("knw-01 r6 every attempt ends", () => {
-  it("t14: the 50 s deadline ends a request that never answers", async () => {
+  it("t14: the 65 s deadline (PRD live v3 §9) ends a request that never answers", async () => {
     vi.useFakeTimers()
     mockFetch(hanging)
     const r = useAsk.getState().submitQuestion({ text: "ما معنى الشهادتين؟", lang: "ar", entrypoint: "typed" })

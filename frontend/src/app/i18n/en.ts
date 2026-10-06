@@ -1007,4 +1007,10 @@ export const en: Dict = {
   "discover.saved.kind.answer": "Answer",
   "discover.saved.answerOn": "Saved on {d}",
   "discover.saved.answerOffline": "This answer can't be shown right now. It will appear when you're back online.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "Searched live just now: {names}",
+  "ask.live.unreachable": "Couldn't reach right now: {names}",
+  "ask.live.fetchedAt": "Read from the source on {d}",
+  "ask.live.openSource": "Open the full text at the source",
+  "ask.live.savedNote": "The source's text isn't kept on your device; open it at the source.",
 }

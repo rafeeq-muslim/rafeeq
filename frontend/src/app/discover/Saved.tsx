@@ -31,7 +31,7 @@ import type { SourceCard } from "@/app/ask/types"
 import { CardBody } from "./CardView"
 import { DiscoverBar } from "./parts"
 import { usePassages, useCards, useLibrary } from "./queries"
-import { resolveAnswer, resolveSaved, type SavedAnswerView } from "./resolve"
+import { liveSourceCard, resolveAnswer, resolveSaved, type SavedAnswerView } from "./resolve"
 import { pushSaved, savedAnswer, useSaved } from "./savedStore"
 import type { DailyCardData, LibraryItemData } from "./types"
 
@@ -55,7 +55,8 @@ export default function Saved() {
   const libEn = useLibrary("en", libLangs.includes("en"))
   const libTl = useLibrary("tl", libLangs.includes("tl"))
   const answerTexts = new Map(items.filter((e) => e.kind === "answer").flatMap((e) => (savedAnswer(e.ref) ? [[e.ref, savedAnswer(e.ref)!]] : [])))
-  const passages = usePassages([...answerTexts.values()].flatMap((a) => a.source_ids))
+  // PRD live v3: live source ids are not stored records; they resolve from their saved link.
+  const passages = usePassages([...answerTexts.values()].flatMap((a) => a.source_ids).filter((id) => !id.startsWith("live:")))
   const [open, setOpen] = React.useState<string | null>(null)
 
   // R3: merge the device list with the account copy when signed in.
@@ -68,7 +69,7 @@ export default function Saved() {
   const records = passages.data ?? new Map<string, SourceCard>()
   const answers = new Map<string, AnswerView>()
   for (const [ref, text] of answerTexts) {
-    const view = resolveAnswer(text, records)
+    const view = resolveAnswer(text, records, liveSourceCard)
     if (view) answers.set(ref, view)
   }
   const approved = {

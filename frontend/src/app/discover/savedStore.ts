@@ -16,8 +16,27 @@ import { useAuth } from "@/app/stores/auth"
 
 export type SavedKind = "card" | "library" | "answer"
 export type SavedEntry = { kind: SavedKind; ref: string; saved_at: string }
+/**
+ * PRD live v3 step 6: a source read live keeps its identity, its link and
+ * when it was read (never its text: the source's licence and rules.md §1.3).
+ */
+export type LiveSourceRef = { id: string; source_id: string; title: string; origin_url: string; retrieved_at: string }
 /** R2: what a saved answer keeps. No question field, by design. */
-export type AnswerText = { lang: string; answer: string; source_ids: string[] }
+export type AnswerText = { lang: string; answer: string; source_ids: string[]; live_sources?: LiveSourceRef[] }
+
+const isLiveRef = (x: unknown): x is LiveSourceRef => {
+  const r = x as LiveSourceRef | null
+  return (
+    !!r &&
+    typeof r.id === "string" &&
+    r.id.startsWith("live:") &&
+    typeof r.source_id === "string" &&
+    typeof r.title === "string" &&
+    typeof r.origin_url === "string" &&
+    r.origin_url.startsWith("https://") &&
+    typeof r.retrieved_at === "string"
+  )
+}
 
 const keyOf = (e: { kind: string; ref: string }) => `${e.kind}:${e.ref}`
 
@@ -59,8 +78,13 @@ const isAnswerText = (a: unknown): a is AnswerText => {
   return !!x && typeof x.answer === "string" && x.answer.length > 0 && typeof x.lang === "string" && Array.isArray(x.source_ids) && x.source_ids.length > 0
 }
 
-/** Only the three fields are kept or sent (older copies carried more). */
-const clean = (a: AnswerText): AnswerText => ({ lang: a.lang, answer: a.answer, source_ids: [...a.source_ids] })
+/** Only these fields are kept or sent (older copies carried more); live refs only when present. */
+const clean = (a: AnswerText): AnswerText => {
+  const live = (Array.isArray(a.live_sources) ? a.live_sources : []).filter(isLiveRef).filter((r) => a.source_ids.includes(r.id))
+  const out: AnswerText = { lang: a.lang, answer: a.answer, source_ids: [...a.source_ids] }
+  if (live.length) out.live_sources = live.map((r) => ({ id: r.id, source_id: r.source_id, title: r.title, origin_url: r.origin_url, retrieved_at: r.retrieved_at }))
+  return out
+}
 
 export function savedAnswer(ref: string): AnswerText | undefined {
   const a = readAnswers()[ref]
