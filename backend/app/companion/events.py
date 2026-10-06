@@ -17,7 +17,8 @@
   cascade on users.id; replies
   they wrote as a mentor stay in the learners' own conversations without a
   name (author SET NULL), and reports they filed stay without a reporter.
-- MentorApproved (ORG-02 R1): `{mentor_id}`. The mentor's profile exists and
+- MentorApproved (ORG-02 R1; CMP-08 R5 when an application made from an
+  account is approved): `{mentor_id}`. The mentor's profile exists and
   is not suspended; the inbox still waits for the mentor rules (ORG-02 R2).
 - MentorSuspended (ORG-02 R5): `{mentor_id}`. The mentor loses the inbox and
   is no longer suggested; each mentee's link ends (thread closed, and it never
@@ -34,7 +35,7 @@ from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion import notify
-from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorEnded, MentorLink
+from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorApplication, MentorEnded, MentorLink
 from app.core.events import subscribe
 
 LANGS = {"ar", "en", "tl"}
@@ -65,6 +66,8 @@ async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
     uid = payload.get("user_id")
     if uid:
         await session.execute(delete(GroupMessage).where(GroupMessage.author_id == uuid.UUID(str(uid))))
+        # CMP-08 R7: the application made from this account goes with it.
+        await session.execute(delete(MentorApplication).where(MentorApplication.user_id == uuid.UUID(str(uid))))
 
 
 @subscribe("EngagementStatusChanged")

@@ -241,6 +241,10 @@ export default function Welcome() {
                   <Button variant="link" className="text-white/70" onClick={() => open("create", true)}>
                     {t("acct.haveInvite")}
                   </Button>
+                  {/* CMP-08: without a code, apply to be a mentor */}
+                  <Button variant="link" className="text-white/70" onClick={() => navigate("/mentor-apply")}>
+                    {t("cmp.apply.entry")}
+                  </Button>
                   <OrgCodeEntry onCheck={typedOrg} />
                 </div>
               </div>
