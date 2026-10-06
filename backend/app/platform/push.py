@@ -47,6 +47,21 @@ REMINDER_TEXT = {  # MOT-05 R3 (Layla's lock screen example)
     "tl": ("Sandali para sa iyo", "May maikling aralin na handa kapag gusto mo"),
 }
 
+# --- PLT-13 notifications on iPhone ------------------------------------------
+# R5: the «جرّب الإشعار» text. Neutral like every push (PLT-06 R3): no app
+# name, no religious word.
+TEST_TEXT = {
+    "ar": ("تجربة", "وصل هذا الإشعار إلى جهازك"),
+    "en": ("Test", "This notification reached your device"),
+    "tl": ("Pagsubok", "Nakarating ang abisong ito sa iyong device"),
+}
+TEST_PER_DAY = 3  # R5: at most three a day per device
+
+
+def urgency_of(payload: dict) -> str:
+    """R3: replies from a person (CMP tags) are urgent, everything else normal."""
+    return "high" if str(payload.get("tag", "")).startswith("cmp-") else "normal"
+
 
 APP_BASE = "/app"  # PLT-10 R2/R3: the app lives under /app; "/" is the landing page
 
@@ -181,7 +196,7 @@ async def state(body: EndpointIn, session: Session) -> dict:
     """The switches stored for this device, so «حسابي» shows what the server
     will really do (the endpoint goes in the body, never in a URL)."""
     sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.endpoint))
-    if sub is None:
+    if sub is None or sub.failed_at is not None:  # PLT-13 R3: a subscription the push service dropped shows off
         return {"subscribed": False, "reminder": False, "time": None, "replies": False}
     return {"subscribed": True, "reminder": sub.reminder_enabled, "time": sub.reminder_time, "replies": sub.replies_enabled}
 
@@ -217,6 +232,64 @@ async def unsubscribe(body: EndpointIn, session: Session) -> None:
     await session.commit()
 
 
+class ResubscribeIn(SubscribeIn):
+    """PLT-13 R4: Safari never fires pushsubscriptionchange, so the app renews a
+    lost or changed subscription itself and moves this device's switches."""
+
+    old_endpoint: str | None = Field(default=None, max_length=1024)
+    reminder: bool = False
+    time: str | None = Field(default=None, pattern=r"^([01]\d|2[0-3]):[0-5]\d$")
+    replies: bool = False
+
+
+@router.post("/resubscribe")
+async def resubscribe(body: ResubscribeIn, session: Session, user: OptionalUser, request: Request) -> dict:
+    """R4: the new endpoint takes the device's settings. What the server learned
+    about the old one (learning days, ignored reminders, account) moves too, but
+    only from a subscription of the same install, and the old row is removed."""
+    ratelimit.hit(f"push-sub:{request.client.host if request.client else '-'}", limit=20, window_s=3600)
+    new_ep = body.subscription.endpoint
+    old = None
+    if body.old_endpoint and body.old_endpoint != new_ep:
+        old = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.old_endpoint))
+        if old is not None and old.install_id != body.install_id:
+            old = None
+    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == new_ep))
+    if sub is None:
+        sub = PushSubscription(endpoint=new_ep)
+        session.add(sub)
+    sub.p256dh, sub.auth = body.subscription.keys.p256dh, body.subscription.keys.auth
+    sub.install_id, sub.locale, sub.timezone, sub.failed_at = body.install_id, body.locale, body.timezone, None
+    if old is not None:
+        sub.user_id = old.user_id
+        sub.reminder_time = old.reminder_time
+        sub.ignored_in_row, sub.last_reminder_on, sub.last_learned_on = old.ignored_in_row, old.last_reminder_on, old.last_learned_on
+        await session.delete(old)
+    if user is not None:
+        sub.user_id = user.id
+    if body.time:
+        sub.reminder_time = body.time
+    sub.reminder_enabled = body.reminder and bool(sub.reminder_time)  # MOT-05 R1: never on without a time
+    sub.replies_enabled = body.replies
+    await session.commit()
+    return {"subscribed": True, "reminder": sub.reminder_enabled, "time": sub.reminder_time, "replies": sub.replies_enabled}
+
+
+@router.post("/test")
+async def test_push(body: EndpointIn, session: Session) -> dict:
+    """PLT-13 R5: one neutral test notification to this device only, three a day
+    at most. The count lives in the limiter (keyed by endpoint), not the
+    database: a restart forgets it, which is harmless."""
+    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.endpoint))
+    if sub is None or sub.failed_at is not None or not (sub.reminder_enabled or sub.replies_enabled):
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "not_subscribed")
+    ratelimit.hit(f"push-test:{sub.endpoint}", limit=TEST_PER_DAY, window_s=24 * 3600)
+    title, text = TEST_TEXT.get(sub.locale, TEST_TEXT["en"])
+    sent = await send(sub, {"title": title, "body": text, "url": app_url("/"), "tag": "plt13-test"})
+    await session.commit()  # send() marks a gone subscription
+    return {"sent": sent}
+
+
 # --- Sending -------------------------------------------------------------
 
 
@@ -243,6 +316,11 @@ class Gone(Exception):
     pass
 
 
+class Rejected(Exception):
+    """PLT-13 R3: the push service refused our signature (403). The device did
+    nothing wrong: keep the subscription and tell the team."""
+
+
 def _no_redirects() -> requests.Session:
     session = requests.Session()
     session.max_redirects = 0
@@ -260,12 +338,16 @@ def _send_sync(sub: PushSubscription, payload: dict) -> None:
             vapid_private_key=s.vapid_private_key,
             vapid_claims={"sub": s.vapid_subject},
             ttl=6 * 3600,
+            headers={"Urgency": urgency_of(payload)},  # PLT-13 R3
             timeout=10,
             requests_session=_no_redirects(),
         )
     except WebPushException as e:
-        if e.response is not None and e.response.status_code in (404, 410):
+        code = e.response.status_code if e.response is not None else None
+        if code in (404, 410):
             raise Gone from e
+        if code == 403:
+            raise Rejected(urlsplit(sub.endpoint).hostname or "-") from None
         raise
 
 
@@ -281,6 +363,9 @@ async def send(sub: PushSubscription, payload: dict) -> bool:
     except Gone:
         sub.reminder_enabled = False
         sub.failed_at = datetime.now(UTC)
+        return False
+    except Rejected as e:  # PLT-13 R3: only the push host is logged, never the endpoint or the person
+        log.error("push signature rejected (403) by %s: check VAPID keys and subject", e)
         return False
     except Exception:  # network trouble: try again next run
         log.warning("push failed", exc_info=True)

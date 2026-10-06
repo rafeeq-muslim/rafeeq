@@ -54,7 +54,7 @@ function TodayList({ times, now, tz }: { times: DayTimes; now: Date; tz: string 
   )
 }
 
-function RamadanCard({
+export function RamadanCard({
   state,
   place,
   today,
@@ -85,6 +85,22 @@ function RamadanCard({
         </div>
         <p className="text-body tabular-nums">{t("practice.ramadan.in", { count: countOf(locale, "days", state.daysLeft), date: start })}</p>
         {!state.announced && <p className="text-label text-muted-foreground">{place.country === "SA" ? t("practice.ramadan.bySighting") : line}</p>}
+      </section>
+    )
+  }
+  // PRC-04 R2: by calculation alone the day is only expected; no fasting times until a sighting is announced.
+  if (!state.announced) {
+    return (
+      <section aria-labelledby="ramadan-title" className="flex flex-col gap-2 rounded-card bg-card p-5 shadow-card">
+        <div className="flex items-center gap-2">
+          <IconMoonStars className="size-5 text-primary" stroke={1.75} aria-hidden="true" />
+          <h2 id="ramadan-title" className="flex-1 font-heading text-h3 font-bold">
+            {t("practice.ramadan.title")}
+          </h2>
+          <Badge variant="outline">{t("practice.ramadan.expected")}</Badge>
+        </div>
+        <p className="text-body tabular-nums">{t("practice.ramadan.expectedDay", { n: state.day })}</p>
+        <p className="text-label text-muted-foreground">{place.country === "SA" ? t("practice.ramadan.bySighting") : line}</p>
       </section>
     )
   }

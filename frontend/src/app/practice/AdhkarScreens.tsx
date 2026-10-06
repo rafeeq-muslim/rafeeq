@@ -21,6 +21,7 @@ import { orderedGroups, suggestGroup, type GroupKey } from "./adhkar"
 import { countOf } from "./plural"
 import { dayTimes } from "./times"
 import { BackBar, NavRow, SourceLine } from "./ui"
+import { unreachable } from "@/app/offline/online"
 
 export function AdhkarIndexScreen() {
   const { t, locale } = useT()
@@ -38,7 +39,7 @@ export function AdhkarIndexScreen() {
       <div className="flex flex-col gap-6 px-4 pt-4 pb-10">
         <p className="text-body text-muted-foreground">{t("practice.adhkar.lede")}</p>
         {q.isLoading && <Skeleton className="h-40 rounded-card" />}
-        {q.isError && <p className="text-body text-muted-foreground">{t("common.offline")}</p>}
+        {unreachable(q) && <p className="text-body text-muted-foreground">{t("common.offline")}</p>}
         {groups.map((g) => (
           <section key={g.key} aria-labelledby={`g-${g.key}`} className="flex flex-col gap-3">
             <div className="flex items-center gap-2">
@@ -142,6 +143,7 @@ export function AdhkarChapterScreen() {
       <div className="flex flex-col gap-4 px-4 pt-4 pb-10">
         {locale === "tl" && <p className="rounded-md bg-muted p-3 text-label text-muted-foreground">{t("practice.adhkar.noTagalog")}</p>}
         {q.isLoading && <Skeleton className="h-48 rounded-card" />}
+        {unreachable(q) && <p className="text-body text-muted-foreground">{t("common.offline")}</p>}{/* PLT-15 R3 */}
         {q.data && q.data.items.length === 0 && <p className="text-body text-muted-foreground">{t("practice.adhkar.inReview")}</p>}
         {q.data?.items.map((d) => (
           <DhikrCard

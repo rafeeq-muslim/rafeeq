@@ -38,6 +38,9 @@ import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFo
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
 import { askWhy, type Why } from "@/app/lesson/why"
+import { useWarmLesson } from "@/app/offline/warmup" // PLT-15 R2
+import { OfflineNote } from "@/app/offline/NeedsConnection"
+import { useOnline } from "@/app/offline/online"
 
 export default function LessonPage() {
   const { lessonId = "" } = useParams()
@@ -46,6 +49,7 @@ export default function LessonPage() {
   const { content, isLoading, lessons, preview } = useContent()
   const progress = useLearning()
   const lesson = content?.lessons[lessonId]
+  useWarmLesson(lesson) // PLT-15 R2: all its verses and images stay on the device
 
   if (isLoading && !content) {
     return (
@@ -324,8 +328,13 @@ function Recitation({ files }: { files: string[] }) {
 function SupportVideo({ src }: { src: string }) {
   const { t } = useT()
   const [open, setOpen] = React.useState(false)
+  // PLT-15 R2 / LRN-03 R5: offline (not downloaded) the video says so and the lesson goes on.
+  const online = useOnline()
+  const [failed, setFailed] = React.useState(false)
+  if (!online || failed) return <OfflineNote text="offline.video" />
   return open ? (
-    <video controls playsInline preload="metadata" src={src} className="w-full rounded-card bg-black" />
+    // PLT-11 R4: nothing loads before the learner asks; the button is that ask, so it starts playing.
+    <video controls playsInline autoPlay preload="none" src={src} onError={() => setFailed(!navigator.onLine)} className="w-full rounded-card bg-black" />
   ) : (
     <Button variant="secondary" className="w-fit" onClick={() => setOpen(true)}>
       {t("lesson.video")}

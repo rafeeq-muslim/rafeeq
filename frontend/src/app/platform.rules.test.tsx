@@ -402,6 +402,49 @@ describe("plt-05-r1 a short privacy policy, before any data and without an accou
     for (const d of [en, tl]) expect(keys.filter((k) => !d[k])).toEqual([])
   })
 
+  // Every host the CSP lets the browser fetch media from (infra/web.security-headers.inc
+  // media-src) that the app actually uses: Quran audio, lesson audio/video, library files.
+  const MEDIA_HOSTS = ["files.quranpedia.net", "d1.islamhouse.com", "d.quranenc.com", "ih-download.islamenc.com"]
+
+  it("plt05_r1_policy_names_every_media_host_and_what_the_site_sees_in_all_three_languages", () => {
+    const sees = { ar: /عنوان IP/, en: /IP address/, tl: /IP address/ }
+    for (const { code } of LOCALES) {
+      const body = translate(code, "policy.media.body")
+      for (const host of MEDIA_HOSTS) expect(body, `${code} ${host}`).toContain(host)
+      expect(body).toMatch(sees[code as keyof typeof sees])
+      expect(body).toMatch(/IslamHouse|إسلام هاوس/) // library search words go to the source searched
+    }
+    expect(ar_("policy.media.body")).toContain("كلمات البحث")
+    expect(POLICY_SECTIONS).toContain("media")
+  })
+
+  it("plt05_r1_nothing_loads_from_others_is_kept_for_fonts_and_libraries_and_points_to_media", () => {
+    for (const { code } of LOCALES) {
+      expect(translate(code, "policy.never.body"), code).toContain(translate(code, "policy.media.title"))
+    }
+    expect(ar_("policy.never.body")).toContain("ولا خطوط أو مكتبات برمجية تُحمّل من جهات أخرى")
+  })
+
+  it("plt05_r1_policy_says_where_data_is_hosted_in_all_three_languages", () => {
+    const own = { ar: "خادم رفيق نفسه", en: "Rafeeq's own server", tl: "sariling server ng Rafeeq" }
+    for (const { code } of LOCALES) {
+      const body = translate(code, "policy.hosting.body")
+      expect(body, code).toContain(own[code as keyof typeof own])
+      expect(body).toContain("Cloudflare") // TLS ends there (infra/web.nginx.conf)
+    }
+    expect(POLICY_SECTIONS).toContain("hosting")
+  })
+
+  it("plt05_r1_the_page_shows_the_media_and_hosting_sections_and_the_revision_date", () => {
+    useDevice.setState({ onboarded: false })
+    wrap(<Privacy />, "/privacy", "/privacy")
+    for (const s of ["media", "hosting"] as const) {
+      expect(screen.getByRole("heading", { name: ar_(`policy.${s}.title`) })).toBeTruthy()
+    }
+    expect(screen.getByText(ar_("policy.updated", { date: "⁦2026-10-06⁩" }))).toBeTruthy()
+    expect(screen.getByText(ar_("policy.revised", { date: "⁦2026-10-06⁩" }))).toBeTruthy()
+  })
+
   it("plt05_r1_opened_from_me_as_a_guest", () => {
     wrap(<Me />, "/me", "/me")
     fireEvent.click(screen.getByRole("button", { name: new RegExp(ar_("privacy.policyLink")) }))

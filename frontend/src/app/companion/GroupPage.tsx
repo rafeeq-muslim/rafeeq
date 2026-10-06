@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { SpotIllustration } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
+import { OfflineOnly } from "@/app/offline/NeedsConnection"
 import { useAuth } from "@/app/stores/auth"
 import { type Group, errorCode, groupApi, safetyApi, useChallenge, useGroup, useGroupMessages, useMine, useMyGroups } from "./api"
 import { ChallengeCard } from "./ChallengeCard"
@@ -269,6 +270,7 @@ export default function GroupPage() {
         }
       />
       <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-5 px-4 pt-4">
+        <OfflineOnly text="offline.mentor" />{/* PLT-15 R5 */}
         {groups.isLoading || (memberOf && group.isLoading) ? (
           <Skeleton className="h-48 rounded-card" />
         ) : g ? (

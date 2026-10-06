@@ -1,4 +1,4 @@
-import { StrictMode, lazy } from "react"
+import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -10,6 +10,7 @@ import { registerServiceWorker } from "@/app/lib/pwa"
 import "@/app/practice/start-reminders"
 import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
+import { lazy } from "@/app/offline/lazyRoute" // PLT-15 R1: a screen not yet on the device says it needs a connection
 import { APP_BASE } from "@/app/lib/base"
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
@@ -34,6 +35,7 @@ const Admin = lazy(() => import("@/app/pages/roles/Admin"))
 const Referrals = lazy(() => import("@/app/companion/mentor/Referrals"))
 const Org = lazy(() => import("@/app/pages/roles/Org")) // ORG-01..03 coordinator
 const Gallery = lazy(() => import("./App"))
+const Downloads = lazy(() => import("@/app/downloads/DownloadsScreen")) // PLT-12
 
 const router = createBrowserRouter([
   {
@@ -61,6 +63,7 @@ const router = createBrowserRouter([
       { path: "practice/*", element: <Practice /> },
       { path: "discover/*", element: <Discover /> },
       { path: "guide", element: <Guide /> }, // PLT-08 «كل ما في رفيق»
+      { path: "downloads", element: <Downloads /> }, // PLT-12 «التنزيلات»
       { path: "inbox/*", element: <RequireRole roles={["mentor", "team"]}><Inbox /></RequireRole> }, // team: urgent requests (CMP-01 R6) + report queue (CMP-04 R3)
       { path: "review-desk/*", element: <RequireRole roles={["sharia_reviewer", "team"]}><ReviewDesk /></RequireRole> },
       { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5

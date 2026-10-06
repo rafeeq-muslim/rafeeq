@@ -7,7 +7,10 @@
  * - R4: the model's order is checked again here; else the fixed order.
  * - R5: the order is set once per device day; an optional component that
  *   stops being eligible is removed in place and its slot stays empty that
- *   day; one the learner hides frees its slot for the next eligible (R6).
+ *   day. One the learner hides (R6) also leaves its slot empty until the
+ *   next day, when the next eligible one may take it.
+ * - PLT-08 R3 (not replaced by PLT-09): at most one NEW optional component
+ *   a day, and none for a feature the learner already opened.
  */
 import type { PrayerKey, DayTimes } from "@/app/practice/times"
 
@@ -73,9 +76,12 @@ export type Eligibility = {
   recitersAvailable: number
   /** KNW-06: an approved book or clip for the learner's unit, in their language. */
   libraryPick: boolean
+  /** PLT-08 R3: features the learner already opened, so not offered again. */
+  opened: Partial<Record<OptionalId, true>>
 }
 
 export function eligible(id: OptionalId, c: Eligibility): boolean {
+  if (c.opened[id]) return false
   const firstLessonDone = Object.keys(c.completed).length > 0
   switch (id) {
     case "ramadan":
@@ -91,28 +97,56 @@ export function eligible(id: OptionalId, c: Eligibility): boolean {
   }
 }
 
+/** PLT-08 R3: paths that count as opening an optional component's feature, beyond the guide's own moments. */
+export const OPENED_BY: Partial<Record<OptionalId, RegExp>> = {
+  save: /^\/me\/account/,
+  library: /^\/discover\/library/,
+}
+
+export function openedBy(path: string): OptionalId[] {
+  return (Object.keys(OPENED_BY) as OptionalId[]).filter((id) => OPENED_BY[id]!.test(path))
+}
+
 /**
- * R1, R5, R6: the optional components of today, in the day's order.
- * `slots` are the ids placed today (kept on the device). A slot whose
- * component stopped being eligible stays (shown as nothing: removed in
- * place, R5); a hidden one is replaced in its place by the next eligible
- * (R6); empty slots fill from the order.
+ * PLT-02 R1: Ramadan holds a slot for a whole month, so in that time the
+ * save-progress offer, when eligible, is never below second among the
+ * eligible components. Otherwise the day's order stands (R4).
  */
-export function daySlots(slots: OptionalId[], order: OptionalId[], isEligible: (id: OptionalId) => boolean, hidden: Partial<Record<OptionalId, true>>): OptionalId[] {
-  const next = (taken: OptionalId[]) => order.find((id) => !taken.includes(id) && !hidden[id] && isEligible(id))
-  const out: OptionalId[] = []
-  for (const id of slots.slice(0, MAX_OPTIONAL)) {
-    if (!hidden[id]) {
-      out.push(id)
-      continue
-    }
-    const repl = next([...slots, ...out])
-    if (repl) out.push(repl)
-  }
-  while (out.length < MAX_OPTIONAL) {
-    const add = next([...slots, ...out])
-    if (!add) break
-    out.push(add)
+export function keepSaveInReach(order: OptionalId[], isEligible: (id: OptionalId) => boolean): OptionalId[] {
+  if (!isEligible("ramadan")) return order
+  const live = order.filter(isEligible)
+  const at = live.indexOf("save")
+  if (at <= 1) return order
+  const rest: OptionalId[] = order.filter((id) => id !== "save")
+  const after = rest.indexOf(live[0]) + 1
+  return [...rest.slice(0, after), "save", ...rest.slice(after)]
+}
+
+/**
+ * R1, R5, R6 and PLT-08 R3: the optional components of today, in the day's
+ * order. `slots` are the ids placed today (kept on the device): each keeps
+ * its place all day, hidden or no longer eligible (shown as nothing), so a
+ * freed slot stays empty until tomorrow. Empty slots fill from the order,
+ * and at most one of today's components may be new (`shown`: the day each
+ * was first shown).
+ */
+export function daySlots(
+  slots: OptionalId[],
+  order: OptionalId[],
+  isEligible: (id: OptionalId) => boolean,
+  hidden: Partial<Record<OptionalId, true>>,
+  shown: Partial<Record<OptionalId, string>> = {},
+  today = "",
+): OptionalId[] {
+  const out = slots.slice(0, MAX_OPTIONAL)
+  let newToday = out.filter((id) => !shown[id] || shown[id] === today).length
+  for (const id of keepSaveInReach(order, isEligible)) {
+    if (out.length >= MAX_OPTIONAL) break
+    if (out.includes(id) || hidden[id] || !isEligible(id)) continue
+    const isNew = !shown[id] || shown[id] === today
+    if (isNew && newToday >= 1) continue
+    if (isNew) newToday++
+    out.push(id)
   }
   return out
 }

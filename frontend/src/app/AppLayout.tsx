@@ -16,6 +16,10 @@ import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
 import { saveDiscreet } from "@/app/lib/discreetPref"
 import { followTheme } from "@/app/lib/theme"
+// PLT-15: offline indicator, needs-connection screen, background warm-up
+import { OfflineIndicator } from "@/app/offline/NeedsConnection"
+import { RouteErrorBoundary } from "@/app/offline/lazyRoute"
+import { useOfflineWarmUp } from "@/app/offline/warmup"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
@@ -127,6 +131,7 @@ export default function AppLayout() {
   const location = useLocation()
   const navigate = useNavigate()
   useGuideTracker(location.pathname) // PLT-08 R3
+  useOfflineWarmUp() // PLT-15 R2-R4
 
   if (!onboarded) {
     // PLT-01 R2: a link may carry the language, and nothing else goes on,
@@ -148,6 +153,7 @@ export default function AppLayout() {
       <TooltipProvider>
         <QuickExit />
         <UpdateBar />
+        <OfflineIndicator />
         <div className="h-dvh">
           <AppShell
             active={activeKey(location.pathname)}
@@ -158,7 +164,9 @@ export default function AppLayout() {
             contentClassName={fullscreen ? "max-w-none pb-0" : undefined}
           >
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">{t("common.loading")}</div>}>
-              <Outlet />
+              <RouteErrorBoundary resetKey={location.pathname}>
+                <Outlet />
+              </RouteErrorBoundary>
             </React.Suspense>
           </AppShell>
         </div>

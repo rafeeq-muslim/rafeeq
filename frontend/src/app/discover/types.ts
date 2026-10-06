@@ -53,6 +53,8 @@ export type Recitation = {
   source: string
   origin_url: string
   suras: Record<string, string>
+  /** PLT-11 R5 / PLT-12: bytes of each surah's file (HEAD Content-Length). */
+  sizes?: Record<string, number>
 }
 
 /** KNW-08 R4: a Quranpedia per-verse Hafs reciter the Sharia reviewer approved. */

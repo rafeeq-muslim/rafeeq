@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
 import { viteSingleFile } from "vite-plugin-singlefile"
+import { PRECACHE_GLOB_IGNORES, PRECACHE_GLOB_PATTERNS, chunkFileName } from "./src/sw/plt11-precache.ts"
 
 // `vite build --mode review` produces one self-contained HTML file of the
 // design gallery (see scripts/build-review.mjs). Every other mode builds the
@@ -38,7 +39,10 @@ export default defineConfig(({ mode }) => ({
                 { src: "/brand/rafeeq-app-icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
               ],
             },
-            injectManifest: { globPatterns: ["**/*.{js,css,html,svg,woff2,png}"], globIgnores: ["landing/**", "brand/*-1024.png", "assets/App-*.js", "assets/ibm-plex-*", "assets/noto-naskh-*"], maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
+            // PLT-11 R2/R3: learner shell only (src/sw/plt11-precache.ts); the manifest
+            // icons are already matched by the glob, so they are not added twice.
+            includeManifestIcons: false,
+            injectManifest: { globPatterns: PRECACHE_GLOB_PATTERNS, globIgnores: PRECACHE_GLOB_IGNORES, maximumFileSizeToCacheInBytes: 4 * 1024 * 1024 },
             devOptions: { enabled: false },
           }),
         ]),
@@ -51,7 +55,7 @@ export default defineConfig(({ mode }) => ({
   build:
     mode === "review"
       ? { outDir: "dist-review", emptyOutDir: true, copyPublicDir: false }
-      : { chunkSizeWarningLimit: 900 },
+      : { chunkSizeWarningLimit: 900, rolldownOptions: { output: { chunkFileNames: chunkFileName } } }, // PLT-11 R2: predictable cities-data chunk
   server: { proxy: { "/api": "http://127.0.0.1:8000" } },
   // The token contrast test (PLT-04) reads these two stylesheets as text.
   test: {

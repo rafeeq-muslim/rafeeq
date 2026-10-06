@@ -61,9 +61,9 @@ function raw(place: Place, ymd: YMD) {
 export type DayTimes = Record<TimeKey, Date> & { ymd: YMD; method: Method }
 
 /**
- * One day's times for a place. `ramadan`: the day is in Ramadan (announced
- * or expected, see hijri.ts) — Umm al-Qura then delays Isha 30 minutes
- * (PRC-04 R4); other methods are unchanged.
+ * One day's times for a place. `ramadan`: the day is in an ANNOUNCED Ramadan
+ * (hijri.ts isRamadan; never the calculation alone, PRC-04 R2). Umm al-Qura
+ * then delays Isha 30 minutes (PRC-04 R4); other methods are unchanged.
  */
 export function dayTimes(place: Place, ymd: YMD, opts: { ramadan?: boolean } = {}): DayTimes {
   const t = raw(place, ymd)

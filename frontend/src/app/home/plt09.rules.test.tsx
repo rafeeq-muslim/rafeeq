@@ -17,7 +17,7 @@ import { orderedLessons } from "@/app/learning/path"
 import type { Content, Lesson, Unit } from "@/app/learning/types"
 import { dayTimes, formatTime, nextPrayer, ymdIn } from "@/app/practice/times"
 import { localDay } from "@/app/guide/suggest"
-import { adhkarLine, checkOrder, daySlots, eligible, FIXED_ORDER, OPTIONAL, prayerLine, timeBucket, visibleOptional, type Eligibility, type OptionalId } from "./layout"
+import { adhkarLine, checkOrder, daySlots, eligible, FIXED_ORDER, keepSaveInReach, OPTIONAL, openedBy, prayerLine, timeBucket, visibleOptional, type Eligibility, type OptionalId } from "./layout"
 import { useHome } from "./store"
 
 // --- content: the day-one unit (u01-l1..u01-l7) ------------------------------------------
@@ -99,6 +99,11 @@ const sequence = () =>
     (el) => el.getAttribute("data-component") ?? el.getAttribute("data-optional") ?? "next",
   )
 
+/** PLT-08 R3: components already shown on an earlier day are not "new" today. */
+function seenBefore(...ids: OptionalId[]) {
+  useHome.setState({ shown: Object.fromEntries(ids.map((id) => [id, "2026-01-01"])) })
+}
+
 function ctx(p: Partial<Eligibility> = {}): Eligibility {
   return {
     completed: {},
@@ -110,6 +115,7 @@ function ctx(p: Partial<Eligibility> = {}): Eligibility {
     reciterChosen: false,
     recitersAvailable: 0,
     libraryPick: false,
+    opened: {},
     ...p,
   }
 }
@@ -127,7 +133,7 @@ beforeEach(() => {
   useAuth.setState({ me: null, token: null })
   useLearning.setState({ completed: {}, sessions: {}, mastery: {}, unlockedUnits: [] })
   useGuide.setState({ dismissed: {}, used: {}, lastShown: null })
-  useHome.setState({ day: null, order: null, slots: [], hidden: {} })
+  useHome.setState({ day: null, order: null, slots: [], hidden: {}, shown: {}, opened: {} })
   Element.prototype.scrollIntoView = vi.fn()
   vi.stubGlobal("matchMedia", (q: string) => ({ matches: false, media: q, addEventListener() {}, removeEventListener() {} }))
   stubFetch()
@@ -192,6 +198,7 @@ describe("plt-09-r1 next step first, three main, at most two optional, nothing a
     useLearning.setState({ completed: { "u01-l1": DONE } })
     useDevice.setState({ city: RIYADH })
     useHome.setState({ day: localDay(new Date()), order: FIXED_ORDER })
+    seenBefore("human", "save")
     wrap("/")
     await screen.findByRole("heading", { name: ar("home.org.daily") })
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "human", "save"]))
@@ -324,6 +331,7 @@ describe("plt-09-r3 the fixed optional list, eligibility on the device", () => {
     // and hiding it on the organized home keeps it away
     useLearning.setState({ completed: { "u01-l1": DONE } })
     useHome.setState({ day: localDay(new Date()), order: FIXED_ORDER })
+    seenBefore("human", "save")
     wrap("/")
     const save = await screen.findByRole("region", { name: ar("me.save") })
     fireEvent.click(within(save).getByRole("button", { name: ar("home.org.hide") }))
@@ -345,6 +353,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
     routes["/api/home/order"] = () => ({ body: { order: { main: ["daily", "card", "ask"], optional: ["library", "reciter", "human", "save", "ramadan"] } } })
     routes["/api/discover/recitations"] = () => ({ body: { lang: "ar", recitation: null, reciters: [{ id: "quranpedia-255" }, { id: "quranpedia-250" }] } })
     routes["/api/discover/library"] = () => ({ body: { lang: "ar", topics: [{ id: "general", unit: null, items: [{ id: "lib-1", title: "كتاب المسلم الجديد", topic: "basics" }] }] } })
+    seenBefore("library", "reciter")
     wrap("/")
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "library", "reciter"]))
     const body = JSON.parse(orderRequests()[0].body!)
@@ -355,6 +364,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
   it("plt09_r4_invalid_model_order_falls_back_to_the_fixed_order", async () => {
     useLearning.setState({ completed: { "u01-l1": DONE } })
     routes["/api/home/order"] = () => ({ body: { order: { main: ["daily", "card", "prayer"], optional: [] } } })
+    seenBefore("human", "save")
     wrap("/")
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "human", "save"]))
     expect(checkOrder({ main: ["daily", "card"], optional: [] })).toBeNull() // «اسأل رفيق» dropped
@@ -364,6 +374,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
   it("plt09_r4_offline_shows_the_fixed_order_at_once_without_waiting_or_error", async () => {
     setOnline(false)
     useLearning.setState({ completed: { "u01-l1": DONE } })
+    seenBefore("human", "save")
     wrap("/")
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "human", "save"]))
     expect(orderRequests()).toHaveLength(0)
@@ -440,22 +451,78 @@ describe("plt-09-r5 the order is set once a day; contents change, places don't",
   it("plt09_r5_an_optional_component_no_longer_eligible_is_removed_in_place", () => {
     const order = [...OPTIONAL] as OptionalId[]
     let ok = (id: OptionalId) => id === "human" || id === "save" || id === "library"
-    const slots = daySlots([], order, ok, {})
+    const seen = { human: "2026-10-01", save: "2026-10-01" } as const
+    const slots = daySlots([], order, ok, {}, seen, "2026-10-06")
     expect(slots).toEqual(["human", "save"])
     ok = (id) => id === "save" || id === "library" // «لست وحدك» no longer eligible (a mentor was chosen)
-    const later = daySlots(slots, order, ok, {})
+    const later = daySlots(slots, order, ok, {}, seen, "2026-10-06")
     expect(later).toEqual(["human", "save"]) // its slot stays, nothing moves, nothing fills it today
     expect(visibleOptional(later, ok, {})).toEqual(["save"])
   })
 })
 
+// --- PLT-08 R3 on the organized home (PLT-09 does not replace it) -----------------------
+describe("plt-08-r3 on the organized home: one new suggestion a day, never after the feature was opened", () => {
+  const order = [...OPTIONAL] as OptionalId[]
+
+  it("plt08_r3_ex2_day_one_shows_one_new_optional_component_not_two", () => {
+    const ok = (id: OptionalId) => id === "human" || id === "save"
+    expect(daySlots([], order, ok, {}, {}, "2026-10-06")).toEqual(["human"])
+    // The next day the second one comes; the first is no longer new.
+    expect(daySlots([], order, ok, {}, { human: "2026-10-06" }, "2026-10-07")).toEqual(["human", "save"])
+  })
+
+  it("plt08_r3_ex2_hiding_today_brings_no_replacement_until_tomorrow", () => {
+    const ok = (id: OptionalId) => id === "human" || id === "save" || id === "library"
+    const seen = { human: "2026-10-05", save: "2026-10-06" } as const
+    expect(daySlots(["human", "save"], order, ok, { save: true }, seen, "2026-10-06")).toEqual(["human", "save"])
+    expect(visibleOptional(["human", "save"], ok, { save: true })).toEqual(["human"])
+    expect(daySlots([], order, ok, { save: true }, seen, "2026-10-07")).toEqual(["human", "library"])
+  })
+
+  it("plt08_r3_ex3_a_feature_already_opened_is_not_offered", () => {
+    const c = ctx({ completed: { "u01-l1": DONE, "u01-l7": DONE }, libraryPick: true, ramadan: { kind: "ramadan" } })
+    expect(OPTIONAL.filter((id) => eligible(id, c))).toEqual(["ramadan", "human", "save", "library"])
+    const opened = ctx({ ...c, opened: { ramadan: true, human: true, library: true } })
+    expect(OPTIONAL.filter((id) => eligible(id, opened))).toEqual(["save"])
+    expect(openedBy("/me/account")).toEqual(["save"])
+    expect(openedBy("/discover/library/lib-1")).toEqual(["library"])
+    expect(openedBy("/discover/quran")).toEqual([])
+  })
+
+  it("plt08_r3_ex3_opening_the_library_or_the_mentor_screen_ends_its_component_on_home", async () => {
+    useLearning.setState({ completed: { "u01-l1": DONE } })
+    useHome.setState({ day: localDay(new Date()), order: FIXED_ORDER })
+    seenBefore("human", "save")
+    useGuide.setState({ used: { human: true } })
+    wrap("/")
+    await screen.findByRole("heading", { name: ar("home.org.daily") })
+    await waitFor(() => expect(sequence().slice(4)).toEqual(["save"]))
+    expect(screen.queryByRole("region", { name: ar("guide.suggest.human.title") })).toBeNull()
+  })
+
+  it("plt02_r1_save_progress_is_not_crowded_out_in_ramadan", () => {
+    const ok = (id: OptionalId) => id === "ramadan" || id === "human" || id === "save"
+    expect(keepSaveInReach(order, ok).filter(ok).slice(0, 2)).toEqual(["ramadan", "save"])
+    // Day one in Ramadan: Ramadan; the next day the save-progress offer joins it, not «لست وحدك».
+    expect(daySlots([], order, ok, {}, {}, "2027-02-10")).toEqual(["ramadan"])
+    expect(daySlots([], order, ok, {}, { ramadan: "2027-02-10" }, "2027-02-11")).toEqual(["ramadan", "save"])
+    // Outside Ramadan the day's order stands (PLT-09 R4).
+    const model: OptionalId[] = ["library", "reciter", "human", "save", "ramadan"]
+    expect(keepSaveInReach(model, (id) => id !== "ramadan")).toEqual(model)
+  })
+})
+
 // --- R6 ----------------------------------------------------------------------------------
 describe("plt-09-r6 the learner owns Home: hide with one tap, no reward or blame", () => {
-  it("plt09_r6_hidden_choose_reciter_does_not_return_and_the_next_eligible_takes_its_place", async () => {
+  it("plt09_r6_hidden_choose_reciter_does_not_return_and_the_next_eligible_takes_its_place_the_next_day", async () => {
     const order: OptionalId[] = ["reciter", "library", "human", "save", "ramadan"]
     const ok = (id: OptionalId) => id === "reciter" || id === "library" || id === "human"
-    expect(daySlots([], order, ok, {})).toEqual(["reciter", "library"])
-    expect(daySlots(["reciter", "library"], order, ok, { reciter: true })).toEqual(["human", "library"])
+    const seen = { reciter: "2026-10-01", library: "2026-10-01", human: "2026-10-01" } as const
+    expect(daySlots([], order, ok, {}, seen, "2026-10-06")).toEqual(["reciter", "library"])
+    // PLT-08 R3: the hidden one's slot stays empty today; tomorrow the next eligible takes it.
+    expect(daySlots(["reciter", "library"], order, ok, { reciter: true }, seen, "2026-10-06")).toEqual(["reciter", "library"])
+    expect(daySlots([], order, ok, { reciter: true }, seen, "2026-10-07")).toEqual(["library", "human"])
 
     // On screen: Layla hides «اختر قارئك».
     localStorage.setItem("rafeeq.quranPos.last", "2")
@@ -464,10 +531,12 @@ describe("plt-09-r6 the learner owns Home: hide with one tap, no reward or blame
     routes["/api/discover/recitations"] = () => ({ body: { reciters: [{ id: "quranpedia-250" }, { id: "quranpedia-255" }] } })
     routes["/api/mentors/mine"] = () => ({ body: { mentor: null } })
     useHome.setState({ day: localDay(new Date()), order: { main: ["daily", "card", "ask"], optional: order } })
+    seenBefore("reciter", "human")
     wrap("/")
     const reciter = await screen.findByRole("region", { name: ar("home.org.reciter.title") })
     fireEvent.click(within(reciter).getByRole("button", { name: ar("home.org.hide") }))
-    await waitFor(() => expect(sequence().slice(4)).toEqual(["human"]))
+    await waitFor(() => expect(sequence().slice(4)).toEqual(["human"])) // nothing takes its place today
+    expect([...useHome.getState().slots].sort()).toEqual(["human", "reciter"]) // the hidden one keeps its slot today
     cleanup()
     wrap("/")
     await screen.findByRole("heading", { name: ar("home.org.daily") })

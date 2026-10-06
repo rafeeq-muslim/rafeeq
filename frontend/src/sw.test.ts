@@ -7,9 +7,10 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { NEUTRAL_LOOK, RAFEEQ_LOOK, saveDiscreet } from "@/app/lib/discreetPref"
 
-vi.mock("workbox-precaching", () => ({ cleanupOutdatedCaches: () => undefined, precacheAndRoute: () => undefined, createHandlerBoundToURL: () => () => undefined }))
+vi.mock("workbox-precaching", () => ({ cleanupOutdatedCaches: () => undefined, precacheAndRoute: () => undefined, createHandlerBoundToURL: () => () => undefined, getCacheKeyForURL: () => undefined }))
 vi.mock("workbox-routing", () => ({ registerRoute: () => undefined, NavigationRoute: class {} }))
-vi.mock("workbox-strategies", () => ({ NetworkFirst: class {}, StaleWhileRevalidate: class {} }))
+vi.mock("workbox-strategies", () => ({ NetworkFirst: class {}, StaleWhileRevalidate: class {}, CacheFirst: class {} }))
+vi.mock("workbox-expiration", () => ({ ExpirationPlugin: class {} })) // PLT-11
 
 function fakeCaches() {
   const stores = new Map<string, Map<string, Response>>()

@@ -203,6 +203,8 @@ class InviteOut(BaseModel):
 
 
 async def _invite(session, org_id: uuid.UUID, role: str, by: uuid.UUID) -> InviteOut:
+    if role not in ("mentor", "org_coordinator"):  # MOT-08: never a team invite (granted only in the database)
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "team_role_db_only" if role == "team" else "role_not_allowed")
     code = f"{'MEN' if role == 'mentor' else 'ORG'}-{secrets.token_hex(4).upper()}"
     expires = datetime.now(UTC) + timedelta(days=INVITE_DAYS)
     session.add(Invite(code=code, role=role, created_by=by, org_id=org_id, expires_at=expires))

@@ -80,6 +80,8 @@ async function startRecitation() {
   renderSura()
   await screen.findByText(/TEST_ARABIC_4/)
   fireEvent.click(await screen.findByRole("button", { name: translate(lc(), "discover.quran.play") }))
+  // PLT-11 R5: the whole-surah file plays only after its size is shown and accepted.
+  fireEvent.click(await screen.findByRole("button", { name: translate(lc(), "plt11.size.listen", { size: translate(lc(), "plt11.size.unknown") }) }))
   const audios = document.querySelectorAll("audio")
   return audios
 }
@@ -127,8 +129,9 @@ describe("KNW-08 R5: listening is worship: no points, streak, badge, counter or 
     const normalise = (s: string | null) => (s ?? "").replaceAll(pause, "").replaceAll(play, "")
     expect(normalise(document.body.textContent)).toBe(normalise(textBefore))
     expect(notices()).toBe(noticesBefore)
-    // Nothing about listening leaves the device: only reads of the public text and audio list.
-    expect(calls.every((c) => c.method === "GET" && /^\/api\/(scripture\/quran|discover\/recitations)/.test(c.url))).toBe(true)
+    // Nothing about listening leaves the device: only reads of the public text and audio list
+    // (and PLT-12's download catalogue, the same for everyone).
+    expect(calls.every((c) => c.method === "GET" && /^\/api\/(scripture\/quran|discover\/recitations|downloads\/catalog)/.test(c.url))).toBe(true)
     // Only the stop position is kept, on this device (R6); no counter or history.
     expect(Object.keys(localStorage).filter((k) => !k.startsWith("rafeeq.quranPos."))).toEqual([])
   })

@@ -23,7 +23,7 @@ import { onSignedIn } from "@/app/lib/sync"
 import { useAuth, type Me } from "@/app/stores/auth"
 import { PrivacyLink } from "@/app/pages/Privacy"
 
-type Tokens = { access_token: string; user: Me }
+type Tokens = { access_token: string; user: Me; notice?: string | null }
 
 function errorKey(e: unknown): Key {
   const code = e instanceof ApiError ? e.code : ""
@@ -99,7 +99,7 @@ export function Create({
   const [taken, setTaken] = React.useState<string[]>([])
   const [error, setError] = React.useState<Key | null>(null)
   const [busy, setBusy] = React.useState(false)
-  const [created, setCreated] = React.useState<{ username: string; password: string } | null>(null)
+  const [created, setCreated] = React.useState<{ username: string; password: string; notice?: string | null } | null>(null)
   const navigate = useNavigate()
 
   const suggest = async (field?: keyof typeof form) => {
@@ -123,7 +123,7 @@ export function Create({
         body: { ...form, locale, invite_code: invite || undefined, gender: gender || undefined },
       })
       onCreated()
-      setCreated({ username: out.user.username, password: form.password })
+      setCreated({ username: out.user.username, password: form.password, notice: out.notice })
       setAuth({ token: out.access_token, me: out.user, ready: true })
       await onSignedIn()
     } catch (err) {
@@ -163,6 +163,7 @@ export function Create({
           ))}
         </dl>
         <p className="text-label text-warning">{t("acct.noRecovery")}</p>
+        {created.notice === "team_role_db_only" && <p className="text-label text-muted-foreground">{t("acct.teamRoleDbOnly")}</p>}
         <Button size="lg" onClick={() => (onDone ? onDone() : navigate("/me", { replace: true }))}>
           <IconCheck data-icon="inline-start" />
           {t("acct.savedThem")}

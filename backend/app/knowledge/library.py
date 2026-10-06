@@ -84,9 +84,19 @@ def _review_items() -> Iterable[ReviewItem]:
 review.register(ITEM_TYPE, _review_items)
 
 
+@lru_cache
+def unplayable_ids() -> frozenset[str]:
+    """Approved items whose file answers but browsers can't play (R1 error):
+    the link check would show them again, so they are listed in the repo."""
+    f = get_settings().content_dir / "discover" / "library-unplayable.json"
+    if not f.exists():
+        return frozenset()
+    return frozenset(json.loads(f.read_text(encoding="utf-8"))["items"])
+
+
 async def hidden_ids(session: AsyncSession) -> set[str]:
     rows = await session.scalars(select(LibraryItem.external_id).where(LibraryItem.status == "hidden"))
-    return set(rows)
+    return set(rows) | unplayable_ids()
 
 
 @lru_cache

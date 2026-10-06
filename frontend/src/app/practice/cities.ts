@@ -21,7 +21,13 @@ let cache: Promise<CityRow[]> | null = null
 
 /** Loaded lazily (≈150 KB) and bundled with the app: works offline. */
 export function loadCities(): Promise<CityRow[]> {
-  cache ??= import("./cities.json").then((m) => m.default as CityRow[])
+  cache ??= import("./cities.json").then(
+    (m) => m.default as CityRow[],
+    (e: unknown) => {
+      cache = null // PLT-15 R3: offline before the list reached the device; try again later
+      throw e
+    },
+  )
   return cache
 }
 

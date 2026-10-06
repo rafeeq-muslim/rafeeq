@@ -40,6 +40,8 @@ jobs:
       - run: bash scripts/check-design.sh
       - run: npx vitest run
       - run: npm run build:app
+      # PLT-11 R6: precache vs size-budget.json; fails on >10% growth, a big media/data file, or a role page precached.
+      - run: npm run check:size
   # LRN-03 R1 / LRN-10 R2: every card covered by an exercise, every objective by two,
   # answers and ids valid, no transliteration; the pipeline units are traced to the book.
   content:
@@ -47,4 +49,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: for f in content/units/*/unit.json; do python3 content/check_content.py "$f"; done
+      # KNW-05 R2 ex2: verses and hadiths cited by the pipeline lessons, excerpts,
+      # recitations and daily cards exist (corpus parts are skipped when absent).
+      - run: python3 content/check_content.py --learner-content
       - run: python3 content/tools/validate.py

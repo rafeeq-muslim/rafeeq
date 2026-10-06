@@ -43,7 +43,10 @@ async def last_trace() -> dict:
 def test_knw02_owner_islamqa_is_a_default_answer_source(monkeypatch):
     monkeypatch.delenv("KNW_ANSWER_SOURCES", raising=False)
     st = Settings(_env_file=None)
-    assert source_policy.parse_sources(st.knw_answer_sources) == (["quranenc", "hadeethenc", "islamhouse_enc", "binbaz", "islamqa"], [])
+    assert source_policy.parse_sources(st.knw_answer_sources) == (
+        ["quranenc", "hadeethenc", "islamhouse_enc", "binbaz", "islamqa", "rafeeq_cards"],
+        [],
+    )
     assert st.ai_embed_daily_budget_usd == 1.0 and st.ai_budget_usd == 10.0
     assert st.knw_embed_job_limit * (60 // st.knw_embed_job_minutes) * 24 >= 96_511  # the islamqa set fits in a day of job runs
 

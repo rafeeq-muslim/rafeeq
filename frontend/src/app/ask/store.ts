@@ -45,6 +45,10 @@ type AskState = {
   cancel: () => void
   put: (id: string, turn: Turn) => void
   reset: () => void
+  /** PLT-15 R5: the typed question stays here (memory only, like the thread)
+   * while offline or on another screen, until its owner sends it. */
+  draft: string
+  setDraft: (v: string | ((d: string) => string)) => void
 }
 
 const newId = () => Math.random().toString(36).slice(2, 10)
@@ -139,6 +143,8 @@ export const useAsk = create<AskState>()((set, get) => {
     turns: [],
     busy: false,
     active: null,
+    draft: "",
+    setDraft: (v) => set({ draft: typeof v === "function" ? v(get().draft) : v }),
     put: (id, turn) => set({ turns: get().turns.map((t) => (t.id === id ? turn : t)) }),
 
     submitQuestion: ({ text, lang, entrypoint, suggestionId }) => {
@@ -192,7 +198,7 @@ export const useAsk = create<AskState>()((set, get) => {
     reset: () => {
       for (const r of running.values()) r.abort("cancelled")
       running.clear()
-      set({ turns: [], busy: false, active: null })
+      set({ turns: [], busy: false, active: null, draft: "" })
     },
   }
 })

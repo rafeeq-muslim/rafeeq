@@ -9,8 +9,11 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
-import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
+import "./sw/plt15-offline" // PLT-15: adhkar text, glossary and saved-item lists kept for offline use
 import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
+import { registerPushHandler } from "./sw/plt13-push"
+import { registerDownloads } from "./sw/plt12-downloads" // PLT-12
+import { registerPlt11Caching } from "./sw/plt11-caching" // PLT-11 R1/R3/R4
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -21,6 +24,8 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST, { directoryIndex: "" })
 // PLT-10 R1/R2: the landing page at / is never replaced by the app shell; only /app/* is.
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { allowlist: [APP_NAVIGATION], denylist: [/^\/api\//] }))
+
+registerDownloads() // PLT-12: downloaded files first (before the generic routes below)
 
 // Approved lesson content and Quran passages: usable offline. Same origin only.
 registerRoute(
@@ -35,29 +40,11 @@ registerRoute(
   ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content/media/") || /\.(jpg|jpeg|png|webp)$/.test(url.pathname)),
   new StaleWhileRevalidate({ cacheName: "rafeeq-media" }),
 )
+registerPlt11Caching(self) // PLT-11: hashed shell files and fonts, cache first; never audio/video
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 
-self.addEventListener("push", (event) => {
-  const data = (() => {
-    try {
-      return event.data?.json() ?? {}
-    } catch {
-      return { body: event.data?.text() }
-    }
-  })() as { title?: string; body?: string; url?: string; tag?: string }
-  // PLT-05 R3 / PLT-06 R6: in discreet mode a plain note icon, not the flower.
-  event.waitUntil(
-    readDiscreet().then((discreet) =>
-      self.registration.showNotification(data.title ?? "", {
-        body: data.body ?? "",
-        ...notificationLook(discreet),
-        tag: data.tag ?? "rafeeq",
-        data: { url: notificationTarget(data.url) },
-      }),
-    ),
-  )
-})
+registerPushHandler(self) // PLT-13 R2: never an empty notification (discreet look kept)
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close()

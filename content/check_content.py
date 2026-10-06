@@ -2,6 +2,9 @@
 """Check a Rafeeq content unit (content/units/*/unit.json).
 
 Usage: python content/check_content.py content/units/unit-01/unit.json
+       python content/check_content.py --learner-content
+         (citations only, KNW-05 R2: the pipeline lessons content/lessons/*.json,
+          quran_excerpts.json, quran_recitation.json and discover/daily-cards.json)
 
 Checks structure and the content rules that can be checked mechanically:
 every text in Arabic, English and Filipino; unique IDs; every objective
@@ -75,9 +78,49 @@ def hadith_ids_in_corpus(directory):
     return out
 
 
+def quran_field_ref(q):
+    """A pipeline lesson card's `quran` field ({"sura": 2, "ayat": [21, 21]}) as
+    'sura:aya' or 'sura:aya-aya' text, or None when it is not of that shape."""
+    if not isinstance(q, dict):
+        return None
+    sura, ayat = q.get("sura"), q.get("ayat")
+    if not (type(sura) is int and isinstance(ayat, list) and len(ayat) == 2 and all(type(a) is int for a in ayat)):
+        return None
+    return f"{sura}:{ayat[0]}" if ayat[0] == ayat[1] else f"{sura}:{ayat[0]}-{ayat[1]}"
+
+
+def card_quran_ref(c):
+    """The Quran reference a card cites: a team card's `ref`/`quran_ref` text or a
+    pipeline card's `quran` field (LRN-01 lessons, content/lessons/*.json)."""
+    for key in ("ref", "quran_ref"):
+        if c.get(key):
+            return str(c[key]).strip()
+    return quran_field_ref(c.get("quran")) if c.get("quran") is not None else None
+
+
+def check_hadith_id(where, h, known, errors, warnings):
+    """One HadeethEnc id: refused when malformed or absent from the stored corpus.
+    Returns True when it could not be checked (no corpus here)."""
+    if not (isinstance(h, int) or (isinstance(h, str) and h.isdigit())) or int(h) < 1:
+        errors.append(f"{where}: hadith id {h!r} is not a HadeethEnc id")
+    elif known is None:
+        return True
+    elif str(int(h)) not in known:
+        errors.append(f"{where}: hadith {h} is not in the stored HadeethEnc corpus")
+    else:
+        missing = [lg for lg in LANGS if lg not in known[str(int(h))]]
+        if missing:
+            warnings.append(f"{where}: hadith {h} has no stored record in {', '.join(missing)}")
+    return False
+
+
+UNCHECKED_HADITH = "hadith ids not checked against the corpus: hadeethenc.jsonl not found (set RAFEEQ_DATA_DIR)"
+
+
 def check_citations(unit, errors, warnings, corpus=None):
     """Every Quran reference names verses that exist; every `hadith_ids` entry is
-    a HadeethEnc id in the stored corpus (unknown → refused, KNW-05 R2 ex2)."""
+    a HadeethEnc id in the stored corpus (unknown → refused, KNW-05 R2 ex2).
+    Works on a team unit and on a pipeline lesson wrapped as {"lessons": [lesson]}."""
     known = hadith_ids_in_corpus(corpus or corpus_dir())
     unverified = False
     for lesson in unit["lessons"]:
@@ -87,22 +130,109 @@ def check_citations(unit, errors, warnings, corpus=None):
                     why = ayah_ref_error(c[key])
                     if why:
                         errors.append(f"{c['id']}: {why}")
+            if c.get("quran") is not None:
+                ref = quran_field_ref(c["quran"])
+                why = ayah_ref_error(ref) if ref else f"malformed Quran reference {c['quran']!r} (expected {{sura, ayat: [from, to]}})"
+                if why:
+                    errors.append(f"{c['id']}: {why}")
             ids = c.get("hadith_ids") or []
             if (c.get("kind") == "hadith" or c.get("contains_hadith")) and not ids:
                 warnings.append(f"{c['id']}: cites a hadith without hadith_ids; the review desk cannot show its stored record")
             for h in ids:
-                if not (isinstance(h, int) or (isinstance(h, str) and h.isdigit())) or int(h) < 1:
-                    errors.append(f"{c['id']}: hadith id {h!r} is not a HadeethEnc id")
-                elif known is None:
-                    unverified = True
-                elif str(int(h)) not in known:
-                    errors.append(f"{c['id']}: hadith {h} is not in the stored HadeethEnc corpus")
-                else:
-                    missing = [lg for lg in LANGS if lg not in known[str(int(h))]]
-                    if missing:
-                        warnings.append(f"{c['id']}: hadith {h} has no stored record in {', '.join(missing)}")
+                unverified |= check_hadith_id(c["id"], h, known, errors, warnings)
     if unverified:
-        warnings.append("hadith ids not checked against the corpus: hadeethenc.jsonl not found (set RAFEEQ_DATA_DIR)")
+        warnings.append(UNCHECKED_HADITH)
+
+
+def quran_words_in_corpus(directory, refs):
+    """{'sura:aya': number of words in the stored Arabic verse} for `refs`, split
+    on spaces as the app does (VerseBlock excerptOf), or None when the corpus is not here."""
+    f = Path(directory) / "quranenc.jsonl"
+    if not f.exists():
+        return None
+    out = {}
+    with f.open(encoding="utf8") as fh:
+        for line in fh:
+            if '"quran_arabic"' not in line:
+                continue
+            row = json.loads(line)
+            if row.get("kind") == "quran_arabic" and row["ref_key"] in refs:
+                out[row["ref_key"]] = len(row["quote_text"].split(" "))
+    return out
+
+
+def check_learner_content(root, errors, warnings, corpus=None):
+    """KNW-05 R2 ex2 beyond the team units: every verse or hadith the learner sees
+    in other content names one that exists.
+    - content/lessons/*.json (pipeline units 2-6 and the replaced unit 1): each card's `quran`;
+    - content/quran_excerpts.json: each `ref` exists and is the verse its card shows,
+      and `verse_words` is the stored verse's word count (corpus);
+    - content/quran_recitation.json: each `ref` exists and is the verse its cards show;
+    - content/discover/daily-cards.json: each `hadith_id` is in the stored corpus.
+    The verse-range part needs nothing outside the repo and always runs; the corpus
+    parts warn and are skipped when the corpus is not here (as for the team units)."""
+    root = Path(root)
+    corpus = corpus or corpus_dir()
+    card_refs = {}  # every card id the learner can see -> the Quran reference it shows
+    for f in sorted((root / "lessons").glob("*.json")):
+        lesson = json.loads(f.read_text(encoding="utf8"))
+        check_citations({"lessons": [lesson]}, errors, warnings, corpus)
+        card_refs.update({c["id"]: card_quran_ref(c) for c in lesson["cards"]})
+    for f in sorted((root / "units").glob("*/unit.json")):
+        unit = json.loads(f.read_text(encoding="utf8"))
+        card_refs.update({c["id"]: card_quran_ref(c) for les in unit["lessons"] for c in les["cards"]})
+
+    excerpts = json.loads((root / "quran_excerpts.json").read_text(encoding="utf8"))["cards"]
+    words = quran_words_in_corpus(corpus, {str(e.get("ref")) for e in excerpts.values()})
+    for cid, e in excerpts.items():
+        where = f"quran_excerpts.json {cid}"
+        why = ayah_ref_error(e.get("ref"))
+        if why:
+            errors.append(f"{where}: {why}")
+            continue
+        if cid not in card_refs:
+            errors.append(f"{where}: no lesson card {cid}")
+        elif card_refs[cid] != e["ref"]:
+            errors.append(f"{where}: ref {e['ref']} but the card shows {card_refs[cid]}")
+        if words is not None:
+            if e["ref"] not in words:
+                errors.append(f"{where}: verse {e['ref']} has no stored Arabic record")
+            elif words[e["ref"]] != e.get("verse_words"):
+                errors.append(f"{where}: verse_words {e.get('verse_words')} but the stored verse {e['ref']} has {words[e['ref']]} words")
+    if words is None:
+        warnings.append("excerpt verse_words not checked against the stored verses: quranenc.jsonl not found (set RAFEEQ_DATA_DIR)")
+
+    recitation = json.loads((root / "quran_recitation.json").read_text(encoding="utf8"))
+    for v in recitation["verses"]:
+        where = f"quran_recitation.json {v.get('ref')}"
+        why = ayah_ref_error(v.get("ref"))
+        if why or "-" in str(v.get("ref")):
+            errors.append(f"{where}: {why or 'a recitation file is one verse'}")
+            continue
+        for cid in v.get("cards") or []:
+            if card_refs.get(cid) != v["ref"]:
+                errors.append(f"{where}: card {cid} shows {card_refs.get(cid, 'no such card')}")
+
+    daily = root / "discover" / "daily-cards.json"
+    if daily.exists():
+        known = hadith_ids_in_corpus(corpus)
+        unverified = False
+        for c in json.loads(daily.read_text(encoding="utf8"))["cards"]:
+            if "hadith_id" in c:
+                unverified |= check_hadith_id(f"daily-cards.json {c.get('id')}", c["hadith_id"], known, errors, warnings)
+        if unverified:
+            warnings.append(UNCHECKED_HADITH)
+
+
+def main_learner_content(root=None, corpus=None):
+    errors, warnings = [], []
+    check_learner_content(root or Path(__file__).parent, errors, warnings, corpus)
+    for w in dict.fromkeys(warnings):
+        print("  ! " + w)
+    for e in errors:
+        print("  ✗ " + e)
+    print("OK: lesson citations" if not errors else f"{len(errors)} blocking citation issue(s)")
+    return 1 if errors else 0
 
 
 # --- KNW-03 R3 ex2: a listed term written with a non-approved spelling -----------
@@ -268,4 +398,6 @@ def main(path, corpus=None, glossary=None):
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         sys.exit(__doc__)
+    if sys.argv[1] == "--learner-content":
+        sys.exit(main_learner_content())
     sys.exit(main(sys.argv[1]))

@@ -15,6 +15,8 @@ import { stripBase } from "@/app/lib/base"
 
 const LEARNING_FLOW = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placement/]
 const HOUR = 60 * 60 * 1000
+export const SW_URL = "/sw.js"
+export const SW_SCOPE = "/"
 
 export const inLearningFlow = (path = stripBase(location.pathname)) => LEARNING_FLOW.some((r) => r.test(path))
 
@@ -40,7 +42,25 @@ export function applyUpdate() {
 
 /** Called on every route change: a pending update applies once the learner leaves a lesson. */
 export function maybeApplyUpdate(path: string) {
-  if (updateReady && !inLearningFlow(path)) applyUpdate()
+  if (updateReady && !inLearningFlow(path)) reloadWhenOnline()
+}
+
+// PLT-15 R6: an update never reloads the app by itself while offline; it
+// waits for the connection (the learner may still tap «حدّث الآن»).
+let waitingForOnline = false
+function reloadWhenOnline() {
+  if (typeof navigator === "undefined" || navigator.onLine) return applyUpdate()
+  notify() // the update bar offers it meanwhile
+  if (waitingForOnline) return
+  waitingForOnline = true
+  window.addEventListener(
+    "online",
+    () => {
+      waitingForOnline = false
+      maybeApplyUpdate(stripBase(location.pathname))
+    },
+    { once: true },
+  )
 }
 
 export function registerServiceWorker() {
@@ -51,13 +71,21 @@ export function registerServiceWorker() {
     if (!hadController || updateReady) return
     updateReady = true
     if (inLearningFlow()) notify()
-    else applyUpdate()
+    else reloadWhenOnline()
   })
 
   window.addEventListener("load", () => {
-    void navigator.serviceWorker.register("/sw.js", { scope: "/" }).then((reg) => {
+    // PLT-13 R6: one worker, /sw.js with scope "/", wherever the app's pages live, so push subscriptions survive moves.
+    void navigator.serviceWorker.register(SW_URL, { scope: SW_SCOPE }).then((reg) => {
+      // PLT-13 R4: Safari never reports a changed subscription; check on every opening and return.
+      const renewPush = () => void import("./push").then((m) => m.syncPushSwitches()).catch(() => undefined)
       const check = () => void reg.update().catch(() => undefined)
-      document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && check())
+      renewPush()
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState !== "visible") return
+        check()
+        renewPush()
+      })
       setInterval(check, HOUR)
     })
   })
