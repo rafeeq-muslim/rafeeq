@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useT } from "@/app/i18n"
-import { COUNTRIES, type Country, HELPLINES, deviceCountry } from "./helplines"
+import { COUNTRIES, type Country, HELPLINES, deviceCountry } from "./helplineNumbers"
 
 export function Helplines({ initialCountry, className }: { initialCountry?: Country; className?: string }) {
   const { t } = useT()

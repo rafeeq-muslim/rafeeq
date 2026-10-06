@@ -199,14 +199,16 @@ describe("plt-01-r2 a link carries the language and nothing about the person", (
   it("plt01_r2_a_deeper_link_passes_only_the_language_to_the_first_screen", () => {
     useDevice.setState({ onboarded: false })
     render(
-      <MemoryRouter initialEntries={["/learn?lang=tl&office=riyadh-dawah"]}>
-        <Routes>
-          <Route path="/welcome" element={<LocationProbe />} />
-          <Route path="/" element={<AppLayout />}>
-            <Route path="learn" element={<p>learn</p>} />
-          </Route>
-        </Routes>
-      </MemoryRouter>,
+      <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <MemoryRouter initialEntries={["/learn?lang=tl&office=riyadh-dawah"]}>
+          <Routes>
+            <Route path="/welcome" element={<LocationProbe />} />
+            <Route path="/" element={<AppLayout />}>
+              <Route path="learn" element={<p>learn</p>} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>,
     )
     expect(screen.getByTestId("at").textContent).toBe("/welcome?lang=tl")
   })
@@ -259,14 +261,16 @@ describe("plt-01-r6 the start happens once per device", () => {
   it("plt01_r6_after_the_start_rafeeq_opens_on_home", () => {
     useDevice.setState({ onboarded: true })
     render(
-      <MemoryRouter initialEntries={["/learn"]}>
-        <Routes>
-          <Route path="/welcome" element={<p>welcome</p>} />
-          <Route path="/" element={<AppLayout />}>
-            <Route path="learn" element={<p>the path</p>} />
-          </Route>
-        </Routes>
-      </MemoryRouter>,
+      <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <MemoryRouter initialEntries={["/learn"]}>
+          <Routes>
+            <Route path="/welcome" element={<p>welcome</p>} />
+            <Route path="/" element={<AppLayout />}>
+              <Route path="learn" element={<p>the path</p>} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>,
     )
     expect(screen.getByText("the path")).toBeTruthy()
     expect(screen.queryByText("welcome")).toBeNull()

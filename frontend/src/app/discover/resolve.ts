@@ -1,5 +1,5 @@
 /** KNW-09 R6: saved ids resolve to current approved content, or «unavailable». */
-import type { SavedEntry } from "./saved"
+import type { SavedEntry } from "./savedStore"
 
 export type Resolved<C, L> =
   | { entry: SavedEntry; available: true; content: C | L }
