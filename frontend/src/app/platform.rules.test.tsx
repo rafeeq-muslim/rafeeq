@@ -282,7 +282,7 @@ describe("plt-01-r6 the start happens once per device", () => {
     localStorage.setItem("rafeeq.device", JSON.stringify({ state: { onboarded: true }, version: 1 }))
     const go = vi.fn()
     await wipeDevice(go)
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome") // PLT-10 R2: the app lives under /app
     expect(localStorage.getItem("rafeeq.device")).toBeNull()
   })
 })
@@ -507,7 +507,7 @@ describe("plt-05-r4 erase this device", () => {
     expect(del?.headers["X-Help-Token"]).toBe("g".repeat(43))
     expect(Object.keys(localStorage).filter((k) => k.startsWith("rafeeq."))).toEqual([])
     expect(localStorage.getItem("other-site-key")).toBe("kept")
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome")
   })
 
   it("plt05_r4_the_push_subscription_is_dropped_on_the_server_and_the_device", async () => {
@@ -563,6 +563,23 @@ describe("plt-05-r6 download a copy of my data", () => {
   it("plt05_r6_offered_in_me", () => {
     wrap(<Me />, "/me", "/me")
     expect(screen.getByRole("button", { name: ar_("privacy.download") })).toBeTruthy()
+  })
+
+  // MOT-07: the privacy notice was approved by the product owner on 2026-10-06 (approvals-ui).
+  it("mot07_the_events_opt_out_carries_no_unapproved_marker", () => {
+    wrap(<Me />, "/me", "/me")
+    expect(screen.getByRole("switch", { name: new RegExp(ar_("privacy.events")) })).toBeTruthy()
+    expect(screen.queryByText("غير معتمد")).toBeNull()
+    expect(document.querySelector('[data-slot="unapproved"]')).toBeNull()
+  })
+
+  it("plt05_r1_policy_is_final_and_says_who_approved_it", () => {
+    for (const { code } of LOCALES) {
+      const line = translate(code, "policy.updated", { date: "2026-10-06" })
+      expect(line).toContain("2026-10-06")
+      expect(line).not.toMatch(/مسودة|مقترح|draft|proposal|burador/i)
+    }
+    expect(ar_("policy.updated", { date: "2026-10-06" })).toContain("اعتمده مالك المنتج")
   })
 })
 
@@ -650,6 +667,29 @@ describe("plt-06-r3 the lock screen stays neutral", () => {
     const base = usePractice.getState().reminders
     expect(reminderText(r, { ...base, showName: false }, "ar", "Asia/Riyadh", false)).toBe("تذكير")
     expect(reminderText(r, { ...base, showName: true }, "ar", "Asia/Riyadh", false)).toContain(ar_("practice.prayer.asr" as Key))
+  })
+})
+
+// PLT-06 R3 / PRC-05 R2 (owner approval 2026-10-06, approvals-ui): no default for the prayer name.
+describe("plt-06-r3 the prayer-reminder switch in «حسابي» asks once about the prayer name", () => {
+  const question = () => screen.queryByRole("dialog", { name: ar_("practice.reminders.ask.title" as Key) })
+
+  it("plt06_r3_first_prayer_reminder_in_me_asks_once_and_the_answer_is_kept", () => {
+    const p = mockPush("default")
+    stubFetch(pushApi)
+    const before = usePractice.getState().reminders
+    usePractice.setState({ reminders: { ...before, enabled: false, showName: false, askedName: undefined } })
+    wrap(<Me />, "/me", "/me")
+    fireEvent.click(switchFor(ar_("practice.reminders")))
+    expect(question()).toBeTruthy()
+    expect(usePractice.getState().reminders).toMatchObject({ enabled: true, showName: false }) // neutral until answered
+    fireEvent.click(screen.getByRole("button", { name: ar_("practice.reminders.ask.show" as Key) }))
+    expect(usePractice.getState().reminders).toMatchObject({ enabled: true, showName: true, askedName: true })
+    fireEvent.click(switchFor(ar_("practice.reminders"))) // off
+    fireEvent.click(switchFor(ar_("practice.reminders"))) // on again: not asked
+    expect(question()).toBeNull()
+    expect(p.N.requestPermission).not.toHaveBeenCalled()
+    usePractice.setState({ reminders: before })
   })
 })
 

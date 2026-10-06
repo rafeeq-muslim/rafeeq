@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { api } from "@/app/lib/api"
 import type { SourceCard } from "@/app/ask/types"
-import type { CardsResponse, LibraryResponse, RecitationResponse } from "./types"
+import type { CardsResponse, LibraryResponse, LibrarySearchSources, RecitationResponse } from "./types"
 
 const STALE = 5 * 60_000
 
@@ -36,6 +36,15 @@ export const usePassages = (ids: string[]) => {
     },
   })
 }
+
+/** KNW-06 library search: which library sources can be searched now (no query sent, no-store). */
+export const useLibrarySearchSources = (lang: string) =>
+  useQuery({
+    queryKey: ["library-search-sources", lang],
+    queryFn: () => api<LibrarySearchSources>(`/api/discover/library/search/sources?lang=${lang}`),
+    staleTime: STALE,
+    retry: 1,
+  })
 
 export const useRecitation =(lang: string) =>
   useQuery({

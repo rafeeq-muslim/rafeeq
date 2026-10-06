@@ -31,40 +31,41 @@
       "hero.title": "You are not alone on your journey",
       "hero.sub": "Your first year as a Muslim, in your language: short lessons, sourced answers, and a person when you need one.",
       "hero.note": "Free. No account needed to start.",
-      "learn.title": "Start from the foundations, one step at a time",
-      "learn.lead": 'Short lessons from the book <span class="book">New Muslim Guideline</span> (<span lang="ar" dir="rtl">المختصر المفيد للمسلم الجديد</span>), in Arabic, English and Tagalog. You begin with what you need on your first day: the meaning of the shahada, then wudu, then your first prayer.',
-      "learn.p1": "No lesson reaches anyone before the Sharia reviewer approves it.",
-      "learn.p2": "Mistakes are safe: you see the right answer in the lesson's own words, then try again. No hearts, no tries that run out.",
+      "hero.more": "See what Rafeeq does",
+      "learn.title": "Learn your faith from the beginning, one lesson at a time",
+      "learn.lead": 'The lessons come from the book <span class="book">New Muslim Guideline</span> (<span lang="ar" dir="rtl">المختصر المفيد للمسلم الجديد</span>), in Arabic, English and Tagalog, and each takes a few minutes. The first ones cover what you need on your first day: the meaning of the shahada, then wudu, then your first prayer.',
+      "learn.p1": "Every lesson is checked by a Sharia reviewer before it is published.",
+      "learn.p2": "If you get something wrong, you see the right answer in the lesson's own words and try again as often as you like.",
       "learn.p3": "Stop whenever you like and pick up where you left off.",
       "path.n1": "Shahada", "path.n2": "Wudu", "path.n3": "First prayer", "path.start": "Start",
-      "ask.title": "No source, no answer",
+      "ask.title": "Every answer comes with its source",
       "ask.lead": "Rafeeq's assistant answers in your language from approved sources only, and shows you where every answer comes from. If it can't find a source, it tells you so and offers you a person.",
       "ask.ai": "The assistant is an AI tool, always says so, and can be wrong.",
-      "ask.which": "What happens to your question?",
+      "ask.which": "How the assistant handles your question:",
       "ask.q": "Your question",
       "ask.k0": "A general question", "ask.k1": "Scholars differ", "ask.k2": "About your own case", "ask.k3": "If you're in danger",
-      "ask.o0": "An answer from approved sources, closed by a strip that names its source.",
-      "ask.o1": "It tells you scholars hold different views, never presents a disputed matter as settled, or refers you to a specialist.",
-      "ask.o2": "The assistant gives no ruling on your case. It offers general information, then a qualified person takes it from there.",
-      "ask.o3": "A person reaches you straight away, and the AI says nothing else.",
-      "ask.e0": "The source sits under every answer", "ask.e1": "The views as they are, not settled", "ask.e2": "A qualified person", "ask.e3": "A person, now",
+      "ask.o0": "An answer from approved sources, with the source named underneath.",
+      "ask.o1": "It tells you scholars differ on it and does not present one view as the ruling, or it refers you to a specialist.",
+      "ask.o2": "The assistant gives no ruling on your case. It shares what the sources say in general and offers you a person who can look at the details.",
+      "ask.o3": "The AI does not answer. You are offered a person from our team straight away, and the emergency numbers for your country.",
+      "ask.e0": "The source sits under every answer", "ask.e1": "The views as they are, not settled", "ask.e2": "A qualified person", "ask.e3": "A person, and emergency numbers",
       "people.title": "“I want a human”",
       "people.caption": "A button in every lesson, review and question.",
-      "people.lead": "Tap it and someone from our team replies in your language. Only they see your message, and you don't need an account.",
-      "people.mentorT": "A volunteer mentor",
-      "people.mentor": "With a simple account, choose a mentor who speaks your language. They see only the progress you allow.",
+      "people.lead": "Tap it and a person from the Rafeeq team replies in your language: a man if you are a man, a woman if you are a woman. You don't need an account.",
+      "people.mentorT": "A mentor who follows your progress",
+      "people.mentor": "With an account, choose a mentor of your own gender who speaks your language. They see only the progress you allow.",
       "people.groupT": "A small group",
       "people.group": "Join with a code. Only the name you choose is shown, and progress is counted together, never who didn't finish.",
       "daily.title": "Your prayer times are worked out on your phone",
-      "daily.lead": "Prayer times and the qibla are calculated on your own phone, and your location never leaves it. The daily adhkar are there too.",
+      "daily.lead": "Rafeeq works out prayer times and the qibla on your own phone, so your location never leaves it. The morning, evening and after-prayer adhkar are there too.",
       "daily.private": "Worship stays between you and Allah: whatever you track of it is private, seen by no one, and never rewarded with a badge or progress.",
       "mercy.title": "Miss a day? We'll wait for you",
       "mercy.lead": "Your learning streak pauses while you're away, and never drops back to zero. When you return, one short lesson is waiting, not a list of what you missed.",
       "mercy.remind": "Reminders come only if you ask for them: once a day at most, at the time you choose, in neutral words that give nothing away.",
-      "mercy.account": "You don't need an account to begin: your progress is kept on your device. When you want to keep it safe, a simple account with a name you choose, no email needed.",
+      "mercy.account": "You don't need an account to begin: your progress is kept on your device. If you want to keep it in an account, a name you choose and a password are enough, with no email or phone number.",
       "mercy.paused": "Paused",
-      "bloom.title": "And by the end of the year, the flower is complete",
-      "bloom.lead": "Every month of learning adds a petal, and the first one starts today.",
+      "bloom.title": "Unit by unit, your flower grows complete",
+      "bloom.lead": "Every unit you finish adds a petal to your flower, and the first one starts today.",
       "bloom.note": "Free, in Arabic, English and Tagalog.",
       "bloom.mentor": "For mentors and da'wa organisations: mentors join with an invite code from the Rafeeq team.",
       "bloom.mentorLink": "Join as a mentor",
@@ -79,9 +80,10 @@
       "hero.title": 'Hindi ka <span class="nw">nag-iisa</span> sa iyong paglalakbay',
       "hero.sub": "Ang iyong unang taon bilang Muslim, sa iyong wika: maiikling aralin, mga sagot na may sanggunian, at isang tao kapag kailangan mo.",
       "hero.note": "Libre. Hindi kailangan ng account para magsimula.",
+      "hero.more": "Alamin ang Rafeeq",
       "learn.title": "Magsimula sa mga batayan, isang hakbang sa bawat pagkakataon",
       "learn.lead": 'Maiikling aralin mula sa aklat na <span class="book">Patnubay Para Sa Bagong Muslim</span>, sa Arabic, English at Tagalog. Magsisimula ka sa kailangan mo sa unang araw: ang kahulugan ng shahada, ang wudu, at ang iyong unang pagdarasal.',
-      "learn.p1": "Walang araling makikita ng sinuman hangga't hindi ito inaaprubahan ng Sharia reviewer.",
+      "learn.p1": "Sinusuri ng isang Sharia reviewer ang bawat aralin bago ito ilathala.",
       "learn.p2": "Ligtas magkamali: makikita mo ang tamang sagot sa mismong salita ng aralin, saka subukang muli. Walang puso, walang subok na nauubos.",
       "learn.p3": "Huminto kahit kailan, at ituloy kung saan ka huminto.",
       "path.n1": "Shahada", "path.n2": "Wudu", "path.n3": "Unang pagdarasal", "path.start": "Simulan",
@@ -94,13 +96,13 @@
       "ask.o0": "Isang sagot mula sa mga aprubadong sanggunian, na may kasamang pangalan ng sanggunian sa dulo.",
       "ask.o1": "Sasabihin nitong magkakaiba ang pananaw ng mga iskolar, hindi nito ipapakitang tiyak na ang pinagtatalunan, o ire-refer ka sa isang espesyalista.",
       "ask.o2": "Hindi nagbibigay ng hatol ang assistant sa iyong kaso. Pangkalahatang impormasyon ang ibibigay nito, saka isang kwalipikadong tao ang magpapatuloy.",
-      "ask.o3": "Isang tao ang agad na lalapit sa iyo, at wala nang ibang sasabihin ang AI.",
-      "ask.e0": "Nasa ilalim ng bawat sagot ang sanggunian", "ask.e1": "Ang mga pananaw, hindi pinagpapasyahan", "ask.e2": "Isang kwalipikadong tao", "ask.e3": "Isang tao, ngayon din",
+      "ask.o3": "Hindi sasagot ang AI. Agad kang aalukin na makausap ang isang tao mula sa aming team, at ipapakita ang mga emergency number sa iyong bansa.",
+      "ask.e0": "Nasa ilalim ng bawat sagot ang sanggunian", "ask.e1": "Ang mga pananaw, hindi pinagpapasyahan", "ask.e2": "Isang kwalipikadong tao", "ask.e3": "Isang tao, at mga emergency number",
       "people.title": "“Gusto ko ng tao”",
       "people.caption": "Isang button sa bawat aralin, pagbabalik-aral at tanong.",
-      "people.lead": "Pindutin ito at sasagot ang isa sa aming team sa iyong wika. Sila lang ang makakakita ng iyong mensahe, at hindi mo kailangan ng account.",
+      "people.lead": "Pindutin ito at sasagot ang isang tao mula sa team ng Rafeeq sa iyong wika: lalaki kung lalaki ka, babae kung babae ka. Hindi mo kailangan ng account.",
       "people.mentorT": "Isang boluntaryong mentor",
-      "people.mentor": "Gamit ang simpleng account, pumili ng mentor na nagsasalita ng iyong wika. Ang progresong pinapayagan mo lang ang makikita niya.",
+      "people.mentor": "Gamit ang account, pumili ng mentor na kapareho mo ng kasarian at nagsasalita ng iyong wika. Ang progresong pinapayagan mo lang ang makikita niya.",
       "people.groupT": "Isang maliit na grupo",
       "people.group": "Sumali gamit ang code. Ang pangalang pipiliin mo lang ang makikita, at sama-samang binibilang ang progreso, hindi kung sino ang hindi nakatapos.",
       "daily.title": "Sa iyong telepono kinakalkula ang oras ng pagdarasal",
@@ -111,8 +113,8 @@
       "mercy.remind": "Darating lang ang paalala kung hihilingin mo: isang beses sa isang araw sa pinakamarami, sa oras na pipiliin mo, sa neutral na salitang walang ibinubunyag.",
       "mercy.account": "Hindi mo kailangan ng account para magsimula: nasa iyong device ang progreso mo. Kapag gusto mo itong ingatan, isang simpleng account na may pangalang pipiliin mo, walang email na kailangan.",
       "mercy.paused": "Nakahinto muna",
-      "bloom.title": "At sa pagtatapos ng taon, buo na ang bulaklak",
-      "bloom.lead": "Bawat buwan ng pag-aaral ay nagdaragdag ng talulot, at ngayon nagsisimula ang una.",
+      "bloom.title": "Yunit kada yunit, nabubuo ang iyong bulaklak",
+      "bloom.lead": "Bawat yunit na matatapos mo ay nagdaragdag ng talulot sa iyong bulaklak, at ngayon nagsisimula ang una.",
       "bloom.note": "Libre, sa Arabic, English at Tagalog.",
       "bloom.mentor": "Para sa mga mentor at organisasyong pang-da'wa: sumasali ang mga mentor gamit ang invite code mula sa team ng Rafeeq.",
       "bloom.mentorLink": "Sumali bilang mentor",
@@ -136,7 +138,7 @@
       document.title = t("title");
       var wm = LANG === "ar" ? "ar" : "en";
       document.querySelectorAll("[data-wordmark]").forEach(function (img) {
-        img.src = "brand/rafeeq-wordmark-" + wm + "-" + img.getAttribute("data-wordmark") + ".svg";
+        img.src = "/landing/brand/rafeeq-wordmark-" + wm + "-" + img.getAttribute("data-wordmark") + ".svg";
       });
     }
     document.querySelectorAll("[data-i18n-attr]").forEach(function (el) {
@@ -161,11 +163,12 @@
     // "Start your journey": hand the chosen language to the app, but only for
     // a device that has not been through onboarding (frontend/src/app/stores/device.ts).
     // PLT-01 R2: a language the visitor chose here travels in the link
-    // (/welcome?lang=tl), so the app starts in it; the link carries nothing else.
+    // (/app/?lang=tl; the app sends a new device on to /app/welcome?lang=tl), so
+    // the app starts in it; the link carries nothing else (PLT-10 R2).
     var chosen = null;
     try { chosen = new URL(location.href).searchParams.get("lang") || localStorage.getItem("rafeeq.landing.lang"); } catch (err) {}
     document.querySelectorAll("[data-start]").forEach(function (a) {
-      if (chosen) a.setAttribute("href", "/welcome?lang=" + encodeURIComponent(LANG));
+      if (chosen) a.setAttribute("href", "/app/?lang=" + encodeURIComponent(LANG));
       a.addEventListener("click", function () {
         try {
           var raw = localStorage.getItem("rafeeq.device"), cur = raw ? JSON.parse(raw) : null;
@@ -475,6 +478,14 @@
     var day = sTop < barH * 0.6 && sBot > barH * 0.6;
     el.bar.classList.toggle("is-day", day);
 
+    // PLT-14 R1: the hero copy scrolls away with the page; it fades as it
+    // reaches the bar so the title never sits under the brand.
+    // Measured from the stage, so the copy is always whole at rest, however
+    // short the screen.
+    var st = el.heroStage.getBoundingClientRect().top, hc = el.heroCopy.getBoundingClientRect();
+    var moved = Math.max(0, -st), room = Math.max(hc.top - st - barH, 1);
+    el.heroCopy.style.opacity = (1 - clamp01(moved / room)).toFixed(3);
+
     // ---- petals drawn: 1 on arrival, 10 while the sheet is read, the 12th at the bloom
     if (loadT0 && loadDraw < 1) loadDraw = clamp01((now - loadT0) / 900);
     var read = clamp01((vh * 0.55 - sTop) / Math.max(sH - vh * 0.35, 1));
@@ -634,6 +645,24 @@
   }
 
   var CASE_AT = [0.1, 0.38, 0.63, 0.88];
+  /* PLT-14 R1: the hero button reads on to the next chapter instead of
+     leaving the page. Lands the chapter just under the bar; instant under
+     reduced motion; moves focus to the chapter heading for keyboard users. */
+  function wireScrollTo() {
+    document.querySelectorAll("[data-scroll-to]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var sec = document.getElementById(a.getAttribute("data-scroll-to"));
+        if (!sec) return;
+        e.preventDefault();
+        var bar = document.getElementById("bar");
+        var top = sec.getBoundingClientRect().top + scrollY - (bar ? bar.offsetHeight : 0);
+        scrollTo({ top: Math.max(0, top), behavior: RM ? "instant" : "smooth" });
+        var h = sec.querySelector("h2, h1");
+        if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+      });
+    });
+  }
+
   function wireCases() {
     el.cases = Array.prototype.slice.call(document.querySelectorAll(".cases button"));
     var targets = CASE_AT;
@@ -663,7 +692,7 @@
       bar: document.getElementById("bar"), rail: document.getElementById("rail"),
       dockBar: document.getElementById("dockBar"), dockRail: document.getElementById("dockRail"),
       sheet: document.getElementById("sheet"), hero: document.getElementById("welcome"), bloom: document.getElementById("bloom"),
-      heroStage: document.getElementById("heroStage"), bloomStage: document.getElementById("bloomStage"),
+      heroStage: document.getElementById("heroStage"), heroCopy: document.querySelector(".hero__copy"), bloomStage: document.getElementById("bloomStage"),
       anchorHero: document.getElementById("anchorHero"), anchorBloom: document.getElementById("anchorBloom"),
       ask: document.getElementById("ask"), daily: document.getElementById("daily"), days: document.getElementById("days"),
       needle: document.getElementById("needle")
@@ -672,6 +701,7 @@
       chapters.push({ a: a, sec: document.querySelector(a.getAttribute("href")) });
     });
     wireCases();
+    wireScrollTo();
 
     window.ScrollCraft.mount(document.body);
 

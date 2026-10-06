@@ -48,6 +48,16 @@ REMINDER_TEXT = {  # MOT-05 R3 (Layla's lock screen example)
 }
 
 
+APP_BASE = "/app"  # PLT-10 R2/R3: the app lives under /app; "/" is the landing page
+
+
+def app_url(url: str) -> str:
+    """An in-app push target under /app ("/next" -> "/app/next"); other URLs unchanged."""
+    if not url.startswith("/") or url.startswith("//") or url == APP_BASE or url.startswith((f"{APP_BASE}/", f"{APP_BASE}?")):
+        return url
+    return f"{APP_BASE}/" if url == "/" else f"{APP_BASE}{url}"
+
+
 class Keys(BaseModel):
     p256dh: str = Field(max_length=255)
     auth: str = Field(max_length=255)
@@ -263,6 +273,8 @@ async def send(sub: PushSubscription, payload: dict) -> bool:
     """Send one push; drop the subscription if the browser says it is gone."""
     if not get_settings().vapid_private_key:
         return False
+    if isinstance(payload.get("url"), str):
+        payload = {**payload, "url": app_url(payload["url"])}  # PLT-10 R3: every caller's link opens inside /app
     try:
         await asyncio.to_thread(_send_sync, sub, payload)
         return True
@@ -298,7 +310,7 @@ async def run_reminders(now: datetime | None = None) -> int:
             if not ok:
                 continue
             title, body = REMINDER_TEXT.get(sub.locale, REMINDER_TEXT["en"])
-            if await send(sub, {"title": title, "body": body, "url": "/next", "tag": "reminder"}):
+            if await send(sub, {"title": title, "body": body, "url": "/app/next", "tag": "reminder"}):
                 sub.last_reminder_on = now.astimezone(ZoneInfo(sub.timezone)).date().isoformat()
                 sub.ignored_in_row = streak
                 sent += 1

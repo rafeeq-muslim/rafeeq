@@ -2,7 +2,7 @@
  * source of truth while offline; each sync merges both sides on the server
  * (union of lessons, latest answer per objective, larger set of learning
  * days) and the device takes the merged result. Guests never call this. */
-import { api } from "@/app/lib/api"
+import { ApiError, api } from "@/app/lib/api"
 import { claimGuestRequests } from "@/app/companion/api"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
@@ -22,31 +22,69 @@ const noNulls = (o: Record<string, unknown>) => Object.fromEntries(Object.entrie
 let timer: ReturnType<typeof setTimeout> | undefined
 let running: Promise<void> | null = null
 
+const offline = () => typeof navigator !== "undefined" && !navigator.onLine
+
+/** PLT-05 R7: how saving to the account went. Waiting helps only for
+ * "offline" and "unreachable"; "rejected" is the server refusing the data. */
+export type SaveResult = "ok" | "offline" | "unreachable" | "rejected"
+
+export function saveFailure(e: unknown): SaveResult {
+  const s = e instanceof ApiError ? e.status : 0
+  return s >= 400 && s < 500 && s !== 408 && s !== 429 ? "rejected" : "unreachable"
+}
+
+/** One merge with the account copy. */
+async function pushAndMerge(): Promise<SaveResult> {
+  try {
+    const L = useLearning.getState()
+    const M = useMotivation.getState()
+    const [l, m] = await Promise.all([
+      api<LearningCopy>("/api/me/learning", { method: "PUT", body: { completed: L.completed, unlockedUnits: L.unlockedUnits, mastery: L.mastery } }),
+      api<MotivationCopy>("/api/me/motivation", { method: "PUT", body: { days: M.days, badges: M.badges } }),
+    ])
+    L.replaceAll({
+      completed: l.completed,
+      unlockedUnits: l.unlockedUnits,
+      // LRN-04 R2: seenExercises is in the account copy too (a union of both
+      // sides), so "prefer an unseen exercise" holds on every device.
+      mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
+    })
+    M.replaceAll({ days: m.days, badges: m.badges })
+    return "ok"
+  } catch (e) {
+    return saveFailure(e) /* next change or sign-in retries */
+  }
+}
+
 export async function syncNow(): Promise<void> {
-  if (!useAuth.getState().token || (typeof navigator !== "undefined" && !navigator.onLine)) return
-  running ??= (async () => {
-    try {
-      const L = useLearning.getState()
-      const M = useMotivation.getState()
-      const [l, m] = await Promise.all([
-        api<LearningCopy>("/api/me/learning", { method: "PUT", body: { completed: L.completed, unlockedUnits: L.unlockedUnits, mastery: L.mastery } }),
-        api<MotivationCopy>("/api/me/motivation", { method: "PUT", body: { days: M.days, badges: M.badges } }),
-      ])
-      L.replaceAll({
-        completed: l.completed,
-        unlockedUnits: l.unlockedUnits,
-        // LRN-04 R2: seenExercises is in the account copy too (a union of both
-        // sides), so "prefer an unseen exercise" holds on every device.
-        mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
-      })
-      M.replaceAll({ days: m.days, badges: m.badges })
-    } catch {
-      /* next change or sign-in retries */
-    } finally {
-      running = null
-    }
-  })()
+  if (!useAuth.getState().token || offline()) return
+  running ??= pushAndMerge().then(() => {
+    running = null
+  })
   return running
+}
+
+/** PLT-05 R7: progress kept on this device that the account would hold
+ * (lessons, mastery, learning days, badges). There is no "dirty" mark: any of
+ * it counts as possibly unsaved until a merge succeeds. */
+export function hasLocalProgress(): boolean {
+  const L = useLearning.getState()
+  const M = useMotivation.getState()
+  return (
+    Object.keys(L.completed).length > 0 ||
+    L.unlockedUnits.length > 0 ||
+    Object.keys(L.mastery).length > 0 ||
+    M.days.length > 0 ||
+    Object.keys(M.badges).length > 0
+  )
+}
+
+/** PLT-05 R7: save this device's progress to the account before signing out. */
+export async function flushProgress(): Promise<SaveResult> {
+  if (!useAuth.getState().token) return "rejected"
+  if (offline()) return "offline"
+  if (running) await running
+  return pushAndMerge()
 }
 
 /** Debounced: lessons finish in bursts of answers. */

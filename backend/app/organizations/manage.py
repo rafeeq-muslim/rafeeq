@@ -40,7 +40,7 @@ def welcome_path(code: OrgCode) -> str:
     """ORG-01 R1/R2: the link carries the organisation's code and the
     language, nothing else (PLT-01 R2 conflict resolved as research/10 §3
     proposes; see docs/engineering/decisions-for-review.md)."""
-    return f"/welcome?lang={code.lang}&org={code.code}"
+    return f"/app/welcome?lang={code.lang}&org={code.code}"  # PLT-10 R2
 
 
 async def coordinator_of(session, user: User, org_id: uuid.UUID) -> Organization:

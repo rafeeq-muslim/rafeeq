@@ -1,7 +1,7 @@
 /** App frame: direction and language on <html>, the adaptive shell, and the
  * guards (first run goes to onboarding). */
 import * as React from "react"
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router"
+import { Navigate, Outlet, matchPath, useLocation, useNavigate } from "react-router"
 import { IconDoorExit } from "@tabler/icons-react"
 
 import { DirectionProvider } from "@/components/ui/direction"
@@ -19,12 +19,27 @@ import { followTheme } from "@/app/lib/theme"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
-function activeKey(path: string): NavKey {
-  if (path.startsWith("/learn")) return "learn"
-  if (path.startsWith("/ask")) return "ask"
-  if (path.startsWith("/mentor")) return "mentor"
-  if (path.startsWith("/me") || path.startsWith("/practice") || path.startsWith("/discover")) return "account"
-  return "home"
+/** The tab each screen belongs to. The team screens (mentor inbox, review
+ * desk, referrals, team, admin, organisation) open from «حسابي», so that tab
+ * stays lit there instead of falling back to Home. Paths are the router's
+ * (basename-relative), so this holds when the app lives under /app. */
+const TAB_OF: [string, NavKey][] = [
+  ["/learn", "learn"],
+  ["/ask", "ask"],
+  ["/mentor", "mentor"],
+  ["/me", "account"],
+  ["/practice", "account"],
+  ["/discover", "account"],
+  ["/inbox", "account"],
+  ["/review-desk", "account"],
+  ["/referrals", "account"],
+  ["/team", "account"],
+  ["/admin", "account"],
+  ["/org", "account"],
+]
+
+export function activeKey(path: string): NavKey {
+  return TAB_OF.find(([p]) => matchPath({ path: p, end: false }, path))?.[1] ?? "home"
 }
 
 /** Screens that take the whole viewport (no navigation). */
@@ -114,12 +129,6 @@ export default function AppLayout() {
   useGuideTracker(location.pathname) // PLT-08 R3
 
   if (!onboarded) {
-    // First visit at the bare address: the public landing page, whose call to
-    // action opens /welcome. Any deeper link (QR codes use /welcome) goes on.
-    if (location.pathname === "/" && !location.search) {
-      window.location.replace("/landing/")
-      return null
-    }
     // PLT-01 R2: a link may carry the language, and nothing else goes on,
     // except an organisation's code (ORG-01 R1/R2), which is asked about once.
     const q = new URLSearchParams(location.search)

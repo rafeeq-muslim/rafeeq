@@ -200,7 +200,8 @@ async def item_detail(item_type: str, item_id: str, session: Session, _: Desk) -
                 "lang": h.lang,
                 "decision": h.decision,
                 "note": h.note,
-                "reviewer": reviewers.get(h.reviewer_id) if h.reviewer_id else None,
+                # an approval recorded without a reviewer account (owner_approvals.py) names its approver
+                "reviewer": reviewers.get(h.reviewer_id) if h.reviewer_id else _owner_approvals.label_for(h.note),
                 "at": h.decided_at,
                 "hash": h.content_hash,
             }
@@ -312,3 +313,4 @@ async def decide(item_type: str, item_id: str, lang: str, body: Decision, sessio
 # KNW-02 R6: approved cards follow the desk (subscribes to ContentApproved).
 from app.knowledge import cards as _cards  # noqa: E402
 from app.knowledge import glossary as _glossary  # noqa: E402
+from app.knowledge import owner_approvals as _owner_approvals  # noqa: E402
