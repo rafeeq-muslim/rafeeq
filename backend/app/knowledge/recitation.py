@@ -11,9 +11,11 @@ Fetch: `uv run python -m app.knowledge.recitation --fetch`
 R2/R4 (decision 2026-10-06): six Quranpedia per-verse Hafs recitations
 (`content/discover/verse_reciters.json`), played verse by verse so the
 highlighted verse is exactly the file playing. Each reciter is a gated
-`recitation` item: learners get it only after the Sharia reviewer has listened
-to a sample of its surahs and approved it in the desk (one decision, in Arabic:
-the audio is the same in every language). Until one is approved, al-Muaiqly
+`recitation` item: learners get it only once it is approved in the desk (one
+decision, in Arabic: the audio is the same in every language), by the Sharia
+reviewer on a sample of its surahs or, for the six decided ones, by the product
+owner's blanket approval of 2026-10-06 recorded at start (owner_approvals.py);
+a later return by the reviewer withdraws it. Until one is approved, al-Muaiqly
 stays. Only the decided reciters, on Quranpedia's own host, in Hafs: anything
 else in the file (another riwaya, a reciter hosted on verse.mp3quran.net, whose
 terms are unclear) is never offered or reviewed.

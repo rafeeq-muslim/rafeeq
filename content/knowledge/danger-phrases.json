@@ -1,6 +1,8 @@
 {
-  "_about": "KNW-01 R5, plan 4.2: phrases that route a message to a human before any model is called. Matched after normalisation (lower case, no Arabic diacritics, folded alef/ya/ta marbuta). Over-matching is the accepted error (plan 2.6). DRAFT written by Claude on 2026-10-05; to be reviewed by the Sharia reviewer (مهند بن صالح الفوزان) and the Companion & Community owner before launch.",
-  "status": "draft",
+  "_about": "KNW-01 R5, plan 4.2: phrases that route a message to a human before any model is called. Matched after normalisation (lower case, no Arabic diacritics, folded alef/ya/ta marbuta). Over-matching is the accepted error (plan 2.6). Written by Claude on 2026-10-05; approved on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر), not reviewed by the Sharia reviewer (مهند بن صالح الفوزان) or the Companion & Community owner (`reviewed_by` stays empty); either can still correct it.",
+  "status": "approved",
+  "approved_by": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
+  "approved_on": "2026-10-06",
   "reviewed_by": [],
   "phrases": {
     "ar": [
