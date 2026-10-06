@@ -6,6 +6,24 @@ SECRETS=/home/naser/.config/rafeeq/secrets.env
 FONTS=/home/naser/.config/rafeeq/fonts/thmanyah
 COMPOSE="docker compose -p rafeeq -f infra/compose.prod.yml"
 
+# The database container gets only its own settings, not the whole secrets
+# file: db.env holds the POSTGRES_* lines, rewritten on every deploy (mode
+# 600) before any compose command reads it. Unchanged content does not
+# recreate the container.
+DB_ENV="$(dirname "$SECRETS")/db.env"
+write_db_env() {
+  local tmp
+  tmp="$(umask 077 && mktemp "$DB_ENV.XXXXXX")"
+  grep '^POSTGRES_' "$SECRETS" > "$tmp" || true
+  if ! grep -q '^POSTGRES_PASSWORD=.' "$tmp"; then
+    rm -f "$tmp"
+    echo "POSTGRES_PASSWORD is missing from the secrets file; nothing was changed" >&2
+    exit 1
+  fi
+  chmod 600 "$tmp" && mv -f "$tmp" "$DB_ENV"
+}
+write_db_env
+
 # Thmanyah may be bundled in our app but never committed (licence).
 if [ -d "$FONTS" ]; then mkdir -p frontend/public/fonts && cp -r "$FONTS" frontend/public/fonts/; fi
 export VITE_VAPID_PUBLIC_KEY="$(grep '^VAPID_PUBLIC_KEY=' "$SECRETS" | cut -d= -f2-)"
