@@ -55,6 +55,20 @@
       "image_url": null,
       "quran": null,
       "source_ref": "what invalidates tayammum"
+    },
+    {
+      "id": "u5-l3-c4",
+      "kind": "text",
+      "text": {
+        "ar": "وفي بعض مسائل هذا الدرس خلاف بين العلماء، وما ذُكر هنا قولٌ معتبر من أقوالهم، فتعلّم تفاصيلها مع مرشدك.",
+        "en": "Scholars differ on some points in this lesson; what is given here is one recognised view among theirs. Learn the details with your mentor.",
+        "tl": "May pagkakaiba ng pananaw ang mga iskolar sa ilang punto ng araling ito; ang nakasaad dito ay isa sa kanilang kinikilalang pananaw. Pag-aralan ang mga detalye kasama ang iyong mentor."
+      },
+      "image_url": null,
+      "quran": null,
+      "source_ref": "note",
+      "authored": true,
+      "why": "decision 2026-10-06: where a lesson states one view on a matter the madhhabs differ on, a short note says so (rules.md §1.4); points: one strike, face and hands only; AUTHORED"
     }
   ],
   "objectives": [

@@ -36,6 +36,32 @@ EDITS = [
 ]
 
 
+D4 = "decision 2026-10-06: where a lesson states one view on a matter the madhhabs differ on, a short note says so (rules.md §1.4)"
+
+MADHHAB_NOTE = {
+    "ar": "وفي بعض مسائل هذا الدرس خلاف بين العلماء، وما ذُكر هنا قولٌ معتبر من أقوالهم، فتعلّم تفاصيلها مع مرشدك.",
+    "en": "Scholars differ on some points in this lesson; what is given here is one recognised view among theirs. Learn the details with your mentor.",
+    "tl": "May pagkakaiba ng pananaw ang mga iskolar sa ilang punto ng araling ito; ang nakasaad dito ay isa sa kanilang kinikilalang pananaw. Pag-aralan ang mga detalye kasama ang iyong mentor.",
+}
+
+# Cards written for Rafeeq, not taken from any edition: (lesson, text, why). Marked
+# `authored` so validate.py checks them for safety but not against the source, and
+# does not require an exercise for them. AUTHORED: Filipino needs a native speaker.
+NOTES = [
+    ("u5-l1", MADHHAB_NOTE, D4 + "; points: the wiping period's start; AUTHORED"),
+    ("u5-l2", MADHHAB_NOTE, D4 + "; points: reciting the Quran in janabah; AUTHORED"),
+    ("u5-l3", MADHHAB_NOTE, D4 + "; points: one strike, face and hands only; AUTHORED"),
+]
+
+
+def add_notes(lessons_by_id: dict) -> None:
+    for lid, text, why in NOTES:
+        lesson = lessons_by_id[lid]
+        n = len(lesson["cards"]) + 1
+        lesson["cards"].append({"id": f"{lid}-c{n}", "kind": "text", "text": dict(text), "image_url": None,
+                                "quran": None, "source_ref": "note", "authored": True, "why": why})
+
+
 def apply(lessons_by_id: dict) -> None:
     for lid, cid, lang, find, repl, why in EDITS:
         lesson = lessons_by_id[lid]
@@ -45,6 +71,7 @@ def apply(lessons_by_id: dict) -> None:
             raise SystemExit(f"edit {cid}.{lang}: {find!r} found {text.count(find)} times")
         card["text"][lang] = text.replace(find, repl)
         lesson.setdefault("edited", []).append({"card": cid, "lang": lang, "from": find, "to": repl, "why": why})
+    add_notes(lessons_by_id)
 
 
 def undo(text: str, edits: list, cid: str, lang: str) -> str:
