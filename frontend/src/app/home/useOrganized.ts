@@ -30,6 +30,8 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { checkOrder, daySlots, eligible, FIXED_ORDER, LESSON_LAST_DAY_ONE, timeBucket, visibleOptional, type Eligibility, type OptionalId, type Order } from "./layout"
 import { useHome } from "./store"
+import { localDay } from "@/app/guide/suggest"
+import { useInstallCardEligible } from "@/app/install/useInstall" // PLT-16 R3, R4
 
 export const ORDER_URL = "/api/home/order"
 /** R4 ex3 spirit: a slow model never holds Home back for long. */
@@ -117,6 +119,7 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
   const used = useGuide((s) => s.used)
   const homeOpened = useHome((s) => s.opened)
   const ramadanKey = ramadan ? `ramadan-${ramadan.start.slice(0, 4)}` : null
+  const install = useInstallCardEligible(localDay(new Date())) // PLT-16: device memory only; not in orderBody (R6)
   const opened: Eligibility["opened"] = {
     ...homeOpened,
     ...(ramadanKey && used[ramadanKey] ? { ramadan: true as const } : {}),
@@ -134,6 +137,7 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
       recitersAvailable: Array.isArray(recitations.data?.reciters) ? recitations.data.reciters.length : 0,
       libraryPick: pick != null,
       opened,
+      install,
     },
     library: pick,
   }

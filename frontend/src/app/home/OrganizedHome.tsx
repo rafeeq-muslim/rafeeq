@@ -59,6 +59,7 @@ import { suraName } from "@/app/lesson/suras"
 import { adhkarLine, prayerLine, type MainId, type OptionalId } from "./layout"
 import { useHome } from "./store"
 import { useDayOrder, useEligibility, useOptional } from "./useOrganized"
+import { InstallCard } from "@/app/install/InstallCard" // PLT-16 R3
 
 const DAY = 86_400_000
 
@@ -107,9 +108,9 @@ export default function OrganizedHome() {
             {order.main.map((id) => (
               <MainComponent key={id} id={id} now={now} />
             ))}
-            {optional.map((id) => (
-              <OptionalCard key={id} id={id} library={library} />
-            ))}
+            {optional.map((id) =>
+              id === "install" ? <InstallCard key={id} /> : <OptionalCard key={id} id={id} library={library} />, // PLT-16 R3
+            )}
           </>
         ) : (
           <div className="flex flex-col gap-4" aria-busy="true">
@@ -305,14 +306,14 @@ function AskRow() {
 
 // --- R3, R6: the optional components ------------------------------------------------
 
-const OPTIONAL_COPY: Record<Exclude<OptionalId, "library">, { icon: TablerIcon; title: Key; body: Key; cta: Key; route: string }> = {
+const OPTIONAL_COPY: Record<Exclude<OptionalId, "library" | "install">, { icon: TablerIcon; title: Key; body: Key; cta: Key; route: string }> = {
   ramadan: { icon: IconMoon, title: "guide.suggest.ramadan.title", body: "guide.suggest.ramadan.body", cta: "guide.suggest.ramadan.cta", route: "/practice" },
   human: { icon: IconHeadset, title: "guide.suggest.human.title", body: "guide.suggest.human.body", cta: "guide.suggest.human.cta", route: "/mentor" },
   save: { icon: IconUserCircle, title: "me.save", body: "me.saveBody", cta: "home.saveCta", route: "/me/account" },
   reciter: { icon: IconMicrophone2, title: "home.org.reciter.title", body: "home.org.reciter.body", cta: "home.org.reciter.cta", route: "/discover/quran" },
 }
 
-export function OptionalCard({ id, library }: { id: OptionalId; library: LibraryItemData | null }) {
+export function OptionalCard({ id, library }: { id: Exclude<OptionalId, "install">; library: LibraryItemData | null }) {
   const { t } = useT()
   const navigate = useNavigate()
   const hide = useHome((s) => s.hide)

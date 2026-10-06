@@ -17,7 +17,7 @@ import type { PrayerKey, DayTimes } from "@/app/practice/times"
 export const MAIN = ["daily", "card", "ask"] as const
 export type MainId = (typeof MAIN)[number]
 /** R3 table order = the fixed order of the optional list. */
-export const OPTIONAL = ["ramadan", "human", "save", "reciter", "library"] as const
+export const OPTIONAL = ["ramadan", "human", "save", "reciter", "library", "install"] as const // PLT-16: "install" is last
 export type OptionalId = (typeof OPTIONAL)[number]
 export const MAX_OPTIONAL = 2
 
@@ -78,6 +78,8 @@ export type Eligibility = {
   libraryPick: boolean
   /** PLT-08 R3: features the learner already opened, so not offered again. */
   opened: Partial<Record<OptionalId, true>>
+  /** PLT-16 R3, R4: «ثبّت رفيق» may show today (decided by lib/install from this device's memory). */
+  install?: boolean
 }
 
 export function eligible(id: OptionalId, c: Eligibility): boolean {
@@ -94,6 +96,8 @@ export function eligible(id: OptionalId, c: Eligibility): boolean {
       return c.openedListening && !c.reciterChosen && c.recitersAvailable > 1 // a choice exists (the picker shows from two)
     case "library":
       return Boolean(c.completed[LESSON_LAST_DAY_ONE]) && c.libraryPick
+    case "install": // PLT-16
+      return c.install === true
   }
 }
 
