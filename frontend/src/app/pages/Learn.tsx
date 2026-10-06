@@ -21,7 +21,7 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { lessonStatus, unitPassed, unitProgress, visibleUnits } from "@/app/learning/path"
+import { lessonStatus, unitLessonIds, unitPassed, unitProgress, visibleUnits } from "@/app/learning/path"
 import { streakView } from "@/app/motivation/streak"
 
 const ZIGZAG = [0, 1, 2, 1, 0, -1, -2, -1] as const
@@ -102,9 +102,21 @@ export default function Learn() {
                   description={unit.source_credit}
                   className="mt-4 scroll-mt-20 first:mt-0"
                 />
-                {unit.lessons.map((id, i) => {
+                {unitLessonIds(unit).map((id, i) => {
                   const lesson = content!.lessons[id]
-                  if (!lesson) return null
+                  // LRN-01 R6 / LRN-02 R3: a lesson not live in this language shows as in preparation,
+                  // never as a machine translation, and it keeps the unit from counting as complete.
+                  if (!lesson)
+                    return (
+                      <PathNode
+                        key={id}
+                        state="locked"
+                        label={t("path.inReview")}
+                        icon={IconBook2}
+                        offset={ZIGZAG[i % ZIGZAG.length]}
+                        stateLabels={{ done: t("path.done"), current: t("path.current"), open: t("path.open"), locked: t("path.locked") }}
+                      />
+                    )
                   const status = lessonStatus(lesson, lessons, progress)
                   const node = (
                     <PathNode

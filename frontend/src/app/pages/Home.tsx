@@ -17,7 +17,7 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { nextLesson, unitDone } from "@/app/learning/path"
+import { nextLesson, unitDone, unitLessonIds } from "@/app/learning/path"
 import { progressOf } from "@/app/learning/session"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { streakView } from "@/app/motivation/streak"
@@ -79,7 +79,7 @@ export default function Home() {
           <LessonCard
             icon={IconBook2}
             title={next.title}
-            meta={t("home.lessonMeta", { i: num(unit.lessons.indexOf(next.id) + 1), n: num(unit.lessons.length) })}
+            meta={t("home.lessonMeta", { i: num(unitLessonIds(unit).indexOf(next.id) + 1), n: num(unitLessonIds(unit).length) })}
             progress={session ? progressOf(next, session) : 0}
             actionLabel={t(session ? "home.continue" : "home.start")}
             onContinue={() => navigate(`/learn/lesson/${next.id}`)}

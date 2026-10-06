@@ -53,7 +53,10 @@ export type Unit = {
   title: string
   badge_name: string
   source_credit: string
+  /** Live lessons in the learner's language, in order. */
   lessons: string[]
+  /** Every lesson of the unit in order, live or not (LRN-01 R6, LRN-02 R3). */
+  outline?: string[]
   approved: boolean
 }
 
