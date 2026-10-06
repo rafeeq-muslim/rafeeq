@@ -1,27 +1,49 @@
 /**
  * PLT-01 first run: language → a three-line introduction → optional
- * placement test (LRN-05 R1). No account is asked for here (PLT-02 R1).
+ * placement test (LRN-05 R1). R1: the first screen asks only for the
+ * language, each written in its own script, the device's language marked
+ * as suggested. R2: a link may carry the language (`/welcome?lang=tl`) and
+ * then starts in it; nothing else in the link is read or kept. R3: three
+ * promises and one button. R4: nothing personal is asked (PLT-02 R1). The
+ * privacy policy is one tap away before anything is entered (PLT-05 R1).
  */
 import * as React from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useSearchParams } from "react-router"
 import { IconArrowLeft, IconBook2, IconHeadset, IconLock } from "@tabler/icons-react"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DirectionProvider } from "@/components/ui/direction"
 import { Halo, PetalPattern, RafeeqSymbol, YearFlower } from "@/components/rafeeq"
-import { LOCALES, dirOf, useT, type Locale } from "@/app/i18n"
-import { useDevice } from "@/app/stores/device"
+import { LOCALES, dirOf, translate, useT, type Locale } from "@/app/i18n"
+import { guessLocale, useDevice } from "@/app/stores/device"
 import { useDocumentLocale } from "@/app/AppLayout"
+import { PrivacyLink } from "@/app/pages/Privacy"
 
 type Step = "lang" | "intro" | "placement"
+
+/** R2: only a known language code is taken from a link. */
+export function linkLocale(search: URLSearchParams): Locale | null {
+  const l = search.get("lang")
+  return LOCALES.some((x) => x.code === l) ? (l as Locale) : null
+}
 
 export default function Welcome() {
   useDocumentLocale()
   const { t, dir } = useT()
   const set = useDevice((s) => s.set)
   const locale = useDevice((s) => s.locale)
-  const [step, setStep] = React.useState<Step>("lang")
+  const [search] = useSearchParams()
+  const fromLink = React.useMemo(() => linkLocale(search), [search])
+  const [step, setStep] = React.useState<Step>(fromLink ? "intro" : "lang")
+  const suggested = React.useMemo(() => guessLocale(), [])
   const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if (!fromLink) return
+    set({ locale: fromLink })
+    navigate("/welcome", { replace: true }) // the link's query is not kept anywhere
+  }, [fromLink, set, navigate])
 
   const finish = (placement: boolean) => {
     set({ onboarded: true, placementOffered: true })
@@ -62,12 +84,20 @@ export default function Welcome() {
                         (locale === l.code ? "border-celebrate bg-white text-ink" : "border-white/20 bg-white/8 text-white")
                       }
                     >
-                      {l.label}
+                      <span className="flex items-center gap-3">
+                        {l.label}
+                        {suggested === l.code && (
+                          <Badge variant="secondary" data-slot="suggested">
+                            {translate(l.code, "onb.lang.suggested")}
+                          </Badge>
+                        )}
+                      </span>
                       <IconArrowLeft className="size-5 ltr:rotate-180" aria-hidden="true" />
                     </button>
                   </li>
                 ))}
               </ul>
+              <PrivacyLink label="privacy.policyLink" className="mt-auto self-center text-white/70" />
             </section>
           )}
 

@@ -1,27 +1,34 @@
 /**
  * Me: who I am here (guest or account, display name only), my badges, my
- * language, the gentle reminder (MOT-05), privacy (PLT-05, MOT-07 R4 opt
- * out), daily tools, team areas by role, and leaving (sign out, delete the
- * account, or erase this device).
+ * language, notifications (PLT-06: three types, each with its own switch;
+ * MOT-05, CMP-01, PRC-05; the Rafeeq tone, PLT-07), privacy (PLT-05: the
+ * policy, quick exit, discreet mode, a copy of my data, erase this device;
+ * MOT-07 R4 opt out), daily tools, team areas by role, and leaving (sign
+ * out, delete the account with a confirmation).
  */
 import * as React from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import {
   IconArrowLeft,
+  IconBellOff,
   IconBook,
   IconChecklist,
   IconCompass,
+  IconDeviceMobile,
+  IconDownload,
   IconFlame,
   IconFlower,
   IconHelpCircle,
   IconInbox,
   IconSettings,
   IconShieldCheck,
+  IconShieldLock,
   IconUsersGroup,
   type TablerIcon,
 } from "@tabler/icons-react"
 import { toast } from "sonner"
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -40,7 +47,10 @@ import {
 import { LanguageSwitcher, MilestoneBadge, TopBar, YearFlower } from "@/components/rafeeq"
 import { num, useT, type Key, type Locale } from "@/app/i18n"
 import { api, sendEvent } from "@/app/lib/api"
-import { pushSupported, setReminder } from "@/app/lib/push"
+import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
+import { downloadMyData, wipeDevice } from "@/app/lib/privacy"
+import { usableTone } from "@/app/lib/tone"
+import { usePractice } from "@/app/practice/store"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
@@ -50,6 +60,10 @@ import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 export default function Me() {
   const { t } = useT()
   const navigate = useNavigate()
+  const { hash } = useLocation()
+  React.useEffect(() => {
+    if (hash === "#privacy") document.getElementById("privacy")?.scrollIntoView?.()
+  }, [hash])
   const me = useAuth((s) => s.me)
   const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
@@ -85,11 +99,12 @@ export default function Me() {
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
 
-        <Section title={t("me.reminder")}>
-          <ReminderSettings />
+        <Section title={t("me.notifications")}>
+          <NotificationSettings />
         </Section>
 
-        <Section title={t("me.privacy")}>
+        <Section title={t("me.privacy")} id="privacy">
+          <LinkRow icon={IconShieldLock} title={t("privacy.policyLink")} hint={t("privacy.policyHint")} onClick={() => navigate("/privacy")} />
           <PrivacySettings />
           {me && <ShareProgressToggle />}
         </Section>
@@ -120,10 +135,10 @@ export default function Me() {
   )
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children, id: anchor }: { title: string; children: React.ReactNode; id?: string }) {
   const id = React.useId()
   return (
-    <section aria-labelledby={id} className="flex flex-col gap-3">
+    <section id={anchor} aria-labelledby={id} className="flex scroll-mt-16 flex-col gap-3">
       <h2 id={id} className="text-label font-bold text-muted-foreground">
         {title}
       </h2>
@@ -235,26 +250,65 @@ function LanguagePicker() {
   )
 }
 
-function ReminderSettings() {
-  const { t } = useT()
-  const on = useDevice((s) => s.reminderOn)
-  const time = useDevice((s) => s.reminderTime)
-  const set = useDevice((s) => s.set)
-  const [busy, setBusy] = React.useState(false)
-  const supported = pushSupported()
-  const denied = supported && typeof Notification !== "undefined" && Notification.permission === "denied"
+/** A setting row: label and hint at the start, switch at the end. */
+function SwitchRow({
+  id,
+  label,
+  hint,
+  checked,
+  disabled,
+  onChange,
+  children,
+}: {
+  id: string
+  label: string
+  hint?: string
+  checked: boolean
+  disabled?: boolean
+  onChange: (v: boolean) => void
+  children?: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-3 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <Label htmlFor={id} className="text-body font-bold">
+            {label}
+          </Label>
+          {hint && <p className="text-label text-muted-foreground">{hint}</p>}
+        </div>
+        <Switch id={id} checked={checked} disabled={disabled} onCheckedChange={onChange} className="mt-1" />
+      </div>
+      {children}
+    </div>
+  )
+}
 
-  const apply = async (enabled: boolean, at = time) => {
+/**
+ * PLT-06: the three notification types in one place, each with its own
+ * switch, all off until turned on (R1, R2). The browser's permission is
+ * asked only by turning a push type on (R1) and never again once refused
+ * (R5); an iPhone outside the Home Screen is told how to add Rafeeq and no
+ * push switch shows on (R4). What reaches the lock screen is neutral (R3).
+ */
+function NotificationSettings() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  const d = useDevice()
+  const prayer = usePractice((s) => s.reminders)
+  const setPractice = usePractice((s) => s.set)
+  const [busy, setBusy] = React.useState(false)
+  const state = pushState()
+  const pushOk = state === "ok"
+
+  React.useEffect(() => {
+    void syncPushSwitches().catch(() => undefined)
+  }, [])
+
+  const run = async (fn: () => Promise<void>) => {
     setBusy(true)
     try {
-      const r = await setReminder(enabled, at)
-      if (r === null) {
-        set({ reminderOn: false })
-        toast(t(enabled ? "reminder.denied" : "reminder.off"))
-        return
-      }
-      set({ reminderOn: r.enabled, reminderTime: r.time ?? at })
-      toast(r.enabled ? t("reminder.saved", { time: at }) : t("reminder.off"))
+      await fn()
     } catch {
       toast.error(t("common.error"))
     } finally {
@@ -262,32 +316,101 @@ function ReminderSettings() {
     }
   }
 
-  if (!supported) return <p className="text-label text-muted-foreground">{t("reminder.unsupported")}</p>
+  const learning = (enabled: boolean, at = d.reminderTime) =>
+    run(async () => {
+      const r = await setReminder(enabled, at)
+      if (r === null) {
+        d.set({ reminderOn: false })
+        if (enabled) toast(t(pushState() === "denied" ? "notif.deniedTitle" : "reminder.unsupported"))
+        return
+      }
+      d.set({ reminderOn: r.enabled, reminderTime: r.time ?? at })
+      toast(r.enabled ? t("reminder.saved", { time: at }) : t("reminder.off"))
+    })
+
+  const replies = (enabled: boolean) =>
+    run(async () => {
+      const r = await setReplies(enabled)
+      if (r === null) {
+        d.set({ repliesOn: false })
+        if (enabled) toast(t(pushState() === "denied" ? "notif.deniedTitle" : "reminder.unsupported"))
+        return
+      }
+      toast(t(r.enabled ? "notif.repliesOn" : "notif.repliesOff"))
+    })
+
   return (
-    <div className="flex flex-col gap-3 rounded-card border-2 bg-card p-4">
-      <div className="flex items-center justify-between gap-3">
-        <Label htmlFor="rem" className="text-body font-bold">
-          {t("reminder.toggle")}
-        </Label>
-        <Switch id="rem" checked={on} disabled={busy} onCheckedChange={(v) => apply(v)} />
-      </div>
-      {on && (
-        <div className="flex items-center justify-between gap-3">
-          <Label htmlFor="rem-time" className="text-label text-muted-foreground">
-            {t("reminder.time")}
-          </Label>
-          <Input
-            id="rem-time"
-            type="time"
-            dir="ltr"
-            className="w-32"
-            value={time}
-            onChange={(e) => set({ reminderTime: e.target.value })}
-            onBlur={(e) => e.target.value && apply(true, e.target.value)}
-          />
-        </div>
+    <div className="flex flex-col gap-3">
+      {state === "ios-home-screen" && (
+        <Alert variant="info" data-slot="ios-note">
+          <IconDeviceMobile stroke={1.75} />
+          <AlertTitle>{t("notif.iosTitle")}</AlertTitle>
+          <AlertDescription>{t("notif.iosBody")}</AlertDescription>
+        </Alert>
       )}
-      <p className="text-label text-muted-foreground">{denied ? t("reminder.denied") : t("reminder.hint")}</p>
+      {state === "denied" && (
+        <Alert variant="warning" data-slot="denied-note">
+          <IconBellOff stroke={1.75} />
+          <AlertTitle>{t("notif.deniedTitle")}</AlertTitle>
+          <AlertDescription>{t("notif.deniedBody")}</AlertDescription>
+        </Alert>
+      )}
+      {state === "unsupported" && <p className="text-label text-muted-foreground">{t("reminder.unsupported")}</p>}
+
+      <div className="flex flex-col divide-y rounded-card border-2 bg-card">
+        <SwitchRow
+          id="notif-learning"
+          label={t("reminder.toggle")}
+          hint={t("reminder.hint")}
+          checked={pushOk && d.reminderOn}
+          disabled={!pushOk || busy}
+          onChange={(v) => void learning(v)}
+        >
+          {pushOk && d.reminderOn && (
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor="rem-time" className="text-label text-muted-foreground">
+                {t("reminder.time")}
+              </Label>
+              <Input
+                id="rem-time"
+                type="time"
+                dir="ltr"
+                className="w-32"
+                value={d.reminderTime}
+                onChange={(e) => d.set({ reminderTime: e.target.value })}
+                onBlur={(e) => e.target.value && void learning(true, e.target.value)}
+              />
+            </div>
+          )}
+        </SwitchRow>
+        <SwitchRow
+          id="notif-replies"
+          label={t("notif.replies")}
+          hint={t("notif.repliesHint")}
+          checked={pushOk && d.repliesOn}
+          disabled={!pushOk || busy}
+          onChange={(v) => void replies(v)}
+        />
+        <SwitchRow
+          id="notif-prayer"
+          label={t("practice.reminders")}
+          hint={t("notif.prayerHint")}
+          checked={prayer.enabled}
+          onChange={(v) => setPractice({ reminders: { ...prayer, enabled: v } })}
+        >
+          <Button
+            variant="link"
+            className="h-auto w-fit px-0"
+            onClick={() => navigate(d.city ? "/practice/reminders" : "/practice/city")}
+          >
+            {t(d.city ? "notif.prayerSettings" : "practice.chooseCity")}
+          </Button>
+        </SwitchRow>
+        {usableTone() && (
+          <SwitchRow id="notif-tone" label={t("notif.tone")} hint={t("notif.toneHint")} checked={d.toneOn} onChange={(v) => d.set({ toneOn: v })} />
+        )}
+      </div>
+      <p className="text-label text-muted-foreground">{t("notif.neutral")}</p>
     </div>
   )
 }
@@ -312,19 +435,45 @@ function PrivacySettings() {
   return (
     <div className="flex flex-col divide-y rounded-card border-2 bg-card">
       {rows.map((r) => (
-        <div key={r.id} className="flex items-start justify-between gap-3 p-4">
-          <div className="min-w-0">
-            <Label htmlFor={`p-${r.id}`} className="text-body font-bold">
-              {t(r.key)}
-            </Label>
-            <p className="text-label text-muted-foreground">{t(r.hint)}</p>
-          </div>
-          <Switch id={`p-${r.id}`} checked={r.value} onCheckedChange={r.change} className="mt-1" />
-        </div>
+        <SwitchRow key={r.id} id={`p-${r.id}`} label={t(r.key)} hint={t(r.hint)} checked={r.value} onChange={r.change}>
+          {/* PLT-05 R2 ex3: honest that the browser history may keep Rafeeq. */}
+          {r.id === "exit" && <p className="text-label text-muted-foreground" data-slot="history-note">{t("privacy.historyNote")}</p>}
+        </SwitchRow>
       ))}
-      <div className="p-4">
+      <div className="flex flex-col items-start gap-1 p-4">
+        <DownloadMyData />
         <WipeDevice />
       </div>
+    </div>
+  )
+}
+
+/** PLT-05 R6: one file, free, whenever the person likes. */
+function DownloadMyData() {
+  const { t } = useT()
+  const [busy, setBusy] = React.useState(false)
+  return (
+    <div className="flex flex-col gap-1">
+      <Button
+        variant="ghost"
+        className="w-fit px-0"
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true)
+          try {
+            await downloadMyData()
+            toast(t("privacy.downloaded"))
+          } catch {
+            toast.error(t("common.error"))
+          } finally {
+            setBusy(false)
+          }
+        }}
+      >
+        <IconDownload data-icon="inline-start" stroke={1.75} />
+        {t("privacy.download")}
+      </Button>
+      <p className="text-label text-muted-foreground">{t("privacy.downloadHint")}</p>
     </div>
   )
 }
@@ -347,14 +496,7 @@ function WipeDevice() {
           <AlertDialogCancel>{t("acct.deleteNo")}</AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive text-white"
-            onClick={async () => {
-              await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
-              for (const k of Object.keys(localStorage)) if (k.startsWith("rafeeq.")) localStorage.removeItem(k)
-              const regs = await navigator.serviceWorker?.getRegistrations?.()
-              for (const r of regs ?? []) (await r.pushManager?.getSubscription())?.unsubscribe()
-              if ("caches" in window) for (const k of await caches.keys()) await caches.delete(k)
-              window.location.replace("/welcome")
-            }}
+            onClick={() => void wipeDevice()}
           >
             {t("me.wipeYes")}
           </AlertDialogAction>

@@ -72,6 +72,39 @@ async def test_plt02_2fa_reports_missing_email_provider(client):
     assert r.status_code == 503 and r.json()["detail"] == "email_unavailable"
 
 
+async def test_plt02_r1_guest_is_invited_not_forced_for_a_mentor_or_group(client):
+    # Choosing a mentor or joining a group needs an account (the app then
+    # offers to create one); asking for a human does not.
+    assert (await client.post("/api/mentors/choose", json={"mentor_id": "00000000-0000-0000-0000-000000000000"})).status_code == 401
+    assert (await client.post("/api/groups/join", json={"code": "ABCDEF"})).status_code == 401
+    r = await client.post("/api/help/requests", json={"lang": "en", "body": "Can someone talk to me?", "gender": "f"})
+    assert r.status_code == 201
+
+
+async def test_plt02_r1_three_guest_lessons_move_into_the_account_and_reach_another_device(client):
+    out = await register(client)
+    phone = {"completed": {f"u1-l{i}": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-01T08:00:00Z", "times": 1} for i in (1, 2, 3)}}
+    assert (await client.put("/api/me/learning", json=phone, headers=auth(out["access_token"]))).status_code == 200
+    other_device = (await client.post("/api/auth/login", json={"username": "layla-1", "password": "pass-1234-word"})).json()
+    got = (await client.get("/api/me/learning", headers=auth(other_device["access_token"]))).json()
+    assert set(got["completed"]) == {"u1-l1", "u1-l2", "u1-l3"}
+
+
+async def test_plt02_r2_gender_is_not_taken_at_sign_up_but_when_matching(client):
+    out = await register(client)
+    assert out["user"]["gender"] is None
+    h = auth(out["access_token"])
+    r = await client.put("/api/mentors/me/match", json={"gender": "f", "languages": ["en"]}, headers=h)
+    assert r.status_code == 200
+    assert (await client.get("/api/me", headers=h)).json()["gender"] == "f"
+
+
+async def test_plt02_r6_email_service_not_ready_is_reported(client):
+    out = await register(client)
+    r = await client.get("/api/me/2fa/available", headers=auth(out["access_token"]))
+    assert r.json() == {"available": False}
+
+
 async def test_plt02_delete_account_removes_it(client):
     out = await register(client)
     assert (await client.delete("/api/me", headers=auth(out["access_token"]))).status_code == 204

@@ -38,6 +38,7 @@ import { useSendError } from "./Chat"
 import { ago } from "./format"
 import { Helplines } from "./Helplines"
 import { ScreenBar, SectionTitle } from "./Screen"
+import { PrivacyLink } from "@/app/pages/Privacy"
 import { useCompanion } from "./store"
 
 /** R1 ex2: the assistant question of this ask id, if it is still on this device (never fetched). */
@@ -239,6 +240,7 @@ export default function HelpScreen() {
             <p className="text-label text-muted-foreground">{t("cmp.help.noSmallQuestion")}</p>
           </div>
         </section>
+        <PrivacyLink />{/* PLT-05 R1 ex2: before anything is written */}
 
         <FieldGroup>
           <FieldSet>

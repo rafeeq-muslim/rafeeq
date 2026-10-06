@@ -33,7 +33,9 @@ export function translate(locale: Locale, key: Key, vars?: Record<string, string
   // Numbers arrive formatted ("1,200"); the plural form needs the value.
   const n = vars?.n !== undefined ? Number(String(vars.n).replace(/,/g, "")) : NaN
   const form = Number.isFinite(n) ? pluralForm(locale, key, n) : undefined
-  return fill(form ?? dicts[locale][key] ?? dicts.en[key] ?? String(key), vars)
+  // PLT-03 R6: a string missing (or left empty) in Tagalog shows in English,
+  // then Arabic (the source of every key); never the key itself.
+  return fill(form ?? (dicts[locale]?.[key] || dicts.en[key] || dicts.ar[key] || ""), vars)
 }
 
 export function useT() {

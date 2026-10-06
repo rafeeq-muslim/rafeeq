@@ -22,7 +22,7 @@ from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
-from sqlalchemy import func, select, update
+from sqlalchemy import delete, func, select, update
 
 from app.companion import notify
 from app.companion.common import (
@@ -370,6 +370,21 @@ async def claim(session: Session, user: CurrentUser, owner: CurrentOwner) -> dic
     )
     await session.commit()
     return {"moved": res.rowcount}  # type: ignore[attr-defined]
+
+
+@router.delete("/guest", status_code=204)
+async def erase_guest(session: Session, owner: CurrentOwner) -> None:
+    """PLT-05 R4: «امسح بيانات هذا الجهاز». A guest device's conversations
+    with a human (and their messages) and its blocks are deleted from the
+    server too, so nothing the device sent stays behind it. Reports it filed
+    stay for the team without the device's token. Accounts delete theirs with
+    the account (PLT-05 R5)."""
+    if owner.token_hash is None:
+        return
+    await session.execute(delete(HelpRequest).where(HelpRequest.guest_token_hash == owner.token_hash))
+    await session.execute(delete(Block).where(Block.blocker_guest_hash == owner.token_hash))
+    await session.execute(update(Report).where(Report.reporter_guest_hash == owner.token_hash).values(reporter_guest_hash=None))
+    await session.commit()
 
 
 @router.post("/requests/{request_id}/block", status_code=204)

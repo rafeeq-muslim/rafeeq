@@ -12,6 +12,7 @@ import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
+const Privacy = lazy(() => import("@/app/pages/Privacy"))
 const Home = lazy(() => import("@/app/pages/Home"))
 const Learn = lazy(() => import("@/app/pages/Learn"))
 const Lesson = lazy(() => import("@/app/pages/Lesson"))
@@ -33,6 +34,7 @@ const Gallery = lazy(() => import("./App"))
 
 const router = createBrowserRouter([
   { path: "/welcome", element: <Welcome /> },
+  { path: "/privacy", element: <Privacy /> }, // PLT-05 R1: readable before onboarding and without an account
   { path: "/design", element: <Gallery /> },
   {
     path: "/",

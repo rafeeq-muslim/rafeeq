@@ -43,6 +43,15 @@ async def test_knw03_r1_merged_term_served_with_definition_and_source(client, te
     }
 
 
+async def test_plt03_r5_term_is_shown_with_its_approved_translation_not_a_machine_one(client, monkeypatch):
+    data = glossary.validate(
+        [{"concept": "التوحيد", "langs": {"en": {"term": "Tawhid", "definition": "Worshipping Allah alone", "source_ids": []}}}]
+    )
+    monkeypatch.setattr(glossary, "load", lambda: data)
+    (t,) = (await client.get("/api/glossary?lang=en")).json()["terms"]
+    assert t["term"] == "Tawhid" and t["definition"] == "Worshipping Allah alone"
+
+
 def test_knw03_r1_second_term_for_language_is_rejected():
     with pytest.raises(glossary.DuplicateTerm):
         glossary.validate(
