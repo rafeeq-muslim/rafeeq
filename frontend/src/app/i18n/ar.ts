@@ -1491,4 +1491,18 @@ export const ar = {
   "ask.lesson.back": "ارجع إلى الدرس", // LRN-03 R5 (lrn-03-r5-return-to-lesson-build): the feature document's wording
   "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
   "ask.review.back": "عُد إلى المراجعة",
+  // --- PLT-17 R8–R10 (plt-17-review-desk): review-desk type names, queue filter, load errors ---
+  "desk.type.library_item": "مادة من المكتبة",
+  "desk.type.dhikr": "ذكر",
+  "desk.type.daily_card": "بطاقة اليوم",
+  "desk.type.practice_line": "عبارة في الممارسة اليومية",
+  "desk.type.glossary_term": "مصطلح في المعجم الموحّد",
+  "desk.filter.type": "نوع المحتوى",
+  "desk.filter.all": "الكل",
+  "desk.filter.search": "ابحث في العنوان أو المعرّف",
+  "desk.filter.none": "لا شيء يطابق ما اخترت.",
+  "desk.filter.clear": "اعرض الكل",
+  "desk.loadFailed": "تعذّر تحميل الطابور.",
+  "desk.retry": "أعد المحاولة",
+  "cmp.referral.loadFailed": "تعذّر تحميل الأسئلة المحالة.",
 } as const

@@ -16,6 +16,7 @@ import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
@@ -31,6 +32,17 @@ import { ExplanationSamples } from "./ExplanationSamples"
 import { ChallengeTexts, useIsShariaReviewer, usePendingTexts } from "./ChallengeTexts" // MOT-06 R3
 
 import { GlossaryFlags, HadithCitations, type GlossaryFlag, type HadithRecord } from "./DeskCitations"
+
+/** PLT-17 R8: every type the backend registers with review.register(), each with a `desk.type.*` label. */
+export const REVIEW_TYPES = ["lesson", "unit", "recitation", "library_item", "dhikr", "daily_card", "practice_line", "glossary_term"] as const
+
+/** PLT-17 R9: rows of one language and status, narrowed by type ("all" for every type) and by text in the title or id. */
+export function filterQueue<R extends { item_type: string; item_id: string; title: Record<string, string> }>(rows: R[], type: string, query: string, lang: string): R[] {
+  const q = query.trim().toLowerCase()
+  return rows.filter(
+    (r) => (type === "all" || r.item_type === type) && (!q || r.item_id.toLowerCase().includes(q) || (r.title[lang] || r.title.ar || "").toLowerCase().includes(q)),
+  )
+}
 
 type Status = "in_review" | "returned" | "approved"
 type Row = { item_type: string; item_id: string; group: string; title: Record<string, string>; langs: Record<string, { status: Status; live: boolean; note: string | null }> }
@@ -87,8 +99,17 @@ function QueueView() {
   const shariaReviewer = useIsShariaReviewer() // MOT-06 R3: mentors' challenge texts, the role itself only
   const texts = usePendingTexts(shariaReviewer)
 
-  const rows = (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === status)
-  const count = (s: Status) => (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === s).length
+  const [type, setType] = React.useState<string>("all")
+  const [query, setQuery] = React.useState("")
+
+  const inLang = (q.data?.items ?? []).filter((r) => r.langs[lang])
+  const filtered = filterQueue(inLang, type, query, lang)
+  const rows = filtered.filter((r) => r.langs[lang]?.status === status)
+  const count = (s: Status) => filtered.filter((r) => r.langs[lang]?.status === s).length
+  const typesHere = [...new Set(inLang.map((r) => r.item_type))].sort(
+    (a, b) => (REVIEW_TYPES.indexOf(a as never) + 1 || 99) - (REVIEW_TYPES.indexOf(b as never) + 1 || 99),
+  )
+  const filtering = type !== "all" || query.trim() !== ""
 
   return (
     <>
@@ -139,8 +160,54 @@ function QueueView() {
           </Button>
         )}
 
+        {typesHere.length > 1 && (
+          <ToggleGroup
+            type="single"
+            variant="outline"
+            size="sm"
+            value={type}
+            onValueChange={(v) => setType(v || "all")}
+            aria-label={t("desk.filter.type")}
+            className="flex-wrap justify-start gap-2"
+          >
+            <ToggleGroupItem value="all">{t("desk.filter.all")}</ToggleGroupItem>
+            {typesHere.map((ty) => (
+              <ToggleGroupItem key={ty} value={ty}>
+                {t(`desk.type.${ty}` as Key)}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        )}
+        {inLang.length > 0 && (
+          <Input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t("desk.filter.search")} aria-label={t("desk.filter.search")} />
+        )}
+
         {q.isLoading && <Skeleton className="h-64 rounded-card" />}
-        {q.data && rows.length === 0 && <p className="py-8 text-center text-body text-muted-foreground">{t("desk.empty")}</p>}
+        {q.isError && (
+          <div role="alert" className="flex flex-col items-center gap-3 py-8 text-center">
+            <p className="text-body text-muted-foreground">{t("desk.loadFailed")}</p>
+            <Button variant="outline" onClick={() => void q.refetch()}>
+              {t("desk.retry")}
+            </Button>
+          </div>
+        )}
+        {q.data && rows.length === 0 &&
+          (filtering ? (
+            <div className="flex flex-col items-center gap-3 py-8 text-center">
+              <p className="text-body text-muted-foreground">{t("desk.filter.none")}</p>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setType("all")
+                  setQuery("")
+                }}
+              >
+                {t("desk.filter.clear")}
+              </Button>
+            </div>
+          ) : (
+            <p className="py-8 text-center text-body text-muted-foreground">{t("desk.empty")}</p>
+          ))}
 
         <ul className="flex flex-col gap-2">
           {rows.map((r) => (

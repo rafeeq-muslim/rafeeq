@@ -1492,4 +1492,18 @@ export const en: Dict = {
   "ask.lesson.back": "Back to the lesson",
   "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
   "ask.review.back": "Back to the review",
+  // --- PLT-17 R8–R10 (plt-17-review-desk): review-desk type names, queue filter, load errors ---
+  "desk.type.library_item": "Library item",
+  "desk.type.dhikr": "Dhikr",
+  "desk.type.daily_card": "Daily card",
+  "desk.type.practice_line": "Daily practice line",
+  "desk.type.glossary_term": "Glossary term",
+  "desk.filter.type": "Content type",
+  "desk.filter.all": "All",
+  "desk.filter.search": "Search the title or id",
+  "desk.filter.none": "Nothing matches your choice.",
+  "desk.filter.clear": "Show all",
+  "desk.loadFailed": "The queue couldn't be loaded.",
+  "desk.retry": "Try again",
+  "cmp.referral.loadFailed": "The referred questions couldn't be loaded.",
 }
