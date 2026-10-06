@@ -198,7 +198,7 @@ export const en: Dict = {
   "privacy.quickExit": "Quick-exit button",
   "privacy.quickExitHint": "A button at the top of every screen, or press Shift three times on a computer, and Rafeeq switches at once to a neutral weather page.",
   "privacy.discreet": "Discreet mode",
-  "privacy.discreetHint": "The page title becomes «Notes», and every reminder shows without Rafeeq's name or any religious word, even if you chose to show the prayer's name. The installed app's name and icon are already neutral.",
+  "privacy.discreetHint": "The page title becomes «Notes», every reminder shows without any religious word even if you chose to show the prayer's name, and notifications use a plain note icon. The installed app's name and icon don't change; they have no religious word or symbol.",
   "privacy.wipe": "Erase this device's data",
 
   "reminder.toggle": "Remind me about a short lesson",
@@ -909,13 +909,15 @@ export const en: Dict = {
   "privacy.policyLink": "Privacy policy",
   "privacy.policyHint": "What we keep, why, when it is deleted, and your rights",
   "privacy.beforeYouWrite": "Before you write: read what we keep and why in the privacy policy.",
+  "privacy.beforeYouChoose": "Before you choose: read what we keep and why in the privacy policy.", // PLT-05 R1: mentor matching asks gender
+  "lesson.glossary.approved": "Rafeeq's approved term", // PLT-03 R5: glossary term in a lesson
   "privacy.historyNote": "No web page can erase your browser history, so Rafeeq may stay in it. To remove it, open your browser history and delete Rafeeq, or use a private window.",
   "privacy.download": "Download a copy of my data",
   "privacy.downloadHint": "One file with what this device keeps, and what we keep about your account if you have one. Free, whenever you like.",
   "privacy.downloaded": "A copy of your data was downloaded.",
   "acct.noRecoveryBefore": "Without email two-step sign-in, a forgotten password means the account cannot be recovered.",
   "me.notifications": "Notifications",
-  "notif.neutral": "What shows on your lock screen is neutral: no Rafeeq name, no religious word, no message text.",
+  "notif.neutral": "What shows on your lock screen has no religious word and no message text. Your phone may show the site address or the installed app's name with it, and the app's icon unless discreet mode is on.",
   "notif.replies": "Replies from a person",
   "notif.repliesHint": "When someone answers you. It shows only «You have a new reply».",
   "notif.repliesOn": "Replies will reach you.",

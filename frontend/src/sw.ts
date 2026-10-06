@@ -3,11 +3,13 @@
  * Service worker: precached app shell (offline lessons after first load,
  * LRN-03 R5), cached approved content, and Web Push (PLT-06, MOT-05).
  * Notification texts arrive neutral from the server; nothing religious.
+ * In discreet mode the icon is neutral too (lib/discreetPref.ts).
  */
 import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
+import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -37,14 +39,16 @@ self.addEventListener("push", (event) => {
       return { body: event.data?.text() }
     }
   })() as { title?: string; body?: string; url?: string; tag?: string }
+  // PLT-05 R3 / PLT-06 R6: in discreet mode a plain note icon, not the flower.
   event.waitUntil(
-    self.registration.showNotification(data.title ?? "", {
-      body: data.body ?? "",
-      icon: "/brand/rafeeq-app-icon-180.png",
-      badge: "/brand/favicon-48.png",
-      tag: data.tag ?? "rafeeq",
-      data: { url: data.url ?? "/" },
-    }),
+    readDiscreet().then((discreet) =>
+      self.registration.showNotification(data.title ?? "", {
+        body: data.body ?? "",
+        ...notificationLook(discreet),
+        tag: data.tag ?? "rafeeq",
+        data: { url: data.url ?? "/" },
+      }),
+    ),
   )
 })
 

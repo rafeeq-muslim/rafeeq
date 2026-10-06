@@ -36,6 +36,11 @@ html = html.replace(/url\((["']?)\.?\/fonts\/thmanyah\/([^"')]+)\1\)/g, (m, _q, 
 })
 // Drop links to files that are not part of the single file.
 html = html.replace(/<link rel="(?:icon|apple-touch-icon)"[^>]*>\s*/g, "")
+// The app's neutral title (PLT-05 R3) is not the gallery's: name the review file.
+html = html
+  .replace(/<!-- PLT-05 R3[^>]*-->\s*/, "")
+  .replace(/<script src="\/boot-title\.js"><\/script>\s*/, "")
+  .replace(/<title>[\s\S]*?<\/title>/, "<title>نظام تصميم رفيق</title>")
 
 const full = path.join(out, "rafeeq-design-system.html")
 writeFileSync(full, html)

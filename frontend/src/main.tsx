@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import "./index.css"
-import AppLayout from "@/app/AppLayout"
+import AppLayout, { PublicFrame } from "@/app/AppLayout"
 import { refreshSession } from "@/app/lib/api"
 import { registerServiceWorker } from "@/app/lib/pwa"
 import "@/app/practice/start-reminders"
@@ -34,8 +34,13 @@ const Referrals = lazy(() => import("@/app/companion/mentor/Referrals"))
 const Gallery = lazy(() => import("./App"))
 
 const router = createBrowserRouter([
-  { path: "/welcome", element: <Welcome /> },
-  { path: "/privacy", element: <Privacy /> }, // PLT-05 R1: readable before onboarding and without an account
+  {
+    element: <PublicFrame />, // PLT-05 R2: quick exit outside AppLayout too
+    children: [
+      { path: "/welcome", element: <Welcome /> },
+      { path: "/privacy", element: <Privacy /> }, // PLT-05 R1: readable before onboarding and without an account
+    ],
+  },
   { path: "/design", element: <Gallery /> },
   {
     path: "/",
