@@ -107,6 +107,11 @@
         "en": "Knows that Ramadan is the ninth month of the Hijri calendar and that fasting all of it is a pillar of Islam",
         "tl": "Alam na ang Ramadhan ay ika-siyam na buwan ng Hijri at ang pag-aayuno rito ay haligi ng Islam"
       },
+      "label": {
+        "ar": "صيام رمضان ركن من أركان الإسلام",
+        "en": "Fasting Ramadan, a pillar of Islam",
+        "tl": "Ang pag-aayuno sa Ramadan, isang haligi ng Islam"
+      },
       "cards": [
         "u3-l3-c1",
         "u3-l3-c2"
@@ -120,6 +125,11 @@
         "en": "Knows what fasting Ramadan is, from dawn to sunset",
         "tl": "Alam ang kahulugan ng pag-aayuno sa Ramadhan, mula Fajr hanggang paglubog ng araw"
       },
+      "label": {
+        "ar": "معنى الصوم ووقته",
+        "en": "What fasting is and when it starts and ends",
+        "tl": "Ang kahulugan ng pag-aayuno at ang oras nito"
+      },
       "cards": [
         "u3-l3-c3"
       ],
@@ -131,6 +141,11 @@
         "ar": "يعرف أن الحج على المستطيع مرة واحدة في العمر",
         "en": "Knows that Hajj is due once in a lifetime on whoever is able",
         "tl": "Alam na ang Hajj ay obligado nang isang beses sa buhay sa sinumang may kakayahan"
+      },
+      "label": {
+        "ar": "الحج على المستطيع مرة في العمر",
+        "en": "Hajj once in a lifetime for those able",
+        "tl": "Ang Hajj minsan sa buhay para sa may kakayahan"
       },
       "cards": [
         "u3-l3-c4",

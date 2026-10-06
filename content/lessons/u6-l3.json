@@ -137,6 +137,11 @@
         "en": "Knows that one of the greatest sources of happiness is the Muslim’s direct connection to his Lord, without a mediator",
         "tl": "Alam na isa sa pinakadakilang dahilan ng kaligayahan ang direktang koneksyon ng Muslim sa kanyang Panginoon, nang walang tagapamagitan"
       },
+      "label": {
+        "ar": "الصلة المباشرة بالله",
+        "en": "A direct bond with Allah",
+        "tl": "Ang tuwirang ugnayan kay Allah"
+      },
       "cards": [
         "u6-l3-c2",
         "u6-l3-c3",
@@ -151,6 +156,11 @@
         "en": "Knows why we were created: to worship Allah alone",
         "tl": "Alam kung bakit tayo nilikha: upang sambahin ang Allah lamang"
       },
+      "label": {
+        "ar": "الحكمة من خلقنا",
+        "en": "Why we were created",
+        "tl": "Kung bakit tayo nilikha"
+      },
       "cards": [
         "u6-l3-c5"
       ],
@@ -163,6 +173,11 @@
         "en": "Knows that the Sharia preserves the five necessities of life",
         "tl": "Alam na pinapanatili ng Sharia ang limang pangangailangan ng buhay"
       },
+      "label": {
+        "ar": "الضرورات الخمس",
+        "en": "The five essentials the Sharia protects",
+        "tl": "Ang limang mahalagang bagay na pinangangalagaan ng Shariah"
+      },
       "cards": [
         "u6-l3-c5"
       ],
@@ -174,6 +189,11 @@
         "ar": "يعرف ما تبعثه رابطة المسلم بربه من طمأنينة وسعادة",
         "en": "Knows the reassurance and happiness that the bond with his Lord brings",
         "tl": "Alam ang kapanatagan at kaligayahang dulot ng ugnayan ng Muslim sa kanyang Panginoon"
+      },
+      "label": {
+        "ar": "الطمأنينة مع الله",
+        "en": "Peace of heart with Allah",
+        "tl": "Ang kapanatagan ng puso kay Allah"
       },
       "cards": [
         "u6-l3-c6",

@@ -89,6 +89,11 @@
         "en": "Knows that Muhammad ﷺ is the final Prophet and Messenger, sent with Islam to all humankind",
         "tl": "Alam na si Muhammad ﷺ ang panghuling Propeta at Sugo, na ipinadala dala ang Islam para sa buong sangkatauhan"
       },
+      "label": {
+        "ar": "محمد ﷺ خاتم الأنبياء",
+        "en": "Muhammad ﷺ, the last of the prophets",
+        "tl": "Si Muhammad ﷺ, ang huling propeta"
+      },
       "cards": [
         "u2-l3-c3",
         "u2-l3-c1",
@@ -103,6 +108,11 @@
         "en": "Knows that the greatest good he guided to is monotheism and the worst evil he warned against is polytheism",
         "tl": "Alam na ang pinakamainam na kabutihan na itinuro niya ay ang Tawheed at ang pinakamasamang kasamaan ay ang pagtatambal"
       },
+      "label": {
+        "ar": "التوحيد والشرك",
+        "en": "Tawhid and shirk",
+        "tl": "Ang tawhid at shirk"
+      },
       "cards": [
         "u2-l3-c3"
       ],
@@ -114,6 +124,11 @@
         "ar": "يذكر من صفات النبي ﷺ",
         "en": "Names some of the traits of the Prophet ﷺ",
         "tl": "Nasasabi ang ilan sa mga katangian ng Propeta ﷺ"
+      },
+      "label": {
+        "ar": "من صفات النبي ﷺ",
+        "en": "Qualities of the Prophet ﷺ",
+        "tl": "Mga katangian ng Propeta ﷺ"
       },
       "cards": [
         "u2-l3-c4"

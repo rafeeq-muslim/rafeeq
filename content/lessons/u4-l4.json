@@ -71,6 +71,11 @@
         "en": "Knows what belief in predestination means: everything happens by Allah’s knowledge and decree, written before mankind was created",
         "tl": "Alam ang kahulugan ng paniniwala sa Qadar: lahat ay itinakda ng Allah at nakasulat bago pa likhain ang tao"
       },
+      "label": {
+        "ar": "معنى الإيمان بالقدر",
+        "en": "What belief in divine decree means",
+        "tl": "Ang kahulugan ng paniniwala sa tadhana"
+      },
       "cards": [
         "u4-l4-c2",
         "u4-l4-c1"
@@ -84,6 +89,11 @@
         "en": "Knows that a person has a will and choice, and that this is not beyond Allah’s knowledge and will",
         "tl": "Alam na ang tao ay may sariling kagustuhan, ngunit hindi ito lalabas sa kaalaman at kagustuhan ng Allah"
       },
+      "label": {
+        "ar": "إرادة الإنسان ومشيئة الله",
+        "en": "Human will and Allah’s will",
+        "tl": "Ang kalooban ng tao at ang kalooban ni Allah"
+      },
       "cards": [
         "u4-l4-c2"
       ],
@@ -95,6 +105,11 @@
         "ar": "يرتّب مراتب الإيمان بالقدر الأربع",
         "en": "Puts the four levels of belief in predestination in order",
         "tl": "Naisasaayos ang apat na antas ng paniniwala sa Qadar"
+      },
+      "label": {
+        "ar": "مراتب الإيمان بالقدر الأربع",
+        "en": "The four levels of belief in divine decree",
+        "tl": "Ang apat na antas ng paniniwala sa tadhana"
       },
       "cards": [
         "u4-l4-c3"

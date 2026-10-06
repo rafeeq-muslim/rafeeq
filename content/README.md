@@ -8,6 +8,7 @@
 
 | Path | What it is |
 | --- | --- |
+| `objective_labels.json` | The learner's name for every objective of units 1–6 (ar/en/tl), read by both builders; a missing name stops the build |
 | `units/unit-01/unit.json` | Unit 1 «دليل اليوم الأول» (LRN-01): 7 lessons, 21 learning objectives, 39 cards, 43 exercises, in Arabic, English and Filipino |
 | `units/unit-01/images/` | 21 step photos from the Arabic edition (WebP, transparent background, no text), about 0.6 MB |
 | `units/unit-01/build_unit.py` | How `unit.json` was built from the book's site text (needs the git-ignored source texts) |
@@ -37,7 +38,7 @@ Every user-facing text is an object `{"ar": …, "en": …, "tl": …}`.
 | `media.audio.fatiha` | Al-Fatihah audio per language (Arabic one file; English and Filipino verse by verse) |
 | `omitted` | What was deliberately left out, and why |
 | `lessons[]` | `id`, `order`, `title`, `support_video` (key into `media`, optional), `objectives`, `cards`, `exercises` |
-| `objectives[]` | `id`, `text` (LRN-10) |
+| `objectives[]` | `id`, `text` (the team's wording, never shown to learners), `label` (the short name a learner reads, from `objective_labels.json`; LRN-10 R1) |
 | `cards[]` | `id`, `kind` (`text`, `quran`, `hadith`, `fatiha`, `reassurance`), `text`, `provenance` (source and section, never shown on the card), `objectives`, optional `image`, `extra_images`, `ref` (surah:ayah), `quran_ref`, `quran_text`, `audio`, `edited`, `note`, `verify`, `excerpt`, `contains_hadith` |
 | `exercises[]` | `id`, `type` (`choice`, `order`, `match`), `objectives`, `prompt`, `explain_card` (the card shown after a mistake and used for «لماذا؟»), and `options` + `answer`, or `items` + `answer` (correct order of ids), or `pairs` |
 

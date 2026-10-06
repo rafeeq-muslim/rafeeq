@@ -115,6 +115,11 @@
         "en": "Knows when wiping over khuffs and socks is allowed, and its conditions",
         "tl": "Alam kung kailan maaaring magpahid sa khuff at medyas, at ang mga kondisyon nito"
       },
+      "label": {
+        "ar": "متى يجوز المسح على الخفين والجوربين",
+        "en": "When wiping over leather and cloth socks is allowed",
+        "tl": "Kailan pinapayagan ang pagpunas sa khuff at medyas"
+      },
       "cards": [
         "u5-l1-c1",
         "u5-l1-c2",
@@ -129,6 +134,11 @@
         "en": "Knows how long wiping lasts for a resident and for a traveller",
         "tl": "Alam ang tagal ng pagpahid para sa residente at sa manlalakbay"
       },
+      "label": {
+        "ar": "مدة المسح",
+        "en": "How long wiping is allowed",
+        "tl": "Gaano katagal pinapayagan ang pagpunas"
+      },
       "cards": [
         "u5-l1-c4"
       ],
@@ -141,6 +151,11 @@
         "en": "Describes how to wipe",
         "tl": "Nailalarawan ang paraan ng pagpahid"
       },
+      "label": {
+        "ar": "صفة المسح",
+        "en": "How to wipe",
+        "tl": "Kung paano magpunas"
+      },
       "cards": [
         "u5-l1-c5"
       ],
@@ -152,6 +167,11 @@
         "ar": "يعرف ما يبطل المسح",
         "en": "Knows what makes the wiping invalid",
         "tl": "Alam ang nakasisira sa bisa ng pagpahid"
+      },
+      "label": {
+        "ar": "ما يبطل المسح",
+        "en": "What ends the wiping allowance",
+        "tl": "Ang nakakasira sa pagpunas"
       },
       "cards": [
         "u5-l1-c6"

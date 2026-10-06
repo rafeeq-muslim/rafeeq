@@ -228,6 +228,9 @@ def main():
             seen.add(o['id'])
             if not o['id'].startswith(lid + '-o'):
                 err(f"{o['id']}: id not prefixed by lesson")
+            # unit 1 is served from content/units/unit-01, which carries its own names
+            if not lid.startswith('u1-') and not all((o.get('label') or {}).get(lg, '').strip() for lg in ('ar', 'en', 'tl')):
+                err(f"{o['id']}: needs a learner name (label) in ar, en and tl, in content/objective_labels.json")
             text3(o.get('text'), f"{o['id']}.text")
             for l in LANGS:
                 check_lang_safety(l, o['text'][l], o['id'])

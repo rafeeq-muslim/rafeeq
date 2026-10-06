@@ -125,6 +125,11 @@
         "en": "Knows that establishing prayer means performing it as Allah prescribed and His Messenger ﷺ taught",
         "tl": "Alam na ang pagtataguyod ng Salah ay pagsasagawa nito ayon sa isinabatas ng Allah at itinuro ng Kanyang Sugo ﷺ"
       },
+      "label": {
+        "ar": "إقامة الصلاة",
+        "en": "Establishing the prayer",
+        "tl": "Ang pagtataguyod ng pagdarasal"
+      },
       "cards": [
         "u3-l2-c1",
         "u3-l2-c2"
@@ -137,6 +142,11 @@
         "ar": "يعرف لماذا فرض الله الزكاة ولمن تُعطى، وما في أدائها من خير",
         "en": "Knows why Allah made Zakah obligatory, to whom it is given, and the good in giving it",
         "tl": "Alam kung bakit inobliga ng Allah ang Zakah, kanino ito ibinibigay, at ang kabutihan sa pagbibigay nito"
+      },
+      "label": {
+        "ar": "الزكاة: حكمتها ولمن تُعطى",
+        "en": "Zakah: its purpose and who receives it",
+        "tl": "Ang zakah: ang layunin nito at kung kanino ibinibigay"
       },
       "cards": [
         "u3-l2-c3",
@@ -152,6 +162,11 @@
         "ar": "يعرف مقدار زكاة المال المدّخر ومتى تجب",
         "en": "Knows the amount of Zakah on saved wealth and when it is due",
         "tl": "Alam ang sukat ng Zakah sa naipong kayamanan at kung kailan ito obligado"
+      },
+      "label": {
+        "ar": "مقدار زكاة المال ووقتها",
+        "en": "How much zakah on savings, and when",
+        "tl": "Gaano kalaki ang zakah sa ipon, at kailan"
       },
       "cards": [
         "u3-l2-c7"

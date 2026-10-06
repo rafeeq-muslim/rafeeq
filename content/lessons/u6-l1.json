@@ -71,6 +71,11 @@
         "en": "Knows that Allah commanded the Muslim woman to wear the hijab and cover her body from men not related to her",
         "tl": "Alam na inutusan ng Allah ang babaeng Muslim na magsuot ng Hijab at takpan ang kanyang awra mula sa mga lalaking hindi kaanu-ano"
       },
+      "label": {
+        "ar": "حجاب المرأة المسلمة",
+        "en": "The Muslim woman’s hijab",
+        "tl": "Ang hijab ng babaeng Muslim"
+      },
       "cards": [
         "u6-l1-c2",
         "u6-l1-c1"
@@ -84,6 +89,11 @@
         "en": "Knows before whom a woman may take off her hijab, and who her mahram are",
         "tl": "Alam kung kanino maaaring alisin ng babae ang Hijab, at kung sino ang mga Mahram"
       },
+      "label": {
+        "ar": "المحارم",
+        "en": "The mahram relatives",
+        "tl": "Ang mga mahram"
+      },
       "cards": [
         "u6-l1-c2"
       ],
@@ -95,6 +105,11 @@
         "ar": "يعدّد ضوابط لباس المرأة المسلمة",
         "en": "Lists the rules for the Muslim woman’s dress",
         "tl": "Naiisa-isa ang mga panuntunan sa pananamit ng babaeng Muslim"
+      },
+      "label": {
+        "ar": "ضوابط لباس المرأة المسلمة",
+        "en": "The guidelines for a Muslim woman’s dress",
+        "tl": "Ang mga panuntunan sa pananamit ng babaeng Muslim"
       },
       "cards": [
         "u6-l1-c3"
