@@ -98,6 +98,10 @@ export default function Referrals() {
         <p className="text-body text-muted-foreground">{t("cmp.referral.intro")}</p>
         {referrals.isLoading ? (
           <Skeleton className="h-40 rounded-card" />
+        ) : referrals.isError ? (
+          <p role="alert" className="py-10 text-center text-body text-muted-foreground">
+            {t("cmp.referral.loadFailed")}
+          </p>
         ) : items.length === 0 ? (
           <section className="flex flex-col items-center gap-3 py-10 text-center">
             <SpotIllustration kind="saved" size={96} />

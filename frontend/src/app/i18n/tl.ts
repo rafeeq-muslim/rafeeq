@@ -1523,4 +1523,18 @@ export const tl: Dict = {
   "plt17.sight.remove": "Alisin",
   "plt17.sight.removeTitle": "Alisin ang anunsyong ito?",
   "plt17.sight.removeBody": "Babalik sa «inaasahan» ang petsa para sa lahat ng nag-aaral sa bansang ito at sa mga sumusunod dito.",
+  // --- PLT-17 R8–R10 (plt-17-review-desk): review-desk type names, queue filter, load errors. ⚠️ Tagalog needs native review ---
+  "desk.type.library_item": "Materyal sa aklatan",
+  "desk.type.dhikr": "Dhikr",
+  "desk.type.daily_card": "Kard ng araw",
+  "desk.type.practice_line": "Linya sa araw-araw na gawain",
+  "desk.type.glossary_term": "Termino sa glosaryo",
+  "desk.filter.type": "Uri ng nilalaman",
+  "desk.filter.all": "Lahat",
+  "desk.filter.search": "Hanapin sa pamagat o id",
+  "desk.filter.none": "Walang tumutugma sa pinili mo.",
+  "desk.filter.clear": "Ipakita lahat",
+  "desk.loadFailed": "Hindi ma-load ang pila.",
+  "desk.retry": "Subukan muli",
+  "cmp.referral.loadFailed": "Hindi ma-load ang mga ipinasang tanong.",
 }
