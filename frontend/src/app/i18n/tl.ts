@@ -1170,4 +1170,11 @@ export const tl: Dict = {
   "mot.team.perUnit": "Mga unit: tama sa aralin, pagkatapos sa pagbabalik-aral",
   "mot.team.mastery": "Bahagdan ng nakabisado ang bawat layunin",
   "mot.team.whyHoldout": "Pagkatapos ng teksto ng card (random na ikalima)",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "Hadith mula sa nakatalang record",
+  "desk.cite.grade": "Antas",
+  "desk.cite.reference": "Sanggunian",
+  "desk.cite.missing": "Wala sa nakatalang record ang hadith {id} sa wikang ito",
+  "desk.glossary.title": "Mga baybay na hindi aprubado ng glosaryo",
+  "desk.glossary.flag": "“{found}” sa halip na aprubadong termino na “{term}”",
 }

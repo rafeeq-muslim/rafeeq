@@ -39,6 +39,11 @@
 | R4 ex3 (mp3quran-only reciter not added) | `test_knw08_r4_example2_mp3quran_only_reciter_is_not_added` |
 | R4 decision (reviewer approves each reciter on a sample; al-Muaiqly until then; Hafs only) | `backend/tests/test_knw08_reciters.py` (`test_knw08_r4_*`), `knw-08-r4: …` (vitest) |
 
+| R1 ex1 (the reciter alone) | `R1: playing a surah plays the reciter's file on the one audio element, and nothing else` (vitest, `quran.rules.test.tsx`) |
+| R1 ex2 (an in-app notice during the recitation is silent) | `R1: an in-app notice during the recitation is shown without sound and leaves the recitation playing` (vitest) |
+| R5 ex1 (no points, streak or message when a surah ends) | `R5: finishing a surah changes no progress, shows no completion message and sends nothing` (vitest); `test_knw08_r5_no_endpoint_records_listening` |
+| R5 ex2 (the mentor sees nothing of the listening) | `test_knw08_r5_mentor_summary_has_nothing_about_listening` |
+
 ## 5. Open decisions
 
 - English meaning audio exists only for `english_rwwad`, while the English text shown is `english_saheeh`: not offered until the team decides which translation English learners read.

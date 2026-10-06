@@ -1,7 +1,8 @@
 /**
  * KNW-05 review desk for the Sharia reviewer (team members read only, R5).
  * Queue by status and language; an item opens with its exact learner text in
- * one language (R6), each Quran citation beside the stored verse (R2), the
+ * one language (R6), each Quran citation beside the stored verse and each
+ * cited hadith beside its stored text, grade and reference (R2), the
  * text learners currently see when it changed after approval (R3), and the
  * full decision history. Approving binds to the version read (hash); a
  * return needs a written reason (R4).
@@ -26,13 +27,27 @@ import type { QuranRef } from "@/app/learning/types"
 import { ReciterSample } from "@/app/discover/ReciterSample" // KNW-08 R4
 import { ExplanationSamples } from "./ExplanationSamples"
 
+import { GlossaryFlags, HadithCitations, type GlossaryFlag, type HadithRecord } from "./DeskCitations"
+
 type Status = "in_review" | "returned" | "approved"
 type Row = { item_type: string; item_id: string; group: string; title: Record<string, string>; langs: Record<string, { status: Status; live: boolean; note: string | null }> }
 type Queue = { items: Row[]; counts: Record<Status, number> }
 type Detail = {
   item_type: string
   item_id: string
-  langs: Record<string, { status: Status; hash: string; current: View; live: View | null }>
+  langs: Record<
+    string,
+    {
+      status: Status
+      hash: string
+      current: View
+      live: View | null
+      /** KNW-05 R2: cited hadith from the stored record (null: not loaded). */
+      hadith?: Record<string, HadithRecord | null>
+      /** KNW-03 R3 ex2: non-approved glossary spellings in this text. */
+      glossary_flags?: GlossaryFlag[]
+    }
+  >
   history: { lang: string; decision: "approved" | "returned"; note: string | null; reviewer: string | null; at: string; hash: string }[]
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -216,9 +231,10 @@ function ItemView() {
             )}
           </section>
         )}
+        {l && <GlossaryFlags flags={l.glossary_flags} />}
         {l && (
           <article lang={lang} dir={dirOf(lang)}>
-            <Render type={type} view={l.current} lang={lang} />
+            <Render type={type} view={l.current} lang={lang} cites={l.hadith} />
           </article>
         )}
 
@@ -282,7 +298,7 @@ function ItemView() {
 }
 
 /** The exact learner text of one item in one language. */
-function Render({ type, view, lang }: { type: string; view: View; lang: Locale }) {
+function Render({ type, view, lang, cites }: { type: string; view: View; lang: Locale; cites?: Record<string, HadithRecord | null> }) {
   const { t } = useT()
   if (type === "unit") {
     return (
@@ -321,6 +337,7 @@ function Render({ type, view, lang }: { type: string; view: View; lang: Locale }
               {c.image_url && <img src={c.image_url} alt="" className="max-h-56 w-full rounded-md object-contain" />}
               {c.text && <p className="font-reading text-reading whitespace-pre-line">{c.text}</p>}
               {c.quran && <VerseBlock quran={c.quran as QuranRef} lang={lang} />}
+              {Array.isArray(c.hadith_ids) && c.hadith_ids.length > 0 && <HadithCitations ids={c.hadith_ids} records={cites} lang={lang} />}
               {Array.isArray(c.audio) &&
                 c.audio.map((src: string) => <audio key={src} controls preload="none" src={src} className="w-full" />)}
             </div>

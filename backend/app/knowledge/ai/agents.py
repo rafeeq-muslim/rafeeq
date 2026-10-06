@@ -58,9 +58,12 @@ REPAIR_HINTS = {
 }
 
 
-def _compose_input(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]]) -> str:
-    return f"LANGUAGE: {LANG_NAME[lang]}\nROUTE: {route} · LEVEL: {level}\nQUESTION:\n{_q(question)}\n\nPASSAGES:\n" + "\n---\n".join(
-        passage_block(p) for p in passages
+def _compose_input(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]], glossary: str = "") -> str:
+    """`glossary`: the GLOSSARY section (KNW-03 R3), empty until terms are approved."""
+    return (
+        f"LANGUAGE: {LANG_NAME[lang]}\nROUTE: {route} · LEVEL: {level}\nQUESTION:\n{_q(question)}\n\nPASSAGES:\n"
+        + "\n---\n".join(passage_block(p) for p in passages)
+        + glossary
     )
 
 
@@ -72,8 +75,10 @@ def _composer_out(d: dict) -> dict[str, Any]:
     return {"sufficient": d["sufficient"], "answer": d.get("answer") or "", "sources": [str(s) for s in d.get("sources") or []]}
 
 
-async def compose_answer(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]]) -> dict[str, Any]:
-    user = _compose_input(question, lang, route, level, passages)
+async def compose_answer(
+    question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]], glossary: str = ""
+) -> dict[str, Any]:
+    user = _compose_input(question, lang, route, level, passages, glossary)
     r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=_composer_ok)
     return _composer_out(r.data)
 
@@ -87,6 +92,7 @@ async def repair_answer(
     previous: dict[str, Any],
     codes: list[str],
     unsupported: list[str],
+    glossary: str = "",
 ) -> dict[str, Any]:
     """The one bounded repair (KNW-01 reliability R5): same passages, the
     previous output and the failure codes. Its output goes through every
@@ -94,7 +100,7 @@ async def repair_answer(
     hints = [REPAIR_HINTS[c] for c in codes if c in REPAIR_HINTS]
     flagged = "".join(f"\n- {_q(u)}" for u in unsupported[:6])
     user = (
-        _compose_input(question, lang, route, level, passages)
+        _compose_input(question, lang, route, level, passages, glossary)
         + "\n\nREPAIR:\nYour previous output failed Rafeeq's checks."
         + "\nPREVIOUS OUTPUT:\n"
         + _q(json.dumps(previous, ensure_ascii=False))
@@ -115,11 +121,11 @@ async def support_check(agent: str, text: str, sources: list[str]) -> dict[str, 
     return {"supported": r.data["supported"], "unsupported": r.data.get("unsupported") or []}
 
 
-async def explain_mistake(card: str, exercise: str, answer: str, lang: str) -> str:
+async def explain_mistake(card: str, exercise: str, answer: str, lang: str, glossary: str = "") -> str:
     def ok(d: dict) -> bool:
         return isinstance(d.get("text"), str) and bool(d["text"].strip())
 
-    user = f"LANGUAGE: {LANG_NAME[lang]}\nCARD:\n{_q(card)}\nEXERCISE:\n{_q(exercise)}\nANSWER:\n{_q(answer)}"
+    user = f"LANGUAGE: {LANG_NAME[lang]}\nCARD:\n{_q(card)}\nEXERCISE:\n{_q(exercise)}\nANSWER:\n{_q(answer)}" + glossary
     r = await client.chat_json("explainer", "main", prompt("explainer"), user, max_tokens=250, check=ok)
     return r.data["text"].strip()
 

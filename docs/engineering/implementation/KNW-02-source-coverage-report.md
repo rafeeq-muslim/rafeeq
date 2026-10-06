@@ -115,4 +115,4 @@ Set in `secrets.env`, then recreate the backend (`docker compose -p rafeeq -f in
 - Recall@8 and answer quality per source: not run (live); needs a reviewed case set.
 - The transitional crowding in §5 until islamqa is embedded (accepted by the owner; S07 requires the text fallback).
 - islamqa permission: still "request to send" (unchanged; owner's decision to use it stands).
-- Per-source batch redistribution in the job is not built (not needed by the measurement: islamqa is the only source with work left).
+- Batch redistribution in the job: built later (knw-audit-gaps, 2026-10-06). Batches now take turns over every (source, language) with work left. Before, rows went strictly by passage id, so islamqa English (`islamqa:en:…`) waited until every islamqa Arabic row had a vector. That ordering matches the audit's reading (islamqa ar 35.6 %, en 0 %); whether the job had also stopped (daily ceiling, the $10 total) was not checked against production; its stop reason is in `knw_sources.versions["embedding"]["stopped"]`. Test: `test_knw02_sc3_embedding_turns_go_round_every_source_and_language`.

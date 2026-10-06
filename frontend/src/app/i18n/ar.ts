@@ -1168,4 +1168,11 @@ export const ar = {
   "mot.team.perUnit": "الوحدات: الصواب في الدرس ثم في المراجعة",
   "mot.team.mastery": "نسبة من أتقنوا كل هدف",
   "mot.team.whyHoldout": "بعد نص البطاقة (الخُمس العشوائي)",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "حديث من السجل المخزَّن",
+  "desk.cite.grade": "الدرجة",
+  "desk.cite.reference": "التخريج",
+  "desk.cite.missing": "الحديث {id} غير موجود في السجل المخزَّن بهذه اللغة",
+  "desk.glossary.title": "ألفاظ غير معتمدة في المعجم",
+  "desk.glossary.flag": "«{found}» بدل اللفظ المعتمد «{term}»",
 } as const

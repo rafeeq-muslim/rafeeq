@@ -41,7 +41,7 @@ from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.deps import OptionalUser, Session
 from app.core.events import publish
-from app.knowledge import approved, query_normalization, source_policy, tasks
+from app.knowledge import approved, glossary, query_normalization, source_policy, tasks
 from app.knowledge.ai import agents, screen
 from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
 from app.knowledge.models import AnswerLog, Passage, Source
@@ -398,6 +398,8 @@ async def _pipeline(
     # 8. Compose from the passages only; verify; one bounded repair or one
     # recomposition after an expansion (shared compose-round counter).
     mode, prev, v = "compose", None, None
+    # KNW-03 R3: approved terms in the asker's language (none yet: the input is unchanged).
+    gloss = glossary.prompt_block(await glossary.prompt_terms(session, lang))
     while True:
         if not ctx.can_afford(2, VERIFY_RESERVE_S + MIN_COMPOSE_S):
             if mode == "repair" and v is not None:
@@ -413,9 +415,11 @@ async def _pipeline(
         t = time.monotonic()
         try:
             if mode == "compose":
-                out = await agents.compose_answer(question, lang, r["route"], r["level"], passages)
+                out = await agents.compose_answer(question, lang, r["route"], r["level"], passages, gloss)
             else:
-                out = await agents.repair_answer(question, lang, r["route"], r["level"], passages, prev or {}, v.codes, v.unsupported)
+                out = await agents.repair_answer(
+                    question, lang, r["route"], r["level"], passages, prev or {}, v.codes, v.unsupported, gloss
+                )
         except AiUnavailable as e:
             ctx.stage(mode, t, round=ctx.compose_rounds_used, status="unavailable")
             return _unavailable_from(r, e, "composer")
@@ -464,6 +468,8 @@ async def _pipeline(
         return _unavailable(r, "temporarily_unavailable", "source_missing_at_render")
     track.verified = True
     r.update(outcome="answered", answer=out["answer"], sources=cards)
+    # KNW-03 R5: a listed concept with no approved term in this language is recorded for review.
+    await glossary.record_gaps(session, lang, [out["answer"], *(retrieved[i]["quote_text"] for i in ids if i in retrieved)])
     events: list[tuple[str, dict]] = []
     # Code, not the model, adds the referral and the "views differ" note (plan 4.6).
     if r["route"] == "personal":

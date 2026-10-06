@@ -40,7 +40,7 @@ Every user-facing text is an object `{"ar": …, "en": …, "tl": …}`.
 | `omitted` | What was deliberately left out, and why |
 | `lessons[]` | `id`, `order`, `title`, `support_video` (key into `media`, optional), `objectives`, `cards`, `exercises` |
 | `objectives[]` | `id`, `text` (the team's wording, never shown to learners), `label` (the short name a learner reads, from `objective_labels.json`; LRN-10 R1) |
-| `cards[]` | `id`, `kind` (`text`, `quran`, `hadith`, `fatiha`, `reassurance`), `text`, `provenance` (source and section, never shown on the card), `objectives`, optional `image`, `extra_images`, `ref` (surah:ayah), `quran_ref`, `quran_text`, `audio`, `edited`, `note`, `verify`, `excerpt`, `contains_hadith` |
+| `cards[]` | `id`, `kind` (`text`, `quran`, `hadith`, `fatiha`, `reassurance`), `text`, `provenance` (source and section, never shown on the card), `objectives`, optional `image`, `extra_images`, `ref` (surah:ayah), `quran_ref`, `quran_text`, `audio`, `edited`, `note`, `verify`, `excerpt`, `contains_hadith`, `hadith_ids` (HadeethEnc ids the card cites: the review desk shows each one's stored text, grade and reference beside the card, and `check_content.py` refuses an id that is not in the stored corpus, KNW-05 R2) |
 | `exercises[]` | `id`, `type` (`choice`, `order`, `match`), `objectives`, `prompt`, `explain_card` (the card shown after a mistake and used for «لماذا؟»), and `options` + `answer`, or `items` + `answer` (correct order of ids), or `pairs` |
 
 Rules the checker enforces: every objective has at least two exercises and at least one card; every card is linked to an objective; IDs are unique; answers exist; images exist; no transliterated adhkar or Quran in English or Filipino.

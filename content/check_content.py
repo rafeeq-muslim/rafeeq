@@ -8,12 +8,18 @@ every text in Arabic, English and Filipino; unique IDs; every objective
 covered by at least two exercises (LRN-10); every card linked to an
 objective; answers that exist; images that exist; and no transliterated
 adhkar or Quran in the English and Filipino text (rules.md §1.4).
+Citations (KNW-05 R2): a Quran reference to a verse that does not exist, or a
+`hadith_ids` entry that is not in the stored HadeethEnc corpus, is refused.
+Glossary (KNW-03 R3): a listed concept written with a spelling the glossary
+marks as not approved is flagged for the reviewer.
 It does not judge Sharia accuracy: the Sharia reviewer approves that.
 Exit code 0 = no blocking issues.
 """
 import json
+import os
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 LANGS = ("ar", "en", "tl")
@@ -23,6 +29,119 @@ TRANSLITERATION = re.compile(
     r"a[‘'`ʿ]?[uū]dh?u\s*bill|a[‘'`ʿ]?[uū]zu\s*bill|auzu|at-?\s*tahiy|as-?\s*sal[aā]mu|assalamu|bismill|"
     r"al-?\s*hamdu\s*lill|la\s+ilaha\s+illa|ashhadu|allahumma|wa\s+bihamdik",
     re.IGNORECASE)
+
+
+# --- KNW-05 R2 ex2: citations must name a verse or hadith that exists -------------
+# Number of ayat in each surah (Hafs); the same table as frontend/src/app/discover/ayaCount.ts.
+AYA_COUNT = (
+    7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111, 43, 52, 99, 128, 111, 110, 98, 135, 112, 78, 118, 64, 77, 227, 93, 88, 69, 60,
+    34, 30, 73, 54, 45, 83, 182, 88, 75, 85, 54, 53, 89, 59, 37, 35, 38, 29, 18, 45, 60, 49, 62, 55, 78, 96, 29, 22, 24, 13, 14, 11, 11, 18,
+    12, 12, 30, 52, 52, 44, 28, 28, 20, 56, 40, 31, 50, 40, 46, 42, 29, 19, 36, 25, 22, 17, 19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8,
+    11, 11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6,
+)
+QURAN_REF = re.compile(r"(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?")
+
+
+def ayah_ref_error(ref):
+    """None if `ref` ('2:222' or '1:1-7') names verses that exist, else the reason."""
+    m = QURAN_REF.fullmatch(str(ref).strip())
+    if not m:
+        return f"malformed Quran reference {ref!r} (expected sura:aya or sura:aya-aya)"
+    sura, first, last = int(m.group(1)), int(m.group(2)), int(m.group(3) or m.group(2))
+    if not 1 <= sura <= 114:
+        return f"unknown surah in {ref!r}"
+    if not 1 <= first <= last <= AYA_COUNT[sura - 1]:
+        return f"unknown ayah in {ref!r} (surah {sura} has {AYA_COUNT[sura - 1]})"
+    return None
+
+
+def corpus_dir():
+    """The approved-source corpus outside the repo (backend app.knowledge.sources._common)."""
+    root = Path(os.environ.get("RAFEEQ_DATA_DIR", Path.home() / ".local/share/rafeeq"))
+    return root / "corpus"
+
+
+def hadith_ids_in_corpus(directory):
+    """{hadith id: {langs}} from hadeethenc.jsonl, or None when the corpus is not here."""
+    f = Path(directory) / "hadeethenc.jsonl"
+    if not f.exists():
+        return None
+    out = {}
+    with f.open(encoding="utf8") as fh:
+        for line in fh:
+            if line.strip():
+                row = json.loads(line)
+                out.setdefault(str(row["ref_key"]), set()).add(row["lang"])
+    return out
+
+
+def check_citations(unit, errors, warnings, corpus=None):
+    """Every Quran reference names verses that exist; every `hadith_ids` entry is
+    a HadeethEnc id in the stored corpus (unknown → refused, KNW-05 R2 ex2)."""
+    known = hadith_ids_in_corpus(corpus or corpus_dir())
+    unverified = False
+    for lesson in unit["lessons"]:
+        for c in lesson["cards"]:
+            for key in ("ref", "quran_ref"):
+                if c.get(key):
+                    why = ayah_ref_error(c[key])
+                    if why:
+                        errors.append(f"{c['id']}: {why}")
+            ids = c.get("hadith_ids") or []
+            if (c.get("kind") == "hadith" or c.get("contains_hadith")) and not ids:
+                warnings.append(f"{c['id']}: cites a hadith without hadith_ids; the review desk cannot show its stored record")
+            for h in ids:
+                if not (isinstance(h, int) or (isinstance(h, str) and h.isdigit())) or int(h) < 1:
+                    errors.append(f"{c['id']}: hadith id {h!r} is not a HadeethEnc id")
+                elif known is None:
+                    unverified = True
+                elif str(int(h)) not in known:
+                    errors.append(f"{c['id']}: hadith {h} is not in the stored HadeethEnc corpus")
+                else:
+                    missing = [lg for lg in LANGS if lg not in known[str(int(h))]]
+                    if missing:
+                        warnings.append(f"{c['id']}: hadith {h} has no stored record in {', '.join(missing)}")
+    if unverified:
+        warnings.append("hadith ids not checked against the corpus: hadeethenc.jsonl not found (set RAFEEQ_DATA_DIR)")
+
+
+# --- KNW-03 R3 ex2: a listed term written with a non-approved spelling -----------
+_AR_MARKS = re.compile(r"[ؐ-ًؚ-ٰٟۖ-ۭـ]")
+_AR_FOLD = str.maketrans({"أ": "ا", "إ": "ا", "آ": "ا", "ٱ": "ا", "ى": "ي", "ة": "ه"})
+
+
+def _norm(s):
+    return _AR_MARKS.sub("", unicodedata.normalize("NFKC", s)).translate(_AR_FOLD).lower()
+
+
+def _spelled(text, spelling):
+    s = _norm(spelling).strip()
+    if not s:
+        return False
+    if re.search(r"[؀-ۿ]", s):
+        stem = s[2:] if s.startswith("ال") and len(s) > 4 else s
+        return stem in text
+    return re.search(rf"(?<![\w']){re.escape(s)}(?![\w'])", text) is not None
+
+
+def load_glossary(path=None):
+    f = Path(path) if path else Path(__file__).parent / "glossary" / "terms.json"
+    return json.loads(f.read_text(encoding="utf8")).get("terms", []) if f.exists() else []
+
+
+def check_glossary(unit, warnings, terms):
+    """Flag, for the Sharia reviewer, a glossary concept written with a spelling
+    the glossary lists as not approved (`alternates`) in that language."""
+    for where, text in walk(unit):
+        for lang in LANGS:
+            for t in terms:
+                v = (t.get("langs") or {}).get(lang) or {}
+                if not v.get("term"):
+                    continue
+                body = _norm(text[lang]).replace(_norm(v["term"]), " ")
+                for alt in v.get("alternates") or []:
+                    if _norm(alt) != _norm(v["term"]) and _spelled(body, alt):
+                        warnings.append(f"{where}: {lang} writes {alt!r} for {t['concept']}; the approved term is {v['term']!r} (KNW-03 R3)")
 
 
 def walk(node, path=""):
@@ -37,11 +156,13 @@ def walk(node, path=""):
             yield from walk(v, f"{path}[{i}]")
 
 
-def main(path):
+def main(path, corpus=None, glossary=None):
     unit_path = Path(path)
     unit = json.loads(unit_path.read_text(encoding="utf8"))
     errors, warnings = [], []
     ids = []
+    check_citations(unit, errors, warnings, corpus)  # KNW-05 R2
+    check_glossary(unit, warnings, load_glossary(glossary))  # KNW-03 R3
 
     for where, text in walk(unit):
         for lang in LANGS:

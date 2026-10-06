@@ -13,7 +13,10 @@ KNW-02 SC3 / S13 / S19:
   nothing remains (a finished batch is not a finished source);
 - vectors from different models are never mixed: a source whose recorded
   model differs from `AI_EMBEDDING_MODEL` is skipped until it is re-embedded
-  on purpose with `--reembed` (which clears that source's vectors first).
+  on purpose with `--reembed` (which clears that source's vectors first);
+- batches take turns over every (source, language) with work left, so the
+  daily ceiling is shared fairly: before this, rows went strictly by id and
+  islamqa English (`islamqa:en:…`) waited until all of islamqa Arabic was done.
 
 Usage:
   python -m app.knowledge.embed [--source quranenc] [--kind hadith] [--lang en]
@@ -79,12 +82,36 @@ async def run(
         log.warning("skipped (vectors of another model; re-embed with --reembed): %s", ", ".join(mismatched))
         if sources == []:
             return {"embedded": 0, "stopped": "model_mismatch"}
-    while limit is None or done < limit:
+    # Fair share: batches rotate over every (source, language) with work left,
+    # so one large group (islamqa Arabic) never starves another (islamqa
+    # English) under the daily ceiling. Inside a group rows go by id.
+    async with SessionLocal() as s:
+        groups = [
+            (sid, lg)
+            for sid, lg in await s.execute(
+                select(Passage.source_id, Passage.lang)
+                .where(*_filters(sources, kind, lang))
+                .group_by(Passage.source_id, Passage.lang)
+                .order_by(Passage.source_id, Passage.lang)
+            )
+        ]
+    turn = 0
+    while groups and (limit is None or done < limit):
         size = batch if limit is None else min(batch, limit - done)
+        sid, lg = groups[turn % len(groups)]
         async with SessionLocal() as s:
-            rows = list(await s.scalars(select(Passage).where(*_filters(sources, kind, lang)).order_by(Passage.id).limit(size)))
+            rows = list(
+                await s.scalars(
+                    select(Passage)
+                    .where(*_filters(sources, kind, lang), Passage.source_id == sid, Passage.lang == lg)
+                    .order_by(Passage.id)
+                    .limit(size)
+                )
+            )
         if not rows:
-            break
+            groups.remove((sid, lg))  # this group is done; the next one takes its turn
+            continue
+        turn += 1
         vectors = None
         for attempt in range(RETRIES + 1):
             try:

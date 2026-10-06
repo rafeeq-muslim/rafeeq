@@ -1169,4 +1169,11 @@ export const en: Dict = {
   "mot.team.perUnit": "Units: correct in the lesson, then in review",
   "mot.team.mastery": "Share who mastered each objective",
   "mot.team.whyHoldout": "After the card text (random fifth)",
+  // --- knw-audit-gaps: KNW-05 R2 citations and KNW-03 R3 spellings in the review desk ---
+  "desk.cite.hadith": "Hadith from the stored record",
+  "desk.cite.grade": "Grade",
+  "desk.cite.reference": "Reference",
+  "desk.cite.missing": "Hadith {id} is not in the stored record in this language",
+  "desk.glossary.title": "Spellings the glossary does not approve",
+  "desk.glossary.flag": "“{found}” instead of the approved term “{term}”",
 }

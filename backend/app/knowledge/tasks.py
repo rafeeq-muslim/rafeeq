@@ -21,6 +21,7 @@ from sqlalchemy import select
 
 from app.core import ratelimit
 from app.core.deps import OptionalUser, Session, require_role
+from app.knowledge import glossary
 from app.knowledge.ai import agents
 from app.knowledge.ai.client import AiUnavailable
 from app.knowledge.ai.textcheck import ATTRIBUTION, TRANSLIT, has_arabic, quoted_spans, words
@@ -134,7 +135,9 @@ async def explain_mistake(session, body: ExplainIn) -> str | None:
     if not card:
         return None
     try:
-        text = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, body.answer), body.lang)
+        # KNW-03 R3: approved terms in the learner's language (none yet: the input is unchanged).
+        gloss = glossary.prompt_block(await glossary.prompt_terms(session, body.lang))
+        text = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, body.answer), body.lang, gloss)
         if check_explanation(text, body.lang):
             return None
         verdict = await agents.support_check("explain_checker", text, [card])
@@ -142,6 +145,7 @@ async def explain_mistake(session, body: ExplainIn) -> str | None:
         return None
     if not verdict["supported"]:
         return None
+    await glossary.record_gaps(session, body.lang, [text, card])  # KNW-03 R5
     session.add(ExplanationLog(exercise_id=body.exercise_id, lang=body.lang, text=text))
     await session.commit()
     return text
