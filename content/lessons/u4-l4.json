@@ -56,7 +56,7 @@
       "text": {
         "ar": "فالإيمانُ بالقدرِ يقوم على أربعِ مراتبَ هي :\nالأولى: الإيمانُ بعلم الله الشامل المحيط\nالثانية: الإيمانُ بكتابة الله لكل ما هو كائن إلى يوم القيامة.\nالثالثة: الإيمانُ بمشيئة الله النافذة وقدرته التامة، فما شاء كانَ وما لم يشأْ لم يكنْ.\nالرابعة: الإيمانُ بأنَّ اللهَ خالقُ كلَّ شيءٍ، لا شريكَ له في خلقه.",
         "en": "Belief in Preordainment is of four levels:\nFirst: Belief in Allah’s Knowledge that encompasses everything.\nSecond: Belief that Allah wrote all that will exist until the Day of Judgment.\nThird: Belief in Allah’s executive Will and His Omnipotence. Whatever He wills occurs, and whatever He does not will never occurs.\nFourth: Belief that Allah is the Creator of everything and that He has no partner in His creation.",
-        "tl": "Ang paniniwala sa Qadar o tadhana ay nababatay sa apat na pantas, ito ay ang sumusunod:\n1 Ang paniniwala sa pangmalawakang kaalaman ng Allah.\n2 Ang paniniwala sa pagsulat ng Allah ng lahat ng mangyayari hanggang sa Araw ng Paghuhukom.\n3 Ang paniniwala sa kagustuhan ng Allah at Kanyang buong kapangyarihan o kakayahan, kaya’t ang anumang Kanyang naisin ay mangyayari at ang anumang hindi Niya naisin ay hindi mangyayari.\n4 Ang paniniwala na ang Allah ang Tagaplikha ng lahat ng bagay at wala Siyang katuwang sa paglikha."
+        "tl": "Ang paniniwala sa Qadar o tadhana ay nababatay sa apat na pantas, ito ay ang sumusunod:\n1 Ang paniniwala sa pangmalawakang kaalaman ng Allah.\n2 Ang paniniwala sa pagsulat ng Allah sa (اللوح المحفوظ) (Kahulugan: ang Iniingatang Talaan) ng lahat ng mangyayari hanggang sa Araw ng Paghuhukom.\n3 Ang paniniwala sa kagustuhan ng Allah at Kanyang buong kapangyarihan o kakayahan, kaya’t ang anumang Kanyang naisin ay mangyayari at ang anumang hindi Niya naisin ay hindi mangyayari.\n4 Ang paniniwala na ang Allah ang Tagaplikha ng lahat ng bagay at wala Siyang katuwang sa paglikha."
       },
       "image_url": null,
       "quran": null,
@@ -405,5 +405,14 @@
       "reason": "transliteration"
     }
   ],
-  "notes": "Sixth pillar. Filipino card 3: the Arabic phrase \"lawhul mahfudh\" in Latin letters was dropped from the second level; the sentence still reads \"the belief that Allah wrote all that will happen\"."
+  "notes": "Sixth pillar. Filipino card 3: the Arabic phrase \"lawhul mahfudh\" in Latin letters was dropped from the second level; the sentence still reads \"the belief that Allah wrote all that will happen\".",
+  "edited": [
+    {
+      "card": "u4-l4-c3",
+      "lang": "tl",
+      "from": "pagsulat ng Allah ng lahat",
+      "to": "pagsulat ng Allah sa (اللوح المحفوظ) (Kahulugan: ang Iniingatang Talaan) ng lahat",
+      "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; AUTHORED: the Tagalog meaning is not in the edition"
+    }
+  ]
 }

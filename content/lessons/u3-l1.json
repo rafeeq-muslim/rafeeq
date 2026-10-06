@@ -50,7 +50,7 @@
       "text": {
         "ar": "الركن الأول: شهادة أنَّ لا إله إلا الله وأنَّ محمدًا رسول الله.\nمعنى شهادة أنَّ لا إله إلا الله: لا معبودَ حقٌّ إلا الله.\nمعنى شهادة أنَّ محمدًا رسول الله: طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألا يُعَبد الله إلا بما شرع.",
         "en": "First Pillar: Shahādah (To bear witness that there is no god except Allah and that Muhammad is the Messenger of Allah).\nThe Shahādah that \"There is no god but Allah\" means that there is no deity worthy of worship except Allah.\nThe Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, avoid what he forbade and warned against, and worship Allah only in the manner he instructed.",
-        "tl": "Ang Unang Haligi\nAng Shadatayn o pagsasaksi na walang diyos na karapat-dapat sambahin maliban sa Allah at si Muhammad ay Sugo ng Allah.\nAng kahulugan ng pagsasaksi: Walang ibang diyos na karapat-dapat sambahin maliban sa Allah.\nAng kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
+        "tl": "Ang Unang Haligi\nAng Shadatayn o pagsasaksi na walang diyos na karapat-dapat sambahin maliban sa Allah at si Muhammad ay Sugo ng Allah.\nAng kahulugan ng pagsasaksi ng (لا إله إلا الله): Walang ibang diyos na karapat-dapat sambahin maliban sa Allah.\nAng kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
       },
       "image_url": null,
       "quran": null,
@@ -329,5 +329,14 @@
       "reason": "transliteration"
     }
   ],
-  "notes": "Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 (LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise (e5) counts toward the u1-l1 objectives. The two verses of the first pillar are not repeated here."
+  "notes": "Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 (LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise (e5) counts toward the u1-l1 objectives. The two verses of the first pillar are not repeated here.",
+  "edited": [
+    {
+      "card": "u3-l1-c3",
+      "lang": "tl",
+      "from": "Ang kahulugan ng pagsasaksi: Walang",
+      "to": "Ang kahulugan ng pagsasaksi ng (لا إله إلا الله): Walang",
+      "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; its meaning follows in the sentence"
+    }
+  ]
 }

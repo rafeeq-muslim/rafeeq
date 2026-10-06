@@ -405,6 +405,8 @@ def main():
         out.append(b.build_lesson(les, UNITS))
     for les in lessons:
         b.check_coverage(les)
+    import edits  # reviewer-decided edits, after coverage (recorded in each lesson's `edited`)
+    edits.apply({d['id']: d for d in out})
     os.makedirs(os.path.join(ROOT, 'lessons'), exist_ok=True)
     for doc in out:
         with open(os.path.join(ROOT, 'lessons', f"{doc['id']}.json"), 'w', encoding='utf-8') as f:

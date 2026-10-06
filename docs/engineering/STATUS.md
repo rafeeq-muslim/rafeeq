@@ -27,6 +27,10 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 - Ask and AI (KNW-01/04/10) finished and committed (`e3c96af`); `ai-agents.md` with prices, bake-off, model choice and spend (about $0.43 of the $10 budget so far).
 - Security review: all findings fixed except the four that need the server owner (see `decisions-for-review.md` → Security review). CSP and security headers live with zero violations.
 
+## 2026-10-06 07:20
+- GitHub Actions now wakes the session on teammate pushes and PRs (`.github/workflows/notify.yml`); polling stopped.
+- Merged PR #6 (مهند): reviewer decisions and first review pass of unit 1 (22 objectives, 45 exercises). Applied both decisions to units 2–6 through recorded edits (`content/tools/edits.py`).
+
 ## State
 All features in the PRDs are built, tested (237 backend, 86 frontend) and deployed. What remains needs people: Sharia approval of the content (nothing is shown to learners before it), the five postponed items, and the four server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
 

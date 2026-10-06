@@ -86,7 +86,7 @@
       "text": {
         "ar": "مبطلات المسح:\n01 ما يوجب الوضوء أو الغسل.\n02 انتهاء وقت مدة المسح.",
         "en": "What makes the wiping invalid:\n1. What makes Wudū' or Ghusl obligatory.\n2. The expiration of the fixed time limit for wiping.",
-        "tl": "Mga bagay na nakakawala ng bisa nito:\n1 na magiging obligado ang paligo.\n2 Kapag natapos na ang limit o tagal ng pagpunas."
+        "tl": "Mga bagay na nakakawala ng bisa nito:\n1 Ang anumang nag-oobliga ng wudhu o paligo.\n2 Kapag natapos na ang limit o tagal ng pagpunas."
       },
       "image_url": null,
       "quran": null,
@@ -507,5 +507,14 @@
       "reason": "repeats the section title (shown as the lesson title)"
     }
   ],
-  "notes": "Section «المسح على الخفين والجوربين». What invalidates the wiping differs between sources: the spreadsheet and the printed Arabic book say «ما يوجب الوضوء أو الغسل» (English sheet: \"What makes Wudū' or Ghusl obligatory\"), while the Arabic site, the printed English book and the Filipino page say ghusl only. Cards follow the spreadsheet for ar/en and the site for tl; exercises use only what all three share (ghusl, end of the time limit). Sharia reviewer to decide (README). The site's tab images for this section are not used (no step cards here)."
+  "notes": "Section «المسح على الخفين والجوربين». What invalidates the wiping differs between sources: the spreadsheet and the printed Arabic book say «ما يوجب الوضوء أو الغسل» (English sheet: \"What makes Wudū' or Ghusl obligatory\"), while the Arabic site, the printed English book and the Filipino page say ghusl only. Cards follow the spreadsheet for ar/en and the site for tl; exercises use only what all three share (ghusl, end of the time limit). Sharia reviewer to decide (README). The site's tab images for this section are not used (no step cards here).",
+  "edited": [
+    {
+      "card": "u5-l1-c6",
+      "lang": "tl",
+      "from": "1 na magiging obligado ang paligo.",
+      "to": "1 Ang anumang nag-oobliga ng wudhu o paligo.",
+      "why": "decision 2026-10-06 (2): the printed Arabic edition is the reference (what requires wudu or ghusl); AUTHORED Tagalog wording"
+    }
+  ]
 }

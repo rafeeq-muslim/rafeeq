@@ -20,6 +20,8 @@ Checks (LRN-01, LRN-03, LRN-09, LRN-10 and docs/agents/rules.md 1.3-1.4):
 import glob, json, os, re, sys, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import edits  # noqa: E402
 ROOT = os.path.dirname(HERE)
 LANGS = ('ar', 'en', 'tl')
 errors, warnings = [], []
@@ -194,7 +196,7 @@ def main():
             if img is not None and not str(img).startswith('https://newmuslimguideline.com/Areas/'):
                 err(f'{cid}: image_url not from the site\'s Arabic page: {img}')
             for l in LANGS:
-                t = c['text'][l]
+                t = edits.undo(c['text'][l], d.get('edited', []), cid, l)  # reviewer edits are recorded, not source
                 if not t.strip():
                     empty_verse_cards.append(f'{cid}.{l}')
                 check_lang_safety(l, t, cid)

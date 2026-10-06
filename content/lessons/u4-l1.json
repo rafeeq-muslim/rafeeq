@@ -92,7 +92,7 @@
       "text": {
         "ar": "الإيمان بالله يقتضي توحيده في ربوبيته وألوهيته وأسمائه وصفاته، وهو متضمِّن ما يلي:\nالإيمان بوجوده سبحانه وتعالى.\nالإيمان بربوبيته سبحانه وتعالى، وأنه مالك كل شيء وخالقة ورازقه ومدبِّر أمره.",
         "en": "The belief in Allah requires the belief in His Oneness of Lordship, His Oneness of Worship, and the uniqueness of His Names and Attributes. This includes the following:\nThe belief in the existence of Allah (SWT)\nThe belief that Allah is the only Lord, and that He is the Owner, Creator, and Sustainer of everything, Who manages the affairs of everything.",
-        "tl": "Ang paniniwala kay Allah ay nangangailangan ng paniniwala sa Kanyang kaisahan sa pagka-Panginoon (Ruboobeeyah), sa Kanyang kaisahan sa pagsamba (Uluhiyah), sa Kanyang mga pangalan at katangian, at kabilang na dito ang mga sumusunod:\nAng paniniwala sa pagka-iral ng Allahﷻ.\nAng paniniwala sa Kanyang pagka-Panginoon, Siya ang nagmamay-ari sa lahat ng bagay, Siya ang lumikha, Siya ang nagbigay biyaya, at Siya ang nangangasiwa sa lahat."
+        "tl": "Ang paniniwala kay Allah ay nangangailangan ng paniniwala sa Kanyang kaisahan sa pagka-Panginoon (الربوبية), sa Kanyang kaisahan sa pagsamba (الألوهية), sa Kanyang mga pangalan at katangian (الأسماء والصفات), at kabilang na dito ang mga sumusunod:\nAng paniniwala sa pagka-iral ng Allahﷻ.\nAng paniniwala sa Kanyang pagka-Panginoon, Siya ang nagmamay-ari sa lahat ng bagay, Siya ang lumikha, Siya ang nagbigay biyaya, at Siya ang nangangasiwa sa lahat."
       },
       "image_url": null,
       "quran": null,
@@ -633,5 +633,28 @@
       "reason": "Quran wording in braces inside the English translation (the Arabic states it as plain prose); verse text is never copied into cards"
     }
   ],
-  "notes": "Intro of «أتعرف على أركان الإيمان» and the first pillar. English card 7: the closing words were set in braces as a Quran quotation ({there is nothing like unto Him…}) and were dropped; the Arabic keeps the same words because it states them as prose (reviewer). Filipino card 6: the phrase \"(Asmaa was sifaat)\" (Arabic in Latin letters) was dropped; single-word terms (Ruboobeeyah, Uluhiyah) stay."
+  "notes": "Intro of «أتعرف على أركان الإيمان» and the first pillar. English card 7: the closing words were set in braces as a Quran quotation ({there is nothing like unto Him…}) and were dropped; the Arabic keeps the same words because it states them as prose (reviewer). Filipino card 6: the phrase \"(Asmaa was sifaat)\" (Arabic in Latin letters) was dropped; single-word terms (Ruboobeeyah, Uluhiyah) stay.",
+  "edited": [
+    {
+      "card": "u4-l1-c6",
+      "lang": "tl",
+      "from": "pagka-Panginoon (Ruboobeeyah)",
+      "to": "pagka-Panginoon (الربوبية)",
+      "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; meaning precedes"
+    },
+    {
+      "card": "u4-l1-c6",
+      "lang": "tl",
+      "from": "sa pagsamba (Uluhiyah)",
+      "to": "sa pagsamba (الألوهية)",
+      "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; meaning precedes"
+    },
+    {
+      "card": "u4-l1-c6",
+      "lang": "tl",
+      "from": "mga pangalan at katangian, at kabilang",
+      "to": "mga pangalan at katangian (الأسماء والصفات), at kabilang",
+      "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; meaning precedes"
+    }
+  ]
 }
