@@ -53,5 +53,9 @@
 | PLT-06 | الإشعارات | [PLT-06](features/PLT-06-notifications.md) |
 | PLT-07 | صوت رفيق | [PLT-07](features/PLT-07-rafeeq-tone.md) |
 | PLT-08 | دليل رفيق | [PLT-08](features/PLT-08-rafeeq-guide.md) |
+| PLT-11 | حجم رفيق والتحميل عند الحاجة | [PLT-11](features/PLT-11-size-and-loading-on-demand.md) |
+| PLT-12 | مركز التنزيلات | [PLT-12](features/PLT-12-download-center.md) |
+| PLT-13 | وصول الإشعارات على الآيفون | [PLT-13](features/PLT-13-notifications-on-iphone.md) |
+| PLT-15 | رفيق دون اتصال | [PLT-15](features/PLT-15-works-offline.md) |
 
 القائمة بأولوياتها في قسم «المنصة» من [features.md](../../features.md). المصادر والتحقق في [research/09](../../agents/research/09-platform-privacy-and-notifications.md).
