@@ -11,11 +11,17 @@ export function addDay(days: string[], day: string): string[] {
   return days.includes(day) ? days : [...days, day].sort()
 }
 
+/** The local day before `day` (YYYY-MM-DD), by the calendar, not by 24 hours. */
+export function dayBefore(day: string): string {
+  const [y, m, d] = day.split("-").map(Number)
+  return localDay(new Date(y, m - 1, d - 1, 12))
+}
+
+/** MOT-02 R3: a whole day without learning pauses the streak; the count stays. */
 export function streakView(days: string[], today = localDay()): { count: number; paused: boolean } {
   if (days.length === 0) return { count: 0, paused: false }
   const last = days[days.length - 1]
-  const yesterday = localDay(new Date(Date.now() - 86_400_000))
-  return { count: days.length, paused: last !== today && last !== yesterday }
+  return { count: days.length, paused: last !== today && last !== dayBefore(today) }
 }
 
 /** MOT-02 R5 example: device 6 days + account 9 days → the account keeps 9

@@ -6,6 +6,7 @@
  * Home Screen (R4). The third type, the prayer reminder, stays on the device
  * (practice/reminders.ts). */
 import { api } from "@/app/lib/api"
+import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { localDay } from "@/app/motivation/streak"
 
@@ -128,12 +129,46 @@ export async function syncPushSwitches() {
   useDevice.getState().set({ reminderOn: s.reminder, reminderTime: time, repliesOn: s.replies })
 }
 
-/** MOT-05 R2: tell the server only the date this device learned on. */
-export async function reportLearnedToday() {
+/** MOT-05 R2: tell the server only the date this device learned on, so no
+ * reminder comes that day. Offline, the date waits on the device and is
+ * sent when back online. Signed in, the server marks the day on every
+ * device of the account, so learning on one stops the reminder on the
+ * others (even when this device has no push subscription itself). */
+const LEARNED_KEY = "rafeeq.push.learnedDay"
+
+export async function reportLearnedToday(day = localDay()) {
+  try {
+    localStorage.setItem(LEARNED_KEY, day)
+  } catch {
+    /* storage blocked: try once now */
+  }
+  await flushLearnedDay(day)
+}
+
+export async function flushLearnedDay(fallback?: string) {
+  let day: string | null | undefined
+  try {
+    day = localStorage.getItem(LEARNED_KEY)
+  } catch {
+    day = fallback
+  }
+  day ??= fallback
+  if (!day || (typeof navigator !== "undefined" && !navigator.onLine)) return
+  const forget = () => {
+    try {
+      if (localStorage.getItem(LEARNED_KEY) === day) localStorage.removeItem(LEARNED_KEY)
+    } catch {
+      /* storage blocked */
+    }
+  }
   try {
     const sub = await currentSubscription()
-    if (sub) await api("/api/push/learned", { method: "POST", body: { endpoint: sub.endpoint, day: localDay() } })
+    if (!sub && !useAuth.getState().token) return forget() // nobody to tell
+    await api("/api/push/learned", { method: "POST", body: { endpoint: sub?.endpoint ?? null, day } })
+    forget()
   } catch {
-    /* offline: the reminder may arrive; harmless */
+    /* kept; sent when back online */
   }
 }
+
+if (typeof window !== "undefined") window.addEventListener("online", () => void flushLearnedDay())

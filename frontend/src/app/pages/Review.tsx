@@ -165,16 +165,18 @@ function ReviewSession({ content }: { content: Content | undefined }) {
   )
 }
 
-function ReviewDone({ badges: initial, objectives }: { badges: string[]; objectives: string[] }) {
+export function ReviewDone({ badges: initial, objectives }: { badges: string[]; objectives: string[] }) {
   const { t } = useT()
   const { lessons } = useContent()
   const navigate = useNavigate()
   const popPending = useMotivation((s) => s.popPending)
   const [badges, setBadges] = React.useState(initial)
   if (badges[0]) {
-    const n = Number(badges[0].slice(5))
+    const id = badges[0]
+    const n = Number(id.slice(5))
+    // MOT-03 R4: announced once; either button takes it off the queue.
     const dismiss = () => {
-      popPending()
+      popPending(id)
       setBadges((b) => b.slice(1))
     }
     return (
@@ -186,7 +188,10 @@ function ReviewDone({ badges: initial, objectives }: { badges: string[]; objecti
         primaryLabel={t("common.continue")}
         onPrimary={dismiss}
         secondaryLabel={t("lesson.backHome")}
-        onSecondary={() => navigate("/")}
+        onSecondary={() => {
+          dismiss()
+          navigate("/")
+        }}
       />
     )
   }

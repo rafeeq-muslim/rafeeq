@@ -21,6 +21,9 @@ import { nextLesson, unitDone } from "@/app/learning/path"
 import { progressOf } from "@/app/learning/session"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { streakView } from "@/app/motivation/streak"
+// MOT audit gaps: badges missed while closed (MOT-03 R4); in-app reminder without push (MOT-05)
+import { PendingBadges } from "@/app/motivation/PendingBadges"
+import { InAppReminder } from "@/app/motivation/InAppReminder"
 
 const DAY = 86_400_000
 
@@ -62,6 +65,7 @@ export default function Home() {
       />
       <JourneySheet className="pb-8">
         {streak.paused && <p className="text-body text-muted-foreground">{t("home.welcomeBack")}</p>}
+        <InAppReminder />
 
         {/* Issue #9 item 19: until the content is here (loading, paused offline,
             or retrying) a skeleton, never the "lessons are with the reviewer"
@@ -149,6 +153,7 @@ export default function Home() {
           <IconArrowLeft className="size-5 shrink-0 text-primary ltr:rotate-180" aria-hidden="true" />
         </button>
       </JourneySheet>
+      <PendingBadges />
     </>
   )
 }

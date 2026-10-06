@@ -30,7 +30,7 @@ import requests
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field, field_validator
 from pywebpush import WebPushException, webpush
-from sqlalchemy import delete, select
+from sqlalchemy import delete, or_, select
 
 from app.core import ratelimit
 from app.core.config import get_settings
@@ -112,7 +112,7 @@ class RepliesIn(BaseModel):
 
 
 class LearnedIn(BaseModel):
-    endpoint: str = Field(max_length=1024)
+    endpoint: str | None = Field(default=None, max_length=1024)
     day: date
 
 
@@ -186,11 +186,19 @@ async def set_replies(body: RepliesIn, session: Session) -> dict:
 
 
 @router.post("/learned", status_code=204)
-async def learned(body: LearnedIn, session: Session) -> None:
-    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.endpoint))
-    if sub is not None and (sub.last_learned_on is None or body.day.isoformat() > sub.last_learned_on):
-        sub.last_learned_on = body.day.isoformat()
-        await session.commit()
+async def learned(body: LearnedIn, session: Session, user: OptionalUser) -> None:
+    """MOT-05 R2: no reminder on a day the person learned. Signed in, a
+    learning day on one device marks every device of the account."""
+    day = body.day.isoformat()
+    who = [PushSubscription.endpoint == body.endpoint] if body.endpoint else []
+    if user is not None:
+        who.append(PushSubscription.user_id == user.id)
+    if not who:
+        return
+    for sub in await session.scalars(select(PushSubscription).where(or_(*who))):
+        if sub.last_learned_on is None or day > sub.last_learned_on:
+            sub.last_learned_on = day
+    await session.commit()
 
 
 @router.post("/unsubscribe", status_code=204)
