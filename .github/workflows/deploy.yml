@@ -19,3 +19,18 @@ jobs:
       - uses: actions/checkout@v5
       - name: Deploy
         run: bash infra/scripts/deploy.sh
+  # PLT-11 R1: after the deploy, check the live site lets browsers keep the
+  # hashed files and fonts. Its own job, so it can never trigger deploy.sh's
+  # rollback. While the host router adds `no-store` it only warns (annotation
+  # in the run summary); set STRICT_CACHE_CHECK to "1" once the router is fixed.
+  live-cache-headers:
+    needs: deploy
+    runs-on: [self-hosted, rafeeq-deploy]
+    timeout-minutes: 5
+    env: { STRICT_CACHE_CHECK: "0" }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 24 }
+      - name: Live cache headers (PLT-11 R1)
+        run: node frontend/scripts/check-live-cache.mjs

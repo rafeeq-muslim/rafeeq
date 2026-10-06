@@ -325,7 +325,8 @@ function SupportVideo({ src }: { src: string }) {
   const { t } = useT()
   const [open, setOpen] = React.useState(false)
   return open ? (
-    <video controls playsInline preload="metadata" src={src} className="w-full rounded-card bg-black" />
+    // PLT-11 R4: nothing loads before the learner asks; the button is that ask, so it starts playing.
+    <video controls playsInline autoPlay preload="none" src={src} className="w-full rounded-card bg-black" />
   ) : (
     <Button variant="secondary" className="w-fit" onClick={() => setOpen(true)}>
       {t("lesson.video")}

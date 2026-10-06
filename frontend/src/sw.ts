@@ -10,6 +10,7 @@ import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
 import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
+import { registerPlt11Caching } from "./sw/plt11-caching" // PLT-11 R1/R3/R4
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -31,6 +32,7 @@ registerRoute(
   ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content/media/") || /\.(jpg|jpeg|png|webp)$/.test(url.pathname)),
   new StaleWhileRevalidate({ cacheName: "rafeeq-media" }),
 )
+registerPlt11Caching(self) // PLT-11: hashed shell files and fonts, cache first; never audio/video
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 
