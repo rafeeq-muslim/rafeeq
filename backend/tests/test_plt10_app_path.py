@@ -105,3 +105,45 @@ def test_plt10_nginx_keeps_headers_cache_proxy_and_relative_redirects():
     assert "proxy_pass http://backend:8000;" in NGINX
     assert 'location /assets/ { add_header Cache-Control "public, max-age=31536000, immutable";' in NGINX
     assert "absolute_redirect off;" in NGINX
+
+
+MAIN_TSX = (Path(__file__).resolve().parents[2] / "frontend" / "src" / "main.tsx").read_text(encoding="utf-8")
+APP_SEGMENTS = sorted({p.lstrip("/").split("/")[0] for p in re.findall(r'path: "([^"]+)"', MAIN_TSX)} - {""})
+
+
+def test_plt10_r2_every_app_route_has_a_legacy_redirect():
+    assert {"welcome", "privacy", "design", "guide", "org", "referrals", "review-desk", "team"} <= set(APP_SEGMENTS)
+    for seg in APP_SEGMENTS:
+        assert "return 301 /app$request_uri" in answer(f"/{seg}"), seg
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/assets/index-x.js",
+        "/fonts/thmanyah/a.woff2",
+        "/brand/favicon.svg",
+        "/sw.js",
+        "/manifest.webmanifest",
+        "/theme.js",
+        "/boot-title.js",
+        "/favicon.svg",
+        "/api/health",
+        "/landing/landing.js",
+    ],
+)
+def test_plt10_r2_static_files_and_api_are_never_redirected(path):
+    assert "return 301" not in answer(path)
+
+
+def test_plt10_api_proxy_unchanged():
+    assert (
+        "  location /api/ {\n"
+        "    proxy_pass http://backend:8000;\n"
+        "    proxy_set_header Host $host;\n"
+        "    proxy_set_header X-Forwarded-For $remote_addr;\n"
+        "    proxy_set_header X-Forwarded-Proto https;\n"
+        "    proxy_read_timeout 120s;\n"
+        "    proxy_buffering off;   # streamed answers\n"
+        "  }\n"
+    ) in NGINX
