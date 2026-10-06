@@ -50,6 +50,17 @@ async def publish(session: AsyncSession, *, country: str, hijri_year: int, hijri
     return row
 
 
+async def remove(session: AsyncSession, *, country: str, hijri_year: int, hijri_month: int) -> bool:
+    row = await session.scalar(
+        select(Sighting).where(Sighting.country == country, Sighting.hijri_year == hijri_year, Sighting.hijri_month == hijri_month)
+    )
+    if row is None:
+        return False
+    await session.delete(row)
+    await session.commit()
+    return True
+
+
 async def published(session: AsyncSession) -> list[dict]:
     rows = await session.scalars(select(Sighting).order_by(Sighting.hijri_year, Sighting.hijri_month))
     return [
