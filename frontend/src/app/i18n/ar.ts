@@ -1179,6 +1179,11 @@ export const ar = {
   "desk.cite.missing": "الحديث {id} غير موجود في السجل المخزَّن بهذه اللغة",
   "desk.glossary.title": "ألفاظ غير معتمدة في المعجم",
   "desk.glossary.flag": "«{found}» بدل اللفظ المعتمد «{term}»",
+  // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
+  "me.theme": "المظهر",
+  "theme.light": "فاتح",
+  "theme.dark": "داكن",
+  "theme.system": "حسب الجهاز",
 
   // --- PLT-09 organized home (plt-09-organized-home-build) ---
   "home.org.daily": "يومي",
