@@ -326,7 +326,8 @@ describe("CMP-06 private questions notebook", () => {
       .filter(([, code]) => /from "(\.\/|@\/app\/companion\/)notebook"|useNotebook|rafeeq\.notebook/.test(code))
       .map(([path]) => path)
       .sort()
-    expect(readers).toEqual(["/src/app/companion/Notebook.tsx", "/src/app/companion/notebook.ts"])
+    // PLT-05 R7: sign-out checks only whether notes exist, to tell their owner they will be erased.
+    expect(readers).toEqual(["/src/app/companion/Notebook.tsx", "/src/app/companion/notebook.ts", "/src/app/privacy/SignOutButton.tsx"])
   })
 
   it("cmp06_r4_delete_one_or_all_and_cleared_site_data_leaves_nothing", () => {

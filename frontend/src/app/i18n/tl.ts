@@ -283,7 +283,6 @@ export const tl: Dict = {
   "acct.enable2fa": "I-on ang two-step sign-in",
   "acct.disable2fa": "I-off ang two-step sign-in at alisin ang email",
   "acct.2faOn": "Naka-on. Pupunta ang mga code sa {email}",
-  "acct.signedOut": "Nag-sign out ka. Mananatili ang progreso mo sa device na ito.",
   "acct.saveDisplay": "I-save ang pangalan",
   "acct.inviteBad": "Hindi valid o nagamit na ang invite code na ito.",
   "acct.genderNeeded": "Pumili ng kasarian para maitugma ka sa tamang grupo.",
@@ -1212,4 +1211,20 @@ export const tl: Dict = {
   "home.org.library.title": "Mula sa aklatan",
   "home.org.library.cta": "Buksan",
   "home.org.openSaved": "Buksan ang mga na-save ko",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "Sine-save ang progreso mo…",
+  "acct.signOut.anyway": "Mag-sign out at burahin",
+  "acct.signOut.wait": "Maghintay hanggang maka-online",
+  // PLT-05 R7 follow-up: one dialog naming what would be lost; privacy policy line. ⚠️ Written by Claude; needs a fluent reviewer.
+  "acct.signOut.lostTitle": "Mabubura ito sa device na ito at hindi mananatili sa account mo",
+  "acct.signOut.offline": "Hindi namin maabot ang account mo ngayon; baka offline ka. Kung maghihintay ka hanggang maka-connect, mase-save muna ang itinatago ng account mo.",
+  "acct.signOut.rejected": "Hindi ito tinanggap ng account mo, at hindi iyon mababago ng paghihintay.",
+  "acct.signOut.deviceOnly": "Nasa device na ito lang ang mga ito at hindi lumilipat sa account mo.",
+  "acct.signOut.lost.progress": "Ang natutunan mo mula sa huling save sa account mo",
+  "acct.signOut.lost.saved": "Mga na-save mo na hindi pa nakarating sa account mo",
+  "acct.signOut.lost.notebook": "Ang pribado mong kuwaderno ng mga tanong",
+  "acct.signOut.lost.habits": "Ang mga gawi mo at ang naitala mo sa mga ito",
+  "policy.signout.title": "Kapag nag-sign out ka",
+  "policy.signout.body": "Binubura ng pag-sign out ang lahat ng itinatago ng Rafeeq sa device na ito, matapos i-save sa account mo ang progreso mo at ang mga na-save mo. Hindi itinatago sa account ang pribado mong kuwaderno ng mga tanong at ang mga gawi mo, kaya nabubura ang mga ito kapag nag-sign out ka. Nananatili ang nasa account mo hanggang burahin mo ito.",
 }

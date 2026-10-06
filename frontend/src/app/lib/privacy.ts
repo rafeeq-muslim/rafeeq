@@ -8,6 +8,9 @@
  * - Erase this device (R4): everything Rafeeq keeps in this browser, plus a
  *   guest's conversations with a person and the push subscription on the
  *   server; then the first-run language screen.
+ * - Sign out (R7): progress is saved to the account first (SignOutButton),
+ *   then this browser is erased like R4, keeping only the app shell cache.
+ *   Nothing account-side changes (organisation link, conversations).
  * - Download a copy of my data (R6): one JSON file with this device's data
  *   and, for an account, what the server keeps (GET /api/me/export), plus
  *   the server's copy of this device's organisation link if it has one
@@ -98,13 +101,9 @@ export async function downloadMyData() {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-/** R4: erase this device, then start again from the language screen. */
-export async function wipeDevice(go: (url: string) => void = (url) => window.location.replace(url)) {
-  const guest = !useAuth.getState().me
-  const headers = helpHeaders()
-  if (guest && headers["X-Help-Token"]) await api("/api/help/guest", { method: "DELETE", headers }).catch(() => undefined)
-  await unlinkOrg().catch(() => undefined) // ORG-01 R4: an organisation link goes with the device
-  await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
+/** What Rafeeq keeps in this browser outside Cache Storage: this device's push
+ * subscription (server row and browser), every rafeeq.* key, the session. */
+async function clearBrowserStorage() {
   try {
     const regs = (await navigator.serviceWorker?.getRegistrations?.()) ?? []
     for (const r of regs) {
@@ -122,6 +121,31 @@ export async function wipeDevice(go: (url: string) => void = (url) => window.loc
   } catch {
     /* blocked storage */
   }
+}
+
+/** The service worker's app shell; keeping it lets Rafeeq still open after sign-out. */
+export const isAppShellCache = (name: string) => name.startsWith("workbox-precache")
+
+/** R4: erase this device, then start again from the language screen. */
+export async function wipeDevice(go: (url: string) => void = (url) => window.location.replace(url)) {
+  const guest = !useAuth.getState().me
+  const headers = helpHeaders()
+  if (guest && headers["X-Help-Token"]) await api("/api/help/guest", { method: "DELETE", headers }).catch(() => undefined)
+  await unlinkOrg().catch(() => undefined) // ORG-01 R4: an organisation link goes with the device
+  await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
+  await clearBrowserStorage()
   if (typeof caches !== "undefined") for (const k of await caches.keys()) await caches.delete(k)
   go(appUrl("/welcome"))
+}
+
+/** R7: sign out, then erase this device like R4 but keep the app shell. Only
+ * what lives in the browser goes: the account keeps its organisation link,
+ * its conversations with a person and its progress (saved by the caller). */
+export async function signOutAndErase(go: (url: string) => void = (url) => window.location.replace(url)) {
+  await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
+  useAuth.getState().set({ token: null, me: null })
+  await clearBrowserStorage()
+  // Runtime caches (content, media) and the discreet-mode copy (rafeeq-prefs) go.
+  if (typeof caches !== "undefined") for (const k of await caches.keys()) if (!isAppShellCache(k)) await caches.delete(k)
+  go("/welcome")
 }

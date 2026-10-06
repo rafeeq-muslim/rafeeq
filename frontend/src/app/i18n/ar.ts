@@ -281,7 +281,6 @@ export const ar = {
   "acct.enable2fa": "فعّل التحقق بخطوتين",
   "acct.disable2fa": "أوقف التحقق بخطوتين وامسح البريد",
   "acct.2faOn": "مفعّل، والرموز تصل إلى {email}",
-  "acct.signedOut": "خرجت من حسابك. تقدّمك باقٍ على هذا الجهاز.",
   "acct.saveDisplay": "احفظ الاسم",
   "acct.inviteBad": "رمز الدعوة غير صالح أو مستعمل.",
   "acct.genderNeeded": "اختر الجنس ليطابقك مع المجموعات المناسبة.",
@@ -1210,4 +1209,20 @@ export const ar = {
   "home.org.library.title": "من المكتبة",
   "home.org.library.cta": "افتح المادة",
   "home.org.openSaved": "افتح محفوظاتي",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "نحفظ تقدّمك…",
+  "acct.signOut.anyway": "اخرج وامسح",
+  "acct.signOut.wait": "انتظر حتى يعود الاتصال",
+  // PLT-05 R7 follow-up: one dialog naming what would be lost; privacy policy line
+  "acct.signOut.lostTitle": "سيُمسح هذا من الجهاز ولن يبقى في حسابك",
+  "acct.signOut.offline": "لم نستطع الوصول إلى حسابك الآن، وقد يكون الاتصال منقطعًا. إن انتظرت حتى يعود الاتصال، نحفظ ما يحفظه حسابك أولًا.",
+  "acct.signOut.rejected": "لم يقبل حسابك حفظ ذلك، والانتظار لا يغيّر شيئًا.",
+  "acct.signOut.deviceOnly": "هذا محفوظ على هذا الجهاز وحده، ولا يُنقل إلى حسابك.",
+  "acct.signOut.lost.progress": "ما تعلّمته منذ آخر حفظ في حسابك",
+  "acct.signOut.lost.saved": "ما حفظته ولم يصل إلى حسابك",
+  "acct.signOut.lost.notebook": "دفتر أسئلتك الخاصة",
+  "acct.signOut.lost.habits": "عاداتك وما سجّلته منها",
+  "policy.signout.title": "عند تسجيل الخروج",
+  "policy.signout.body": "تسجيل الخروج يمسح من هذا الجهاز كل ما يحفظه رفيق عليه، بعد أن نحفظ في حسابك تقدّمك وما حفظته. ودفتر أسئلتك الخاصة وعاداتك لا تُحفظ في الحساب، فتُمسح مع الخروج. وما في حسابك يبقى حتى تحذفه.",
 } as const

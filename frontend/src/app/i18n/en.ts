@@ -282,7 +282,6 @@ export const en: Dict = {
   "acct.enable2fa": "Turn on two-step sign-in",
   "acct.disable2fa": "Turn off two-step sign-in and remove the email",
   "acct.2faOn": "On. Codes go to {email}",
-  "acct.signedOut": "You signed out. Your progress stays on this device.",
   "acct.saveDisplay": "Save the name",
   "acct.inviteBad": "This invite code is not valid or was already used.",
   "acct.genderNeeded": "Choose a gender to match you with the right groups.",
@@ -1211,4 +1210,20 @@ export const en: Dict = {
   "home.org.library.title": "From the library",
   "home.org.library.cta": "Open it",
   "home.org.openSaved": "Open my saved items",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "Saving your progress…",
+  "acct.signOut.anyway": "Sign out and erase",
+  "acct.signOut.wait": "Wait until I'm connected",
+  // PLT-05 R7 follow-up: one dialog naming what would be lost; privacy policy line
+  "acct.signOut.lostTitle": "This will be erased from this device and won't be in your account",
+  "acct.signOut.offline": "We couldn't reach your account just now; you may be offline. If you wait until you're connected, what your account keeps is saved first.",
+  "acct.signOut.rejected": "Your account didn't accept it, and waiting won't change that.",
+  "acct.signOut.deviceOnly": "These are kept on this device only and never move to your account.",
+  "acct.signOut.lost.progress": "What you learned since the last save to your account",
+  "acct.signOut.lost.saved": "Items you saved that haven't reached your account",
+  "acct.signOut.lost.notebook": "Your private questions notebook",
+  "acct.signOut.lost.habits": "Your habits and what you recorded of them",
+  "policy.signout.title": "When you sign out",
+  "policy.signout.body": "Signing out erases everything Rafeeq keeps on this device, after saving your progress and saved items to your account. Your private questions notebook and your habits are not kept in the account, so they are erased when you sign out. What is in your account stays until you delete it.",
 }

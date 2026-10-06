@@ -132,17 +132,22 @@ type AccountEntry = SavedEntry & { answer?: AnswerText | null }
 
 /** R3: send the device's list (answers with their text) to the account and keep the merged result. */
 export async function pushSaved(): Promise<void> {
+  try {
+    await pushSavedOrThrow()
+  } catch {
+    /* offline: the device copy stays; merged on the next visit */
+  }
+}
+
+/** PLT-05 R7: the same, but sign-out learns when the account did not get the list. */
+export async function pushSavedOrThrow(): Promise<void> {
   if (!useAuth.getState().token) return
   const items: AccountEntry[] = useSaved.getState().items.map((e) => {
     const answer = e.kind === "answer" ? savedAnswer(e.ref) : undefined
     return answer ? { ...e, answer } : e
   })
-  try {
-    const r = await api<{ items: AccountEntry[] }>("/api/me/saved", { method: "PUT", body: { items } })
-    // An answer saved on another device arrives with its text.
-    for (const e of r.items) if (e.kind === "answer" && isAnswerText(e.answer) && !savedAnswer(e.ref)) keepAnswer(e.ref, e.answer)
-    useSaved.getState().replace(mergeSaved(useSaved.getState().items, r.items))
-  } catch {
-    /* offline: the device copy stays; merged on the next visit */
-  }
+  const r = await api<{ items: AccountEntry[] }>("/api/me/saved", { method: "PUT", body: { items } })
+  // An answer saved on another device arrives with its text.
+  for (const e of r.items) if (e.kind === "answer" && isAnswerText(e.answer) && !savedAnswer(e.ref)) keepAnswer(e.ref, e.answer)
+  useSaved.getState().replace(mergeSaved(useSaved.getState().items, r.items))
 }

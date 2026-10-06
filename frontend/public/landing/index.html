@@ -93,15 +93,15 @@
 <main id="main">
 
   <!-- 1 · RECOGNITION (night). pin + bespoke depth planes. -->
-  <section class="hero" id="welcome" data-sc-act="pin" data-sc-span="1.6" aria-labelledby="hero-title">
+  <section class="hero" id="welcome" data-sc-act="pin" data-sc-span="1.25" aria-labelledby="hero-title">
     <div data-sc-stage class="hero__stage" id="heroStage">
       <div class="hero__grid">
-        <div class="hero__copy" data-sc-cue="0 1 0 0.3">
+        <div class="hero__copy">
           <h1 id="hero-title" class="display" data-i18n-html="hero.title">لست وحدك في رحلتك</h1>
-          <p class="hero__sub" data-i18n="hero.sub">رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه.</p>
+          <p class="hero__sub" data-i18n="hero.sub">في سنتك الأولى مسلمًا يكون معك رفيق بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان تكلّمه متى احتجت.</p>
           <div class="hero__actions">
-            <a class="btn btn--night" href="/welcome" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
-            <p class="hero__note" data-i18n="hero.note">مجاني، ولا يطلب منك حسابًا لتبدأ.</p>
+            <a class="btn btn--night" href="#learn" data-scroll-to="learn"><span data-i18n="hero.more">تعرّف على رفيق</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l0 14"/><path d="M18 13l-6 6"/><path d="M6 13l6 6"/></svg></a>
+            <p class="hero__note" data-i18n="hero.note">مجاني، وتبدأ دون حساب.</p>
           </div>
         </div>
         <div class="hero__flower" id="anchorHero" aria-hidden="true"><div class="static-flower" data-flower="1"></div></div>
@@ -116,11 +116,11 @@
     <section class="chapter learn" id="learn" data-sc-act="flow" aria-labelledby="learn-title">
       <div class="wrap learn__grid">
         <div class="learn__copy" data-sc-in data-sc-stagger="70">
-          <h2 id="learn-title" class="h2" data-i18n="learn.title">تبدأ من الأصل، خطوة بخطوة</h2>
-          <p class="reading soft" data-i18n-html="learn.lead">دروس قصيرة من كتاب <span class="book">«المختصر المفيد للمسلم الجديد»</span>، بالعربية والإنجليزية والتاغالوغية. تبدأ بما تحتاجه في يومك الأول: معنى الشهادتين، ثم الوضوء، ثم الصلاة الأولى.</p>
+          <h2 id="learn-title" class="h2" data-i18n="learn.title">تتعلّم دينك من أوله، درسًا بعد درس</h2>
+          <p class="reading soft" data-i18n-html="learn.lead">الدروس من كتاب <span class="book">«المختصر المفيد للمسلم الجديد»</span>، بالعربية والإنجليزية والتاغالوغية، وكل درس دقائق معدودة. أولها ما تحتاجه في يومك الأول: معنى الشهادتين، ثم الوضوء، ثم الصلاة الأولى.</p>
           <ul class="petals">
-            <li data-i18n="learn.p1">لا يظهر درس لأحد قبل أن يعتمده المراجع الشرعي.</li>
-            <li data-i18n="learn.p2">الخطأ آمن: ترى الإجابة الصحيحة بكلمات الدرس نفسه، ثم تحاول من جديد. لا قلوب ولا محاولات تنفد.</li>
+            <li data-i18n="learn.p1">كل درس يراجعه مراجع شرعي قبل أن يُنشر.</li>
+            <li data-i18n="learn.p2">إن أخطأت رأيت الصواب بكلمات الدرس نفسه، وأعدت المحاولة كما تشاء، فلا عدد محدودًا للمحاولات.</li>
             <li data-i18n="learn.p3">تتوقف متى شئت، وتعود إلى حيث توقفت.</li>
           </ul>
         </div>
@@ -133,10 +133,10 @@
       <div data-sc-stage class="ask__stage">
         <div class="wrap ask__grid">
           <div class="ask__copy">
-            <h2 id="ask-title" class="h2" data-i18n="ask.title">لا مصدر، لا إجابة</h2>
+            <h2 id="ask-title" class="h2" data-i18n="ask.title">كل إجابة معها مصدرها</h2>
             <p class="reading soft" data-i18n="ask.lead">يجيبك مساعد رفيق بلغتك من المصادر المعتمدة وحدها، ويريك من أين جاءت كل إجابة. وإن لم يجد مصدرًا قال لك ذلك، وعرض عليك أن تسأل إنسانًا.</p>
             <p class="ask__ai"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M14 18h-1l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v4.5"/><path d="M19 22v.01"/><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"/></svg><span data-i18n="ask.ai">المساعد أداة ذكاء اصطناعي، ويخبرك بذلك دائمًا، وقد يخطئ.</span></p>
-            <p class="cases__label" id="cases-label" data-i18n="ask.which">ماذا يحدث لسؤالك؟</p>
+            <p class="cases__label" id="cases-label" data-i18n="ask.which">كيف يتعامل المساعد مع سؤالك:</p>
             <ul class="cases" aria-labelledby="cases-label">
               <li><button type="button" data-case="0" aria-controls="case-0" data-i18n="ask.k0">سؤال عام</button></li>
               <li><button type="button" data-case="1" aria-controls="case-1" data-i18n="ask.k1">مسألة فيها خلاف</button></li>
@@ -150,23 +150,23 @@
             <div class="route__stack">
               <div class="route__case" id="case-0" data-sc-cue="0 0.26 0 0.12">
                 <p class="route__kind" data-i18n="ask.k0">سؤال عام</p>
-                <p class="h3" data-i18n="ask.o0">إجابة من المصادر المعتمدة، يختمها شريط يذكر مصدرها.</p>
+                <p class="h3" data-i18n="ask.o0">إجابة من المصادر المعتمدة، وتحتها اسم المصدر.</p>
                 <p class="route__end route__end--source"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12"/><path d="M19 16h-12a2 2 0 0 0 -2 2"/><path d="M9 8h6"/></svg><span data-i18n="ask.e0">المصدر يظهر تحت كل إجابة</span></p>
               </div>
               <div class="route__case" id="case-1" data-sc-cue="0.255 0.51 0.12 0.12">
                 <p class="route__kind" data-i18n="ask.k1">مسألة فيها خلاف</p>
-                <p class="h3" data-i18n="ask.o1">يذكر لك أن للعلماء فيها أقوالًا، ولا يقدّم المختلف فيه على أنه محسوم، أو يحيلك إلى مختص.</p>
+                <p class="h3" data-i18n="ask.o1">يخبرك أن العلماء اختلفوا فيها، ولا يعرض قولًا واحدًا على أنه الحكم، أو يحيلك إلى مختص.</p>
                 <p class="route__end route__end--differ"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20l10 0"/><path d="M6 6l6 -1l6 1"/><path d="M12 3l0 17"/><path d="M9 12l-3 -6l-3 6a3 3 0 0 0 6 0"/><path d="M21 12l-3 -6l-3 6a3 3 0 0 0 6 0"/></svg><span data-i18n="ask.e1">الأقوال كما هي، دون حسم</span></p>
               </div>
               <div class="route__case" id="case-2" data-sc-cue="0.505 0.755 0.12 0.12">
                 <p class="route__kind" data-i18n="ask.k2">سؤال عن حالتك</p>
-                <p class="h3" data-i18n="ask.o2">لا يفتي المساعد في حالتك. يعطيك معلومة عامة، ثم يكمل معك إنسان مؤهل.</p>
+                <p class="h3" data-i18n="ask.o2">لا يفتي المساعد في حالتك. يعطيك ما ورد في المصادر بوجه عام، ويعرض عليك أن تسأل إنسانًا يعرف تفاصيلها.</p>
                 <p class="route__end route__end--person"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-3a8 8 0 1 1 16 0v3"/><path d="M18 19c0 1.657 -2.686 3 -6 3"/><path d="M4 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3"/><path d="M15 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3"/></svg><span data-i18n="ask.e2">إنسان مؤهل</span></p>
               </div>
               <div class="route__case" id="case-3" data-sc-cue="0.75 1 0.12 0">
                 <p class="route__kind" data-i18n="ask.k3">إن كنت في خطر</p>
-                <p class="h3" data-i18n="ask.o3">يصلك إنسان فورًا، ولا يقول الذكاء الاصطناعي شيئًا غير ذلك.</p>
-                <p class="route__end route__end--now"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M15 15l3.35 3.35"/><path d="M9 15l-3.35 3.35"/><path d="M5.65 5.65l3.35 3.35"/><path d="M18.35 5.65l-3.35 3.35"/></svg><span data-i18n="ask.e3">إنسان، الآن</span></p>
+                <p class="h3" data-i18n="ask.o3">لا يجيب الذكاء الاصطناعي بشيء، ويعرض عليك فورًا التواصل مع إنسان من فريقنا، وأرقام الطوارئ في بلدك.</p>
+                <p class="route__end route__end--now"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M15 15l3.35 3.35"/><path d="M9 15l-3.35 3.35"/><path d="M5.65 5.65l3.35 3.35"/><path d="M18.35 5.65l-3.35 3.35"/></svg><span data-i18n="ask.e3">إنسان، وأرقام الطوارئ</span></p>
               </div>
             </div>
           </div>
@@ -185,12 +185,12 @@
           </div>
         </div>
         <div class="people__body" data-sc-in>
-          <p class="reading soft" style="margin-inline:auto" data-i18n="people.lead">اضغطه فيرد عليك أحد فريقنا بلغتك، ولا يرى رسالتك غيره. ولا تحتاج حسابًا لذلك.</p>
+          <p class="reading soft" style="margin-inline:auto" data-i18n="people.lead">اضغطه فيرد عليك إنسان من فريق رفيق بلغتك: رجل إن كنت رجلًا، وامرأة إن كنتِ امرأة. ولا تحتاج حسابًا لذلك.</p>
         </div>
         <div class="people__two" data-sc-in data-sc-stagger="80">
           <div>
-            <h3 class="h3" data-i18n="people.mentorT">مرشد متطوع</h3>
-            <p class="body soft" data-i18n="people.mentor">تختار مرشدًا يتكلم لغتك، ولا يرى من تقدّمك إلا ما تأذن به.</p>
+            <h3 class="h3" data-i18n="people.mentorT">مرشد يتابعك</h3>
+            <p class="body soft" data-i18n="people.mentor">إن أنشأت حسابًا اخترت مرشدًا من جنسك يتكلم لغتك، ولا يرى من تقدّمك إلا ما تأذن به.</p>
           </div>
           <div>
             <h3 class="h3" data-i18n="people.groupT">مجموعة صغيرة</h3>
@@ -210,8 +210,8 @@
           </div>
         </div>
         <div class="daily__copy" data-sc-in data-sc-stagger="70">
-          <h2 id="daily-title" class="h2" data-i18n="daily.title">صلاتك تُحسب على جهازك</h2>
-          <p class="reading soft" data-i18n="daily.lead">مواقيت الصلاة والقبلة تُحسب على هاتفك نفسه، وموقعك لا يغادره أبدًا. ومعها الأذكار اليومية.</p>
+          <h2 id="daily-title" class="h2" data-i18n="daily.title">مواقيت الصلاة تُحسب على هاتفك</h2>
+          <p class="reading soft" data-i18n="daily.lead">يحسب رفيق مواقيت الصلاة واتجاه القبلة على هاتفك نفسه، فلا يغادره موقعك. وفيه أذكار الصباح والمساء وما بعد الصلاة.</p>
           <p class="private body"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6"/><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/><path d="M8 11v-4a4 4 0 1 1 8 0v4"/></svg><span data-i18n="daily.private">العبادة بينك وبين الله: ما تتابعه منها خاص بك، لا يراه أحد، ولا يُكافأ عليه بوسام ولا تقدّم.</span></p>
         </div>
       </div>
@@ -227,7 +227,7 @@
         <ol class="days" id="days" aria-hidden="true"></ol>
         <div class="mercy__foot" data-sc-in data-sc-stagger="80">
           <p class="body soft" data-i18n="mercy.remind">والتذكير لا يأتي إلا إن طلبته: مرة في اليوم على الأكثر، في الوقت الذي تختاره، بنص محايد لا يكشف شيئًا.</p>
-          <p class="body soft" data-i18n="mercy.account">ولا تحتاج حسابًا لتبدأ: تقدّمك محفوظ على جهازك. وإن أردت حفظه، فحساب بسيط باسم تختاره أنت، دون بريد.</p>
+          <p class="body soft" data-i18n="mercy.account">ولا تحتاج حسابًا لتبدأ: تقدّمك محفوظ على جهازك. وإن أردت حفظه في حساب، فيكفيك اسم تختاره وكلمة مرور، دون بريد ولا رقم جوال.</p>
         </div>
       </div>
     </section>
@@ -240,8 +240,8 @@
       <div class="bloom__col">
         <div class="bloom__flower" id="anchorBloom" aria-hidden="true"><div class="static-flower" data-flower="12"></div></div>
         <div class="bloom__copy">
-          <h2 id="bloom-title" class="display" data-sc-cue="0.4" data-sc-kinetic="lines" data-i18n="bloom.title">وفي آخر السنة، تكتمل الزهرة</h2>
-          <p class="bloom__p" data-sc-cue="0.48" data-i18n="bloom.lead">كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تبدأ اليوم.</p>
+          <h2 id="bloom-title" class="display" data-sc-cue="0.4" data-sc-kinetic="lines" data-i18n="bloom.title">وحدةً بعد وحدة، تكتمل زهرتك</h2>
+          <p class="bloom__p" data-sc-cue="0.48" data-i18n="bloom.lead">كل وحدة تُتمّها تضيف إلى زهرتك بتلة، وأولاها تبدأ اليوم.</p>
           <div class="bloom__cta" data-sc-cue="0.54" data-sc-rise="0">
             <a class="btn btn--celebrate" href="/app/" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
             <p class="hero__note" data-i18n="bloom.note">مجاني، بالعربية والإنجليزية والتاغالوغية.</p>
