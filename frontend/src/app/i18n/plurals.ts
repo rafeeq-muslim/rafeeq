@@ -41,6 +41,8 @@ export const PLURALS: Partial<Record<Locale, Record<string, Forms>>> = {
       many: "{n} فكرة تحتاج مراجعة قصيرة.",
       other: "{n} فكرة تحتاج مراجعة قصيرة.",
     },
+    // PLT-09 R2: the coming prayer in its last hour («العصر بعد 40 دقيقة»).
+    "home.org.soon": { one: "{name} بعد دقيقة", two: "{name} بعد دقيقتين", few: "{name} بعد {n} دقائق", many: "{name} بعد {n} دقيقة", other: "{name} بعد {n} دقيقة" },
   },
   en: {
     "home.reviewBody": { one: "1 objective to strengthen" },
@@ -50,6 +52,7 @@ export const PLURALS: Partial<Record<Locale, Record<string, Forms>>> = {
     "placement.more.body": { one: "Up to 1 more question, the same way. Or start now with “{unit}”." },
     "ask.guide.masteredCount": { one: "You mastered 1 idea." },
     "ask.guide.reviewCount": { one: "1 idea needs a short review." },
+    "home.org.soon": { one: "{name} in 1 minute" }, // PLT-09 R2
   },
 }
 

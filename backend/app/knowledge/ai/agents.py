@@ -141,6 +141,19 @@ async def write_guide(summary: dict[str, Any], lang: str) -> str:
     return r.data["text"].strip()
 
 
+async def order_home(summary: dict[str, Any], bucket: str, lang: str) -> dict[str, Any]:
+    """PLT-09 R4: the guide's model ranks Home's components from the learning
+    summary and a time-of-day bucket only. Returns the raw {main, optional};
+    the caller validates the ids (app.platform.home.check_order)."""
+
+    def ok(d: dict) -> bool:
+        return isinstance(d.get("main"), list) and isinstance(d.get("optional"), list)
+
+    user = f"LANGUAGE: {LANG_NAME[lang]}\nTIME OF DAY: {bucket}\nLEARNING SUMMARY:\n" + json.dumps(summary, ensure_ascii=False, indent=1)
+    r = await client.chat_json("home_order", "fast", prompt("home_order"), user, max_tokens=120, check=ok)
+    return r.data
+
+
 async def tag_objective(question: str, objectives: dict[str, str]) -> str | None:
     def ok(d: dict) -> bool:
         return "objective_id" in d and (d["objective_id"] is None or isinstance(d["objective_id"], str))

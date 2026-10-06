@@ -35,6 +35,7 @@ Eleven parts, seven of them model calls. Costs are averages of real calls record
 | 9 | Objective tagger | LRN-10 R5, KNW-10 R5 | fast | answered question + approved objectives → one id or null | `tagger.md` | Only with the learner's consent and only on `general`/`disputed`; id must be in the list; event `ObjectiveAsked` carries the id only | ≈ $0.0001 ⚠️ (≈1.5k tokens of objectives) | `test_knw10_r5_*` |
 | 10 | Bare baseline | KNW-04 R2 | main | question → free text | `bare.md` | Test only, never shown to users | ≈ $0.0003 ⚠️ | `test_knw04_*` |
 | 11 | Embedder (job + CLI) | KNW-02 §3.6 | `baai/bge-m3` | passage text (≤ 6,000 chars) → 1024-d vector | none | Resumable (NULL vectors only), spend-guarded per batch, back-off on 429, scheduler batch of 2,000 every 15 min in production | $0.00014 per batch of ~50 hadith | `test_knw02_embed_job_*` |
+| 12 | Home order | PLT-09 R4 | fast (the guide's tier) | learning summary (names, as for agent 8) + time-of-day bucket + language → `{main, optional}` ids | `home_order.md` | Only while `PLT09_ORGANIZED_HOME` is on (default); request refuses any other field; ids checked (each main once, known optional, no next step); else null → fixed order; once a day per device; nothing stored | not measured ⚠️ | `test_plt09_*` |
 
 Per answered question: router + embedding + composer + verifier ≈ **$0.0015 and 9–15 s** ✅ (measured on the live corpus). Danger, refusal and guide requests cost nothing. At $10 the budget covers roughly 6,000 answered questions after the corpus is embedded.
 
