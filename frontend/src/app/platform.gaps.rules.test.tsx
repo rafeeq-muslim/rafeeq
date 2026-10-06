@@ -97,7 +97,8 @@ const publicRoutes = (entry: string) =>
 
 beforeEach(() => {
   localStorage.clear()
-  useDevice.setState({ locale: "ar", onboarded: true, quickExit: false, discreet: false })
+  // PLT-08 R1/R5 are tested on the previous Home, which PLT09_ORGANIZED_HOME=false brings back (PLT-09 replaces them when on).
+  useDevice.setState({ locale: "ar", onboarded: true, quickExit: false, discreet: false, organizedHome: false })
   useLearning.setState({ completed: {}, sessions: {}, mastery: {}, unlockedUnits: [] })
   useGuide.setState({ dismissed: {}, used: {}, lastShown: null })
   vi.mocked(exitNow).mockClear()

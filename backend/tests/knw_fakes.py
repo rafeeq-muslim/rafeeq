@@ -35,6 +35,7 @@ AGENT_OF_HEADING = {
     "# Rafeeq mistake explainer": "explainer",
     "# Rafeeq learning guide": "guide",
     "# Rafeeq objective tagger": "tagger",
+    "# Rafeeq home order": "home_order",  # PLT-09 R4
 }
 
 

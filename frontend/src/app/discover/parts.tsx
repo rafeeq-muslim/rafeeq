@@ -1,6 +1,6 @@
 /** Small shared pieces of the Discover screens. */
 import * as React from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { IconArrowRight, IconBook2, IconBookmark, IconBookmarkFilled } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
@@ -8,16 +8,21 @@ import { Button } from "@/components/ui/button"
 import { TopBar } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useSaved, type SavedKind } from "./savedStore"
+import { useOrganizedHomeCached } from "@/app/home/setting"
 
 /** Sticky bar with a back arrow (mirrors in LTR). */
 export function DiscoverBar({ title, back = "/discover", end }: { title: React.ReactNode; back?: string; end?: React.ReactNode }) {
   const { t } = useT()
   const navigate = useNavigate()
+  // PLT-09: without the Discover hub, its screens go back to where they now live (Home; «محفوظاتي» to «حسابي»).
+  const organized = useOrganizedHomeCached()
+  const { pathname } = useLocation()
+  const to = organized && back === "/discover" ? (pathname.startsWith("/discover/saved") ? "/me" : "/") : back
   return (
     <TopBar
       className="sticky top-0"
       start={
-        <Button variant="ghost" size="icon" aria-label={t("common.back")} onClick={() => navigate(back)}>
+        <Button variant="ghost" size="icon" aria-label={t("common.back")} onClick={() => navigate(to)}>
           <IconArrowRight className="ltr:rotate-180" stroke={1.75} />
         </Button>
       }

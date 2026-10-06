@@ -10,18 +10,19 @@ import CardView from "@/app/discover/CardView"
 import { LibraryItemPage, LibraryList } from "@/app/discover/Library"
 import { SuraList, SuraPage } from "@/app/discover/Quran"
 import Saved from "@/app/discover/Saved"
+import { UnlessOrganized } from "@/app/home/UnlessOrganized" // PLT-09: the hub is removed when its setting is on
 
 export default function Discover() {
   return (
     <Routes>
-      <Route index element={<Hub />} />
+      <Route index element={<UnlessOrganized><Hub /></UnlessOrganized>} />
       <Route path="card" element={<CardView />} />
       <Route path="library" element={<LibraryList />} />
       <Route path="library/:itemId" element={<LibraryItemPage />} />
       <Route path="quran" element={<SuraList />} />
       <Route path="quran/:sura" element={<SuraPage />} />
       <Route path="saved" element={<Saved />} />
-      <Route path="*" element={<Hub />} />
+      <Route path="*" element={<UnlessOrganized><Hub /></UnlessOrganized>} />
     </Routes>
   )
 }

@@ -29,6 +29,8 @@ type DeviceState = {
   repliesOn: boolean
   /** PLT-07 R3: the Rafeeq tone (plays only once an approved tone exists). */
   toneOn: boolean
+  /** PLT-09: the server setting PLT09_ORGANIZED_HOME as last read (on by default; offline keeps it). */
+  organizedHome: boolean
   set: (patch: Partial<Omit<DeviceState, "set">>) => void
 }
 
@@ -65,6 +67,7 @@ export const useDevice = create<DeviceState>()(
       reminderTime: "20:00",
       repliesOn: false,
       toneOn: true,
+      organizedHome: true,
       set: (patch) => set(patch),
     }),
     { name: "rafeeq.device", version: 1 },
