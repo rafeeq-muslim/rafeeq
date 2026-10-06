@@ -75,6 +75,11 @@ export function ChallengeCard({ challenge, members = [], className }: { challeng
         <p dir="auto" className="text-body text-muted-foreground">
           {goal(c)}
         </p>
+        {c.status === "rejected" && c.review_note && (
+          <p className="text-label text-destructive">
+            {t("cmp.ch.reason")} <bdi>{c.review_note}</bdi>
+          </p>
+        )}
       </section>
     )
   }

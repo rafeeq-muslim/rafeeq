@@ -1386,4 +1386,17 @@ export const tl: Dict = {
   "plt11.size.cancel": "Hindi muna",
   // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected --- ⚠️ Tagalog needs native review
   "practice.ramadan.expectedDay": "Ika-{n} araw ng inaasahang Ramadan; hindi pa inihahayag ang simula nito",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "Mga teksto ng hamon",
+  "desk.ch.title": "Teksto ng hamon",
+  "desk.ch.waiting": "{n} naghihintay ng pag-apruba",
+  "desk.ch.hint": "Mga lingguhang layunin na isinulat ng mga mentor para sa kanilang grupo. Hindi ito nakikita ng mga miyembro bago maaprubahan, at hindi inaaprubahan ang anumang gawaing pagsamba. Bawat tekstong inaprubahan mo ay nagiging template na magagamit ng mga mentor.",
+  "desk.ch.approve": "Aprubahan",
+  "desk.ch.return": "Ibalik",
+  "desk.ch.reason": "Dahilan ng pagbabalik, ang mentor lang ang makakakita",
+  "desk.ch.approvedToast": "Naaprubahan; nagsimula na ang lingguhang layunin ng grupo",
+  "desk.ch.returnedToast": "Ibinalik sa mentor kasama ang dahilan",
+  "desk.ch.gone": "Napagpasyahan na ang tekstong ito o binawi ng mentor",
+  "desk.ch.empty": "Walang tekstong naghihintay ng pag-apruba ngayon.",
+  "cmp.ch.reason": "Dahilan ng tagasuri:",
 }

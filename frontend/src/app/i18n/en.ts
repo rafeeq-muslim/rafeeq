@@ -1385,4 +1385,17 @@ export const en: Dict = {
   "plt11.size.cancel": "Not now",
   // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
   "practice.ramadan.expectedDay": "Day {n} of the expected Ramadan; its start has not been announced yet",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "Challenge texts",
+  "desk.ch.title": "Challenge texts",
+  "desk.ch.waiting": "{n} waiting for approval",
+  "desk.ch.hint": "Weekly goals mentors wrote for their groups. Members don't see them before approval, and anything that is an act of worship is not approved. Each text you approve becomes a template mentors can reuse.",
+  "desk.ch.approve": "Approve",
+  "desk.ch.return": "Return",
+  "desk.ch.reason": "Reason for returning it, seen by the mentor only",
+  "desk.ch.approvedToast": "Approved; the group's weekly goal has started",
+  "desk.ch.returnedToast": "Returned to the mentor with the reason",
+  "desk.ch.gone": "This text was already decided or withdrawn by its mentor",
+  "desk.ch.empty": "No texts are waiting for approval right now.",
+  "cmp.ch.reason": "Reviewer's reason:",
 }

@@ -1384,4 +1384,17 @@ export const ar = {
   "plt11.size.cancel": "ليس الآن",
   // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
   "practice.ramadan.expectedDay": "اليوم {n} من رمضان المتوقع، ولم يُعلن ثبوته بعد",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "نصوص التحديات",
+  "desk.ch.title": "نصوص التحديات",
+  "desk.ch.waiting": "{n} بانتظار الاعتماد",
+  "desk.ch.hint": "أهداف أسبوعية كتبها المرشدون لمجموعاتهم. لا يراها الأعضاء قبل اعتمادها، ولا يُعتمد ما كان عبادة. كل نص تعتمده يصير قالبًا يستعمله المرشدون.",
+  "desk.ch.approve": "اعتمد",
+  "desk.ch.return": "أعِده",
+  "desk.ch.reason": "سبب الإعادة، يراه المرشد وحده",
+  "desk.ch.approvedToast": "اعتُمد، وبدأ هدف الأسبوع لأعضاء المجموعة",
+  "desk.ch.returnedToast": "أُعيد إلى المرشد مع السبب",
+  "desk.ch.gone": "قُرّر في هذا النص من قبل أو سحبه المرشد",
+  "desk.ch.empty": "لا نصوص تنتظر الاعتماد الآن.",
+  "cmp.ch.reason": "سبب المراجع:",
 } as const

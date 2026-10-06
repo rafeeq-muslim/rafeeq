@@ -88,6 +88,14 @@ describe("CMP-05 R6 / MOT-06 R4 the group page shows a count only", () => {
     expect(card.textContent).toContain("بلغت المجموعة 5 من 8")
     expect(card.textContent).not.toContain("Joseph")
   })
+
+  it("mot06_r3_ex2_mentor_reads_the_reviewers_reason_for_a_returned_text", () => {
+    const text = "Pray fajr in the mosque every day"
+    wrap(<ChallengeCard challenge={challenge({ type: "free_text", text, status: "rejected", review_note: "عبادة؛ اختر هدفًا تعليميًا" })} />)
+    expect(screen.getByText(translate("ar", "cmp.ch.rejected"))).toBeTruthy()
+    expect(screen.getByText(text)).toBeTruthy()
+    expect(screen.getByText("عبادة؛ اختر هدفًا تعليميًا")).toBeTruthy()
+  })
 })
 
 describe("MOT-06 learning log from the device stores", () => {
