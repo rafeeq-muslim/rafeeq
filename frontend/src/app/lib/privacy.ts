@@ -14,6 +14,7 @@
  *   (ORG-01). Erasing the device also removes that link.
  */
 import { api } from "@/app/lib/api"
+import { appUrl } from "@/app/lib/base"
 import { useAuth } from "@/app/stores/auth"
 import { helpHeaders } from "@/app/companion/store"
 import { linkState, unlinkOrg } from "@/app/org/api"
@@ -122,5 +123,5 @@ export async function wipeDevice(go: (url: string) => void = (url) => window.loc
     /* blocked storage */
   }
   if (typeof caches !== "undefined") for (const k of await caches.keys()) await caches.delete(k)
-  go("/welcome")
+  go(appUrl("/welcome"))
 }

@@ -280,7 +280,7 @@ describe("plt-01-r6 the start happens once per device", () => {
     localStorage.setItem("rafeeq.device", JSON.stringify({ state: { onboarded: true }, version: 1 }))
     const go = vi.fn()
     await wipeDevice(go)
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome") // PLT-10 R2: the app lives under /app
     expect(localStorage.getItem("rafeeq.device")).toBeNull()
   })
 })
@@ -505,7 +505,7 @@ describe("plt-05-r4 erase this device", () => {
     expect(del?.headers["X-Help-Token"]).toBe("g".repeat(43))
     expect(Object.keys(localStorage).filter((k) => k.startsWith("rafeeq."))).toEqual([])
     expect(localStorage.getItem("other-site-key")).toBe("kept")
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome")
   })
 
   it("plt05_r4_the_push_subscription_is_dropped_on_the_server_and_the_device", async () => {

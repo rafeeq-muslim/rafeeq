@@ -15,14 +15,14 @@
 <meta name="description" content="رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه. Rafeeq walks with you through your first year as a Muslim, in Arabic, English and Tagalog.">
 <meta name="theme-color" content="#1d1645">
 <meta name="color-scheme" content="light">
-<link rel="canonical" href="https://rafeeq.nan.sa/landing/">
-<link rel="alternate" hreflang="ar" href="https://rafeeq.nan.sa/landing/?lang=ar">
-<link rel="alternate" hreflang="en" href="https://rafeeq.nan.sa/landing/?lang=en">
-<link rel="alternate" hreflang="tl" href="https://rafeeq.nan.sa/landing/?lang=tl">
-<link rel="alternate" hreflang="x-default" href="https://rafeeq.nan.sa/landing/">
+<link rel="canonical" href="https://rafeeq.nan.sa/">
+<link rel="alternate" hreflang="ar" href="https://rafeeq.nan.sa/?lang=ar">
+<link rel="alternate" hreflang="en" href="https://rafeeq.nan.sa/?lang=en">
+<link rel="alternate" hreflang="tl" href="https://rafeeq.nan.sa/?lang=tl">
+<link rel="alternate" hreflang="x-default" href="https://rafeeq.nan.sa/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="رفيق Rafeeq">
-<meta property="og:url" content="https://rafeeq.nan.sa/landing/">
+<meta property="og:url" content="https://rafeeq.nan.sa/">
 <meta property="og:title" content="رفيق · لست وحدك في رحلتك · Rafeeq: you are not alone on your journey">
 <meta property="og:description" content="رفيق يرافقك في سنتك الأولى مسلمًا، بلغتك: دروس قصيرة، وأجوبة من مصادر معتمدة، وإنسان حين تحتاجه. A companion for your first year as a Muslim: short lessons, sourced answers, and a person when you need one.">
 <meta property="og:locale" content="ar_SA">
@@ -41,9 +41,10 @@
 <link rel="apple-touch-icon" href="/brand/rafeeq-app-icon-180.png">
 <link rel="preload" href="/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/thmanyah/thmanyahsans-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<script src="lang.js"></script>
-<link rel="stylesheet" href="scrollcraft.css">
-<link rel="stylesheet" href="landing.css">
+<script src="/landing/standalone.js"></script>
+<script src="/landing/lang.js"></script>
+<link rel="stylesheet" href="/landing/scrollcraft.css">
+<link rel="stylesheet" href="/landing/landing.css">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
@@ -64,8 +65,8 @@
 <!-- ============ chrome ============ -->
 <header class="bar" id="bar">
   <a class="bar__brand" href="#welcome" data-i18n-attr="aria-label:brand">
-    <img src="brand/rafeeq-wordmark-ar-reverse.svg" alt="" width="84" height="40" data-wordmark="reverse">
-    <img src="brand/rafeeq-wordmark-ar-ink.svg" alt="" width="84" height="40" data-wordmark="ink">
+    <img src="/landing/brand/rafeeq-wordmark-ar-reverse.svg" alt="" width="84" height="40" data-wordmark="reverse">
+    <img src="/landing/brand/rafeeq-wordmark-ar-ink.svg" alt="" width="84" height="40" data-wordmark="ink">
   </a>
   <div class="bar__dock" id="dockBar" aria-hidden="true"></div>
   <div class="bar__end">
@@ -74,7 +75,7 @@
       <a href="?lang=en" lang="en" hreflang="en" data-lang="en" aria-label="English"><span class="short">EN</span><span class="long">English</span></a>
       <a href="?lang=tl" lang="tl" hreflang="tl" data-lang="tl" aria-label="Tagalog"><span class="short">TL</span><span class="long">Tagalog</span></a>
     </nav>
-    <a class="btn btn--night btn--sm" href="/welcome" data-start data-i18n="cta">ابدأ رحلتك</a>
+    <a class="btn btn--night btn--sm" href="/app/" data-start data-i18n="cta">ابدأ رحلتك</a>
   </div>
 </header>
 
@@ -242,10 +243,10 @@
           <h2 id="bloom-title" class="display" data-sc-cue="0.4" data-sc-kinetic="lines" data-i18n="bloom.title">وفي آخر السنة، تكتمل الزهرة</h2>
           <p class="bloom__p" data-sc-cue="0.48" data-i18n="bloom.lead">كل شهر تتعلّم فيه يضيف بتلة، والبتلة الأولى تبدأ اليوم.</p>
           <div class="bloom__cta" data-sc-cue="0.54" data-sc-rise="0">
-            <a class="btn btn--celebrate" href="/welcome" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
+            <a class="btn btn--celebrate" href="/app/" data-start><span data-i18n="cta">ابدأ رحلتك</span><svg class="icon i-fwd" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg></a>
             <p class="hero__note" data-i18n="bloom.note">مجاني، بالعربية والإنجليزية والتاغالوغية.</p>
           </div>
-          <p class="bloom__mentor" data-sc-cue="0.58"><span data-i18n="bloom.mentor">للمرشدين والجهات الدعوية: ينضم المرشد برمز دعوة من فريق رفيق.</span> <a href="/me/account" data-i18n="bloom.mentorLink">انضم مرشدًا</a></p>
+          <p class="bloom__mentor" data-sc-cue="0.58"><span data-i18n="bloom.mentor">للمرشدين والجهات الدعوية: ينضم المرشد برمز دعوة من فريق رفيق.</span> <a href="/app/me/account" data-i18n="bloom.mentorLink">انضم مرشدًا</a></p>
         </div>
         <footer class="foot" data-sc-cue="0.58">
           <p data-i18n="foot.made">بُني لتحدي بذل للذكاء الاصطناعي في خدمة المحتوى الإسلامي، المسار الثالث.</p>
@@ -257,7 +258,7 @@
 
 </main>
 
-<script src="scrollcraft.js"></script>
-<script src="landing.js"></script>
+<script src="/landing/scrollcraft.js"></script>
+<script src="/landing/landing.js"></script>
 </body>
 </html>
