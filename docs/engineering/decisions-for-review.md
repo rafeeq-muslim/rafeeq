@@ -107,8 +107,10 @@ Fixed (2026-10-05/06):
 - #10 the scripture-copy check now runs for every language.
 - Low: invite claimed atomically; login limit key normalised; only the Sharia reviewer approves challenge text; sign-out unlinks the account from push; opt-out and account deletion remove event history that links the device or the account.
 
-Open, needs the server owner (outside what Claude may change):
-1. **The host router logs visitors' real IPs** (`~/claude-works/nginx-app-router/generated/rafeeq.conf`, combined format, kept 14 days). The router has no per-app option to turn it off; add one (e.g. `access_log: off` in the app schema and template), then purge `rafeeq.access.log*`.
-2. **CI runs on the production host** for any member's branch or PR. Give CI its own unprivileged user or machine (needs sudo).
+Accepted by the product owner (2026-10-06), no action:
+1. The host router keeps its standard access log (visitor IPs, 14 days). The app itself still stores no IP (rules.md §4 inside the app).
+2. CI keeps running on the production host's runner. Accepted because the repo is private, only team members push or open PRs, deploys run only from `main`, and dependencies are locked; the residual risk is a malicious dependency or a stolen member token.
+
+Still open (small, can be done without the server owner):
 3. Mentor gender can be changed freely after sign-up; decide whether a gender change needs the team's confirmation.
 4. The database container receives the whole secrets file; split a database-only env file.
