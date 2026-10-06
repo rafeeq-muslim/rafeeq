@@ -19,6 +19,9 @@ import { addDays, dayTimes, fastingTimes, formatTime, PRAYER_KEYS, ymdIn, ymdKey
 
 export type Reminder = { id: string; key: ReminderKey; at: Date; time: Date }
 
+/** R3: minutes before the time the learner can choose (0 = at the time). */
+export const REMINDER_OFFSETS = [0, 5, 10, 15, 20, 30] as const
+
 /** Reminders still to come today and tomorrow, in the city's time zone. */
 export function upcomingReminders(
   city: Pick<City, "lat" | "lng" | "country" | "tz">,

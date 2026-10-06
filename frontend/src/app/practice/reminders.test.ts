@@ -5,7 +5,7 @@ import { ar } from "@/app/i18n/ar"
 import { en } from "@/app/i18n/en"
 import { tl } from "@/app/i18n/tl"
 import { DEFAULT_REMINDERS, type ReminderSettings } from "./store"
-import { reminderText, upcomingReminders } from "./reminders"
+import { REMINDER_OFFSETS, reminderText, upcomingReminders } from "./reminders"
 import { formatTime } from "./times"
 
 const RIYADH = { lat: 24.68773, lng: 46.72185, country: "SA", tz: "Asia/Riyadh" }
@@ -58,6 +58,13 @@ describe("PRC-05 R3: at the time or minutes before, from the city's times", () =
     const [asr] = upcomingReminders(RIYADH, on({ prayers: ["asr"], offset: 10 }), at("2026-10-05T12:00:00+03:00"))
     expect(formatTime(asr.at, RIYADH.tz)).toBe("2:55")
     expect(formatTime(asr.time, RIYADH.tz)).toBe("3:05")
+  })
+
+  it("prc-05-r3 offers 0, 5, 10, 15, 20 and 30 minutes; 20 before Asr in Riyadh on 5 Oct 2026 is 2:45", () => {
+    expect(REMINDER_OFFSETS).toEqual([0, 5, 10, 15, 20, 30])
+    const [asr] = upcomingReminders(RIYADH, on({ prayers: ["asr"], offset: 20 }), at("2026-10-05T12:00:00+03:00"))
+    expect(formatTime(asr.at, RIYADH.tz)).toBe("2:45")
+    expect(reminderText(asr, on({ showName: true, offset: 20 }), "ar", RIYADH.tz)).toContain("20")
   })
 
   it("after moving to Manila, reminders follow Manila's times", () => {
