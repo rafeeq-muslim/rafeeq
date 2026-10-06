@@ -1187,6 +1187,11 @@ export const tl: Dict = {
   "theme.light": "Maliwanag",
   "theme.dark": "Madilim",
   "theme.system": "Ayon sa device",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen. ⚠️ Tagalog needs native review ---
+  "welcome.signin.entry": "May account ako, mag-sign in",
+  "welcome.signin.title": "Mag-sign in",
+  "welcome.code.org": "May code ako mula sa isang da'wah na organisasyon",
+  "welcome.code.invalid": "Hindi tama ang code",
 
   // --- PLT-09 organized home (plt-09-organized-home-build) ---
   "home.org.daily": "Ang araw ko",

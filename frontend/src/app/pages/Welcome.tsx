@@ -13,6 +13,13 @@
  * whether to count the journey in that organisation's numbers. Only «نعم»
  * sends it to the server; «لا» keeps nothing. (PLT-01 R2 conflict resolved as
  * research/10 §3 proposes; docs/engineering/decisions-for-review.md.)
+ *
+ * PLT-10 R4: anyone with an account (learner, mentor, team, reviewer) can
+ * sign in from here; a team invite opens account creation with its field,
+ * checked only on registration; an organisation's code typed by hand asks
+ * the same once-only question as its link. The two codes never mix.
+ * PLT-10 R5: whoever signed in or already started on this device never
+ * repeats the start; with an organisation's link they are asked once, then home.
  */
 import * as React from "react"
 import { useNavigate, useSearchParams } from "react-router"
@@ -27,10 +34,16 @@ import { guessLocale, useDevice } from "@/app/stores/device"
 import { useDocumentLocale } from "@/app/AppLayout"
 import { BAR_COLOR, setBarColor } from "@/app/lib/theme"
 import { PrivacyLink } from "@/app/pages/Privacy"
-import { codeInfo, linkOrg, type CodeInfo } from "@/app/org/api"
+import { codeInfo, linkOrg, normalizeCode, type CodeInfo } from "@/app/org/api"
+import { useOrgLink } from "@/app/org/store"
+import { useAuth } from "@/app/stores/auth"
+import { ApiError } from "@/app/lib/api"
+import { Create, SignIn } from "@/app/pages/Account"
+import { Input } from "@/components/ui/input"
+import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import { OrgQuestion } from "@/app/org/OrgQuestion"
 
-type Step = "lang" | "intro" | "org" | "placement"
+type Step = "lang" | "intro" | "org" | "placement" | "signin" | "create"
 
 /** R2: only a known language code is taken from a link. */
 export function linkLocale(search: URLSearchParams): Locale | null {
@@ -54,30 +67,70 @@ export default function Welcome() {
   const [search] = useSearchParams()
   const fromLink = React.useMemo(() => linkLocale(search), [search])
   const [step, setStep] = React.useState<Step>(fromLink ? "intro" : "lang")
-  // ORG-01: held in memory for the one question, never stored.
-  const [orgCode] = React.useState(() => linkOrgCode(search))
+  // PLT-10 R5: decided once, when the screen opens.
+  const [returning] = React.useState(() => useDevice.getState().onboarded || !!useAuth.getState().me)
+  // ORG-01: held in memory for the one question, never stored. Already linked
+  // and returning: nothing to ask.
+  const [linkCode] = React.useState(() => (returning && useOrgLink.getState().link ? null : linkOrgCode(search)))
+  const [orgCode, setOrgCode] = React.useState(linkCode)
   const [org, setOrg] = React.useState<CodeInfo | null>(null)
   const [busy, setBusy] = React.useState(false)
   const suggested = React.useMemo(() => guessLocale(), [])
   const navigate = useNavigate()
+  const me = useAuth((s) => s.me)
+  const [langChosen, setLangChosen] = React.useState(!!fromLink)
+  const [back, setBack] = React.useState<Step>("lang")
+  const [inviteOpen, setInviteOpen] = React.useState(false)
+
+  const home = React.useCallback(() => {
+    set({ onboarded: true, placementOffered: true })
+    navigate("/", { replace: true })
+  }, [set, navigate])
+
+  // PLT-10 R5: started before, or signed in: home, unless a link's organisation is asked about first.
+  React.useEffect(() => {
+    if (returning && !linkCode) home()
+  }, [returning, linkCode, home])
+  React.useEffect(() => {
+    if (me && !returning && (step === "lang" || step === "intro")) {
+      if (!langChosen) set({ locale: me.locale })
+      home()
+    }
+  }, [me, returning, step, langChosen, set, home])
+
+  const open = (next: Step, invite = false) => {
+    setBack(step)
+    setInviteOpen(invite)
+    setStep(next)
+  }
+  const signedInHere = () => {
+    const m = useAuth.getState().me
+    if (!langChosen && m) set({ locale: m.locale })
+    home()
+  }
 
   React.useEffect(() => {
     if (!fromLink && !search.get("org")) return
+    if (returning && !linkCode) return // PLT-10 R5: going home with replace drops the query anyway
     if (fromLink) set({ locale: fromLink })
     navigate("/welcome", { replace: true }) // the link's query is not kept anywhere
-  }, [fromLink, search, set, navigate])
+  }, [fromLink, search, set, navigate, returning, linkCode])
 
   React.useEffect(() => {
-    if (!orgCode) return
+    if (!linkCode) return
     let alive = true
-    codeInfo(orgCode).then(
-      (info) => alive && setOrg(info),
-      () => undefined, // a retired or wrong code: no question, nothing said about any organisation
+    codeInfo(linkCode).then(
+      (info) => {
+        if (!alive) return
+        setOrg(info)
+        if (returning) setStep("org")
+      },
+      () => alive && returning && home(), // a retired or wrong code: no question, nothing said about any organisation
     )
     return () => {
       alive = false
     }
-  }, [orgCode])
+  }, [linkCode, returning, home])
 
   const afterIntro = () => setStep(org ? "org" : "placement")
   const answer = async (yes: boolean) => {
@@ -87,8 +140,18 @@ export default function Welcome() {
       setBusy(false)
     }
     setOrg(null)
-    setStep("placement")
+    if (returning) home()
+    else setStep("placement")
   }
+  // PLT-10 R4: a typed organisation code leads to the same one question.
+  const typedOrg = async (code: string) => {
+    const info = await codeInfo(code)
+    setOrgCode(normalizeCode(code))
+    setOrg(info)
+    setStep("org")
+  }
+
+  if (returning && step !== "org") return null
 
   const finish = (placement: boolean) => {
     set({ onboarded: true, placementOffered: true })
@@ -122,6 +185,7 @@ export default function Welcome() {
                       dir={dirOf(l.code)}
                       onClick={() => {
                         set({ locale: l.code as Locale })
+                        setLangChosen(true)
                         setStep("intro")
                       }}
                       className={
@@ -142,7 +206,10 @@ export default function Welcome() {
                   </li>
                 ))}
               </ul>
-              <PrivacyLink label="privacy.policyLink" className="mt-auto self-center text-white/70" />
+              <div className="mt-auto flex flex-col items-center gap-1">
+                <AccountEntry onClick={() => open("signin")} />
+                <PrivacyLink label="privacy.policyLink" className="self-center text-white/70" />
+              </div>
             </section>
           )}
 
@@ -169,6 +236,13 @@ export default function Welcome() {
                 <Button size="lg" variant="celebrate" className="w-full" onClick={afterIntro}>
                   {t("onb.intro.cta")}
                 </Button>
+                <div className="mt-4 flex flex-col items-center gap-1" data-slot="welcome-entries">
+                  <AccountEntry onClick={() => open("signin")} />
+                  <Button variant="link" className="text-white/70" onClick={() => open("create", true)}>
+                    {t("acct.haveInvite")}
+                  </Button>
+                  <OrgCodeEntry onCheck={typedOrg} />
+                </div>
               </div>
             </section>
           )}
@@ -177,6 +251,24 @@ export default function Welcome() {
             <div className="mt-6 flex flex-1 flex-col justify-end">
               <OrgQuestion night name={org.name} busy={busy} onYes={() => void answer(true)} onNo={() => void answer(false)} />
             </div>
+          )}
+
+          {(step === "signin" || step === "create") && (
+            <section className="mt-2 flex flex-1 flex-col gap-5" aria-labelledby="acct-title">
+              <div className="flex items-center justify-between gap-3">
+                <h1 id="acct-title" className="font-heading text-h2 font-bold text-white">
+                  {t(step === "signin" ? "welcome.signin.title" : "acct.create")}
+                </h1>
+                <Button variant="ghost" size="sm" className="text-white/80" onClick={() => setStep(back)}>
+                  {t("common.back")}
+                </Button>
+              </div>
+              {step === "signin" ? (
+                <SignIn onCreate={() => setStep("create")} onDone={signedInHere} />
+              ) : (
+                <Create inviteOpen={inviteOpen} onSignin={() => setStep("signin")} onCreated={() => undefined} onDone={signedInHere} />
+              )}
+            </section>
           )}
 
           {step === "placement" && (
@@ -198,5 +290,68 @@ export default function Welcome() {
         </div>
       </main>
     </DirectionProvider>
+  )
+}
+
+/** PLT-10 R4: the quiet way in for anyone who already has an account. */
+function AccountEntry({ onClick }: { onClick: () => void }) {
+  const { t } = useT()
+  return (
+    <Button variant="link" className="text-white/80" onClick={onClick}>
+      {t("welcome.signin.entry")}
+    </Button>
+  )
+}
+
+/** PLT-10 R4 / ORG-01: an organisation's code typed by hand. A wrong or
+ * retired code says so and names no organisation; the start goes on without it. */
+function OrgCodeEntry({ onCheck }: { onCheck: (code: string) => Promise<void> }) {
+  const { t } = useT()
+  const [value, setValue] = React.useState<string | null>(null)
+  const [error, setError] = React.useState<"welcome.code.invalid" | "acct.rateLimited" | null>(null)
+  const [busy, setBusy] = React.useState(false)
+  if (value === null)
+    return (
+      <Button variant="link" className="text-white/70" onClick={() => setValue("")}>
+        {t("welcome.code.org")}
+      </Button>
+    )
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!normalizeCode(value)) return
+    setBusy(true)
+    setError(null)
+    try {
+      await onCheck(value)
+    } catch (err) {
+      setError(err instanceof ApiError && err.status === 429 ? "acct.rateLimited" : "welcome.code.invalid")
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <form onSubmit={submit} className="flex w-full flex-col gap-2" noValidate>
+      <Field data-invalid={!!error || undefined}>
+        <FieldLabel htmlFor="welcome-org-code" className="text-white/85">
+          {t("org.me.codeLabel")}
+        </FieldLabel>
+        <div className="flex gap-2">
+          <Input
+            id="welcome-org-code"
+            dir="ltr"
+            autoCapitalize="characters"
+            autoCorrect="off"
+            spellCheck={false}
+            value={value}
+            aria-invalid={!!error || undefined}
+            onChange={(e) => (setValue(e.target.value), setError(null))}
+          />
+          <Button type="submit" variant="secondary" disabled={busy || !normalizeCode(value)}>
+            {t("org.me.check")}
+          </Button>
+        </div>
+        {error && <FieldError>{t(error)}</FieldError>}
+      </Field>
+    </form>
   )
 }

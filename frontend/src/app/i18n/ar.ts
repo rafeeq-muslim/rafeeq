@@ -1185,6 +1185,11 @@ export const ar = {
   "theme.light": "فاتح",
   "theme.dark": "داكن",
   "theme.system": "حسب الجهاز",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen ---
+  "welcome.signin.entry": "لي حساب، سجّل دخولي",
+  "welcome.signin.title": "سجّل دخولك",
+  "welcome.code.org": "عندي رمز من جهة دعوية",
+  "welcome.code.invalid": "الرمز غير صحيح",
 
   // --- PLT-09 organized home (plt-09-organized-home-build) ---
   "home.org.daily": "يومي",
