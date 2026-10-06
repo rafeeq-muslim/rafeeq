@@ -5,7 +5,8 @@
  * first lesson, a quiet offer to save progress (PLT-02 R1).
  */
 import { useNavigate } from "react-router"
-import { IconArrowLeft, IconBook2, IconRefresh, IconSparkles } from "@tabler/icons-react"
+import { IconArrowLeft, IconBook2, IconLayoutGrid, IconRefresh, IconSparkles } from "@tabler/icons-react"
+import { SuggestionCard } from "@/app/guide/SuggestionCard"
 
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -107,6 +108,8 @@ export default function Home() {
           </button>
         )}
 
+        <SuggestionCard />
+
         <button
           type="button"
           onClick={() => navigate("/ask")}
@@ -130,6 +133,21 @@ export default function Home() {
             </div>
           </section>
         )}
+        {/* PLT-08 R5: the sheet shows there is more below the journey. */}
+        <button
+          type="button"
+          onClick={() => navigate("/guide")}
+          className="flex items-center gap-3 border-t pt-5 text-start"
+        >
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+            <IconLayoutGrid className="size-5" stroke={1.75} aria-hidden="true" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-body font-bold">{t("guide.homeLink")}</span>
+            <span className="block text-label text-muted-foreground">{t("guide.homeLinkBody")}</span>
+          </span>
+          <IconArrowLeft className="size-5 shrink-0 text-primary ltr:rotate-180" aria-hidden="true" />
+        </button>
       </JourneySheet>
     </>
   )

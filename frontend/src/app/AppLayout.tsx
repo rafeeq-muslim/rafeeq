@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { AppShell, type NavKey } from "@/components/rafeeq"
 import { LOCALES, useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
+import { useGuideTracker } from "@/app/guide/useGuide"
 import { flushEvents } from "@/app/lib/api"
 import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
@@ -98,6 +99,7 @@ export default function AppLayout() {
   const onboarded = useDevice((s) => s.onboarded)
   const location = useLocation()
   const navigate = useNavigate()
+  useGuideTracker(location.pathname) // PLT-08 R3
 
   if (!onboarded) {
     // First visit at the bare address: the public landing page, whose call to
