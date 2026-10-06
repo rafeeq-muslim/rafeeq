@@ -6,9 +6,10 @@ KNW-07 R5, KNW-08 R5). Saved items have an optional account copy (KNW-09 R3).
 """
 
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 
 from fastapi import APIRouter, Response
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, ValidationError, model_validator
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, ValidationError, model_serializer, model_validator
 from sqlalchemy import delete, select
 
 from app.core.deps import CurrentUser, Session
@@ -63,6 +64,34 @@ async def glossary_terms(session: Session, response: Response, lang: Lang = "ar"
 Kind = Literal["card", "library", "answer"]
 
 
+class SavedLiveSource(BaseModel):
+    """PRD live v3 step 6 (knw-live-source-access): a saved answer whose
+    source was read live keeps that source's identity, its link and when it
+    was read, never its text. The link must be a live connector's own page."""
+
+    model_config = ConfigDict(extra="forbid")
+    id: Annotated[str, Field(pattern=r"^live:[a-z_]{2,32}:(ar|en|tl):\d{1,9}:c\d{1,3}$")]
+    source_id: Annotated[str, Field(pattern=r"^[a-z_]{2,32}$")]
+    title: Annotated[str, Field(max_length=300)] = ""
+    origin_url: Annotated[str, Field(min_length=10, max_length=600)]
+    retrieved_at: Annotated[str, Field(pattern=r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")]
+
+    @model_validator(mode="after")
+    def _connector_page(self) -> "SavedLiveSource":
+        from app.knowledge.live_sources import registry
+
+        conn = registry.connectors().get(self.source_id)
+        host = urlsplit(self.origin_url)
+        if (
+            conn is None
+            or host.scheme != "https"
+            or (host.hostname or "") not in conn.hosts
+            or not self.id.startswith(f"live:{self.source_id}:")
+        ):
+            raise ValueError("live source must link to its connector's own site")
+        return self
+
+
 class SavedAnswer(BaseModel):
     """R2: a saved answer keeps its text, its source ids and its language,
     never the question (the consent rule for the question is still open, so
@@ -73,6 +102,21 @@ class SavedAnswer(BaseModel):
     lang: Lang
     answer: Annotated[str, Field(min_length=1, max_length=12000)]
     source_ids: Annotated[list[Annotated[str, Field(min_length=1, max_length=96)]], Field(min_length=1, max_length=40)]
+    # PRD live v3: identity of each live source among source_ids (optional; left out when empty).
+    live_sources: Annotated[list[SavedLiveSource], Field(max_length=40)] = []
+
+    @model_validator(mode="after")
+    def _live_among_sources(self) -> "SavedAnswer":
+        if any(s.id not in self.source_ids for s in self.live_sources):
+            raise ValueError("live source not among source_ids")
+        return self
+
+    @model_serializer(mode="wrap")
+    def _without_empty_live(self, handler):  # older copies and clients see the same three fields
+        d = handler(self)
+        if not d.get("live_sources"):
+            d.pop("live_sources", None)
+        return d
 
 
 class Saved(BaseModel):

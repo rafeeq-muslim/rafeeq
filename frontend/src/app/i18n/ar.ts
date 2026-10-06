@@ -1225,4 +1225,10 @@ export const ar = {
   "acct.signOut.lost.habits": "عاداتك وما سجّلته منها",
   "policy.signout.title": "عند تسجيل الخروج",
   "policy.signout.body": "تسجيل الخروج يمسح من هذا الجهاز كل ما يحفظه رفيق عليه، بعد أن نحفظ في حسابك تقدّمك وما حفظته. ودفتر أسئلتك الخاصة وعاداتك لا تُحفظ في الحساب، فتُمسح مع الخروج. وما في حسابك يبقى حتى تحذفه.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "بحثنا الآن مباشرة في: {names}",
+  "ask.live.unreachable": "تعذّر الوصول الآن إلى: {names}",
+  "ask.live.fetchedAt": "قُرئ من المصدر في {d}",
+  "ask.live.openSource": "افتح النص كاملًا في المصدر",
+  "ask.live.savedNote": "لا يُحفظ نص المصدر على جهازك؛ افتحه في موقعه.",
 } as const

@@ -1227,4 +1227,10 @@ export const tl: Dict = {
   "acct.signOut.lost.habits": "Ang mga gawi mo at ang naitala mo sa mga ito",
   "policy.signout.title": "Kapag nag-sign out ka",
   "policy.signout.body": "Binubura ng pag-sign out ang lahat ng itinatago ng Rafeeq sa device na ito, matapos i-save sa account mo ang progreso mo at ang mga na-save mo. Hindi itinatago sa account ang pribado mong kuwaderno ng mga tanong at ang mga gawi mo, kaya nabubura ang mga ito kapag nag-sign out ka. Nananatili ang nasa account mo hanggang burahin mo ito.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "Hinanap ngayon mismo sa: {names}",
+  "ask.live.unreachable": "Hindi naabot ngayon: {names}",
+  "ask.live.fetchedAt": "Binasa mula sa pinagmulan noong {d}",
+  "ask.live.openSource": "Buksan ang buong teksto sa pinagmulan",
+  "ask.live.savedNote": "Hindi naka-save sa iyong device ang teksto ng pinagmulan; buksan ito sa pinagmulan.",
 }

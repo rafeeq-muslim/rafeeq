@@ -1226,4 +1226,10 @@ export const en: Dict = {
   "acct.signOut.lost.habits": "Your habits and what you recorded of them",
   "policy.signout.title": "When you sign out",
   "policy.signout.body": "Signing out erases everything Rafeeq keeps on this device, after saving your progress and saved items to your account. Your private questions notebook and your habits are not kept in the account, so they are erased when you sign out. What is in your account stays until you delete it.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "Searched live just now: {names}",
+  "ask.live.unreachable": "Couldn't reach right now: {names}",
+  "ask.live.fetchedAt": "Read from the source on {d}",
+  "ask.live.openSource": "Open the full text at the source",
+  "ask.live.savedNote": "The source's text isn't kept on your device; open it at the source.",
 }
