@@ -2,7 +2,7 @@
  * Conversation pieces shared by help threads (CMP-01/02/03) and group chat
  * (CMP-05): a message list built from the shadcn Message/Bubble primitives
  * and a composer that explains, never just fails, when a message is refused
- * (contact details, CMP-01 R3).
+ * (contact details, CMP-01 R5).
  */
 import * as React from "react"
 import { IconDots, IconSend2 } from "@tabler/icons-react"
@@ -27,7 +27,7 @@ export type ChatItem = {
   tag?: string | null
   body: string
   at: string
-  /** The author's own message that was hidden for review (CMP-04 R4). */
+  /** The author's own message that was hidden for review (CMP-04 R5). */
   hidden?: boolean
   actions?: ChatAction[]
 }
@@ -95,6 +95,7 @@ export function useSendError() {
     if (code === "contact_not_allowed") return t("cmp.err.contact")
     if (code === "empty_message") return t("cmp.err.empty")
     if (code === "rate_limited") return t("cmp.err.rate")
+    if (code === "gender_required") return t("cmp.err.gender")
     return t("common.error")
   }
 }

@@ -22,6 +22,7 @@ import { useAuth } from "@/app/stores/auth"
 import { type InboxRow, useInbox } from "../api"
 import { ago, initial, langName } from "../format"
 import { ScreenBar } from "../Screen"
+import { requesterName } from "./InboxThread"
 import { MenteesTab } from "./MenteesTab"
 import { MentorGroupsTab } from "./MentorGroupsTab"
 import { ReportsQueue } from "./ReportsQueue"
@@ -31,7 +32,8 @@ type Tab = "requests" | "mentees" | "groups" | "reports"
 export function RequestRowItem({ row, onOpen }: { row: InboxRow; onOpen: () => void }) {
   const { t, locale } = useT()
   const urgent = row.kind === "urgent"
-  const name = row.is_guest ? t("cmp.inbox.guest", { n: row.handle }) : row.handle
+  const myGender = useAuth((s) => s.me?.gender ?? null)
+  const name = requesterName(t, row, myGender)
   if (!row.can_reply)
     return (
       <Alert variant="destructive">

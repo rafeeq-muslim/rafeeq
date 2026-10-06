@@ -6,6 +6,8 @@ import {
   IconLifebuoy,
 } from "@tabler/icons-react"
 
+import type { ReactNode } from "react"
+
 import { cn } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -22,9 +24,9 @@ import {
 
 /*
  * Companion & Community (CMP). A human is always one tap away (cmp-01).
- * Danger cases go to a person immediately; we never invent helpline
- * numbers: the panel points to local emergency services generically until
- * verified numbers per country exist in the sources log.
+ * Danger cases go to a person immediately, with the official helpline
+ * numbers verified in research/08 shown at once (passed in as `children`;
+ * the app bundles them so they work offline). Never an unverified number.
  */
 
 /** «أريد إنسانًا»: always visible on Ask and lesson screens. */
@@ -54,6 +56,8 @@ function HumanHelpButton({
 /**
  * Shown the moment the assistant detects harm, eviction or risk to life
  * (KNW → CMP «حالة خطر»). Human first; no AI answer is shown with it.
+ * `children` carries the verified helplines, shown at once. The secondary
+ * button appears only when it has an action.
  */
 function DangerHelpPanel({
   title = "لست وحدك، وسنوصلك بإنسان الآن",
@@ -62,6 +66,7 @@ function DangerHelpPanel({
   secondaryLabel = "أرقام الطوارئ في بلدي",
   onPrimary,
   onSecondary,
+  children,
   className,
 }: {
   title?: string
@@ -70,6 +75,7 @@ function DangerHelpPanel({
   secondaryLabel?: string
   onPrimary?: () => void
   onSecondary?: () => void
+  children?: ReactNode
   className?: string
 }) {
   return (
@@ -83,10 +89,13 @@ function DangerHelpPanel({
         <IconHeadset data-icon="inline-start" stroke={1.75} />
         {primaryLabel}
       </Button>
-      <Button size="lg" variant="outline" className="w-full" onClick={onSecondary}>
-        <IconAlertTriangle data-icon="inline-start" stroke={1.75} />
-        {secondaryLabel}
-      </Button>
+      {children}
+      {onSecondary && (
+        <Button size="lg" variant="outline" className="w-full" onClick={onSecondary}>
+          <IconAlertTriangle data-icon="inline-start" stroke={1.75} />
+          {secondaryLabel}
+        </Button>
+      )}
     </div>
   )
 }

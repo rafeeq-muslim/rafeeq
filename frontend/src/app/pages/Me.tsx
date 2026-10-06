@@ -13,6 +13,7 @@ import {
   IconCompass,
   IconFlame,
   IconFlower,
+  IconHelpCircle,
   IconInbox,
   IconSettings,
   IconShieldCheck,
@@ -62,6 +63,7 @@ export default function Me() {
   const roleLinks: { to: string; key: Key; icon: TablerIcon; show: boolean }[] = [
     { to: "/inbox", key: "role.mentorInbox", icon: IconInbox, show: has("mentor") },
     { to: "/review-desk", key: "role.review", icon: IconShieldCheck, show: has("sharia_reviewer") || has("team") },
+    { to: "/referrals", key: "role.referrals", icon: IconHelpCircle, show: has("sharia_reviewer") },
     { to: "/team", key: "role.team", icon: IconUsersGroup, show: has("team") },
     { to: "/admin", key: "role.admin", icon: IconSettings, show: has("admin") },
   ]

@@ -1,6 +1,10 @@
 /**
- * The mentor's own card (CMP-03 R3) and limits (iERA: set availability,
- * avoid burnout; Osool p.102: 5–10 per mentor) — /inbox/profile.
+ * The mentor's own card (CMP-03 R3) and limits (CMP-02 R4; iERA: set
+ * availability, avoid burnout; Osool p.102: 5–10 per mentor) —
+ * /inbox/profile. Availability is shown to learners before they write;
+ * the personal cap is 8 by default and at most 10 (group members are
+ * counted apart); pausing stops new learners and new requests from the
+ * pool, while current mentees and urgent requests stay.
  */
 import * as React from "react"
 import { useQueryClient } from "@tanstack/react-query"
@@ -60,9 +64,12 @@ function Form({ profile }: { profile: Profile }) {
         />
       </Field>
       <Field orientation="horizontal" className="justify-between">
-        <FieldLabel htmlFor="accepting" className="text-body">
-          {t("cmp.profile.accepting")}
-        </FieldLabel>
+        <div className="flex flex-col gap-1">
+          <FieldLabel htmlFor="accepting" className="text-body">
+            {t("cmp.profile.accepting")}
+          </FieldLabel>
+          <FieldDescription>{t("cmp.profile.acceptingHint")}</FieldDescription>
+        </div>
         <Switch id="accepting" checked={accepting} onCheckedChange={setAccepting} />
       </Field>
       <Field>
@@ -77,6 +84,7 @@ function Form({ profile }: { profile: Profile }) {
           onChange={(e) => setCapacity(Math.max(1, Math.min(10, Number(e.target.value) || 1)))}
           className="w-28 tabular-nums"
         />
+        <FieldDescription>{t("cmp.profile.capacityHint")}</FieldDescription>
       </Field>
       <Button size="lg" disabled={pending} onClick={() => void save()}>
         {t("cmp.profile.save")}

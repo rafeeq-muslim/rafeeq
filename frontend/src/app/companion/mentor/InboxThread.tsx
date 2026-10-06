@@ -1,7 +1,9 @@
 /**
  * CMP-02 a request from the mentor's side — /inbox/r/:id. The first reply
- * claims it (R3); close it, or hand it to the team as urgent (R4). Shows
- * only display name or guest number, language, topic and source (R5).
+ * claims it (R3). The mentor gives no fatwa: he refers a learner's personal
+ * Sharia question to the Sharia reviewer, or hands danger to everyone as
+ * urgent (R5). Shows only display name or guest number, language, topic and
+ * source (R6).
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
@@ -15,11 +17,18 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
-import { inboxApi, useInboxThread } from "../api"
+import { useAuth } from "@/app/stores/auth"
+import { type InboxRow, REFERRAL_NOTICE, inboxApi, useInboxThread } from "../api"
 import { type ChatItem, ChatList, Composer } from "../Chat"
 import { Confirm } from "../Confirm"
 import { langName } from "../format"
 import { ScreenBar } from "../Screen"
+
+/** CMP-02 R6: a guest is «زائر» / «زائرة» and a short number; a sister's request reaches sisters only (CMP-01 R3). */
+export function requesterName(t: ReturnType<typeof useT>["t"], row: Pick<InboxRow, "is_guest" | "handle" | "kind">, myGender: string | null) {
+  if (!row.is_guest) return row.handle
+  return t(row.kind !== "urgent" && myGender === "f" ? "cmp.inbox.guestF" : "cmp.inbox.guest", { n: row.handle })
+}
 
 export default function InboxThread() {
   const { id } = useParams()
@@ -28,6 +37,8 @@ export default function InboxThread() {
   const qc = useQueryClient()
   const thread = useInboxThread(id)
   const [confirmUrgent, setConfirmUrgent] = React.useState(false)
+  const [referring, setReferring] = React.useState<string | null>(null)
+  const myGender = useAuth((s) => s.me?.gender ?? null)
   const r = thread.data
 
   const refresh = () => qc.invalidateQueries({ queryKey: ["cmp"] })
@@ -49,14 +60,29 @@ export default function InboxThread() {
     }
   }
 
+  const refer = async (messageId: string) => {
+    try {
+      await inboxApi.refer(id!, messageId)
+      toast.success(t("cmp.referral.sent"))
+      await refresh()
+    } catch {
+      toast.error(t("common.error"))
+    }
+  }
+
+  const name = r ? requesterName(t, r, myGender) : ""
   const items: ChatItem[] = (r?.messages ?? []).map((m) => ({
     id: m.id,
     mine: m.mine,
-    name: m.author === "learner" ? (r!.is_guest ? t("cmp.inbox.guest", { n: r!.handle }) : r!.handle) : m.name,
-    body: m.body,
+    name: m.author === "learner" ? name : m.author === "scholar" ? t("cmp.referral.scholars") : m.name,
+    body: m.author === "system" && m.body === REFERRAL_NOTICE ? t("cmp.referral.noticeMentor") : m.body,
     at: m.created_at,
+    // R5: a learner's personal Sharia question goes to scholars, once.
+    actions:
+      m.author === "learner" && r?.can_reply && !r.referred.includes(m.id)
+        ? [{ label: t("cmp.referral.action"), onSelect: () => setReferring(m.id) }]
+        : undefined,
   }))
-  const name = r ? (r.is_guest ? t("cmp.inbox.guest", { n: r.handle }) : r.handle) : ""
 
   return (
     <>
@@ -120,6 +146,15 @@ export default function InboxThread() {
           </>
         )}
       </div>
+      <Confirm
+        open={referring !== null}
+        onOpenChange={(o) => !o && setReferring(null)}
+        title={t("cmp.referral.action")}
+        description={t("cmp.referral.confirm")}
+        confirmLabel={t("cmp.referral.confirmYes")}
+        cancelLabel={t("common.cancel")}
+        onConfirm={() => referring && void refer(referring)}
+      />
       <Confirm
         open={confirmUrgent}
         onOpenChange={setConfirmUrgent}

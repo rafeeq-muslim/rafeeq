@@ -15,7 +15,7 @@
  *   updates the same message and never touches a new draft.
  */
 import * as React from "react"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { IconWifiOff } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
@@ -109,6 +109,20 @@ export default function Ask() {
     const res = retry(turnId)
     if (res.accepted) void res.done.then(onAnswer)
   }
+
+  // CMP-06 R2 ex2: a question its owner sent from the private notebook arrives
+  // once, through the route state (never the URL), as an ordinary question.
+  const location = useLocation()
+  const handedOver = React.useRef(false)
+  React.useEffect(() => {
+    const q = (location.state as { notebookQuestion?: unknown } | null)?.notebookQuestion
+    if (handedOver.current || typeof q !== "string") return
+    handedOver.current = true
+    navigate(".", { replace: true, state: null })
+    if (online && !busy) submit(q, "typed")
+    else setDraft(q)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state])
 
   /** Put the question back for editing, without overwriting a new draft. */
   const editQuestion = (question: string) => setDraft((d) => (d.trim() ? d : question))

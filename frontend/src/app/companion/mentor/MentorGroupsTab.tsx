@@ -1,6 +1,8 @@
 /**
  * CMP-05 R1: a mentor's groups, each in their own gender and one of their
- * languages, at most 15, with a join code to share.
+ * languages, 10 members by default and at most 15, with a join code to
+ * share. All of a mentor's groups hold at most 25 places together; his
+ * personal mentees are counted apart (CMP-02 R4).
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
@@ -10,15 +12,75 @@ import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
-import { Field, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field"
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { SpotIllustration } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
-import { errorCode, groupApi, useMyGroups } from "../api"
+import { ApiError } from "@/app/lib/api"
+import { type Group, errorCode, groupApi, useMyGroups } from "../api"
 import { langName } from "../format"
+
+export const GROUP_MAX = 15
+export const MENTOR_GROUP_PLACES = 25
+
+/** The reason a group could not be created or resized, in words (CMP-05 R1 ex3). */
+export function groupError(t: ReturnType<typeof useT>["t"], e: unknown): string {
+  const code = errorCode(e)
+  if (code === "contact_not_allowed") return t("cmp.err.contact")
+  if (code === "mentor_member_limit") {
+    const remaining = e instanceof ApiError ? Number((e.detail as { remaining?: number })?.remaining ?? 0) : 0
+    return t("cmp.groups.err.limit", { limit: MENTOR_GROUP_PLACES, n: remaining })
+  }
+  if (code === "below_members") return t("cmp.groups.err.belowMembers")
+  return t("common.error")
+}
+
+/** The mentor changes a group's cap, within 15 and his 25 places (CMP-05 R1). */
+export function GroupCapacity({ group }: { group: Group }) {
+  const { t } = useT()
+  const qc = useQueryClient()
+  const [capacity, setCapacity] = React.useState(group.capacity)
+  const [error, setError] = React.useState<string | null>(null)
+  const [pending, setPending] = React.useState(false)
+  const save = async () => {
+    setPending(true)
+    setError(null)
+    try {
+      await groupApi.setCapacity(group.id, capacity)
+      await qc.invalidateQueries({ queryKey: ["cmp"] })
+      toast.success(t("cmp.groups.capacitySaved"))
+    } catch (e) {
+      setError(groupError(t, e))
+    } finally {
+      setPending(false)
+    }
+  }
+  return (
+    <Field data-invalid={!!error || undefined}>
+      <FieldLabel htmlFor="group-cap">{t("cmp.groups.capacity")}</FieldLabel>
+      <div className="flex items-center gap-2">
+        <Input
+          id="group-cap"
+          type="number"
+          inputMode="numeric"
+          min={2}
+          max={GROUP_MAX}
+          value={capacity}
+          onChange={(e) => setCapacity(Math.max(2, Math.min(GROUP_MAX, Number(e.target.value) || 2)))}
+          className="w-28 tabular-nums"
+        />
+        <Button variant="outline" disabled={pending || capacity === group.capacity} onClick={() => void save()}>
+          {t("common.save")}
+        </Button>
+      </div>
+      <FieldDescription>{t("cmp.groups.capacityHint", { max: GROUP_MAX, limit: MENTOR_GROUP_PLACES })}</FieldDescription>
+      {error && <FieldError>{error}</FieldError>}
+    </Field>
+  )
+}
 
 export function CopyCode({ code }: { code: string }) {
   const { t } = useT()
@@ -65,7 +127,7 @@ function CreateGroup({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
       onOpenChange(false)
       navigate(`/inbox/g/${g.id}`)
     } catch (e) {
-      setError(errorCode(e) === "contact_not_allowed" ? t("cmp.err.contact") : t("common.error"))
+      setError(groupError(t, e))
     } finally {
       setPending(false)
     }
@@ -101,11 +163,12 @@ function CreateGroup({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
               type="number"
               inputMode="numeric"
               min={2}
-              max={15}
+              max={GROUP_MAX}
               value={capacity}
-              onChange={(e) => setCapacity(Math.max(2, Math.min(15, Number(e.target.value) || 2)))}
+              onChange={(e) => setCapacity(Math.max(2, Math.min(GROUP_MAX, Number(e.target.value) || 2)))}
               className="w-28 tabular-nums"
             />
+            <FieldDescription>{t("cmp.groups.capacityHint", { max: GROUP_MAX, limit: MENTOR_GROUP_PLACES })}</FieldDescription>
           </Field>
         </FieldGroup>
         <DrawerFooter className="pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
