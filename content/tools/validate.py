@@ -204,7 +204,7 @@ def main():
                     err(f'{cid}.{l}: Quran verse marks in card text')
                 if l != 'ar' and ('{' in t or '}' in t):
                     err(f'{cid}.{l}: braces (verse quotation) in card text')
-                for ln in t.split('\n'):
+                for ln in ([] if c.get('authored') else t.split('\n')):  # authored notes: safety only
                     ok, bad = pieces_of_source(ln, STREAM[l])
                     if not ok:
                         err(f'{cid}.{l}: text not found in source near {bad!r}')
@@ -236,7 +236,7 @@ def main():
                     err(f"{o['id']}: unknown card {k}")
 
         # exercises
-        card_hits = {k: 0 for k in card_ids}
+        card_hits = {k: 0 for k in card_ids if not next(c for c in d['cards'] if c['id'] == k).get('authored')}
         obj_hits = {o['id']: 0 for o in objs}
         for x in d['exercises']:
             xid = x.get('id', '?')
