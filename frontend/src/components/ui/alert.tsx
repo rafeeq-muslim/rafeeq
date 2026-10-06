@@ -8,13 +8,14 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: "bg-card text-card-foreground",
+        // Descriptions take the full colour: at /90 they fell under 4.5:1.
         destructive:
-          "border-transparent bg-danger-surface text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current",
+          "border-transparent bg-danger-surface text-destructive *:data-[slot=alert-description]:text-destructive *:[svg]:text-current",
         success:
-          "border-transparent bg-success-surface text-success *:data-[slot=alert-description]:text-success/90",
+          "border-transparent bg-success-surface text-success *:data-[slot=alert-description]:text-success",
         warning:
-          "border-transparent bg-warning-surface text-warning *:data-[slot=alert-description]:text-warning/90",
-        info: "border-transparent bg-info-surface text-info *:data-[slot=alert-description]:text-info/90",
+          "border-transparent bg-warning-surface text-warning *:data-[slot=alert-description]:text-warning",
+        info: "border-transparent bg-info-surface text-info *:data-[slot=alert-description]:text-info",
       },
     },
     defaultVariants: {

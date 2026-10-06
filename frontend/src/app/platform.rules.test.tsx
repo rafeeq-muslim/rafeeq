@@ -220,7 +220,9 @@ describe("plt-01-r3 three promises and one button", () => {
     wrap(<Welcome />, "/welcome", "/welcome")
     fireEvent.click(screen.getByRole("button", { name: /العربية/ }))
     for (const k of ["onb.intro.p1", "onb.intro.p2", "onb.intro.p3"] as const) expect(screen.getByText(ar_(k))).toBeTruthy()
-    expect(screen.getAllByRole("button").map((b) => b.textContent)).toEqual([ar_("onb.intro.cta")])
+    // One button to start; PLT-10 R4's quiet entries (sign-in, codes) sit apart.
+    const main = screen.getAllByRole("button").filter((b) => !b.closest('[data-slot="welcome-entries"]'))
+    expect(main.map((b) => b.textContent)).toEqual([ar_("onb.intro.cta")])
   })
 })
 

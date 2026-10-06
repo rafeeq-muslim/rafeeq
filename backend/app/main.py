@@ -18,6 +18,7 @@ from app.motivation import router as motivation
 from app.organizations import router as organizations
 from app.platform import admin, auth, push
 from app.platform import export as data_export
+from app.platform import home as plt09_home  # PLT-09 (behind PLT09_ORGANIZED_HOME)
 from app.platform.models import User
 from app.practice import router as practice
 
@@ -77,6 +78,7 @@ for r in (
     tasks.router,  # KNW-10
     knw_eval.router,  # KNW-04
     organizations.router,  # ORG-01..03
+    plt09_home.router,  # PLT-09 organized home (off by default)
 ):
     app.include_router(r)
 

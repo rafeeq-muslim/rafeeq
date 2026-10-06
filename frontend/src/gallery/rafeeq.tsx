@@ -1,13 +1,18 @@
 import * as React from "react"
 import {
+  IconBook,
+  IconCompass,
   IconDroplet,
   IconPray,
+  IconRefresh,
   IconStar,
 } from "@tabler/icons-react"
 
 import { RadioGroup } from "@/components/ui/radio-group"
 import {
+  Backdrop,
   CoreGlow,
+  IconTile,
   JourneySky,
   LessonMedallion,
   PetalConfetti,
@@ -41,15 +46,18 @@ import {
   QuickExitButton,
   ReferralCard,
   StreakChip,
+  ThemeSwitcher,
   UserMessage,
   type LocaleCode,
   type NavKey,
+  type ThemeCode,
 } from "@/components/rafeeq"
 import { Demo, Section } from "./showcase"
 
 function RafeeqComponents() {
   const [nav, setNav] = React.useState<NavKey>("home")
   const [lang, setLang] = React.useState<LocaleCode>("ar")
+  const [theme, setTheme] = React.useState<ThemeCode>("light")
   const [habits, setHabits] = React.useState({ fajr: true, walk: false })
   return (
     <div className="flex flex-col gap-14">
@@ -98,6 +106,31 @@ function RafeeqComponents() {
               <div className="relative isolate h-32 overflow-hidden rounded-card bg-ink">
                 <PetalConfetti />
               </div>
+            </div>
+          </Demo>
+
+          <Demo
+            name="Backdrop · IconTile"
+            domain="PLT-04"
+            description="خلفية التطبيق: تدرّج الرفقة غسلاتٍ خفيفة مع النقشة في أعلاها، في الوضعين. وبلاطة الأيقونة: أيقونة بيضاء على تدرّج بنفسجي لكل صف أو أداة تُفتح."
+            rules={[
+              "الخلفية في AppShell وحده، ولا يقل عليها تباين نص عن 4.5:1",
+              "البلاطة بنفسجية فقط: تدل على ما يُفتح، لا على احتفال",
+            ]}
+            code={`<div className="relative isolate bg-background">
+  <Backdrop />
+</div>
+<IconTile icon={IconCompass} />           // sm | md | lg`}
+            stack
+          >
+            <div className="relative isolate grid h-40 place-items-center overflow-hidden rounded-card border bg-background">
+              <Backdrop />
+              <p className="text-label text-muted-foreground">نص ثانوي على الخلفية</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <IconTile icon={IconCompass} size="sm" />
+              <IconTile icon={IconBook} />
+              <IconTile icon={IconRefresh} size="lg" />
             </div>
           </Demo>
 
@@ -362,7 +395,7 @@ function RafeeqComponents() {
           <Demo
             name="BottomNav"
             domain="PLT-04"
-            description="خمس علامات. النشطة بنفسجية بنقطة كهرمانية، وتبويب «مرشدي» حاضر دائمًا."
+            description="خمس علامات. أيقونة النشطة في حبة بتدرّج بنفسجي بنقطة كهرمانية، واسمها بنفسجي عريض. وتبويب «مرشدي» حاضر دائمًا."
             code={`<BottomNav active={tab} onNavigate={setTab} />`}
             previewClassName="block p-0"
           >
@@ -370,15 +403,17 @@ function RafeeqComponents() {
           </Demo>
 
           <Demo
-            name="LanguageSwitcher · QuickExitButton · PrivacyNote"
-            domain="PLT-01 · PLT-02 · PLT-05"
-            description="كل لغة مكتوبة بلغتها. الخروج السريع يستبدل الصفحة بصفحة محايدة ويمحو الرجوع."
+            name="LanguageSwitcher · ThemeSwitcher · QuickExitButton · PrivacyNote"
+            domain="PLT-01 · PLT-04 · PLT-02 · PLT-05"
+            description="كل لغة مكتوبة بلغتها. المظهر فاتح افتراضيًا، والداكن باختيار المستخدم. الخروج السريع يستبدل الصفحة بصفحة محايدة ويمحو الرجوع."
             code={`<LanguageSwitcher value={lang} onValueChange={(code, dir) => setLocale(code, dir)} />
+<ThemeSwitcher value={theme} onValueChange={setTheme} />
 <QuickExitButton href={NEUTRAL_PAGE} />
 <PrivacyNote />`}
             stack
           >
             <LanguageSwitcher value={lang} onValueChange={(c) => setLang(c)} />
+            <ThemeSwitcher value={theme} onValueChange={setTheme} />
             <QuickExitButton href="about:blank" className="w-fit" />
             <PrivacyNote />
           </Demo>

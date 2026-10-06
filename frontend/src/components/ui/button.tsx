@@ -8,13 +8,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "tactile bg-primary text-primary-foreground [--lip:var(--primary-lip)] hover:bg-primary/92",
+        default:
+          "tactile bg-primary bg-grad-action text-primary-foreground [--lip:var(--primary-lip)] hover:brightness-105",
         celebrate:
-          "tactile bg-celebrate text-celebrate-foreground [--lip:var(--celebrate-lip)] hover:bg-celebrate/92 focus-visible:ring-celebrate/40",
+          "tactile bg-celebrate bg-grad-celebrate text-celebrate-foreground [--lip:var(--celebrate-lip)] hover:brightness-105 focus-visible:ring-celebrate/40",
         outline:
           "tactile border-2 border-border bg-card [--lip:var(--outline-lip)] hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:
-          "tactile bg-secondary text-secondary-foreground [--lip:var(--secondary-lip)] hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "tactile bg-secondary bg-grad-secondary text-secondary-foreground [--lip:var(--secondary-lip)] hover:[filter:var(--secondary-hover)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-muted hover:text-foreground active:translate-y-px aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:

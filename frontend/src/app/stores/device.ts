@@ -7,10 +7,14 @@ import { persist } from "zustand/middleware"
 import type { Locale } from "@/app/i18n"
 
 export type City = { id: string; name: Record<string, string>; country: string; lat: number; lng: number; tz: string }
+/** PLT-04: light, dark, or "system" (follow the device's own setting). */
+export type Theme = "light" | "dark" | "system"
 
 type DeviceState = {
   installId: string
   locale: Locale
+  /** PLT-04: light unless the learner picks dark or «حسب الجهاز» in «حسابي». */
+  theme: Theme
   onboarded: boolean
   placementOffered: boolean
   shareEvents: boolean
@@ -29,6 +33,8 @@ type DeviceState = {
   repliesOn: boolean
   /** PLT-07 R3: the Rafeeq tone (plays only once an approved tone exists). */
   toneOn: boolean
+  /** PLT-09: the server setting PLT09_ORGANIZED_HOME as last read (on by default; offline keeps it). */
+  organizedHome: boolean
   set: (patch: Partial<Omit<DeviceState, "set">>) => void
 }
 
@@ -51,6 +57,7 @@ export const useDevice = create<DeviceState>()(
     (set) => ({
       installId: newId(),
       locale: guessLocale(),
+      theme: "light",
       onboarded: false,
       placementOffered: false,
       shareEvents: true,
@@ -65,6 +72,7 @@ export const useDevice = create<DeviceState>()(
       reminderTime: "20:00",
       repliesOn: false,
       toneOn: true,
+      organizedHome: true,
       set: (patch) => set(patch),
     }),
     { name: "rafeeq.device", version: 1 },
