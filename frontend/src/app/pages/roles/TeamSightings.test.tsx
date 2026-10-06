@@ -97,8 +97,9 @@ describe("PLT-17 R5 team month-start announcements", () => {
     expect(calls.some((c) => c.method === "DELETE")).toBe(false)
 
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
-    fireEvent.click(screen.getByRole("button", { name: ar("plt17.sight.remove") }))
-    fireEvent.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: ar("plt17.sight.remove") }))
+    // the page behind a closing dialog stays hidden from roles for a moment
+    fireEvent.click(await screen.findByRole("button", { name: ar("plt17.sight.remove") }))
+    fireEvent.click(within(await screen.findByRole("alertdialog")).getByRole("button", { name: ar("plt17.sight.remove") }))
     await settle()
     await settle()
     expect(calls.find((c) => c.method === "DELETE")?.url).toBe("/api/practice/sightings/SA/1448/9")
