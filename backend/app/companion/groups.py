@@ -33,9 +33,12 @@ MAX_CAPACITY = 15
 MENTOR_MEMBER_LIMIT = 25  # R1: across all of one mentor's groups
 
 
-async def mentor_only(user: CurrentUser) -> User:
+async def mentor_only(user: CurrentUser, session: Session) -> User:
     if not user.has("mentor"):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    from app.companion.inbox import mentor_gate
+
+    await mentor_gate(session, user)  # ORG-02 R2, R5: rules first; a suspended mentor opens no group
     return user
 
 

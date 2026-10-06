@@ -19,6 +19,9 @@ log = logging.getLogger(__name__)
 TEXTS: dict[str, dict[str, str]] = {
     # to a learner
     "reply": {"ar": "لديك رد جديد", "en": "You have a new reply", "tl": "May bago kang sagot"},
+    # ORG-02 R5: the learner's mentor is no longer available. Neutral: no
+    # reason, no organisation, no mentor name; the app says the rest.
+    "mentor_change": {"ar": "لديك تنبيه جديد", "en": "You have a new notice", "tl": "May bago kang abiso"},
     # to a mentor
     "message": {"ar": "لديك رسالة جديدة", "en": "You have a new message", "tl": "May bago kang mensahe"},
     "urgent": {"ar": "طلب عاجل ينتظر ردًا", "en": "An urgent request is waiting", "tl": "May agarang kahilingang naghihintay"},

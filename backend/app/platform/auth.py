@@ -175,8 +175,8 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     invite: Invite | None = None
     if body.invite_code:
         invite = await session.get(Invite, body.invite_code.strip())
-        if invite is None or invite.used_by is not None:
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")
+        if invite is None or invite.used_by is not None or (invite.expires_at is not None and invite.expires_at < datetime.now(UTC)):
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")  # ORG-02 R1 ex2: used or expired
         roles = [invite.role]
         if invite.role == "mentor" and not body.gender:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
@@ -199,7 +199,11 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         if claimed.rowcount != 1:
             await session.rollback()
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")
-    await publish(session, "AccountCreated", "PLT", {"user_id": str(user.id)})
+    created: dict = {"user_id": str(user.id)}
+    if invite and invite.org_id:
+        # ORG-02 R1: an organisation's own invite; ORG records the approval.
+        created["invite"] = {"role": invite.role, "org_id": str(invite.org_id)}
+    await publish(session, "AccountCreated", "PLT", created)
     return await _issue(session, user, response)
 
 

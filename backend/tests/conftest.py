@@ -61,6 +61,10 @@ async def with_roles(client, username: str, *roles: str) -> str:
     async with SessionLocal() as s:
         await s.execute(update(User).where(User.username == username).values(roles=list(roles)))
         await s.commit()
+    if "mentor" in roles:
+        from tests.cmp_helpers import accept_mentor_rules
+
+        await accept_mentor_rules(out["user"]["id"])  # ORG-02 R2
     return out["access_token"]
 
 

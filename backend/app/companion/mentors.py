@@ -16,12 +16,12 @@ from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
-from sqlalchemy import ARRAY, String, cast, func, or_, select, update
+from sqlalchemy import ARRAY, String, and_, cast, delete, func, select, update
 
 from app.companion import notify
 from app.companion.common import Gender, Lang, is_blocked, not_found, now
 from app.companion.inbox import MENTEE_CAP_DEFAULT, profile_of
-from app.companion.models import Block, HelpRequest, MentorLink, MentorProfile
+from app.companion.models import Block, HelpRequest, MentorEnded, MentorLink, MentorProfile
 from app.core.deps import CurrentUser, Session
 from app.platform.models import User
 
@@ -49,6 +49,9 @@ class MineOut(BaseModel):
     thread_id: uuid.UUID | None
     gender: str | None
     languages: list[str]
+    # ORG-02 R5: the previous mentor is no longer available; choose another.
+    # No reason and no organisation are ever given.
+    mentor_ended: bool = False
 
 
 async def _card(session, mentor: User) -> MentorCard:
@@ -82,7 +85,8 @@ async def eligible_mentors(session, learner: User) -> list[User]:
             User.id != learner.id,
             User.gender == learner.gender,
             User.languages.op("&&")(cast(_learner_langs(learner), ARRAY(String(5)))),
-            or_(MentorProfile.user_id.is_(None), MentorProfile.accepting.is_(True)),
+            # ORG-02 R2, R5: only a mentor who accepted the mentor rules and is not suspended.
+            and_(MentorProfile.accepting.is_(True), MentorProfile.suspended.is_(False), MentorProfile.rules_accepted_at.is_not(None)),
             func.coalesce(load.c.n, 0) < func.coalesce(MentorProfile.capacity, MENTEE_CAP_DEFAULT),  # group members not counted
             User.id.not_in(blocked),
             User.id.not_in(blocking),
@@ -164,6 +168,7 @@ async def choose(body: ChooseIn, session: Session, user: CurrentUser) -> MineOut
         await end_link(session, old)  # R4: one at a time; the old mentor stops seeing them
         await session.flush()
     session.add(MentorLink(learner_id=user.id, mentor_id=body.mentor_id, share_progress=False, chosen_at=now()))
+    await session.execute(delete(MentorEnded).where(MentorEnded.learner_id == user.id))  # ORG-02 R5: notice done
     await profile_of(session, body.mentor_id)
     await session.commit()
     notify.later(notify.to_user, body.mentor_id, "new_mentee", "/inbox?tab=mentees")  # R5
@@ -175,7 +180,13 @@ async def mine(session: Session, user: CurrentUser) -> MineOut:
     link = await session.get(MentorLink, user.id)
     if link is None:
         return MineOut(
-            mentor=None, share_progress=False, chosen_at=None, thread_id=None, gender=user.gender, languages=_learner_langs(user)
+            mentor=None,
+            share_progress=False,
+            chosen_at=None,
+            thread_id=None,
+            gender=user.gender,
+            languages=_learner_langs(user),
+            mentor_ended=await session.get(MentorEnded, user.id) is not None,
         )
     mentor = await session.get(User, link.mentor_id)
     thread_id = await session.scalar(
@@ -191,6 +202,13 @@ async def mine(session: Session, user: CurrentUser) -> MineOut:
         gender=user.gender,
         languages=_learner_langs(user),
     )
+
+
+@router.delete("/mine/notice", status_code=204)
+async def dismiss_notice(session: Session, user: CurrentUser) -> None:
+    """ORG-02 R5: the learner closes the «choose another mentor» notice."""
+    await session.execute(delete(MentorEnded).where(MentorEnded.learner_id == user.id))
+    await session.commit()
 
 
 @router.delete("/mine", status_code=204)

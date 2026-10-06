@@ -9,7 +9,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, IdMixin, TimestampMixin
 
-ROLES = ("learner", "mentor", "sharia_reviewer", "team", "admin")
+ROLES = ("learner", "mentor", "sharia_reviewer", "team", "admin", "org_coordinator")
 
 
 class User(IdMixin, TimestampMixin, Base):
@@ -54,8 +54,10 @@ class OneTimeCode(IdMixin, TimestampMixin, Base):
 
 
 class Invite(TimestampMixin, Base):
-    """Team-issued codes that grant a role at sign-up (mentor, reviewer, team).
-    Stands in for the postponed Organizations domain."""
+    """One-time codes that grant a role at sign-up. Issued by the team
+    (mentor, reviewer, team, admin; no expiry; kept for "Rafeeq" mentors
+    without an organisation, ORG-02 open question) or for an organisation
+    (ORG-02 R1: its mentors, valid 7 days; its coordinators, issued by the team)."""
 
     __tablename__ = "invites"
     code: Mapped[str] = mapped_column(String(32), primary_key=True)
@@ -63,6 +65,9 @@ class Invite(TimestampMixin, Base):
     created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"))
     used_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # ORG-02 R1: the organisation that approves the person, and the code's end.
+    org_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True, index=True)
+    expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
 class PushSubscription(IdMixin, TimestampMixin, Base):
