@@ -132,8 +132,6 @@ export default function Ask() {
     if (res.accepted) void res.done.then(onAnswer)
   }
 
-  // CMP-06 R2 ex2: a question its owner sent from the private notebook arrives
-  // once, through the route state (never the URL), as an ordinary question.
   const origin = lessonHelp?.from ?? "ask"
   // LRN-03 R5: opened from its own tab, nothing of a lesson left earlier is kept any longer.
   const fromTab = !lessonHelp
@@ -146,6 +144,8 @@ export default function Ask() {
     if (path) navigate(path, { replace: true })
     else navigate(-1)
   }
+  // CMP-06 R2 ex2: a question its owner sent from the private notebook arrives
+  // once, through the route state (never the URL), as an ordinary question.
   const handedOver = React.useRef(false)
   React.useEffect(() => {
     const q = (location.state as { notebookQuestion?: unknown } | null)?.notebookQuestion

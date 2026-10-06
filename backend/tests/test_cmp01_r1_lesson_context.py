@@ -58,8 +58,20 @@ LESSON = {
 }
 EXERCISE_2 = {"lesson_id": "t1", "exercise_id": "t1-e2"}
 CARD_PASSAGE = "rafeeq_cards:ar:t1-c2"
-OTHER = {"id": "binbaz:ar:9", "kind": "fatwa", "lang": "ar", "quote_text": "TEST_QUOTE_TEXT الوضوء أتوضأ", "context_text": "TEST_CONTEXT_TEXT"}
-OTHER_EN = {"id": "binbaz:en:9", "kind": "fatwa", "lang": "en", "quote_text": "TEST_QUOTE_TEXT wudu what does this mean", "context_text": ""}
+OTHER = {
+    "id": "binbaz:ar:9",
+    "kind": "fatwa",
+    "lang": "ar",
+    "quote_text": "TEST_QUOTE_TEXT الوضوء أتوضأ",
+    "context_text": "TEST_CONTEXT_TEXT",
+}
+OTHER_EN = {
+    "id": "binbaz:en:9",
+    "kind": "fatwa",
+    "lang": "en",
+    "quote_text": "TEST_QUOTE_TEXT wudu what does this mean",
+    "context_text": "",
+}
 ROUTE_GENERAL = {"route": "general", "level": "A"}
 SUPPORTED = {"supported": True, "unsupported": []}
 FROM_CARD = {"sufficient": True, "answer": "المقصود عدد غسلات الوجه في الوضوء.", "sources": [CARD_PASSAGE]}
