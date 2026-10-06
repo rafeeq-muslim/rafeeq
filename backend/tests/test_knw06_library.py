@@ -66,6 +66,20 @@ async def test_knw06_r1_dead_link_is_hidden_after_check(client, items):
     assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl", "ih-2-tl"]
 
 
+async def test_knw06_r1_unplayable_item_stays_hidden_even_when_its_link_answers(client, items, monkeypatch):
+    monkeypatch.setattr(library, "unplayable_ids", lambda: frozenset({"ih-2-tl"}))
+    async with SessionLocal() as s, httpx.AsyncClient(transport=httpx.MockTransport(lambda r: httpx.Response(200))) as http:
+        await library.check_library_links(s, http)
+    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl"]
+
+
+def test_knw06_r1_english_prayer_video_is_listed_unplayable():
+    library.unplayable_ids.cache_clear()
+    ids = library.unplayable_ids()
+    assert "ih-2838921-en" in ids
+    assert ids <= {it["id"] for it in library.load()}  # only real library items
+
+
 async def test_knw06_r2_items_in_learner_language_only(client, items):
     body = (await client.get("/api/discover/library?lang=tl")).json()
     basics = next(t for t in body["topics"] if t["id"] == "basics")
