@@ -15,17 +15,20 @@ import json
 import re
 from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field, field_validator
+from sqlalchemy import select
 
 from app.core import ratelimit
-from app.core.deps import OptionalUser, Session
+from app.core.deps import OptionalUser, Session, require_role
 from app.knowledge.ai import agents
 from app.knowledge.ai.client import AiUnavailable
 from app.knowledge.ai.textcheck import ATTRIBUTION, TRANSLIT, has_arabic, quoted_spans, words
 from app.knowledge.models import ExplanationLog
 from app.knowledge.review import published
+from app.learning import content as learning_content
 from app.learning.models import ExplanationBlock
+from app.platform.models import User
 
 router = APIRouter(prefix="/api/learning", tags=["learning-assistant"])
 Lang = Literal["ar", "en", "tl"]
@@ -253,3 +256,78 @@ async def tag_question(session, question: str, lang: str, route: str) -> str | N
         return await agents.tag_objective(question, objectives)
     except AiUnavailable:
         return None
+
+
+# --- reviewer: explanation samples and blocks (LRN-03 R6) ---------------------
+# The Sharia reviewer reads samples of shown explanations (stored with the
+# exercise id and language only, no identity) and can block the explanation
+# for one exercise in one language; explain_mistake then answers with the
+# card text alone. Reviewer only: team members neither read nor block.
+
+Reviewer = Annotated[User, Depends(require_role("sharia_reviewer"))]
+
+
+def _pick(text: Any, lang: str) -> str:
+    return (text.get(lang) or text.get("ar") or "") if isinstance(text, dict) else str(text or "")
+
+
+def _exercise_info(exercise_id: str, lang: str) -> dict[str, str]:
+    found = learning_content.store().exercise(exercise_id)
+    if found is None:
+        return {}
+    lesson, ex = found
+    return {"lesson_id": lesson["id"], "lesson_title": _pick(lesson.get("title"), lang), "prompt": _pick(ex.get("prompt"), lang)}
+
+
+@router.get("/explanations")
+async def explanation_samples(
+    session: Session,
+    _: Reviewer,
+    lang: Lang | None = None,
+    exercise_id: Annotated[str | None, Query(max_length=24)] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 30,
+) -> dict:
+    q = select(ExplanationLog).order_by(ExplanationLog.at.desc(), ExplanationLog.id).limit(limit)
+    if lang:
+        q = q.where(ExplanationLog.lang == lang)
+    if exercise_id:
+        q = q.where(ExplanationLog.exercise_id == exercise_id)
+    rows = list(await session.scalars(q))
+    blocks = list(await session.scalars(select(ExplanationBlock).order_by(ExplanationBlock.created_at.desc())))
+    blocked = {(b.exercise_id, b.lang) for b in blocks}
+    return {
+        "items": [
+            {
+                "id": str(r.id),
+                "at": r.at,
+                "exercise_id": r.exercise_id,
+                "lang": r.lang,
+                "text": r.text,
+                "blocked": (r.exercise_id, r.lang) in blocked,
+                **_exercise_info(r.exercise_id, r.lang),
+            }
+            for r in rows
+        ],
+        "blocks": [
+            {"exercise_id": b.exercise_id, "lang": b.lang, "at": b.created_at, **_exercise_info(b.exercise_id, b.lang)} for b in blocks
+        ],
+    }
+
+
+@router.put("/explanations/blocks/{exercise_id}/{lang}")
+async def block_explanation(exercise_id: str, lang: Lang, session: Session, user: Reviewer) -> dict:
+    if learning_content.store().exercise(exercise_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "exercise_not_found")
+    if await session.get(ExplanationBlock, (exercise_id, lang)) is None:
+        session.add(ExplanationBlock(exercise_id=exercise_id, lang=lang, blocked_by=user.id))
+        await session.commit()
+    return {"blocked": True}
+
+
+@router.delete("/explanations/blocks/{exercise_id}/{lang}")
+async def unblock_explanation(exercise_id: str, lang: Lang, session: Session, _: Reviewer) -> dict:
+    row = await session.get(ExplanationBlock, (exercise_id, lang))
+    if row is not None:
+        await session.delete(row)
+        await session.commit()
+    return {"blocked": False}
