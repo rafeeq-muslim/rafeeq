@@ -17,6 +17,7 @@ from app.motivation import challenges, indicators
 from app.motivation import router as motivation
 from app.organizations import router as organizations
 from app.platform import admin, auth, push
+from app.platform import downloads as plt12_downloads  # PLT-12 download center
 from app.platform import export as data_export
 from app.platform import home as plt09_home  # PLT-09 (behind PLT09_ORGANIZED_HOME)
 from app.platform.models import User
@@ -79,6 +80,7 @@ for r in (
     knw_eval.router,  # KNW-04
     organizations.router,  # ORG-01..03
     plt09_home.router,  # PLT-09 organized home (off by default)
+    plt12_downloads.router,  # PLT-12 download center (catalogue + pass-through)
 ):
     app.include_router(r)
 
