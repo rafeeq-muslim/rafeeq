@@ -75,6 +75,11 @@ Every video must be watched in full by the Sharia reviewer before use (no music 
 | Tabler Icons (`@tabler/icons-react`) | Icon set named in the brand guide | MIT |
 | shadcn/ui, Radix UI, Tailwind CSS, Vite, React, sonner, vaul, input-otp, `@shadcn/react` | Design-system code (`frontend/`) | MIT |
 | Agent skills in `.claude/skills/` | shadcn (MIT), Anthropic Design plugin (Apache-2.0), cuellarfr/design-skills (MIT), design-system-ops subset (MIT), Emil Kowalski mobile-native/animate/break-ui (MIT), pwa-skill-suite pwa-rtl (MIT); licence file kept in each skill folder. `frontend-design` is Anthropic's official plugin (installed via the plugin directory, not vendored) | As listed |
+| HyperFrames (`hyperframes` 0.7.109, HeyGen) | Renders the promo video `media/promo/` from HTML (npm dev dependency there, not vendored) | Apache-2.0 |
+| HyperFrames student kit (github.com/nateherkai/hyperframes-student-kit) | Workflow and skills followed to make the promo video; cloned outside the repo, nothing copied in | MIT (its AIS brand assets are not licensed and were not used) |
+| GSAP 3.14.2 | Animation timeline of the promo video (npm dev dependency in `media/promo/hyperframes/`) | GSAP Standard "no charge" licence |
+| `ffmpeg-static` 5.3.0, `ffprobe-static` 3.1.0 | Static FFmpeg/FFprobe binaries for encoding the promo video and fitting the recorded voice-over, no system install | ffmpeg-static GPL-3.0-or-later (FFmpeg static build), ffprobe-static MIT wrapper around FFmpeg's GPL binaries; used as tools, not shipped in the app |
+| Playwright with its Chromium | Captured the app screens for the promo video (local stack, guest only) | Apache-2.0 |
 
 ## Avoid
 
