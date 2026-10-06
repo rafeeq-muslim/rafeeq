@@ -166,6 +166,16 @@ async def set_reminder(body: ReminderIn, session: Session) -> dict:
     return {"enabled": sub.reminder_enabled, "time": sub.reminder_time}
 
 
+@router.post("/state")
+async def state(body: EndpointIn, session: Session) -> dict:
+    """The switches stored for this device, so «حسابي» shows what the server
+    will really do (the endpoint goes in the body, never in a URL)."""
+    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.endpoint))
+    if sub is None:
+        return {"subscribed": False, "reminder": False, "time": None, "replies": False}
+    return {"subscribed": True, "reminder": sub.reminder_enabled, "time": sub.reminder_time, "replies": sub.replies_enabled}
+
+
 @router.put("/replies")
 async def set_replies(body: RepliesIn, session: Session) -> dict:
     """PLT-06 R2: this device's «replies from a human» switch."""

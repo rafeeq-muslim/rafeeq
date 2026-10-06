@@ -89,6 +89,14 @@ async def test_plt06_r2_turning_replies_off_stops_them_for_a_guest_device_too(cl
     assert len(sent) == 1
 
 
+async def test_plt06_r2_the_device_reads_back_each_switch(client):
+    assert (await client.post("/api/push/state", json={"endpoint": SUB})).json()["subscribed"] is False
+    await _subscribe(client)
+    await client.put("/api/push/replies", json={"endpoint": SUB, "enabled": True})
+    got = (await client.post("/api/push/state", json={"endpoint": SUB})).json()
+    assert got == {"subscribed": True, "reminder": False, "time": None, "replies": True}
+
+
 async def test_plt06_r2_replies_switch_needs_a_subscribed_device(client):
     r = await client.put("/api/push/replies", json={"endpoint": SUB, "enabled": True})
     assert r.status_code == 404

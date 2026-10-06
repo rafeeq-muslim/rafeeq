@@ -11,6 +11,7 @@ import { toast } from "sonner"
 
 import { translate, type Locale } from "@/app/i18n"
 import { useDevice, type City } from "@/app/stores/device"
+import { playTone } from "@/app/lib/tone"
 import { isRamadan, type Sighting } from "./hijri"
 import { countOf } from "./plural"
 import { usePractice, type ReminderKey, type ReminderSettings } from "./store"
@@ -45,9 +46,10 @@ export function upcomingReminders(
   return out.filter((r) => r.at > now).sort((a, b) => a.at.getTime() - b.at.getTime())
 }
 
-/** R2: «تذكير» only, unless the learner chose to show the prayer's name. */
-export function reminderText(r: Reminder, s: ReminderSettings, locale: Locale, tz: string): string {
-  if (!s.showName) return translate(locale, "practice.reminders.neutral")
+/** R2: «تذكير» only, unless the learner chose to show the prayer's name.
+ * PLT-05 R3 / PLT-06 R6: discreet mode makes it «تذكير» even then. */
+export function reminderText(r: Reminder, s: ReminderSettings, locale: Locale, tz: string, discreet = useDevice.getState().discreet): string {
+  if (!s.showName || discreet) return translate(locale, "practice.reminders.neutral")
   const name = translate(locale, `practice.prayer.${r.key}` as Parameters<typeof translate>[1])
   if (r.key === "iftar") return translate(locale, "practice.reminders.iftarNow")
   const minutes = Math.round((r.time.getTime() - r.at.getTime()) / 60_000)
@@ -79,6 +81,7 @@ export function startReminderLoop(interval = 15_000) {
         (r) => r.at <= now && !fired.includes(r.id),
       )
       for (const r of due) toast(reminderText(r, reminders, locale, city.tz), { id: r.id, duration: 60_000 })
+      if (due.length) playTone() // PLT-07 R2: the Rafeeq tone, in the app only (silent until one is approved)
       if (due.length) set({ fired: [...fired, ...due.map((r) => r.id)].slice(-20) })
     }
     last = now
