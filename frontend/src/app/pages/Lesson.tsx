@@ -3,7 +3,9 @@
  * is safe and comes back before the end; the lesson completes when every
  * exercise is right; it resumes where it stopped and works offline once
  * opened. The help button opens the assistant with the lesson's topic alone
- * (CMP-01 R1); «أريد إنسانًا» is always visible there.
+ * (CMP-01 R1); «أريد إنسانًا» is always visible there. Coming back from
+ * that help lands on the same card or exercise, with the choice not yet
+ * checked (R5, lesson/helpReturn.ts).
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
@@ -39,6 +41,7 @@ import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFo
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
 import { LessonHelpButton } from "@/app/lesson/LessonHelpButton"
+import { dropLessonHelpReturn, heldDraft, holdLessonForHelp } from "@/app/lesson/helpReturn"
 import { askWhy, type Why } from "@/app/lesson/why"
 import { useWarmLesson } from "@/app/offline/warmup" // PLT-15 R2
 import { OfflineNote } from "@/app/offline/NeedsConnection"
@@ -97,17 +100,36 @@ function Player({ lesson }: { lesson: LessonT }) {
   const session = saved ?? startSession(lesson)
   const screen = current(lesson, session)
 
+  // R5: back from the assistant or a human request, the exercise is as the
+  // learner left it. Read once on mount, then dropped; a session old enough
+  // to ask continue-or-restart starts clean.
+  const [back] = React.useState(() => {
+    const draft = askResume ? null : heldDraft(lesson.id)
+    const left = draft && lesson.exercises.find((e) => e.id === draft.exerciseId)
+    if (!draft || !left) return null
+    // An unchecked choice belongs to the exercise on screen; a checked one keeps its result panel.
+    if (!draft.result && !(screen.kind === "exercise" && screen.exercise.id === left.id)) return null
+    return { ...draft, exercise: left }
+  })
+  React.useEffect(() => dropLessonHelpReturn(), [])
+
   // The exercise on screen and its checked result (kept until «متابعة»).
-  const [shown, setShown] = React.useState<{ exercise: Exercise; result: Result } | null>(null)
-  const [value, setValue] = React.useState<Value>(null)
+  const [shown, setShown] = React.useState<{ exercise: Exercise; result: Result } | null>(() =>
+    back?.result ? { exercise: back.exercise, result: back.result } : null,
+  )
+  const [value, setValue] = React.useState<Value>(back?.value ?? null)
   const [why, setWhy] = React.useState<Why | "loading" | null>(null)
   const [done, setDone] = React.useState<Completion | null>(null)
-  const [attempt, setAttempt] = React.useState(0)
+  const [attempt, setAttempt] = React.useState(back?.round ?? 0)
   const [footer, footerHeight] = useFooterSpace<HTMLElement>()
 
   const exercise = shown?.exercise ?? (screen.kind === "exercise" ? screen.exercise : null)
+  // The exercise the value on screen belongs to: a new exercise starts empty, a restored one keeps its choice.
+  const valueOf = React.useRef<string | null>(back?.exercise.id ?? null)
   React.useEffect(() => {
-    if (exercise && !shown) setValue(emptyValue(exercise))
+    if (!exercise) return
+    if (!shown && valueOf.current !== exercise.id) setValue(emptyValue(exercise))
+    valueOf.current = exercise.id
   }, [exercise?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   React.useEffect(() => {
@@ -149,7 +171,11 @@ function Player({ lesson }: { lesson: LessonT }) {
           <IconX />
         </Button>
         <Progress value={progressOf(lesson, session)} aria-label={t("lesson.progress")} className="h-3.5 flex-1" />
-        <LessonHelpButton from="lesson" topic={lesson.title} />
+        <LessonHelpButton
+          from="lesson"
+          topic={lesson.title}
+          onLeave={() => holdLessonForHelp(lesson.id, exercise ? { exerciseId: exercise.id, value, round: attempt, result: shown?.result ?? null } : null)}
+        />
       </header>
 
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>

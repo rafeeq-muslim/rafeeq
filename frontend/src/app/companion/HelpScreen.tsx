@@ -7,7 +7,8 @@
  * account needed (R2). Someone of their own gender replies: an account uses
  * its gender, a guest is asked «أخ أم أخت؟» once and the device remembers
  * (R3). Topics include non-religious needs (R4). Contact details are refused
- * with the reason (R5).
+ * with the reason (R5). Coming from a lesson, «ارجع إلى الدرس» leads back to
+ * it at the point it was left (LRN-03 R5).
  *
  * `kind=urgent` (a danger case from the assistant, KNW-01 R5; companion
  * README) creates the urgent request at once, with no question text, shows
@@ -16,7 +17,7 @@
 import * as React from "react"
 import { useNavigate, useSearchParams } from "react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { IconHeadset, IconLifebuoy, IconUserHeart } from "@tabler/icons-react"
+import { IconArrowLeft, IconHeadset, IconLifebuoy, IconUserHeart } from "@tabler/icons-react"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
@@ -42,6 +43,7 @@ import { useOnline } from "@/app/offline/online"
 import { ScreenBar, SectionTitle } from "./Screen"
 import { PrivacyLink } from "@/app/pages/Privacy"
 import { useCompanion } from "./store"
+import { lessonReturnPath } from "@/app/lesson/helpReturn"
 
 /** R1 ex2: the assistant question of this ask id, if it is still on this device (never fetched). */
 export function questionOf(turns: Turn[], askId: string | null): string | null {
@@ -140,6 +142,20 @@ export function ThreadList({ threads, onOpen }: { threads: ThreadSummary[]; onOp
         )
       })}
     </ul>
+  )
+}
+
+/** LRN-03 R5: shown whenever the person came from a lesson. Which lesson is
+ * known to this device only (lesson/helpReturn.ts); if it no longer is (the
+ * page was reloaded), the path opens, where that lesson is the next step. */
+function BackToLesson() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <Button variant="outline" size="sm" className="w-fit" data-slot="back-to-lesson" onClick={() => navigate(lessonReturnPath() ?? "/learn", { replace: true })}>
+      <IconArrowLeft data-icon="inline-start" className="rtl:rotate-180" />
+      {t("ask.lesson.back")}
+    </Button>
   )
 }
 
@@ -248,6 +264,7 @@ export default function HelpScreen() {
     <>
       <ScreenBar title={t("human.title")} back={-1} />
       <div className="flex flex-col gap-6 px-4 pt-5">
+        {source === "lesson" && <BackToLesson />}
         <OfflineHelp />
         <section className="flex items-center gap-4">
           <SpotIllustration kind="companion" size={72} />

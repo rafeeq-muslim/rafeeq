@@ -4,7 +4,8 @@
  *   reachable (top bar).
  * - CMP-01 R1: opened from a lesson's or a review's help button, it carries
  *   the lesson's topic alone (ask/lessonHelp.ts) and a human request made
- *   from here says it came from the lesson or the review.
+ *   from here says it came from the lesson or the review. LRN-03 R5:
+ *   «ارجع إلى الدرس» leads back to that lesson, at the point it was left.
  * - Answers end with source strips; Quran and hadith words come from the
  *   database; no source → ReferralCard; danger → DangerHelpPanel only.
  * - KNW-10 R3: "What should I learn now?" is answered by the learning guide
@@ -34,6 +35,7 @@ import { useContent } from "@/app/learning/useContent"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
 import { ErrorTurn, GuideTurn, HelpOriginContext, PendingTurn, QuestionTurn, ResponseTurn, humanUrl } from "@/app/ask/parts"
 import { readLessonHelp } from "@/app/ask/lessonHelp"
+import { dropLessonHelpReturn, lessonReturnPath } from "@/app/lesson/helpReturn"
 import { QUESTION_MAX, useAsk } from "@/app/ask/store"
 import type { AskResponse, Entrypoint } from "@/app/ask/types"
 import { SUGGESTIONS } from "@/app/ask/suggestions"
@@ -124,6 +126,17 @@ export default function Ask() {
   const location = useLocation()
   const lessonHelp = readLessonHelp(location.state) // CMP-01 R1: topic and origin only
   const origin = lessonHelp?.from ?? "ask"
+  // LRN-03 R5: opened from its own tab, nothing of a lesson left earlier is kept any longer.
+  const fromTab = !lessonHelp
+  React.useEffect(() => {
+    if (fromTab) dropLessonHelpReturn()
+  }, [fromTab])
+  /** Back to the lesson itself when this device still knows which; else one step back, where it was opened from. */
+  const backToWhereItCameFrom = () => {
+    const path = lessonHelp?.from === "lesson" ? lessonReturnPath() : null
+    if (path) navigate(path, { replace: true })
+    else navigate(-1)
+  }
   const handedOver = React.useRef(false)
   React.useEffect(() => {
     const q = (location.state as { notebookQuestion?: unknown } | null)?.notebookQuestion
@@ -151,7 +164,7 @@ export default function Ask() {
         {lessonHelp?.topic && (
           <div data-slot="lesson-topic" className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-secondary px-4 py-3 text-secondary-foreground">
             <p className="min-w-0 flex-1 text-label">{t(`ask.${lessonHelp.from}.from`, { name: lessonHelp.topic })}</p>
-            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
+            <Button variant="ghost" size="sm" data-slot="back-to-lesson" onClick={backToWhereItCameFrom}>
               {t(`ask.${lessonHelp.from}.back`)}
             </Button>
           </div>
