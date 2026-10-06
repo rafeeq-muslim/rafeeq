@@ -20,12 +20,12 @@ Everything here runs **on the device**. No endpoint receives a city, coordinates
 | R4 (next prayer, countdown, city time zone) | `times.ts::nextPrayer`, `formatTime` | Times are absolute instants; they are always formatted with the **city's** IANA zone, never the device zone. After Isha the next prayer is tomorrow's Fajr |
 | R5 (great-circle bearing) | `practice/qibla.ts::qiblaBearing` | `adhan` `Qibla()`; Riyadh = 244° |
 | R5 (no compass / denied) | `practice/QiblaScreen.tsx` | Live compass only when `DeviceOrientationEvent` gives an absolute heading (iOS `webkitCompassHeading` after a tap-to-allow; Android `deviceorientationabsolute`). Otherwise: bearing from north + a short how-to, no failure message |
-| R5 (reassurance line) | `content/practice/lines.json` → review desk item `practice_line:qibla_direction` | Shown only once the Sharia reviewer approves it in the learner's language |
+| R5 (reassurance line) | `content/practice/lines.json` → review desk item `practice_line:qibla_direction` | Shown once merged (rules.md §1.4 (2026-10-06): merged content is shown directly; a version the reviewer returns in the desk is withdrawn in that language until corrected). Test: `test_prc04_sightings.py::test_prc01_r5_merged_qibla_line_shown` |
 | R6 (no motivation) | — | No event, no counter, no streak call anywhere in `practice/` |
 
 ## 2. Endpoints
 
-None for times or qibla. The reassurance line comes with the other approved Practice lines: `GET /api/practice/lines?lang=` (see PRC-04 doc).
+None for times or qibla. The reassurance line comes with the other live Practice lines: `GET /api/practice/lines?lang=` (see PRC-04 doc).
 
 ## 3. Data
 

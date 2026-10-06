@@ -7,12 +7,12 @@
 
 | Rule / example | Module | What it does |
 | --- | --- | --- |
-| R1 approval per dhikr per language; text unchanged | `backend/app/practice/adhkar.py` | Reads `data/hisnmuslim/raw/{ar,en}/<chapter>.json` byte-for-byte (lenient JSON), builds one learner view per dhikr per language and registers item type `dhikr` (`hisn-<ID>`, group = chapter) with the KNW-05 review desk. Learners get approved snapshots only |
-| R1 chapter not approved in my language | `GET /api/practice/adhkar` | A chapter is listed with `approved_count`; the client shows «قيد المراجعة بلغتك» when it is 0 |
+| R1 reviewed before merge, shown when merged; returned → withdrawn; text unchanged | `backend/app/practice/adhkar.py` | Reads `data/hisnmuslim/raw/{ar,en}/<chapter>.json` byte-for-byte (lenient JSON), builds one learner view per dhikr per language and registers item type `dhikr` (`hisn-<ID>`, group = chapter) with the KNW-05 review desk. Learners get the merged text through `review.published()` (rules.md §1.4 (2026-10-06): merged content is shown directly; a version the reviewer returns in the desk is withdrawn in that language until corrected) |
+| R1 chapter with nothing live in my language | `GET /api/practice/adhkar` | A chapter is listed with `approved_count` (dhikr live in that language, i.e. merged and not returned); the client shows «قيد المراجعة بلغتك» when it is 0 |
 | R2 verses from the stored Quran record | `content/practice/adhkar.json` (`verses`) + `adhkar.py::segments` | Each `﴿…﴾` span in the Arabic text is replaced, in order, by a reference `{sura, from, to}` listed for that dhikr. A dhikr with `﴿` and no complete mapping is **not offered** for review. The client renders references with `/api/scripture/quran` (QuranEnc); offline → reference only |
 | R3 Arabic + meaning from the same source; no transliteration; no MT | `adhkar.py::view` | `ar`: segments. `en`: segments + `meaning` = Hisn English `TRANSLATED_TEXT`, except where that text is itself a Quran translation (`en_meaning:false` in the mapping; the QuranEnc translation is shown with the verse instead). `tl`: segments + `meaning: null`. `LANGUAGE_ARABIC_TRANSLATED_TEXT` (transliteration) is never read |
 | R4 repeat as text; no counter; no tracking | view `repeat` (int) → «3 مرات» | No tap counter, no endpoint that records anything, no event. The Rafeeq guide (PLT-08) does not store that adhkar were opened either: `guide/suggest.ts::QUIET_MOMENTS` keeps adhkar out of `used`, and opening them ends the suggestion as a dateless dismissal, the same state a «not now» leaves (`guide/store.ts`, persist v2 drops an old `used.adhkar`) |
-| R5 audio from Rafeeq; missing file → no button | `GET /api/practice/adhkar/audio/{id}.mp3` | `FileResponse` from `data/hisnmuslim/audio/ar/<ID>.mp3` (git-ignored, copied to the server). `audio` in the view is true only when the file exists, so adding audio changes the view and needs a new approval (the reviewer listens first) |
+| R5 audio from Rafeeq; missing file → no button | `GET /api/practice/adhkar/audio/{id}.mp3` | `FileResponse` from `data/hisnmuslim/audio/ar/<ID>.mp3` (git-ignored, copied to the server). `audio` in the view is true only when the file exists, so adding audio changes the view; under rules.md §1.4 the reviewer listens before the files are added, and the desk can still return it |
 | R6 groups and suggestion by the time of day | `content/practice/adhkar.json` (`groups`) + `frontend/src/app/practice/adhkar.ts::suggestGroup` | Groups: `morning_evening` (27), `after_prayer` (25), `sleep` (28), `waking` (1), `daily` (10, 11, 13, 14, 8, 9, 69, 70). Suggestion from the device city's prayer times; no city → fixed order |
 
 ## 2. Endpoints (`app/practice/router.py`)
@@ -31,9 +31,9 @@ No table. Views are rebuilt from the files; approvals live in `content_approvals
 
 | Example | Test (`backend/tests/test_prc07_adhkar.py` unless noted) |
 | --- | --- |
-| R1 approved text unchanged | `test_prc07_r1_approved_dhikr_shown_unchanged` |
-| R1 unapproved hidden | `test_prc07_r1_unapproved_dhikr_hidden` |
-| R1 chapter in review | `test_prc07_r1_chapter_without_approval_reports_zero` |
+| R1 merged text unchanged | `test_prc07_r1_merged_dhikr_shown_unchanged` |
+| R1 returned dhikr hidden | `test_prc07_r1_returned_dhikr_withdrawn_until_corrected` |
+| R1 merged chapter lists every offered dhikr | `test_prc07_r1_merged_chapter_shows_every_offered_dhikr` |
 | R2 Ayat al-Kursi from the record | `test_prc07_r2_verses_are_references_not_text` |
 | R2 unmapped verse never offered | `test_prc07_r2_unmapped_verse_not_offered` |
 | R3 English meaning, no transliteration | `test_prc07_r3_english_meaning_without_transliteration` |
