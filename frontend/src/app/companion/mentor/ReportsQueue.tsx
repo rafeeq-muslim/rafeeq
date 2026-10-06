@@ -10,6 +10,16 @@ import * as React from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -24,6 +34,7 @@ function ReportCard({ item }: { item: QueueItem }) {
   const { t, locale } = useT()
   const qc = useQueryClient()
   const open = item.status === "open"
+  const [confirmRemove, setConfirmRemove] = React.useState(false) // PLT-17 R6
   const act = async (action: "keep_hidden" | "restore" | "remove_member") => {
     try {
       await inboxApi.act(item.id, action)
@@ -74,10 +85,26 @@ function ReportCard({ item }: { item: QueueItem }) {
             {t("cmp.reports.restore")}
           </Button>
           {item.target_type === "group_message" && (
-            <Button size="sm" variant="destructive" onClick={() => void act("remove_member")}>
+            <Button size="sm" variant="destructive" onClick={() => setConfirmRemove(true)}>
               {t("cmp.reports.remove")}
             </Button>
           )}
+          <AlertDialog open={confirmRemove} onOpenChange={setConfirmRemove}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-start">
+                  {item.author_name ? <bdi>{t("plt17.reports.removeTitle", { name: item.author_name })}</bdi> : t("plt17.reports.removeTitleNoName")}
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-start">{t("plt17.reports.removeBody")}</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>{t("plt17.reports.removeCancel")}</AlertDialogCancel>
+                <AlertDialogAction variant="destructive" onClick={() => void act("remove_member")}>
+                  {t("cmp.reports.remove")}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ) : (
         item.hidden && (
