@@ -1,6 +1,6 @@
 # Overnight build: status and handoff
 
-Owner of this file: Claude (product engineer). Updated: 2026-10-05 ~23:30 (server time, UTC).
+Owner of this file: Claude (product engineer). Updated: 2026-10-06 ~01:10 (server time, UTC).
 
 Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automatic rollback).
 
@@ -23,8 +23,12 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 ## Incident 23:00 (resolved)
 - The deploy of `4bd9f4a` failed: a full-text migration over the whole corpus outlived the 3-minute health window; the rollback then ran the old image on the migrated schema and could not start (502 for ~20 minutes). Fixed in `1baf417`: migrations now run as their own step before the switch, with no time limit. Rule kept: migrations are additive only.
 
-## In progress
-- Ask and AI agent: finishing KNW-01/04/10 and `ai-agents.md` (model analysis and bake-off).
+## Done since 23:30
+- Ask and AI (KNW-01/04/10) finished and committed (`e3c96af`); `ai-agents.md` with prices, bake-off, model choice and spend (about $0.43 of the $10 budget so far).
+- Security review: all findings fixed except the four that need the server owner (see `decisions-for-review.md` → Security review). CSP and security headers live with zero violations.
+
+## State
+All features in the PRDs are built, tested (237 backend, 86 frontend) and deployed. What remains needs people: Sharia approval of the content (nothing is shown to learners before it), the five postponed items, and the four server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
 
 ## Credentials and access (never in git)
 - Secrets: `/home/naser/.config/rafeeq/secrets.env` (OpenRouter key, DB, JWT, VAPID, bootstrap admin `rafeeq-admin`).
@@ -34,7 +38,5 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 See `decisions-for-review.md` → "Postponed: needs you" (email provider, helplines, permission letters, Sharia approval, Tagalog review).
 
 ## Next
-1. Integrate the agents' work, run all checks, commit, deploy, walk every screen on the live site.
-2. Landing page wiring: first-time visitors at `/` see `/landing/`; its call to action opens `/welcome`.
-3. Security review and code review passes; fix findings.
-4. Keep watching GitHub for new PRs and commits; apply the PRD → plan → code → tests procedure to anything new.
+1. Keep watching GitHub for new PRs and commits; apply the PRD → plan → code → tests procedure to anything new.
+2. When مهند approves content, walk every learner screen on the live site in all three languages.
