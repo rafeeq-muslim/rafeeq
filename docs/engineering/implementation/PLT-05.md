@@ -42,6 +42,20 @@ Two facts the approved text left out, checked against the code. The approval lin
 
 Not stated because the repo doesn't say it: the server's country or hosting provider. ⚠️ Pending the product owner. Not covered either: the browser's push service delivering notifications, and the email provider for 2FA (not configured).
 
+### 2.2 Added with CMP-08 (2026-10-06, branch `cmp-08-mentor-application`)
+
+A new section «ما نحفظه إن قدّمت لتكون مرشدًا» (`policy.apply.*`, `"apply"` in `POLICY_SECTIONS`) and a third date line (`policy.revisedApply`, `POLICY_REVISED_APPLY`). **Not covered by the owner's approval until he confirms it.** Arabic written first; en/tl written by Claude from the Arabic.
+
+| The policy says | The code does |
+| --- | --- |
+| Kept: display name, gender, languages, country and city if written, the text about yourself, one contact (email or mobile) | `cmp_mentor_applications` columns (`companion/models.py::MentorApplication`); also the form's language, the status and its dates, and no IP address |
+| Seen only by the Rafeeq team, and the organisation's coordinator if an organisation's code was entered; used only to tell the result | `applications.py`: `staff` router (`require_role("team")`), `org` router (`coordinator_of`, rows of that `org_id` only); `mine` returns the status only |
+| Not accepted: contact and text deleted at once | `_reject` sets `contact` and `about` to NULL |
+| Whole application deleted 90 days after the decision, or after 90 days undecided | `purge` (`KEEP_DAYS = 90`), daily job `companion/jobs.py` |
+| Signed in: no contact asked, the application is in the data copy and goes with the account | `apply` (contact optional with an account), `companion/export.py` (`mentor_application`, without the team's note), FK cascade + `AccountDeleted` handler |
+
+Not said in the policy: the contact is stored unencrypted, like the 2FA email (see `implementation/CMP-08.md` §2).
+
 Still missing (not covered by the approval, not invented): the data controller's name and contact. Rights are exercised in the app («حسابي»), as the policy's rights section says. Conversations are kept until account deletion or device erase.
 
 ## 3. Tests

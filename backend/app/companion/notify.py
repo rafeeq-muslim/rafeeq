@@ -22,6 +22,9 @@ TEXTS: dict[str, dict[str, str]] = {
     # ORG-02 R5: the learner's mentor is no longer available. Neutral: no
     # reason, no organisation, no mentor name; the app says the rest.
     "mentor_change": {"ar": "لديك تنبيه جديد", "en": "You have a new notice", "tl": "May bago kang abiso"},
+    # CMP-08: to the team (a new mentor application) and to a signed-in
+    # applicant (a decision). Says nothing about what it is.
+    "notice": {"ar": "لديك تنبيه جديد", "en": "You have a new notice", "tl": "May bago kang abiso"},
     # to a mentor
     "message": {"ar": "لديك رسالة جديدة", "en": "You have a new message", "tl": "May bago kang mensahe"},
     "urgent": {"ar": "طلب عاجل ينتظر ردًا", "en": "An urgent request is waiting", "tl": "May agarang kahilingang naghihintay"},

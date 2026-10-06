@@ -3,6 +3,7 @@ and role changes. Admin only."""
 
 import secrets
 import uuid
+from datetime import datetime
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -26,15 +27,22 @@ class InviteIn(BaseModel):
 TEAM_ROLE_DB_ONLY = "team_role_db_only"
 
 
+def new_invite(session, role: str, created_by: uuid.UUID, org_id: uuid.UUID | None = None, expires_at: datetime | None = None) -> Invite:
+    """One one-time code for `role`, added to the session (the caller commits).
+    Also used by CMP-08 when an application is approved."""
+    code = f"{role[:3].upper()}-{secrets.token_hex(4).upper()}"
+    invite = Invite(code=code, role=role, created_by=created_by, org_id=org_id, expires_at=expires_at)
+    session.add(invite)
+    return invite
+
+
 @router.post("/invites")
 async def create_invites(body: InviteIn, admin: Admin, session: Session) -> dict:
     if body.role == "team":
         raise HTTPException(403, TEAM_ROLE_DB_ONLY)
     codes = []
     for _ in range(max(1, min(body.count, 50))):
-        code = f"{body.role[:3].upper()}-{secrets.token_hex(4).upper()}"
-        session.add(Invite(code=code, role=body.role, created_by=admin.id))
-        codes.append(code)
+        codes.append(new_invite(session, body.role, admin.id).code)
     await session.commit()
     return {"codes": codes}
 

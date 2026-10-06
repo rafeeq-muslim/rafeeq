@@ -28,12 +28,16 @@ import { useDocumentLocale } from "@/app/AppLayout"
 export const POLICY_UPDATED = "2026-10-06"
 /** The day the "media" and "hosting" sections were added, after that approval. */
 export const POLICY_REVISED = "2026-10-06"
+/** CMP-08: the day the "apply" section (mentor applications) was added. Not yet confirmed by the product owner. */
+export const POLICY_REVISED_APPLY = "2026-10-06"
 
+// "apply": CMP-08 what a mentor application keeps, who reads it and when it is deleted
+// (backend/app/companion/applications.py: KEEP_DAYS, _reject, purge).
 // "org": ORG-01 the organisation link (what the link carries, what «نعم» keeps, unlinking).
 // "media": what the browser fetches straight from the sources' hosts (CSP img-src/media-src in
 // infra/web.security-headers.inc) and the library search words the server sends (KNW-06);
 // "hosting": where server data and backups are kept (infra/compose.prod.yml, scripts/backup.sh).
-export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "media", "stats", "org", "hosting", "never", "rights", "retention", "signout"] as const
+export const POLICY_SECTIONS = ["device", "account", "contact", "apply", "notifications", "ai", "media", "stats", "org", "hosting", "never", "rights", "retention", "signout"] as const
 
 export default function Privacy() {
   useDocumentLocale()
@@ -66,6 +70,7 @@ export default function Privacy() {
               {t("policy.updated", { date: `⁦${POLICY_UPDATED}⁩` })}
             </p>
             <p className="text-label text-muted-foreground">{t("policy.revised", { date: `⁦${POLICY_REVISED}⁩` })}</p>
+            <p className="text-label text-muted-foreground">{t("policy.revisedApply", { date: `⁦${POLICY_REVISED_APPLY}⁩` })}</p>
           </header>
 
           {POLICY_SECTIONS.map((s) => (

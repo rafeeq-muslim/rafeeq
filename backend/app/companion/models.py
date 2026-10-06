@@ -4,7 +4,7 @@ reports and blocks. A mentor sees only what the learner allows."""
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import ARRAY, Boolean, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -178,3 +178,30 @@ class Block(IdMixin, Base):
     blocker_guest_hash: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
     blocked_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class MentorApplication(IdMixin, Base):
+    """CMP-08: someone asks to become a mentor; the team (or the coordinator
+    of the organisation whose code they entered) decides. `contact` is the
+    single place Rafeeq keeps a contact detail for a mentor, and only staff
+    read it (R3). `about` and `contact` go on rejection; the whole row goes
+    90 days after a decision, or after 90 days unanswered (R6)."""
+
+    __tablename__ = "cmp_mentor_applications"
+    display_name: Mapped[str] = mapped_column(String(40))
+    gender: Mapped[str] = mapped_column(String(1))  # same-gender rule (CMP-01 R3)
+    languages: Mapped[list[str]] = mapped_column(ARRAY(String(5)))
+    locale: Mapped[str] = mapped_column(String(5), default="ar")  # the form's language, to answer in it
+    place: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    about: Mapped[str | None] = mapped_column(Text, nullable=True)
+    contact: Mapped[str | None] = mapped_column(String(254), nullable=True)
+    # Applied while signed in: approval grants the role to this account.
+    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), _user_fk(), nullable=True, index=True)
+    # The organisation whose ORG-01 code was entered (no FK across domains, like invites.org_id).
+    org_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True, index=True)
+    status: Mapped[str] = mapped_column(String(10), default="pending", index=True)  # pending | approved | rejected
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    decided_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)  # the team's own note on a rejection; never shown to the applicant
+    invite_code: Mapped[str | None] = mapped_column(String(32), nullable=True)  # issued on approval, sent by hand

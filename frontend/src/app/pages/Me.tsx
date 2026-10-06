@@ -21,6 +21,7 @@ import {
   IconDownload,
   IconFlame,
   IconFlower,
+  IconHeartHandshake,
   IconHelpCircle,
   IconInbox,
   IconLayoutGrid,
@@ -86,6 +87,7 @@ export default function Me() {
     { to: "/referrals", key: "role.referrals", icon: IconHelpCircle, show: has("sharia_reviewer") },
     { to: "/team", key: "role.team", icon: IconUsersGroup, show: has("team") },
     { to: "/admin", key: "role.admin", icon: IconSettings, show: has("admin") },
+    { to: "/mentor-applications", key: "cmp.apps.title", icon: IconHeartHandshake, show: has("team") || has("admin") }, // CMP-08 R3
     { to: "/org", key: "org.role.link", icon: IconBuildingCommunity, show: !!me?.roles.includes("org_coordinator") }, // ORG-02, ORG-03
   ]
 
@@ -133,6 +135,13 @@ export default function Me() {
         <Section title={t("org.me.title")} id="org">
           <OrgSection />
         </Section>
+
+        {/* CMP-08: the way in for whoever wants to mentor; mentors already are */}
+        {!has("mentor") && (
+          <Section title={t("cmp.apply.entry")}>
+            <LinkRow icon={IconHeartHandshake} title={t("cmp.apply.entry")} hint={t("cmp.apply.entryHint")} onClick={() => navigate("/mentor-apply")} />
+          </Section>
+        )}
 
         {roleLinks.some((r) => r.show) && (
           <Section title={t("me.team")}>
