@@ -1,0 +1,21 @@
+{
+  "decision": "KNW-06 open question «ما الموضوعات؟»: topics = the learning path's units (owner's approval 2026-10-06). Items not listed here are shown under «عام».",
+  "rule": "An item is linked to a unit only when its title clearly matches that unit's lessons (content/units.json). Anything unclear stays under «عام» for the KNW owner to place. This file only arranges approved items; it changes no item text, so no review is needed.",
+  "units": {
+    "u1": [
+      "ih-2834583-ar",
+      "ih-2832089-ar",
+      "ih-2839968-en",
+      "ih-2834586-en",
+      "ih-2839969-en",
+      "ih-2838921-en",
+      "ih-2837377-en"
+    ],
+    "u3": [
+      "ih-2840435-ar",
+      "ih-443194-en",
+      "ih-898875-en",
+      "ih-2832057-tl"
+    ]
+  }
+}

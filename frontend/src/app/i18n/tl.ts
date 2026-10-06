@@ -1284,4 +1284,6 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ⚠️ Tagalog needs native review ---
+  "discover.lib.topic.general": "Pangkalahatan",
 }

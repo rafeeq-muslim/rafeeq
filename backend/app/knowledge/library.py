@@ -39,8 +39,10 @@ log = logging.getLogger(__name__)
 ITEM_TYPE = "library_item"
 LANGS = ("ar", "en", "tl")
 API = "https://api3.islamhouse.com/v3/paV29H2gm56kvLPy"
-# Topics = the two curated IslamHouse categories (decision: mapping items to path units needs the reviewer's time).
+# The two curated IslamHouse categories items are fetched from. Learners see
+# them grouped by the path's units instead (KNW-06 R2, see learner_topics).
 TOPICS = {"basics": 179666, "stories": 221824}
+GENERAL = "general"  # KNW-06 R2: items not linked to a unit («عام»)
 TYPES = ("books", "articles", "videos", "audios")
 # R5: only files on IslamHouse's own hosts (no ads, no tracking, no video platform).
 FILE_HOSTS = ("d1.islamhouse.com", "islamhouse.com", "d2.islamhouse.com")
@@ -87,15 +89,44 @@ async def hidden_ids(session: AsyncSession) -> set[str]:
     return set(rows)
 
 
-def learner_topics(live: dict[str, Any], hidden: set[str]) -> list[dict]:
-    """Approved, link-healthy items of one language grouped by topic (R1, R2)."""
-    topics: dict[str, list] = {t: [] for t in TOPICS}
+@lru_cache
+def unit_links() -> dict[str, str]:
+    """KNW-06 R2: item id -> path unit id, from content/discover/library-units.json.
+    Kept apart from the items so arranging them never changes an approved version."""
+    f = get_settings().content_dir / "discover" / "library-units.json"
+    if not f.exists():
+        return {}
+    data = json.loads(f.read_text(encoding="utf-8"))
+    return {iid: uid for uid, ids in data["units"].items() for iid in ids}
+
+
+@lru_cache
+def path_units() -> list[dict[str, Any]]:
+    """The learning path's units in path order (content/units.json)."""
+    f = get_settings().content_dir / "units.json"
+    if not f.exists():
+        return []
+    return sorted(json.loads(f.read_text(encoding="utf-8")), key=lambda u: u.get("order", 0))
+
+
+def learner_topics(live: dict[str, Any], hidden: set[str], lang: str = "ar") -> list[dict]:
+    """Approved, link-healthy items of one language (R1), grouped by the path's
+    units in path order, then «عام» (R2). The topic list is the same in every
+    language, so an empty topic can offer the English items (R2 ex2)."""
+    links = unit_links()
+    linked = set(links.values())
+    topics: dict[str, dict] = {
+        u["id"]: {"id": u["id"], "unit": u["id"], "title": u["title"].get(lang) or u["title"].get("ar", u["id"]), "items": []}
+        for u in path_units()
+        if u["id"] in linked
+    }
+    general: dict[str, Any] = {"id": GENERAL, "unit": None, "items": []}
     for it in load():
         snap = live.get(it["id"])
         if snap is None or it["id"] in hidden:
             continue
-        topics.setdefault(snap["topic"], []).append(snap)
-    return [{"id": t, "items": items} for t, items in topics.items()]
+        topics.get(links.get(it["id"], ""), general)["items"].append(snap)
+    return [*topics.values(), general]
 
 
 # --- link health (R1 error) ---------------------------------------------------
