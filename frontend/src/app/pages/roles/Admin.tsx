@@ -16,6 +16,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { TopBar } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
 import { api } from "@/app/lib/api"
+import { AdminOrgs } from "@/app/org/AdminOrgs" // ORG-01: organisations made by the team
 
 const INVITE_ROLES = ["mentor", "sharia_reviewer", "team", "admin"] as const
 const ALL_ROLES = ["learner", ...INVITE_ROLES] as const
@@ -31,6 +32,7 @@ export default function Admin() {
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3">{t("role.admin")}</span>} />
       <div className="flex flex-col gap-10 px-4 pt-4 pb-12">
         <Invites />
+        <AdminOrgs />
         <Roles />
       </div>
     </>

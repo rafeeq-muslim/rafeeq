@@ -93,6 +93,8 @@ export type Mine = {
   thread_id: string | null
   gender: Gender | null
   languages: string[]
+  /** ORG-02 R5: the previous mentor is no longer available (no reason is ever given). */
+  mentor_ended?: boolean
 }
 export type Mentee = {
   id: string
@@ -266,6 +268,7 @@ export const mentorApi = {
   share: (share: boolean) => api<Mine>("/api/mentors/mine/share", { method: "PUT", body: { share } }),
   thread: () => api<{ id: string }>("/api/mentors/mine/thread", { method: "POST" }),
   block: () => api("/api/mentors/mine/block", { method: "POST" }),
+  dismissNotice: () => api("/api/mentors/mine/notice", { method: "DELETE" }), // ORG-02 R5
 }
 
 // --- CMP-05: groups ----------------------------------------------------------

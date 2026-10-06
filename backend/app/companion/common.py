@@ -114,7 +114,7 @@ async def is_paused(session: AsyncSession, user: User) -> bool:
     if is_team(user) or not user.has("mentor"):
         return False
     prof = await session.get(MentorProfile, user.id)
-    return prof is not None and not prof.accepting
+    return prof is not None and (not prof.accepting or prof.suspended)
 
 
 async def same_gender_available(session: AsyncSession, gender: str | None, lang: str) -> bool:
@@ -134,7 +134,14 @@ async def same_gender_available(session: AsyncSession, gender: str | None, lang:
             User.roles.op("&&")(cast(list(RESPONDER_ROLES), ARRAY(String(20)))),
             User.gender == gender,
             speaks,
-            or_(team, MentorProfile.user_id.is_(None), MentorProfile.accepting.is_(True)),
+            or_(
+                team,
+                and_(
+                    MentorProfile.accepting.is_(True),
+                    MentorProfile.suspended.is_(False),  # ORG-02 R5
+                    MentorProfile.rules_accepted_at.is_not(None),  # ORG-02 R2: no inbox yet
+                ),
+            ),
         )
         .limit(1)
     )

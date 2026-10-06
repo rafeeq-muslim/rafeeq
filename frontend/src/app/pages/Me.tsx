@@ -12,6 +12,7 @@ import {
   IconArrowLeft,
   IconBellOff,
   IconBook,
+  IconBuildingCommunity,
   IconChecklist,
   IconCompass,
   IconDeviceMobile,
@@ -57,6 +58,9 @@ import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
+// ORG-01 R3/R4 (org-01-03-organizations-build)
+import { OrgSection } from "@/app/org/OrgSection"
+import { unlinkOrg } from "@/app/org/api"
 
 export default function Me() {
   const { t } = useT()
@@ -81,6 +85,7 @@ export default function Me() {
     { to: "/referrals", key: "role.referrals", icon: IconHelpCircle, show: has("sharia_reviewer") },
     { to: "/team", key: "role.team", icon: IconUsersGroup, show: has("team") },
     { to: "/admin", key: "role.admin", icon: IconSettings, show: has("admin") },
+    { to: "/org", key: "org.role.link", icon: IconBuildingCommunity, show: !!me?.roles.includes("org_coordinator") }, // ORG-02, ORG-03
   ]
 
   return (
@@ -109,6 +114,10 @@ export default function Me() {
           <LinkRow icon={IconShieldLock} title={t("privacy.policyLink")} hint={t("privacy.policyHint")} onClick={() => navigate("/privacy")} />
           <PrivacySettings />
           {me && <ShareProgressToggle />}
+        </Section>
+
+        <Section title={t("org.me.title")} id="org">
+          <OrgSection />
         </Section>
 
         {roleLinks.some((r) => r.show) && (
@@ -529,6 +538,7 @@ function DeleteAccount() {
             className="bg-destructive text-white"
             onClick={async () => {
               try {
+                await unlinkOrg().catch(() => undefined) // ORG-01 R4: the organisation link goes with the account
                 await api("/api/me", { method: "DELETE" })
                 setAuth({ token: null, me: null })
                 toast(t("me.deleted"))

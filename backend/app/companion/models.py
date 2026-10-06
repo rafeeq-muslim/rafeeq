@@ -22,6 +22,11 @@ class MentorProfile(Base):
     # CMP-02 R4: paused = not suggested to new learners and no new requests
     # from the pool; current mentees, own threads and urgent requests stay.
     accepting: Mapped[bool] = mapped_column(Boolean, default=True)
+    # ORG-02 R2: the mentor rules are accepted before the inbox opens.
+    rules_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # ORG-02 R5 (MentorSuspended): no inbox, not suggested, no new groups,
+    # until the organisation approves them again (MentorApproved).
+    suspended: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
 
 class MentorLink(Base):
@@ -35,6 +40,16 @@ class MentorLink(Base):
     chosen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     # CMP-03 R5: the mentor's first message to this learner («رحّب به» until then).
     welcomed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class MentorEnded(Base):
+    """ORG-02 R5: the learner's mentor was suspended or lost approval. The
+    learner sees a neutral notice (no reason, no organisation) until they
+    choose another mentor (CMP-03) or dismiss it."""
+
+    __tablename__ = "cmp_mentor_ended"
+    learner_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), primary_key=True)
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class MenteeStatus(Base):

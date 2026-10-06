@@ -118,6 +118,16 @@ async def _interact(session: AsyncSession, install_id: str, ats: list[datetime],
 
 async def opt_out(session: AsyncSession, install_id: str, now: datetime) -> None:
     """MOT-07 R4 (error example): one bare opt-out event, then unlink everything."""
+    st = await session.get(EngagementState, install_id)
+    if st is not None and st.status is not None:
+        # The device has no status any more: domains holding a copy (CMP-02 R6,
+        # ORG-03) drop it. The event row itself is removed just below.
+        await publish(
+            session,
+            "EngagementStatusChanged",
+            "MOT",
+            {"install_id": install_id, "user_id": str(st.user_id) if st.user_id else None, "status": None},
+        )
     await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
     await session.execute(delete(EngagementState).where(EngagementState.install_id == install_id))
     # Status-change history must not keep the device's id either.
