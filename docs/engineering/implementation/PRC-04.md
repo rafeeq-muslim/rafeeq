@@ -7,7 +7,7 @@
 
 | Rule / example | Module | What it does |
 | --- | --- | --- |
-| R1 (Umm al-Qura date for everyone, offline) | `frontend/src/app/practice/hijri.ts::hijriOf` | `Intl.DateTimeFormat('en-u-ca-islamic-umalqura')` parts → `{year, month, day}`; month names from UI strings. Same date in Riyadh and Manila for the same civil day |
+| R1 (Umm al-Qura date for everyone, offline) | `frontend/src/app/practice/hijri.ts::hijriOf` | `Intl.DateTimeFormat('en-u-ca-islamic-umalqura')` parts → `{year, month, day}`; month names from UI strings. Same date in Riyadh and Manila for the same civil day. Shown when the app opens: `practice/HijriToday.tsx`, a small caption at the top of Home's sheet (the chosen city's day, else the device's), and in the Practice header |
 | R2 (expected start, countdown) | `hijri.ts::expectedStart(month, from)` | Walks forward day by day to the first civil date whose Umm al-Qura date is `1/month`. «متوقع» until an announcement exists |
 | R2 (announcement wins; ±1 day check) | backend `app/practice/sightings.py` + `hijri.ts::ramadanState` | `prc_sightings` rows (country `SA`). `validate()` rejects a start date more than 1 day from the expected date. The client uses an announced date when present, else the expected one |
 | R2 (published without team approval) | `sightings.py::publish` | Called by the reader job; no review step. ⚠️ The SPA reader itself is not built tonight (see §5); a team-only `POST` is the interim entry point and goes through the same `validate()` |
@@ -33,7 +33,7 @@
 
 | Example | Test |
 | --- | --- |
-| R1 5 Oct 2026 = 24 Rabi II 1448 (and offline, Manila) | `hijri.test.ts` |
+| R1 5 Oct 2026 = 24 Rabi II 1448 (and offline, Manila) | `hijri.test.ts`; `pages/Home.hijri.test.tsx` (on Home when the app opens, offline, Riyadh / Manila / no city) |
 | R2 20 Jan 2027 → expected 8 Feb, 19 days | `hijri.test.ts` |
 | R2 announced 9 Feb → 8 Feb is not Ramadan | `hijri.test.ts` |
 | R2 SPA statement accepted / >1 day rejected | `backend/tests/test_prc04_sightings.py` |
