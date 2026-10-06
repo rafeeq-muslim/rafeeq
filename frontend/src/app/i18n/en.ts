@@ -1495,4 +1495,8 @@ export const en: Dict = {
   // --- PLT-17 R1/R2 (plt-17-staff-links): role screens at the top of «حسابي» ---
   "me.myWork": "My work in Rafeeq",
   "cmp.inbox.teamTitle": "Urgent requests and reports",
+  // KNW-01 R7 follow-up (knw-01-r7-ask-update-wording): the update bar outside a lesson; the Ask conversation in the policy
+  "app.updateWaiting": "A new version of Rafeeq is ready. Update when you're done.",
+  "policy.device.ask": "Your conversation with the assistant stays in this browser tab for this visit and is never kept on our server; quick exit, erasing this device's data and signing out clear it, and so does a day without use.",
+  "policy.revisedAsk": "Updated on {date}: added where your conversation with the assistant stays.",
 }

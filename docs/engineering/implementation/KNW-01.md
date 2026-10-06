@@ -115,4 +115,13 @@ Why: the product owner reported that chat messages disappear for no reason (2026
 
 Not changed: the request still carries one question and no history; `deviceData()` (R6 export) reads localStorage only, so the session copy is not in the export.
 
-Tests: `frontend/src/app/ask/session.rules.test.ts` (reload, cut answer, retry, privacy modes, quick exit, erase, sign-out, idle day, format version, full storage, update wait), `frontend/src/app/pages/Ask.kept.rules.test.tsx` (navigation, lesson help, notebook hand-off, language, theme, discreet switch, sign-in, retry, offline/online).
+Follow-up (2026-10-06, branch `knw-01-r7-ask-update-wording`). The lead approved the defaults as built, under the product owner's blanket approval (feature doc open questions 1–3): the conversation lives for the visit and 24 h idle; no write while quick exit or discreet mode is on (either); not in the data export.
+
+| Follow-up | Where | How |
+| --- | --- | --- |
+| The update bar under a conversation no longer says «تقدّمك في الدرس محفوظ» | `AppLayout.tsx::UpdateBar` (now exported), `app.updateWaiting` (ar/en/tl) | The bar reads `app.updateReady` only when `inLearningFlow(path)` (lesson, review, placement); everywhere else it reads `app.updateWaiting` «نسخة جديدة من رفيق. حدّث حين تنتهي.». "Everywhere else" is the Ask holds above and also the offline wait of PLT-15 R6 on any other screen, which showed the lesson wording too |
+| The policy mentions the conversation | `pages/Privacy.tsx`, `policy.device.ask`, `policy.revisedAsk` | One sentence under «ما نحفظه على جهازك وحده» and its own dated line; see `PLT-05.md` §2.3 |
+
+English and Tagalog strings written by Claude from the Arabic.
+
+Tests: `frontend/src/app/ask/updateBar.rules.test.tsx` (bar text on Ask vs lesson, review and placement, in ar/en/tl), `platform.rules.test.tsx` (`plt05_r1_policy_says_where_the_ask_conversation_stays_…`, `plt05_r1_the_device_section_shows_the_ask_sentence_…`), `frontend/src/app/ask/session.rules.test.ts` (reload, cut answer, retry, privacy modes, quick exit, erase, sign-out, idle day, format version, full storage, update wait), `frontend/src/app/pages/Ask.kept.rules.test.tsx` (navigation, lesson help, notebook hand-off, language, theme, discreet switch, sign-in, retry, offline/online).

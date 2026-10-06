@@ -1494,4 +1494,8 @@ export const ar = {
   // --- PLT-17 R1/R2 (plt-17-staff-links): role screens at the top of «حسابي» ---
   "me.myWork": "عملي في رفيق",
   "cmp.inbox.teamTitle": "الطلبات العاجلة والبلاغات",
+  // KNW-01 R7 follow-up (knw-01-r7-ask-update-wording): the update bar outside a lesson; the Ask conversation in the policy
+  "app.updateWaiting": "نسخة جديدة من رفيق. حدّث حين تنتهي.",
+  "policy.device.ask": "ومحادثتك مع المساعد تبقى في هذا التبويب من متصفحك ما دامت زيارتك، ولا تُحفظ في خادمنا، وتُمسح بالخروج السريع وبمسح بيانات جهازك وبتسجيل الخروج، وبعد يوم بلا استعمال.",
+  "policy.revisedAsk": "وحُدّث في {date}: أُضيف أين تبقى محادثتك مع المساعد.",
 } as const
