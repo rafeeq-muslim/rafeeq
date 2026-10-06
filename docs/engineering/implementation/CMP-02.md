@@ -40,15 +40,15 @@ Blocks (CMP-04 R5) are applied in `_visible`: a request whose owner blocked this
 | Example | Test |
 | --- | --- |
 | R1 ex1 languages | `test_cmp02_r1_mentor_sees_only_requests_in_his_languages` |
-| R1 ex2 sister preferred | `test_cmp02_r1_gender_preference_hides_request_from_other_gender` |
-| R1 ex3 urgent in any language | `test_cmp02_r1_urgent_request_is_visible_in_any_language` |
+| R1 ex2 same gender | `test_cmp02_r1_sister_request_is_hidden_from_a_brother` |
+| R1 ex3 urgent in any language | `test_cmp02_r1_urgent_request_is_visible_in_any_language_first` |
 | R2 ex1 urgent first | `test_cmp02_r2_urgent_first_then_longest_waiting` |
 | R3 ex1 claim | `test_cmp02_r3_first_reply_claims_and_hides_from_others` |
 | R3 ex2 own mentor | `test_cmp02_r3_request_goes_to_own_mentor_only` |
-| R3 ex3 after 24 h | `test_cmp02_r3_unanswered_after_24h_opens_to_pool` |
-| R4 ex1 reopen | `test_cmp02_r4_learner_message_reopens_closed_request` |
-| R4 ex2 escalate | `test_cmp02_r4_mentor_escalates_to_urgent` |
-| R5 ex1 guest handle only | `test_cmp02_r5_guest_request_shows_handle_only` |
+| R3 ex3 after 24 h | `test_cmp02_r3_unanswered_after_a_day_opens_to_others` |
+| Reopen a closed request (was R4 ex1) | `test_cmp02_closed_request_reopens_when_learner_writes` |
+| R5 escalate to urgent (was R4 ex2) | `test_cmp02_r5_mentor_turns_harm_into_urgent` |
+| R6 ex1 guest handle only (was R5) | `test_cmp02_r6_guest_request_shows_handle_only` |
 | R6 ex1 shared status | `test_cmp02_r6_shared_status_is_visible` |
 | R6 ex2 not shared | `test_cmp02_r6_unshared_mentee_shows_name_and_date_only` |
 | R6 ex3 non-mentor | `test_cmp02_r6_learner_cannot_open_inbox` |

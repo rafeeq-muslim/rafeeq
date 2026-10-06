@@ -29,15 +29,15 @@
 | R1 ex2 guest reports | `test_cmp04_r1_guest_can_report_mentor_message` |
 | R2 ex1 marriage hides for all | `test_cmp04_r2_marriage_report_hides_message_for_everyone` |
 | R2 ex2 abuse hides for reporter only | `test_cmp04_r2_other_reason_hides_only_for_reporter` |
-| R3 ex1 restore | `test_cmp04_r3_team_restores_message` |
-| R3 ex2 remove member | `test_cmp04_r3_team_removes_member_and_emits_group_left` |
-| R3 ex3 mentor hides | `test_cmp04_r3_group_mentor_hides_message_with_record` |
-| R3 ex4 learner can't see queue | `test_cmp04_r3_learner_cannot_open_report_queue` |
-| R4 ex1 author doesn't see reporter | `test_cmp04_r4_author_sees_hidden_without_reporter` |
-| R5 ex1 block member | `test_cmp04_r5_blocked_member_messages_are_hidden_for_blocker` |
-| R5 ex2 block mentor | `test_cmp04_r5_blocking_mentor_ends_link` |
-| R5 ex3 block responder | `test_cmp04_r5_blocking_responder_returns_request_to_pool` |
-| R5 ex4 self | `test_cmp04_r5_cannot_block_self` |
+| R4 ex1 restore (was R3) | `test_cmp04_r4_team_restores_message` |
+| R4 ex2 remove member (was R3) | `test_cmp04_r4_team_removes_member_and_emits_group_left` |
+| R4 ex3 mentor hides (was R3) | `test_cmp04_r4_group_mentor_hides_message_with_record` |
+| R4 ex4 learner can't see queue (was R3) | `test_cmp04_r4_learner_cannot_open_report_queue` |
+| R5 ex1 author doesn't see reporter (was R4) | `test_cmp04_r5_author_sees_hidden_without_reporter` |
+| R6 ex1 block member (was R5) | `test_cmp04_r6_blocked_member_messages_are_hidden_for_blocker` |
+| R6 ex2 block mentor (was R5) | `test_cmp04_r6_blocking_mentor_ends_link` |
+| R6 ex3 block responder (was R5) | `test_cmp04_r6_blocking_responder_returns_request_to_other_sisters` |
+| R6 ex4 self (was R5) | `test_cmp04_r6_cannot_block_self` |
 
 ## Rewrite (PR #21, 2026-10-06)
 
