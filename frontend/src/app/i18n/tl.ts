@@ -1295,4 +1295,6 @@ export const tl: Dict = {
   "plt13.testSent": "Naipadala ang pansubok na abiso. Darating ito sa loob ng isang minuto.",
   "plt13.testLimit": "Tatlong beses ka nang sumubok ngayong araw. Puwede ulit bukas.",
   "plt13.testFailed": "Hindi naipadala ang pansubok na abiso. Patayin at buksan muli ang switch, saka subukan.",
+  // --- MOT-08 (mot-08-team-role-db-only): an old team invite opens a normal account. ⚠️ Tagalog needs native review ---
+  "acct.teamRoleDbOnly": "Nagawa ang iyong account bilang karaniwang account. Ang tungkuling team ay direktang ibinibigay ng administrator, hindi sa pamamagitan ng invite code.",
 }

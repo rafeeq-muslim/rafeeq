@@ -1293,4 +1293,6 @@ export const ar = {
   "plt13.testSent": "أرسلنا إشعار التجربة، ويصلك خلال دقيقة.",
   "plt13.testLimit": "جرّبت الإشعار ثلاث مرات اليوم. تعود التجربة غدًا.",
   "plt13.testFailed": "لم نستطع إرسال إشعار التجربة. أطفئ المفتاح وفعّله مرة أخرى، ثم جرّب.",
+  // --- MOT-08 (mot-08-team-role-db-only): an old team invite opens a normal account ---
+  "acct.teamRoleDbOnly": "أُنشئ حسابك حسابًا عاديًا. صفة «فريق» يمنحها المسؤول مباشرة، لا برمز دعوة.",
 } as const

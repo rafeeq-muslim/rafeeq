@@ -1294,4 +1294,6 @@ export const en: Dict = {
   "plt13.testSent": "Test notification sent. It should arrive within a minute.",
   "plt13.testLimit": "You tried three times today. You can try again tomorrow.",
   "plt13.testFailed": "We couldn't send the test notification. Turn the switch off and on again, then try.",
+  // --- MOT-08 (mot-08-team-role-db-only): an old team invite opens a normal account ---
+  "acct.teamRoleDbOnly": "Your account was created as a regular account. The team role is granted directly by an administrator, not by an invite code.",
 }
