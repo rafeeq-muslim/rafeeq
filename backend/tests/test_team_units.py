@@ -51,3 +51,12 @@ async def test_media_route_serves_only_step_images(client):
     assert ok.status_code == 200 and ok.headers["content-type"] == "image/webp"
     for bad in ("unit-01/unit.json", "unit-01/build_unit.py", "unit-01/images/../unit.json", "../units.json"):
         assert (await client.get(f"/api/content/media/{bad}")).status_code == 404
+
+
+def test_lrn01_r2_unit1_verse_card_carries_the_quoted_span():
+    content.store.cache_clear()
+    card = next(c for c in content.store().lessons["u01-l2"]["cards"] if c["id"] == "u01-l2-c1")
+    assert card["quran"]["sura"] == 2 and card["quran"]["ayat"] == [222, 222]
+    view = content.lang_view(card, "en")["quran"]["excerpt"]
+    assert view["words"] == [22, 27] and view["translation"].startswith("Indeed, Allah loves")
+    assert content.lang_view(card, "ar")["quran"]["excerpt"] == {"words": [22, 27]}

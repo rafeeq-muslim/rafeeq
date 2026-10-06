@@ -40,6 +40,10 @@ def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
         for c in les.get("cards", []):
             kind = c.get("kind", "text")
             quran = _ref(c.get("ref") or c.get("quran_ref")) if kind in ("quran", "fatiha") else None
+            if quran and c.get("excerpt"):
+                # LRN-01 R2: the book quotes part of the verse; per language a word span of
+                # the stored Arabic and, for en/tl, the book's own translation of that part.
+                quran["excerpt"] = c["excerpt"]
             card: dict[str, Any] = {
                 "id": c["id"],
                 "kind": "step" if c.get("image") else "text",

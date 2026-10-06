@@ -17,6 +17,16 @@ type Verses = {
   source: { name: string; translation: string | null; version: string }
 }
 
+/** The quoted word span of a stored verse, or null when the span does not fit
+ * it (then the whole verse is shown, as before). Words are never altered. */
+export function excerptOf(arabic: string, words: [number, number] | undefined): string | null {
+  if (!words) return null
+  const all = arabic.split(" ")
+  const [from, to] = words
+  if (from < 1 || to < from || to > all.length) return null
+  return all.slice(from - 1, to).join(" ")
+}
+
 export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk: the language under review. */ lang?: Locale }) {
   const { t, locale: uiLocale } = useT()
   const locale = lang ?? uiLocale
@@ -27,6 +37,11 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
     staleTime: Infinity,
     retry: 1,
   })
+  // An excerpt applies to a single verse whose span fits the stored text.
+  const single = from === to
+  const excerptShown = !!(single && q.data && excerptOf(q.data.ayat[0]?.arabic ?? "", quran.excerpt?.words))
+  // The book's translation of the quoted part replaces the full translation (QuranEnc text is never cut).
+  const bookTranslation = excerptShown && locale !== "ar" ? quran.excerpt?.translation : undefined
   const ref = t("lesson.verseRef", { s: suraName(quran.sura, locale), a: from === to ? num(from) : `${num(from)}–${num(to)}` })
 
   return (
@@ -41,14 +56,21 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
           <blockquote lang="ar" dir="rtl" className="text-center font-quran text-[1.65rem] leading-[2.6] text-foreground">
             {q.data.ayat.map((a) => (
               <span key={a.aya}>
-                {a.arabic} <span className="whitespace-nowrap text-primary">﴿{num(a.aya)}﴾</span>{" "}
+                {(single && excerptOf(a.arabic, quran.excerpt?.words)) || a.arabic}{" "}
+                <span className="whitespace-nowrap text-primary">﴿{num(a.aya)}﴾</span>{" "}
               </span>
             ))}
           </blockquote>
-          {q.data.ayat.some((a) => a.translation) && (
-            <div dir="auto" className="mt-4 flex flex-col gap-1 border-t border-primary/15 pt-4 font-reading text-reading text-foreground/90">
-              {q.data.ayat.map((a) => a.translation && <p key={a.aya}>{a.translation}</p>)}
+          {bookTranslation ? (
+            <div dir="auto" className="mt-4 border-t border-primary/15 pt-4 font-reading text-reading text-foreground/90">
+              <p>{bookTranslation}</p>
             </div>
+          ) : (
+            q.data.ayat.some((a) => a.translation) && (
+              <div dir="auto" className="mt-4 flex flex-col gap-1 border-t border-primary/15 pt-4 font-reading text-reading text-foreground/90">
+                {q.data.ayat.map((a) => a.translation && <p key={a.aya}>{a.translation}</p>)}
+              </div>
+            )
           )}
         </>
       ) : (
@@ -56,7 +78,11 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
       )}
       <figcaption className="mt-4 flex flex-wrap items-center gap-x-2 text-caption text-muted-foreground">
         <span className="font-medium text-secondary-foreground">{ref}</span>
-        {q.data?.source.translation && <span>{t("lesson.translation", { name: q.data.source.translation })}</span>}
+        {bookTranslation ? (
+          <span>{t("lesson.bookTranslation")}</span>
+        ) : (
+          q.data?.source.translation && <span>{t("lesson.translation", { name: q.data.source.translation })}</span>
+        )}
         {q.data && !q.data.source.translation && <span>{q.data.source.name}</span>}
       </figcaption>
     </figure>

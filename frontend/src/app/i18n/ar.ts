@@ -800,4 +800,5 @@ export const ar = {
   "lesson.locked": "يُفتح هذا الدرس بعد «{name}». الدروس تأتي بالترتيب ليبني كل درس على ما قبله.",
   "ask.guide.nextLesson": "خطوتك التالية «{step}»، لأنه الدرس التالي في مسارك.",
   "ask.guide.nextReview": "خطوتك التالية مراجعة قصيرة، لتثبيت ما تعلّمته.",
+  "lesson.bookTranslation": "ترجمة الكتاب للجزء المقتبس",
 } as const

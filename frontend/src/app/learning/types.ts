@@ -1,7 +1,11 @@
 /** Content model as served by GET /api/content?lang= : one language, the
  * Sharia reviewer's approved snapshot (KNW-05 R3, LRN-01 R6). */
 
-export type QuranRef = { sura: number; ayat: [number, number] }
+/** LRN-01 R2: the book quotes part of a verse — a 1-based word span of the
+ * stored Arabic (split on single spaces) and, for en/tl, the book's own
+ * translation of that part. */
+export type QuranExcerpt = { words: [number, number]; translation?: string }
+export type QuranRef = { sura: number; ayat: [number, number]; excerpt?: QuranExcerpt | null }
 
 export type Card = {
   id: string

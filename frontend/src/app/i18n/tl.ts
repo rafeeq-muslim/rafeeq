@@ -802,4 +802,5 @@ export const tl: Dict = {
   "lesson.locked": "Magbubukas ang araling ito pagkatapos ng “{name}”. Sunod-sunod ang mga aralin para ang bawat isa ay nakabatay sa nauna.",
   "ask.guide.nextLesson": "Ang susunod mong hakbang ay “{step}”, ang susunod na aralin sa iyong landas.",
   "ask.guide.nextReview": "Ang susunod mong hakbang ay maikling balik-aral, para tumatag ang natutunan mo.",
+  "lesson.bookTranslation": "Salin ng aklat sa sinipi na bahagi",
 }
