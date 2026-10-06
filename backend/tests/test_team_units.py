@@ -38,7 +38,9 @@ def test_quran_cards_show_the_stored_verse_not_a_quotation():
         "unit-01",
     )
     card = lessons[0]["cards"][0]
-    assert card["quran"] == {"sura": 2, "ayat": [222, 222]} and card["text"] == {}
+    assert card["quran"] == {"sura": 2, "ayat": [222, 222]}
+    # issue #9: the learner view must carry a string, never an empty object
+    assert {lg: content.lang_view(card, lg)["text"] for lg in ("ar", "en", "tl")} == {"ar": "", "en": "", "tl": ""}
     ex = lessons[0]["exercises"][0]
     assert ex["type"] == "match" and ex["answer"] == [["l0", "r0"], ["l1", "r1"]] and ex["cards"] == ["c1"]
     assert lessons[0]["objectives"][0]["cards"] == ["c1"]

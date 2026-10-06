@@ -245,14 +245,14 @@ function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
         </p>
       )}
       {index === 0 && lesson.media?.video && <SupportVideo src={lesson.media.video} />}
-      {(card.image_url || card.extra_images?.length) && (
+      {Boolean(card.image_url || card.extra_images?.length) && (
         <div className="flex gap-3">
           {[card.image_url, ...(card.extra_images ?? [])].filter(Boolean).map((src) => (
             <img key={src!} src={src!} alt="" className="min-w-0 flex-1 rounded-card bg-card object-contain p-2" loading="lazy" />
           ))}
         </div>
       )}
-      {card.text && (
+      {typeof card.text === "string" && card.text && (
         <p className={cn("font-reading text-reading whitespace-pre-line text-foreground", card.hadith && "border-s-4 border-primary/30 ps-4")}>{card.text}</p>
       )}
       {card.quran && <VerseBlock quran={card.quran} />}

@@ -84,6 +84,8 @@ export default function Review() {
       setFinished(newBadges)
     }
     setQueue(next)
+    const upcoming = next[0] ? byId.get(next[0])?.exercise : undefined
+    if (upcoming) setValue(emptyValue(upcoming)) // reset before the next exercise renders
   }
 
   const cardText = exercise

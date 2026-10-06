@@ -33,9 +33,13 @@ export function check(e: Exercise, v: Value): boolean {
 type Props<E, V> = { exercise: E; value: V; onChange: (v: V) => void; result: Result }
 
 export function ExerciseView({ exercise, value, onChange, result }: Props<Exercise, Value>) {
-  if (exercise.type === "choose") return <Choose exercise={exercise} value={value as string | null} onChange={onChange} result={result} />
-  if (exercise.type === "order") return <Order exercise={exercise} value={value as string[]} onChange={onChange} result={result} />
-  return <Match exercise={exercise} value={value as [string, string][]} onChange={onChange} result={result} />
+  // A value left over from the previous exercise must never reach the next one
+  // in the wrong shape (issue #9: review crashed going from choose to match).
+  if (exercise.type === "choose")
+    return <Choose exercise={exercise} value={typeof value === "string" ? value : null} onChange={onChange} result={result} />
+  const list = Array.isArray(value) ? value : []
+  if (exercise.type === "order") return <Order exercise={exercise} value={list as string[]} onChange={onChange} result={result} />
+  return <Match exercise={exercise} value={list as [string, string][]} onChange={onChange} result={result} />
 }
 
 function Choose({ exercise, value, onChange, result }: Props<ChooseExercise, string | null>) {

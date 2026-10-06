@@ -43,7 +43,9 @@ def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
             card: dict[str, Any] = {
                 "id": c["id"],
                 "kind": "step" if c.get("image") else "text",
-                "text": {} if (kind == "quran" and quran) else c.get("text", {}),
+                # Verse-only card: an empty string per language, never {} (issue #9: an
+                # empty object reached the page as card text and crashed lesson 1).
+                "text": dict.fromkeys(("ar", "en", "tl"), "") if (kind == "quran" and quran) else c.get("text", {}),
                 "image_url": _image(unit_dir, c.get("image")),
                 "extra_images": [_image(unit_dir, i) for i in c.get("extra_images", [])],
                 "quran": quran,
