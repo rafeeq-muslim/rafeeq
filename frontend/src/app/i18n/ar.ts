@@ -1153,6 +1153,11 @@ export const ar = {
   "desk.reciter.riwaya": "الرواية",
   "desk.reciter.sample": "العيّنة",
   "desk.reciter.otherSura": "سورة أخرى",
+  // KNW-08 R2: tap a verse to recite from it; previous/next verse (knw-08-r2-tap-verse)
+  "discover.quran.prevVerse": "الآية السابقة",
+  "discover.quran.nextVerse": "الآية التالية",
+  "discover.quran.reciteFrom": "ابدأ التلاوة من الآية {n}:",
+  "discover.quran.verseControls": "التنقّل بين الآيات",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
   "mot.unapproved": "غير معتمد",
   "mot.reminder.pickTime": "اختر الوقت الذي يناسبك",

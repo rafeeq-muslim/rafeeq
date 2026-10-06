@@ -41,4 +41,4 @@
 
 ## الميزات
 
-انظر قسم «المعرفة والأسئلة» في [features.md](../../features.md). مثال جاهز: [KNW-01 الإجابة الموثّقة](features/KNW-01-sourced-answer.md). خطة التنفيذ: [implementation-plan.md](implementation-plan.md). ملحقان: [ثبات الإجابة والاقتراحات (KNW-01)](features/KNW-01-chatbot-reliability-prd.md)، و[تغطية المصادر واختيارها (KNW-02)](features/KNW-02-source-coverage-and-retrieval-prd.md)، و[البحث المباشر وإتاحة مصادر المعرفة (الإصدار 3)](features/PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md).
+انظر قسم «المعرفة والأسئلة» في [features.md](../../features.md). مثال جاهز: [KNW-01 الإجابة الموثّقة](features/KNW-01-sourced-answer.md). خطة التنفيذ: [implementation-plan.md](implementation-plan.md). ملحقان: [ثبات الإجابة والاقتراحات (KNW-01)](features/KNW-01-chatbot-reliability-prd.md)، و[تغطية المصادر واختيارها (KNW-02)](features/KNW-02-source-coverage-and-retrieval-prd.md)، و[البحث المباشر وإتاحة مصادر المعرفة (الإصدار 3)](features/PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md)، و[محرك البحث المباشر في المكتبة (KNW-06)](features/PRD-LIBRARY-LIVE-SEARCH.md).

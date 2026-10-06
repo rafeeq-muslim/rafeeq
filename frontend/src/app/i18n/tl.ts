@@ -1155,6 +1155,11 @@ export const tl: Dict = {
   "desk.reciter.riwaya": "Riwāyah",
   "desk.reciter.sample": "Halimbawa",
   "desk.reciter.otherSura": "Ibang sūrah",
+  // KNW-08 R2: tap a verse to recite from it; previous/next verse (knw-08-r2-tap-verse)
+  "discover.quran.prevVerse": "Nakaraang talata",
+  "discover.quran.nextVerse": "Susunod na talata",
+  "discover.quran.reciteFrom": "Bigkasin mula sa talata {n}:",
+  "discover.quran.verseControls": "Paglipat sa mga talata",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
   "mot.unapproved": "Hindi pa aprubado",
   "mot.reminder.pickTime": "Pumili ng oras na bagay sa iyo",

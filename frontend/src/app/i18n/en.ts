@@ -1154,6 +1154,11 @@ export const en: Dict = {
   "desk.reciter.riwaya": "Riwaya",
   "desk.reciter.sample": "Sample",
   "desk.reciter.otherSura": "Another surah",
+  // KNW-08 R2: tap a verse to recite from it; previous/next verse (knw-08-r2-tap-verse)
+  "discover.quran.prevVerse": "Previous verse",
+  "discover.quran.nextVerse": "Next verse",
+  "discover.quran.reciteFrom": "Recite from verse {n}:",
+  "discover.quran.verseControls": "Verse controls",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
   "mot.unapproved": "Not yet approved",
   "mot.reminder.pickTime": "Pick a time that suits you",

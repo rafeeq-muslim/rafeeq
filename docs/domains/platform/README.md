@@ -53,5 +53,8 @@
 | PLT-06 | الإشعارات | [PLT-06](features/PLT-06-notifications.md) |
 | PLT-07 | صوت رفيق | [PLT-07](features/PLT-07-rafeeq-tone.md) |
 | PLT-08 | دليل رفيق | [PLT-08](features/PLT-08-rafeeq-guide.md) |
+| PLT-09 | الرئيسية المرتّبة | [PLT-09](features/PLT-09-organized-home.md) |
+| PLT-10 | مسار التطبيق والترحيب | [PLT-10](features/PLT-10-app-path-and-welcome.md) |
+| PLT-14 | صفحة التعريف والشعار | [PLT-14](features/PLT-14-landing-page.md) |
 
 القائمة بأولوياتها في قسم «المنصة» من [features.md](../../features.md). المصادر والتحقق في [research/09](../../agents/research/09-platform-privacy-and-notifications.md).
