@@ -1258,6 +1258,9 @@ export const en: Dict = {
   "ask.live.fetchedAt": "Read from the source on {d}",
   "ask.live.openSource": "Open the full text at the source",
   "ask.live.savedNote": "The source's text isn't kept on your device; open it at the source.",
+  // GO-LIVE (go-live-approved, PLT-05, owner 2026-10-06): live source search in the privacy policy
+  "policy.live.title": "When the assistant searches the sources live",
+  "policy.live.body": "To find an answer, up to 12 search words taken from your question are sent from Rafeeq's server to islamqa.info and binbaz.org.sa. Nothing that identifies you goes with them: no name, no account, no device number and no cookies, and e-mail addresses, links and long numbers are removed first.",
   // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06; written by Claude)
   "practice.reminders.ask.title": "Do you want the reminder to show the prayer's name?",
   "practice.reminders.ask.body": "Anyone looking at your phone's screen may see it.",
@@ -1307,6 +1310,8 @@ export const en: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Sermon",
   "discover.lib.search.type.qa": "Q&A",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ---
+  "discover.lib.topic.general": "General",
 
   // PLT-13 notifications on iPhone
   "plt13.iosUpdateTitle": "Your iPhone needs an update for notifications",

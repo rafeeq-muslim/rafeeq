@@ -27,10 +27,20 @@ def _item(iid, lang="tl", topic="basics", type_="books", host="d1.islamhouse.com
     }
 
 
+UNITS = [
+    {"id": "u1", "order": 1, "title": {"ar": "دليل اليوم الأول", "en": "First Day Guide", "tl": "Gabay sa Unang Araw"}},
+    {"id": "u2", "order": 2, "title": {"ar": "ربي ونبيي وكتابي", "en": "My Lord", "tl": "Ang Panginoon ko"}},
+    {"id": "u3", "order": 3, "title": {"ar": "أركان الإسلام", "en": "The Pillars of Islam", "tl": "Mga Haligi ng Islam"}},
+]
+
+
 @pytest.fixture
 def items(monkeypatch):
     data = [_item(1), _item(2), _item(3, lang="en", topic="stories"), _item(4, lang="ar", topic="stories")]
     monkeypatch.setattr(library, "load", lambda: data)
+    # KNW-06 R2: ih-1-tl belongs to unit u1; ih-2-tl and ih-3-en to u3; ih-4-ar to no unit.
+    monkeypatch.setattr(library, "unit_links", lambda: {"ih-1-tl": "u1", "ih-2-tl": "u3", "ih-3-en": "u3"})
+    monkeypatch.setattr(library, "path_units", lambda: UNITS)
     return data
 
 
@@ -66,17 +76,58 @@ async def test_knw06_r1_dead_link_is_hidden_after_check(client, items):
     assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl", "ih-2-tl"]
 
 
+async def test_knw06_r1_unplayable_item_stays_hidden_even_when_its_link_answers(client, items, monkeypatch):
+    monkeypatch.setattr(library, "unplayable_ids", lambda: frozenset({"ih-2-tl"}))
+    async with SessionLocal() as s, httpx.AsyncClient(transport=httpx.MockTransport(lambda r: httpx.Response(200))) as http:
+        await library.check_library_links(s, http)
+    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl"]
+
+
+def test_knw06_r1_english_prayer_video_is_listed_unplayable():
+    library.unplayable_ids.cache_clear()
+    ids = library.unplayable_ids()
+    assert "ih-2838921-en" in ids
+    assert ids <= {it["id"] for it in library.load()}  # only real library items
+
+
 async def test_knw06_r2_items_in_learner_language_only(client, items):
     body = (await client.get("/api/discover/library?lang=tl")).json()
-    basics = next(t for t in body["topics"] if t["id"] == "basics")
-    assert [i["lang"] for i in basics["items"]] == ["tl", "tl"]
+    assert {i["lang"] for t in body["topics"] for i in t["items"]} == {"tl"}
+
+
+async def test_knw06_r2_items_grouped_under_path_units_in_unit_order(client, items):
+    body = (await client.get("/api/discover/library?lang=tl")).json()
+    # Only units that have library items, in path order, then «عام»; u2 has none.
+    assert [t["id"] for t in body["topics"]] == ["u1", "u3", "general"]
+    by = {t["id"]: t for t in body["topics"]}
+    assert [i["id"] for i in by["u1"]["items"]] == ["ih-1-tl"]
+    assert [i["id"] for i in by["u3"]["items"]] == ["ih-2-tl"]
+    assert by["u1"]["title"] == "Gabay sa Unang Araw" and by["u1"]["unit"] == "u1"
+
+
+async def test_knw06_r2_item_without_a_unit_is_under_general(client, items):
+    body = (await client.get("/api/discover/library?lang=ar")).json()
+    general = next(t for t in body["topics"] if t["id"] == "general")
+    assert [i["id"] for i in general["items"]] == ["ih-4-ar"] and general["unit"] is None
 
 
 async def test_knw06_r2_empty_topic_and_english_on_request(client, items):
-    tl = (await client.get("/api/discover/library?lang=tl")).json()
-    assert next(t for t in tl["topics"] if t["id"] == "stories")["items"] == []
+    ar = (await client.get("/api/discover/library?lang=ar")).json()
     en = (await client.get("/api/discover/library?lang=en")).json()  # the "show English items" choice
-    assert _ids(en) == ["ih-3-en"]
+    assert [t["id"] for t in ar["topics"]] == [t["id"] for t in en["topics"]]  # same topics in every language
+    assert next(t for t in ar["topics"] if t["id"] == "u3")["items"] == []
+    assert [i["id"] for i in next(t for t in en["topics"] if t["id"] == "u3")["items"]] == ["ih-3-en"]
+
+
+def test_knw06_r2_unit_links_only_name_real_units_and_real_items():
+    library.unit_links.cache_clear()
+    library.path_units.cache_clear()
+    library.load.cache_clear()
+    units = {u["id"] for u in library.path_units()}
+    items = {it["id"] for it in library.load()}
+    links = library.unit_links()
+    assert links and set(links.values()) <= units
+    assert set(links) <= items
 
 
 async def test_knw06_r3_item_carries_source_card_fields(client, items):

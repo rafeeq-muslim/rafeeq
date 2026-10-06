@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 from sqlalchemy import select
 
-from app.core.config import get_settings
+from app.core.config import Settings, get_settings
 from app.core.db import SessionLocal
 from app.knowledge import ask
 from app.knowledge.ai.client import prompt
@@ -609,7 +609,32 @@ def test_knw_live_window_never_exceeds_settings():
     st = get_settings()
     assert st.ask_live_window_seconds <= 20 and st.ask_live_deadline_seconds <= 60
     assert st.ask_live_max_calls_per_source <= 4 and st.ask_live_max_calls <= 16 and st.ask_live_max_ai_calls <= 6
-    assert registry.policy() == registry.POLICY_LOCAL  # default: off
+
+
+def test_knw_live_shipped_default_is_on_for_islamqa_and_binbaz_only():
+    """Owner's go-live approval (2026-10-06): live by default; islamenc stays off (robots.txt)."""
+    fields = Settings.model_fields
+    assert fields["ask_source_policy"].default == registry.POLICY_LIVE
+    assert fields["ask_live_sources"].default == "islamqa,binbaz"
+    assert fields["ask_live_islamic_content_search_permitted"].default is False
+
+
+def test_knw_live_env_rolls_back_to_local_or_fewer_sources(monkeypatch):
+    monkeypatch.delenv("ASK_LIVE_SOURCES", raising=False)
+    monkeypatch.delenv("ASK_SOURCE_POLICY", raising=False)
+    st = Settings()
+    assert st.ask_source_policy == registry.POLICY_LIVE and st.ask_live_sources == "islamqa,binbaz"
+    monkeypatch.setenv("ASK_SOURCE_POLICY", "local-index-v2")
+    monkeypatch.setenv("ASK_LIVE_SOURCES", "binbaz")
+    st = Settings()
+    assert st.ask_source_policy == registry.POLICY_LOCAL and st.ask_live_sources == "binbaz"
+
+
+def test_knw_live_default_connectors_never_include_the_encyclopedia(monkeypatch):
+    st = get_settings()
+    monkeypatch.setattr(st, "ask_source_policy", Settings.model_fields["ask_source_policy"].default)
+    monkeypatch.setattr(st, "ask_live_sources", Settings.model_fields["ask_live_sources"].default)
+    assert [c.id for c in registry.enabled()] == ["islamqa", "binbaz"]
 
 
 def test_knw_live_unknown_connector_name_is_ignored(monkeypatch):
