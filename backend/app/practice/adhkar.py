@@ -2,7 +2,7 @@
 
 The files are read exactly as served (never edited, README). Each dhikr
 becomes one review-desk item (`dhikr`, `hisn-<ID>`) per language; learners
-only receive the Sharia reviewer's approved snapshot (R1, rules.md §1.4).
+receive the merged text (reviewed before merge, rules.md §1.4 since 2026-10-06; a version the reviewer returns is withdrawn) (R1).
 
 R2: every Quran span «﴿…﴾» is replaced by a reference to the stored QuranEnc
 record ({sura, from, to}); the client fetches the words from

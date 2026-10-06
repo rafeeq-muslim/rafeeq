@@ -1,4 +1,8 @@
-"""KNW-07 stories, benefits and the daily card: server side (one test per example)."""
+"""KNW-07 stories, benefits and the daily card: server side (one test per example).
+
+Since 2026-10-06 (rules.md §1.4) cards are reviewed before they are merged, so
+a merged card is served directly; a card the reviewer returns is withdrawn in
+that language until corrected."""
 
 import json
 
@@ -6,7 +10,7 @@ import pytest
 
 from app.core.config import get_settings
 from app.knowledge import daily
-from tests.conftest import auth, with_roles
+from tests.conftest import with_roles, withdraw
 
 
 def _card(hid, langs=("ar", "en", "tl")):
@@ -38,19 +42,15 @@ def cards(monkeypatch):
     return data
 
 
-async def approve(client, token, item_type, item_id, lang):
-    detail = (await client.get(f"/api/review/items/{item_type}/{item_id}", headers=auth(token))).json()
-    body = {"decision": "approved", "hash": detail["langs"][lang]["hash"]}
-    r = await client.post(f"/api/review/items/{item_type}/{item_id}/{lang}", json=body, headers=auth(token))
-    assert r.status_code == 200, r.text
+def _ids(body):
+    return [c["id"] for c in body["cards"]]
 
 
-async def test_knw07_r1_approved_card_served_with_source(client, cards):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "daily_card", "hadeethenc-1", "tl")
+async def test_knw07_r1_merged_card_served_with_source(client, cards):
     r = await client.get("/api/discover/cards?lang=tl")
     assert r.status_code == 200 and r.headers["cache-control"].startswith("public")
-    [card] = r.json()["cards"]
+    card, _ = r.json()["cards"]
+    assert card["id"] == "hadeethenc-1"
     assert card["text"] == "Ang mga gawa ay ayon sa layunin"
     assert card["text_ar"] == "«إنما الأعمال بالنيات»"  # the original, separate from the explanation
     assert card["source"]["name"] == "HadeethEnc.com" and card["source"]["url"].endswith("/tl/browse/hadith/1")
@@ -58,20 +58,21 @@ async def test_knw07_r1_approved_card_served_with_source(client, cards):
     assert r.json()["total"] == 3 and card["order"] == 0  # the device picks by date modulo the whole set
 
 
-async def test_knw07_r1_unapproved_card_is_not_served(client, cards):
+async def test_knw07_r1_returned_card_withdrawn_until_corrected(client, cards):
     reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "daily_card", "hadeethenc-2", "ar")
-    ids = [c["id"] for c in (await client.get("/api/discover/cards?lang=ar")).json()["cards"]]
-    assert ids == ["hadeethenc-2"]  # card 1 is not approved: never served; the device moves on to the next
+    await withdraw(client, reviewer, "daily_card", "hadeethenc-1", "ar", note="الشرح يحتاج تصحيحًا")
+    ar = (await client.get("/api/discover/cards?lang=ar")).json()
+    assert _ids(ar) == ["hadeethenc-2", "hadeethenc-3"]  # card 1 is withdrawn: never served; the device moves on to the next
+    assert ar["total"] == 3 and ar["cards"][0]["order"] == 1
+    assert _ids((await client.get("/api/discover/cards?lang=en")).json()) == ["hadeethenc-1", "hadeethenc-2", "hadeethenc-3"]
+    cards["cards"][0]["langs"]["ar"]["explanation"] = "شرح مصحح"  # the corrected card is merged
+    assert _ids((await client.get("/api/discover/cards?lang=ar")).json()) == ["hadeethenc-1", "hadeethenc-2", "hadeethenc-3"]
 
 
-async def test_knw07_r6_language_without_approval_gets_other_cards(client, cards):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    for cid in ("hadeethenc-1", "hadeethenc-3"):
-        await approve(client, reviewer, "daily_card", cid, "en")
-    # Card 3 has no Tagalog text at all, and card 1 is not approved in Tagalog: nothing machine-translated.
-    assert (await client.get("/api/discover/cards?lang=tl")).json()["cards"] == []
-    assert [c["id"] for c in (await client.get("/api/discover/cards?lang=en")).json()["cards"]] == ["hadeethenc-1", "hadeethenc-3"]
+async def test_knw07_r6_language_without_text_gets_other_cards(client, cards):
+    # Card 3 has no Tagalog text at all: nothing machine-translated, the other cards are served.
+    assert _ids((await client.get("/api/discover/cards?lang=tl")).json()) == ["hadeethenc-1", "hadeethenc-2"]
+    assert _ids((await client.get("/api/discover/cards?lang=en")).json()) == ["hadeethenc-1", "hadeethenc-2", "hadeethenc-3"]
 
 
 def test_knw07_r1_card_text_matches_stored_record():

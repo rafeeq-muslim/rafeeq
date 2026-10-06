@@ -1,11 +1,15 @@
-"""KNW-06 library: one test per example."""
+"""KNW-06 library: one test per example.
+
+Since 2026-10-06 (rules.md §1.4) items are reviewed before they are merged, so
+a merged item is listed directly; an item the reviewer returns is withdrawn
+until corrected."""
 
 import httpx
 import pytest
 
 from app.core.db import SessionLocal
 from app.knowledge import library
-from tests.test_knw07_daily import approve, with_roles
+from tests.conftest import with_roles, withdraw
 
 
 def _item(iid, lang="tl", topic="basics", type_="books", host="d1.islamhouse.com"):
@@ -34,21 +38,20 @@ def _ids(body):
     return [i["id"] for t in body["topics"] for i in t["items"]]
 
 
-async def test_knw06_r1_approved_item_is_listed(client, items):
+async def test_knw06_r1_merged_item_is_listed_without_approval(client, items):
+    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl", "ih-2-tl"]
+
+
+async def test_knw06_r1_returned_item_withdrawn_until_corrected(client, items):
     reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "library_item", "ih-1-tl", "tl")
-    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl"]
-
-
-async def test_knw06_r1_unapproved_item_is_hidden(client, items):
-    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == []
+    await withdraw(client, reviewer, "library_item", "ih-1-tl", "tl", note="Hindi angkop ang paglalarawan")
+    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-2-tl"]
+    assert _ids((await client.get("/api/discover/library?lang=en")).json()) == ["ih-3-en"]  # other languages unaffected
+    items[0] = {**items[0], "description": "Itinamang paglalarawan"}  # the corrected entry is merged
+    assert _ids((await client.get("/api/discover/library?lang=tl")).json()) == ["ih-1-tl", "ih-2-tl"]
 
 
 async def test_knw06_r1_dead_link_is_hidden_after_check(client, items):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "library_item", "ih-1-tl", "tl")
-    await approve(client, reviewer, "library_item", "ih-2-tl", "tl")
-
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(404 if "/2.pdf" in str(request.url) else 200)
 
@@ -64,17 +67,12 @@ async def test_knw06_r1_dead_link_is_hidden_after_check(client, items):
 
 
 async def test_knw06_r2_items_in_learner_language_only(client, items):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "library_item", "ih-1-tl", "tl")
-    await approve(client, reviewer, "library_item", "ih-3-en", "en")
     body = (await client.get("/api/discover/library?lang=tl")).json()
     basics = next(t for t in body["topics"] if t["id"] == "basics")
-    assert [i["lang"] for i in basics["items"]] == ["tl"]
+    assert [i["lang"] for i in basics["items"]] == ["tl", "tl"]
 
 
 async def test_knw06_r2_empty_topic_and_english_on_request(client, items):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "library_item", "ih-3-en", "en")
     tl = (await client.get("/api/discover/library?lang=tl")).json()
     assert next(t for t in tl["topics"] if t["id"] == "stories")["items"] == []
     en = (await client.get("/api/discover/library?lang=en")).json()  # the "show English items" choice
@@ -82,9 +80,7 @@ async def test_knw06_r2_empty_topic_and_english_on_request(client, items):
 
 
 async def test_knw06_r3_item_carries_source_card_fields(client, items):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "library_item", "ih-1-tl", "tl")
-    [it] = [i for t in (await client.get("/api/discover/library?lang=tl")).json()["topics"] for i in t["items"]]
+    [it] = [i for t in (await client.get("/api/discover/library?lang=tl")).json()["topics"] for i in t["items"] if i["id"] == "ih-1-tl"]
     assert it["title"] == "Aklat 1" and it["authors"] == ["Muhammad Ash-Shahrīy"]
     assert it["source"] == "IslamHouse.com" and it["lang"] == "tl" and it["type"] == "books"
     assert it["origin_url"] == "https://islamhouse.com/tl/books/1/"

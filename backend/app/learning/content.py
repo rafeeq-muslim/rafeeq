@@ -3,7 +3,7 @@ Sharia reviewer's approvals applied per language.
 
 rules.md §1.4 / LRN-01 R6: learners never receive text in a language the
 reviewer has not approved. Lessons and units are registered with the KNW-05
-review desk; learners are served the approved snapshot (KNW-05 R3)."""
+review desk; learners are served the merged text (reviewed before merge, rules.md §1.4 since 2026-10-06; a version the reviewer returns is withdrawn)."""
 
 import json
 from collections.abc import Iterable
@@ -108,10 +108,11 @@ review.register("lesson", lambda: (i for i in _review_items() if i.item_type == 
 def build_content(lang: str, units_live: dict[str, Any], lessons_live: dict[str, Any], preview: bool) -> dict:
     """The path in one language (LRN-01 R6, KNW-05 R1/R3/R6).
 
-    Learners get the approved snapshot of each lesson and unit, never the
-    working text. A unit shows when it and at least one of its lessons are
-    approved. Team accounts can `preview` the working text; `approved` and
-    `changed` still tell them what learners see."""
+    Learners get the merged text of each lesson and unit (reviewed before
+    merge, rules.md §1.4), except a version the reviewer returned in the desk,
+    which is withdrawn until corrected. A unit shows when it and at least one
+    of its lessons are live. Team accounts can `preview` withdrawn versions
+    too; `approved` is false for those."""
     s = store()
     lessons: dict[str, dict] = {}
     for lid, lesson in s.lessons.items():

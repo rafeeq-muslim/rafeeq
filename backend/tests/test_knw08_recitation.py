@@ -1,9 +1,13 @@
-"""KNW-08 Quran listening: server side (R4)."""
+"""KNW-08 Quran listening: server side (R4).
+
+Since 2026-10-06 (rules.md §1.4) the recitation is reviewed before it is
+merged, so the merged mushaf is served directly; a version the reviewer
+returns is withdrawn in that language until corrected."""
 
 import pytest
 
 from app.knowledge import recitation
-from tests.test_knw07_daily import approve, with_roles
+from tests.conftest import with_roles, withdraw
 
 
 @pytest.fixture
@@ -22,16 +26,20 @@ def recs(monkeypatch):
     return data
 
 
-async def test_knw08_r4_approved_recitation_names_reciter_and_source(client, recs):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await approve(client, reviewer, "recitation", "islamhouse-728787", "tl")
+async def test_knw08_r4_merged_recitation_names_reciter_and_source(client, recs):
     rec = (await client.get("/api/discover/recitations?lang=tl")).json()["recitation"]
     assert rec["reciter"] == "Maher Al-Muaiqly" and rec["source"] == "IslamHouse.com"
     assert rec["suras"]["1"].startswith("https://d1.islamhouse.com/")
 
 
-async def test_knw08_r4_unapproved_recitation_is_not_served(client, recs):
+async def test_knw08_r4_returned_recitation_withdrawn_until_corrected(client, recs):
+    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
+    await withdraw(client, reviewer, "recitation", "islamhouse-728787", "ar", note="في الملف مؤثرات صوتية")
     assert (await client.get("/api/discover/recitations?lang=ar")).json()["recitation"] is None
+    assert (await client.get("/api/discover/recitations?lang=en")).json()["recitation"]["id"] == "islamhouse-728787"
+    recs[0]["suras"] = {"1": "https://d1.islamhouse.com/data/ar/ih_quran/y/ar-001-y.mp3"}  # the corrected files are merged
+    rec = (await client.get("/api/discover/recitations?lang=ar")).json()["recitation"]
+    assert rec["suras"]["1"].endswith("ar-001-y.mp3")
 
 
 def test_knw08_r4_shipped_file_covers_every_surah():

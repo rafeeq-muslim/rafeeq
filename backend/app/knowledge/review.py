@@ -2,9 +2,14 @@
 
 Other domains register the items they want reviewed (lessons, units, media,
 daily cards, adhkar...). Each item offers, per language, the exact view a
-learner would see. The reviewer approves or returns one language at a time
-(R6); approval stores that view as the published snapshot (R3), so learners
-keep the last approved text while an edit waits for review.
+learner would see.
+
+Product owner's decision (2026-10-06, rules.md §1.4): the Sharia reviewer
+reviews content *before it is merged* into the repository, so merged content
+is shown to learners directly. The desk stays for later corrections: the
+reviewer can confirm a version (approve, recorded with its hash) or return
+it with a reason, which withdraws that exact version in that language until
+it is corrected (a new version shows again).
 
 The status of the *current* version of an item in one language is:
   approved   the current text is the published snapshot
@@ -72,9 +77,18 @@ def find(item_type: str, item_id: str) -> ReviewItem:
 
 
 async def published(session: AsyncSession, item_type: str, lang: str) -> dict[str, Any]:
-    """item_id -> approved snapshot, for what learners see."""
-    rows = await session.scalars(select(ContentApproval).where(ContentApproval.item_type == item_type, ContentApproval.lang == lang))
-    return {r.item_id: r.snapshot for r in rows}
+    """item_id -> what learners see in `lang`: the merged text, except a
+    version the reviewer returned (withdrawn until corrected)."""
+    decisions = await _latest_decisions(session, item_type)
+    out: dict[str, Any] = {}
+    for it in items(item_type):
+        if lang not in it.views:
+            continue
+        last = decisions.get((item_type, it.item_id, lang))
+        if last is not None and last.decision == "returned" and last.content_hash == it.hash(lang):
+            continue
+        out[it.item_id] = it.views[lang]
+    return out
 
 
 async def _latest_decisions(session: AsyncSession, item_type: str | None = None) -> dict[tuple[str, str, str], ContentReview]:
@@ -109,7 +123,8 @@ async def queue(session: Session, _: Desk, item_type: str | None = None) -> dict
                 continue
             key = (it.item_type, it.item_id, lg)
             st = _status(it, lg, approvals.get(key), decisions.get(key))
-            langs[lg] = {"status": st, "live": key in approvals, "note": decisions[key].note if st == "returned" else None}
+            # live: learners see it (merged content is shown unless this version was returned)
+            langs[lg] = {"status": st, "live": st != "returned", "note": decisions[key].note if st == "returned" else None}
         rows.append({"item_type": it.item_type, "item_id": it.item_id, "group": it.group, "title": _title(it), "langs": langs})
     counts = {s: sum(1 for r in rows for v in r["langs"].values() if v["status"] == s) for s in ("in_review", "returned", "approved")}
     return {"items": rows, "counts": counts}
@@ -147,7 +162,7 @@ async def item_detail(item_type: str, item_id: str, session: Session, _: Desk) -
             "status": _status(it, lg, a, last),
             "hash": it.hash(lg),
             "current": view,
-            "live": a.snapshot if a and a.content_hash != it.hash(lg) else None,  # shown as "what learners see now"
+            "live": None,  # since 2026-10-06 learners see the merged text itself (rules.md §1.4)
         }
     return {
         "item_type": item_type,

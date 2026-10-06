@@ -7,7 +7,7 @@ unchanged from the normalized corpus, with the hadith id and version
 (rules.md §1.3; HadeethEnc terms: no modification, cite the source).
 
 Each card is a KNW-05 review item (`daily_card`), approved one language at a
-time; learners only ever receive approved snapshots. Picking the card of
+time; learners receive the merged text (reviewed before merge, rules.md §1.4 since 2026-10-06; a version the reviewer returns is withdrawn). Picking the card of
 the day happens on the device (date modulo the number of cards), so the
 server never needs anything about the learner.
 

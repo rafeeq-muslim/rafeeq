@@ -1,6 +1,6 @@
 """Discover API (KNW-03, KNW-06, KNW-07, KNW-08, KNW-09).
 
-Learner endpoints serve approved snapshots only (KNW-05) and are the same
+Learner endpoints serve the merged text (reviewed before merge, rules.md §1.4 since 2026-10-06; a version the reviewer returns is withdrawn) (KNW-05) and are the same
 for every user: nothing about the learner goes in or is logged (KNW-06 R6,
 KNW-07 R5, KNW-08 R5). Saved items have an optional account copy (KNW-09 R3).
 """

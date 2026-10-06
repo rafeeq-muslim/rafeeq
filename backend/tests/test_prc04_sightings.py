@@ -1,10 +1,18 @@
-"""PRC-04 R2/R6 (moon-sighting announcements) and the approved Practice lines
-(PRC-01 R5, PRC-04 R2). Client-side rules are tested in frontend/src/app/practice."""
+"""PRC-04 R2/R6 (moon-sighting announcements) and the short Sharia Practice lines
+(PRC-01 R5, PRC-04 R2). Client-side rules are tested in frontend/src/app/practice.
+
+Announcements are entered by the team in the app and published without review.
+The lines are merged content: since 2026-10-06 (rules.md §1.4) they are
+reviewed before merging and shown directly; a line the reviewer returns is
+withdrawn in that language until corrected."""
 
 from datetime import date
 
+import pytest
+
+from app.practice import router as practice
 from app.practice.sightings import validate
-from tests.conftest import auth, with_roles
+from tests.conftest import auth, with_roles, withdraw
 
 BODY = {
     "country": "SA",
@@ -45,23 +53,34 @@ async def test_prc04_r6_same_file_no_params(client):
     assert r1.json() == r2.json() and r1.headers["cache-control"].startswith("public")
 
 
-async def _approve_line(client, token, line_id, lang):
-    detail = (await client.get(f"/api/review/items/practice_line/{line_id}", headers=auth(token))).json()
-    body = {"decision": "approved", "hash": detail["langs"][lang]["hash"]}
-    assert (await client.post(f"/api/review/items/practice_line/{line_id}/{lang}", json=body, headers=auth(token))).status_code == 200
+@pytest.fixture
+def local_line(monkeypatch):
+    data = [
+        {
+            "id": "ramadan_local",
+            "feature": "PRC-04 R2",
+            "text": {"ar": "يبدأ الصوم مع إعلان بلدك أو مسجدك عن دخول الشهر.", "en": "", "tl": "Nagsisimula ang pag-aayuno."},
+        }
+    ]
+    monkeypatch.setattr(practice, "_lines", lambda: data)
+    return data
 
 
-async def test_prc04_r2_local_line_only_after_approval(client):
+async def test_prc04_r2_merged_local_line_shown_without_approval(client, local_line):
+    assert (await client.get("/api/practice/lines?lang=tl")).json()["lines"] == {"ramadan_local": "Nagsisimula ang pag-aayuno."}
+    assert (await client.get("/api/practice/lines?lang=en")).json()["lines"] == {}  # no English text: nothing translated
+
+
+async def test_prc04_r2_returned_local_line_withdrawn_until_corrected(client, local_line):
+    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
+    await withdraw(client, reviewer, "practice_line", "ramadan_local", "tl", note="Kulang ang pangungusap")
     assert (await client.get("/api/practice/lines?lang=tl")).json()["lines"] == {}
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await _approve_line(client, reviewer, "ramadan_local", "tl")
+    assert list((await client.get("/api/practice/lines?lang=ar")).json()["lines"]) == ["ramadan_local"]  # other languages unaffected
+    local_line[0]["text"]["tl"] = "Nagsisimula ang pag-aayuno kapag inihayag ng iyong bansa o masjid."  # the corrected line is merged
     lines = (await client.get("/api/practice/lines?lang=tl")).json()["lines"]
-    assert list(lines) == ["ramadan_local"]
-    assert (await client.get("/api/practice/lines?lang=en")).json()["lines"] == {}
+    assert lines == {"ramadan_local": local_line[0]["text"]["tl"]}
 
 
-async def test_prc01_r5_qibla_line_only_after_approval(client):
-    reviewer = await with_roles(client, "mohannad-1", "sharia_reviewer")
-    await _approve_line(client, reviewer, "qibla_direction", "ar")
+async def test_prc01_r5_merged_qibla_line_shown(client):
     lines = (await client.get("/api/practice/lines?lang=ar")).json()["lines"]
     assert lines["qibla_direction"].startswith("يكفيك أن تستقبل جهة القبلة")

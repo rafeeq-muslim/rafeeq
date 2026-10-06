@@ -62,3 +62,12 @@ async def with_roles(client, username: str, *roles: str) -> str:
         await s.execute(update(User).where(User.username == username).values(roles=list(roles)))
         await s.commit()
     return out["access_token"]
+
+
+async def withdraw(client, token: str, item_type: str, item_id: str, lang: str, note: str = "يحتاج تصحيحًا") -> None:
+    """KNW-05: the Sharia reviewer returns the current version in `lang` with a reason,
+    which withdraws that exact version until a corrected one is merged (rules.md §1.4)."""
+    detail = (await client.get(f"/api/review/items/{item_type}/{item_id}", headers=auth(token))).json()
+    body = {"decision": "returned", "hash": detail["langs"][lang]["hash"], "note": note}
+    r = await client.post(f"/api/review/items/{item_type}/{item_id}/{lang}", json=body, headers=auth(token))
+    assert r.status_code == 200, r.text
