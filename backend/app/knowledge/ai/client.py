@@ -8,6 +8,14 @@
 - Spend guard: before any paid call, the cumulative cost of all calls must
   be below `AI_BUDGET_USD` (product owner: $10). Past it, `BudgetExceeded`
   is raised and callers fall back to fixed replies; no request is sent.
+  Two daily ceilings sit under the total: the corpus embedding job (agent
+  "embed") has `AI_EMBED_DAILY_BUDGET_USD`, everything else (answers, query
+  embeddings, learning tasks) has `AI_DAILY_BUDGET_USD`, so neither can
+  starve the other (KNW-02 SC3).
+- Inside an /api/ask pipeline the `RequestContext` (request_context.py)
+  counts every call, retries and fallback included, against one budget,
+  shortens each timeout to the time left, and its `ask_id` is written on
+  the cost row (KNW-01 reliability §7, §14.2).
 - The provider receives only what the caller passes (question and passages,
   or card text); callers never pass identity (rules.md §2.6). Providers that
   keep or train on prompts are excluded (`data_collection: deny`).
@@ -29,7 +37,11 @@ from sqlalchemy import func, select
 
 from app.core.config import get_settings
 from app.core.db import SessionLocal
+from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
 from app.knowledge.models import AiCall
+from app.knowledge.request_context import current as current_request
+
+__all__ = ["AiUnavailable", "BudgetExceeded", "CallBudgetExhausted", "DeadlineExceeded"]
 
 log = logging.getLogger("rafeeq.ai")
 
@@ -47,12 +59,7 @@ PRICES: dict[str, tuple[float, float]] = {
 UNKNOWN_PRICE = (2.0, 8.0)
 
 
-class AiUnavailable(Exception):
-    """No model produced a usable answer (no key, outage, invalid output)."""
-
-
-class BudgetExceeded(AiUnavailable):
-    """The cumulative AI spend reached the budget; no paid call was made."""
+EMBED_JOB_AGENT = "embed"  # the corpus embedding job; its own daily ceiling
 
 
 class _CallFailed(Exception):
@@ -76,35 +83,38 @@ def prompt(name: str) -> str:
 
 _spent: float | None = None
 _spent_at = 0.0
-
-
-_today: float | None = None
+_today: float | None = None  # today's spend except the embedding job
+_today_embed: float | None = None  # today's spend of the embedding job
 
 
 async def spent() -> float:
     """Cumulative cost of every recorded call (refreshed from the DB each minute)."""
-    global _spent, _spent_at, _today
+    global _spent, _spent_at, _today, _today_embed
     if _spent is None or time.monotonic() - _spent_at > 60:
         midnight = datetime.now(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
+        total = func.coalesce(func.sum(AiCall.cost_usd), 0.0)
         async with SessionLocal() as s:
-            _spent = float(await s.scalar(select(func.coalesce(func.sum(AiCall.cost_usd), 0.0))) or 0.0)
-            _today = float(await s.scalar(select(func.coalesce(func.sum(AiCall.cost_usd), 0.0)).where(AiCall.at >= midnight)) or 0.0)
+            _spent = float(await s.scalar(select(total)) or 0.0)
+            _today = float(await s.scalar(select(total).where(AiCall.at >= midnight, AiCall.agent != EMBED_JOB_AGENT)) or 0.0)
+            _today_embed = float(await s.scalar(select(total).where(AiCall.at >= midnight, AiCall.agent == EMBED_JOB_AGENT)) or 0.0)
         _spent_at = time.monotonic()
     return _spent
 
 
-async def spent_today() -> float:
+async def spent_today(agent: str | None = None) -> float:
+    """Today's spend under the ceiling that applies to `agent`."""
     await spent()
-    return _today or 0.0
+    return (_today_embed if agent == EMBED_JOB_AGENT else _today) or 0.0
 
 
 def reset_spend_cache() -> None:
-    global _spent, _today
+    global _spent, _today, _today_embed
     _spent = None
     _today = None
+    _today_embed = None
 
 
-async def guard() -> None:
+async def guard(agent: str | None = None) -> None:
     st = get_settings()
     if not st.openrouter_api_key:
         raise AiUnavailable("no_key")
@@ -112,7 +122,9 @@ async def guard() -> None:
         raise BudgetExceeded("budget")
     # Security review #5: a daily ceiling so one abusive client cannot spend
     # the whole budget in a day; everyone gets fixed replies until midnight UTC.
-    if await spent_today() + MARGIN_USD >= st.ai_daily_budget_usd:
+    # The embedding job has its own ceiling (KNW-02 SC3).
+    ceiling = st.ai_embed_daily_budget_usd if agent == EMBED_JOB_AGENT else st.ai_daily_budget_usd
+    if await spent_today(agent) + MARGIN_USD >= ceiling:
         raise BudgetExceeded("daily_budget")
 
 
@@ -124,8 +136,9 @@ def _cost(model: str, usage: dict) -> float:
 
 
 async def _record(agent: str, model: str, usage: dict, ok: bool, started: float) -> float:
-    global _spent
+    global _spent, _today, _today_embed
     cost = _cost(model, usage) if usage else 0.0
+    ctx = current_request.get()
     try:
         async with SessionLocal() as s:
             s.add(
@@ -137,6 +150,7 @@ async def _record(agent: str, model: str, usage: dict, ok: bool, started: float)
                     cost_usd=cost,
                     ok=ok,
                     latency_ms=int((time.monotonic() - started) * 1000),
+                    ask_id=ctx.ask_id if ctx else None,
                 )
             )
             await s.commit()
@@ -144,7 +158,19 @@ async def _record(agent: str, model: str, usage: dict, ok: bool, started: float)
         log.exception("could not record AI call")
     if _spent is not None:
         _spent += cost
+    if agent == EMBED_JOB_AGENT:
+        if _today_embed is not None:
+            _today_embed += cost
+    elif _today is not None:
+        _today += cost
     return cost
+
+
+def _budgeted_timeout(default: float) -> float:
+    """Inside an /api/ask pipeline: count the call and cap its timeout to the
+    time left (KNW-01 reliability R5/R6). Raises before anything is sent."""
+    ctx = current_request.get()
+    return ctx.take_call(default) if ctx else default
 
 
 # --- transport ----------------------------------------------------------------
@@ -226,8 +252,10 @@ async def complete(
     temperature: float = 0.0,
     timeout_s: float = 30.0,
 ) -> tuple[str, float]:
-    """One paid call to one model. Returns (content, cost). Raises _CallFailed."""
-    await guard()
+    """One paid call to one model. Returns (content, cost). Raises _CallFailed,
+    or AiUnavailable subclasses (budget, deadline, call budget) before sending."""
+    await guard(agent)
+    timeout_s = _budgeted_timeout(timeout_s)
     body: dict[str, Any] = {
         "model": model,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
@@ -294,10 +322,11 @@ async def chat_text(agent: str, model: str, system: str, user: str, *, max_token
 async def embed(texts: list[str], agent: str = "embed") -> list[list[float]]:
     """bge-m3 vectors (1024-d) for `texts`, in order."""
     st = get_settings()
-    await guard()
+    await guard(agent)
+    timeout_s = _budgeted_timeout(60.0)
     started = time.monotonic()
     try:
-        data = await _post("/embeddings", {"model": st.ai_embedding_model, "input": texts}, 60.0)
+        data = await _post("/embeddings", {"model": st.ai_embedding_model, "input": texts}, timeout_s)
     except _CallFailed as e:
         await _record(agent, st.ai_embedding_model, {}, False, started)
         raise AiUnavailable(str(e)) from None

@@ -43,16 +43,67 @@ def passage_block(p: dict[str, Any]) -> str:
     return out
 
 
-async def compose_answer(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]]) -> dict[str, Any]:
-    def ok(d: dict) -> bool:
-        return isinstance(d.get("sufficient"), bool) and isinstance(d.get("answer", ""), str) and isinstance(d.get("sources", []), list)
+# KNW-01 reliability R5: what the one repair is told about each failure.
+# Codes only; the passages stay exactly the same, nothing new is retrieved.
+REPAIR_HINTS = {
+    "wrong_language": "The answer was not written in LANGUAGE. Write it in LANGUAGE only.",
+    "arabic_in_non_arabic_answer": "The answer contained Arabic letters. Use Latin letters only.",
+    "malformed_marker": "A marker was malformed. Markers are exactly {{q:PASSAGE_ID}}.",
+    "unretrieved_reference": "The answer cited an id that is not among the PASSAGES. Cite only ids given in PASSAGES.",
+    "no_citation": "The answer cited no passage. Cite the passage ids you used in sources.",
+    "long_quote_outside_marker": "The answer quoted a long span. Use your own short words, or a marker.",
+    "scripture_copied_outside_marker": "The answer repeated words of a verse or hadith. Use a marker instead of its words.",
+    "unsupported_sentence": "Some sentences were not supported by the passages. Remove them; add nothing new.",
+    "empty": "The answer was empty.",
+}
 
-    user = f"LANGUAGE: {LANG_NAME[lang]}\nROUTE: {route} · LEVEL: {level}\nQUESTION:\n{_q(question)}\n\nPASSAGES:\n" + "\n---\n".join(
+
+def _compose_input(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]]) -> str:
+    return f"LANGUAGE: {LANG_NAME[lang]}\nROUTE: {route} · LEVEL: {level}\nQUESTION:\n{_q(question)}\n\nPASSAGES:\n" + "\n---\n".join(
         passage_block(p) for p in passages
     )
-    r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=ok)
-    d = r.data
+
+
+def _composer_ok(d: dict) -> bool:
+    return isinstance(d.get("sufficient"), bool) and isinstance(d.get("answer", ""), str) and isinstance(d.get("sources", []), list)
+
+
+def _composer_out(d: dict) -> dict[str, Any]:
     return {"sufficient": d["sufficient"], "answer": d.get("answer") or "", "sources": [str(s) for s in d.get("sources") or []]}
+
+
+async def compose_answer(question: str, lang: str, route: str, level: str, passages: list[dict[str, Any]]) -> dict[str, Any]:
+    user = _compose_input(question, lang, route, level, passages)
+    r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=_composer_ok)
+    return _composer_out(r.data)
+
+
+async def repair_answer(
+    question: str,
+    lang: str,
+    route: str,
+    level: str,
+    passages: list[dict[str, Any]],
+    previous: dict[str, Any],
+    codes: list[str],
+    unsupported: list[str],
+) -> dict[str, Any]:
+    """The one bounded repair (KNW-01 reliability R5): same passages, the
+    previous output and the failure codes. Its output goes through every
+    check again; the caller never re-checks an unchanged text."""
+    hints = [REPAIR_HINTS[c] for c in codes if c in REPAIR_HINTS]
+    flagged = "".join(f"\n- {_q(u)}" for u in unsupported[:6])
+    user = (
+        _compose_input(question, lang, route, level, passages)
+        + "\n\nREPAIR:\nYour previous output failed Rafeeq's checks."
+        + "\nPREVIOUS OUTPUT:\n"
+        + _q(json.dumps(previous, ensure_ascii=False))
+        + "\nPROBLEMS:\n"
+        + "\n".join(f"- {h}" for h in hints)
+        + (f"\nUNSUPPORTED SENTENCES:{flagged}" if flagged else "")
+    )
+    r = await client.chat_json("composer", "main", prompt("composer"), user, max_tokens=900, check=_composer_ok)
+    return _composer_out(r.data)
 
 
 async def support_check(agent: str, text: str, sources: list[str]) -> dict[str, Any]:

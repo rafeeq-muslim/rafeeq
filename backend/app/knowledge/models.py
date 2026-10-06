@@ -75,18 +75,33 @@ class AiCall(IdMixin, Base):
     cost_usd: Mapped[float] = mapped_column(Float, default=0.0)
     ok: Mapped[bool] = mapped_column(Boolean, default=True)
     latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+    # KNW-01 reliability §7: the random id of the /api/ask request the call
+    # served (NULL for the embedding job, learning tasks and older rows).
+    ask_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
 
 
 class AnswerLog(IdMixin, Base):
-    """KNW plan 4.9: route, outcome and time only; no question text."""
+    """KNW plan 4.9: route, outcome and time only; no question text.
+    KNW-01 reliability §7 adds the random `ask_id`, the public reason, the
+    internal detail code, the entry point and a stage trace of names,
+    durations, counts and known codes (never question, answer or passage
+    text). All added columns are nullable: older rows stay valid."""
 
     __tablename__ = "knw_answer_log"
     at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), index=True)
     lang: Mapped[str] = mapped_column(String(5))
     route: Mapped[str] = mapped_column(String(16))
     level: Mapped[str | None] = mapped_column(String(1), nullable=True)
-    outcome: Mapped[str] = mapped_column(String(24))  # answered | apologized | refused | danger | fixed | cached | failed
+    # answered | cached | no_source | verification_failed | unavailable | danger | refused | out_of_scope | learning_guide | error
+    outcome: Mapped[str] = mapped_column(String(24))
     latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+    ask_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
+    reason_code: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    detail: Mapped[str | None] = mapped_column(String(48), nullable=True)
+    entrypoint: Mapped[str | None] = mapped_column(String(12), nullable=True)
+    suggestion_id: Mapped[str | None] = mapped_column(String(48), nullable=True)
+    client_request_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    trace: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
 
 
 class ExplanationLog(IdMixin, Base):

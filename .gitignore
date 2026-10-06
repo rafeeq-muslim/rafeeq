@@ -36,3 +36,6 @@ frontend/public/fonts/thmanyah/
 
 # Hisn al-Muslim audio: downloaded locally by data/hisnmuslim/fetch.py --audio, never committed
 data/hisnmuslim/audio/
+
+# Isolated agent worktrees (local only)
+.claude/worktrees/

@@ -72,6 +72,20 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 
 See `ai-agents.md` (written with the AI build): agents, models, measured prices, bake-off, budget guard at $10 cumulative.
 
+## Assistant reliability and sources (KNW-01 reliability, KNW-02 source coverage, 2026-10-06)
+
+Reports: `implementation/KNW-01-chatbot-reliability-report.md`, `implementation/KNW-02-source-coverage-report.md`.
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| **Product owner's decision (2026-10-06): islamqa (الإسلام سؤال وجواب) is a main source of the assistant**, Arabic and English, in the default `KNW_ANSWER_SOURCES`; its whole set is embedded within the first day after deploy (embedding job: own ceiling `AI_EMBED_DAILY_BUDGET_USD` $1.00/day under the $10 total, 4,000 passages every 10 min; ≈ $0.63, ≈ 4–8 h); on a near tie with another source islamqa ranks first (`KNW_NEAR_TIE_EPSILON` 0.0006 on the fused score, plus a shared retrieval channel and close underlying scores); its cards read «الإسلام سؤال وجواب» / "IslamQA" and link to islamqa.info | Owner's instruction. Not a quota: no irrelevant islamqa passage is added or cited, a clearly better passage of another source is never dropped, every citation is still verified. The permission status in `docs/agents/sources.md` is unchanged (request still to send) | `KNW_ANSWER_SOURCES`, `KNW_NEAR_TIE_EPSILON=0` |
+| Until islamqa has vectors it is searched by words only; one dev measurement showed its word matches pushing a useful HadeethEnc passage out of an English answer's context | Measured once; the PRD forbids changing ranking on one case. **Accepted by the product owner (2026-10-06)** for the few hours of embedding: S07 requires the text fallback, so no coverage gate | — |
+| Failures are no longer shown as «لم أجد جوابًا موثّقًا»: `no_source` (healthy search, not enough evidence), `verification_failed` (a composed answer failed the checks), `unavailable` (outage, deadline, budget, degraded search) | All 8 production «no source» answers before the change were compositions rejected by the checks (none was an empty search or an outage) | No flag (PRD) |
+| One bounded repair of a rejected composition, then every check again (`ASK_REPAIR_ENABLED` on) | Local smoke: 2 of 6 real questions were answered only thanks to it; ≈ $0.0013 and 5–9 s extra when used | `ASK_REPAIR_ENABLED=false` |
+| Search-only normalization on (`ASK_QUERY_NORMALIZATION_ENABLED`): «مامعنى» → «ما معنى» at the first word only, never «مالك»; negation and personal details kept | Acceptance and safety tests pass (KNW-01 report §3) | `ASK_QUERY_NORMALIZATION_ENABLED=false` |
+| Approved FAQ answers built but off (`ASK_APPROVED_FAQ_ENABLED=false`) | `content/knowledge/approved-answers.json` is empty; answers must be written by the team and approved by the Sharia reviewer, with the passage versions they cite | Fill the file, then turn the flag on |
+| Budget reason `service_limit` (not retryable) added to the PRD's suggested public codes | The PRD says `retryable` must be false for budget or configuration failures, which "temporarily unavailable" would contradict | — |
+
 ## Daily Practice (PRC-01, 02, 04, 05, 07)
 
 | Decision | Why | To change |

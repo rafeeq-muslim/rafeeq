@@ -41,3 +41,42 @@ export function segments(answer: string, sources: SourceCard[]): Segment[] {
 
 export const isQuran = (s: SourceCard) => s.source_id === "quranenc"
 export const isHadith = (s: SourceCard) => s.kind === "hadith"
+
+/**
+ * KNW-01 reliability R8: one card per reference. Passages of the same
+ * source, reference, language and version (two parts of fatwa 6940) are
+ * shown once; every passage id stays in `sources` for the markers and the
+ * verifier. Different translations or works stay apart. Quran records are
+ * already one per ayah.
+ */
+export type SourceGroup = { key: string; first: SourceCard; cards: SourceCard[] }
+
+export function groupSources(sources: SourceCard[]): SourceGroup[] {
+  const groups = new Map<string, SourceGroup>()
+  for (const s of sources) {
+    const key = isQuran(s) ? `id:${s.id}` : [s.source_id, s.ref_key, s.lang, s.version].join("|")
+    const g = groups.get(key)
+    if (g) g.cards.push(s)
+    else groups.set(key, { key, first: s, cards: [s] })
+  }
+  return [...groups.values()]
+}
+
+/** Short source names for the source strips (KNW-02 SC5). */
+const SOURCE_SHORT: Record<string, string> = {
+  quranenc: "QuranEnc.com",
+  hadeethenc: "HadeethEnc.com",
+  binbaz: "binbaz.org.sa",
+  islamhouse_enc: "IslamHouse.com",
+}
+/** Source names that differ by language (KNW-02 SC5; product owner 2026-10-06). The link is the passage's own origin_url. */
+const SOURCE_BY_LOCALE: Record<string, Partial<Record<string, string>> & { default: string }> = {
+  islamqa: { ar: "الإسلام سؤال وجواب", default: "IslamQA" },
+}
+
+/** The site the passage came from, never the author quoted inside it (KNW-02 S16). */
+export function sourceLabel(s: Pick<SourceCard, "source_id" | "source_name">, locale: string): string {
+  const byLocale = SOURCE_BY_LOCALE[s.source_id]
+  if (byLocale) return byLocale[locale] ?? byLocale.default
+  return SOURCE_SHORT[s.source_id] ?? s.source_name
+}

@@ -9,6 +9,10 @@
  * - KNW-10 R5: the learner's consent switch (off by default) lets an
  *   answered question nudge their learning; only the objective id is used.
  * - Offline: asking is disabled with a clear note; nothing is queued.
+ * - KNW-01 reliability R1/R6: typed questions and suggestions go through
+ *   one `submitQuestion` (a suggestion has a stable id and sends its shown
+ *   text); the draft is cleared only once the store accepted it; a retry
+ *   updates the same message and never touches a new draft.
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
@@ -24,8 +28,9 @@ import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
 import { ErrorTurn, GuideTurn, HELP_HUMAN, PendingTurn, QuestionTurn, ResponseTurn } from "@/app/ask/parts"
-import { useAsk } from "@/app/ask/store"
-import type { AskResponse } from "@/app/ask/types"
+import { QUESTION_MAX, useAsk } from "@/app/ask/store"
+import type { AskResponse, Entrypoint } from "@/app/ask/types"
+import { SUGGESTIONS } from "@/app/ask/suggestions"
 
 function useOnline() {
   const [online, setOnline] = React.useState(() => (typeof navigator === "undefined" ? true : navigator.onLine))
@@ -46,12 +51,13 @@ export default function Ask() {
   const { t, locale } = useT()
   const navigate = useNavigate()
   const online = useOnline()
-  const { turns, busy, ask, put } = useAsk()
+  const { turns, busy, submitQuestion, retry, put } = useAsk()
   const consent = useDevice((s) => s.askConsent)
   const setDevice = useDevice((s) => s.set)
   const markSeen = useLearning((s) => s.markSeen)
   const { lessons } = useContent()
   const [draft, setDraft] = React.useState("")
+  const [notice, setNotice] = React.useState<"tooLong" | null>(null)
   const endRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
@@ -61,7 +67,12 @@ export default function Ask() {
   const answerGuide = React.useCallback(
     async (turnId: string) => {
       const summary = buildSummary(locale, lessons, useLearning.getState())
-      const ai = await requestGuide(summary)
+      let ai: string | null = null
+      try {
+        ai = await requestGuide(summary) // bounded (10 s); null on any failure
+      } catch {
+        ai = null
+      }
       const text = ai ?? fixedMessage(summary, lessons, t)
       put(turnId, { id: turnId, role: "assistant", state: "guide", text, nextHref: nextHref(summary), ai: !!ai })
     },
@@ -81,13 +92,26 @@ export default function Ask() {
     [answerGuide, markSeen],
   )
 
-  const send = async (text = draft) => {
-    if (!online || busy || text.trim().length < 2) return
-    setDraft("")
-    onAnswer(await ask(text, locale))
+  const submit = (text: string, entrypoint: Entrypoint, suggestionId?: string) => {
+    if (!online) return
+    const res = submitQuestion({ text, lang: locale, entrypoint, suggestionId })
+    if (!res.accepted) {
+      if (res.reason === "too_long") setNotice("tooLong")
+      return
+    }
+    setNotice(null)
+    if (entrypoint === "typed") setDraft("") // only once the store took it
+    void res.done.then(onAnswer)
   }
 
-  const suggestions = [t("ask.whatNext"), t("ask.suggest.1"), t("ask.suggest.2"), t("ask.suggest.3")]
+  const retryTurn = (turnId: string) => {
+    if (!online) return
+    const res = retry(turnId)
+    if (res.accepted) void res.done.then(onAnswer)
+  }
+
+  /** Put the question back for editing, without overwriting a new draft. */
+  const editQuestion = (question: string) => setDraft((d) => (d.trim() ? d : question))
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -106,15 +130,16 @@ export default function Ask() {
             <p className="max-w-sm text-body text-muted-foreground">{t("ask.empty")}</p>
             <div className="flex w-full flex-col items-stretch gap-2">
               <p className="text-start text-label font-medium text-muted-foreground">{t("ask.suggest.title")}</p>
-              {suggestions.map((s) => (
+              {SUGGESTIONS.map((sg) => (
                 <Button
-                  key={s}
+                  key={sg.id}
+                  data-suggestion-id={sg.id}
                   variant="outline"
                   className="h-auto min-h-11 justify-start rounded-md py-2.5 text-start whitespace-normal"
                   disabled={!online || busy}
-                  onClick={() => void send(s)}
+                  onClick={() => submit(t(sg.key), "suggestion", sg.id)}
                 >
-                  {s}
+                  {t(sg.key)}
                 </Button>
               ))}
             </div>
@@ -130,12 +155,27 @@ export default function Ask() {
           <div className="flex flex-col gap-5" aria-live="polite">
             {turns.map((turn) => {
               if (turn.role === "user") return <QuestionTurn key={turn.id} text={turn.text} />
-              if (turn.state === "pending") return <PendingTurn key={turn.id} startedAt={turn.startedAt} />
+              if (turn.state === "pending") return <PendingTurn key={turn.id} />
               if (turn.state === "error")
-                return <ErrorTurn key={turn.id} code={turn.code} onRetry={() => void send(turn.question)} />
+                return (
+                  <ErrorTurn
+                    key={turn.id}
+                    code={turn.code}
+                    retryAfter={turn.retryAfter}
+                    onRetry={() => retryTurn(turn.id)}
+                    onEdit={() => editQuestion(turn.snapshot.question)}
+                  />
+                )
               if (turn.state === "guide") return <GuideTurn key={turn.id} text={turn.text} nextHref={turn.nextHref} ai={turn.ai} />
-              if (turn.response.outcome === "learning_guide") return <PendingTurn key={turn.id} startedAt={Date.now()} />
-              return <ResponseTurn key={turn.id} response={turn.response} />
+              if (turn.response.outcome === "learning_guide") return <PendingTurn key={turn.id} />
+              return (
+                <ResponseTurn
+                  key={turn.id}
+                  response={turn.response}
+                  onRetry={() => retryTurn(turn.id)}
+                  onEdit={() => editQuestion(turn.snapshot.question)}
+                />
+              )
             })}
           </div>
         )}
@@ -143,6 +183,11 @@ export default function Ask() {
       </div>
 
       <div className="sticky bottom-0 z-10 flex flex-col gap-2 bg-background/90 px-3 pt-2 pb-3 backdrop-blur">
+        {notice === "tooLong" && (
+          <p role="alert" className="px-2 text-label text-destructive">
+            {t("ask.tooLong")}
+          </p>
+        )}
         {!online && (
           <p role="status" className="flex items-center gap-2 px-2 text-label text-muted-foreground">
             <IconWifiOff className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
@@ -152,8 +197,11 @@ export default function Ask() {
         <AskComposer
           placeholder={t("ask.placeholder")}
           value={draft}
-          onChange={setDraft}
-          onSend={() => void send()}
+          onChange={(v) => {
+            setDraft(v)
+            if (notice && v.trim().length <= QUESTION_MAX) setNotice(null)
+          }}
+          onSend={() => submit(draft, "typed")}
           disabled={!online || busy || draft.trim().length < 2}
           labels={{ input: t("ask.input"), send: t("ask.send") }}
         />

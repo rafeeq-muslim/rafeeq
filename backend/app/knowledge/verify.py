@@ -1,7 +1,10 @@
-"""KNW-01 plan §4.6: checks before an answer is shown. Any failure means the
-answer is treated as having no source (rules.md §2.3: verify every reference
-against the retrieved set; §1.3: drop an answer citing what was not
-retrieved).
+"""KNW-01 plan §4.6: checks before an answer is shown (rules.md §2.3: verify
+every reference against the retrieved set; §1.3: drop an answer citing what
+was not retrieved). No failing answer is ever shown.
+
+KNW-01 reliability §14.1: the result is typed. `rejected` (a content problem
+with its codes) is kept apart from `unavailable` (the checker could not
+run), which is never read as "no source".
 
 Code checks (no model):
   1 the output matches the contract (done by the client: retried once)
@@ -16,6 +19,7 @@ Then a fast-model support check: every sentence is supported by the cited
 passages. If the checker cannot run, the answer is not shown (fail closed).
 """
 
+from dataclasses import dataclass, field
 from typing import Any
 
 from app.core.config import get_settings
@@ -24,6 +28,25 @@ from app.knowledge.ai.client import AiUnavailable
 from app.knowledge.ai.textcheck import MARKER, has_arabic, language_matches, longest_quote_words, ngram_overlap, strip_markers
 
 SCRIPTURE_KINDS = ("quran_arabic", "quran_translation", "quran_tafsir", "hadith")
+# Codes that mean "the passages do not answer it" rather than a content violation.
+INSUFFICIENT_CODES = {"insufficient", "empty", "no_citation"}
+
+
+@dataclass
+class VerificationResult:
+    status: str  # passed | rejected | unavailable
+    codes: list[str] = field(default_factory=list)
+    unsupported: list[str] = field(default_factory=list)  # verifier quotes, used only for the one repair
+    error: AiUnavailable | None = None  # why the checker could not run (status unavailable)
+
+    @property
+    def passed(self) -> bool:
+        return self.status == "passed"
+
+    @property
+    def insufficient_only(self) -> bool:
+        """Rejected only because the passages were judged not enough (§14.1 rule 6)."""
+        return self.status == "rejected" and "insufficient" in self.codes and set(self.codes) <= INSUFFICIENT_CODES
 
 
 def cited_ids(out: dict[str, Any]) -> list[str]:
@@ -63,13 +86,17 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
     return fails
 
 
-async def verify(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, Any]]) -> list[str]:
+async def verify(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, Any]]) -> VerificationResult:
+    """Code checks, then the model support check (main model, then fallback,
+    inside the request budget). Fails closed: nothing is shown unless passed."""
     fails = code_checks(out, lang, retrieved)
     if fails:
-        return fails
+        return VerificationResult("rejected", fails)
     cited = [agents.passage_block(retrieved[i]) for i in cited_ids(out)]
     try:
         r = await agents.support_check("verifier", out["answer"], cited)
-    except AiUnavailable:
-        return ["verifier_unavailable"]
-    return [] if r["supported"] else ["unsupported_sentence"]
+    except AiUnavailable as e:
+        return VerificationResult("unavailable", ["verifier_unavailable"], error=e)
+    if r["supported"]:
+        return VerificationResult("passed")
+    return VerificationResult("rejected", ["unsupported_sentence"], [str(u)[:300] for u in r["unsupported"]][:6])

@@ -1,7 +1,7 @@
 # KNW-02 §3.6/3.8 embeddings and search: implementation
 
 **Feature:** `docs/domains/knowledge/features/KNW-02-approved-sources-ingestion.md` (R4: search in the asker's language only) · **Plan:** §2.2–2.4, §3.6, §3.8
-**Written:** 2026-10-05 by Claude.
+**Written:** 2026-10-05 by Claude. **Updated 2026-10-06** for source coverage (`docs/domains/knowledge/features/KNW-02-source-coverage-and-retrieval-prd.md`, report `KNW-02-source-coverage-report.md`) and the reliability PRD (`KNW-01-chatbot-reliability-report.md`).
 
 ## 1. Model check (done 2026-10-05, live)
 
@@ -13,8 +13,11 @@
 | Step | Module | Behaviour |
 | --- | --- | --- |
 | 3.6 embed passages | `app/knowledge/embed.py` | `python -m app.knowledge.embed [--source X] [--kind K] [--lang L] [--limit N] [--batch 64] [--estimate]`. Selects rows with `embedding IS NULL` (so it resumes and re-embeds only changed text: the loader nulls the vector when `text_hash` changes), sends `quote_text + "\n\n" + context_text` capped at 6,000 characters, writes vectors per batch in its own transaction. Every batch passes the spend guard first; on `BudgetExceeded` it stops cleanly. `--estimate` prints rows, characters and a cost estimate without calling anything |
-| production embedding | `app/knowledge/jobs.py` | `register(scheduler)`: every 15 minutes, embed at most `KNW_EMBED_JOB_LIMIT` (default 2,000) rows of the answer sources, only when a key is set. Registered in `app/jobs.py` |
-| 3.8 `search(question, lang, k)` | `app/knowledge/search.py` | Embeds the question (in-memory LRU by hash, no identity), runs pgvector cosine top 24 and full-text top 24 **in `lang` only**, fuses them by reciprocal rank, collapses duplicate records (two translations of one ayah), returns `k` passages with their cosine score. If `KNW_MIN_SIMILARITY` > 0 and no vector hit reaches it, the result is empty. If the embedding call fails (outage or budget), full-text results alone are used |
+| production embedding | `app/knowledge/jobs.py` | `register(scheduler)`: every `KNW_EMBED_JOB_MINUTES` (10), embed at most `KNW_EMBED_JOB_LIMIT` (4,000) rows of the sources `source_policy.eligible_sources()` returns, only when a key is set. Spend: agent `embed`, its own daily ceiling `AI_EMBED_DAILY_BUDGET_USD` ($1.00) under the $10 total; answers keep `AI_DAILY_BUDGET_USD` ($0.75). After each run, coverage per source and language (passages, embedded, remaining, %), model, last run, last success and stop reason go to `knw_sources.versions["embedding"]`; `ready` only when nothing remains |
+| answer-source policy | `app/knowledge/source_policy.py` | The only parser of `KNW_ANSWER_SOURCES` (trim, no repeats, unknown names reported, never widening). Eligible = configured ∩ in the database ∩ `mode = index`; `None` = policy, `[]` = nothing. Per-language readiness cached 10 min. Vectors recorded under another model are not searched |
+| 3.8 `retrieve(query, lang, k)` / `search()` | `app/knowledge/search.py` | Embeds the search form of the question (`query_normalization.py`); cache key = model + normalization version + language + exactly the embedded text. Runs pgvector cosine top 24 and full-text top 24 **in `lang` only**, both always; `KNW_MIN_SIMILARITY` > 0 drops weak vector hits only. Fuses by reciprocal rank, ties by passage id; an islamqa candidate moves ahead of a near-tied candidate of another source (owner decision 2026-10-06: fused scores within `KNW_NEAR_TIE_EPSILON` = 0.0006, a shared channel, close cosine/full-text scores; never past a clearly better one). Collapses two translations of one ayah; keeps every other passage. Returns a `RetrievalResult`: status complete / degraded (embeddings down, or one channel's SQL failed) / unavailable (no channel worked), counts, per-source counters and exclusion reasons. A database error is never an empty "no source" result |
+| corpus loader safety | `app/knowledge/load.py` | A requested source without its file fails; empty, non-JSON, incomplete rows, repeated ids, a mismatching `<source>.manifest.json`, or > 10 % fewer rows than stored refuse the whole source (rolled back, exit code 1); `--allow-shrink` for an intended removal |
+| diagnostics | `app/knowledge/source_diagnostics.py` | Internal CLI only (`inventory`, `trace CASES.json`), no endpoint; ids, ranks, cosine and RRF kept apart, Recall@k; never question or passage text |
 | full-text column | Alembic `b3c1d2e4f5a6` | generated `tsv` (english config for `en`, simple for `ar`/`tl`; Arabic diacritics/tatweel removed and alef, ya, ta marbuta folded) + GIN index |
 
 ## 3. Cost estimate before running (2026-10-05, local corpus)
@@ -28,9 +31,11 @@ Characters per source (quote + context capped at 6,000) and tokens at ~3.3 chara
 | HadeethEnc (ar, en, tl) | 7,851 | 12.8 | 3.9 | $0.039 |
 | IslamHouse encyclopedia | 43 | < 0.1 | < 0.1 | < $0.001 |
 | binbaz | 19,229 | 18.8 | 5.7 | $0.057 |
-| islamqa (not run: permission pending) | 96,511 | 198.9 | 60 | $0.60 |
+| islamqa (answer source since the owner's decision of 2026-10-06; permission request still pending) | 96,511 | 198.9 | 60 | $0.60 estimate; **measured on 1,000 ar passages (2026-10-06): $0.00657 → ≈ $0.63** |
 
 Run locally tonight: QuranEnc + HadeethEnc + IslamHouse encyclopedia + a 2,000-row binbaz sample (≈ $0.07). Production embeds the rest through the job.
+
+Production state 2026-10-06 (read-only, before the source-coverage deploy): every source fully embedded except islamqa (ar 60,943 and en 35,568 passages, 0 vectors). After the deploy the job embeds islamqa at 4,000 passages per 10-minute run: measured 6.7 s per 64 passages on the development database → ≈ 4 h (up to ≈ 8 h if runs overrun their tick), ≈ $0.63, within the $1.00 daily embedding ceiling. Until then islamqa is searched by words only (`embedding_pending` in the trace).
 
 ## 4. Tests (`backend/tests/test_knw02_search.py`)
 
@@ -38,4 +43,5 @@ Run locally tonight: QuranEnc + HadeethEnc + IslamHouse encyclopedia + a 2,000-r
 - `test_knw02_embed_job_resumes_and_skips_embedded_rows`
 - `test_knw02_embed_job_stops_at_budget`
 - `test_knw02_search_falls_back_to_fulltext_when_embedding_fails`
-- `test_knw02_search_threshold_returns_empty_list`
+- `test_knw02_search_threshold_drops_weak_vectors_but_checks_full_text` (replaces `…_threshold_returns_empty_list`: reliability R3)
+- `backend/tests/test_knw02_source_coverage.py`: S01–S20 and the owner's islamqa decisions (table in `KNW-02-source-coverage-report.md` §6)

@@ -18,7 +18,7 @@ import respx
 
 from app.core.config import get_settings
 from app.core.db import SessionLocal
-from app.knowledge import search
+from app.knowledge import search, source_policy
 from app.knowledge.ai import client
 from app.knowledge.ai.textcheck import words
 from app.knowledge.models import EMBED_DIM, Passage, Source
@@ -102,6 +102,7 @@ def ai(monkeypatch):
     monkeypatch.setattr(get_settings(), "openrouter_api_key", "test-key")
     client.reset_spend_cache()
     search._cache.clear()
+    source_policy.reset_readiness_cache()
     with respx.mock(assert_all_called=False, assert_all_mocked=True) as mock:
         yield FakeOpenRouter(mock)
     client.reset_spend_cache()
@@ -112,6 +113,7 @@ SOURCES = {
     "hadeethenc": "HadeethEnc.com",
     "binbaz": "binbaz.org.sa",
     "islamhouse_enc": "IslamHouse encyclopedia",
+    "islamqa": "الإسلام سؤال وجواب",
 }
 
 
@@ -143,6 +145,7 @@ async def add_passages(*rows: dict, embed: bool = True) -> None:
                 )
             )
         await s.commit()
+    source_policy.reset_readiness_cache()  # new rows: per-language readiness must be read again
 
 
 def strip_ws(s: str) -> str:

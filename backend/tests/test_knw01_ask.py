@@ -117,12 +117,11 @@ async def test_knw01_r1_quran_text_comes_from_database_not_model(client, ai):
 async def test_knw01_r1_unretrieved_reference_drops_answer(client, ai):
     await add_passages(SHAHADA)
     ai.on("router", ROUTE_GENERAL)
-    ai.on(
-        "composer",
-        {"sufficient": True, "answer": "It means worship is for Allah alone. {{q:hadeethenc:en:999}}", "sources": ["hadeethenc:en:999"]},
-    )
+    bad = {"sufficient": True, "answer": "It means worship is for Allah alone. {{q:hadeethenc:en:999}}", "sources": ["hadeethenc:en:999"]}
+    ai.on("composer", bad, bad)  # the one repair returns the same invented reference
     b = await post(client, "What does la ilaha illa allah mean?")
-    assert b["outcome"] == "no_source"
+    # Reliability R4: a rejected answer is "could not verify", not "no source"; nothing generated is shown.
+    assert b["outcome"] == "verification_failed" and b["reason_code"] == "verification_rejected"
     assert b["sources"] == [] and "hadeethenc:en:999" not in b["answer"]
     assert "support" not in ai.agents_called()  # dropped by the code check before the model check
 
@@ -168,9 +167,13 @@ async def test_knw01_r2_outage_serves_cached_approved_answer(client, ai, monkeyp
         "questions": ["What does la ilaha illa allah mean?"],
         "answer": "TEST_APPROVED_ANSWER {{q:hadeethenc:en:101}}",
         "sources": ["hadeethenc:en:101"],
+        "source_versions": {"hadeethenc:en:101": "test-1"},
         "status": "approved",
+        "reviewer": "TEST_REVIEWER",
+        "approved_at": "2026-10-06",
     }
     monkeypatch.setattr(screen, "approved_answers", lambda: [approved])
+    monkeypatch.setattr(get_settings(), "ask_approved_faq_enabled", True)  # reliability R7: behind its flag
     ai.on("router", 503, 503)
     b = await post(client, "what does la ilaha illa allah mean")
     assert b["outcome"] == "cached"
@@ -286,27 +289,23 @@ async def test_knw01_every_danger_phrase_routes_to_human_without_network(ai, lan
 async def test_knw01_arabic_letters_in_english_answer_are_rejected(client, ai):
     await add_passages(SHAHADA)
     ai.on("router", ROUTE_GENERAL)
-    ai.on(
-        "composer",
-        {"sufficient": True, "answer": "It means لا إله إلا الله: nothing deserves worship but Allah.", "sources": ["hadeethenc:en:101"]},
-    )
+    bad = {"sufficient": True, "answer": "It means لا إله إلا الله: nothing deserves worship but Allah.", "sources": ["hadeethenc:en:101"]}
+    ai.on("composer", bad, bad)  # the repair does not fix it
     b = await post(client, "What does la ilaha illa allah mean?")
-    assert b["outcome"] == "no_source"
+    assert b["outcome"] == "verification_failed" and b["sources"] == []
 
 
 async def test_knw01_long_quote_outside_marker_is_rejected(client, ai):
     await add_passages(SHAHADA)
     ai.on("router", ROUTE_GENERAL)
-    ai.on(
-        "composer",
-        {
-            "sufficient": True,
-            "answer": 'The hadith says "none has the right to be worshipped but Allah alone without any partner" here.',
-            "sources": ["hadeethenc:en:101"],
-        },
-    )
+    bad = {
+        "sufficient": True,
+        "answer": 'The hadith says "none has the right to be worshipped but Allah alone without any partner" here.',
+        "sources": ["hadeethenc:en:101"],
+    }
+    ai.on("composer", bad, bad)  # the repair does not fix it
     b = await post(client, "What does la ilaha illa allah mean?")
-    assert b["outcome"] == "no_source"
+    assert b["outcome"] == "verification_failed" and b["sources"] == []
 
 
 async def test_knw01_unsupported_sentence_is_rejected(client, ai):
@@ -317,8 +316,14 @@ async def test_knw01_unsupported_sentence_is_rejected(client, ai):
         {"sufficient": True, "answer": "It means worship is for Allah alone. {{q:hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]},
     )
     ai.on("support", {"supported": False, "unsupported": ["It means worship is for Allah alone."]})
+    ai.on(
+        "composer",
+        {"sufficient": True, "answer": "Worship belongs to Allah alone. {{q:hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]},
+    )
+    ai.on("support", {"supported": False, "unsupported": ["Worship belongs to Allah alone."]})
     b = await post(client, "What does la ilaha illa allah mean?")
-    assert b["outcome"] == "no_source"
+    assert b["outcome"] == "verification_failed"
+    assert b["sources"] == [] and "Worship" not in b["answer"]
 
 
 async def test_knw01_budget_exceeded_gives_fixed_reply_without_paid_call(client, ai):
@@ -344,8 +349,25 @@ async def test_knw01_answer_log_has_no_question_text(client, ai):
     async with SessionLocal() as s:
         (row,) = list(await s.scalars(select(AnswerLog)))
         calls = list(await s.scalars(select(AiCall)))
-    assert {c.name for c in AnswerLog.__table__.columns} == {"id", "at", "lang", "route", "level", "outcome", "latency_ms"}
+    assert {c.name for c in AnswerLog.__table__.columns} == {
+        "id",
+        "at",
+        "lang",
+        "route",
+        "level",
+        "outcome",
+        "latency_ms",
+        # reliability §7: random id, codes, entry point and a trace of counts (no text)
+        "ask_id",
+        "reason_code",
+        "detail",
+        "entrypoint",
+        "suggestion_id",
+        "client_request_id",
+        "trace",
+    }
     assert (row.lang, row.route, row.level, row.outcome) == ("en", "general", "A", "answered")
+    assert question not in json.dumps(row.trace, ensure_ascii=False)
     assert calls and all(c.cost_usd > 0 for c in calls if c.ok)  # usage.cost read back from the response
     for e in await outbox():
         assert question not in json.dumps(e.payload)
@@ -361,12 +383,10 @@ async def test_knw01_rate_limit(client, ai):
 async def test_knw01_malformed_marker_is_rejected(client, ai):
     await add_passages(SHAHADA)
     ai.on("router", ROUTE_GENERAL)
-    ai.on(
-        "composer",
-        {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]},
-    )
+    bad = {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]}
+    ai.on("composer", bad, bad)  # the repair does not fix it
     b = await post(client, "What does la ilaha illa allah mean?")
-    assert b["outcome"] == "no_source"
+    assert b["outcome"] == "verification_failed" and b["sources"] == []
 
 
 def test_knw01_translation_pasted_as_model_text_is_rejected_in_english():

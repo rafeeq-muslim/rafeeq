@@ -1,5 +1,5 @@
 {
-  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. DRAFT by Claude, 2026-10-05; the team writes the final wording and the Sharia reviewer approves it.",
+  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. DRAFT by Claude, 2026-10-05; the team writes the final wording and the Sharia reviewer approves it. 2026-10-06 (KNW-01 reliability R4): no_source, verification_failed and unavailable reworded from the PRD's table so a failure is never shown as a lack of sources.",
   "status": "draft",
   "replies": {
     "danger": {
@@ -18,14 +18,19 @@
       "tl": "Ako si Rafeeq. Sinasagot ko ang mga tanong tungkol sa Islam at sa buhay mo bilang bagong Muslim, mula sa mga aprubadong sanggunian. Subukang magtanong tungkol sa salah, wudu o kahulugan ng shahadah."
     },
     "no_source": {
-      "ar": "لم أجد جوابًا موثّقًا في مصادري المعتمدة. لا أريد أن أجيبك بلا مصدر، فاسأل إنسانًا من فريقنا.",
-      "en": "I couldn't find a sourced answer in my approved sources. I don't want to answer you without a source, so please ask a person from our team.",
-      "tl": "Wala akong nakitang sagot na may sanggunian sa aking mga aprubadong sanggunian. Ayokong sumagot nang walang sanggunian, kaya magtanong ka sa isang tao mula sa aming team."
+      "ar": "لم أجد في المصادر المتاحة ما يكفي للإجابة عن هذا السؤال. لا أجيب بلا مصدر، فاسأل إنسانًا من فريقنا.",
+      "en": "I didn't find enough in the available sources to answer this question. I don't answer without a source, so please ask a person from our team.",
+      "tl": "Wala akong nakitang sapat sa mga available na sanggunian para masagot ang tanong na ito. Hindi ako sumasagot nang walang sanggunian, kaya magtanong ka sa isang tao mula sa aming team."
+    },
+    "verification_failed": {
+      "ar": "لم أتمكن من التحقق من إجابة موثوقة لهذا السؤال. يمكنك تعديل السؤال، أو سؤال إنسان من فريقنا.",
+      "en": "I couldn't verify a reliable answer to this question. You can rephrase it, or ask a person from our team.",
+      "tl": "Hindi ko ma-verify ang isang maaasahang sagot sa tanong na ito. Maaari mong baguhin ang tanong, o magtanong sa isang tao mula sa aming team."
     },
     "unavailable": {
-      "ar": "المساعد غير متاح الآن. لا أريد أن أجيبك بلا تحقق، فحاول بعد قليل، أو اسأل إنسانًا من فريقنا.",
-      "en": "The assistant isn't available right now. I don't want to answer you without checking, so try again shortly, or ask a person from our team.",
-      "tl": "Hindi available ang assistant ngayon. Ayokong sumagot nang hindi sinusuri, kaya subukan muli mamaya, o magtanong sa isang tao mula sa aming team."
+      "ar": "تعذر إكمال الإجابة الآن. حاول بعد قليل، أو تواصل مع إنسان من فريقنا.",
+      "en": "I couldn't complete the answer right now. Try again shortly, or contact a person from our team.",
+      "tl": "Hindi ko natapos ang sagot ngayon. Subukan muli mamaya, o makipag-ugnayan sa isang tao mula sa aming team."
     },
     "personal_note": {
       "ar": "الحكم في حالتك بعينها يحتاج إلى مختص يعرف تفاصيلها؛ تحدث مع مرشدك.",

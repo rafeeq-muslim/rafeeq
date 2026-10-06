@@ -4,6 +4,11 @@
  *   the model's text is labelled as Rafeeq's wording (rules.md §1.3).
  * - Every answer ends with source strips; no source → ReferralCard.
  * - Danger → DangerHelpPanel only, no AI text, no invented numbers.
+ * - KNW-01 reliability R4/R6: "not enough in the sources", "could not
+ *   verify" and "could not complete now" are different messages; only a
+ *   retryable failure offers a retry; an unknown outcome is a safe failure;
+ *   the waiting text does not pretend to report real stages.
+ * - R8: one source card per reference (all passage ids stay for markers).
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
@@ -17,20 +22,14 @@ import { cn } from "@/lib/utils"
 import { AssistantMessage, DangerHelpPanel, HumanHelpButton, ReferralCard, UserMessage } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { suraName } from "@/app/lesson/suras"
-import { isHadith, isQuran, segments } from "./answer"
+import { groupSources, isHadith, isQuran, segments, sourceLabel } from "./answer"
 import { useSaveAnswer } from "./saved"
-import type { AskResponse, SourceCard } from "./types"
+import type { AskResponse, ErrorCode, SourceCard } from "./types"
 
 /** CMP hand-off (Companion's /mentor/help). Only the random ask id travels, never the question text. */
 export const HELP_HUMAN = "/mentor/help?from=ask"
 const helpUrl = (kind: "urgent" | "escalation", askId: string) => `/mentor/help?kind=${kind}&from=ask&ask=${encodeURIComponent(askId)}`
 
-const SOURCE_SHORT: Record<string, string> = {
-  quranenc: "QuranEnc.com",
-  hadeethenc: "HadeethEnc.com",
-  binbaz: "binbaz.org.sa",
-  islamhouse_enc: "IslamHouse.com",
-}
 /** Names of the stored translations and tafsir (source titles, not UI copy). */
 const TRANSLATION_NAME: Record<string, string> = {
   english_saheeh: "Saheeh International",
@@ -138,16 +137,17 @@ function SaveAnswer({ response }: { response: AskResponse }) {
 }
 
 export function AnswerTurn({ response }: { response: AskResponse }) {
-  const { t } = useT()
+  const { t, locale } = useT()
   const navigate = useNavigate()
   const refLabel = useRefLabel()
   const segs = segments(response.answer, response.sources)
-  const strips = response.sources.map((s) => `${SOURCE_SHORT[s.source_id] ?? s.source_name} — ${refLabel(s)}`)
+  const groups = groupSources(response.sources)
+  const strips = groups.map((g) => `${sourceLabel(g.first, locale)} — ${refLabel(g.first)}`)
   return (
     <div className="flex flex-col gap-3">
       <AssistantMessage
         sources={strips}
-        sourceLinks={response.sources.map((s) => s.origin_url)}
+        sourceLinks={groups.map((g) => g.first.origin_url)}
         sourceLabel={t("ask.source")}
         footer={<SaveAnswer response={response} />}
       >
@@ -203,7 +203,47 @@ export function PlainTurn({ text }: { text: string }) {
   )
 }
 
-export function ResponseTurn({ response }: { response: AskResponse }) {
+function FailureCard({
+  kind,
+  askId,
+  onRetry,
+  onEdit,
+}: {
+  kind: "noSource" | "verificationFailed" | "unavailable"
+  askId: string
+  onRetry?: () => void
+  onEdit?: () => void
+}) {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <div className="flex flex-col gap-2">
+      <ReferralCard
+        title={t(`ask.${kind}.title`)}
+        description={t(`ask.${kind}.body`)}
+        actionLabel={t("ask.human")}
+        onRefer={() => navigate(helpUrl("escalation", askId))}
+      />
+      {(onRetry || onEdit) && (
+        <div className="flex flex-wrap gap-2 ps-2">
+          {onRetry && (
+            <Button variant="outline" size="sm" onClick={onRetry}>
+              <IconRefresh data-icon="inline-start" stroke={1.75} />
+              {t("common.retry")}
+            </Button>
+          )}
+          {onEdit && (
+            <Button variant="ghost" size="sm" onClick={onEdit}>
+              {t("ask.editQuestion")}
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export function ResponseTurn({ response, onRetry, onEdit }: { response: AskResponse; onRetry?: () => void; onEdit?: () => void }) {
   const { t } = useT()
   const navigate = useNavigate()
   switch (response.outcome) {
@@ -222,43 +262,31 @@ export function ResponseTurn({ response }: { response: AskResponse }) {
         />
       )
     case "no_source":
-    case "unavailable": {
-      const key = response.outcome === "no_source" ? "noSource" : "unavailable"
-      return (
-        <ReferralCard
-          title={t(`ask.${key}.title`)}
-          description={t(`ask.${key}.body`)}
-          actionLabel={t("ask.human")}
-          onRefer={() => navigate(helpUrl("escalation", response.ask_id))}
-        />
-      )
-    }
-    default:
+      return <FailureCard kind="noSource" askId={response.ask_id} onEdit={onEdit} />
+    case "verification_failed":
+      // No automatic retry loop (R4): rephrase or ask a person.
+      return <FailureCard kind="verificationFailed" askId={response.ask_id} onEdit={onEdit} />
+    case "unavailable":
+      return <FailureCard kind="unavailable" askId={response.ask_id} onRetry={response.retryable ? onRetry : undefined} />
+    case "refused":
+    case "out_of_scope":
       return <PlainTurn text={response.answer} />
+    default:
+      // An outcome this build does not know: a safe failure, never its text.
+      return <FailureCard kind="unavailable" askId={response.ask_id} />
   }
 }
 
-const STAGES = [
-  { after: 0, key: "ask.stage.route" },
-  { after: 2500, key: "ask.thinking" },
-  { after: 7000, key: "ask.stage.check" },
-] as const
-
-export function PendingTurn({ startedAt }: { startedAt: number }) {
+/** One honest waiting message: the server does not report stages (R6). */
+export function PendingTurn() {
   const { t } = useT()
-  const [now, setNow] = React.useState(() => Date.now())
-  React.useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 500)
-    return () => clearInterval(id)
-  }, [])
-  const stage = [...STAGES].reverse().find((s) => now - startedAt >= s.after) ?? STAGES[0]
   return (
     <Message align="start">
       <MessageContent>
         <Bubble variant="outline" align="start">
           <BubbleContent className="flex items-center gap-2 text-label text-muted-foreground" role="status" aria-live="polite">
             <Spinner className="size-4" />
-            {t(stage.key)}
+            {t("ask.waiting")}
           </BubbleContent>
         </Bubble>
       </MessageContent>
@@ -266,18 +294,47 @@ export function PendingTurn({ startedAt }: { startedAt: number }) {
   )
 }
 
-export function ErrorTurn({ code, onRetry }: { code: "network" | "rate_limited"; onRetry: () => void }) {
+const ERROR_TEXT = {
+  network: "ask.error.network",
+  timeout: "ask.error.timeout",
+  cancelled: "ask.error.cancelled",
+  rate_limited: "ask.tooMany",
+  invalid: "ask.error.invalid",
+  server: "ask.error.server",
+  invalid_response: "ask.error.invalidResponse",
+} as const
+
+export function ErrorTurn({
+  code,
+  retryAfter,
+  onRetry,
+  onEdit,
+}: {
+  code: ErrorCode
+  retryAfter?: number | null
+  onRetry: () => void
+  onEdit?: () => void
+}) {
   const { t } = useT()
+  const text = code === "rate_limited" && retryAfter ? t("ask.tooManyWait", { s: String(retryAfter) }) : t(ERROR_TEXT[code] ?? "common.error")
   return (
     <Message align="start">
       <MessageContent>
         <Bubble variant="muted" align="start" className="max-w-[92%]">
-          <BubbleContent className="flex flex-col items-start gap-2 text-body">
-            {t(code === "rate_limited" ? "ask.tooMany" : "common.error")}
-            <Button variant="outline" size="sm" onClick={onRetry}>
-              <IconRefresh data-icon="inline-start" stroke={1.75} />
-              {t("common.retry")}
-            </Button>
+          <BubbleContent className="flex flex-col items-start gap-2 text-body" role="status">
+            {text}
+            {code === "invalid" ? (
+              onEdit && (
+                <Button variant="outline" size="sm" onClick={onEdit}>
+                  {t("ask.editQuestion")}
+                </Button>
+              )
+            ) : (
+              <Button variant="outline" size="sm" onClick={onRetry}>
+                <IconRefresh data-icon="inline-start" stroke={1.75} />
+                {t("common.retry")}
+              </Button>
+            )}
           </BubbleContent>
         </Bubble>
       </MessageContent>

@@ -65,11 +65,17 @@ async def test_knw02_search_falls_back_to_fulltext_when_embedding_fails(ai):
     assert hits[0]["score"] is None
 
 
-async def test_knw02_search_threshold_returns_empty_list(ai, monkeypatch):
+async def test_knw02_search_threshold_drops_weak_vectors_but_checks_full_text(ai, monkeypatch):
+    """Reliability R3 (was: the threshold emptied the result before the
+    full-text channel ran). Weak vector hits are dropped; full-text
+    candidates are still passed on (the composer and verifier decide);
+    with no lexical match either, the result is empty."""
     await add_passages(EN)
     monkeypatch.setattr(get_settings(), "knw_min_similarity", 0.9)
     async with SessionLocal() as s:
-        assert await search(s, "ablution washing", "en") == []
+        hits = await search(s, "ablution washing", "en")
+        assert [h["id"] for h in hits] == ["hadeethenc:en:1"] and hits[0]["score"] is None  # full-text only
+        assert await search(s, "football cup", "en") == []
 
 
 async def test_knw02_embed_job_resumes_and_skips_embedded_rows(ai):

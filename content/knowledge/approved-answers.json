@@ -1,4 +1,4 @@
 {
-  "_about": "Plan 4.8: answers approved by the Sharia reviewer for the most frequent questions, served when both models are down. Each entry: id, lang, questions (phrasings), answer (may contain {{q:passage id}} markers), sources (passage ids), status, reviewer, approved_at. Only status \"approved\" is ever served. Empty until the team writes and the reviewer approves them.",
+  "_about": "Plan 4.8 / KNW-01 reliability R7: answers approved by the Sharia reviewer for frequent general questions. Served only when ASK_APPROVED_FAQ_ENABLED is on (off by default). Each entry: id, lang, questions (phrasings), answer (may contain {{q:passage id}} markers), sources (passage ids), source_versions ({passage id: version} as approved), status, reviewer, approved_at. Only status \"approved\" with a reviewer and a date is served, and only while every cited passage exists with the recorded version in a source the answer policy allows. Never mark a generated answer approved. Empty until the team writes and the reviewer approves them.",
   "answers": []
 }

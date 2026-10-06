@@ -1,12 +1,16 @@
 """Knowledge jobs (registered from app/jobs.py):
 
 - KNW-06 (plan §8.3): weekly link check of library items; broken ones are hidden.
-- KNW-02 §3.6: embed a bounded batch of passages per run, so production
-  fills its vectors gradually and within the AI budget."""
+- KNW-02 §3.6 / SC3: embed a bounded batch of passages per run, so production
+  fills its vectors gradually and within the embedding job's own daily
+  ceiling (`AI_EMBED_DAILY_BUDGET_USD`). The sources come from the one
+  answer-source policy (source_policy.py), and every run records coverage
+  per source and language (embed.record_coverage)."""
 
 import logging
 
 from app.core.config import get_settings
+from app.core.db import SessionLocal
 
 log = logging.getLogger("rafeeq.knowledge.jobs")
 
@@ -15,16 +19,29 @@ async def embed_batch() -> None:
     st = get_settings()
     if not st.openrouter_api_key or st.knw_embed_job_limit <= 0:
         return
-    from app.knowledge import embed
+    from app.knowledge import embed, source_policy
 
-    sources = [s for s in st.knw_answer_sources.split(",") if s]
+    async with SessionLocal() as s:
+        sources = (await source_policy.eligible_sources(s)).sources
+    if not sources:
+        return
     result = await embed.run(sources=sources, limit=st.knw_embed_job_limit)
+    coverage = await embed.record_coverage(sources, result)
     if result["embedded"] or result["stopped"]:
-        log.info("embedding job: %s", result)
+        log.info("embedding job: %s; coverage %s", result, coverage)
 
 
 def register(scheduler) -> None:
     from app.knowledge.library import scheduled_check
 
+    st = get_settings()
     scheduler.add_job(scheduled_check, "interval", weeks=1, id="knw_library_links", max_instances=1, coalesce=True, replace_existing=True)
-    scheduler.add_job(embed_batch, "interval", minutes=15, id="knw_embed_batch", max_instances=1, coalesce=True, replace_existing=True)
+    scheduler.add_job(
+        embed_batch,
+        "interval",
+        minutes=max(st.knw_embed_job_minutes, 1),
+        id="knw_embed_batch",
+        max_instances=1,
+        coalesce=True,
+        replace_existing=True,
+    )

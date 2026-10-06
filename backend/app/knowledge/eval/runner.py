@@ -38,7 +38,9 @@ async def rafeeq_once(q: dict[str, Any]) -> dict[str, Any]:
         await s.rollback()  # nothing from a test run is published or logged
     if r.body["outcome"] == "unavailable":
         raise Interrupted("unavailable")
-    return {"body": r.body, "events": r.events, "checks": r.checks}
+    # KNW-01 reliability §10.2: the trace (codes and counts only) tells a first-try
+    # pass from one that needed the bounded repair or the expansion round.
+    return {"body": r.body, "events": r.events, "checks": r.checks, "detail": r.detail, "trace": r.trace}
 
 
 async def bare_once(q: dict[str, Any]) -> dict[str, Any]:
