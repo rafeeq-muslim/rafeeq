@@ -786,8 +786,8 @@ export const tl: Dict = {
   "ask.ref.ayah": "{s}, talata {a}",
   "ask.ref.hadith": "Hadith blg. {n}",
   "ask.guide.title": "Ang iyong gabay sa pag-aaral",
-  "ask.guide.mastered": "Na-master mo ang nasa {list}",
-  "ask.guide.review": "Sulit balikan sandali: {list}",
+  "ask.guide.mastered": "Na-master mo: {list}.",
+  "ask.guide.review": "Maikling balik-aral para sa: {list}.",
   "ask.guide.next": "Ang susunod mong hakbang: {step}",
   "ask.guide.reviewStep": "isang maikling pagbabalik-aral",
   "ask.guide.start": "Simulan ang unang aralin, at sasabihin ko kung nasaan ka na.",
@@ -800,4 +800,6 @@ export const tl: Dict = {
   "ask.more": "Basahin ang buong hadith",
   "ask.less": "Ipakita nang mas kaunti",
   "lesson.locked": "Magbubukas ang araling ito pagkatapos ng “{name}”. Sunod-sunod ang mga aralin para ang bawat isa ay nakabatay sa nauna.",
+  "ask.guide.nextLesson": "Ang susunod mong hakbang ay “{step}”, ang susunod na aralin sa iyong landas.",
+  "ask.guide.nextReview": "Ang susunod mong hakbang ay maikling balik-aral, para tumatag ang natutunan mo.",
 }

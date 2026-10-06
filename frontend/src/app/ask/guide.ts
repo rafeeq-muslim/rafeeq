@@ -47,24 +47,28 @@ export function buildSummary(
   return { lang, mastered, reviewing, next }
 }
 
-/** The fixed message (LRN-07 R4). Names lessons, not objective texts (those
- * are written for the team, in the third person), in the learner's own list
- * punctuation (issue #9). */
-export function fixedMessage(
-  s: Summary,
-  lessons: Lesson[],
-  t: (key: "ask.guide.mastered" | "ask.guide.review" | "ask.guide.next" | "ask.guide.reviewStep" | "ask.guide.start", vars?: Record<string, string>) => string,
-): string {
+/** The fixed message (LRN-07 R1, R4): what was mastered, what needs a short
+ * review, and the next step with its reason, written with the objectives'
+ * learner names (LRN-10 R1), never their team-facing text; an empty
+ * sentence is dropped. */
+export type GuideKey =
+  | "ask.guide.mastered"
+  | "ask.guide.review"
+  | "ask.guide.nextLesson"
+  | "ask.guide.nextReview"
+  | "ask.guide.start"
+
+export function fixedMessage(s: Summary, lessons: Lesson[], t: (key: GuideKey, vars?: Record<string, string>) => string): string {
   const sep = s.lang === "ar" ? "، " : ", "
-  const lessonOf = new Map(lessons.flatMap((l) => l.objectives.map((o) => [o.id, l.title] as const)))
+  const label = new Map(lessons.flatMap((l) => l.objectives.map((o) => [o.id, o.label || l.title] as const)))
   const titles = new Map(lessons.map((l) => [l.id, l.title]))
-  const lessonList = (ids: string[]) => [...new Set(ids.map((id) => lessonOf.get(id)).filter(Boolean))].map((x) => `«${x}»`).join(sep)
+  const list = (ids: string[]) => [...new Set(ids.map((id) => label.get(id)).filter(Boolean))].join(sep)
   const parts: string[] = []
-  if (s.mastered.length) parts.push(t("ask.guide.mastered", { list: lessonList(s.mastered) }))
-  if (s.reviewing.length) parts.push(t("ask.guide.review", { list: lessonList(s.reviewing) }))
-  if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.next", { step: `«${titles.get(s.next.lesson_id) ?? ""}»` }))
-  else if (s.next) parts.push(t("ask.guide.next", { step: t("ask.guide.reviewStep") }))
-  return parts.length ? parts.join(s.lang === "ar" ? ". " : ". ") + "." : t("ask.guide.start")
+  if (s.mastered.length) parts.push(t("ask.guide.mastered", { list: list(s.mastered) }))
+  if (s.reviewing.length) parts.push(t("ask.guide.review", { list: list(s.reviewing) }))
+  if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.nextLesson", { step: titles.get(s.next.lesson_id) ?? "" }))
+  else if (s.next) parts.push(t("ask.guide.nextReview"))
+  return parts.length ? parts.join(" ") : t("ask.guide.start")
 }
 
 export function nextHref(s: Summary): string | null {

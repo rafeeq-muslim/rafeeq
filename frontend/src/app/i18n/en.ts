@@ -785,8 +785,8 @@ export const en: Dict = {
   "ask.ref.ayah": "{s}, verse {a}",
   "ask.ref.hadith": "Hadith no. {n}",
   "ask.guide.title": "Your learning guide",
-  "ask.guide.mastered": "You mastered what is in {list}",
-  "ask.guide.review": "Worth a short review: {list}",
+  "ask.guide.mastered": "You mastered: {list}.",
+  "ask.guide.review": "A short review for: {list}.",
   "ask.guide.next": "Your next step: {step}",
   "ask.guide.reviewStep": "a short review",
   "ask.guide.start": "Start your first lesson, and I'll tell you where you are.",
@@ -799,4 +799,6 @@ export const en: Dict = {
   "ask.more": "Read the full hadith",
   "ask.less": "Show less",
   "lesson.locked": "This lesson opens after “{name}”. Lessons come in order so each builds on the one before.",
+  "ask.guide.nextLesson": "Your next step is “{step}”, the next lesson on your path.",
+  "ask.guide.nextReview": "Your next step is a short review, to make what you learned stick.",
 }

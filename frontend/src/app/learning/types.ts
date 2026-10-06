@@ -15,7 +15,9 @@ export type Card = {
   hadith?: boolean
 }
 
-export type Objective = { id: string; text: string; cards: string[]; key?: boolean }
+/** `text` is the team's wording for measuring mastery; `label` is the short
+ * name the learner reads (LRN-10 R1). Never show `text` to learners. */
+export type Objective = { id: string; text: string; label?: string; cards: string[]; key?: boolean }
 
 export type Item = { id: string; text: string }
 type ExerciseBase = { id: string; objectives: string[]; cards: string[]; prompt: string }

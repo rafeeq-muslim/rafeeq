@@ -322,6 +322,7 @@ function Render({ type, view, lang }: { type: string; view: View; lang: Locale }
               <li key={o.id} className="flex items-start gap-2 text-body">
                 {o.key ? <IconKey className="mt-1.5 size-4 shrink-0 text-primary" aria-label={t("desk.key")} /> : <span className="size-4 shrink-0" />}
                 <span>
+                  {o.label && <span className="block font-bold">{o.label}</span>}
                   {o.text} <span className="text-caption text-muted-foreground tabular-nums">({o.cards.map(cardNo).map((n: number) => `#${n}`).join(" ")})</span>
                 </span>
               </li>

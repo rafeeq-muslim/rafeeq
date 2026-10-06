@@ -167,8 +167,9 @@ class GuideIn(BaseModel):
     returning: bool = False
 
 
-async def approved_names(session, lang: str) -> tuple[dict[str, str], dict[str, str]]:
-    """objective id → text and lesson id → title, from approved lessons only."""
+async def approved_names(session, lang: str, learner: bool = False) -> tuple[dict[str, str], dict[str, str]]:
+    """objective id → text (or, for messages to the learner, its short label:
+    LRN-10 R1, LRN-07 R1) and lesson id → title, from live lessons only."""
     objectives: dict[str, str] = {}
     lessons: dict[str, str] = {}
     for lid, lesson in (await published(session, "lesson", lang)).items():
@@ -176,8 +177,9 @@ async def approved_names(session, lang: str) -> tuple[dict[str, str], dict[str, 
             continue
         lessons[lid] = lesson.get("title") or ""
         for o in lesson.get("objectives") or []:
-            if o.get("text"):
-                objectives[o["id"]] = o["text"]
+            name = (o.get("label") if learner else None) or o.get("text")
+            if name:
+                objectives[o["id"]] = name
     return objectives, lessons
 
 
@@ -201,7 +203,7 @@ def check_guide(text: str, lang: str, allowed: set[str]) -> list[str]:
 
 
 async def write_guide(session, body: GuideIn) -> str | None:
-    objectives, lessons = await approved_names(session, body.lang)
+    objectives, lessons = await approved_names(session, body.lang, learner=True)
     mastered = [objectives[i] for i in body.mastered if i in objectives]
     reviewing = [objectives[i] for i in body.reviewing if i in objectives]
     nxt: dict[str, str] | None = None

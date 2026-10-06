@@ -61,7 +61,8 @@ def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
             for o in c.get("objectives", []):
                 obj_cards.setdefault(o, []).append(c["id"])
         objectives = [
-            {"id": o["id"], "text": o["text"], "cards": obj_cards.get(o["id"], []), "key": bool(o.get("key"))}
+            # label: the learner's short name for the objective (LRN-10 R1); text is the team's wording
+            {"id": o["id"], "text": o["text"], "label": o.get("label", {}), "cards": obj_cards.get(o["id"], []), "key": bool(o.get("key"))}
             for o in les.get("objectives", [])
         ]
 

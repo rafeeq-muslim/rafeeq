@@ -70,6 +70,16 @@ describe("knw-10-r3 learning guide summary", () => {
     expect(msg).toContain("TITLE_l2")
   })
 
+  it("uses each objective's learner name, never its team text (LRN-10 R1)", () => {
+    const named = lessons.map((l) => ({ ...l, objectives: l.objectives.map((o) => ({ ...o, label: `LABEL_${o.id}` })) }))
+    const s = buildSummary("en", named, progress as never)
+    const t = (k: string, v?: Record<string, string>) => `${k}:${JSON.stringify(v ?? {})}`
+    const msg = fixedMessage(s, named, t as never)
+    expect(msg).toContain("LABEL_o1")
+    expect(msg).toContain("LABEL_o2")
+    expect(msg).not.toContain("TEXT_")
+  })
+
   it("leaves out lessons not yet completed (issue #9)", () => {
     const s = buildSummary("en", lessons, { ...progress, completed: {} } as never)
     expect(s.mastered).toEqual([])

@@ -784,8 +784,8 @@ export const ar = {
   "ask.ref.ayah": "{s}، الآية {a}",
   "ask.ref.hadith": "حديث رقم {n}",
   "ask.guide.title": "موجّهك في التعلّم",
-  "ask.guide.mastered": "أتقنت ما في {list}",
-  "ask.guide.review": "يستحق مراجعة قصيرة ما في {list}",
+  "ask.guide.mastered": "أتقنتَ: {list}.",
+  "ask.guide.review": "راجِع مراجعة قصيرة: {list}.",
   "ask.guide.next": "خطوتك التالية {step}",
   "ask.guide.reviewStep": "مراجعة قصيرة",
   "ask.guide.start": "ابدأ أول درس، وسأخبرك أين وصلت.",
@@ -798,4 +798,6 @@ export const ar = {
   "ask.more": "اقرأ الحديث كاملًا",
   "ask.less": "اطوِ النص",
   "lesson.locked": "يُفتح هذا الدرس بعد «{name}». الدروس تأتي بالترتيب ليبني كل درس على ما قبله.",
+  "ask.guide.nextLesson": "خطوتك التالية «{step}»، لأنه الدرس التالي في مسارك.",
+  "ask.guide.nextReview": "خطوتك التالية مراجعة قصيرة، لتثبيت ما تعلّمته.",
 } as const
