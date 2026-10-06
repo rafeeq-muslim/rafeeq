@@ -68,6 +68,15 @@ export default function Privacy() {
             </section>
           ))}
 
+          {/* Go-live (owner, 2026-10-06): the assistant reads islamqa.info and binbaz.org.sa
+              live by default; at most 12 search words leave the server (live_sources/evidence.py MAX_TERMS). */}
+          <section aria-labelledby="policy-live" className="flex flex-col gap-2">
+            <h2 id="policy-live" className="font-heading text-h3 font-bold">
+              {t("policy.live.title")}
+            </h2>
+            <p className="text-body">{t("policy.live.body")}</p>
+          </section>
+
           {onboarded && (
             <Button asChild size="lg" variant="secondary" className="w-full">
               <Link to="/me#privacy">{t("policy.rightsCta")}</Link>
