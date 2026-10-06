@@ -173,7 +173,6 @@ async def test_knw01_r2_outage_serves_cached_approved_answer(client, ai, monkeyp
         "approved_at": "2026-10-06",
     }
     monkeypatch.setattr(screen, "approved_answers", lambda: [approved])
-    monkeypatch.setattr(get_settings(), "ask_approved_faq_enabled", True)  # reliability R7: behind its flag
     ai.on("router", 503, 503)
     b = await post(client, "what does la ilaha illa allah mean")
     assert b["outcome"] == "cached"
