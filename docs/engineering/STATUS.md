@@ -31,6 +31,9 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 - GitHub Actions now wakes the session on teammate pushes and PRs (`.github/workflows/notify.yml`); polling stopped.
 - Merged PR #6 (مهند): reviewer decisions and first review pass of unit 1 (22 objectives, 45 exercises). Applied both decisions to units 2–6 through recorded edits (`content/tools/edits.py`).
 
+## 2026-10-06 08:25
+- Merged PR #7 (مهند): lesson-by-lesson Sharia review of unit 1 (`content/units/unit-01/review.md`; 22 objectives, 46 exercises). Next step is his: approve each lesson per language in the review desk, which now also plays each lesson's audio and support video.
+
 ## State
 All features in the PRDs are built, tested (237 backend, 86 frontend) and deployed. What remains needs people: Sharia approval of the content (nothing is shown to learners before it), the five postponed items, and the four server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
 
