@@ -205,9 +205,9 @@ async def test_mot06_r5_ended_challenge_shows_result_without_names(client):
 
 async def test_cmp05_r6_group_page_challenge_shows_count_only(client):
     mentor, members, g = await brothers(client, 8)
-    await set_challenge(client, mentor, g, type="lesson", target_id="u1-l2")
+    await set_challenge(client, mentor, g, type="lesson", target_id="u01-l2")
     for m in members[:6]:
-        await learn(client, m, lesson("u1-l2"))
+        await learn(client, m, lesson("u01-l2"))
     seen = await view(client, members[0], g)
     assert (seen["done"], seen["of"]) == (6, 8)
 
