@@ -7,7 +7,7 @@
 
 | Rule | Module | Behaviour |
 | --- | --- | --- |
-| R1 (save cards and items, find them with their source; no duplicates) | `frontend/src/app/discover/saved.ts` | Zustand store persisted in `localStorage` (`rafeeq.saved`), keyed `kind:ref` (`card:hadeethenc-66511`, `library:2835963`). Saving twice keeps one entry |
+| R1 (save cards and items, find them with their source; no duplicates) | `frontend/src/app/discover/savedStore.ts` | Zustand store persisted in `localStorage` (`rafeeq.saved`), keyed `kind:ref` (`card:hadeethenc-66511`, `library:2835963`). Saving twice keeps one entry |
 | R2 (answers: text + sources + date, question only by choice) | — | Saving assistant answers belongs to the Ask screen (another agent); the store accepts `kind: "answer"` with a payload so Ask can add it later |
 | R3 (guest on the device; moved to the account) | `saved.ts` + `GET/PUT /api/me/saved` (`backend/app/knowledge/discover.py`) | Signed-in learners merge: union by `kind:ref`, earliest `saved_at` wins; stored in the existing `knw_saved_items` table |
 | R4 (private) | — | No mentor, group or dashboard endpoint reads `knw_saved_items` |
