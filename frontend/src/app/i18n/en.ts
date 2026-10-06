@@ -1181,4 +1181,9 @@ export const en: Dict = {
   "desk.cite.missing": "Hadith {id} is not in the stored record in this language",
   "desk.glossary.title": "Spellings the glossary does not approve",
   "desk.glossary.flag": "“{found}” instead of the approved term “{term}”",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen ---
+  "welcome.signin.entry": "I have an account, sign me in",
+  "welcome.signin.title": "Sign in",
+  "welcome.code.org": "I have a code from a da'wah organisation",
+  "welcome.code.invalid": "This code is not valid",
 }

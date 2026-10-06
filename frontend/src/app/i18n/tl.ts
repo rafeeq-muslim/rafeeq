@@ -1182,4 +1182,9 @@ export const tl: Dict = {
   "desk.cite.missing": "Wala sa nakatalang record ang hadith {id} sa wikang ito",
   "desk.glossary.title": "Mga baybay na hindi aprubado ng glosaryo",
   "desk.glossary.flag": "“{found}” sa halip na aprubadong termino na “{term}”",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen. ⚠️ Tagalog needs native review ---
+  "welcome.signin.entry": "May account ako, mag-sign in",
+  "welcome.signin.title": "Mag-sign in",
+  "welcome.code.org": "May code ako mula sa isang da'wah na organisasyon",
+  "welcome.code.invalid": "Hindi tama ang code",
 }

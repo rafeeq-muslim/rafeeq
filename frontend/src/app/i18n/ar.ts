@@ -1180,4 +1180,9 @@ export const ar = {
   "desk.cite.missing": "الحديث {id} غير موجود في السجل المخزَّن بهذه اللغة",
   "desk.glossary.title": "ألفاظ غير معتمدة في المعجم",
   "desk.glossary.flag": "«{found}» بدل اللفظ المعتمد «{term}»",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen ---
+  "welcome.signin.entry": "لي حساب، سجّل دخولي",
+  "welcome.signin.title": "سجّل دخولك",
+  "welcome.code.org": "عندي رمز من جهة دعوية",
+  "welcome.code.invalid": "الرمز غير صحيح",
 } as const
