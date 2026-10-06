@@ -4,7 +4,9 @@ import { cn } from "@/lib/utils"
 import logoHorizontalColor from "@/assets/brand/rafeeq-logo-horizontal-color.svg"
 import logoHorizontalReverse from "@/assets/brand/rafeeq-logo-horizontal-reverse.svg"
 import logoInternationalColor from "@/assets/brand/rafeeq-logo-international-color.svg"
+import logoInternationalReverse from "@/assets/brand/rafeeq-logo-international-reverse.svg"
 import logoVerticalColor from "@/assets/brand/rafeeq-logo-vertical-color.svg"
+import logoVerticalReverse from "@/assets/brand/rafeeq-logo-vertical-reverse.svg"
 
 /*
  * «زهرة الرفاق»: 12 hollow elliptical petals every 30°, tilted 18°,
@@ -148,7 +150,19 @@ const LOGOS = {
   international: logoInternationalColor,
 } as const
 
-/** Official lockups from the logo pack. Minimum widths per the guide. */
+/** PLT-14 R3: the reverse lockup shown on dark surfaces. */
+const REVERSE: Partial<Record<keyof typeof LOGOS, string>> = {
+  horizontal: logoHorizontalReverse,
+  vertical: logoVerticalReverse,
+  international: logoInternationalReverse,
+}
+
+/**
+ * Official lockups from the logo pack. Minimum widths per the guide.
+ * PLT-14 R3: under any `.dark` ancestor (the app theme or a night surface)
+ * the reverse lockup shows instead; CSS only, so it follows a theme change
+ * live. The mark itself is never recoloured.
+ */
 function RafeeqLogo({
   variant = "horizontal",
   className,
@@ -156,17 +170,39 @@ function RafeeqLogo({
 }: Omit<React.ComponentProps<"img">, "src"> & {
   variant?: keyof typeof LOGOS
 }) {
+  const width = variant === "vertical" ? "w-20 min-w-20" : "w-30 min-w-30"
+  const reverse = REVERSE[variant]
+  if (!reverse) {
+    return (
+      <img
+        data-slot="rafeeq-logo"
+        src={LOGOS[variant]}
+        alt="رفيق"
+        className={cn(width, className)}
+        {...props}
+      />
+    )
+  }
   return (
-    <img
+    <span
       data-slot="rafeeq-logo"
-      src={LOGOS[variant]}
-      alt="رفيق"
-      className={cn(
-        variant === "vertical" ? "w-20 min-w-20" : "w-30 min-w-30",
-        className
-      )}
-      {...props}
-    />
+      className={cn("inline-block", width, className)}
+    >
+      <img
+        data-logo-tone="light"
+        src={LOGOS[variant]}
+        alt="رفيق"
+        className="block w-full dark:hidden"
+        {...props}
+      />
+      <img
+        data-logo-tone="dark"
+        src={reverse}
+        alt="رفيق"
+        className="hidden w-full dark:block"
+        {...props}
+      />
+    </span>
   )
 }
 
