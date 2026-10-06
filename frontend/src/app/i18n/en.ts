@@ -1039,6 +1039,15 @@ export const en: Dict = {
   "practice.city.farAway": "There's no listed city near you, so we didn't pick a far-away one. Search for the nearest city to you by name.",
   "practice.city.typeToSearch": "Type your city's name to find it, or use your location if you like.",
   "practice.habits.kindTagWorship": "Worship, private",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "Reciter",
+  "discover.quran.nowReciting": "Verse being recited now",
+  "discover.quran.nowVerse": "Reciting verse {n}",
+  "desk.type.recitation": "Recitation",
+  "desk.reciter.hint": "Listen to a sample of this reciter's surahs, verse by verse, then approve it or return it with a reason. Learners don't get it until you approve it.",
+  "desk.reciter.riwaya": "Riwaya",
+  "desk.reciter.sample": "Sample",
+  "desk.reciter.otherSura": "Another surah",
 
   // --- PLT-09 organized home (plt-09-organized-home-build), behind the PLT-09 setting ---
   "home.org.daily": "My day",

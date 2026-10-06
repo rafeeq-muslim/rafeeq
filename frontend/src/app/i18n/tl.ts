@@ -1040,6 +1040,15 @@ export const tl: Dict = {
   "practice.city.farAway": "Walang nakalistang lungsod na malapit sa iyo, kaya hindi kami pumili ng malayo. Hanapin sa pangalan ang pinakamalapit na lungsod sa iyo.",
   "practice.city.typeToSearch": "I-type ang pangalan ng iyong lungsod para hanapin ito, o gamitin ang iyong lokasyon kung gusto mo.",
   "practice.habits.kindTagWorship": "Pagsamba, pribado",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "Tagabigkas",
+  "discover.quran.nowReciting": "Talatang binibigkas ngayon",
+  "discover.quran.nowVerse": "Binibigkas ang talata {n}",
+  "desk.type.recitation": "Pagbigkas",
+  "desk.reciter.hint": "Pakinggan ang ilang sūrah ng tagabigkas na ito, talata por talata, saka aprubahan o ibalik nang may dahilan. Hindi ito makikita ng mga nag-aaral hangga't hindi mo inaaprubahan.",
+  "desk.reciter.riwaya": "Riwāyah",
+  "desk.reciter.sample": "Halimbawa",
+  "desk.reciter.otherSura": "Ibang sūrah",
 
   // --- PLT-09 organized home (plt-09-organized-home-build), behind the PLT-09 setting ---
   "home.org.daily": "Ang araw ko",
@@ -1054,9 +1063,9 @@ export const tl: Dict = {
   "home.org.quranContinue": "Ituloy ang Surah {name}",
   "home.org.libraryMeta": "Mga aprubadong aklat at video para sa bagong Muslim",
   "home.org.hide": "Itago ito",
-  "home.org.reciter.title": "Piliin ang iyong qari",
+  "home.org.reciter.title": "Piliin ang iyong tagabigkas",
   "home.org.reciter.body": "Piliin ang boses na gusto mong pakinggan sa Quran.",
-  "home.org.reciter.cta": "Pumili ng qari",
+  "home.org.reciter.cta": "Pumili ng tagabigkas",
   "home.org.library.title": "Mula sa aklatan",
   "home.org.library.cta": "Buksan",
   "home.org.openSaved": "Buksan ang mga na-save ko",

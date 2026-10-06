@@ -4,20 +4,29 @@
  * the stored QuranEnc record (R2); a meaning never plays over the recitation
  * (R3); the reciter and source are named (R4); nothing is counted or
  * rewarded (R5); where the learner stopped stays on this device (R6).
+ *
+ * R2/R4 (decision 2026-10-06): once the Sharia reviewer has approved a
+ * Quranpedia per-verse Hafs reciter, the surah plays verse by verse and the
+ * stored verse being recited is highlighted and kept in view; until then,
+ * al-Muaiqly's per-surah file plays as before. Nothing is shown outside the
+ * page (no lock-screen metadata), so discreet mode stays discreet.
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
 import { IconArrowLeft, IconPlayerPauseFilled, IconPlayerPlayFilled, IconSearch, IconVolume } from "@tabler/icons-react"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { num, useT } from "@/app/i18n"
 import { SURA_AR, SURA_LATIN, suraName } from "@/app/lesson/suras"
 import { AYA_COUNT } from "./ayaCount"
 import { DiscoverBar, SourceLine } from "./parts"
-import { ListeningPlayer, loadPosition, meaningAudioUrl, savePosition } from "./player"
+import { ListeningPlayer, loadPosition, meaningAudioUrl, nextAya, savePosition } from "./player"
 import { useRecitation } from "./queries"
+import { followVerse, loadReciterChoice, pickReciter, saveReciterChoice, verseUrl } from "./reciters"
 import { meaningLines, useSuraText } from "./verses"
 
 const normalize = (s: string) => s.toLowerCase().replace(/[ً-ْٰ'\-\s]/g, "").replace(/^(ال|al|an|ar|as|at|ad|adh|az|ash)/, "")
@@ -68,13 +77,26 @@ export function SuraList() {
 export function SuraPage() {
   const { t, locale } = useT()
   const sura = Math.min(114, Math.max(1, Number(useParams().sura) || 1))
+  const count = AYA_COUNT[sura - 1] ?? 0
   const text = useSuraText(sura, locale)
-  const rec = useRecitation(locale).data?.recitation ?? null
-  const recUrl = rec?.suras[String(sura)]
+  const recData = useRecitation(locale).data
+  const rec = recData?.recitation ?? null
+  // R4: approved Quranpedia reciters replace al-Muaiqly once there is one.
+  const reciters = recData?.reciters ?? []
+  const [chosen, setChosen] = React.useState(() => loadReciterChoice())
+  const reciter = pickReciter(reciters, chosen)
+  const recUrl = reciter ? null : rec?.suras[String(sura)]
+  const canRecite = reciter ? count > 0 : !!(rec && recUrl)
 
   const audioRef = React.useRef<HTMLAudioElement>(null)
   const playerRef = React.useRef<ListeningPlayer | null>(null)
   const [playing, setPlaying] = React.useState<null | "recitation" | number>(null)
+  // R2: the verse being recited (verse by verse), highlighted and kept in view.
+  const [current, setCurrent] = React.useState<number | null>(null)
+  const currentRef = React.useRef<number | null>(null)
+  React.useEffect(() => {
+    currentRef.current = current
+  }, [current])
   const saved = React.useMemo(() => loadPosition(sura), [sura])
   const topAya = React.useRef(saved?.aya ?? 1)
   const listRef = React.useRef<HTMLOListElement>(null)
@@ -83,7 +105,12 @@ export function SuraPage() {
 
   // R6: remember where the learner stopped, on this device only.
   const remember = React.useCallback(() => {
-    savePosition(sura, { time: playerRef.current?.recitationPosition() ?? saved?.time ?? 0, aya: topAya.current })
+    const p = playerRef.current
+    if (p?.track?.kind === "verse" || (p?.track?.kind === "meaning" && currentRef.current)) {
+      savePosition(sura, { time: 0, aya: currentRef.current ?? topAya.current })
+      return
+    }
+    savePosition(sura, { time: p?.recitationPosition() ?? saved?.time ?? 0, aya: topAya.current })
   }, [sura, saved])
 
   React.useEffect(() => {
@@ -104,16 +131,52 @@ export function SuraPage() {
     }
   }, [text.data, saved, remember])
 
+  // R2: when the highlight moves, the screen follows it if it is not visible.
+  React.useEffect(() => {
+    if (current == null) return
+    const el = listRef.current?.querySelector(`[data-aya="${current}"]`)
+    if (el) followVerse(el)
+  }, [current])
+
+  const playVerse = (aya: number) => {
+    if (!reciter) return
+    player().playVerse(sura, aya, verseUrl(reciter, sura, aya))
+    setCurrent(aya)
+    setPlaying("recitation")
+  }
+
   const toggleRecitation = () => {
-    if (!recUrl) return
     if (playing === "recitation") {
       player().pause()
       setPlaying(null)
       remember()
-    } else {
+    } else if (reciter) {
+      playVerse(Math.min(count, Math.max(1, current ?? saved?.aya ?? 1)))
+    } else if (recUrl) {
       player().playRecitation(sura, recUrl, saved?.time ?? 0)
       setPlaying("recitation")
     }
+  }
+
+  const chooseReciter = (id: string) => {
+    if (playing === "recitation") player().pause()
+    setPlaying(null)
+    setChosen(id)
+    saveReciterChoice(id)
+  }
+
+  const onEnded = () => {
+    const track = playerRef.current?.track
+    if (track?.kind === "verse" && reciter) {
+      const next = nextAya(track.aya, count)
+      if (next != null) return playVerse(next)
+      setCurrent(null)
+      setPlaying(null)
+      savePosition(sura, { time: 0, aya: 1 }) // the surah ended: next time from its start
+      return
+    }
+    setPlaying(null)
+    remember()
   }
 
   const playMeaning = (aya: number) => {
@@ -127,31 +190,43 @@ export function SuraPage() {
 
   const lines = text.data ? meaningLines(text.data.ayat) : []
   const source = text.data?.source
+  const reciterName = reciter?.reciter ?? rec?.reciter
+  const reciterSource = reciter?.source ?? rec?.source
 
   return (
     <>
       <DiscoverBar title={suraName(sura, locale)} back="/discover/quran" />
       {/* One element for every sound on this screen (R3); no controls of our own add sound (R1). */}
-      <audio
-        ref={audioRef}
-        preload="none"
-        onEnded={() => {
-          setPlaying(null)
-          remember()
-        }}
-        onPause={() => setPlaying((p) => (p === "recitation" ? null : p))}
-      />
+      <audio ref={audioRef} preload="none" onEnded={onEnded} onPause={() => setPlaying((p) => (p === "recitation" ? null : p))} />
 
       <div className="flex flex-col gap-5 px-4 pt-5 pb-4">
         <header className="flex flex-col items-center gap-1 rounded-panel bg-secondary/60 px-5 py-6 text-center text-secondary-foreground">
           <p lang="ar" dir="rtl" className="font-quran text-h1 leading-normal text-foreground">
             سورة {SURA_AR[sura - 1]}
           </p>
-          <p className="text-label tabular-nums">{t("discover.quran.ayat", { n: num(AYA_COUNT[sura - 1]) })}</p>
+          <p className="text-label tabular-nums">{t("discover.quran.ayat", { n: num(count) })}</p>
           <p className="text-caption text-muted-foreground">{t("discover.quran.position")}</p>
         </header>
 
-        {!rec && <p className="rounded-card bg-muted p-4 text-label text-muted-foreground">{t("discover.quran.noAudio")}</p>}
+        {!rec && !reciter && <p className="rounded-card bg-muted p-4 text-label text-muted-foreground">{t("discover.quran.noAudio")}</p>}
+
+        {reciters.length > 1 && reciter && (
+          <div className="flex flex-col gap-2">
+            <span className="text-label font-bold">{t("discover.quran.reciterPick")}</span>
+            <Select value={reciter.id} onValueChange={chooseReciter}>
+              <SelectTrigger className="w-full" aria-label={t("discover.quran.reciterPick")}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {reciters.map((r) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    <bdi>{r.reciter}</bdi>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {text.isLoading ? (
           <div className="flex flex-col gap-3">
@@ -162,30 +237,39 @@ export function SuraPage() {
           <p className="text-body text-muted-foreground">{t("discover.quran.textError")}</p>
         ) : (
           <ol ref={listRef} className="flex flex-col divide-y">
-            {lines.map((l) => (
-              <li key={l.aya} data-aya={l.aya} className="flex scroll-mt-20 flex-col gap-3 py-5">
-                <p lang="ar" dir="rtl" className="font-quran text-[1.6rem] leading-[2.4] text-foreground">
-                  {l.arabic} <span className="whitespace-nowrap text-primary">﴿{num(l.aya)}﴾</span>
-                </p>
-                {l.meaning && (
-                  <div className="flex items-start gap-2">
-                    <p dir="auto" className="min-w-0 flex-1 font-reading text-reading text-foreground/90">
-                      {l.meaning}
-                    </p>
-                    {meaningAudioUrl(locale, sura, l.aya) && (
-                      <Button
-                        variant={playing === l.aya ? "secondary" : "ghost"}
-                        size="icon"
-                        aria-label={t("discover.quran.listenMeaning", { n: num(l.aya) })}
-                        onClick={() => playMeaning(l.aya)}
-                      >
-                        <IconVolume stroke={1.75} />
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </li>
-            ))}
+            {lines.map((l) => {
+              const now = current === l.aya
+              return (
+                <li
+                  key={l.aya}
+                  data-aya={l.aya}
+                  aria-current={now ? "true" : undefined}
+                  className={cn("flex scroll-mt-20 flex-col gap-3 border-s-4 py-5 ps-3", now ? "rounded-md border-primary bg-secondary" : "border-transparent")}
+                >
+                  {now && <span className="sr-only">{t("discover.quran.nowReciting")}</span>}
+                  <p lang="ar" dir="rtl" className="font-quran text-[1.6rem] leading-[2.4] text-foreground">
+                    {l.arabic} <span className="whitespace-nowrap text-primary">﴿{num(l.aya)}﴾</span>
+                  </p>
+                  {l.meaning && (
+                    <div className="flex items-start gap-2">
+                      <p dir="auto" className="min-w-0 flex-1 font-reading text-reading text-foreground/90">
+                        {l.meaning}
+                      </p>
+                      {meaningAudioUrl(locale, sura, l.aya) && (
+                        <Button
+                          variant={playing === l.aya ? "secondary" : "ghost"}
+                          size="icon"
+                          aria-label={t("discover.quran.listenMeaning", { n: num(l.aya) })}
+                          onClick={() => playMeaning(l.aya)}
+                        >
+                          <IconVolume stroke={1.75} />
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </li>
+              )
+            })}
           </ol>
         )}
 
@@ -198,17 +282,17 @@ export function SuraPage() {
                 {t("discover.quran.meaning")}: <bdi>{source.translation}</bdi> <bdi className="tabular-nums">{source.version}</bdi>
               </>
             )}
-            {rec && (
+            {reciterName && (
               <>
                 {" · "}
-                {t("discover.quran.reciter", { name: rec.reciter })} (<bdi>{rec.source}</bdi>)
+                {t("discover.quran.reciter", { name: reciterName })} (<bdi>{reciterSource}</bdi>)
               </>
             )}
           </SourceLine>
         )}
       </div>
 
-      {rec && recUrl && (
+      {canRecite && reciterName && (
         <div className="sticky bottom-3 z-20 px-4">
           <div className="flex items-center gap-3 rounded-panel bg-card p-3 shadow-raised">
             <Button size="icon-lg" aria-label={t(playing === "recitation" ? "discover.quran.pause" : "discover.quran.play")} onClick={toggleRecitation}>
@@ -216,9 +300,13 @@ export function SuraPage() {
             </Button>
             <div className="min-w-0 flex-1">
               <p className="truncate text-label font-bold">
-                {playing === "recitation" || !saved?.time ? t("discover.quran.play") : t("discover.quran.resume", { n: num(saved.aya) })}
+                {playing === "recitation" && current
+                  ? t("discover.quran.nowVerse", { n: num(current) })
+                  : playing === "recitation" || !(reciter ? (current ?? saved?.aya ?? 1) > 1 : saved?.time)
+                    ? t("discover.quran.play")
+                    : t("discover.quran.resume", { n: num(current ?? saved?.aya ?? 1) })}
               </p>
-              <p className="truncate text-caption text-muted-foreground">{t("discover.quran.reciter", { name: rec.reciter })}</p>
+              <p className="truncate text-caption text-muted-foreground">{t("discover.quran.reciter", { name: reciterName })}</p>
             </div>
           </div>
         </div>

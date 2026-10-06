@@ -52,7 +52,10 @@ export type Recitation = {
   suras: Record<string, string>
 }
 
-export type RecitationResponse = { lang: string; recitation: Recitation | null }
+/** KNW-08 R4: a Quranpedia per-verse Hafs reciter the Sharia reviewer approved. */
+export type VerseReciter = { id: string; quranpedia_id: number; reciter: string; source: string; origin_url: string }
+
+export type RecitationResponse = { lang: string; recitation: Recitation | null; reciters?: VerseReciter[] }
 
 export type Aya = { aya: number; arabic: string; translation: string | null; url: string }
 export type Verses = { sura: number; ayat: Aya[]; source: { name: string; translation: string | null; version: string } }
