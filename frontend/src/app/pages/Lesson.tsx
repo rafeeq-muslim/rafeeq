@@ -255,7 +255,7 @@ function Player({ lesson }: { lesson: LessonT }) {
  * it; the unit's source credit is on the path (once per unit, always there to
  * read). The page reference stays in the content for the Sharia reviewer. */
 function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
-  const { t } = useT()
+  const { t, locale } = useT()
   const card = lesson.cards[index]
   const glossary = useGlossary(locale) // PLT-03 R5: approved terms only; none → plain text
   return (

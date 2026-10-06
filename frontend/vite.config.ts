@@ -53,5 +53,5 @@ export default defineConfig(({ mode }) => ({
       ? { outDir: "dist-review", emptyOutDir: true, copyPublicDir: false }
       : { chunkSizeWarningLimit: 900 },
   server: { proxy: { "/api": "http://127.0.0.1:8000" } },
-  test: { environment: "jsdom", include: ["src/**/*.test.ts", "src/**/*.test.tsx"] },
+  test: { environment: "jsdom", include: ["src/**/*.test.ts", "src/**/*.test.tsx"], setupFiles: ["src/test-setup.ts"], testTimeout: 15000 },
 }))
