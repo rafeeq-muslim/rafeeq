@@ -24,6 +24,7 @@ import { useAuth } from "@/app/stores/auth"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import type { QuranRef } from "@/app/learning/types"
 import { ReciterSample } from "@/app/discover/ReciterSample" // KNW-08 R4
+import { ExplanationSamples } from "./ExplanationSamples"
 
 type Status = "in_review" | "returned" | "approved"
 type Row = { item_type: string; item_id: string; group: string; title: Record<string, string>; langs: Record<string, { status: Status; live: boolean; note: string | null }> }
@@ -47,6 +48,7 @@ export default function ReviewDesk() {
   return (
     <Routes>
       <Route index element={<QueueView />} />
+      <Route path="explanations" element={<ExplanationSamples />} />
       <Route path=":type/:id" element={<ItemView />} />
     </Routes>
   )
@@ -62,6 +64,7 @@ function QueueView() {
   const q = useQueue()
   const [lang, setLang] = React.useState<Locale>(locale)
   const [status, setStatus] = React.useState<Status>("in_review")
+  const reviewer = useAuth((s) => s.has("sharia_reviewer")) // LRN-03 R6: explanation samples are the reviewer's
 
   const rows = (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === status)
   const count = (s: Status) => (q.data?.items ?? []).filter((r) => r.langs[lang]?.status === s).length
@@ -94,6 +97,13 @@ function QueueView() {
             </button>
           ))}
         </div>
+
+        {reviewer && (
+          <Button variant="secondary" className="w-full justify-between" onClick={() => navigate("explanations")}>
+            {t("desk.explain.open")}
+            <IconArrowLeft data-icon="inline-end" className="ltr:rotate-180" />
+          </Button>
+        )}
 
         {q.isLoading && <Skeleton className="h-64 rounded-card" />}
         {q.data && rows.length === 0 && <p className="py-8 text-center text-body text-muted-foreground">{t("desk.empty")}</p>}

@@ -14,7 +14,7 @@ import { num, useT } from "@/app/i18n"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { nextLesson } from "@/app/learning/path"
+import { nextLesson, unitLessonIds } from "@/app/learning/path"
 import type { Completion } from "@/app/learning/complete"
 import { GuideNote } from "@/app/learning/GuideNote"
 import { badgeView } from "@/app/motivation/badges"
@@ -58,9 +58,11 @@ export function LessonDone({ lesson, completion }: { lesson: Lesson; completion:
     )
   }
 
-  const total = unit?.lessons.length ?? 1
-  const done = unit ? unit.lessons.filter((id) => progress.completed[id]).length : 1
-  const fresh = unit ? unit.lessons.indexOf(lesson.id) : 0
+  // LRN-02 R3: count every lesson of the unit, including one not yet live in this language.
+  const ids = unit ? unitLessonIds(unit) : []
+  const total = unit ? ids.length : 1
+  const done = unit ? ids.filter((id) => progress.completed[id]).length : 1
+  const fresh = unit ? ids.indexOf(lesson.id) : 0
 
   return (
     <section

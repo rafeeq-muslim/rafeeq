@@ -63,8 +63,11 @@ export type GuideKey =
   | "ask.guide.nextLesson"
   | "ask.guide.nextReview"
   | "ask.guide.start"
+  | "ask.guide.welcome"
 
 export const GUIDE_MAX_NAMES = 2
+/** LRN-07 R1: at most three sentences. */
+export const GUIDE_MAX_SENTENCES = 3
 export const GUIDE_MAX_WORDS = 30
 
 export function fixedMessage(s: Summary, lessons: Lesson[], t: (key: GuideKey, vars?: Record<string, string>) => string): string {
@@ -78,14 +81,23 @@ export function fixedMessage(s: Summary, lessons: Lesson[], t: (key: GuideKey, v
       return countsOnly || n.length > GUIDE_MAX_NAMES ? t(countKey, { n: String(n.length) }) : t(key, { list: n.join(sep) })
     }
     const parts: string[] = []
+    // LRN-07 R5 / MOT-02 R4: a returning learner is welcomed first, with no word about the pause.
+    if (s.returning) parts.push(t("ask.guide.welcome"))
     if (names(s.mastered).length) parts.push(sentence(s.mastered, "ask.guide.mastered", "ask.guide.masteredCount"))
-    if (names(s.reviewing).length) parts.push(sentence(s.reviewing, "ask.guide.review", "ask.guide.reviewCount"))
-    if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.nextLesson", { step: titles.get(s.next.lesson_id) ?? "" }))
-    else if (s.next) parts.push(t("ask.guide.nextReview"))
+    const review = names(s.reviewing).length ? sentence(s.reviewing, "ask.guide.review", "ask.guide.reviewCount") : null
+    const step =
+      s.next && "lesson_id" in s.next
+        ? t("ask.guide.nextLesson", { step: titles.get(s.next.lesson_id) ?? "" })
+        : s.next
+          ? t("ask.guide.nextReview")
+          : null
+    // R1: three sentences at most; with a welcome, the review sentence gives way to the one step.
+    if (review && parts.length + (step ? 2 : 1) <= GUIDE_MAX_SENTENCES) parts.push(review)
+    if (step) parts.push(step)
     return parts.join(" ")
   }
   const msg = build(false)
-  if (!msg) return t("ask.guide.start")
+  if (!msg || msg === t("ask.guide.welcome")) return s.returning ? `${t("ask.guide.welcome")} ${t("ask.guide.start")}` : t("ask.guide.start")
   return msg.split(/\s+/).length > GUIDE_MAX_WORDS ? build(true) : msg
 }
 

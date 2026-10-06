@@ -57,12 +57,27 @@ export function unitPassed(unit: Unit, p: Progress): boolean {
   return p.unlockedUnits.includes(unit.id) && !unitDone(unit, p)
 }
 
+/** Every lesson of the unit in order, including those not yet live in the
+ * learner's language (LRN-01 R6, LRN-02 R3). Older servers send `lessons` only. */
+export function unitLessonIds(unit: Unit): string[] {
+  return unit.outline?.length ? unit.outline : unit.lessons
+}
+
+/** A lesson of the unit that is not live in this language: «قيد الإعداد بلغتك». */
+export function isPending(unit: Unit, lessonId: string): boolean {
+  return unitLessonIds(unit).includes(lessonId) && !unit.lessons.includes(lessonId)
+}
+
+/** LRN-02 R3/R5: a unit is complete only when every one of its lessons is,
+ * so a lesson withdrawn in this language keeps it open (no unit event, no badge). */
 export function unitDone(unit: Unit, p: Progress): boolean {
-  return unit.lessons.length > 0 && unit.lessons.every((id) => p.completed[id])
+  const ids = unitLessonIds(unit)
+  return ids.length > 0 && ids.every((id) => p.completed[id])
 }
 
 export function unitProgress(unit: Unit, p: Progress): { done: number; total: number } {
-  return { done: unit.lessons.filter((id) => p.completed[id]).length, total: unit.lessons.length }
+  const ids = unitLessonIds(unit)
+  return { done: ids.filter((id) => p.completed[id]).length, total: ids.length }
 }
 
 /** Merge device progress with an account copy: union, keep earliest/latest (LRN-02 R4). */

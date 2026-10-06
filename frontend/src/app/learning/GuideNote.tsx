@@ -24,13 +24,14 @@ const DAY = 86_400_000
 export function GuideNote({ lessons, objectives, returning = false }: { lessons: Lesson[]; objectives: string[]; returning?: boolean }) {
   const { t, locale } = useT()
   const progress = useLearning()
-  const [summary] = React.useState(() => buildSummary(locale, lessons, progress, new Date(), objectives))
+  // R5: `returning` reaches both the AI request and the fixed message.
+  const [summary] = React.useState(() => ({ ...buildSummary(locale, lessons, progress, new Date(), objectives), returning }))
   const fixed = fixedMessage(summary, lessons, t)
   const [text, setText] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     let live = true
-    void requestGuide({ ...summary, returning }).then((r) => live && r && setText(r))
+    void requestGuide(summary).then((r) => live && r && setText(r))
     sendEvent({ type: "guide_shown" })
     const href = nextHref(summary)
     try {

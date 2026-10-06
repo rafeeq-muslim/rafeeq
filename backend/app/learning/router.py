@@ -50,6 +50,8 @@ class Mastery(BaseModel):
     masteredAt: AwareDatetime | None = None
     lastExerciseId: str | None = Field(default=None, max_length=24)
     checksDone: int = Field(default=0, ge=0, le=10)
+    # LRN-04 R2: exercises already answered for this objective (review prefers an unseen one).
+    seenExercises: list[Annotated[str, Field(max_length=24)]] = Field(default_factory=list, max_length=60)
 
 
 class LearningSync(BaseModel):
@@ -74,6 +76,7 @@ async def _learning_of(session, user_id) -> LearningSync:
                 masteredAt=m.mastered_at,
                 lastExerciseId=m.last_exercise_id,
                 checksDone=m.checks_done,
+                seenExercises=list(m.seen_exercises or []),
             )
             for m in mast
         },
@@ -105,7 +108,12 @@ async def merge_learning(body: LearningSync, session: Session, user: CurrentUser
     epoch = datetime.min.replace(tzinfo=UTC)
     for oid, m in body.mastery.items():
         mine = have.mastery.get(oid)
+        # Seen exercises are a union: answered on any device counts as seen (LRN-04 R2).
+        seen = list(dict.fromkeys([*(mine.seenExercises if mine else []), *m.seenExercises]))[-60:]
         if mine is not None and (mine.lastAnswerAt or epoch) >= (m.lastAnswerAt or epoch):
+            if seen != mine.seenExercises:
+                row = await session.get(ObjectiveMastery, (user.id, oid))
+                row.seen_exercises = seen
             continue
         row = await session.get(ObjectiveMastery, (user.id, oid))
         if row is None:
@@ -113,6 +121,7 @@ async def merge_learning(body: LearningSync, session: Session, user: CurrentUser
             session.add(row)
         row.p, row.seen, row.answered, row.last_answer_at = m.p, m.seen, m.answered, m.lastAnswerAt
         row.mastered_at, row.last_exercise_id, row.checks_done = m.masteredAt, m.lastExerciseId, m.checksDone
+        row.seen_exercises = seen
     await session.commit()
     return await _learning_of(session, user.id)
 
