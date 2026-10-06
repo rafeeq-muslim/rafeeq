@@ -4,6 +4,10 @@
  * «أريد إنسانًا» is then always visible inside the assistant. Below 380px it
  * is a 44px icon and keeps its label for screen readers, so it is never
  * hidden from a crowded header.
+ *
+ * LRN-03 R5: `onLeave` lets the lesson keep, on the device, the exercise as
+ * it is on screen before the learner leaves (lesson/helpReturn.ts). Nothing
+ * of it travels with the navigation.
  */
 import { useNavigate } from "react-router"
 import { IconHelpCircle } from "@tabler/icons-react"
@@ -12,7 +16,7 @@ import { Button } from "@/components/ui/button"
 import { useT } from "@/app/i18n"
 import { lessonHelpState, type LessonHelp } from "@/app/ask/lessonHelp"
 
-export function LessonHelpButton({ from, topic }: LessonHelp) {
+export function LessonHelpButton({ from, topic, onLeave }: LessonHelp & { onLeave?: () => void }) {
   const { t } = useT()
   const navigate = useNavigate()
   return (
@@ -21,7 +25,10 @@ export function LessonHelpButton({ from, topic }: LessonHelp) {
       variant="outline"
       size="sm"
       className="max-[380px]:size-11 max-[380px]:p-0!"
-      onClick={() => navigate("/ask", { state: lessonHelpState(from, topic) })}
+      onClick={() => {
+        onLeave?.()
+        navigate("/ask", { state: lessonHelpState(from, topic) })
+      }}
     >
       <IconHelpCircle data-icon="inline-start" stroke={1.75} />
       <span className="max-[380px]:sr-only">{t("lesson.help")}</span>
