@@ -99,3 +99,20 @@ Reliability PRD T01–T32: `backend/tests/test_knw01_reliability.py`, `frontend/
 - `KNW_MIN_SIMILARITY` stays 0. First calibration (plan 5.5, `python -m app.knowledge.eval calibrate`, 2026-10-05, 31-question starter set): answerable questions scored 0.51–0.76, the two "no source" questions 0.57 and 0.63, so the groups overlap and a threshold of 0.63 would drop half the answerable questions. Until the full 80-question set separates them, the gates are the composer's `sufficient` and the verifier (plan 4.4).
 - Helpline numbers per country: the danger panel in Ask shows the verified helplines bundled in the app (`frontend/src/app/companion/helplineNumbers.ts`, Saudi Arabia and the Philippines, verified 2026-10-06); no unverified number is listed.
 - `sensitive` route: answered from sources like `general`, with `should_escalate = true` so the human button is offered (the feature has no example; plan §4.3 only says it continues to retrieval).
+
+## 7. The conversation on the device (R7)
+
+Why: the product owner reported that chat messages disappear for no reason (2026-10-06). The thread lived in page memory only (`ask/store.ts`), so every reload emptied it, and `lib/pwa.ts` reloads the page by itself when a new version takes over (every deploy), except inside a lesson, review or placement.
+
+| Rule / example | Where | How |
+| --- | --- | --- |
+| R7 reload keeps the thread and the draft | `frontend/src/app/ask/session.ts`, `ask/store.ts` | The store starts from `loadSession()` and writes `rafeeq.ask.thread` / `rafeeq.ask.draft` to **sessionStorage** (this tab only) when turns or draft change. Stored as `{v, at, data}`; `ASK_SESSION_VERSION` = 1 with a `migrate` step for later formats; an unknown or broken copy opens an empty chat. Never localStorage, never the server |
+| R7 an answer cut by a reload | `session.ts::restore` | A stored `pending` turn (or a `learning_guide` reply whose text was not written yet) comes back as an error turn with its snapshot, so «أعد المحاولة» re-sends the same question into the same message |
+| R7 update does not reload under a conversation | `lib/pwa.ts::holdUpdateWhile`, `updateMustWait`; `store.ts::conversationHoldsUpdate` | The automatic reload waits (update bar shown) on `/ask` with turns or a draft, anywhere while an answer is on its way, and anywhere while a conversation exists that is not kept on the device (quick exit / discreet mode). `pwa.ts` does not import the Ask store; the store registers its reason |
+| R7 quick exit / discreet mode: nothing written | `session.ts::keepsOnDevice` | No write while `quickExit` or `discreet` is on; turning either on removes the copy at once (subscription to the device store), turning it off writes it again |
+| R7 what clears it | `lib/privacy.ts` | `exitNow` removes the copy (Back after a quick exit reloads the app); `wipeDevice` and `signOutAndErase` already clear sessionStorage |
+| R7 one visit, one day | `session.ts` | sessionStorage ends with the tab; a copy idle for `ASK_SESSION_IDLE_MS` (24 h) is dropped on load (a browser restoring old tabs). When storage is full the page keeps everything and the copy keeps the latest messages |
+
+Not changed: the request still carries one question and no history; `deviceData()` (R6 export) reads localStorage only, so the session copy is not in the export.
+
+Tests: `frontend/src/app/ask/session.rules.test.ts` (reload, cut answer, retry, privacy modes, quick exit, erase, sign-out, idle day, format version, full storage, update wait), `frontend/src/app/pages/Ask.kept.rules.test.tsx` (navigation, lesson help, notebook hand-off, language, theme, discreet switch, sign-in, retry, offline/online).
