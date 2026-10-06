@@ -506,7 +506,7 @@ export const tl: Dict = {
   "practice.reminders.atTime": "Sa oras mismo",
   "practice.reminders.minutesBefore": "{count} bago",
   "practice.reminders.showName": "Ipakita ang pangalan ng dasal",
-  "practice.reminders.showNameHint": "Naka-off bilang default: “Paalala” lang ang lalabas, walang salitang panrelihiyon.",
+  "practice.reminders.showNameHint": "Pinipili mo ito sa unang pagbukas ng paalala, at mababago mo ito rito. Habang naka-off, “Paalala” lang ang lalabas, walang salitang panrelihiyon.",
   "practice.reminders.preview": "Susunod na paalala sa {time}: “{text}”",
   "practice.reminders.suhoor": "Bago matapos ang suhoor",
   "practice.reminders.iftar": "Sa iftar",
@@ -950,7 +950,7 @@ export const tl: Dict = {
 
   "policy.title": "Ang privacy mo sa Rafeeq",
   "policy.intro": "Maaaring ipakita ng paggamit mo ng Rafeeq ang iyong relihiyon, kaya iniingatan namin ang pinakakaunti, at sinasabi namin dito ang lahat ng itinatago namin.",
-  "policy.updated": "Huling update: {date}",
+  "policy.updated": "Huling update at inaprubahan ng may-ari ng produkto: {date}",
   "policy.device.title": "Ang nasa device mo lamang",
   "policy.device.body": "Ang progreso mo sa mga aralin, ang lungsod mo para sa oras ng dasal, ang iyong pribadong mga gawi, ang mga sinave mo, ang notebook ng iyong mga tanong at ang iyong settings. Hindi kailanman umaalis sa device mo ang iyong lokasyon: ginagamit ito para piliin ang pinakamalapit na lungsod at saka kinakalimutan.",
   "policy.account.title": "Ang itinatago namin kung gagawa ka ng account",
@@ -1160,7 +1160,6 @@ export const tl: Dict = {
   "discover.quran.reciteFrom": "Bigkasin mula sa talata {n}:",
   "discover.quran.verseControls": "Paglipat sa mga talata",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
-  "mot.unapproved": "Hindi pa aprubado",
   "mot.reminder.pickTime": "Pumili ng oras na bagay sa iyo",
   "mot.reminder.confirm": "I-on ang paalala",
   "mot.reminder.inAppToggle": "Paalalahanan ako sa loob ng Rafeeq",
@@ -1233,4 +1232,9 @@ export const tl: Dict = {
   "ask.live.fetchedAt": "Binasa mula sa pinagmulan noong {d}",
   "ask.live.openSource": "Buksan ang buong teksto sa pinagmulan",
   "ask.live.savedNote": "Hindi naka-save sa iyong device ang teksto ng pinagmulan; buksan ito sa pinagmulan.",
+  // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06; written by Claude)
+  "practice.reminders.ask.title": "Gusto mo bang lumabas ang pangalan ng dasal sa paalala?",
+  "practice.reminders.ask.body": "Maaari itong makita ng sinumang tumitingin sa screen ng iyong telepono.",
+  "practice.reminders.ask.show": "Ipakita ang pangalan ng dasal",
+  "practice.reminders.ask.neutral": "“Paalala” lang",
 }

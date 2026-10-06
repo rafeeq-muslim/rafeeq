@@ -33,7 +33,6 @@ import {
 import { toast } from "sonner"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -55,7 +54,7 @@ import { api, sendEvent } from "@/app/lib/api"
 import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
 import { downloadMyData, wipeDevice } from "@/app/lib/privacy"
 import { usableTone } from "@/app/lib/tone"
-import { usePractice } from "@/app/practice/store"
+import { usePrayerReminderSwitch } from "@/app/practice/PrayerNameAsk" // PLT-06 R3 / PRC-05 R2 ask once (approvals-ui)
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
@@ -322,8 +321,7 @@ function NotificationSettings() {
   const { t } = useT()
   const navigate = useNavigate()
   const d = useDevice()
-  const prayer = usePractice((s) => s.reminders)
-  const setPractice = usePractice((s) => s.set)
+  const prayer = usePrayerReminderSwitch() // PLT-06 R3 / PRC-05 R2: first turn-on asks once about the prayer name
   const [busy, setBusy] = React.useState(false)
   const state = pushState()
   const pushOk = state === "ok"
@@ -493,8 +491,9 @@ function NotificationSettings() {
           label={t("practice.reminders")}
           hint={t("notif.prayerHint")}
           checked={prayer.enabled}
-          onChange={(v) => setPractice({ reminders: { ...prayer, enabled: v } })}
+          onChange={prayer.setEnabled}
         >
+          {prayer.dialog}
           <Button
             variant="link"
             className="h-auto w-fit px-0"
@@ -535,12 +534,6 @@ function PrivacySettings() {
         <SwitchRow key={r.id} id={`p-${r.id}`} label={t(r.key)} hint={t(r.hint)} checked={r.value} onChange={r.change}>
           {/* PLT-05 R2 ex3: honest that the browser history may keep Rafeeq. */}
           {r.id === "exit" && <p className="text-label text-muted-foreground" data-slot="history-note">{t("privacy.historyNote")}</p>}
-          {/* MOT-07 open question: provisional text until the privacy notice is approved. */}
-          {r.id === "events" && (
-            <Badge variant="warning" className="w-fit" data-slot="unapproved">
-              {t("mot.unapproved")}
-            </Badge>
-          )}
         </SwitchRow>
       ))}
       <div className="flex flex-col items-start gap-1 p-4">

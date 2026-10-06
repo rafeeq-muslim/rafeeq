@@ -1,7 +1,8 @@
 /**
  * PRC-05 prayer reminders on the web. R1: off until turned on, chosen
  * prayers only; Ramadan's suhoor and iftar reminders appear in Ramadan, off.
- * R2: neutral text unless the prayer name is chosen (with a preview).
+ * R2: neutral text unless the prayer name is chosen (with a preview); the
+ * first time reminders are turned on, the learner is asked once (PrayerNameAsk).
  * R3: at the time or minutes before. R6: the honest note — on the web they
  * arrive only while Rafeeq is open on this device.
  */
@@ -18,6 +19,7 @@ import { useNow, useRamadan } from "./api"
 import { countOf } from "./plural"
 import { REMINDER_OFFSETS as OFFSETS, reminderText, upcomingReminders } from "./reminders"
 import { usePractice, type ReminderSettings } from "./store"
+import { usePrayerReminderSwitch } from "./PrayerNameAsk"
 import { formatTimeFull, PRAYER_KEYS, type PrayerKey } from "./times"
 import { BackBar, prayerName } from "./ui"
 
@@ -42,6 +44,7 @@ export default function RemindersScreen() {
   const now = useNow()
   const { state, isRamadan } = useRamadan(now)
   const patch = (p: Partial<ReminderSettings>) => set({ reminders: { ...r, ...p } })
+  const onOff = usePrayerReminderSwitch()
   const togglePrayer = (k: PrayerKey, on: boolean) =>
     patch({ prayers: on ? PRAYER_KEYS.filter((x) => x === k || r.prayers.includes(x)) : r.prayers.filter((x) => x !== k) })
 
@@ -65,7 +68,8 @@ export default function RemindersScreen() {
           </div>
         ) : (
           <>
-            <Row id="rem-on" label={t("practice.reminders.enable")} checked={r.enabled} onChange={(v) => patch({ enabled: v })} />
+            <Row id="rem-on" label={t("practice.reminders.enable")} checked={r.enabled} onChange={onOff.setEnabled} />
+            {onOff.dialog}
 
             <fieldset disabled={!r.enabled} className="flex flex-col gap-5 disabled:opacity-60">
               <section className="flex flex-col gap-1">
@@ -104,7 +108,7 @@ export default function RemindersScreen() {
                   label={t("practice.reminders.showName")}
                   hint={t("practice.reminders.showNameHint")}
                   checked={r.showName}
-                  onChange={(v) => patch({ showName: v })}
+                  onChange={(v) => patch({ showName: v, askedName: true })}
                 />
                 {upcoming && (
                   <p className="rounded-md bg-muted p-3 text-label">

@@ -504,7 +504,7 @@ export const ar = {
   "practice.reminders.atTime": "عند دخول الوقت",
   "practice.reminders.minutesBefore": "قبل {count}",
   "practice.reminders.showName": "أظهر اسم الصلاة",
-  "practice.reminders.showNameHint": "مغلق افتراضيًا: يظهر «تذكير» فقط، بلا كلمة دينية.",
+  "practice.reminders.showNameHint": "تختاره عند أول تفعيل للتذكير، ويمكنك تغييره هنا. حين يكون مغلقًا يظهر «تذكير» فقط، بلا كلمة دينية.",
   "practice.reminders.preview": "التذكير القادم {time}: «{text}»",
   "practice.reminders.suhoor": "قبل انتهاء السحور",
   "practice.reminders.iftar": "عند الإفطار",
@@ -948,7 +948,7 @@ export const ar = {
 
   "policy.title": "خصوصيتك في رفيق",
   "policy.intro": "استعمالك لرفيق قد يدل على دينك، فنحفظ أقل ما يمكن، ونقول لك هنا كل ما نحفظه.",
-  "policy.updated": "آخر تحديث: {date}",
+  "policy.updated": "آخر تحديث، واعتمده مالك المنتج: {date}",
   "policy.device.title": "ما نحفظه على جهازك وحده",
   "policy.device.body": "تقدّمك في الدروس، ومدينة مواقيت الصلاة، وعاداتك الخاصة، وما حفظته، ودفتر أسئلتك، وإعداداتك. موقعك لا يغادر جهازك أبدًا: يُستعمل لاختيار أقرب مدينة ثم يُنسى.",
   "policy.account.title": "ما نحفظه عندنا إن أنشأت حسابًا",
@@ -1158,7 +1158,6 @@ export const ar = {
   "discover.quran.reciteFrom": "ابدأ التلاوة من الآية {n}:",
   "discover.quran.verseControls": "التنقّل بين الآيات",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
-  "mot.unapproved": "غير معتمد",
   "mot.reminder.pickTime": "اختر الوقت الذي يناسبك",
   "mot.reminder.confirm": "فعّل التذكير",
   "mot.reminder.inAppToggle": "ذكّرني داخل رفيق",
@@ -1231,4 +1230,9 @@ export const ar = {
   "ask.live.fetchedAt": "قُرئ من المصدر في {d}",
   "ask.live.openSource": "افتح النص كاملًا في المصدر",
   "ask.live.savedNote": "لا يُحفظ نص المصدر على جهازك؛ افتحه في موقعه.",
+  // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06)
+  "practice.reminders.ask.title": "هل تريد أن يظهر اسم الصلاة في التذكير؟",
+  "practice.reminders.ask.body": "قد يراه من ينظر إلى شاشة جوالك.",
+  "practice.reminders.ask.show": "أظهر اسم الصلاة",
+  "practice.reminders.ask.neutral": "«تذكير» فقط",
 } as const
