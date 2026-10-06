@@ -293,6 +293,13 @@ function Render({ type, view, lang }: { type: string; view: View; lang: Locale }
     return (
       <div className="flex flex-col gap-6">
         <h1 className="font-heading text-h1 font-bold text-balance">{view.title}</h1>
+        {view.media?.video && (
+          <section className="flex flex-col gap-2">
+            <h2 className="text-label font-bold text-muted-foreground">{t("lesson.video")}</h2>
+            {/* rules.md: the reviewer watches support videos in full before approving */}
+            <video controls playsInline preload="none" src={view.media.video} className="w-full rounded-card bg-black" />
+          </section>
+        )}
         <section className="flex flex-col gap-3">
           <h2 className="text-label font-bold text-muted-foreground">{t("desk.cards")}</h2>
           {view.cards.map((c: View, i: number) => (
@@ -303,6 +310,8 @@ function Render({ type, view, lang }: { type: string; view: View; lang: Locale }
               {c.image_url && <img src={c.image_url} alt="" className="max-h-56 w-full rounded-md object-contain" />}
               {c.text && <p className="font-reading text-reading whitespace-pre-line">{c.text}</p>}
               {c.quran && <VerseBlock quran={c.quran as QuranRef} lang={lang} />}
+              {Array.isArray(c.audio) &&
+                c.audio.map((src: string) => <audio key={src} controls preload="none" src={src} className="w-full" />)}
             </div>
           ))}
         </section>
