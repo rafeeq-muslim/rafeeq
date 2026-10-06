@@ -29,7 +29,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
-from app.core.events import OutboxEvent, publish, subscribe
+from app.core.events import OutboxEvent, payload_text, publish, subscribe
 from app.motivation.engagement import account_status, after_interaction, status_at
 from app.motivation.models import AnonEvent, DailySnapshot, EarnedBadge, EngagementState, StreakDay
 
@@ -67,9 +67,18 @@ class EventIn(BaseModel):
     seq: int | None = Field(default=None, ge=0, le=2**62)  # MOT-09 R4: the device's event order
 
 
+# One request carries at most this many events; the app sends its offline
+# queue in batches of this size (frontend lib/api.ts EVENT_BATCH).
+EVENTS_PER_REQUEST = 100
+# Stored rows per minute: a lesson produces a few dozen events, so a device
+# and a shared address (a class behind one router) stay far below these.
+EVENTS_PER_MIN_DEVICE = 300
+EVENTS_PER_MIN_ADDRESS = 600
+
+
 class EventsIn(BaseModel):
     install_id: str = Field(min_length=8, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
-    events: list[EventIn] = Field(max_length=500)
+    events: list[EventIn] = Field(max_length=EVENTS_PER_REQUEST)
 
 
 router = APIRouter(prefix="/api", tags=["motivation"])
@@ -85,14 +94,20 @@ def _when(at: datetime | None, now: datetime) -> datetime:
 
 @router.post("/events", status_code=202)
 async def events(body: EventsIn, session: Session, request: Request) -> dict:
+    address = request.client.host if request.client else "-"  # kept in memory only
     ratelimit.hit(f"events:{body.install_id}", limit=60, window_s=60)
-    ratelimit.hit(f"events-ip:{request.client.host if request.client else '-'}", limit=240, window_s=60)  # address kept in memory only
+    ratelimit.hit(f"events-ip:{address}", limit=240, window_s=60)
     now = datetime.now(UTC)
     if any(e.type == "opt_out" for e in body.events):
         await opt_out(session, body.install_id, now)
         await session.commit()
         return {"accepted": 1}
 
+    # The limits above count requests; these count the rows a request stores,
+    # per address first (one address can invent any number of device ids).
+    for _ in body.events:
+        ratelimit.hit(f"events-rows-ip:{address}", limit=EVENTS_PER_MIN_ADDRESS, window_s=60)
+        ratelimit.hit(f"events-rows:{body.install_id}", limit=EVENTS_PER_MIN_DEVICE, window_s=60)
     interactions: list[datetime] = []
     for e in body.events:
         at = _when(e.at, now)
@@ -136,7 +151,7 @@ async def published_account_statuses(session: AsyncSession, user_id: uuid.UUID |
     `EngagementStatusChanged` naming the account in the outbox (the event
     history, core/events.py). Older events that named both a device and the
     account count too: they hold what the mentor's copy shows now."""
-    uid = OutboxEvent.payload["user_id"].astext
+    uid = payload_text("user_id")
     latest = func.row_number().over(partition_by=uid, order_by=OutboxEvent.created_at.desc()).label("n")
     q = select(uid.label("u"), OutboxEvent.payload["status"].astext.label("s"), latest).where(
         OutboxEvent.name == "EngagementStatusChanged", uid.is_not(None)
@@ -184,7 +199,7 @@ async def opt_out(session: AsyncSession, install_id: str, now: datetime) -> None
     if user_id is not None:
         await publish_account_status(session, user_id, now)
     # Status-change history must not keep the device's id either.
-    await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
+    await session.execute(delete(OutboxEvent).where(payload_text("install_id") == install_id))
     session.add(AnonEvent(install_id=None, type="opt_out", day=now.astimezone(RIYADH).date()))
     await scrub_snapshots(session, [f"i:{install_id}"])
 
@@ -211,7 +226,7 @@ async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
     installs = list(await session.scalars(select(EngagementState.install_id).where(EngagementState.user_id == user_id)))
     for install_id in installs:
         await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
-        await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
+        await session.execute(delete(OutboxEvent).where(payload_text("install_id") == install_id))
     await session.execute(delete(EngagementState).where(EngagementState.user_id == user_id))
     await scrub_snapshots(session, [f"u:{user_id}", *(f"i:{i}" for i in installs)])
 

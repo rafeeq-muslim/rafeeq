@@ -1,14 +1,14 @@
 """MOT-07 R3 daily status refresh and MOT-08 R2 snapshot at 00:00 Asia/Riyadh."""
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from apscheduler.triggers.cron import CronTrigger
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import SessionLocal
 from app.motivation.engagement import STATUSES, status_at
-from app.motivation.models import DailySnapshot, EngagementState
+from app.motivation.models import AnonEvent, DailySnapshot, EngagementState
 from app.motivation.router import (
     RIYADH,
     account_status_of,
@@ -55,10 +55,39 @@ async def refresh_and_snapshot(session: AsyncSession, now: datetime | None = Non
     return snap
 
 
+# Anonymous events are read for the last 7 or 30 days only (MOT-08 R3,
+# MOT-09: `indicators.py` loads `day >= today - days`); the status of a device
+# lives in EngagementState and the history of rates in the frozen snapshots,
+# neither of which is touched here. Three times the longest window is kept.
+ANON_EVENT_DAYS = 90
+_PURGE_BATCH = 5000
+_PURGE_MAX_BATCHES = 400  # at most two million rows a night
+
+
+async def purge_old_anon_events(session: AsyncSession, now: datetime | None = None) -> int:
+    """Security review A-H5: anonymous events no indicator reads any more."""
+    cutoff = (now or datetime.now(UTC)).astimezone(RIYADH).date() - timedelta(days=ANON_EVENT_DAYS)
+    total = 0
+    for _ in range(_PURGE_MAX_BATCHES):
+        ids = select(AnonEvent.id).where(AnonEvent.day < cutoff).limit(_PURGE_BATCH)
+        n = (await session.execute(delete(AnonEvent).where(AnonEvent.id.in_(ids)))).rowcount or 0
+        await session.commit()
+        total += n
+        if n < _PURGE_BATCH:
+            break
+    return total
+
+
 async def _run() -> None:
     async with SessionLocal() as session:
         await refresh_and_snapshot(session)
 
 
+async def _purge() -> None:
+    async with SessionLocal() as session:
+        await purge_old_anon_events(session)
+
+
 def register(scheduler) -> None:
     scheduler.add_job(_run, CronTrigger(hour=0, minute=0, timezone=RIYADH), id="mot-daily", replace_existing=True, misfire_grace_time=3600)
+    scheduler.add_job(_purge, CronTrigger(hour=1, minute=20, timezone=RIYADH), id="mot-anon-retention", replace_existing=True, misfire_grace_time=3600)

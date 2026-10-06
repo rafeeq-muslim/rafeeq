@@ -10,7 +10,7 @@ from collections.abc import Awaitable, Callable
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import DateTime, String, func
+from sqlalchemy import DateTime, Index, String, func, literal_column, text, type_coerce
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column
@@ -27,6 +27,21 @@ class OutboxEvent(IdMixin, Base):
     source: Mapped[str] = mapped_column(String(8))
     payload: Mapped[dict] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    # Opt-out, account deletion and the mentor-contact lookup find rows by
+    # these two payload fields: without the indexes each is a full scan.
+    __table_args__ = (
+        Index("ix_outbox_payload_install_id", text("(payload ->> 'install_id')")),
+        Index("ix_outbox_payload_user_id", text("(payload ->> 'user_id')")),
+    )
+
+
+def payload_text(key: str):
+    """`payload ->> 'key'` with the key written inline (never a bound
+    parameter), so the planner always matches the expression indexes above.
+    `key` is a name from the code, never request data."""
+    if not key.isidentifier():
+        raise ValueError(key)
+    return type_coerce(OutboxEvent.__table__.c.payload.op("->>")(literal_column(f"'{key}'")), String)
 
 
 def subscribe(name: str) -> Callable[[Handler], Handler]:
