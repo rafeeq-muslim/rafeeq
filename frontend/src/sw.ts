@@ -10,6 +10,7 @@ import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
 import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
+import { registerDownloads } from "./sw/plt12-downloads" // PLT-12
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -17,6 +18,8 @@ self.skipWaiting()
 cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST)
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { denylist: [/^\/api\//, /^\/landing(\/|$)/] }))
+
+registerDownloads() // PLT-12: downloaded files first (before the generic routes below)
 
 // Approved lesson content and Quran passages: usable offline. Same origin only.
 registerRoute(
