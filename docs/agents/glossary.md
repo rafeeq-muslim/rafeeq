@@ -66,6 +66,9 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | صندوق المرشد | `mentor_inbox` | Where mentors see and answer requests |
 | المجموعة | `group` | Small, same-gender, same-language group with a mentor |
 | البلاغ | `report` | Flagging an abusive or suspicious message |
+| أرقام المساعدة | `helpline` | Official, verified numbers per country, shown in a danger case and working offline (`research/08`) |
+| الإحالة إلى أهل العلم | `scholar_referral` | A mentor hands a personal Sharia question to the Sharia reviewer instead of answering it |
+| دفتر الأسئلة الخاصة | `private_notebook` | Questions kept on the device only; one leaves only when its owner sends it |
 
 ## Daily Practice (`PRC`)
 
