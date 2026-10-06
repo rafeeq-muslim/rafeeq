@@ -98,6 +98,22 @@ class Settings(BaseSettings):
     ask_live_request_timeout_seconds: float = 8.0
     ask_live_user_agent: str = "RafeeqBot/1.0 (+https://rafeeq.nan.sa)"
 
+    # --- KNW-06 library search (PRD-LIBRARY-LIVE-SEARCH, knw-06-library-live-search-build) ---
+    # Its own allowlist: only islamic_content and islamhouse can ever be searched
+    # (app.knowledge.library_search.LIBRARY_SOURCES); the chat settings above are
+    # never read for it. LIBRARY_SEARCH_SOURCES may only switch a library source
+    # off. The encyclopedia stays "not connected" until
+    # ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true (the site's robots.txt).
+    # Rollback: LIBRARY_SEARCH_ENABLED=false hides the search; the catalogue is untouched.
+    library_search_enabled: bool = True
+    library_search_sources: str = "islamic_content,islamhouse"
+    library_search_window_seconds: float = 12.0  # PRD §8: whole backend window (the app waits 15 s)
+    library_search_request_timeout_seconds: float = 8.0
+    library_search_max_calls_per_source: int = 4  # PRD §8: per source per page, retries included
+    library_search_max_calls: int = 8  # PRD §8: shared cap per page
+    library_search_session_seconds: int = 300  # PRD §7: a search session ends after 5 minutes
+    library_search_max_sessions: int = 2000  # memory bound; the oldest session goes first
+
     # Web Push (VAPID).
     vapid_public_key: str = ""
     vapid_private_key: str = ""
