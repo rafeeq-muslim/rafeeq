@@ -9,8 +9,13 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 | 1 | **Email provider for two-step sign-in codes** (PLT-02 R6) | Needs an account with a mail service (e.g. Amazon SES, Postmark, or a Google Workspace SMTP relay) in the organisation's name; I must not create accounts | The feature is fully built and tested; the app says «إرسال الرموز بالبريد غير متاح الآن». Add `SMTP_HOST/PORT/USER/PASSWORD/FROM` to `~/.config/rafeeq/secrets.env` and redeploy |
 | 2 | **Verified helpline numbers per country** for the danger panel (rules.md §2), and **who watches urgent requests at night** | Numbers must be verified by a person; inventing them is forbidden. Urgent requests reach every mentor's and team member's inbox at once, but nobody is on call yet | Danger cases show «تحدث مع إنسان الآن» (our team) and a generic "call your local emergency number" |
 | 3 | **Permission letters**: islamqa.info (AI and app use of the offline archive), binbaz.org.sa (AI use), IslamHouse (own API key, self-hosting the Osoul videos and Al-Fatiha audio), dorar.net (stays link-only) | Sending email on your behalf needs your approval | islamqa is indexed on your explicit instruction and labelled "permission pending"; its files stay outside the public repo; dorar/islamenc/dawa.center are link-only |
-| 4 | **Sharia approval of the content** by مهند بن صالح الفوزان | Only he may approve (KNW-05 R5) | 25 lessons are ready and waiting in the review desk. Learners see an honest "being reviewed" message. Invite code for his account: `~/.config/rafeeq/invites.txt` (role `sharia_reviewer`) |
+| 4 | **Prayer reminder: show the prayer name by default?** The Sharia reviewer asks for «أظهر اسم الصلاة» on by default; rules.md §4 says notifications are neutral by default (learners who hide their Islam). Question addressed to ناصر بن عبدالعزيز in `docs/agents/decisions.md` | Product owner's call. Reviewer's proposed solution (decisions.md): no default; ask once when prayer reminders are first turned on, «هل تريد أن يظهر اسم الصلاة في التذكير؟ قد يراه من ينظر إلى شاشة جوالك.» It keeps rules.md §4. Ready to build as soon as you approve | Stays neutral (off) until decided |
 | 5 | **Native Tagalog review** of exercises, objectives and UI strings | Needs a fluent speaker | Tagalog is live after approval but marked as needing review in `frontend/src/app/i18n/tl.ts` and `content/README.md` |
+
+## Rule change applied (2026-10-06)
+
+- **Merged content is shown to learners directly** (product owner; rules.md §1.4): the Sharia reviewer reviews before merge (logs in `content/units/*/review.md`, `content/lessons/REVIEW.md`). Implemented centrally in `backend/app/knowledge/review.py` `published()`: lessons, units, adhkar, daily cards, library, recitations and glossary serve the merged text; the desk can still confirm a version or return it with a reason, which withdraws that version in that language until corrected. Mentor-written challenge text is not merged content and still needs in-app approval.
+- **Live now without a review log entry** (for مهند to check on the live site, as he decided for u2-l3…u6-l4 in `content/lessons/REVIEW.md`): lessons u2-l3 to u6-l4; the AUTHORED Tagalog in `content/tools/edits.py`; the English and Tagalog qibla and Ramadan lines in `content/practice/lines.json` (drafted by Claude). Sourced and unchanged: Hisn al-Muslim adhkar (Arabic, English), HadeethEnc daily cards, IslamHouse library and recitation entries. Returning any version in the desk withdraws it at once.
 
 ## Platform and engineering
 
@@ -44,6 +49,14 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 | Path nodes gained a fourth state, **open** (unlocked by placement) | LRN-02 and LRN-05 together need it; showing a check mark would claim completion | — |
 | Placement asks knowledge questions only, offers «لا أعرف», and never marks answers | LRN-05 R5 and rules.md (no "do you pray") | — |
 | Lesson completion shows a **unit flower** gaining the earned petal; badges are celebrated first | One orchestrated moment of delight, from the brand's petal geometry | — |
+
+## Fixes from the reviewer's site test (issue #9, 2026-10-06)
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| An objective enters review only after its lesson is completed (seeing a card in an unfinished lesson does not count) | The reviewer saw «2 objectives to strengthen» before finishing any lesson; LRN-04 R1 counts «اطّلع», which LRN-10 defines as seeing the cards, so this narrows it to completed lessons | `completedObjectives` in `frontend/src/app/learning/reviewItems.ts` |
+| An objective answered less than an hour ago waits before it returns in review; review prefers an exercise the learner has never answered | The reviewer met the question he had just answered twice; LRN-04 R2 asks for an exercise not answered last time | `REVIEW_PAUSE_MS` in `frontend/src/app/learning/review.ts` |
+| The guide's fixed message names lessons («أشهد»), not objective texts, with Arabic punctuation in Arabic | Objective texts are written for the team in the third person («يعرف…») | `fixedMessage` in `frontend/src/app/ask/guide.ts` |
 
 ## Motivation and indicators
 

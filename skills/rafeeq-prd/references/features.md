@@ -69,8 +69,8 @@
 
 | المعرّف | الميزة وما تقدّمه | الأولوية | الحالة | الوثيقة |
 | --- | --- | --- | --- | --- |
-| KNW-01 | **الإجابة الموثّقة:** يجيب المساعد عن السؤال بلغة السائل من المصادر المعتمدة فقط، ويعرض المصدر، ويمتنع أو يحيل حين يلزم | P1 | جاهزة للتوسيع (**مثال**) | [KNW-01](domains/knowledge/features/KNW-01-sourced-answer.md) |
-| KNW-02 | **تجهيز المصادر المعتمدة:** جلب المحتوى من المصادر التي يسمح ترخيصها بذلك، وفهرسته للبحث، وحفظ نصه كما هو مع مصدره وإصداره | P1 | فكرة | [KNW-02](domains/knowledge/features/KNW-02-approved-sources-ingestion.md) |
+| KNW-01 | **الإجابة الموثّقة:** يجيب المساعد عن السؤال بلغة السائل من المصادر المعتمدة فقط، ويعرض المصدر، ويمتنع أو يحيل حين يلزم | P1 | جاهزة للتوسيع (**مثال**) | [KNW-01](domains/knowledge/features/KNW-01-sourced-answer.md)، [ملحق الثبات](domains/knowledge/features/KNW-01-chatbot-reliability-prd.md) |
+| KNW-02 | **تجهيز المصادر المعتمدة:** جلب المحتوى من المصادر التي يسمح ترخيصها بذلك، وفهرسته للبحث، وحفظ نصه كما هو مع مصدره وإصداره | P1 | فكرة | [KNW-02](domains/knowledge/features/KNW-02-approved-sources-ingestion.md)، [ملحق تغطية المصادر](domains/knowledge/features/KNW-02-source-coverage-and-retrieval-prd.md) |
 | KNW-03 | **المعجم الموحّد:** ترجمة معتمدة واحدة لكل مصطلح شرعي في كل لغة، يستخدمها المساعد والدروس | P2 | فكرة | [KNW-03](domains/knowledge/features/KNW-03-unified-glossary.md) |
 | KNW-04 | **اختبار موثوقية الإجابات:** 80 سؤالًا عاديًا وحرجًا تُختبر عليها الإجابات ثلاث مرات، مقارنة بالنموذج نفسه دون ضوابط رفيق، ويُنشر التقرير | P1 | فكرة | [KNW-04](domains/knowledge/features/KNW-04-answer-reliability-test.md) |
 | KNW-05 | **مراجعة المحتوى واعتماده:** شاشة يعتمد فيها المراجع الشرعي الدروس والبطاقات قبل نشرها. في النسخة الأولى تتم المراجعة على الملفات مباشرة | P2 | فكرة | [KNW-05](domains/knowledge/features/KNW-05-content-review-approval.md) |
