@@ -16,6 +16,7 @@ from app.learning import router as learning
 from app.motivation import challenges, indicators
 from app.motivation import router as motivation
 from app.platform import admin, auth, push
+from app.platform import export as data_export
 from app.platform.models import User
 from app.practice import router as practice
 
@@ -59,6 +60,7 @@ app = FastAPI(title="Rafeeq API", lifespan=lifespan, docs_url="/api/docs", opena
 for r in (
     auth.router,
     auth.me,
+    data_export.router,  # PLT-05 R6
     admin.router,
     learning.router,
     review.router,
