@@ -1211,4 +1211,15 @@ export const en: Dict = {
   "home.org.library.title": "From the library",
   "home.org.library.cta": "Open it",
   "home.org.openSaved": "Open my saved items",
+
+  // PLT-13 notifications on iPhone
+  "plt13.iosUpdateTitle": "Your iPhone needs an update for notifications",
+  "plt13.iosUpdateBody": "On iPhone, notifications need iOS 16.4 or later. Update in Settings, then General, then Software Update, and open Rafeeq from its Home Screen icon.",
+  "plt13.revokedTitle": "Notification permission was turned off on your device",
+  "plt13.revokedBody": "We turned the notification switches off here and won't ask again on our own. To bring them back, allow notifications for Rafeeq in your device settings, then turn on what you want here.",
+  "plt13.test": "Try a notification",
+  "plt13.testHint": "A neutral test notification goes to this device only.",
+  "plt13.testSent": "Test notification sent. It should arrive within a minute.",
+  "plt13.testLimit": "You tried three times today. You can try again tomorrow.",
+  "plt13.testFailed": "We couldn't send the test notification. Turn the switch off and on again, then try.",
 }

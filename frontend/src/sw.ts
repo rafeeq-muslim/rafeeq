@@ -9,7 +9,7 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
-import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
+import { registerPushHandler } from "./sw/plt13-push"
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -34,26 +34,7 @@ registerRoute(
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 
-self.addEventListener("push", (event) => {
-  const data = (() => {
-    try {
-      return event.data?.json() ?? {}
-    } catch {
-      return { body: event.data?.text() }
-    }
-  })() as { title?: string; body?: string; url?: string; tag?: string }
-  // PLT-05 R3 / PLT-06 R6: in discreet mode a plain note icon, not the flower.
-  event.waitUntil(
-    readDiscreet().then((discreet) =>
-      self.registration.showNotification(data.title ?? "", {
-        body: data.body ?? "",
-        ...notificationLook(discreet),
-        tag: data.tag ?? "rafeeq",
-        data: { url: data.url ?? "/" },
-      }),
-    ),
-  )
-})
+registerPushHandler(self) // PLT-13 R2: never an empty notification (discreet look kept)
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close()
