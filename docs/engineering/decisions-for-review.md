@@ -185,3 +185,22 @@ Branch `plt-01-07-platform-rules`. Notes in `implementation/PLT-01.md`, `PLT-02.
 **Pending a human:** the policy text (product owner, and a legal read against PDPL), the data controller's name and contact for the policy (PLT-05 open question), the tone (design: ناصر بن خالد; approval: مهند), native Tagalog review of the new strings, the first glossary terms, and the notification domain question above.
 
 **Feature documents:** not edited (no factual mismatch with the code). research/09 §7 was left as the proposal; the corrected wording lives in the app and `implementation/PLT-05.md`.
+
+## Live source access v3 (knw-live-source-access-build, 2026-10-06)
+
+Implements `PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md` v3; details and evidence in `implementation/KNW-live-source-access-report.md`.
+
+**Decided by the agent (reversible):**
+- **Off by default.** `ASK_SOURCE_POLICY=local-index-v2`; the live path needs `ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3` and `ASK_LIVE_SOURCES=…`, because one of the three connectors (the encyclopedia) is not usable from the backend.
+- **The near-tie preference for islamqa is off** (`KNW_PREFERRED_SOURCE` default empty): v3 §1/§7.2 (no site preferred by its name) supersedes the 2026-10-06 near-tie decision. The mechanism stays; setting the env value restores it.
+- **The «Islamic Content Encyclopedia» is islamenc.com** («موسوعة المحتوى الإسلامي» in its own schema.org record). Not `islamhouse_enc`, not the ICSA `islamic-content-mcp-server`.
+- **islamenc's search is not called**: its robots.txt disallows `/*/search` for every agent, including user-triggered ones (ChatGPT-User, Perplexity-User). The connector stays blocked until written access arrives (`ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`).
+- In live mode, the **local copy of a live connector is not used** as evidence (v3 §8). The other approved sources (QuranEnc, HadeethEnc, IslamHouse enc) are still searched locally, in parallel.
+- **A saved live answer keeps the source's link, identity and read time, not its text** (licences; rules.md §1.3).
+- **A repeated transport with the same `client_request_id` returns the same result** (A15). The app's manual retry sends a new id.
+
+**Pending a human:**
+1. Product owner: confirm that islamenc.com is the intended encyclopedia, and request data/search access from it (ICSA?).
+2. islamqa permission (personal-use terms) and binbaz AI-assistant use. Both are already on the permission list; live reading does not change the licence question.
+3. Privacy: in live mode, a search form of the question (at most 12 words, with e-mail addresses, links and long digit runs removed) is sent to the source sites. No identity is sent and no cookies are kept. The privacy policy page should say so before rollout.
+4. Sharia reviewer: review a live evaluation set (PRD §14, ≥95% target). Only a 4-question smoke run was done.

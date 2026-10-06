@@ -616,3 +616,14 @@ def test_knw_live_unknown_connector_name_is_ignored(monkeypatch):
     monkeypatch.setattr(get_settings(), "ask_source_policy", registry.POLICY_LIVE)
     monkeypatch.setattr(get_settings(), "ask_live_sources", "islamqa,nope")
     assert [c.id for c in registry.enabled()] == ["islamqa"]
+
+
+async def test_knw_live_a26_search_words_never_reach_the_log(client, live, caplog):
+    caplog.set_level(logging.DEBUG)
+    live.sites.add("islamqa", "en", IQ)
+    live.ai.on("router", ROUTE).on("composer", answer("Deep sleep breaks wudu. {{q:" + IQ_ID + "}}", IQ_ID)).on("support", OK)
+    b = await post(client, "Does sleeping zzqqxx break wudu?")
+    assert b["outcome"] == "answered"
+    assert any("zzqqxx" in str(req.url) for _, _, req in live.sites.calls)  # the word was sent to the site
+    text = caplog.text + " ".join(r.getMessage() for r in caplog.records)
+    assert "zzqqxx" not in text and "islamqa.info/api/search" not in text  # httpx request lines are not logged

@@ -22,6 +22,7 @@ connectors' own domains."""
 
 import asyncio
 import ipaddress
+import logging
 import socket
 import time
 from dataclasses import dataclass, field
@@ -30,6 +31,12 @@ from email.utils import parsedate_to_datetime
 import httpx
 
 from app.knowledge.live_sources import types as T
+
+# A26 / PRD §8: httpx logs every request line at INFO, query string included,
+# which would write the search words of a question to the backend log.
+# Request lines are never logged; warnings and errors still are.
+for _name in ("httpx", "httpcore"):
+    logging.getLogger(_name).setLevel(logging.WARNING)
 
 MAX_REDIRECTS = 3
 MAX_BYTES = 3_000_000
