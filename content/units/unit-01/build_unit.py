@@ -296,6 +296,8 @@ L4 = {
         {"id": "u01-l4-o2", "text": T("يعرف حدود ما يُغسل: الوجه، والمرفقان، والكعبان", "Knows the limits of washing: the face, the elbows and the ankles",
                                       "Alam ang hangganan ng hinuhugasan: ang mukha, ang siko at ang bukong-bukong")},
         {"id": "u01-l4-o3", "text": T("يعرف ما يبطل الوضوء", "Knows what nullifies wudu’", "Alam kung ano ang nakakasira sa wudhu")},
+        {"id": "u01-l4-o4", "text": T("يعرف كيف يزيل النجاسة بعد قضاء الحاجة", "Knows how to clean impurity after relieving oneself",
+                                      "Alam kung paano aalisin ang karumihan pagkatapos dumumi")},
     ],
     "cards": [
         card("u01-l4-c1", T("غسل الوجه\nحد الوجه:\n" + "\n".join(ar_face),
@@ -325,7 +327,7 @@ L4 = {
                             "Mawawalan ng bisa ang wudo kapag nagawa ang mga bagay na ito:\n" + "\n".join(after("tl", "Mawawalan ng bisa ang wudo", 3))),
              "Nullifiers of wudu’", ["u01-l4-o3"]),
         card("u01-l4-c6", T(line("ar", "إذا قضى الإنسان حاجته"), line("en", "If someone wants to relieve himself"), line("tl", "Kapag dumumi ang tao")),
-             "After relieving oneself", ["u01-l4-o3"]),
+             "After relieving oneself", ["u01-l4-o4"]),
     ],
 }
 ALL8 = ["intent", "hands", "mouth", "nose", "face", "arms", "head", "feet"]
@@ -352,6 +354,15 @@ L4["exercises"] = [
     ex("u01-l4-e7", "choice", ["u01-l4-o3"], T("كل ما يوجب الغسل يبطل الوضوء.", "Everything that requires ghusl nullifies wudu’.",
                                                 "Ang lahat ng dahilan ng pagka-obligado ng ghusl ay nakakasira sa wudhu."), "u01-l4-c5",
        options=[opt("a", "صحيح", "True", "Tama"), opt("b", "خطأ", "False", "Mali")], answer="a"),
+    ex("u01-l4-e8", "choice", ["u01-l4-o4"], T("بماذا تُزال النجاسة بعد قضاء الحاجة؟ (الأفضل)", "What is best for cleaning after relieving oneself?",
+                                                "Ano ang pinakamainam na panlinis pagkatapos dumumi?"), "u01-l4-c6",
+       options=[opt("a", "الماء الطهور", "Clean water", "Tubig na naipandadalisay"), opt("b", "لا يلزم التنظيف", "No cleaning is needed", "Hindi kailangang maglinis"),
+                opt("c", "مسحة واحدة بأي شيء", "One wipe with anything", "Isang pahid ng kahit ano")], answer="a"),
+    ex("u01-l4-e9", "choice", ["u01-l4-o4"], T("إن لم يُستعمل الماء، فكم مسحة على الأقل؟", "If water is not used, how many wipes at least?",
+                                                "Kung hindi tubig ang gagamitin, ilang pahid man lang?"), "u01-l4-c6",
+       options=[opt("a", "ثلاث مسحات منقية فأكثر بشيء طاهر مباح", "Three cleansing wipes or more, with something clean and permissible",
+                    "Tatlong ulit o higit pa na pagpapahid ng malinis na ipinahihintulot na bagay"),
+                opt("b", "مسحة واحدة", "One wipe", "Isang pahid"), opt("c", "لا حد لها ولو مسحة ناقصة", "Any amount, even an incomplete wipe", "Kahit gaano, kahit hindi malinis")], answer="a"),
 ]
 
 # ---------------------------------------------------------------- lesson 5
@@ -486,9 +497,9 @@ L6["exercises"] = [
                 opt("b", "أسلّم عن يميني", "I turn to the right and give salām", "Babati ako sa kanan"),
                 opt("c", "أسجد مباشرة", "I prostrate straight away", "Magpapatirapa agad")], answer="a"),
     ex("u01-l6-e3", "choice", ["u01-l6-o2"], T("ماذا أقول في الركوع؟", "What do I say while bowing?", "Ano ang sasabihin ko sa pagyuko?"), "u01-l6-c7",
-       options=[opt("a", "سبحان ربي العظيم", "سبحان ربي العظيم", "سبحان ربي العظيم"),
-                opt("b", "سبحان ربي الأعلى", "سبحان ربي الأعلى", "سبحان ربي الأعلى"),
-                opt("c", "ربي اغفر لي", "ربي اغفر لي", "ربي اغفر لي")], answer="a"),
+       options=[opt("a", "سبحان ربي العظيم", "سبحان ربي العظيم (Meaning: Glory is to my Lord, the Great)", "سبحان ربي العظيم (Kahulugan: Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)"),
+                opt("b", "سبحان ربي الأعلى", "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)", "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"),
+                opt("c", "ربي اغفر لي", "ربي اغفر لي (Meaning: My Lord, forgive my sins)", "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)")], answer="a"),
     ex("u01-l6-e4", "choice", ["u01-l6-o2"], T("كيف أركع؟", "How do I bow?", "Paano ako yuyuko?"), "u01-l6-c7",
        options=[opt("a", "حتى يستوي ظهري، ويداي على ركبتيّ مفرّجة الأصابع", "Until my back is level, my hands on my knees with fingers spread",
                     "Hanggang tuwid ang likod at nasa tuhod ang mga kamay na nakabukas ang mga daliri"),
@@ -553,9 +564,9 @@ L7 = {
              "I learn to pray: step 13", ["u01-l7-o3"], image="salah-14-taslim", edited={"en": EDIT, "tl": EDIT}),
     ],
 }
-DH = {"rising": T("سمع الله لمن حمده", "سمع الله لمن حمده", "سمع الله لمن حمده"),
-      "sujud": T("سبحان ربي الأعلى", "سبحان ربي الأعلى", "سبحان ربي الأعلى"),
-      "jalsa": T("ربي اغفر لي", "ربي اغفر لي", "ربي اغفر لي")}
+DH = {"rising": T("سمع الله لمن حمده", "سمع الله لمن حمده (Meaning: Allah hears the one who praises Him)", "سمع الله لمن حمده (Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya)"),
+      "sujud": T("سبحان ربي الأعلى", "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)", "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"),
+      "jalsa": T("ربي اغفر لي", "ربي اغفر لي (Meaning: My Lord, forgive my sins)", "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)")}
 L7["exercises"] = [
     ex("u01-l7-e1", "order", ["u01-l7-o1"], T("رتّب أفعال الصلاة بعد الركوع", "Put the actions after bowing in order", "Isaayos ang mga gawain pagkatapos ng pagyuko"), "u01-l7-c1",
        items=sitems(["rising", "sujud", "sitting", "sujud2", "standing"]), answer=["rising", "sujud", "sitting", "sujud2", "standing"]),
@@ -575,6 +586,59 @@ L7["exercises"] = [
                 opt("b", "أقوم من السجود", "I stand up from prostration", "Tatayo ako mula sa sujud"),
                 opt("c", "أرفع يديّ وأكبّر", "I raise my hands and say الله أكبر", "Itataas ko ang kamay at sasabihin ang الله أكبر")], answer="a"),
 ]
+
+
+# ---------------------------------------------------------------- reviewer decisions 2026-10-06
+# 1) The meaning of each dhikr stays in English and Filipino, labelled so it is never taken
+#    for the words to say in prayer. 2) Where the editions differ, the Arabic edition governs.
+# 3) Wording corrected to the printed book (owner's spreadsheet) where the site differs.
+MEANING = {"en": [
+    ("(Allah is the Most Great)", "(Meaning: Allah is the Most Great)"),
+    ("(Glory and praise be to You O Allah.", "(Meaning: Glory and praise be to You O Allah."),
+    ("(I seek refuge in Allah from the accursed Satan)", "(Meaning: I seek refuge in Allah from the accursed Satan)"),
+    ("(Glory is to my Lord, the Great)", "(Meaning: Glory is to my Lord, the Great)"),
+    ("(Allah hears the one who praises Him)", "(Meaning: Allah hears the one who praises Him)"),
+    ("(Our Lord, and to You is all praise)", "(Meaning: Our Lord, and to You is all praise)"),
+    ("(Glory is to my Lord, the Most High)", "(Meaning: Glory is to my Lord, the Most High)"),
+    ("(My Lord, forgive my sins)", "(Meaning: My Lord, forgive my sins)"),
+    ("(All compliments, prayers", "(Meaning: All compliments, prayers"),
+    ("(Peace and blessings of Allah be upon you)", "(Meaning: Peace and blessings of Allah be upon you)"),
+], "tl": [
+    ("(ang Allah ang Pinakadakila)", "(Kahulugan: ang Allah ang Pinakadakila)"),
+    ("“Ang kaluwalhatian ay sa Iyo O Allah", "(Kahulugan:) “Ang kaluwalhatian ay sa Iyo O Allah"),
+    ("(Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)", "(Kahulugan: Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)"),
+    ("(dininig ng Allah ang sinumang pumuri sa kanya)", "(Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya)"),
+    ("(Panginoon namin, tanging sa Iyo lamang ang papuri)", "(Kahulugan: Panginoon namin, tanging sa Iyo lamang ang papuri)"),
+    ("(Luwalhati sa aking Panginoon, ang Kataas-taasan)", "(Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"),
+    ("(Panginoon, patawarin mo ako)", "(Kahulugan: Panginoon, patawarin mo ako)"),
+    ("“Ang lahat ng kapangyarihan at kadakilaan", "(Kahulugan:) “Ang lahat ng kapangyarihan at kadakilaan"),
+    ("“O Allah! Puriin nawa si Muhammad", "(Kahulugan:) “O Allah! Puriin nawa si Muhammad"),
+    (", ang kapayapaan at mga pagpapala ng Allah ay sumaiyo,", " (Kahulugan: ang kapayapaan at mga pagpapala ng Allah ay sumaiyo),"),
+]}
+MEANING_NOTE = "The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
+PRINTED = {
+    "u01-l2-c4": {"ar": [("علي أصل خلقته", "على أصل خلقته")]},
+    "u01-l1-c5": {"en": [("leave what he forbade", "avoid what he forbade")]},
+    "u01-l3-c1": {"en": [("to perform the worship to get close", "to perform the worship in order to get close")]},
+    "u01-l4-c3": {"en": [("to the nape and then back.", "to the nape and then all the way back.")]},
+    "u01-l5-c2": {"en": [("minor impurity, and major impurity if", "minor impurity, and from major impurity if")]},
+}
+PRINTED_NOTE = "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+for lesson in (L6, L7):
+    for c in lesson["cards"]:
+        for lang, pairs in MEANING.items():
+            before = c["text"][lang]
+            for a, b in pairs:
+                c["text"][lang] = c["text"][lang].replace(a, b)
+            if c["text"][lang] != before:
+                c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + MEANING_NOTE).strip()
+for lesson in (L1, L2, L3, L4, L5):
+    for c in lesson["cards"]:
+        for lang, pairs in PRINTED.get(c["id"], {}).items():
+            for a, b in pairs:
+                assert a in c["text"][lang], (c["id"], a)
+                c["text"][lang] = c["text"][lang].replace(a, b)
+            c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + PRINTED_NOTE).strip()
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
 
