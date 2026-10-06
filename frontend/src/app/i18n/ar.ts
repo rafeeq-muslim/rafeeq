@@ -1279,4 +1279,7 @@ export const ar = {
   "discover.lib.search.type.poster": "تصميم",
   "discover.lib.search.type.khutbah": "خطبة",
   "discover.lib.search.type.qa": "سؤال وجواب",
+
+  // --- MOT-08 (mot-08-team-role-db-only): an old team invite opens a normal account ---
+  "acct.teamRoleDbOnly": "أُنشئ حسابك حسابًا عاديًا. صفة «فريق» يمنحها المسؤول مباشرة، لا برمز دعوة.",
 } as const

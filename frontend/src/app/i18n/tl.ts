@@ -1281,4 +1281,7 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+
+  // --- MOT-08 (mot-08-team-role-db-only): an old team invite opens a normal account. ⚠️ Tagalog needs native review ---
+  "acct.teamRoleDbOnly": "Nagawa ang iyong account bilang karaniwang account. Ang tungkuling team ay direktang ibinibigay ng administrator, hindi sa pamamagitan ng invite code.",
 }

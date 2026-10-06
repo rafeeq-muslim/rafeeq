@@ -87,6 +87,7 @@ class TwoFactorIn(BaseModel):
 class TokenOut(BaseModel):
     access_token: str
     user: "MeOut"
+    notice: str | None = None  # MOT-08: e.g. "team_role_db_only" after an old team invite
 
 
 class LoginOut(BaseModel):
@@ -177,7 +178,9 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         invite = await session.get(Invite, body.invite_code.strip())
         if invite is None or invite.used_by is not None or (invite.expires_at is not None and invite.expires_at < datetime.now(UTC)):
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")  # ORG-02 R1 ex2: used or expired
-        roles = [invite.role]
+        # MOT-08: the team role is granted only in the database; an invite made
+        # for it before that decision still opens a normal account and is used up.
+        roles = ["learner"] if invite.role == "team" else [invite.role]
         if invite.role == "mentor" and not body.gender:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
     user = User(
@@ -204,7 +207,10 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         # ORG-02 R1: an organisation's own invite; ORG records the approval.
         created["invite"] = {"role": invite.role, "org_id": str(invite.org_id)}
     await publish(session, "AccountCreated", "PLT", created)
-    return await _issue(session, user, response)
+    out = await _issue(session, user, response)
+    if invite and invite.role == "team":
+        out.notice = "team_role_db_only"
+    return out
 
 
 @router.post("/login", response_model=LoginOut)
