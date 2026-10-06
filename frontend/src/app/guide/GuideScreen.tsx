@@ -6,13 +6,23 @@
 import { useNavigate } from "react-router"
 import { IconArrowLeft } from "@tabler/icons-react"
 
-import { PetalPattern } from "@/components/rafeeq"
+import { IconTile, PetalPattern } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { BackBar } from "@/app/practice/ui"
 import { useAuth } from "@/app/stores/auth"
 import { GROUPS } from "./catalogue"
+import { UnlessOrganized } from "@/app/home/UnlessOrganized"
 
+/** PLT-09: the page is removed when the organized home's setting is on (off by default). */
 export default function GuideScreen() {
+  return (
+    <UnlessOrganized>
+      <GuideList />
+    </UnlessOrganized>
+  )
+}
+
+function GuideList() {
   const { t } = useT()
   const navigate = useNavigate()
   const me = useAuth((s) => s.me)
@@ -40,9 +50,7 @@ export default function GuideScreen() {
                     onClick={() => navigate(route)}
                     className="flex min-h-16 w-full items-center gap-3 px-4 py-3 text-start transition-colors duration-150 ease-rafeeq hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
                   >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-                      <Icon className="size-5" stroke={1.75} aria-hidden="true" />
-                    </span>
+                    <IconTile icon={Icon} size="sm" />
                     <span className="min-w-0 flex-1">
                       <span className="block text-body font-bold">{t(title)}</span>
                       <span className="block text-label text-muted-foreground">{t(body)}</span>

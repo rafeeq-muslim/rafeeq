@@ -20,6 +20,8 @@ export type Track =
 
 /** KNW-08 R2: after a verse's file ends, the next verse of the surah; null at its end. */
 export const nextAya = (aya: number, count: number): number | null => (aya < count ? aya + 1 : null)
+/** KNW-08 R2: the verse before; null on the surah's first verse. */
+export const prevAya = (aya: number): number | null => (aya > 1 ? aya - 1 : null)
 
 export class ListeningPlayer {
   track: Track | null = null
@@ -50,12 +52,16 @@ export class ListeningPlayer {
   /**
    * R2/R4: one verse of a per-verse recitation (Quranpedia), so the verse
    * highlighted is exactly the file playing. Unpausing, or coming back from
-   * a meaning, resumes the same verse where it stopped.
+   * a meaning, resumes the same verse where it stopped. `fromStart` (the
+   * learner tapped the verse or jumped to it) recites it from its beginning.
    */
-  playVerse(sura: number, aya: number, url: string) {
+  playVerse(sura: number, aya: number, url: string, fromStart = false) {
     this.el.pause()
     const same = this.verseAt?.sura === sura && this.verseAt.aya === aya && this.verseAt.url === url
-    if (!(same && this.track?.kind === "verse")) {
+    if (fromStart) {
+      this.el.src = url
+      this.el.currentTime = 0
+    } else if (!(same && this.track?.kind === "verse")) {
       this.el.src = url
       this.el.currentTime = same ? this.verseAt!.time : 0
     }
@@ -114,7 +120,21 @@ export function loadPosition(sura: number, storage: Pick<Storage, "getItem"> = l
 export function savePosition(sura: number, pos: Position, storage: Pick<Storage, "setItem"> = localStorage) {
   try {
     storage.setItem(KEY(sura), JSON.stringify(pos))
+    storage.setItem(LAST_KEY, String(sura)) // PLT-09 R2: «يومي» continues the last surah
   } catch {
     /* storage blocked: start from the beginning next time */
+  }
+}
+
+// PLT-09 R2: which surah the learner last stopped in, kept with the stop
+// positions on this device only (R6); not a history or a counter.
+const LAST_KEY = "rafeeq.quranPos.last"
+
+export function lastSura(storage: Pick<Storage, "getItem"> = localStorage): number | null {
+  try {
+    const n = Number(storage.getItem(LAST_KEY))
+    return Number.isInteger(n) && n >= 1 && n <= 114 ? n : null
+  } catch {
+    return null
   }
 }

@@ -78,12 +78,23 @@ function DataPromise() {
   )
 }
 
-function Create({ onSignin, onCreated }: { onSignin: () => void; onCreated: () => void }) {
+/** PLT-10 R4: also used on the welcome screen; `onDone` replaces going to «حسابي», `inviteOpen` shows the team invite field. */
+export function Create({
+  onSignin,
+  onCreated,
+  onDone,
+  inviteOpen = false,
+}: {
+  onSignin: () => void
+  onCreated: () => void
+  onDone?: () => void
+  inviteOpen?: boolean
+}) {
   const { t, locale } = useT()
   const setAuth = useAuth((s) => s.set)
   const [form, setForm] = React.useState({ display_name: "", username: "", password: "" })
   const [showPw, setShowPw] = React.useState(false)
-  const [invite, setInvite] = React.useState<string | null>(null)
+  const [invite, setInvite] = React.useState<string | null>(inviteOpen ? "" : null)
   const [gender, setGender] = React.useState<"m" | "f" | "">("")
   const [taken, setTaken] = React.useState<string[]>([])
   const [error, setError] = React.useState<Key | null>(null)
@@ -152,7 +163,7 @@ function Create({ onSignin, onCreated }: { onSignin: () => void; onCreated: () =
           ))}
         </dl>
         <p className="text-label text-warning">{t("acct.noRecovery")}</p>
-        <Button size="lg" onClick={() => navigate("/me", { replace: true })}>
+        <Button size="lg" onClick={() => (onDone ? onDone() : navigate("/me", { replace: true }))}>
           <IconCheck data-icon="inline-start" />
           {t("acct.savedThem")}
         </Button>
@@ -276,7 +287,8 @@ function Create({ onSignin, onCreated }: { onSignin: () => void; onCreated: () =
   )
 }
 
-function SignIn({ onCreate }: { onCreate: () => void }) {
+/** PLT-10 R4: also used on the welcome screen, where `onDone` replaces going to «حسابي». */
+export function SignIn({ onCreate, onDone }: { onCreate: () => void; onDone?: () => void }) {
   const { t } = useT()
   const navigate = useNavigate()
   const setAuth = useAuth((s) => s.set)
@@ -289,7 +301,8 @@ function SignIn({ onCreate }: { onCreate: () => void }) {
   const finish = async (out: Tokens) => {
     setAuth({ token: out.access_token, me: out.user, ready: true })
     await onSignedIn()
-    navigate("/me", { replace: true })
+    if (onDone) onDone()
+    else navigate("/me", { replace: true })
   }
 
   const login = async (e?: React.FormEvent) => {

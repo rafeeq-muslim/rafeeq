@@ -281,7 +281,6 @@ export const ar = {
   "acct.enable2fa": "فعّل التحقق بخطوتين",
   "acct.disable2fa": "أوقف التحقق بخطوتين وامسح البريد",
   "acct.2faOn": "مفعّل، والرموز تصل إلى {email}",
-  "acct.signedOut": "خرجت من حسابك. تقدّمك باقٍ على هذا الجهاز.",
   "acct.saveDisplay": "احفظ الاسم",
   "acct.inviteBad": "رمز الدعوة غير صالح أو مستعمل.",
   "acct.genderNeeded": "اختر الجنس ليطابقك مع المجموعات المناسبة.",
@@ -1153,6 +1152,11 @@ export const ar = {
   "desk.reciter.riwaya": "الرواية",
   "desk.reciter.sample": "العيّنة",
   "desk.reciter.otherSura": "سورة أخرى",
+  // KNW-08 R2: tap a verse to recite from it; previous/next verse (knw-08-r2-tap-verse)
+  "discover.quran.prevVerse": "الآية السابقة",
+  "discover.quran.nextVerse": "الآية التالية",
+  "discover.quran.reciteFrom": "ابدأ التلاوة من الآية {n}:",
+  "discover.quran.verseControls": "التنقّل بين الآيات",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
   "mot.unapproved": "غير معتمد",
   "mot.reminder.pickTime": "اختر الوقت الذي يناسبك",
@@ -1178,4 +1182,56 @@ export const ar = {
   // KNW-01 answer rate: failure copy that leads with retry, not with a person
   "ask.fail.verificationFailed.body": "لم تجتز الإجابة فحص المصادر، فلم أعرضها. المحاولة من جديد تكتب إجابة جديدة، وكثيرًا ما تنجح.",
   "ask.fail.unavailable.body": "تعذّر إكمال الإجابة الآن، ولا أجيب دون تحقق. حاول مرة أخرى بعد قليل.",
+  // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
+  "me.theme": "المظهر",
+  "theme.light": "فاتح",
+  "theme.dark": "داكن",
+  "theme.system": "حسب الجهاز",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen ---
+  "welcome.signin.entry": "لي حساب، سجّل دخولي",
+  "welcome.signin.title": "سجّل دخولك",
+  "welcome.code.org": "عندي رمز من جهة دعوية",
+  "welcome.code.invalid": "الرمز غير صحيح",
+
+  // --- PLT-09 organized home (plt-09-organized-home-build) ---
+  "home.org.daily": "يومي",
+  "home.org.prayerUnknown": "اعرف وقت الصلاة حيث أنت",
+  "home.org.prayerAt": "{name} {time}",
+  "home.org.soon": "{name} بعد {n} دقيقة",
+  "home.org.adhkar.morning": "أذكار الصباح",
+  "home.org.adhkar.evening": "أذكار المساء",
+  "home.org.adhkar.afterPrayer": "أذكار بعد الصلاة",
+  "home.org.adhkar.sleep": "أذكار النوم",
+  "home.org.adhkar.any": "الأذكار",
+  "home.org.quranContinue": "تابع سورة {name}",
+  "home.org.libraryMeta": "كتب ومقاطع معتمدة للمسلم الجديد",
+  "home.org.hide": "أخفِ هذا المكوّن",
+  "home.org.reciter.title": "اختر قارئك",
+  "home.org.reciter.body": "اختر الصوت الذي تحب أن تستمع به إلى القرآن.",
+  "home.org.reciter.cta": "اختر القارئ",
+  "home.org.library.title": "من المكتبة",
+  "home.org.library.cta": "افتح المادة",
+  "home.org.openSaved": "افتح محفوظاتي",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "نحفظ تقدّمك…",
+  "acct.signOut.anyway": "اخرج وامسح",
+  "acct.signOut.wait": "انتظر حتى يعود الاتصال",
+  // PLT-05 R7 follow-up: one dialog naming what would be lost; privacy policy line
+  "acct.signOut.lostTitle": "سيُمسح هذا من الجهاز ولن يبقى في حسابك",
+  "acct.signOut.offline": "لم نستطع الوصول إلى حسابك الآن، وقد يكون الاتصال منقطعًا. إن انتظرت حتى يعود الاتصال، نحفظ ما يحفظه حسابك أولًا.",
+  "acct.signOut.rejected": "لم يقبل حسابك حفظ ذلك، والانتظار لا يغيّر شيئًا.",
+  "acct.signOut.deviceOnly": "هذا محفوظ على هذا الجهاز وحده، ولا يُنقل إلى حسابك.",
+  "acct.signOut.lost.progress": "ما تعلّمته منذ آخر حفظ في حسابك",
+  "acct.signOut.lost.saved": "ما حفظته ولم يصل إلى حسابك",
+  "acct.signOut.lost.notebook": "دفتر أسئلتك الخاصة",
+  "acct.signOut.lost.habits": "عاداتك وما سجّلته منها",
+  "policy.signout.title": "عند تسجيل الخروج",
+  "policy.signout.body": "تسجيل الخروج يمسح من هذا الجهاز كل ما يحفظه رفيق عليه، بعد أن نحفظ في حسابك تقدّمك وما حفظته. ودفتر أسئلتك الخاصة وعاداتك لا تُحفظ في الحساب، فتُمسح مع الخروج. وما في حسابك يبقى حتى تحذفه.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "بحثنا الآن مباشرة في: {names}",
+  "ask.live.unreachable": "تعذّر الوصول الآن إلى: {names}",
+  "ask.live.fetchedAt": "قُرئ من المصدر في {d}",
+  "ask.live.openSource": "افتح النص كاملًا في المصدر",
+  "ask.live.savedNote": "لا يُحفظ نص المصدر على جهازك؛ افتحه في موقعه.",
 } as const

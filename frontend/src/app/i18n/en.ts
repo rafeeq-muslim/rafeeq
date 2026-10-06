@@ -282,7 +282,6 @@ export const en: Dict = {
   "acct.enable2fa": "Turn on two-step sign-in",
   "acct.disable2fa": "Turn off two-step sign-in and remove the email",
   "acct.2faOn": "On. Codes go to {email}",
-  "acct.signedOut": "You signed out. Your progress stays on this device.",
   "acct.saveDisplay": "Save the name",
   "acct.inviteBad": "This invite code is not valid or was already used.",
   "acct.genderNeeded": "Choose a gender to match you with the right groups.",
@@ -1154,6 +1153,11 @@ export const en: Dict = {
   "desk.reciter.riwaya": "Riwaya",
   "desk.reciter.sample": "Sample",
   "desk.reciter.otherSura": "Another surah",
+  // KNW-08 R2: tap a verse to recite from it; previous/next verse (knw-08-r2-tap-verse)
+  "discover.quran.prevVerse": "Previous verse",
+  "discover.quran.nextVerse": "Next verse",
+  "discover.quran.reciteFrom": "Recite from verse {n}:",
+  "discover.quran.verseControls": "Verse controls",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
   "mot.unapproved": "Not yet approved",
   "mot.reminder.pickTime": "Pick a time that suits you",
@@ -1179,4 +1183,56 @@ export const en: Dict = {
   // KNW-01 answer rate: failure copy that leads with retry, not with a person
   "ask.fail.verificationFailed.body": "The answer didn't pass the source check, so I'm not showing it. Trying again writes a new answer, and that often works.",
   "ask.fail.unavailable.body": "I couldn't finish the answer right now, and I don't answer without checking. Please try again in a moment.",
+  // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
+  "me.theme": "Appearance",
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "theme.system": "Device setting",
+  // --- PLT-10 R4 (plt-10-r4-r5-welcome-sign-in): sign-in and an organisation's code on the welcome screen ---
+  "welcome.signin.entry": "I have an account, sign me in",
+  "welcome.signin.title": "Sign in",
+  "welcome.code.org": "I have a code from a da'wah organisation",
+  "welcome.code.invalid": "This code is not valid",
+
+  // --- PLT-09 organized home (plt-09-organized-home-build) ---
+  "home.org.daily": "My day",
+  "home.org.prayerUnknown": "Know the prayer times where you are",
+  "home.org.prayerAt": "{name} {time}",
+  "home.org.soon": "{name} in {n} minutes",
+  "home.org.adhkar.morning": "Morning adhkar",
+  "home.org.adhkar.evening": "Evening adhkar",
+  "home.org.adhkar.afterPrayer": "Adhkar after the prayer",
+  "home.org.adhkar.sleep": "Adhkar before sleep",
+  "home.org.adhkar.any": "Adhkar",
+  "home.org.quranContinue": "Continue Surah {name}",
+  "home.org.libraryMeta": "Approved books and clips for new Muslims",
+  "home.org.hide": "Hide this",
+  "home.org.reciter.title": "Choose your reciter",
+  "home.org.reciter.body": "Pick the voice you'd like to hear the Quran in.",
+  "home.org.reciter.cta": "Choose a reciter",
+  "home.org.library.title": "From the library",
+  "home.org.library.cta": "Open it",
+  "home.org.openSaved": "Open my saved items",
+
+  // PLT-05 R7: sign-out saves progress, then erases this device
+  "acct.signOut.saving": "Saving your progress…",
+  "acct.signOut.anyway": "Sign out and erase",
+  "acct.signOut.wait": "Wait until I'm connected",
+  // PLT-05 R7 follow-up: one dialog naming what would be lost; privacy policy line
+  "acct.signOut.lostTitle": "This will be erased from this device and won't be in your account",
+  "acct.signOut.offline": "We couldn't reach your account just now; you may be offline. If you wait until you're connected, what your account keeps is saved first.",
+  "acct.signOut.rejected": "Your account didn't accept it, and waiting won't change that.",
+  "acct.signOut.deviceOnly": "These are kept on this device only and never move to your account.",
+  "acct.signOut.lost.progress": "What you learned since the last save to your account",
+  "acct.signOut.lost.saved": "Items you saved that haven't reached your account",
+  "acct.signOut.lost.notebook": "Your private questions notebook",
+  "acct.signOut.lost.habits": "Your habits and what you recorded of them",
+  "policy.signout.title": "When you sign out",
+  "policy.signout.body": "Signing out erases everything Rafeeq keeps on this device, after saving your progress and saved items to your account. Your private questions notebook and your habits are not kept in the account, so they are erased when you sign out. What is in your account stays until you delete it.",
+  // PRD live v3 (knw-live-source-access): live source search
+  "ask.live.searched": "Searched live just now: {names}",
+  "ask.live.unreachable": "Couldn't reach right now: {names}",
+  "ask.live.fetchedAt": "Read from the source on {d}",
+  "ask.live.openSource": "Open the full text at the source",
+  "ask.live.savedNote": "The source's text isn't kept on your device; open it at the source.",
 }

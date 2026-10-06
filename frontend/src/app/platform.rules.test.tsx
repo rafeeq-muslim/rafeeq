@@ -220,7 +220,9 @@ describe("plt-01-r3 three promises and one button", () => {
     wrap(<Welcome />, "/welcome", "/welcome")
     fireEvent.click(screen.getByRole("button", { name: /العربية/ }))
     for (const k of ["onb.intro.p1", "onb.intro.p2", "onb.intro.p3"] as const) expect(screen.getByText(ar_(k))).toBeTruthy()
-    expect(screen.getAllByRole("button").map((b) => b.textContent)).toEqual([ar_("onb.intro.cta")])
+    // One button to start; PLT-10 R4's quiet entries (sign-in, codes) sit apart.
+    const main = screen.getAllByRole("button").filter((b) => !b.closest('[data-slot="welcome-entries"]'))
+    expect(main.map((b) => b.textContent)).toEqual([ar_("onb.intro.cta")])
   })
 })
 
@@ -280,7 +282,7 @@ describe("plt-01-r6 the start happens once per device", () => {
     localStorage.setItem("rafeeq.device", JSON.stringify({ state: { onboarded: true }, version: 1 }))
     const go = vi.fn()
     await wipeDevice(go)
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome") // PLT-10 R2: the app lives under /app
     expect(localStorage.getItem("rafeeq.device")).toBeNull()
   })
 })
@@ -505,7 +507,7 @@ describe("plt-05-r4 erase this device", () => {
     expect(del?.headers["X-Help-Token"]).toBe("g".repeat(43))
     expect(Object.keys(localStorage).filter((k) => k.startsWith("rafeeq."))).toEqual([])
     expect(localStorage.getItem("other-site-key")).toBe("kept")
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome")
   })
 
   it("plt05_r4_the_push_subscription_is_dropped_on_the_server_and_the_device", async () => {

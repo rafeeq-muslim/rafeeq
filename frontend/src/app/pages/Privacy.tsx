@@ -22,7 +22,7 @@ import { useDocumentLocale } from "@/app/AppLayout"
 export const POLICY_UPDATED = "2026-10-06"
 
 // "org": ORG-01 the organisation link (what the link carries, what «نعم» keeps, unlinking).
-export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "stats", "org", "never", "rights", "retention"] as const
+export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "stats", "org", "never", "rights", "retention", "signout"] as const
 
 export default function Privacy() {
   useDocumentLocale()
@@ -45,7 +45,7 @@ export default function Privacy() {
         />
         <main className="mx-auto flex w-full max-w-xl flex-col gap-8 px-4 pt-6 pb-[calc(env(safe-area-inset-bottom,0px)+3rem)]">
           <header className="flex flex-col gap-3">
-            <span className="grid size-12 place-items-center rounded-full bg-secondary text-secondary-foreground">
+            <span className="grid size-12 place-items-center rounded-full bg-secondary bg-grad-secondary text-secondary-foreground">
               <IconShieldLock className="size-6" stroke={1.75} aria-hidden="true" />
             </span>
             <h1 className="font-heading text-h1 font-bold text-balance">{t("policy.title")}</h1>

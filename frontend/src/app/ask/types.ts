@@ -37,6 +37,17 @@ export type SourceCard = {
   title: string | null
   origin_url: string
   version: string
+  /** PRD live v3: read live from the source in this attempt (never a stored record). */
+  live?: boolean
+  /** When the backend read it (live records only). */
+  retrieved_at?: string | null
+}
+
+/** PRD live v3 §10: what really happened to one live connector in this attempt. */
+export type LiveSearchEntry = {
+  source_id: string
+  attempted: boolean
+  status: "ok" | "no_results" | "unavailable" | "unsupported_language" | "cancelled" | (string & {})
 }
 
 export type AskResponse = {
@@ -54,6 +65,10 @@ export type AskResponse = {
   handoff: { kind: "urgent" | "escalation"; lang: string } | null
   objective_id: string | null
   lang: string
+  /** PRD live v3 §10, optional additions. */
+  source_policy?: string
+  used_source_ids?: string[]
+  live_search?: LiveSearchEntry[]
 }
 
 /** How the question was sent (R1). Both go through the same request. */

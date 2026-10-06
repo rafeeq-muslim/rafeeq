@@ -1,10 +1,11 @@
 /**
  * Me: who I am here (guest or account, display name only), my badges, my
- * language, notifications (PLT-06: three types, each with its own switch;
- * MOT-05, CMP-01, PRC-05; the Rafeeq tone, PLT-07), privacy (PLT-05: the
- * policy, quick exit, discreet mode, a copy of my data, erase this device;
- * MOT-07 R4 opt out), daily tools, team areas by role, and leaving (sign
- * out, delete the account with a confirmation).
+ * language and appearance (PLT-04), notifications (PLT-06: three types,
+ * each with its own switch; MOT-05, CMP-01, PRC-05; the Rafeeq tone,
+ * PLT-07), privacy (PLT-05: the policy, quick exit, discreet mode, a copy
+ * of my data, erase this device; MOT-07 R4 opt out), daily tools, team
+ * areas by role, and leaving (sign out, delete the account with a
+ * confirmation).
  */
 import * as React from "react"
 import { useLocation, useNavigate } from "react-router"
@@ -13,6 +14,7 @@ import {
   IconBellOff,
   IconBook,
   IconBuildingCommunity,
+  IconBookmark,
   IconChecklist,
   IconCompass,
   IconDeviceMobile,
@@ -47,7 +49,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { LanguageSwitcher, MilestoneBadge, TopBar, YearFlower } from "@/components/rafeeq"
+import { IconTile, LanguageSwitcher, MilestoneBadge, ThemeSwitcher, TopBar, YearFlower } from "@/components/rafeeq"
 import { num, useT, type Key, type Locale } from "@/app/i18n"
 import { api, sendEvent } from "@/app/lib/api"
 import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
@@ -63,7 +65,9 @@ import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 // ORG-01 R3/R4 (org-01-03-organizations-build)
 import { OrgSection } from "@/app/org/OrgSection"
+import { SignOutButton } from "@/app/privacy/SignOutButton" // PLT-05 R7
 import { unlinkOrg } from "@/app/org/api"
+import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
 
 export default function Me() {
   const { t } = useT()
@@ -73,14 +77,8 @@ export default function Me() {
     if (hash === "#privacy") document.getElementById("privacy")?.scrollIntoView?.()
   }, [hash])
   const me = useAuth((s) => s.me)
-  const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
-
-  const signOut = async () => {
-    await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
-    setAuth({ token: null, me: null })
-    toast(t("acct.signedOut"))
-  }
+  const organized = useOrganizedHomeCached() // PLT-09 R2: «أدوات يومية» leaves «حسابي» (unless PLT-09 is switched off)
 
   const roleLinks: { to: string; key: Key; icon: TablerIcon; show: boolean }[] = [
     { to: "/inbox", key: "role.mentorInbox", icon: IconInbox, show: has("mentor") },
@@ -103,11 +101,19 @@ export default function Me() {
           <LanguagePicker />
         </Section>
 
+        <Section title={t("me.theme")}>
+          <ThemePicker />
+        </Section>
+
+        {organized ? (
+          <OrganizedSaved />
+        ) : (
         <Section title={t("me.tools")}>
           <LinkRow icon={IconLayoutGrid} title={t("guide.homeLink")} hint={t("guide.homeLinkBody")} onClick={() => navigate("/guide")} />
           <LinkRow icon={IconCompass} title={t("practice.prayer")} hint={t("me.practiceHint")} onClick={() => navigate("/practice")} />
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
+        )}
 
         <Section title={t("me.notifications")}>
           <NotificationSettings />
@@ -137,9 +143,7 @@ export default function Me() {
           <Section title={t("acct.settings")}>
             <LinkRow icon={IconChecklist} title={t("me.account")} onClick={() => navigate("/me/account")} />
             <div className="flex flex-wrap gap-2 pt-2">
-              <Button variant="outline" onClick={signOut}>
-                {t("me.signout")}
-              </Button>
+              <SignOutButton />
               <DeleteAccount />
             </div>
           </Section>
@@ -168,9 +172,7 @@ function LinkRow({ icon: Icon, title, hint, onClick }: { icon: TablerIcon; title
       onClick={onClick}
       className="tactile flex min-h-16 items-center gap-3 rounded-card border-2 bg-card px-4 py-3 text-start [--lip:var(--outline-lip)]"
     >
-      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-        <Icon className="size-5" stroke={1.75} aria-hidden="true" />
-      </span>
+      <IconTile icon={Icon} size="sm" />
       <span className="min-w-0 flex-1">
         <span className="block text-body font-bold">{title}</span>
         {hint && <span className="block text-label text-muted-foreground">{hint}</span>}
@@ -256,6 +258,21 @@ function LanguagePicker() {
         set({ locale: code as Locale })
         if (me) void api("/api/me", { method: "PATCH", body: { locale: code } }).then((m) => setAuth({ me: m as typeof me }), () => undefined)
       }}
+    />
+  )
+}
+
+/** PLT-04: light by default, dark, or follow the device; the choice stays on this device. */
+function ThemePicker() {
+  const { t } = useT()
+  const theme = useDevice((s) => s.theme)
+  const set = useDevice((s) => s.set)
+  return (
+    <ThemeSwitcher
+      value={theme}
+      onValueChange={(v) => set({ theme: v })}
+      label={t("me.theme")}
+      labels={{ light: t("theme.light"), dark: t("theme.dark"), system: t("theme.system") }}
     />
   )
 }
@@ -627,5 +644,18 @@ function DeleteAccount() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  )
+}
+
+// --- PLT-09 organized home (plt-09-organized-home-build) ------------------------------
+
+/** PLT-09 R2: with the organized home, «محفوظاتي» moves here (the Discover hub is gone). */
+function OrganizedSaved() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <Section title={t("discover.saved")}>
+      <LinkRow icon={IconBookmark} title={t("home.org.openSaved")} hint={t("discover.savedBody")} onClick={() => navigate("/discover/saved")} />
+    </Section>
   )
 }

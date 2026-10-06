@@ -13,7 +13,7 @@
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
-import { IconBookmark, IconBookmarkFilled, IconRefresh, IconSparkles } from "@tabler/icons-react"
+import { IconBookmark, IconBookmarkFilled, IconExternalLink, IconRefresh, IconSparkles } from "@tabler/icons-react"
 
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
@@ -23,10 +23,10 @@ import { cn } from "@/lib/utils"
 import { AssistantMessage, DangerHelpPanel, HumanHelpButton, ReferralCard, UserMessage } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { suraName } from "@/app/lesson/suras"
-import { groupSources, isHadith, isQuran, segments, sourceLabel } from "./answer"
+import { groupSources, isHadith, isQuran, liveSummary, segments, sourceLabel } from "./answer"
 import { useSaveAnswer } from "./saved"
 import { Helplines } from "@/app/companion/Helplines"
-import type { AskResponse, ErrorCode, SourceCard } from "./types"
+import type { AskResponse, ErrorCode, LiveSearchEntry, SourceCard } from "./types"
 
 /** CMP hand-off (Companion's /mentor/help). Only the random ask id travels, never the question text. */
 export const HELP_HUMAN = "/mentor/help?from=ask"
@@ -120,10 +120,52 @@ export function ScriptureQuote({ source }: { source: SourceCard }) {
   return (
     <details className="rounded-card bg-secondary/60 px-4 py-3 text-secondary-foreground">
       <summary className="cursor-pointer text-label font-medium">{refLabel}</summary>
-      <p dir="auto" className="mt-2 font-reading text-body whitespace-pre-line text-foreground/90">
-        {source.quote_text}
-      </p>
+      {source.quote_text ? (
+        <p dir="auto" className="mt-2 font-reading text-body whitespace-pre-line text-foreground/90">
+          {source.quote_text}
+        </p>
+      ) : (
+        source.live && <p className="mt-2 text-caption text-muted-foreground">{t("ask.live.savedNote")}</p>
+      )}
+      {source.live && <LiveSourceMeta source={source} />}
     </details>
+  )
+}
+
+const DATE_TAG: Record<string, string> = { ar: "ar-u-nu-latn", en: "en-US", tl: "fil-PH" }
+
+/** PRD live v3 §8: a live record says when it was read and links to its page; never "updated now". */
+function LiveSourceMeta({ source }: { source: SourceCard }) {
+  const { t, locale } = useT()
+  const at = source.retrieved_at ? new Date(source.retrieved_at) : null
+  const when =
+    at && !Number.isNaN(at.getTime())
+      ? new Intl.DateTimeFormat(DATE_TAG[locale] ?? "en-US", { dateStyle: "medium", timeStyle: "short" }).format(at)
+      : null
+  return (
+    <div className="mt-2 flex flex-col items-start gap-1">
+      {when && <p className="text-caption text-muted-foreground">{t("ask.live.fetchedAt", { d: when })}</p>}
+      <Button asChild variant="ghost" size="xs" className="-ms-2">
+        <a href={source.origin_url} target="_blank" rel="noopener noreferrer">
+          <IconExternalLink data-icon="inline-start" stroke={1.75} />
+          {t("ask.live.openSource")}
+        </a>
+      </Button>
+    </div>
+  )
+}
+
+/** PRD live v3 §10: one line from the attempt's real events only (no timer, no guess). */
+export function LiveSearchNote({ entries }: { entries: LiveSearchEntry[] | undefined }) {
+  const { t, locale } = useT()
+  const { searched, unreachable } = liveSummary(entries)
+  if (!searched.length && !unreachable.length) return null
+  const names = (ids: string[]) => ids.map((id) => sourceLabel({ source_id: id, source_name: id }, locale)).join(locale === "ar" ? "، " : ", ")
+  return (
+    <div className="flex flex-col gap-0.5 ps-2 text-caption text-muted-foreground" data-testid="live-search-note">
+      {searched.length > 0 && <p>{t("ask.live.searched", { names: names(searched) })}</p>}
+      {unreachable.length > 0 && <p>{t("ask.live.unreachable", { names: names(unreachable) })}</p>}
+    </div>
   )
 }
 
@@ -191,6 +233,7 @@ export function AnswerTurn({ response }: { response: AskResponse }) {
           </p>
         ))}
       </AnswerMessage>
+      <LiveSearchNote entries={response.live_search} />
       {response.route === "personal" && (
         <ReferralCard
           title={t("ask.personal.title")}
@@ -229,11 +272,13 @@ function FailureCard({
   askId,
   onRetry,
   onEdit,
+  live,
 }: {
   kind: "noSource" | "verificationFailed" | "unavailable"
   askId: string
   onRetry?: () => void
   onEdit?: () => void
+  live?: LiveSearchEntry[]
 }) {
   const { t } = useT()
   const navigate = useNavigate()
@@ -283,6 +328,7 @@ function FailureCard({
         actionLabel={t("ask.human")}
         onRefer={() => navigate(helpUrl("escalation", askId))}
       />
+      <LiveSearchNote entries={live} />
       {(onRetry || onEdit) && (
         <div className="flex flex-wrap gap-2 ps-2">
           {onRetry && (
@@ -321,14 +367,21 @@ export function ResponseTurn({ response, onRetry, onEdit }: { response: AskRespo
         </DangerHelpPanel>
       )
     case "no_source":
-      return <FailureCard kind="noSource" askId={response.ask_id} onEdit={onEdit} />
+      return <FailureCard kind="noSource" askId={response.ask_id} onEdit={onEdit} live={response.live_search} />
     case "verification_failed":
       // No automatic retry loop (R4): the user may retry (a new composition), rephrase or ask a person.
       return (
         <FailureCard kind="verificationFailed" askId={response.ask_id} onRetry={response.retryable ? onRetry : undefined} onEdit={onEdit} />
       )
     case "unavailable":
-      return <FailureCard kind="unavailable" askId={response.ask_id} onRetry={response.retryable ? onRetry : undefined} />
+      return (
+        <FailureCard
+          kind="unavailable"
+          askId={response.ask_id}
+          onRetry={response.retryable ? onRetry : undefined}
+          live={response.live_search}
+        />
+      )
     case "refused":
     case "out_of_scope":
       return <PlainTurn text={response.answer} />

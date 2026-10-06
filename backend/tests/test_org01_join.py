@@ -34,7 +34,7 @@ async def test_org01_r1_the_link_carries_only_the_organisation_and_the_language(
     shared = (await client.get(f"/api/org/{org.id}/codes", headers=org.coordinator.h)).json()
     tl = next(c for c in shared if c["lang"] == "tl")
     query = parse_qs(urlparse(tl["path"]).query)
-    assert urlparse(tl["path"]).path == "/welcome" and query == {"lang": ["tl"], "org": [org.codes["tl"]]}
+    assert urlparse(tl["path"]).path == "/app/welcome" and query == {"lang": ["tl"], "org": [org.codes["tl"]]}
     events_before = await rows(OutboxEvent)
     r = await client.get(f"/api/org/codes/{org.codes['tl']}")
     assert r.status_code == 200 and r.json() == {"name": org.name, "lang": "tl"}

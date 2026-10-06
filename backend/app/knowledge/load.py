@@ -78,7 +78,7 @@ SOURCES: dict[str, dict[str, str]] = {
     # by app.knowledge.cards, never from a corpus file.
     "rafeeq_cards": {
         "name": "بطاقات رفيق المعتمدة",
-        "url": "/learn",
+        "url": "/app/learn",  # PLT-10 R2
         "license": "Rafeeq team content, approved by the Sharia reviewer (KNW-05)",
     },
 }

@@ -283,3 +283,55 @@ Evidence and numbers: `docs/engineering/implementation/KNW-01-chatbot-reliabilit
 - the narrowed `personal` route;
 - the honorific list;
 - two answers seen while testing: hijab defined as covering the face, presented as settled; "five daily prayers" sourced only to 76:25.
+
+## PLT-04 light theme re-applied (branch `plt-04-light-theme-reapply`, 2026-10-06)
+
+PR #30 re-applied on the product owner's instruction (2026-10-06); design owner ناصر بن خالد to review. PR #31 had reverted it with no reason given.
+
+| Decision | Rule | Where |
+| --- | --- | --- |
+| Light by default whatever the device says; «المظهر» in «حسابي» offers فاتح / داكن / حسب الجهاز. «حسب الجهاز» (follow the device, live) is new compared with PR #30, where it was an open question; the product owner asked for it | PLT-04 R1, R2 (`docs/design-system.md` «المظهر») | `lib/theme.ts`, `public/theme.js`, `stores/device.ts`, `ThemeSwitcher` |
+| `theme-color` and `color-scheme` follow the resolved mode (mist / ink; ink on Welcome) | PLT-04 R2 | `lib/theme.ts`, `index.html` |
+| Contrast fixes from PR #30 kept (muted grey #5C5982, full-colour alert text, inactive tabs, dark «عاجل», JourneyCard label/streak chip); `src/styles/contrast.test.ts` guards them | PLT-04 R4 | `index.css`, components |
+| Brand backdrop, gradient fills and `IconTile` kept; `IconTile` also on the MOT in-app reminder row | PLT-04 R5, R6 | `graphics.tsx`, `ui/button.tsx`, … |
+
+**Pending a human:** the design owner (ناصر بن خالد العويمر) to review the re-apply and the third option «حسب الجهاز».
+## PLT-09 organized home (plt-09-organized-home-build)
+
+Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No migration.
+
+**PLT-09 on by default: product owner's instruction 2026-10-06; PLT owner ناصر بن خالد informed.** The setting `PLT09_ORGANIZED_HOME` stays as a roll-back switch: `PLT09_ORGANIZED_HOME=false` on the API brings back the previous Home, «كل ما في رفيق», Discover and «أدوات يومية» in «حسابي».
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| One next-step card = the short review when it is due, else the next lesson | R1 «أو للمراجعة القصيرة حين تستحق، لا بطاقتان» | `NextStep` in `home/OrganizedHome.tsx` |
+| On the first opening of the day (online) the main components wait up to 4 s for the model's order behind a skeleton; offline the fixed order shows at once | R5: positions must not move once shown; R4 ex3: offline without waiting | `ORDER_TIMEOUT_MS` in `home/useOrganized.ts` |
+| «من المكتبة» picks the first approved item of the basics topic | Library items have no unit tags («يناسب وحدته») | `libraryPick` in `home/useOrganized.ts` |
+| «اختر قارئك»: "opened listening" = a surah was played on this device; only when two or more approved reciters exist | R3; KNW-08 R4 reciters are gated by the reviewer and the picker shows from two | `eligible()` in `home/layout.ts` |
+| Time-of-day bucket from the clock hour (04–06 fajr … 21–04 night), never from prayer times | R4: the location never reaches the model | `timeBucket()` |
+| The model is the guide's (fast tier) with its own prompt `home_order.md`; same budget and spend guard | Open question 2's proposal; until decided the fixed order stays the fallback | `agents.order_home` |
+| An optional component that stops being eligible leaves an empty slot for the rest of the day; a hidden one is replaced in its slot | R5 «يُحذف في مكانه دون أن يتحرك ما سواه»; R6 «يأخذ مكانه الاختياري التالي» | `daySlots()` |
+
+| MOT's in-app reminder (MOT-05) sits under the header, before the next step, and pending badges (MOT-03 R4) after the sheet, as on the previous Home | Keep MOT's behaviour on the new Home | `OrganizedHome.tsx` |
+| «تابع سورة …» reads the last surah from `rafeeq.quranPos.last`, kept with the stop positions | KNW-08 R6 keeps only stop positions on the device, no history | `discover/player.ts` |
+
+**Pending a human:** the ranking model (open question 2); until decided, the guide's model with the fixed order as fallback.
+
+## Live source access v3 (knw-live-source-access-build, 2026-10-06)
+
+Implements `PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md` v3; details and evidence in `implementation/KNW-live-source-access-report.md`.
+
+**Decided by the agent (reversible):**
+- **Off by default.** `ASK_SOURCE_POLICY=local-index-v2`; the live path needs `ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3` and `ASK_LIVE_SOURCES=…`, because one of the three connectors (the encyclopedia) is not usable from the backend.
+- **The near-tie preference for islamqa is off** (`KNW_PREFERRED_SOURCE` default empty): v3 §1/§7.2 (no site preferred by its name) supersedes the 2026-10-06 near-tie decision. The mechanism stays; setting the env value restores it.
+- **The «Islamic Content Encyclopedia» is islamenc.com** («موسوعة المحتوى الإسلامي» in its own schema.org record). Not `islamhouse_enc`, not the ICSA `islamic-content-mcp-server`.
+- **islamenc's search is not called**: its robots.txt disallows `/*/search` for every agent, including user-triggered ones (ChatGPT-User, Perplexity-User). The connector stays blocked until written access arrives (`ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`).
+- In live mode, the **local copy of a live connector is not used** as evidence (v3 §8). The other approved sources (QuranEnc, HadeethEnc, IslamHouse enc) are still searched locally, in parallel.
+- **A saved live answer keeps the source's link, identity and read time, not its text** (licences; rules.md §1.3).
+- **A repeated transport with the same `client_request_id` returns the same result** (A15). The app's manual retry sends a new id.
+
+**Pending a human:**
+1. Product owner: confirm that islamenc.com is the intended encyclopedia, and request data/search access from it (ICSA?).
+2. islamqa permission (personal-use terms) and binbaz AI-assistant use. Both are already on the permission list; live reading does not change the licence question.
+3. Privacy: in live mode, a search form of the question (at most 12 words, with e-mail addresses, links and long digit runs removed) is sent to the source sites. No identity is sent and no cookies are kept. The privacy policy page should say so before rollout.
+4. Sharia reviewer: review a live evaluation set (PRD §14, ≥95% target). Only a 4-question smoke run was done.

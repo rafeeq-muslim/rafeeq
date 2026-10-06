@@ -15,6 +15,7 @@ import { flushEvents } from "@/app/lib/api"
 import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
 import { saveDiscreet } from "@/app/lib/discreetPref"
+import { followTheme } from "@/app/lib/theme"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
@@ -32,6 +33,7 @@ const FULLSCREEN = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placeme
 export function useDocumentLocale() {
   const { locale, dir } = useT()
   const discreet = useDevice((s) => s.discreet)
+  const theme = useDevice((s) => s.theme)
   React.useEffect(() => {
     document.documentElement.lang = locale
     document.documentElement.dir = dir
@@ -39,17 +41,12 @@ export function useDocumentLocale() {
   }, [locale, dir, discreet])
   // PLT-05 R3 / PLT-06 R6: the service worker picks a neutral notification icon.
   React.useEffect(() => void saveDiscreet(discreet), [discreet])
+  // PLT-04: the learner's choice (light by default); "system" follows the device.
+  React.useEffect(() => followTheme(theme), [theme])
   React.useEffect(() => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)")
-    const apply = () => document.documentElement.classList.toggle("dark", dark.matches)
-    apply()
-    dark.addEventListener("change", apply)
     const online = () => void flushEvents()
     window.addEventListener("online", online)
-    return () => {
-      dark.removeEventListener("change", apply)
-      window.removeEventListener("online", online)
-    }
+    return () => window.removeEventListener("online", online)
   }, [])
 }
 
@@ -111,17 +108,12 @@ export default function AppLayout() {
   useDocumentLocale()
   const { t, dir } = useT()
   const onboarded = useDevice((s) => s.onboarded)
+  const theme = useDevice((s) => s.theme)
   const location = useLocation()
   const navigate = useNavigate()
   useGuideTracker(location.pathname) // PLT-08 R3
 
   if (!onboarded) {
-    // First visit at the bare address: the public landing page, whose call to
-    // action opens /welcome. Any deeper link (QR codes use /welcome) goes on.
-    if (location.pathname === "/" && !location.search) {
-      window.location.replace("/landing/")
-      return null
-    }
     // PLT-01 R2: a link may carry the language, and nothing else goes on,
     // except an organisation's code (ORG-01 R1/R2), which is asked about once.
     const q = new URLSearchParams(location.search)
@@ -155,7 +147,7 @@ export default function AppLayout() {
             </React.Suspense>
           </AppShell>
         </div>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" theme={theme} />
       </TooltipProvider>
     </DirectionProvider>
   )

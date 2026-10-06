@@ -1,0 +1,7 @@
+# Thmanyah may be bundled in the app only; it is never committed (licence). build.mjs copies fonts here.
+hyperframes/fonts/
+hyperframes/node_modules/
+hyperframes/renders/
+hyperframes/audio/
+hyperframes/.hyperframes/
+hyperframes/.thumbnails/

@@ -2,10 +2,10 @@
  * KNW-08 R4 in the review desk: the Sharia reviewer listens to a sample of a
  * Quranpedia reciter's surahs, verse by verse over the stored text (as
  * learners will hear it, R2), then approves or returns the reciter with the
- * desk's buttons (recorded with the reviewer's name and date).
+ * desk's buttons (recorded with the reviewer's name and date). The reviewer
+ * taps a verse or uses «الآية السابقة/التالية» exactly as learners do (R2).
  */
 import * as React from "react"
-import { IconPlayerPauseFilled, IconPlayerPlayFilled } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -18,6 +18,7 @@ import { AYA_COUNT } from "./ayaCount"
 import { ListeningPlayer, nextAya } from "./player"
 import { followVerse } from "./reciters"
 import { useSuraText } from "./verses"
+import { VerseControls } from "./VerseControls"
 
 export type ReciterReviewView = {
   title: string
@@ -89,8 +90,8 @@ export function SampleSura({ reciter, sura }: { reciter: number; sura: number })
   const [playing, setPlaying] = React.useState(false)
   const player = () => (playerRef.current ??= new ListeningPlayer(audioRef.current!))
 
-  const play = (aya: number) => {
-    player().playVerse(sura, aya, quranpediaUrl(reciter, sura, aya))
+  const play = (aya: number, fromStart = false) => {
+    player().playVerse(sura, aya, quranpediaUrl(reciter, sura, aya), fromStart)
     setCurrent(aya)
     setPlaying(true)
   }
@@ -115,18 +116,22 @@ export function SampleSura({ reciter, sura }: { reciter: number; sura: number })
           }
         }}
       />
-      <Button
-        className="w-fit"
-        onClick={() => {
-          if (playing) {
-            player().pause()
-            setPlaying(false)
-          } else play(current ?? 1)
-        }}
-      >
-        {playing ? <IconPlayerPauseFilled data-icon="inline-start" /> : <IconPlayerPlayFilled data-icon="inline-start" />}
-        {t(playing ? "discover.quran.pause" : "discover.quran.play")}
-      </Button>
+      {count > 0 && (
+        <VerseControls
+          size="default"
+          className="w-fit"
+          playing={playing}
+          at={current ?? 1}
+          count={count}
+          onToggle={() => {
+            if (playing) {
+              player().pause()
+              setPlaying(false)
+            } else play(current ?? 1)
+          }}
+          onJump={(aya) => play(aya, true)}
+        />
+      )}
       {text.isLoading ? (
         <Skeleton className="h-40 rounded-card" />
       ) : text.isError ? (
@@ -140,7 +145,12 @@ export function SampleSura({ reciter, sura }: { reciter: number; sura: number })
               aria-current={current === a.aya ? "true" : undefined}
               className={cn("border-s-4 py-3 ps-3", current === a.aya ? "rounded-md border-primary bg-secondary" : "border-transparent")}
             >
-              <button type="button" onClick={() => play(a.aya)} className="w-full text-start">
+              <button
+                type="button"
+                onClick={() => play(a.aya, true)}
+                className="w-full rounded-md text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <span className="sr-only">{t("discover.quran.reciteFrom", { n: num(a.aya) })}</span>
                 <span lang="ar" dir="rtl" className="block font-quran text-[1.5rem] leading-[2.3] text-foreground">
                   {a.arabic} <span className="whitespace-nowrap text-primary">﴿{num(a.aya)}﴾</span>
                 </span>
