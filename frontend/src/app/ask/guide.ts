@@ -8,7 +8,7 @@
  */
 import { api } from "@/app/lib/api"
 import { levelOf, type ObjectiveState } from "@/app/learning/bkt"
-import { firstIncomplete, type Progress } from "@/app/learning/path"
+import { nextLesson, type Progress } from "@/app/learning/path"
 import { inReview } from "@/app/learning/review"
 import type { Lesson } from "@/app/learning/types"
 
@@ -45,8 +45,8 @@ export function buildSummary(
     .sort(([, a], [, b]) => a.p - b.p)
     .slice(0, MAX)
     .map(([id]) => id)
-  const nextLesson = firstIncomplete(lessons, progress)
-  const next = nextLesson ? { lesson_id: nextLesson.id } : reviewing.length ? ({ review: true } as const) : null
+  const step = nextLesson(lessons, progress)
+  const next = step ? { lesson_id: step.id } : reviewing.length ? ({ review: true } as const) : null
   return { lang, mastered, reviewing, next }
 }
 

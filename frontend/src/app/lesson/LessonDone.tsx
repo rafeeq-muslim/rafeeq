@@ -14,7 +14,7 @@ import { num, useT } from "@/app/i18n"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { firstIncomplete } from "@/app/learning/path"
+import { nextLesson } from "@/app/learning/path"
 import type { Completion } from "@/app/learning/complete"
 import { GuideNote } from "@/app/learning/GuideNote"
 import type { Lesson } from "@/app/learning/types"
@@ -28,7 +28,7 @@ export function LessonDone({ lesson, completion }: { lesson: Lesson; completion:
   const [badges, setBadges] = React.useState(completion.badges)
 
   const unit = content?.units.find((u) => u.id === lesson.unit)
-  const next = firstIncomplete(lessons, progress)
+  const next = nextLesson(lessons, progress)
 
   if (badges.length > 0) {
     const id = badges[0]

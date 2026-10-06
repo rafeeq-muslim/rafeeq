@@ -17,7 +17,7 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { firstIncomplete, unitDone } from "@/app/learning/path"
+import { nextLesson, unitDone } from "@/app/learning/path"
 import { progressOf } from "@/app/learning/session"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { streakView } from "@/app/motivation/streak"
@@ -40,7 +40,7 @@ export default function Home() {
   const streak = streakView(days)
   const petals = content ? content.units.filter((u) => unitDone(u, learning)).length : 0
 
-  const next = firstIncomplete(lessons, learning)
+  const next = nextLesson(lessons, learning)
   const unit = next && content?.units.find((u) => u.id === next.unit)
   const session = next ? learning.sessions[next.id] : undefined
   const review = content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []

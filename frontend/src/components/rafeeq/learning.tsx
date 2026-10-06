@@ -204,6 +204,7 @@ function PathUnitHeader({
   description,
   locked = false,
   className,
+  id,
 }: {
   /** e.g. «الشهر 1» */
   unit: string
@@ -212,9 +213,12 @@ function PathUnitHeader({
   description?: string
   locked?: boolean
   className?: string
+  /** Anchor for scrolling the path to this unit. */
+  id?: string
 }) {
   return (
     <li
+      id={id}
       data-slot="path-unit-header"
       data-locked={locked}
       className={cn(
