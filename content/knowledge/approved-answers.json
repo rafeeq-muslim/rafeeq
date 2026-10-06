@@ -1,4 +1,385 @@
 {
-  "_about": "Plan 4.8: answers approved by the Sharia reviewer for the most frequent questions, served when both models are down. Each entry: id, lang, questions (phrasings), answer (may contain {{q:passage id}} markers), sources (passage ids), status, reviewer, approved_at. Only status \"approved\" is ever served. Empty until the team writes and the reviewer approves them.",
-  "answers": []
+  "_about": "Plan 4.8 / KNW-01 R7: answers approved by the Sharia reviewer for the most frequent questions. Each entry: id, lang, suggestion_key (optional: the Ask starter suggestion it answers), questions (known phrasings), answer (may contain {{q:passage id}} markers), sources (passage ids), source_versions (per source: id, source_id, ref_key, version at drafting time; if a source is removed or its version changes, the answer is not used until re-reviewed), status (draft | approved | withdrawn), reviewer, approved_at (YYYY-MM-DD), note. Only status \"approved\" is ever served (backend/app/knowledge/ai/screen.py). Drafts wait for the Sharia reviewer.",
+  "answers": [
+    {
+      "id": "suggest-shahada-ar",
+      "lang": "ar",
+      "suggestion_key": "ask.suggest.1",
+      "questions": [
+        "ما معنى الشهادتين؟",
+        "ما معنى الشهادتين",
+        "مامعنى الشهادتين",
+        "مامعنى الشهادتين؟",
+        "معنى الشهادتين",
+        "ما معنى شهادة أن لا إله إلا الله وأن محمدا رسول الله؟",
+        "ما معنى لا إله إلا الله محمد رسول الله؟"
+      ],
+      "answer": "الشهادتان هما أصل الإسلام وأساسه، وبهما يدخل الإنسان في الإسلام.\nمعنى شهادة أن لا إله إلا الله: أن تشهد بلسانك وتؤمن بقلبك، عن علم ويقين وصدق، أنه لا معبود بحق إلا الله، وأن كل ما عبده الناس من دونه من أصنام أو أموات أو أشجار أو أحجار أو غيرها باطل.\nومعنى شهادة أن محمدًا رسول الله: أن تشهد عن علم ويقين وصدق أن محمد بن عبد الله رسول الله حقًّا إلى الجن والإنس، وأنه خاتم الأنبياء فلا نبي بعده؛ ومن معناها أيضًا طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه، وألا يُعبد الله إلا بما شرع.",
+      "sources": [
+        "binbaz:ar:18975",
+        "binbaz:ar:6940:p1",
+        "islamhouse_enc:160:ar:s5:p1"
+      ],
+      "source_versions": [
+        {
+          "id": "binbaz:ar:18975",
+          "source_id": "binbaz",
+          "ref_key": "18975",
+          "version": "rn0x@28f3afa/2024-09-21"
+        },
+        {
+          "id": "binbaz:ar:6940:p1",
+          "source_id": "binbaz",
+          "ref_key": "6940",
+          "version": "rn0x@28f3afa/2024-09-21"
+        },
+        {
+          "id": "islamhouse_enc:160:ar:s5:p1",
+          "source_id": "islamhouse_enc",
+          "ref_key": "160:s5",
+          "version": "enc-api@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-shahada-en",
+      "lang": "en",
+      "suggestion_key": "ask.suggest.1",
+      "questions": [
+        "What does the shahada mean?",
+        "What is the meaning of the shahada?",
+        "What does the shahadah mean?",
+        "Meaning of the shahada",
+        "What does it mean to testify that there is no god but Allah and that Muhammad is His Messenger?",
+        "What is the meaning of the testimony of faith?"
+      ],
+      "answer": "The shahada is the testimony that there is no god but Allah and that Muhammad is the Messenger of Allah. A person enters Islam with this testimony. {{q:hadeethenc:en:3390}}\n\"There is no god but Allah\" means that no one is worthy of worship except Allah: you devote worship to Allah alone and give up the worship of everything else.\n\"Muhammad is the Messenger of Allah\" means having faith in him and in what he brought, believing him, and believing that he is the last Messenger Allah sent to all people. It also means obeying his orders, believing what he told us, avoiding what he forbade, and worshipping Allah only in the way he taught.",
+      "sources": [
+        "hadeethenc:en:3390",
+        "islamhouse_enc:160:en:s5:p1"
+      ],
+      "source_versions": [
+        {
+          "id": "hadeethenc:en:3390",
+          "source_id": "hadeethenc",
+          "ref_key": "3390",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "islamhouse_enc:160:en:s5:p1",
+          "source_id": "islamhouse_enc",
+          "ref_key": "160:s5",
+          "version": "enc-api@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-shahada-tl",
+      "lang": "tl",
+      "suggestion_key": "ask.suggest.1",
+      "questions": [
+        "Ano ang kahulugan ng shahada?",
+        "Ano ang kahulugan ng shahadah?",
+        "Ano ang ibig sabihin ng shahada?",
+        "Ano ang kahulugan ng pagsaksi na walang Diyos kundi si Allah?"
+      ],
+      "answer": "Ang shahada ay ang pagsaksi na walang Diyos kundi si Allāh at na si Muḥammad ay Sugo ni Allāh. Sa pamamagitan ng pagsaksing ito, pumapasok ang tao sa Islām. {{q:hadeethenc:tl:3390}}\nAng kahulugan ng pagsaksi na walang Diyos kundi si Allāh ay walang sinasamba ayon sa karapatan kundi si Allāh: ang pagbubukod-tangi kay Allāh sa pagsamba at ang pagwaksi sa pagsamba sa anumang iba sa Kanya.\nAng kahulugan ng pagsaksi na si Muḥammad ay Sugo ni Allāh ay ang pananampalataya sa kanya at sa anumang inihatid niya, ang pagpapatotoo sa kanya, at na siya ang kahuli-hulihan sa mga sugo ni Allāh sa sangkatauhan.",
+      "sources": [
+        "hadeethenc:tl:3390",
+        "hadeethenc:tl:6765"
+      ],
+      "source_versions": [
+        {
+          "id": "hadeethenc:tl:3390",
+          "source_id": "hadeethenc",
+          "ref_key": "3390",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:tl:6765",
+          "source_id": "hadeethenc",
+          "ref_key": "6765",
+          "version": "api-v1@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-wudu-ar",
+      "lang": "ar",
+      "suggestion_key": "ask.suggest.2",
+      "questions": [
+        "ما فضل الوضوء؟",
+        "ما فضل الوضوء",
+        "مافضل الوضوء",
+        "ما هو فضل الوضوء؟",
+        "ما أجر الوضوء؟",
+        "ما ثواب الوضوء؟"
+      ],
+      "answer": "من فضل الوضوء أنه يكفّر الذنوب الصغيرة: من توضأ فأحسن وضوءه، مراعيًا سننه وآدابه، كان ذلك سببًا في خروج خطاياه من جسده. {{q:hadeethenc:ar:6263}}\nوعند غسل الوجه واليدين والرجلين تخرج الخطايا الصغيرة التي وقعت من كل عضو، حتى يفرغ من وضوئه نقيًّا منها. {{q:hadeethenc:ar:3284}}\nففي الوضوء طهارة للبدن، وطهارة من الذنوب. أما الكبائر فلا بد لها من التوبة.",
+      "sources": [
+        "hadeethenc:ar:6263",
+        "hadeethenc:ar:3284"
+      ],
+      "source_versions": [
+        {
+          "id": "hadeethenc:ar:6263",
+          "source_id": "hadeethenc",
+          "ref_key": "6263",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:ar:3284",
+          "source_id": "hadeethenc",
+          "ref_key": "3284",
+          "version": "api-v1@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-wudu-en",
+      "lang": "en",
+      "suggestion_key": "ask.suggest.2",
+      "questions": [
+        "What is the reward of wudu?",
+        "What is the virtue of wudu?",
+        "What is the reward of ablution?",
+        "What is the virtue of ablution?",
+        "Why is wudu rewarded?"
+      ],
+      "answer": "Wudu wipes away minor sins. Whoever performs wudu well, observing its Sunnahs and etiquettes, has his sins come out of his body. {{q:hadeethenc:en:6263}}\nAs the face, hands and feet are washed, the minor sins done by each of them leave with the water, so that by the end of wudu the person is cleansed of them. {{q:hadeethenc:en:3284}}\nSo wudu purifies the body and also purifies from sins. Major sins, however, need repentance.",
+      "sources": [
+        "hadeethenc:en:6263",
+        "hadeethenc:en:3284"
+      ],
+      "source_versions": [
+        {
+          "id": "hadeethenc:en:6263",
+          "source_id": "hadeethenc",
+          "ref_key": "6263",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:en:3284",
+          "source_id": "hadeethenc",
+          "ref_key": "3284",
+          "version": "api-v1@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-wudu-tl",
+      "lang": "tl",
+      "suggestion_key": "ask.suggest.2",
+      "questions": [
+        "Ano ang gantimpala ng wudhu?",
+        "Ano ang gantimpala ng wudu?",
+        "Ano ang kainaman ng wuḍū'?",
+        "Ano ang kainaman ng wudu?"
+      ],
+      "answer": "Ang wuḍū' ay panakip-sala sa maliliit na pagkakasala. Ang sinumang nagsagawa ng wuḍū' nang maganda, kasabay ng pagsasaalang-alang sa mga sunnah at etiketa nito, ay lalabasan ng mga kasalanan mula sa katawan niya. {{q:hadeethenc:tl:6263}}\nSa paghuhugas ng mukha, mga kamay at mga paa, lumalabas kasama ng tubig ang maliliit na pagkakamaling nagawa ng mga bahaging iyon, hanggang sa matapos siya sa wuḍū' na dalisay mula sa mga ito. {{q:hadeethenc:tl:3284}}\nKaya ang wuḍū' ay may pagdadalisay na pisikal at pagdadalisay na espirituwal mula sa mga pagkakasala. Hinggil naman sa malalaking pagkakasala, hindi makaiiwas sa pagbabalik-loob.",
+      "sources": [
+        "hadeethenc:tl:6263",
+        "hadeethenc:tl:3284"
+      ],
+      "source_versions": [
+        {
+          "id": "hadeethenc:tl:6263",
+          "source_id": "hadeethenc",
+          "ref_key": "6263",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:tl:3284",
+          "source_id": "hadeethenc",
+          "ref_key": "3284",
+          "version": "api-v1@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-parents-ar",
+      "lang": "ar",
+      "suggestion_key": "ask.suggest.3",
+      "questions": [
+        "كيف أعامل والديّ؟",
+        "كيف أعامل والدي؟",
+        "كيف أعامل والدي",
+        "كيف أبر والديّ؟",
+        "كيف أبر والدي؟",
+        "كيف أعامل أبي وأمي؟"
+      ],
+      "answer": "أمر الله بالإحسان إلى الوالدين، خاصة عند كبرهما: فلا تُظهر لهما الضجر، ولا تزجرهما، ولا تُغلظ لهما القول، وقل لهما قولًا كريمًا فيه لين ولطف. {{q:quranenc:ar:17:23}}\nوبر الوالدين من أحب الأعمال إلى الله بعد الصلاة في وقتها، ويكون بالإحسان إليهما والقيام بحقهما وترك عقوقهما. {{q:hadeethenc:ar:3365}}\nولكل واحد من الوالدين حق في حسن الصحبة، وحق الأم مقدَّم؛ إذ ذكرها النبي ﷺ ثلاث مرات قبل الأب. {{q:hadeethenc:ar:4182}}\nوإن حاول الوالدان أن يحملاك على الشرك بالله فلا تطعهما في ذلك، وصاحبهما في الدنيا بالبر والصلة والإحسان. {{q:quranenc:ar:31:15}}",
+      "sources": [
+        "quranenc:ar:17:23",
+        "quranenc:arabic_mokhtasar:17:23",
+        "hadeethenc:ar:3365",
+        "hadeethenc:ar:4182",
+        "quranenc:ar:31:15",
+        "quranenc:arabic_mokhtasar:31:15"
+      ],
+      "source_versions": [
+        {
+          "id": "quranenc:ar:17:23",
+          "source_id": "quranenc",
+          "ref_key": "17:23",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "quranenc:arabic_mokhtasar:17:23",
+          "source_id": "quranenc",
+          "ref_key": "17:23",
+          "version": "unlisted@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:ar:3365",
+          "source_id": "hadeethenc",
+          "ref_key": "3365",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:ar:4182",
+          "source_id": "hadeethenc",
+          "ref_key": "4182",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "quranenc:ar:31:15",
+          "source_id": "quranenc",
+          "ref_key": "31:15",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "quranenc:arabic_mokhtasar:31:15",
+          "source_id": "quranenc",
+          "ref_key": "31:15",
+          "version": "unlisted@2026-10-05"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-parents-en",
+      "lang": "en",
+      "suggestion_key": "ask.suggest.3",
+      "questions": [
+        "How should I treat my parents?",
+        "How do I treat my parents?",
+        "How should a Muslim treat his parents?",
+        "How can I be good to my parents?",
+        "What does Islam say about treating parents well?"
+      ],
+      "answer": "Allah has decreed that you worship none but Him and that you treat your parents well. When they grow old, do not show them annoyance or repel them; speak to them with noble words. {{q:quranenc:english_saheeh:17:23}}\nBeing dutiful to parents is among the deeds dearest to Allah, after offering prayer at its time. It means being kind to them, fulfilling their rights, and not being undutiful to them. {{q:hadeethenc:en:3365}}\nBoth parents have a right to good companionship, and the mother's right comes first: the Prophet mentioned her three times before the father. {{q:hadeethenc:en:4182}}\nEven if your parents push you to associate others with Allah, do not obey them in that, but keep them company in this world with kindness. {{q:quranenc:english_saheeh:31:15}}",
+      "sources": [
+        "quranenc:english_saheeh:17:23",
+        "hadeethenc:en:3365",
+        "hadeethenc:en:4182",
+        "quranenc:english_saheeh:31:15"
+      ],
+      "source_versions": [
+        {
+          "id": "quranenc:english_saheeh:17:23",
+          "source_id": "quranenc",
+          "ref_key": "17:23",
+          "version": "1.1.2"
+        },
+        {
+          "id": "hadeethenc:en:3365",
+          "source_id": "hadeethenc",
+          "ref_key": "3365",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:en:4182",
+          "source_id": "hadeethenc",
+          "ref_key": "4182",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "quranenc:english_saheeh:31:15",
+          "source_id": "quranenc",
+          "ref_key": "31:15",
+          "version": "1.1.2"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    },
+    {
+      "id": "suggest-parents-tl",
+      "lang": "tl",
+      "suggestion_key": "ask.suggest.3",
+      "questions": [
+        "Paano ko dapat pakitunguhan ang aking mga magulang?",
+        "Paano ko pakikitunguhan ang mga magulang ko?",
+        "Paano ako magiging mabuti sa aking mga magulang?",
+        "Paano dapat pakitunguhan ng Muslim ang kanyang mga magulang?"
+      ],
+      "answer": "Nagtadhana si Allāh na huwag sumamba kundi sa Kanya at gumawa ng maganda sa mga magulang. Kapag tumanda sila, huwag kang magpakita ng pagkasuya at huwag kang bumulyaw sa kanila; magsabi ka sa kanila ng salitang marangal. {{q:quranenc:tagalog_rwwad:17:23}}\nAng pagsasamabuting-loob sa mga magulang ay kabilang sa mga gawaing pinakakaibig-ibig kay Allāh, matapos ng pagdarasal sa oras nito. Ito ay sa pamamagitan ng paggawa ng maganda sa kanila, pagtataguyod sa karapatan nila, at pagwaksi ng pagkasuwail sa kanila. {{q:hadeethenc:tl:3365}}\nAng bawat isa sa mga magulang ay may karapatan sa magandang pakikisama, at ang karapatan ng ina ay nauuna dahil binanggit siya nang tatlong ulit bago ang ama. {{q:hadeethenc:tl:4182}}\nKahit nakipagpunyagi sila sa iyo na magtambal ka kay Allāh, huwag kang tumalima sa kanila roon, ngunit makisama ka sa kanila sa Mundo ayon sa nakabubuti. {{q:quranenc:tagalog_rwwad:31:15}}",
+      "sources": [
+        "quranenc:tagalog_rwwad:17:23",
+        "hadeethenc:tl:3365",
+        "hadeethenc:tl:4182",
+        "quranenc:tagalog_rwwad:31:15"
+      ],
+      "source_versions": [
+        {
+          "id": "quranenc:tagalog_rwwad:17:23",
+          "source_id": "quranenc",
+          "ref_key": "17:23",
+          "version": "1.1.4"
+        },
+        {
+          "id": "hadeethenc:tl:3365",
+          "source_id": "hadeethenc",
+          "ref_key": "3365",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "hadeethenc:tl:4182",
+          "source_id": "hadeethenc",
+          "ref_key": "4182",
+          "version": "api-v1@2026-10-05"
+        },
+        {
+          "id": "quranenc:tagalog_rwwad:31:15",
+          "source_id": "quranenc",
+          "ref_key": "31:15",
+          "version": "1.1.4"
+        }
+      ],
+      "status": "draft",
+      "reviewer": null,
+      "approved_at": null,
+      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+    }
+  ]
 }
