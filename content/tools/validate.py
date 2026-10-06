@@ -126,6 +126,11 @@ def main():
         if os.path.basename(f) != f"{d.get('id')}.json":
             err(f'{f}: file name does not match id')
     all_objectives = {o['id'] for d in lessons.values() for o in d.get('objectives', [])}
+    # Team units (content/units/*/unit.json) replace pipeline units in the app, so a
+    # review exercise may point at their objectives (u3-l1-e5 → u01-l1-o*, LRN-09 R3).
+    for f in sorted(glob.glob(os.path.join(ROOT, 'units', '*', 'unit.json'))):
+        team = json.load(open(f, encoding='utf-8'))
+        all_objectives |= {o['id'] for les in team.get('lessons', []) for o in les.get('objectives', [])}
 
     # units
     if not isinstance(units, list) or len(units) != 6:

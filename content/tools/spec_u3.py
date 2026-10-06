@@ -38,7 +38,7 @@ u3l1 = L(
                   'ay dapat gampanan ng bawat Muslim; kailangang paniwalaan at itaguyod ang lahat ng ito'),
                 T('يكفي المسلم أن يأتي ببعضها', 'it is enough for a Muslim to do some of them',
                   'sapat na sa Muslim ang gawin ang ilan lamang sa mga ito'), T('تلزم العلماء وحدهم', 'They are required of scholars only', 'Obligado lamang ang mga ito sa mga iskolar')]),
-        match(['u1-l1-o1', 'u1-l1-o2'], [3], T('مراجعة: صِل كل شهادة بمعناها', 'Review: match each testimony with its meaning',
+        match(['u01-l1-o1', 'u01-l1-o2'], [3], T('مراجعة: صِل كل شهادة بمعناها', 'Review: match each testimony with its meaning',
                                               'Balik-aral: itugma ang bawat pagsaksi sa kahulugan nito'),
               [(T('شهادة أن لا إله إلا الله', 'The testimony that there is no god but Allah', 'Ang pagsaksi na walang diyos maliban sa Allah'),
                 T('لا معبود حق إلا الله', 'There is no deity worthy of worship except Allah',
@@ -50,7 +50,8 @@ u3l1 = L(
     ],
     notes='Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 '
           '(LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise '
-          '(e5) counts toward the u1-l1 objectives. The two verses of the first pillar are not repeated here.',
+          '(e5) counts toward the day-one shahada objectives (u01-l1-o1, u01-l1-o2 of content/units/unit-01, which '
+          'replaces the pipeline unit 1). The two verses of the first pillar are not repeated here.',
 )
 
 u3l2 = L(

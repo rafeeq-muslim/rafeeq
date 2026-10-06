@@ -189,7 +189,7 @@ Arabic script (other than ﷺ ﷻ) in en/tl text, no verse text in cards, every 
    absent from the spreadsheet. Its three-language text is in `unplaced.json`.
 6. **Lesson boundaries**: u1-l2 also takes the verse on p. 60; u1-l5 also takes the "five prayers" sentence that
    opens the prayer section; u2-l1/u2-l2 split at «من أسمائه الحسنى»; u3-l1 = pillars intro + one review card
-   (its exercise counts toward the u1-l1 objectives; the two pillar-1 verses are not repeated); u6-l3/u6-l4 split
+   (its exercise counts toward the day-one shahada objectives `u01-l1-o1`, `u01-l1-o2`; the two pillar-1 verses are not repeated); u6-l3/u6-l4 split
    at the paragraph «تلك الحلاوة» (spreadsheet rows 252/253, p. 122).
 7. **Verse references** follow the Arabic where translations cite wrongly: 2:222 (spreadsheet/tl say 2:22), 2:183
    for fasting (spreadsheet ar/en and tl say 2:110), 16:97 for u6-l3 (tl quotes a different verse, 4:124).

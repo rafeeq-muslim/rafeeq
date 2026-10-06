@@ -288,8 +288,8 @@
       "id": "u3-l1-e5",
       "type": "match",
       "objectives": [
-        "u1-l1-o1",
-        "u1-l1-o2"
+        "u01-l1-o1",
+        "u01-l1-o2"
       ],
       "cards": [
         "u3-l1-c3"
@@ -355,7 +355,7 @@
       "reason": "transliteration"
     }
   ],
-  "notes": "Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 (LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise (e5) counts toward the u1-l1 objectives. The two verses of the first pillar are not repeated here.",
+  "notes": "Intro of «أتعرف على أركان الإسلام» plus one review card for the first pillar, already taught in u1-l1 (LRN-09 rule 3): the review card repeats the pillar title and the two meaning sentences; its one exercise (e5) counts toward the day-one shahada objectives (u01-l1-o1, u01-l1-o2 of content/units/unit-01, which replaces the pipeline unit 1). The two verses of the first pillar are not repeated here.",
   "edited": [
     {
       "card": "u3-l1-c3",
