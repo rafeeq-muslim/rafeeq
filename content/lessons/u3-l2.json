@@ -191,6 +191,14 @@
             "en": "performing it in any way the Muslim chooses",
             "tl": "pagsasagawa nito sa anumang paraang gusto ng Muslim"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بالقراءة عنها دون أدائها",
+            "en": "By reading about it without performing it",
+            "tl": "Sa pagbabasa tungkol dito nang hindi ito isinasagawa"
+          }
         }
       ],
       "answer": "a"
@@ -208,9 +216,9 @@
         "u3-l2-c5"
       ],
       "prompt": {
-        "ar": "صِل كل عبارة بما يناسبها في الدرس",
-        "en": "Match each phrase with what fits it in the lesson",
-        "tl": "Itugma ang bawat parirala sa angkop dito ayon sa aralin"
+        "ar": "صِل كل عبارة بما يناسبها",
+        "en": "Match each phrase with what fits it",
+        "tl": "Itugma ang bawat parirala sa angkop dito"
       },
       "left": [
         {
@@ -289,9 +297,9 @@
         "u3-l2-c4"
       ],
       "prompt": {
-        "ar": "مما ذكره الدرس من أسباب فرض الزكاة:",
-        "en": "One of the reasons the lesson gives for making Zakah obligatory:",
-        "tl": "Isa sa mga dahilan ng pag-obliga ng Zakah ayon sa aralin:"
+        "ar": "من أسباب فرض الزكاة:",
+        "en": "One reason Allah made zakah obligatory:",
+        "tl": "Isa sa mga dahilan kung bakit inobliga ni Allah ang zakah:"
       },
       "options": [
         {
@@ -340,21 +348,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "للمستحقين، وهم أصناف ثمانية ذكرهم الله في القرآن",
+            "en": "to those eligible: eight categories mentioned in the Qur’an",
+            "tl": "sa mga karapat-dapat: walong uri ng tao na binanggit sa Qur’an"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "لأي أحد ولو لم يكن من المستحقين",
             "en": "to anyone, even if not eligible",
             "tl": "kahit kanino, kahit hindi karapat-dapat"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "للمستحقين، وهم أصناف ثمانية ذكرهم الله في القرآن",
-            "en": "to those eligible: eight categories mentioned in the Qur’an",
-            "tl": "sa mga karapat-dapat: walong uri ng tao na binanggit sa Qur’an"
+            "ar": "للأغنياء",
+            "en": "To the rich",
+            "tl": "Sa mayayaman"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u3-l2-e5",
@@ -374,21 +390,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "إضعاف للمحبة بين أفراد المجتمع",
+            "en": "weakens the love between people in the community",
+            "tl": "nagpapahina ng pagmamahalan sa lipunan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "تطهير لأخلاق المسلم وأمواله، وتقوية للمحبة بين أفراد المجتمع",
             "en": "purifies the Muslim’s character and wealth, and strengthens love in the community",
             "tl": "nagdadalisay sa kayamanan at pag-uugali ng Muslim, at nagpapalakas ng pagmamahalan sa lipunan"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "إضعاف للمحبة بين أفراد المجتمع",
-            "en": "weakens the love between people in the community",
-            "tl": "nagpapahina ng pagmamahalan sa lipunan"
+            "ar": "لا خير فيه للمجتمع",
+            "en": "No good for society",
+            "tl": "Walang kabutihan para sa lipunan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u3-l2-e6",
@@ -461,6 +485,14 @@
             "ar": "كلما ربح ولو لم تمرّ عليه سنة",
             "en": "whenever there is profit, even before a year has passed",
             "tl": "tuwing may kita, kahit hindi pa lumilipas ang isang taon"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "مرة واحدة في العمر",
+            "en": "Once in a lifetime",
+            "tl": "Isang beses lamang sa buong buhay"
           }
         }
       ],

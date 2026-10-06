@@ -214,6 +214,14 @@
             "en": "taking a mediator between him and his Lord from the living or the dead",
             "tl": "pagkakaroon ng tagapamagitan sa pagitan niya at ng kanyang Panginoon mula sa mga buhay o patay"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "كثرة المال",
+            "en": "Having much wealth",
+            "tl": "Pagkakaroon ng maraming kayamanan"
+          }
         }
       ],
       "answer": "a"
@@ -229,9 +237,9 @@
         "u6-l3-c4"
       ],
       "prompt": {
-        "ar": "بماذا أمرنا الله سبحانه في الدرس؟",
-        "en": "What does Allah command us, as the lesson says?",
-        "tl": "Ano ang iniutos sa atin ng Allah ayon sa aralin?"
+        "ar": "بماذا أمرنا الله سبحانه؟",
+        "en": "What has Allah commanded us to do?",
+        "tl": "Ano ang iniutos sa atin ni Allah?"
       },
       "options": [
         {
@@ -248,6 +256,14 @@
             "ar": "بدعائه، وجعله من أعظم العبادات",
             "en": "to call upon Him; He made supplication one of the great acts of worship",
             "tl": "na manalangin sa Kanya; ginawa Niya itong isa sa pinakadakilang pagsamba"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بأن ندعو غيره",
+            "en": "To call upon others besides Him",
+            "tl": "Na manalangin sa iba bukod sa Kanya"
           }
         }
       ],
@@ -271,21 +287,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "لعبادته وحده لا شريك له",
-            "en": "to worship Him alone without any partner",
-            "tl": "upang sambahin lamang Siya nang walang katambal"
+            "ar": "عبثًا بلا حكمة",
+            "en": "in vain, without wisdom",
+            "tl": "nang walang kabuluhan"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "عبثًا بلا حكمة",
-            "en": "in vain, without wisdom",
-            "tl": "nang walang kabuluhan"
+            "ar": "للّهو واللعب",
+            "en": "For amusement and play",
+            "tl": "Para sa libangan at laro"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "لعبادته وحده لا شريك له",
+            "en": "to worship Him alone without any partner",
+            "tl": "upang sambahin lamang Siya nang walang katambal"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u6-l3-e4",
@@ -305,21 +329,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "الدين والنفس والعرض والعقل والمال",
+            "en": "religion, life, honor, mind and property",
+            "tl": "relihiyon, sarili, karangalan, isipan at kayamanan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "الطمأنينة والراحة والسرور",
             "en": "reassurance, comfort and delight",
             "tl": "kapanatagan, kaginhawaan at kasiyahan"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "الدين والنفس والعرض والعقل والمال",
-            "en": "religion, life, honor, mind and property",
-            "tl": "relihiyon, sarili, karangalan, isipan at kayamanan"
+            "ar": "المال والجاه فقط",
+            "en": "Wealth and status only",
+            "tl": "Kayamanan at katayuan lamang"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u6-l3-e5",
@@ -340,21 +372,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "ضيّع هذه الضرورات",
+            "en": "loses these necessities",
+            "tl": "nawawala sa kanya ang mga ito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "حفظ هذه الضرورات وعاش سعيدًا مطمئنًا",
             "en": "preserves these necessities and lives a happy, peaceful life",
             "tl": "napangalagaan ang mga pangangailangang ito at namumuhay nang masaya at payapa"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "ضيّع هذه الضرورات",
-            "en": "loses these necessities",
-            "tl": "nawawala sa kanya ang mga ito"
+            "ar": "لا فرق بينه وبين غيره",
+            "en": "Is no different from anyone else",
+            "tl": "Walang pagkakaiba sa iba"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u6-l3-e6",
@@ -383,13 +423,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "الحزن والقلق",
+            "en": "Sadness and worry",
+            "tl": "Kalungkutan at pag-aalala"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "الطمأنينة والراحة النفسية والأمان والسرور",
             "en": "reassurance, spiritual comfort, safety and delight",
             "tl": "kapanatagan, kaginhawaan ng sarili, katiwasayan at kasiyahan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     },
     {
       "id": "u6-l3-e7",
@@ -403,9 +451,9 @@
         "u6-l3-c4"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل عبارة بما يتمّ معناها",
+        "en": "Match each statement with what completes its meaning",
+        "tl": "Itugma ang bawat pahayag sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {

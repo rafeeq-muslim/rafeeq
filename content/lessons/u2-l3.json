@@ -152,6 +152,14 @@
             "en": "the first of the prophets",
             "tl": "ang unang Propeta"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "ملَك من الملائكة",
+            "en": "An angel",
+            "tl": "Isang anghel"
+          }
         }
       ],
       "answer": "a"
@@ -188,6 +196,14 @@
             "en": "To all humankind",
             "tl": "Para sa buong sangkatauhan"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "إلى أهل مكة وحدهم",
+            "en": "To the people of Makkah only",
+            "tl": "Sa mga tao ng Makkah lamang"
+          }
         }
       ],
       "answer": "b"
@@ -202,9 +218,9 @@
         "u2-l3-c3"
       ],
       "prompt": {
-        "ar": "صِل كل كلمة بما ذكره الدرس عنها",
-        "en": "Match each word with what the lesson says about it",
-        "tl": "Itugma ang bawat salita sa sinabi ng aralin tungkol dito"
+        "ar": "صِل كلًّا منهما بأعظمه",
+        "en": "Match each with the greatest of it",
+        "tl": "Itugma ang bawat isa sa pinakadakila nito"
       },
       "left": [
         {
@@ -271,21 +287,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "التوحيد",
+            "en": "Monotheism",
+            "tl": "Ang Tawheed o kaisahan ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "الشرك",
             "en": "Polytheism",
             "tl": "Ang pagtatambal"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "التوحيد",
-            "en": "Monotheism",
-            "tl": "Ang Tawheed o kaisahan ng Allah"
+            "ar": "كثرة المال",
+            "en": "Having much wealth",
+            "tl": "Pagkakaroon ng maraming kayamanan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u2-l3-e5",
@@ -297,13 +321,21 @@
         "u2-l3-c4"
       ],
       "prompt": {
-        "ar": "أيّ مجموعة كلها من صفاته ﷺ المذكورة في الدرس؟",
-        "en": "Which group lists only traits of the Prophet ﷺ named in the lesson?",
-        "tl": "Aling grupo ang naglalaman lamang ng mga katangian ng Propeta ﷺ na binanggit sa aralin?"
+        "ar": "أيّ مجموعة كلها من صفاته ﷺ؟",
+        "en": "Which group lists only his qualities (peace be upon him)?",
+        "tl": "Aling grupo ang pawang mga katangian niya (pagpalain siya ni Allah)?"
       },
       "options": [
         {
           "id": "a",
+          "text": {
+            "ar": "الناس، والخير، والأنبياء",
+            "en": "People, good, prophets",
+            "tl": "Sangkatauhan, kabutihan, propeta"
+          }
+        },
+        {
+          "id": "b",
           "text": {
             "ar": "الصدق، والرحمة، والحلم",
             "en": "Honesty, mercy, forbearance",
@@ -311,15 +343,15 @@
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "الناس، والخير، والأنبياء",
-            "en": "People, good, prophets",
-            "tl": "Sangkatauhan, kabutihan, propeta"
+            "ar": "الغضب، والكِبر، والقسوة",
+            "en": "Anger, arrogance and harshness",
+            "tl": "Galit, kayabangan at kalupitan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u2-l3-e6",
@@ -347,13 +379,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "البخل، والجبن، والكذب",
+            "en": "Stinginess, cowardice and lying",
+            "tl": "Pagkakuripot, karuwagan at pagsisinungaling"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "التواضع، والعفو، والعدل",
             "en": "Modesty, forgiveness, fairness",
             "tl": "Mapagkumbaba, mapagpatawad, makatarungan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     }
   ],
   "dropped": [

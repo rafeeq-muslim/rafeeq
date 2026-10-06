@@ -213,6 +213,14 @@
             "en": "is one of the five pillars of Islam",
             "tl": "ay kabilang sa mga haligi ng Islam"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "مستحبّ لمن شاء",
+            "en": "Recommended for whoever wishes",
+            "tl": "Mabuti lamang para sa may nais"
+          }
         }
       ],
       "answer": "b"
@@ -235,21 +243,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "من طلوع الفجر إلى غروب الشمس",
-            "en": "from dawn to sunset",
-            "tl": "mula sa pagsapit ng Fajr hanggang sa paglubog ng araw"
+            "ar": "من غروب الشمس إلى طلوع الفجر",
+            "en": "from sunset to dawn",
+            "tl": "mula sa paglubog ng araw hanggang sa Fajr"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "من غروب الشمس إلى طلوع الفجر",
-            "en": "from sunset to dawn",
-            "tl": "mula sa paglubog ng araw hanggang sa Fajr"
+            "ar": "طوال اليوم والليلة",
+            "en": "All day and all night",
+            "tl": "Buong araw at buong gabi"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "من طلوع الفجر إلى غروب الشمس",
+            "en": "from dawn to sunset",
+            "tl": "mula sa pagsapit ng Fajr hanggang sa paglubog ng araw"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u3-l3-e4",
@@ -355,21 +371,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "كل سنة",
+            "en": "Every year",
+            "tl": "Bawat taon"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "مرة واحدة في العمر",
             "en": "Once in a lifetime",
             "tl": "Isang beses sa buhay"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "كل سنة",
-            "en": "Every year",
-            "tl": "Bawat taon"
+            "ar": "كل عشر سنين",
+            "en": "Every ten years",
+            "tl": "Bawat sampung taon"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u3-l3-e6",
@@ -381,9 +405,9 @@
         "u3-l3-c5"
       ],
       "prompt": {
-        "ar": "مَن حجّ البيت كما ذكر الدرس؟",
-        "en": "Who performed Hajj, as the lesson mentions?",
-        "tl": "Sino ang nagsagawa ng Hajj ayon sa aralin?"
+        "ar": "هل حجّ الأنبياءُ البيتَ؟",
+        "en": "Did the prophets perform Hajj to the House?",
+        "tl": "Nagsagawa ba ng Hajj ang mga propeta?"
       },
       "options": [
         {
@@ -397,13 +421,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "حجّ النبي ﷺ وحده",
+            "en": "Only the Prophet (peace be upon him)",
+            "tl": "Ang Propeta lamang"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "النبي ﷺ وغيره من الأنبياء من قبله",
             "en": "The Prophet ﷺ, and other prophets before him",
             "tl": "Ang Propeta ﷺ at ang iba pang mga propeta na nauna sa kanya"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     }
   ],
   "dropped": [],

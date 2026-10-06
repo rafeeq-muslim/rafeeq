@@ -209,9 +209,9 @@
         "u4-l2-c3"
       ],
       "prompt": {
-        "ar": "صِل كل عبارة بتمامها كما في الدرس",
-        "en": "Match each phrase with its ending, as in the lesson",
-        "tl": "Itugma ang bawat parirala sa katapusan nito, ayon sa aralin"
+        "ar": "صِل كلًّا بما يصفه",
+        "en": "Match each with its description",
+        "tl": "Itugma ang bawat isa sa paglalarawan nito"
       },
       "left": [
         {
@@ -333,9 +333,9 @@
         "u4-l2-c3"
       ],
       "prompt": {
-        "ar": "مَن الموكّل بالوحي من الملائكة كما في الدرس؟",
-        "en": "Which angel is assigned with the revelation, as the lesson says?",
-        "tl": "Sinong anghel ang itinalaga sa rebelasyon ayon sa aralin?"
+        "ar": "مَن الموكّل بالوحي من الملائكة؟",
+        "en": "Which angel is assigned with the revelation?",
+        "tl": "Sinong anghel ang itinalaga sa rebelasyon?"
       },
       "options": [
         {
@@ -384,21 +384,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "جميع الكتب السماوية كلام الله، منزّلة من عنده على رسله",
+            "en": "all the divine Scriptures are the word of Allah, revealed by Him to His messengers",
+            "tl": "ang lahat ng mga kapahayagan ay salita ng Allah, ibinaba sa Kanyang mga Sugo"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "الكتب السماوية ليست من عند الله",
             "en": "the divine Scriptures are not from Allah",
             "tl": "ang mga kapahayagan ay hindi mula sa Allah"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "جميع الكتب السماوية كلام الله، منزّلة من عنده على رسله",
-            "en": "all the divine Scriptures are the word of Allah, revealed by Him to His messengers",
-            "tl": "ang lahat ng mga kapahayagan ay salita ng Allah, ibinaba sa Kanyang mga Sugo"
+            "ar": "القرآن وحده كلام الله دون الكتب التي قبله",
+            "en": "Only the Quran is Allah’s speech, not the books before it",
+            "tl": "Ang Quran lamang ang salita ni Allah at hindi ang mga naunang kasulatan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u4-l2-e5",
@@ -418,21 +426,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "الناس",
+            "en": "People",
+            "tl": "Ang mga tao"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "الله تعالى",
             "en": "Allah",
             "tl": "Ang Allah"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "الناس",
-            "en": "People",
-            "tl": "Ang mga tao"
+            "ar": "العلماء وحدهم",
+            "en": "The scholars alone",
+            "tl": "Ang mga iskolar lamang"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u4-l2-e6",
@@ -460,13 +476,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "لأنه أطول الكتب",
+            "en": "Because it is the longest book",
+            "tl": "Dahil ito ang pinakamahabang aklat"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "لأنه آخر كتب الله إلى البشر، ومحمد ﷺ آخر الرسل",
             "en": "Because it is the last revelation to mankind, and Muhammad ﷺ is the last Messenger",
             "tl": "Dahil ito ang huling kapahayagan ng Allah, at si Muhammad ang huling sugo"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     },
     {
       "id": "u4-l2-e7",

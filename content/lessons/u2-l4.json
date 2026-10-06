@@ -157,9 +157,9 @@
         "u2-l4-c2"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل جزء بما يتمّ معناه",
+        "en": "Match each part with what completes its meaning",
+        "tl": "Itugma ang bawat bahagi sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {
@@ -246,21 +246,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "من الظلمات إلى النور",
-            "en": "out of darknesses into the light",
-            "tl": "mula sa kadiliman tungo sa liwanag"
+            "ar": "من النور إلى الظلمات",
+            "en": "out of the light into darknesses",
+            "tl": "mula sa liwanag tungo sa kadiliman"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "من النور إلى الظلمات",
-            "en": "out of the light into darknesses",
-            "tl": "mula sa liwanag tungo sa kadiliman"
+            "ar": "ليشقّ عليهم في حياتهم",
+            "en": "To make their lives hard",
+            "tl": "Upang pahirapan ang kanilang buhay"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "من الظلمات إلى النور",
+            "en": "out of darknesses into the light",
+            "tl": "mula sa kadiliman tungo sa liwanag"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u2-l4-e4",
@@ -272,9 +280,9 @@
         "u2-l4-c3"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل عمل بثمرته",
+        "en": "Match each deed with its fruit",
+        "tl": "Itugma ang bawat gawa sa bunga nito"
       },
       "left": [
         {
@@ -341,21 +349,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "الظلمات",
+            "en": "Darknesses",
+            "tl": "Kadiliman"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "أجر عظيم",
             "en": "A great reward",
             "tl": "Dakilang gantimpala"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "الظلمات",
-            "en": "Darknesses",
-            "tl": "Kadiliman"
+            "ar": "لا شيء",
+            "en": "Nothing",
+            "tl": "Wala"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     }
   ],
   "dropped": [],

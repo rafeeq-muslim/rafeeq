@@ -172,9 +172,9 @@
         "u4-l3-c4"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل عبارة بما يتمّ معناها",
+        "en": "Match each statement with what completes its meaning",
+        "tl": "Itugma ang bawat pahayag sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {
@@ -274,6 +274,14 @@
             "en": "To worship Allah alone, and to reject anything worshiped other than Him",
             "tl": "Sa pagsamba lamang sa Allah at pagtakwil ng pagsamba sa iba"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "إلى عبادة الملائكة",
+            "en": "To worship the angels",
+            "tl": "Sa pagsamba sa mga anghel"
+          }
         }
       ],
       "answer": "b"
@@ -296,21 +304,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "بشر عبيد لله، صادقون مصدَّقون",
-            "en": "humans, servants of Allah, honest and trusted",
-            "tl": "mga tao lamang na tagapaglingkod ng Allah, makatotohanan at pinatotohanan"
+            "ar": "ليسوا من البشر",
+            "en": "not human beings",
+            "tl": "hindi mga tao"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "ليسوا من البشر",
-            "en": "not human beings",
-            "tl": "hindi mga tao"
+            "ar": "ملائكة في صورة بشر",
+            "en": "Angels in human form",
+            "tl": "Mga anghel na nasa anyong tao"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بشر عبيد لله، صادقون مصدَّقون",
+            "en": "humans, servants of Allah, honest and trusted",
+            "tl": "mga tao lamang na tagapaglingkod ng Allah, makatotohanan at pinatotohanan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u4-l3-e4",
@@ -330,21 +346,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "نعم، بلّغوه جميعًا",
+            "en": "Yes, they conveyed all of it",
+            "tl": "Oo, ipinaabot nila ang lahat ng ito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "بلّغوا بعضه وكتموا بعضه",
             "en": "They conveyed some of it and hid some",
             "tl": "Ipinaabot nila ang ilan at itinago ang iba"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "نعم، بلّغوه جميعًا",
-            "en": "Yes, they conveyed all of it",
-            "tl": "Oo, ipinaabot nila ang lahat ng ito"
+            "ar": "لم يبلّغوا شيئًا",
+            "en": "They conveyed nothing",
+            "tl": "Wala silang ipinarating"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u4-l3-e5",
@@ -364,21 +388,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "اختلفت دعوتهم في أصل الدين",
+            "en": "They differed on the principle of religion",
+            "tl": "Nagkaiba-iba sila sa pundasyon ng pananampalataya"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "توحيد الله في العبادة وعدم الإشراك به",
             "en": "Worshipping Allah alone without associating partners with Him",
             "tl": "Ang kaisahan ng Allah sa pagsamba at paglayo sa pagtatambal sa Kanya"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "اختلفت دعوتهم في أصل الدين",
-            "en": "They differed on the principle of religion",
-            "tl": "Nagkaiba-iba sila sa pundasyon ng pananampalataya"
+            "ar": "كثرة العبادات دون توحيد",
+            "en": "Many acts of worship without tawhid",
+            "tl": "Maraming pagsamba nang walang tawhid"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u4-l3-e6",
@@ -391,9 +423,9 @@
         "u4-l3-c5"
       ],
       "prompt": {
-        "ar": "مما يتعلق باليوم الآخر كما في الدرس:",
-        "en": "Which of these is part of the Last Day, as the lesson says?",
-        "tl": "Alin dito ang kaugnay ng Huling Araw ayon sa aralin?"
+        "ar": "مما يتعلق باليوم الآخر:",
+        "en": "Among the things related to the Last Day:",
+        "tl": "Kabilang sa mga may kaugnayan sa Huling Araw:"
       },
       "options": [
         {
@@ -407,13 +439,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "الأعمال اليومية في الدنيا",
+            "en": "Daily work in this world",
+            "tl": "Ang pang-araw-araw na gawain sa mundong ito"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "البعث والميزان والحساب والجنة والنار",
             "en": "Resurrection, the Scale, reckoning, Paradise and Hell",
             "tl": "Ang pagbangon muli, ang timbangan, ang paglilitis, ang Paraiso at ang Impiyerno"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     },
     {
       "id": "u4-l3-e7",
@@ -444,6 +484,14 @@
             "ar": "لم يخبر به الله ولا رسوله",
             "en": "neither Allah nor His Messenger told us",
             "tl": "hindi ibinalita ng Allah o ng Kanyang Sugo"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "اتفق عليه الناس",
+            "en": "Whatever people agreed on",
+            "tl": "Anumang napagkasunduan ng mga tao"
           }
         }
       ],

@@ -106,9 +106,9 @@
         "u5-l2-c1"
       ],
       "prompt": {
-        "ar": "مما يوجب الغسل كما في الدرس:",
-        "en": "Which of these requires ghusl, as the lesson says?",
-        "tl": "Alin dito ang nag-oobliga ng paligo ayon sa aralin?"
+        "ar": "مما يوجب الغسل:",
+        "en": "Among what makes ghusl obligatory:",
+        "tl": "Kabilang sa nag-oobliga ng paliligo:"
       },
       "options": [
         {
@@ -125,6 +125,14 @@
             "ar": "قراءة القرآن",
             "en": "Reciting the Qur’an",
             "tl": "Pagbasa ng Qur’an"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الأكل والشرب",
+            "en": "Eating and drinking",
+            "tl": "Pagkain at pag-inom"
           }
         }
       ],
@@ -233,21 +241,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "أن يعمّم المسلم بدنه كله بالماء، ومن ذلك المضمضة والاستنشاق",
-            "en": "the Muslim washes his whole body with water, including rinsing the mouth and sniffing water into the nose",
-            "tl": "babasain ng Muslim ang buong katawan ng tubig, kasama ang pagmumog at pagsinghot ng tubig"
+            "ar": "أن يغسل الوجه واليدين فقط",
+            "en": "washing only the face and hands",
+            "tl": "paghuhugas lamang ng mukha at kamay"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "أن يغسل الوجه واليدين فقط",
-            "en": "washing only the face and hands",
-            "tl": "paghuhugas lamang ng mukha at kamay"
+            "ar": "أن يمسح رأسه فقط",
+            "en": "To wipe the head only",
+            "tl": "Ang pagpunas lamang ng ulo"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أن يعمّم المسلم بدنه كله بالماء، ومن ذلك المضمضة والاستنشاق",
+            "en": "the Muslim washes his whole body with water, including rinsing the mouth and sniffing water into the nose",
+            "tl": "babasain ng Muslim ang buong katawan ng tubig, kasama ang pagmumog at pagsinghot ng tubig"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u5-l2-e4",
@@ -267,21 +283,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "تمّت طهارته",
+            "en": "his purification is complete",
+            "tl": "ganap na siyang malinis"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "لم تتم طهارته بعد",
             "en": "his purification is not complete yet",
             "tl": "hindi pa siya malinis"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "تمّت طهارته",
-            "en": "his purification is complete",
-            "tl": "ganap na siyang malinis"
+            "ar": "عليه أن يعيد الغسل مرة أخرى",
+            "en": "He must repeat the ghusl",
+            "tl": "Kailangan niyang ulitin ang paliligo"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u5-l2-e5",
@@ -301,21 +325,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "تعميم البدن بالماء",
+            "en": "Washing the whole body with water",
+            "tl": "Pagbasa ng buong katawan ng tubig"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "الصلاة، والطواف بالكعبة، ومسّ المصحف",
             "en": "Praying, circling the Ka‘bah, and touching the Mus-haf",
             "tl": "Ang Salah, pagtawaf sa Ka’bah, at paghawak ng Mushaf"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "تعميم البدن بالماء",
-            "en": "Washing the whole body with water",
-            "tl": "Pagbasa ng buong katawan ng tubig"
+            "ar": "الأكل والنوم",
+            "en": "Eating and sleeping",
+            "tl": "Pagkain at pagtulog"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     }
   ],
   "dropped": [],

@@ -80,7 +80,7 @@
       "text": {
         "ar": "الله هو ربي ورب كل شيء، المالك، الخالق، الرازق، المدبِّر كل شيءٍ.\nوهو المستحق وحده العبادة، لا ربَّ غيره ولا إله سواه.",
         "en": "Allah is my Lord and the Lord of all things, the Possessor, the Creator, the Provider, the Disposer of everything.\nHe alone is worthy of being worshiped. There is no lord or god other than Him.",
-        "tl": "Si Allah ang aking Panginoon at Panginoon ng lahat ng bagay. Sya angTagapaglikha, ang Tagapagtustos, at ang Tagapangasiwa ng lahat ng bagay. Sya lang ang Bukod-tangi na karapat-dapat na pag-ukulan ng pagsamba. Walang ibang Panginoon at walang ibang Diyos maliban lamang sa Kanya."
+        "tl": "Si Allah ang aking Panginoon at Panginoon ng lahat ng bagay. Sya ang Tagapagmay-ari, ang Tagapaglikha, ang Tagapagtustos, at ang Tagapangasiwa ng lahat ng bagay. Sya lang ang Bukod-tangi na karapat-dapat na pag-ukulan ng pagsamba. Walang ibang Panginoon at walang ibang Diyos maliban lamang sa Kanya."
       },
       "image_url": null,
       "quran": null,
@@ -154,9 +154,9 @@
         "u2-l1-c5"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها كما في الدرس",
-        "en": "Match the start of each sentence with its end, as in the lesson",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito, ayon sa aralin"
+        "ar": "صِل كل عبارة بما يتمّ معناها",
+        "en": "Match each statement with what completes its meaning",
+        "tl": "Itugma ang bawat pahayag sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {
@@ -235,9 +235,9 @@
         "u2-l1-c5"
       ],
       "prompt": {
-        "ar": "مَن أثبت لله الأسماء الحسنى والصفات العلا كما في الدرس؟",
-        "en": "Who established the excellent names and sublime attributes for Allah, as the lesson says?",
-        "tl": "Sino ang naglarawan kay Allah ng magagandang Pangalan at mararangal na katangian, ayon sa aralin?"
+        "ar": "مَن أثبت لله الأسماء الحسنى والصفات العلا؟",
+        "en": "Who established the excellent names and sublime attributes for Allah?",
+        "tl": "Sino ang naglarawan kay Allah ng magagandang Pangalan at mararangal na katangian?"
       },
       "options": [
         {
@@ -255,13 +255,21 @@
             "en": "Allah established them for Himself, and the Prophet established them for Him",
             "tl": "Inilarawan Niya ito sa Kanyang sarili, at inilarawan ito sa Kanya ng Kanyang Propeta"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الملائكة وحدهم",
+            "en": "The angels alone",
+            "tl": "Ang mga anghel lamang"
+          }
         }
       ],
       "answer": "b"
     },
     {
       "id": "u2-l1-e3",
-      "type": "order",
+      "type": "choose",
       "objectives": [
         "u2-l1-o2"
       ],
@@ -271,96 +279,80 @@
         "u2-l1-c2"
       ],
       "prompt": {
-        "ar": "رتّب الجملة كما في الدرس",
-        "en": "Put the sentence together as in the lesson",
-        "tl": "Buuin ang pangungusap ayon sa aralin"
+        "ar": "ما معنى أن الله هو المستحق وحده العبادة؟",
+        "en": "What does it mean that Allah alone is worthy of worship?",
+        "tl": "Ano ang kahulugan na si Allah lamang ang karapat-dapat sambahin?"
       },
-      "items": [
+      "options": [
         {
-          "id": "s3",
+          "id": "a",
           "text": {
-            "ar": "ولا إله سواه.",
-            "en": "There is no lord or god other than Him.",
-            "tl": "Walang ibang Panginoon at walang ibang Diyos maliban lamang sa Kanya."
+            "ar": "يُعبد الله ويُعبد معه غيره",
+            "en": "Allah is worshipped along with others",
+            "tl": "Sinasamba si Allah kasama ng iba"
           }
         },
         {
-          "id": "s2",
+          "id": "b",
           "text": {
-            "ar": "لا ربّ غيره",
-            "en": "of being worshiped.",
-            "tl": "na karapat-dapat na pag-ukulan ng pagsamba."
+            "ar": "العبادة لكل من نحبّه",
+            "en": "Worship is for anyone we love",
+            "tl": "Ang pagsamba ay para sa sinumang mahal natin"
           }
         },
         {
-          "id": "s1",
+          "id": "c",
           "text": {
-            "ar": "وهو المستحق وحده العبادة،",
-            "en": "He alone is worthy",
-            "tl": "Sya lang ang Bukod-tangi"
+            "ar": "لا ربّ غيره ولا إله سواه",
+            "en": "There is no lord or god other than Him",
+            "tl": "Walang ibang Panginoon at walang ibang Diyos maliban sa Kanya"
           }
         }
       ],
-      "answer": [
-        "s1",
-        "s2",
-        "s3"
-      ]
+      "answer": "c"
     },
     {
       "id": "u2-l1-e4",
-      "type": "order",
+      "type": "choose",
       "objectives": [
         "u2-l1-o1"
       ],
       "cards": [
-        "u2-l1-c4"
+        "u2-l1-c4",
+        "u2-l1-c1"
       ],
       "prompt": {
-        "ar": "رتّب الجملة كما في الدرس",
-        "en": "Put the sentence together as in the lesson",
-        "tl": "Buuin ang pangungusap ayon sa aralin"
+        "ar": "أيّ هذه من معاني أن الله رب كل شيء؟",
+        "en": "Which of these is part of Allah being the Lord of all things?",
+        "tl": "Alin dito ang bahagi ng pagiging Panginoon ni Allah ng lahat ng bagay?"
       },
-      "items": [
+      "options": [
         {
-          "id": "s4",
+          "id": "a",
           "text": {
-            "ar": "المدبّر كل شيء.",
-            "en": "the Disposer of everything.",
-            "tl": "at ang Tagapangasiwa ng lahat ng bagay."
+            "ar": "أنه المالك، الخالق، الرازق، المدبّر كل شيء",
+            "en": "He is the Possessor, the Creator, the Provider and the Disposer of everything",
+            "tl": "Siya ang Tagapagmay-ari, ang Tagapaglikha, ang Tagapagtustos at ang Tagapangasiwa ng lahat ng bagay"
           }
         },
         {
-          "id": "s3",
+          "id": "b",
           "text": {
-            "ar": "المالك، الخالق، الرازق،",
-            "en": "the Possessor, the Creator, the Provider,",
-            "tl": "Sya ang Tagapaglikha, ang Tagapagtustos,"
+            "ar": "أنه خلق الأشياء ثم تركها بلا تدبير",
+            "en": "He created things and then left them unmanaged",
+            "tl": "Nilikha Niya ang mga bagay at pinabayaan"
           }
         },
         {
-          "id": "s2",
+          "id": "c",
           "text": {
-            "ar": "ورب كل شيء،",
-            "en": "and the Lord of all things,",
-            "tl": "at Panginoon ng lahat ng bagay."
-          }
-        },
-        {
-          "id": "s1",
-          "text": {
-            "ar": "الله هو ربي",
-            "en": "Allah is my Lord",
-            "tl": "Si Allah ang aking Panginoon"
+            "ar": "أن لكل شيء ربًّا غيره",
+            "en": "Each thing has a lord other than Him",
+            "tl": "May ibang panginoon ang bawat bagay"
           }
         }
       ],
-      "answer": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
-      ]
+      "answer": "a"
     },
     {
       "id": "u2-l1-e5",
@@ -373,13 +365,21 @@
         "u2-l1-c3"
       ],
       "prompt": {
-        "ar": "ماذا يقول الدرس عن مِثل الله تعالى؟",
-        "en": "What does the lesson say about anything being like Allah?",
-        "tl": "Ano ang sinasabi ng aralin tungkol sa anumang katulad ng Allah?"
+        "ar": "هل يشبه اللهَ شيءٌ من خلقه؟",
+        "en": "Is anything in creation like Allah?",
+        "tl": "May katulad ba si Allah sa Kanyang mga nilikha?"
       },
       "options": [
         {
           "id": "a",
+          "text": {
+            "ar": "له مثيل من خلقه",
+            "en": "Something in His creation is like Him",
+            "tl": "May katulad Siya sa Kanyang mga nilikha"
+          }
+        },
+        {
+          "id": "b",
           "text": {
             "ar": "ليس كمثله شيء، وهو السميع البصير",
             "en": "There is nothing like unto Him, and He is the All-Hearing, the All-Seeing",
@@ -387,17 +387,26 @@
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "له مثيل من خلقه",
-            "en": "Something in His creation is like Him",
-            "tl": "May katulad Siya sa Kanyang mga nilikha"
+            "ar": "يشبه الإنسانَ في صفاته",
+            "en": "He resembles people in His attributes",
+            "tl": "Kahawig Niya ang tao sa Kanyang mga katangian"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     }
   ],
   "dropped": [],
-  "notes": "Section «ربي الله» up to the list of names. Three verses are shown from the Quran database (2:21, 59:22, 42:11). The Filipino page gives verse 42:11 with no words before it, so card 3 has an empty Filipino text and shows only the verse."
+  "notes": "Section «ربي الله» up to the list of names. Three verses are shown from the Quran database (2:21, 59:22, 42:11). The Filipino page gives verse 42:11 with no words before it, so card 3 has an empty Filipino text and shows only the verse.",
+  "edited": [
+    {
+      "card": "u2-l1-c4",
+      "lang": "tl",
+      "from": "Sya angTagapaglikha, ang Tagapagtustos,",
+      "to": "Sya ang Tagapagmay-ari, ang Tagapaglikha, ang Tagapagtustos,",
+      "why": "decision 2026-10-06 (2): the printed Arabic edition is the reference (the Arabic names المالك, the Possessor); AUTHORED Tagalog word; also a missing space"
+    }
+  ]
 }
