@@ -5,4 +5,7 @@
 Tagalog. The team (مسلّم and مهند) completes it to the 80 of plan §5.2 and reviews every expected behaviour;
 a Tagalog reader reviews the Tagalog lines. No line may copy a real user's question (KNW-04 R6).
 
+`reference-set.jsonl` is a separate draft reference set with expected sources (KNW-01 §10.2, KNW-02 §9); see
+`../README.md` for its fields and who confirms it.
+
 Run: `cd backend && uv run python -m app.knowledge.eval run` (see `docs/engineering/implementation/KNW-04.md`).
