@@ -203,7 +203,7 @@ async def act(report_id: uuid.UUID, body: ActionIn, session: Session, team: Team
                 raise HTTPException(status.HTTP_400_BAD_REQUEST, "not_a_group_message")
             g = await session.get(Group, msg.group_id)
             if g is not None:
-                await remove(session, g, msg.author_id)
+                await remove(session, g, msg.author_id, removed=True)  # R4 ex2: and no rejoin by code
     r.handled_by = team.id
     # Other open reports on the same message are settled by the same decision.
     for other in await session.scalars(
