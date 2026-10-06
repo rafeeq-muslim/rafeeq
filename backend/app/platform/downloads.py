@@ -431,7 +431,8 @@ async def file(fid: str, request: Request, session: Session) -> StreamingRespons
         if code == 416:
             raise HTTPException(status.HTTP_416_RANGE_NOT_SATISFIABLE, "bad_range")
         raise HTTPException(status.HTTP_502_BAD_GATEWAY, "upstream")  # includes any redirect: never followed
-    headers = {"Content-Type": entry["mime"], "Accept-Ranges": "bytes", "Cache-Control": "no-store"}
+    # X-Accel-Buffering: nginx passes the stream on instead of spooling it to disk (nothing stored).
+    headers = {"Content-Type": entry["mime"], "Accept-Ranges": "bytes", "Cache-Control": "no-store", "X-Accel-Buffering": "no"}
     for h in ("content-length", "content-range"):
         if h in upstream.headers:
             headers[h.title()] = upstream.headers[h]

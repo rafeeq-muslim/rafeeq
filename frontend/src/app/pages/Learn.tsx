@@ -23,12 +23,13 @@ import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
 import { lessonStatus, unitLessonIds, unitPassed, unitProgress, visibleUnits } from "@/app/learning/path"
 import { streakView } from "@/app/motivation/streak"
+import { DownloadControl } from "@/app/downloads/DownloadControl" // PLT-12 R1
 
 const ZIGZAG = [0, 1, 2, 1, 0, -1, -2, -1] as const
 const unitAnchor = (unitId: string) => `unit-${unitId}`
 
 export default function Learn() {
-  const { t } = useT()
+  const { t, locale } = useT()
   const navigate = useNavigate()
   const progress = useLearning()
   const days = useMotivation((s) => s.days)
@@ -102,6 +103,10 @@ export default function Learn() {
                   description={unit.source_credit}
                   className="mt-4 scroll-mt-20 first:mt-0"
                 />
+                {/* PLT-12 R1: download this unit, in place */}
+                <li className="-mt-3 self-end">
+                  <DownloadControl itemId={`unit:${unit.id}:${locale}`} lang={locale} />
+                </li>
                 {unitLessonIds(unit).map((id, i) => {
                   const lesson = content!.lessons[id]
                   // LRN-01 R6 / LRN-02 R3: a lesson not live in this language shows as in preparation,
