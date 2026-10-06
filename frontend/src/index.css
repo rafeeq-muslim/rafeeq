@@ -107,8 +107,6 @@
   --color-danger-surface: var(--danger-surface);
   --color-info: var(--info);
   --color-info-surface: var(--info-surface);
-  --color-tile-foreground: var(--tile-foreground);
-  --color-backdrop-pattern: var(--backdrop-pattern);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -145,11 +143,9 @@
 }
 
 /* ==========================================================
-   Layer 2: semantic tokens. Light is the default; dark is the
-   learner's choice in «حسابي» (PLT-04), never the device's.
+   Layer 2: semantic tokens. Light (default).
    ========================================================== */
 :root {
-  color-scheme: light;
   --radius: var(--rf-radius-sm);
   --background: var(--rf-mist);
   --foreground: var(--rf-ink);
@@ -162,9 +158,7 @@
   --secondary: var(--rf-violet-100);
   --secondary-foreground: var(--rf-violet-700);
   --muted: var(--rf-violet-50);
-  /* Brand grey deepened toward ink: 5.5:1 on violet-100 and on the tinted
-     backdrop, where #6B6890 fell to 4.1–4.4 (WCAG AA is 4.5). */
-  --muted-foreground: color-mix(in oklab, var(--rf-muted) 82%, var(--rf-ink));
+  --muted-foreground: var(--rf-muted);
   --accent: var(--rf-violet-50);
   --accent-foreground: var(--rf-violet-700);
   --destructive: var(--rf-error);
@@ -202,37 +196,11 @@
   --outline-lip: var(--rf-line);
   --success-lip: color-mix(in oklab, var(--rf-success) 70%, black);
   --danger-lip: color-mix(in oklab, var(--rf-error) 70%, black);
-
-  /* Gradient fills, lit from the top like the tactile lip below them.
-     Every stop keeps its text at 4.5:1 or more. */
-  --grad-action: linear-gradient(180deg, var(--rf-lavender) 0%, var(--rf-violet) 55%, var(--rf-violet-600) 100%);
-  --grad-celebrate: linear-gradient(180deg, var(--rf-glow) 0%, var(--rf-amber) 100%);
-  --grad-secondary: linear-gradient(180deg, var(--rf-violet-50) 0%, var(--rf-violet-100) 100%);
-  --secondary-hover: brightness(0.97);
-  /* Icon tiles: white icon on lavender → deep (4.7:1 at the light end). */
-  --grad-tile: linear-gradient(135deg, var(--rf-lavender) 0%, var(--rf-violet) 50%, var(--rf-deep) 100%);
-  --grad-tile-rtl: linear-gradient(225deg, var(--rf-lavender) 0%, var(--rf-violet) 50%, var(--rf-deep) 100%);
-  --tile-foreground: var(--rf-white);
-
-  /* App backdrop: the companionship gradient as light washes on mist
-     (lavender at the top start, orchid at the top end, a hint of dawn at
-     the bottom), plus the petal pattern. Each wash stops where muted text
-     and violet links would fall under 4.5:1 (lavender 18%, orchid 22%). */
-  --backdrop:
-    radial-gradient(120% 55% at 0% 0%, color-mix(in oklab, var(--rf-lavender) 18%, transparent) 0%, transparent 70%),
-    radial-gradient(90% 45% at 100% 8%, color-mix(in oklab, var(--rf-orchid) 22%, transparent) 0%, transparent 70%),
-    radial-gradient(110% 50% at 100% 100%, color-mix(in oklab, var(--rf-dawn) 16%, transparent) 0%, transparent 70%);
-  --backdrop-rtl:
-    radial-gradient(120% 55% at 100% 0%, color-mix(in oklab, var(--rf-lavender) 18%, transparent) 0%, transparent 70%),
-    radial-gradient(90% 45% at 0% 8%, color-mix(in oklab, var(--rf-orchid) 22%, transparent) 0%, transparent 70%),
-    radial-gradient(110% 50% at 0% 100%, color-mix(in oklab, var(--rf-dawn) 16%, transparent) 0%, transparent 70%);
-  --backdrop-pattern: color-mix(in oklab, var(--rf-violet) 7%, transparent);
 }
 
 /* Dark: ink surfaces (brand "reverse" world). Values not in the brand
    palette are derived with color-mix from brand colors. */
 .dark {
-  color-scheme: dark;
   --background: var(--rf-ink);
   --foreground: var(--rf-mist);
   --card: color-mix(in oklab, var(--rf-violet-800) 55%, var(--rf-ink));
@@ -247,8 +215,7 @@
   --muted-foreground: var(--rf-violet-300);
   --accent: rgb(255 255 255 / 0.08);
   --accent-foreground: var(--rf-mist);
-  /* 55% (not 65%): «عاجل» on the danger surface over a card reaches 5.4:1. */
-  --destructive: color-mix(in oklab, var(--rf-error) 55%, white);
+  --destructive: color-mix(in oklab, var(--rf-error) 65%, white);
   --border: rgb(255 255 255 / 0.1);
   --input: rgb(255 255 255 / 0.14);
   --ring: var(--rf-violet-400);
@@ -277,23 +244,6 @@
   --outline-lip: rgb(255 255 255 / 0.12);
   --success-lip: rgb(0 0 0 / 0.35);
   --danger-lip: rgb(0 0 0 / 0.35);
-
-  /* Celebrate and tile gradients are the same as in light. */
-  --grad-action: linear-gradient(180deg, var(--rf-violet-200) 0%, var(--rf-violet-300) 55%, color-mix(in oklab, var(--rf-violet-300) 55%, var(--rf-violet-400)) 100%);
-  --grad-secondary: linear-gradient(180deg, color-mix(in oklab, var(--rf-violet-700) 72%, var(--rf-ink)) 0%, color-mix(in oklab, var(--rf-violet-700) 52%, var(--rf-ink)) 100%);
-  --secondary-hover: brightness(1.15);
-
-  /* The night sky of the brand: deep violet light from the top, orchid and
-     dawn embers low at the edges. */
-  --backdrop:
-    radial-gradient(130% 60% at 50% -10%, color-mix(in oklab, var(--rf-deep) 70%, transparent) 0%, transparent 70%),
-    radial-gradient(80% 40% at 0% 100%, color-mix(in oklab, var(--rf-orchid) 18%, transparent) 0%, transparent 70%),
-    radial-gradient(70% 35% at 100% 100%, color-mix(in oklab, var(--rf-dawn) 14%, transparent) 0%, transparent 70%);
-  --backdrop-rtl:
-    radial-gradient(130% 60% at 50% -10%, color-mix(in oklab, var(--rf-deep) 70%, transparent) 0%, transparent 70%),
-    radial-gradient(80% 40% at 100% 100%, color-mix(in oklab, var(--rf-orchid) 18%, transparent) 0%, transparent 70%),
-    radial-gradient(70% 35% at 0% 100%, color-mix(in oklab, var(--rf-dawn) 14%, transparent) 0%, transparent 70%);
-  --backdrop-pattern: rgb(255 255 255 / 0.035);
 }
 
 /* Brand gradients and graphic utilities */
@@ -314,29 +264,6 @@
 }
 @utility bg-grad-glow {
   background-image: var(--rf-grad-glow);
-}
-/* Semantic gradient fills (per theme). Pair each with its flat colour
-   (`bg-primary bg-grad-action`) so the fill never goes missing. */
-@utility bg-grad-action {
-  background-image: var(--grad-action);
-}
-@utility bg-grad-celebrate {
-  background-image: var(--grad-celebrate);
-}
-@utility bg-grad-secondary {
-  background-image: var(--grad-secondary);
-}
-@utility bg-grad-tile {
-  background-image: var(--grad-tile);
-  &:where([dir="rtl"], [dir="rtl"] *) {
-    background-image: var(--grad-tile-rtl);
-  }
-}
-@utility bg-backdrop {
-  background-image: var(--backdrop);
-  &:where([dir="rtl"], [dir="rtl"] *) {
-    background-image: var(--backdrop-rtl);
-  }
 }
 
 /* Tactile press: a 4px lip that collapses on press (mobile-game feel).

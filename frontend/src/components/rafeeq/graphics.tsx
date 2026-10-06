@@ -1,5 +1,4 @@
 import * as React from "react"
-import type { Icon as IconComponent, TablerIcon } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
 import { PETAL } from "./brand"
@@ -137,59 +136,6 @@ function PetalPattern({
       </defs>
       <rect width="100%" height="100%" fill={`url(#${id})`} />
     </svg>
-  )
-}
-
-/**
- * «خلفية رفيق» (PLT-04): the app backdrop. The companionship gradient as
- * soft washes (`--backdrop`, one set per theme, mirrored in RTL) with the
- * petal pattern fading out from the top. Place it first inside an
- * `isolate` container that paints the background colour; text on it keeps
- * 4.5:1 or more.
- */
-function Backdrop({ className }: { className?: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      data-slot="backdrop"
-      className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-backdrop", className)}
-    >
-      <PetalPattern
-        scale={1.5}
-        className="text-backdrop-pattern [mask-image:linear-gradient(to_bottom,black,transparent_45%)]"
-      />
-    </div>
-  )
-}
-
-/**
- * «بلاطة الأيقونة» (PLT-04): a row's or a tool's icon on the violet
- * gradient (lavender → deep), white icon at 4.7:1 or more. Violet only:
- * it marks something to open, never a celebration.
- */
-function IconTile({
-  icon: Icon,
-  size = "md",
-  className,
-}: {
-  /** Any Tabler icon (forwardRef or plain component). */
-  icon: TablerIcon | IconComponent
-  /** sm 40px, md 44px, lg 48px */
-  size?: "sm" | "md" | "lg"
-  className?: string
-}) {
-  return (
-    <span
-      data-slot="icon-tile"
-      aria-hidden="true"
-      className={cn(
-        "grid shrink-0 place-items-center rounded-full bg-primary bg-grad-tile text-tile-foreground",
-        { sm: "size-10 [&>svg]:size-5", md: "size-11 [&>svg]:size-5", lg: "size-12 [&>svg]:size-6" }[size],
-        className
-      )}
-    >
-      <Icon stroke={2} />
-    </span>
   )
 }
 
@@ -391,5 +337,5 @@ function SpotIllustration({
   )
 }
 
-export { YearFlower, PetalPattern, Backdrop, IconTile, CoreGlow, PetalConfetti, PetalRow, FlowerDefs, SpotIllustration, UnitBloom }
+export { YearFlower, PetalPattern, CoreGlow, PetalConfetti, PetalRow, FlowerDefs, SpotIllustration, UnitBloom }
 export type { SpotKind }

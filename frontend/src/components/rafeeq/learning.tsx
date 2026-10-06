@@ -90,7 +90,7 @@ function LessonCard({
         </div>
       </div>
       <Progress value={progress} aria-label={`${title}: ${progress}%`} className="h-3" />
-      <span className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary bg-grad-action text-body font-bold text-primary-foreground shadow-[0_4px_0_0_var(--primary-lip)]">
+      <span className="flex h-12 items-center justify-center gap-2 rounded-full bg-primary text-body font-bold text-primary-foreground shadow-[0_4px_0_0_var(--primary-lip)]">
         {actionLabel}
         <IconArrowLeft className="size-5 ltr:rotate-180" stroke={2} aria-hidden="true" />
       </span>
@@ -172,11 +172,9 @@ function JourneyCard({
       )}
     >
       <Halo className="absolute -end-10 -top-10 -z-10 size-48 text-white/25" />
-      {/* White at /90 and an ink chip: at /80 and on white/15 they fell to
-          4.3:1 and 3.2:1 where the gradient turns lavender. */}
-      <p className="text-label font-medium text-white/90">{title}</p>
+      <p className="text-label font-medium text-white/80">{title}</p>
       <h2 className="font-heading text-h2 font-bold">{monthLabel}</h2>
-      <StreakChip days={streakDays} paused={streakPaused} className="bg-ink/40 text-white" />
+      <StreakChip days={streakDays} paused={streakPaused} className="bg-white/15 text-white" />
       {children}
     </section>
   )
@@ -287,11 +285,10 @@ function PathNode({
         aria-label={`${label}، ${stateLabel}`}
         className={cn(
           "tactile relative grid place-items-center rounded-full disabled:cursor-not-allowed [--lip-depth:6px]",
-          state === "done" && "size-16 bg-primary bg-grad-action text-primary-foreground [--lip:var(--primary-lip)]",
+          state === "done" && "size-16 bg-primary text-primary-foreground [--lip:var(--primary-lip)]",
           state === "current" &&
-            "size-20 bg-primary bg-grad-action text-primary-foreground [--lip:var(--primary-lip)]",
-          state === "open" &&
-            "size-16 bg-secondary bg-grad-secondary text-secondary-foreground [--lip:var(--secondary-lip)]",
+            "size-20 bg-primary text-primary-foreground [--lip:var(--primary-lip)]",
+          state === "open" && "size-16 bg-secondary text-secondary-foreground [--lip:var(--secondary-lip)]",
           state === "locked" && "size-16 bg-muted text-muted-foreground [--lip:var(--outline-lip)]"
         )}
       >

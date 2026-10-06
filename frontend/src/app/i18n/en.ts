@@ -165,9 +165,6 @@ export const en: Dict = {
   "me.badges": "Your badges",
   "me.delete": "Delete my account and data",
   "me.tools": "Daily tools",
-  "me.theme": "Appearance",
-  "theme.light": "Light",
-  "theme.dark": "Dark",
 
   "acct.create": "Create your account",
   "acct.displayName": "Display name",

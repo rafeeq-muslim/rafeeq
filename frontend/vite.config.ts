@@ -53,6 +53,5 @@ export default defineConfig(({ mode }) => ({
       ? { outDir: "dist-review", emptyOutDir: true, copyPublicDir: false }
       : { chunkSizeWarningLimit: 900 },
   server: { proxy: { "/api": "http://127.0.0.1:8000" } },
-  // The token contrast test (PLT-04) reads these two stylesheets as text.
-  test: { environment: "jsdom", include: ["src/**/*.test.ts", "src/**/*.test.tsx"], css: { include: [/src\/styles\/tokens\.css/, /src\/index\.css/] } },
+  test: { environment: "jsdom", include: ["src/**/*.test.ts", "src/**/*.test.tsx"] },
 }))

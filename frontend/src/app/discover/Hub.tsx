@@ -6,7 +6,7 @@ import { useNavigate } from "react-router"
 import { IconArrowLeft, IconBookmark, IconBooks, IconHeadphones, type TablerIcon } from "@tabler/icons-react"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import { DailyCard, IconTile, PetalPattern, TopBar } from "@/components/rafeeq"
+import { DailyCard, PetalPattern, TopBar } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
 import { cardOfDay, dayNumber } from "./daily"
 import { useCards } from "./queries"
@@ -52,7 +52,9 @@ export default function Hub() {
               onClick={() => navigate(to)}
               className="tactile flex min-h-18 items-center gap-4 rounded-card border-2 bg-card p-4 text-start [--lip:var(--outline-lip)]"
             >
-              <IconTile icon={Icon} size="lg" />
+              <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+                <Icon className="size-6" stroke={1.75} aria-hidden="true" />
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-body font-bold">{t(title)}</span>
                 <span className="block text-label text-muted-foreground">{t(body)}</span>

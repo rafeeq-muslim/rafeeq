@@ -89,15 +89,13 @@ function JourneySky({
   )
 }
 
-/** The mist sheet that overlaps the sky: radius 28 at the top, like iOS
- * sheets. Opaque where it covers the sky, then it lets the app backdrop
- * show through. */
+/** The mist sheet that overlaps the sky: radius 28 at the top, like iOS sheets. */
 function JourneySheet({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="journey-sheet"
       className={cn(
-        "relative -mt-8 flex flex-col gap-5 rounded-t-panel bg-[linear-gradient(to_bottom,var(--background)_3rem,transparent_12rem)] px-4 pt-6 @min-[52.5rem]/shell:mt-0 @min-[52.5rem]/shell:bg-none @min-[52.5rem]/shell:px-0 @min-[52.5rem]/shell:pt-0",
+        "relative -mt-8 flex flex-col gap-5 rounded-t-panel bg-background px-4 pt-6 @min-[52.5rem]/shell:mt-0 @min-[52.5rem]/shell:px-0 @min-[52.5rem]/shell:pt-0",
         className
       )}
       {...props}

@@ -164,9 +164,6 @@ export const ar = {
   "me.badges": "أوسمتك",
   "me.delete": "احذف حسابي وبياناتي",
   "me.tools": "أدوات يومية",
-  "me.theme": "المظهر",
-  "theme.light": "فاتح",
-  "theme.dark": "داكن",
 
   "acct.create": "أنشئ حسابك",
   "acct.displayName": "الاسم المعروض",

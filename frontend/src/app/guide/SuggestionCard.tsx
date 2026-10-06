@@ -7,7 +7,6 @@ import { useNavigate } from "react-router"
 import { IconCards, IconClock, IconHeadset, IconMoon, IconSunMoon, IconX, type Icon as TablerIcon } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
-import { IconTile } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
 import { useSuggestion } from "./useGuide"
 import type { MomentId } from "./suggest"
@@ -51,5 +50,9 @@ export function SuggestionCard() {
 
 function MomentIcon({ id }: { id: MomentId }) {
   const Icon = ICON[id]
-  return <IconTile icon={Icon} size="lg" />
+  return (
+    <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+      <Icon className="size-6" stroke={1.75} aria-hidden="true" />
+    </span>
+  )
 }
