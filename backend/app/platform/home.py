@@ -28,7 +28,7 @@ from app.knowledge.tasks import approved_names, client_key
 router = APIRouter(prefix="/api/home", tags=["home"])
 
 MAIN = ("daily", "card", "ask")  # R1: «يومي», «بطاقة اليوم», «اسأل رفيق»
-OPTIONAL = ("ramadan", "human", "save", "reciter", "library")  # R3 table order (the fixed order)
+OPTIONAL = ("ramadan", "human", "save", "reciter", "library", "install")  # R3 table order (the fixed order); PLT-16 "install" last
 Bucket = Literal["fajr", "morning", "dhuhr", "asr", "evening", "night"]
 Id = Annotated[str, Field(max_length=24)]
 

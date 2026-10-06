@@ -12,6 +12,7 @@ import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
 import { lazy } from "@/app/offline/lazyRoute" // PLT-15 R1: a screen not yet on the device says it needs a connection
 import { APP_BASE } from "@/app/lib/base"
+import { startInstall } from "@/app/install/store" // PLT-16 R2
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
 const Privacy = lazy(() => import("@/app/pages/Privacy"))
@@ -80,6 +81,7 @@ const queryClient = new QueryClient({
 
 void refreshSession()
 registerServiceWorker()
+startInstall() // PLT-16 R2: keep the browser's install offer for a tap; nothing opens by itself
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
