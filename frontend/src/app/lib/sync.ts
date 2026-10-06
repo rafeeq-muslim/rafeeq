@@ -97,8 +97,9 @@ export function scheduleSync(ms = 1500) {
  * move this device's guest help conversations to the account (CMP-01 R2 ex3)
  * and merge progress both ways. */
 export async function onSignedIn() {
-  const install_id = useDevice.getState().installId
-  await api("/api/me/install", { method: "POST", body: { install_id } }).catch(() => undefined)
+  const { installId: install_id, shareEvents } = useDevice.getState()
+  // MOT-07 R4: a device that stopped sharing events is never tied to the account.
+  if (shareEvents) await api("/api/me/install", { method: "POST", body: { install_id } }).catch(() => undefined)
   await claimGuestRequests()
   await syncNow()
 }
