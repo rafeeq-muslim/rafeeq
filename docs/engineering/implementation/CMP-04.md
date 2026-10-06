@@ -38,3 +38,15 @@
 | R5 ex2 block mentor | `test_cmp04_r5_blocking_mentor_ends_link` |
 | R5 ex3 block responder | `test_cmp04_r5_blocking_responder_returns_request_to_pool` |
 | R5 ex4 self | `test_cmp04_r5_cannot_block_self` |
+
+## Rewrite (PR #21, 2026-10-06)
+
+Rules renumbered: R3 is new («خطر على أحد»), old R3–R5 became R4–R6.
+
+| Rule | Change |
+| --- | --- |
+| R1 | A scholar's answer can be reported like any reply |
+| R3 | Reason `danger` → `priority = "danger"`; queue order danger, high, then oldest; `notify.to_role(["team","admin"], "report_danger")` at once. Dangerous reasons push `report` too (open-question default). `danger` hides for the reporter only |
+| R6 ex3 | Blocking the sister who answered returns the request to other sisters only (same-gender pool) |
+
+Tests: `backend/tests/test_cmp04_safety.py`, vitest `cmp04_r3_*`.

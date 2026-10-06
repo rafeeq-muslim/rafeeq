@@ -52,3 +52,15 @@ Blocks (CMP-04 R5) are applied in `_visible`: a request whose owner blocked this
 | R6 ex1 shared status | `test_cmp02_r6_shared_status_is_visible` |
 | R6 ex2 not shared | `test_cmp02_r6_unshared_mentee_shows_name_and_date_only` |
 | R6 ex3 non-mentor | `test_cmp02_r6_learner_cannot_open_inbox` |
+
+## Rewrite (PR #21, 2026-10-06)
+
+| Rule | Change |
+| --- | --- |
+| R1 | Pool = ordinary requests in the responder's languages **of the responder's gender**; responders are mentors and team members with a gender. Urgent requests: everyone, first |
+| R3 ex2 | After a day, the pool sees a mentee's request, still same-gender only |
+| R4 | `MENTEE_CAP_DEFAULT = 8`, `MENTEE_CAP_MAX = 10`; group members not counted. Paused (`accepting = false`): not suggested, no new pool requests; mentees, claimed threads and urgent stay. Availability text checked for contact details |
+| R5 | `referrals.py`: `POST /api/inbox/requests/{id}/refer {message_id}` (a learner message, once) → `cmp_scholar_referrals` row + system line `scholar_referral`; `GET /api/referrals` and `POST /api/referrals/{id}/answer` for `sharia_reviewer` only; the answer is a `scholar` message. Frontend: «أحِله إلى أهل العلم» on learner messages, `/referrals` screen |
+| R6 | «زائرة» label for sisters (frontend); fields unchanged |
+
+Tests: `backend/tests/test_cmp02_inbox.py` (every example), vitest `cmp02_*`.

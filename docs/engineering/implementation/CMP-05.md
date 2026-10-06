@@ -39,3 +39,7 @@ Learner: `/mentor/group` (join by code, or the group: challenge, members, chat).
 | R5 ex1 leave silently | `test_cmp05_r5_leaving_is_silent_and_emits_group_left` |
 | R5 ex2 mentor removes | `test_cmp05_r5_mentor_removes_member` |
 | R6 ex1 «6 من 8» | `test_cmp05_r6_group_page_challenge_shows_count_only` (in `test_mot06_challenges.py`) |
+
+## Rewrite (PR #21, 2026-10-06)
+
+R1: `DEFAULT_CAPACITY = 10`, `MAX_CAPACITY = 15`, `MENTOR_MEMBER_LIMIT = 25` as the sum of the mentor's group caps (`409 {code: mentor_member_limit, limit, remaining}`); `PUT /api/groups/{id}/capacity` for the mentor (2–15, not below current members, within 25). Frontend: cap editor in the members drawer and the hint in the create form. Tests: `backend/tests/test_cmp05_groups.py` (`test_cmp05_r1_*`).
