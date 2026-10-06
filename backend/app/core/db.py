@@ -32,7 +32,9 @@ class TimestampMixin:
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
-engine = create_async_engine(get_settings().database_url, pool_pre_ping=True, pool_size=10)
+# hide_parameters (security audit H2/M3): a failed statement is logged without
+# its bound values, which can be personal data (emails, contacts, messages).
+engine = create_async_engine(get_settings().database_url, pool_pre_ping=True, pool_size=10, hide_parameters=True)
 SessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
 

@@ -2,13 +2,14 @@
 account deletion. Roles beyond learner come only from team invites."""
 
 import re
+import secrets
 import uuid
 from datetime import UTC, datetime, timedelta
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Cookie, HTTPException, Request, Response, status
+from fastapi import APIRouter, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, or_, select, update
 
 from app.core import ratelimit
 from app.core.config import get_settings
@@ -26,7 +27,42 @@ from app.platform import generate, mailer
 from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
-COOKIE = "rafeeq_refresh"
+COOKIE = "rafeeq_refresh"  # local runs (plain http), and production sessions issued before the prefix
+# Security audit L9: in production the refresh cookie carries the `__Secure-`
+# prefix, so a browser accepts it only over HTTPS with the Secure attribute.
+# `__Host-` is not possible here: it requires Path=/, and this cookie is
+# deliberately scoped to Path=/api/auth so it is not sent with every request.
+# The old name is still read, so nobody is signed out; each refresh replaces
+# it with the new name.
+SECURE_COOKIE = "__Secure-rafeeq_refresh"
+COOKIE_PATH = "/api/auth"
+
+# Security audit M5: failed invite claims from every address together. Past
+# the cap every claim is refused with the same answer as a wrong code.
+INVITE_FAILS = ("invite-fail-all", 50, 600)
+# Security audit L4: wrong two-step codes per account, across challenges.
+CODE_FAILS_PER_USER = (10, 600)
+MAX_CODE_ATTEMPTS = 5
+
+
+def cookie_name() -> str:
+    return SECURE_COOKIE if get_settings().is_production else COOKIE
+
+
+def _refresh_token(request: Request) -> str | None:
+    return request.cookies.get(SECURE_COOKIE) or request.cookies.get(COOKIE)
+
+
+def _forget_cookies(response: Response) -> None:
+    response.delete_cookie(COOKIE, path=COOKIE_PATH)
+    if get_settings().is_production:
+        response.delete_cookie(SECURE_COOKIE, path=COOKIE_PATH, secure=True, httponly=True, samesite="lax")
+
+
+def _ip(request: Request) -> str:
+    return request.client.host if request.client else "-"
+
+
 _DUMMY_HASH = hash_password("rafeeq-timing-equaliser")
 
 
@@ -50,12 +86,12 @@ class Suggestion(BaseModel):
 
 class RegisterIn(BaseModel):
     display_name: str = Field(min_length=1, max_length=40)
-    username: str
+    username: str = Field(max_length=64)
     password: str = Field(min_length=8, max_length=128)
     locale: Locale = "ar"
-    invite_code: str | None = None
+    invite_code: str | None = Field(default=None, max_length=64)
     gender: Literal["m", "f"] | None = None
-    languages: list[Locale] = []
+    languages: list[Locale] = Field(default=[], max_length=8)
 
     @field_validator("username")
     @classmethod
@@ -75,8 +111,9 @@ class RegisterIn(BaseModel):
 
 
 class LoginIn(BaseModel):
-    username: str
-    password: str
+    # Security audit A-H2 / C-L2: bounded, the username is also a limiter key.
+    username: str = Field(max_length=40)
+    password: str = Field(max_length=128)
 
 
 class TwoFactorIn(BaseModel):
@@ -138,14 +175,16 @@ async def _issue(session: Session, user: User, response: Response) -> TokenOut:
     user.last_login_at = datetime.now(UTC)
     await session.commit()
     response.set_cookie(
-        COOKIE,
+        cookie_name(),
         token,
         httponly=True,
         secure=s.is_production,
         samesite="lax",
         max_age=s.refresh_token_days * 86400,
-        path="/api/auth",
+        path=COOKIE_PATH,
     )
+    if s.is_production:
+        response.delete_cookie(COOKIE, path=COOKIE_PATH)  # L9: the pre-prefix cookie ends here
     return TokenOut(access_token=create_access_token(user.id, user.roles), user=me_out(user))
 
 
@@ -156,7 +195,7 @@ async def suggest(locale: Locale = "ar") -> Suggestion:
 
 
 @router.get("/username-available")
-async def username_available(session: Session, u: str, request: Request) -> dict:
+async def username_available(session: Session, u: Annotated[str, Query(max_length=64)], request: Request) -> dict:
     # Security review #7: without a limit anyone could test a hidden convert's usual handle.
     ratelimit.hit(f"uname:{request.client.host if request.client else '-'}", 30, 600)
     u = u.strip().lower()
@@ -175,6 +214,9 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     roles = ["learner"]
     invite: Invite | None = None
     if body.invite_code:
+        key, limit, window = INVITE_FAILS
+        if ratelimit.full(key, limit, window):  # M5: too many wrong codes from everyone together
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")
         invite = await session.get(Invite, body.invite_code.strip())
         if (
             invite is None
@@ -182,6 +224,7 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
             or invite.revoked_at is not None  # PLT-17 R12
             or (invite.expires_at is not None and invite.expires_at < datetime.now(UTC))
         ):
+            ratelimit.hit(key, limit, window)  # never raises here: `full` was checked above
             raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")  # ORG-02 R1 ex2: used, revoked or expired
         # MOT-08: the team role is granted only in the database; an invite made
         # for it before that decision still opens a normal account and is used up.
@@ -220,8 +263,7 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
 
 @router.post("/login", response_model=LoginOut)
 async def login(body: LoginIn, session: Session, request: Request, response: Response) -> LoginOut:
-    ip = request.client.host if request.client else "-"
-    ratelimit.hit(f"login:{ip}", 30, 600)
+    ratelimit.hit(f"login:{_ip(request)}", 30, 600)
     ratelimit.hit(f"login-user:{body.username.strip().lower()}", 8, 600)
     user = await session.scalar(select(User).where(User.username == body.username.strip().lower()))
     if user is None:
@@ -238,6 +280,11 @@ async def login(body: LoginIn, session: Session, request: Request, response: Res
 
 async def _send_code(session: Session, user: User, purpose: str, email: str) -> uuid.UUID:
     code = new_otp()
+    # Security audit L4: a new code replaces the earlier unused ones of the same
+    # kind, so asking again never adds guesses (nor keeps an older pending email).
+    await session.execute(
+        delete(OneTimeCode).where(OneTimeCode.user_id == user.id, OneTimeCode.purpose == purpose, OneTimeCode.used_at.is_(None))
+    )
     otp = OneTimeCode(
         user_id=user.id,
         purpose=purpose,
@@ -252,20 +299,42 @@ async def _send_code(session: Session, user: User, purpose: str, email: str) -> 
     return otp.id
 
 
-async def _check_code(session: Session, challenge_id: uuid.UUID, code: str, purpose: str) -> OneTimeCode:
-    otp = await session.get(OneTimeCode, challenge_id)
-    if otp is None or otp.purpose != purpose or otp.used_at or otp.expires_at < datetime.now(UTC) or otp.attempts >= 5:
+async def _check_code(session: Session, challenge_id: uuid.UUID, code: str, purpose: str) -> Any:
+    """Returns the used code's (user_id, pending_email). Security audit L5:
+    the attempt is counted in one statement, so parallel guesses cannot share
+    one attempt; L4: wrong codes are also counted per account."""
+    now = datetime.now(UTC)
+    live = (OneTimeCode.id == challenge_id, OneTimeCode.purpose == purpose, OneTimeCode.used_at.is_(None), OneTimeCode.expires_at > now)
+    tried = (
+        await session.execute(
+            update(OneTimeCode)
+            .where(*live, OneTimeCode.attempts < MAX_CODE_ATTEMPTS)
+            .values(attempts=OneTimeCode.attempts + 1)
+            .returning(OneTimeCode.user_id, OneTimeCode.code_hash)
+        )
+    ).first()
+    if tried is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "code_expired")
-    otp.attempts += 1
-    if otp.code_hash != sha256(code):
-        await session.commit()
+    await session.commit()  # the attempt counts whatever happens next
+    fails = f"2fa-fail:{tried.user_id}"
+    if ratelimit.full(fails, *CODE_FAILS_PER_USER):
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "rate_limited")
+    if not secrets.compare_digest(tried.code_hash, sha256(code)):
+        ratelimit.hit(fails, *CODE_FAILS_PER_USER)
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "code_invalid")
-    otp.used_at = datetime.now(UTC)
-    return otp
+    used = (
+        await session.execute(
+            update(OneTimeCode).where(*live).values(used_at=now).returning(OneTimeCode.user_id, OneTimeCode.pending_email)
+        )
+    ).first()
+    if used is None:  # a parallel request used it first
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "code_expired")
+    return used
 
 
 @router.post("/login/2fa", response_model=TokenOut)
-async def login_2fa(body: TwoFactorIn, session: Session, response: Response) -> TokenOut:
+async def login_2fa(body: TwoFactorIn, session: Session, request: Request, response: Response) -> TokenOut:
+    ratelimit.hit(f"2fa-ip:{_ip(request)}", 30, 600)  # audit A-H2: the challenge id below is the caller's choice
     ratelimit.hit(f"2fa:{body.challenge_id}", 6, 600)
     otp = await _check_code(session, body.challenge_id, body.code, "login")
     user = await session.get(User, otp.user_id)
@@ -274,7 +343,8 @@ async def login_2fa(body: TwoFactorIn, session: Session, response: Response) -> 
 
 
 @router.post("/refresh", response_model=TokenOut)
-async def refresh(session: Session, response: Response, rafeeq_refresh: Annotated[str | None, Cookie()] = None) -> TokenOut:
+async def refresh(session: Session, request: Request, response: Response) -> TokenOut:
+    rafeeq_refresh = _refresh_token(request)
     if not rafeeq_refresh:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "no_session")
     rs = await session.scalar(select(RefreshSession).where(RefreshSession.token_hash == sha256(rafeeq_refresh)))
@@ -287,7 +357,8 @@ async def refresh(session: Session, response: Response, rafeeq_refresh: Annotate
 
 
 @router.post("/logout", status_code=204)
-async def logout(session: Session, response: Response, rafeeq_refresh: Annotated[str | None, Cookie()] = None) -> None:
+async def logout(session: Session, request: Request, response: Response) -> None:
+    rafeeq_refresh = _refresh_token(request)
     if rafeeq_refresh:
         rs = await session.scalar(select(RefreshSession).where(RefreshSession.token_hash == sha256(rafeeq_refresh)))
         if rs is not None:
@@ -296,7 +367,7 @@ async def logout(session: Session, response: Response, rafeeq_refresh: Annotated
             await session.execute(update(PushSubscription).where(PushSubscription.user_id == rs.user_id).values(user_id=None))
             await session.delete(rs)
         await session.commit()
-    response.delete_cookie(COOKIE, path="/api/auth")
+    _forget_cookies(response)
 
 
 # ---- the signed-in user --------------------------------------------------
@@ -319,12 +390,12 @@ def set_own_gender(user: User, gender: str) -> None:
 class MePatch(BaseModel):
     display_name: str | None = Field(default=None, min_length=1, max_length=40)
     locale: Locale | None = None
-    languages: list[Locale] | None = None
+    languages: list[Locale] | None = Field(default=None, max_length=8)
     gender: Literal["m", "f"] | None = None  # mentors and team members set theirs in «حسابي»
 
 
 class PasswordIn(BaseModel):
-    current_password: str
+    current_password: str = Field(max_length=128)
     new_password: str = Field(min_length=8, max_length=128)
 
 
@@ -358,9 +429,13 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
 
 @me.post("/password", status_code=204)
 async def change_password(body: PasswordIn, user: CurrentUser, session: Session, response: Response) -> None:
+    ratelimit.hit(f"password:{user.id}", 5, 600)  # security audit L8: a stolen access token cannot guess the password freely
     if not verify_password(user.password_hash, body.current_password):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "invalid_credentials")
     user.password_hash = hash_password(body.new_password)
+    # Security audit L7: access tokens issued before this moment are refused
+    # (core/deps.py); the app then refreshes with the new cookie set below.
+    user.password_changed_at = datetime.now(UTC)
     await _revoke_other_sessions(session, user, response)
     await session.commit()
 
@@ -379,6 +454,7 @@ async def start_2fa(body: EnableTwoFactorIn, user: CurrentUser, session: Session
 
 @me.post("/2fa/confirm", response_model=MeOut)
 async def confirm_2fa(body: ConfirmIn, user: CurrentUser, session: Session, response: Response) -> MeOut:
+    ratelimit.hit(f"2fa-confirm:{user.id}", 6, 600)  # security audit L5
     otp = await _check_code(session, body.challenge_id, body.code, "enable_2fa")
     if otp.user_id != user.id:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "code_invalid")
@@ -391,6 +467,8 @@ async def confirm_2fa(body: ConfirmIn, user: CurrentUser, session: Session, resp
 @me.delete("/2fa", response_model=MeOut)
 async def disable_2fa(user: CurrentUser, session: Session, response: Response) -> MeOut:
     user.email, user.two_factor_enabled = None, False  # the email is kept only for codes
+    # Security audit L10: nor does a code row keep it (pending_email) after two-step is turned off.
+    await session.execute(delete(OneTimeCode).where(OneTimeCode.user_id == user.id))
     await _revoke_other_sessions(session, user, response)
     await session.commit()
     return me_out(user)
@@ -402,7 +480,11 @@ async def delete_account(user: CurrentUser, session: Session, response: Response
     tables cascade on users.id; domains also receive AccountDeleted."""
     await publish(session, "AccountDeleted", "PLT", {"user_id": str(user.id)})
     # Leave no event history that names the account (security review #10).
-    await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["user_id"].astext == str(user.id)))
+    # Security audit L11: MentorApproved, MentorSuspended and GroupCreated name it as `mentor_id`.
+    uid = str(user.id)
+    await session.execute(
+        delete(OutboxEvent).where(or_(OutboxEvent.payload["user_id"].astext == uid, OutboxEvent.payload["mentor_id"].astext == uid))
+    )
     await session.delete(user)
     await session.commit()
-    response.delete_cookie(COOKIE, path="/api/auth")
+    _forget_cookies(response)

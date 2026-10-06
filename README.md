@@ -90,7 +90,7 @@ uv run alembic upgrade head   # creates every table
 uv run uvicorn app.main:app --port 8000 --reload
 ```
 
-Run backend commands from `backend/`: the settings are read from `backend/.env` in the current directory. Check it: `curl http://127.0.0.1:8000/api/health` returns `{"ok":true}`. The API docs are at http://127.0.0.1:8000/api/docs.
+Run backend commands from `backend/`: the settings are read from `backend/.env` in the current directory. Check it: `curl http://127.0.0.1:8000/api/health` returns `{"ok":true}`. The API docs are at http://127.0.0.1:8000/api/docs (local runs only: off with `ENV=production`).
 
 **4. The first admin account**
 
@@ -166,14 +166,14 @@ All backend settings live in `backend/app/core/config.py`. Each field is read fr
 
 | Variable | Production | Default | What it is / how to get it |
 | --- | --- | --- | --- |
-| `ENV` | yes: `production` | `development` | `production` makes the sign-in cookie `Secure` |
+| `ENV` | yes: `production` | `development` | `production` makes the sign-in cookie `Secure` (named `__Secure-rafeeq_refresh`), turns the API docs off, and refuses to start on a weak `JWT_SECRET` or a short first-admin password |
 | `PUBLIC_URL` | yes | `http://localhost:5173` | Where the app is opened from; sent as `HTTP-Referer` on AI calls |
 | `DATABASE_URL` | yes | `postgresql+asyncpg://rafeeq:rafeeq_dev@127.0.0.1:5442/rafeeq` | Async SQLAlchemy URL to PostgreSQL 16 with pgvector |
-| `JWT_SECRET` | yes | `dev-only-change-me` | Signs sign-in tokens. Generate: `python3 -c "import secrets; print(secrets.token_urlsafe(48))"` |
+| `JWT_SECRET` | yes, 32 characters or more: with `ENV=production` the backend does not start on the default, the `.env.example` placeholder or a shorter value | `dev-only-change-me` | Signs sign-in tokens. Generate: `python3 -c "import secrets; print(secrets.token_urlsafe(48))"` |
 | `ACCESS_TOKEN_MINUTES` | no | `30` | Access token lifetime |
 | `REFRESH_TOKEN_DAYS` | no | `60` | Refresh cookie lifetime |
 | `BOOTSTRAP_ADMIN_USERNAME` | first start | empty | First admin, created at startup only if no admin exists |
-| `BOOTSTRAP_ADMIN_PASSWORD` | first start | empty | Its password; choose a long one |
+| `BOOTSTRAP_ADMIN_PASSWORD` | first start | empty | Its password. With `ENV=production`: 16 characters or more, or the backend does not start; remove both values once the admin exists |
 
 **Content and corpus paths**
 

@@ -367,8 +367,9 @@ async def send(sub: PushSubscription, payload: dict) -> bool:
     except Rejected as e:  # PLT-13 R3: only the push host is logged, never the endpoint or the person
         log.error("push signature rejected (403) by %s: check VAPID keys and subject", e)
         return False
-    except Exception:  # network trouble: try again next run
-        log.warning("push failed", exc_info=True)
+    except Exception as e:  # network trouble: try again next run
+        # Security audit M3: the type only. The error text and traceback hold the device's endpoint URL.
+        log.warning("push failed: %s", type(e).__name__)
         return False
 
 
