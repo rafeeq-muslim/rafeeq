@@ -56,3 +56,4 @@ Updated for the PR #25 documents in `PLT-02.md` (and PLT-01, 03, 05, 06, 07 in t
 | MOT-07 R6 mentor sees it only with permission | Companion (CMP-02) | CMP tests |
 | MOT-08 R1–R6 | `backend/app/motivation/indicators.py`, `pages/roles/Team.tsx` | `test_mot08_*` |
 | MOT-09 R1–R6 | `indicators.understanding()`, events from `answers.ts`, `why.ts`, `Placement.tsx` | `test_mot09_*` |
+| MOT-09 R6 on placement and R5 | `indicators.placement_figures()`: each device counts once by its last outcome (done or skipped); under 10 people in all hides everything; a bucket under 10 is hidden, with complementary suppression (as ORG-03) so it cannot be worked out from the others; events unlinked by an opt-out are left out. `guide_followed` and `quick_check_correct` stay rates over messages and answers, but need 10 distinct devices. Team page shows «لا تكفي البيانات بعد» (`team.notEnough`) in place of each hidden figure | `test_mot09_r6_placement.py`, `Team.placement.test.tsx` |
