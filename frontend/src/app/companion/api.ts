@@ -151,6 +151,8 @@ export type Challenge = {
   mine: boolean | null
   my_lessons: number | null
   shared_done: string[] | null
+  /** Mentor only: the Sharia reviewer's reason for returning a free text (MOT-06 R3). */
+  review_note?: string | null
 }
 export type Template = { id: string; text: string; lang: string }
 export type QueueItem = {

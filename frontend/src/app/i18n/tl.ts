@@ -1284,4 +1284,17 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+  // MOT-06 R3: mentors' challenge texts in the review desk (mot-06-r3-challenge-review-screen)
+  "desk.ch.open": "Mga teksto ng hamon",
+  "desk.ch.title": "Teksto ng hamon",
+  "desk.ch.waiting": "{n} naghihintay ng pag-apruba",
+  "desk.ch.hint": "Mga lingguhang layunin na isinulat ng mga mentor para sa kanilang grupo. Hindi ito nakikita ng mga miyembro bago maaprubahan, at hindi inaaprubahan ang anumang gawaing pagsamba. Bawat tekstong inaprubahan mo ay nagiging template na magagamit ng mga mentor.",
+  "desk.ch.approve": "Aprubahan",
+  "desk.ch.return": "Ibalik",
+  "desk.ch.reason": "Dahilan ng pagbabalik, ang mentor lang ang makakakita",
+  "desk.ch.approvedToast": "Naaprubahan; nagsimula na ang lingguhang layunin ng grupo",
+  "desk.ch.returnedToast": "Ibinalik sa mentor kasama ang dahilan",
+  "desk.ch.gone": "Napagpasyahan na ang tekstong ito o binawi ng mentor",
+  "desk.ch.empty": "Walang tekstong naghihintay ng pag-apruba ngayon.",
+  "cmp.ch.reason": "Dahilan ng tagasuri:",
 }
