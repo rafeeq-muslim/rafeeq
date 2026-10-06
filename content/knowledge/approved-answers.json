@@ -40,10 +40,10 @@
           "version": "enc-api@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 (reviewed in Arabic)."
     },
     {
       "id": "suggest-shahada-en",
@@ -76,10 +76,10 @@
           "version": "enc-api@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer."
     },
     {
       "id": "suggest-shahada-tl",
@@ -110,10 +110,10 @@
           "version": "api-v1@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer; Tagalog wording still needs a native reader."
     },
     {
       "id": "suggest-wudu-ar",
@@ -146,10 +146,10 @@
           "version": "api-v1@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 (reviewed in Arabic)."
     },
     {
       "id": "suggest-wudu-en",
@@ -181,10 +181,10 @@
           "version": "api-v1@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer."
     },
     {
       "id": "suggest-wudu-tl",
@@ -215,10 +215,10 @@
           "version": "api-v1@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer; Tagalog wording still needs a native reader."
     },
     {
       "id": "suggest-parents-ar",
@@ -279,10 +279,10 @@
           "version": "unlisted@2026-10-05"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 (reviewed in Arabic)."
     },
     {
       "id": "suggest-parents-en",
@@ -328,10 +328,10 @@
           "version": "1.1.2"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer."
     },
     {
       "id": "suggest-parents-tl",
@@ -376,10 +376,10 @@
           "version": "1.1.4"
         }
       ],
-      "status": "draft",
-      "reviewer": null,
-      "approved_at": null,
-      "note": "Drafted by Claude from the cited passages; needs the Sharia reviewer's approval"
+      "status": "approved",
+      "reviewer": "مهند بن صالح الفوزان",
+      "approved_at": "2026-10-06",
+      "note": "Drafted by Claude from the cited passages; approved by the Sharia reviewer on 2026-10-06 on the strength of the approved Arabic answer; Tagalog wording still needs a native reader."
     }
   ]
 }
