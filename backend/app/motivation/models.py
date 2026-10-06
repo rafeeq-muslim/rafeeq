@@ -66,10 +66,14 @@ class AnonEvent(Base):
     exercise_id: Mapped[str | None] = mapped_column(String(24), nullable=True)
     correct: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     context: Mapped[str | None] = mapped_column(String(16), nullable=True)  # lesson | review | placement | quick_check
-    shown: Mapped[str | None] = mapped_column(String(16), nullable=True)  # ai_explanation | card_only
+    # ai_explanation | card_holdout (MOT-09 R4 random fifth) | card_only (offline, failed or refused)
+    shown: Mapped[str | None] = mapped_column(String(16), nullable=True)
     is_repeat: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     value: Mapped[int | None] = mapped_column(Integer, nullable=True)  # e.g. units passed in placement
     day: Mapped[date] = mapped_column(Date, index=True)
+    # MOT-09 R4: the device's own order of its events (a counter), so an
+    # offline queue arriving at once keeps "what came after «لماذا؟»".
+    seq: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

@@ -137,5 +137,10 @@ def build_content(lang: str, units_live: dict[str, Any], lessons_live: dict[str,
         ids = [lid for lid in u.get("lessons", []) if lid in lessons]
         if view is None or not ids:
             continue
-        units.append({**view, "id": u["id"], "order": u.get("order", i + 1), "lessons": ids, "approved": live is not None})
+        # LRN-01 R6 / LRN-02 R3: every lesson of the unit, in order, live or not, so the path
+        # shows a missing one as «قيد الإعداد بلغتك» and never counts the unit as complete.
+        outline = list(u.get("lessons", []))
+        units.append(
+            {**view, "id": u["id"], "order": u.get("order", i + 1), "lessons": ids, "outline": outline, "approved": live is not None}
+        )
     return {"lang": lang, "preview": preview, "units": units, "lessons": lessons}

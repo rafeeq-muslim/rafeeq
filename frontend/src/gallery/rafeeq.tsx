@@ -30,7 +30,6 @@ import {
   HumanHelpButton,
   JourneyCard,
   LanguageSwitcher,
-  LeaderboardRow,
   LearningPath,
   LessonCard,
   MentorCard,
@@ -43,7 +42,6 @@ import {
   ReferralCard,
   StreakChip,
   UserMessage,
-  XpChip,
   type LocaleCode,
   type NavKey,
 } from "@/components/rafeeq"
@@ -225,26 +223,18 @@ function RafeeqComponents() {
           </Demo>
 
           <Demo
-            name="StreakChip · XpChip · LeaderboardRow"
-            domain="MOT-01 · MOT-02 · MOT-04"
-            description="لوحة الترتيب اختيارية يفعّلها المستخدم، وتعرض الاسم المعروض ونقاط التعلّم فقط."
-            rules={["«متوقفة مؤقتًا» لا «خسرت سلسلتك»", "لا نقاط على صلاة أو صيام أو أي عبادة"]}
+            name="StreakChip"
+            domain="MOT-02"
+            description="أيام التعلّم وحدها. لا نقاط ولا لوحة ترتيب في رفيق (rules.md §3)."
+            rules={["«متوقفة مؤقتًا» لا «خسرت سلسلتك»", "لا نقاط ولا ترتيب، ولا سلسلة على أي عبادة"]}
             code={`<StreakChip days={7} />
-<StreakChip days={7} paused />
-<XpChip points={1240} />
-<LeaderboardRow rank={4} displayName="نجمة الصباح" points={980} isYou />`}
+<StreakChip days={7} paused />`}
             stack
           >
             <div className="flex flex-wrap gap-2">
               <StreakChip days={7} />
               <StreakChip days={7} paused />
-              <XpChip points={1240} />
             </div>
-            <ol className="flex flex-col gap-1.5">
-              <LeaderboardRow rank={1} displayName="سالك" points={1520} />
-              <LeaderboardRow rank={2} displayName="Hope_21" points={1310} />
-              <LeaderboardRow rank={4} displayName="نجمة الصباح" points={980} isYou />
-            </ol>
           </Demo>
         </div>
       </Section>

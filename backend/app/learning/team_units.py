@@ -56,6 +56,10 @@ def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
             }
             if kind == "hadith":
                 card["hadith"] = True
+            if c.get("hadith_ids"):
+                # KNW-05 R2: the HadeethEnc ids the card cites; the review desk shows each
+                # beside the card from the stored record (text, grade, reference).
+                card["hadith_ids"] = [int(h) for h in c["hadith_ids"]]
             if c.get("audio"):
                 card["audio"] = (media.get("audio") or {}).get(c["audio"])  # {lang: [urls] | None}
             cards.append(card)

@@ -35,15 +35,30 @@ OWN_MENTOR_FIRST = timedelta(hours=24)
 ALERT_LIFETIME = timedelta(hours=24)
 
 
-async def responder(user: CurrentUser) -> User:
+async def mentor_gate(session, user: User) -> None:
+    """ORG-02 R2 and R5: a mentor reads and accepts the mentor rules before
+    the inbox opens, and a suspended mentor has no inbox. Team members are
+    staff, not volunteers, and have no gate."""
+    if is_team(user) or not user.has("mentor"):
+        return
+    prof = await session.get(MentorProfile, user.id)
+    if prof is not None and prof.suspended:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "mentor_suspended")
+    if prof is None or prof.rules_accepted_at is None:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "mentor_rules_required")
+
+
+async def responder(user: CurrentUser, session: Session) -> User:
     if not (user.has("mentor") or is_team(user)):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")  # R6 ex3
+    await mentor_gate(session, user)
     return user
 
 
-async def mentor_only(user: CurrentUser) -> User:
+async def mentor_only(user: CurrentUser, session: Session) -> User:
     if not user.has("mentor"):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    await mentor_gate(session, user)
     return user
 
 
@@ -312,6 +327,36 @@ async def mentee_thread(learner_id: uuid.UUID, session: Session, me: Mentor) -> 
     req = await get_or_create_thread(session, link)
     await session.commit()
     return await _row(session, req, me)
+
+
+# --- the mentor rules (ORG-02 R2) ------------------------------------------
+
+
+class RulesOut(BaseModel):
+    required: bool
+    accepted_at: datetime | None
+    suspended: bool
+
+
+@router.get("/rules", response_model=RulesOut)
+async def get_rules(session: Session, user: CurrentUser) -> RulesOut:
+    """Whether the inbox waits for the mentor rules. The rules' text lives in
+    the app (ar/en/tl); the server keeps only when they were accepted."""
+    if not user.has("mentor"):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    prof = await session.get(MentorProfile, user.id)
+    accepted = prof.rules_accepted_at if prof else None
+    return RulesOut(required=not is_team(user) and accepted is None, accepted_at=accepted, suspended=bool(prof and prof.suspended))
+
+
+@router.post("/rules", response_model=RulesOut)
+async def accept_rules(session: Session, user: CurrentUser) -> RulesOut:
+    if not user.has("mentor"):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    prof = await profile_of(session, user.id)
+    prof.rules_accepted_at = prof.rules_accepted_at or now()
+    await session.commit()
+    return RulesOut(required=False, accepted_at=prof.rules_accepted_at, suspended=prof.suspended)
 
 
 # --- profile -------------------------------------------------------------

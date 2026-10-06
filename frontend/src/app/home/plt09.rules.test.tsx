@@ -123,7 +123,7 @@ beforeEach(() => {
     "/api/home/config": () => ({ body: { organized: true } }),
     "/api/home/order": () => ({ body: { order: null } }),
   }
-  useDevice.setState({ locale: "ar", onboarded: true, city: null, organizedHome: true, organizedHomePreview: false, dismissedSaveSheet: false })
+  useDevice.setState({ locale: "ar", onboarded: true, city: null, organizedHome: true, dismissedSaveSheet: false })
   useAuth.setState({ me: null, token: null })
   useLearning.setState({ completed: {}, sessions: {}, mastery: {}, unlockedUnits: [] })
   useGuide.setState({ dismissed: {}, used: {}, lastShown: null })
@@ -140,19 +140,30 @@ afterEach(() => {
 })
 
 // --- the setting -------------------------------------------------------------------------
-describe("plt-09 setting: off by default, the current app stays", () => {
-  it("plt09_setting_is_off_by_default_on_the_device", () => {
-    const fresh = useDevice.getInitialState?.() ?? null
-    expect(fresh?.organizedHome ?? false).toBe(false)
-    expect(fresh?.organizedHomePreview ?? false).toBe(false)
+describe("plt-09 setting: on by default (approved), switchable off to roll back", () => {
+  it("plt09_setting_is_on_by_default_on_the_device", () => {
+    expect(useDevice.getInitialState().organizedHome).toBe(true)
   })
 
-  it("plt09_setting_off_home_me_guide_and_discover_are_unchanged", async () => {
+  it("plt09_setting_on_by_default_home_me_guide_and_discover_follow_plt09", async () => {
+    wrap("/")
+    expect(await screen.findByRole("heading", { name: ar("home.org.daily") })).toBeTruthy()
+    expect(screen.queryByRole("button", { name: new RegExp(ar("guide.homeLink")) })).toBeNull()
+    cleanup()
+    wrap("/me")
+    expect(screen.queryByRole("heading", { name: ar("me.tools") })).toBeNull()
+  })
+
+  it("plt09_setting_switched_off_by_the_server_restores_the_previous_app", async () => {
     routes["/api/home/config"] = () => ({ body: { organized: false } })
-    useDevice.setState({ organizedHome: false })
     wrap("/")
     expect(await screen.findByRole("button", { name: new RegExp(ar("guide.homeLink")) })).toBeTruthy() // PLT-08 R5 link at the end
     expect(screen.queryByRole("heading", { name: ar("home.org.daily") })).toBeNull()
+    expect(useDevice.getState().organizedHome).toBe(false) // kept for offline
+    cleanup()
+    calls = []
+    wrap("/")
+    await screen.findByRole("button", { name: new RegExp(ar("guide.homeLink")) })
     expect(orderRequests()).toHaveLength(0) // no model call while off
     cleanup()
     wrap("/me")
@@ -165,22 +176,11 @@ describe("plt-09 setting: off by default, the current app stays", () => {
     expect(screen.getByText(ar("discover.lede"))).toBeTruthy()
   })
 
-  it("plt09_setting_on_from_the_server_turns_the_organized_home_on", async () => {
+  it("plt09_setting_switched_back_on_by_the_server_turns_the_organized_home_on", async () => {
     useDevice.setState({ organizedHome: false })
     wrap("/")
     expect(await screen.findByRole("heading", { name: ar("home.org.daily") })).toBeTruthy()
-    expect(useDevice.getState().organizedHome).toBe(true) // kept for offline
-  })
-
-  it("plt09_setting_team_preview_on_one_device_only", async () => {
-    routes["/api/home/config"] = () => ({ body: { organized: false } })
-    useDevice.setState({ organizedHome: false, organizedHomePreview: true })
-    wrap("/")
-    await screen.findByRole("button", { name: new RegExp(ar("guide.homeLink")) }) // a learner's preview flag alone does nothing
-    cleanup()
-    useAuth.setState({ me: { id: "t", display_name: "فريق", username: "team", roles: ["team"] } as never, token: "x" })
-    wrap("/")
-    expect(await screen.findByRole("heading", { name: ar("home.org.daily") })).toBeTruthy()
+    expect(useDevice.getState().organizedHome).toBe(true)
   })
 })
 
@@ -248,7 +248,7 @@ describe("plt-09-r2 «يومي»: prayer, adhkar, Quran, library", () => {
     fireEvent.click(await screen.findByRole("button", { name: new RegExp(ar("discover.quran")) }))
     expect(screen.getByTestId("where").textContent).toBe("/discover/quran")
     cleanup()
-    localStorage.setItem("rafeeq.quranLast", "36")
+    localStorage.setItem("rafeeq.quranPos.last", "36")
     wrap("/")
     fireEvent.click(await screen.findByRole("button", { name: new RegExp(ar("home.org.quranContinue", { name: "يس" })) }))
     expect(screen.getByTestId("where").textContent).toBe("/discover/quran/36")
@@ -340,7 +340,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
   it("plt09_r4_model_order_is_used_and_the_device_keeps_the_first_two_eligible", async () => {
     vi.useFakeTimers({ toFake: ["Date"] })
     vi.setSystemTime(new Date(2026, 9, 6, 19, 0)) // evening on the device clock
-    localStorage.setItem("rafeeq.quranLast", "1") // opened listening
+    localStorage.setItem("rafeeq.quranPos.last", "1") // opened listening
     useLearning.setState({ completed: { "u01-l1": DONE, "u01-l7": DONE } })
     routes["/api/home/order"] = () => ({ body: { order: { main: ["daily", "card", "ask"], optional: ["library", "reciter", "human", "save", "ramadan"] } } })
     routes["/api/discover/recitations"] = () => ({ body: { lang: "ar", recitation: null, reciters: [{ id: "quranpedia-255" }, { id: "quranpedia-250" }] } })
@@ -458,7 +458,7 @@ describe("plt-09-r6 the learner owns Home: hide with one tap, no reward or blame
     expect(daySlots(["reciter", "library"], order, ok, { reciter: true })).toEqual(["human", "library"])
 
     // On screen: Layla hides «اختر قارئك».
-    localStorage.setItem("rafeeq.quranLast", "2")
+    localStorage.setItem("rafeeq.quranPos.last", "2")
     useLearning.setState({ completed: { "u01-l1": DONE } })
     useAuth.setState({ me: { id: "l", display_name: "ليلى", username: "layla", roles: ["learner"] } as never, token: "x" })
     routes["/api/discover/recitations"] = () => ({ body: { reciters: [{ id: "quranpedia-250" }, { id: "quranpedia-255" }] } })

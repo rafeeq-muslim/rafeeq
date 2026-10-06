@@ -1,6 +1,5 @@
 import * as React from "react"
 import {
-  IconBolt,
   IconFlame,
   IconLock,
   IconPlayerPause,
@@ -15,6 +14,7 @@ import { YearFlower } from "./graphics"
 /*
  * Motivation (MOT). Everything here counts LEARNING only.
  * Worship is never scored, streaked or badged (docs/agents/rules.md).
+ * No points and no leaderboard of any kind (rules.md §3, 2026-10-05).
  */
 
 /**
@@ -145,64 +145,4 @@ function StreakChip({
   )
 }
 
-/** «نقاط التعلّم» (MOT-01): earned from lessons and exercises only. */
-function XpChip({ points, className }: { points: number; className?: string }) {
-  return (
-    <Badge
-      data-slot="xp-chip"
-      variant="secondary"
-      className={cn("tabular-nums", className)}
-    >
-      <IconBolt data-icon="inline-start" stroke={1.75} />
-      {`${points.toLocaleString("en-US")} نقطة تعلّم`}
-    </Badge>
-  )
-}
-
-/**
- * «لوحة الترتيب» row (MOT-04). Opt-in only; shows the display name
- * (never the real name) and learning points.
- */
-function LeaderboardRow({
-  rank,
-  displayName,
-  points,
-  isYou = false,
-  className,
-}: {
-  rank: number
-  displayName: string
-  points: number
-  isYou?: boolean
-  className?: string
-}) {
-  return (
-    <li
-      data-slot="leaderboard-row"
-      data-you={isYou}
-      className={cn(
-        "flex min-h-14 items-center gap-3 rounded-md px-4 py-2",
-        isYou ? "bg-secondary text-secondary-foreground" : "bg-card",
-        className
-      )}
-    >
-      <span
-        className={cn(
-          "grid size-8 shrink-0 place-items-center rounded-full text-label font-bold tabular-nums",
-          rank <= 3 ? "bg-celebrate text-celebrate-foreground" : "bg-muted text-muted-foreground"
-        )}
-      >
-        {rank}
-      </span>
-      <span className="min-w-0 flex-1 truncate text-body font-medium">
-        <bdi>{displayName}</bdi>
-        {isYou && <span className="text-caption text-muted-foreground"> (أنت)</span>}
-      </span>
-      <span className="text-label font-medium tabular-nums text-muted-foreground">
-        {points.toLocaleString("en-US")}
-      </span>
-    </li>
-  )
-}
-
-export { FirstYearCounter, MilestoneBadge, StreakChip, XpChip, LeaderboardRow }
+export { FirstYearCounter, MilestoneBadge, StreakChip }

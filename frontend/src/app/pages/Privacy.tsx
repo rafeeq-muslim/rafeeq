@@ -21,7 +21,8 @@ import { useDocumentLocale } from "@/app/AppLayout"
 
 export const POLICY_UPDATED = "2026-10-06"
 
-export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "stats", "never", "rights", "retention"] as const
+// "org": ORG-01 the organisation link (what the link carries, what «نعم» keeps, unlinking).
+export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "stats", "org", "never", "rights", "retention"] as const
 
 export default function Privacy() {
   useDocumentLocale()

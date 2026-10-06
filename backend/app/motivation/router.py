@@ -7,6 +7,8 @@ that opts out sends one `opt_out` event; its install ID is then removed
 from every stored event and it has no status any more.
 """
 
+import re
+import uuid
 from datetime import UTC, date, datetime, timedelta
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
@@ -18,11 +20,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
-from app.core.events import OutboxEvent, publish
+from app.core.events import OutboxEvent, publish, subscribe
 from app.motivation.engagement import after_interaction, status_at
-from app.motivation.models import AnonEvent, EarnedBadge, EngagementState, StreakDay
+from app.motivation.models import AnonEvent, DailySnapshot, EarnedBadge, EngagementState, StreakDay
 
 RIYADH = ZoneInfo("Asia/Riyadh")
+BADGE_ID = re.compile(r"unit-[A-Za-z0-9_-]{1,16}|days-(7|30|66)")
 LEARNING = {"lesson_completed", "review_completed"}  # MOT-07: the only learning interactions
 
 EventType = Literal[
@@ -31,7 +34,7 @@ EventType = Literal[
     "unit_completed",  # unit_id
     "first_answer",  # MOT-09: objective_id, exercise_id, correct, context, shown
     "mastered",  # objective_id
-    "why_shown",  # LRN-03 / MOT-09 R4: shown = ai_explanation | card_only
+    "why_shown",  # LRN-03 / MOT-09 R4: shown = ai_explanation | card_holdout (random fifth) | card_only
     "placement_done",  # value = units passed
     "placement_skipped",
     "guide_shown",  # MOT-09 R5
@@ -49,9 +52,10 @@ class EventIn(BaseModel):
     exercise_id: str | None = Field(default=None, max_length=24)
     correct: bool | None = None
     context: Literal["lesson", "review", "placement", "quick_check"] | None = None
-    shown: Literal["ai_explanation", "card_only"] | None = None
+    shown: Literal["ai_explanation", "card_holdout", "card_only"] | None = None
     is_repeat: bool | None = None
     value: int | None = Field(default=None, ge=0, le=1000)
+    seq: int | None = Field(default=None, ge=0, le=2**62)  # MOT-09 R4: the device's event order
 
 
 class EventsIn(BaseModel):
@@ -118,11 +122,49 @@ async def _interact(session: AsyncSession, install_id: str, ats: list[datetime],
 
 async def opt_out(session: AsyncSession, install_id: str, now: datetime) -> None:
     """MOT-07 R4 (error example): one bare opt-out event, then unlink everything."""
+    st = await session.get(EngagementState, install_id)
+    if st is not None and st.status is not None:
+        # The device has no status any more: domains holding a copy (CMP-02 R6,
+        # ORG-03) drop it. The event row itself is removed just below.
+        await publish(
+            session,
+            "EngagementStatusChanged",
+            "MOT",
+            {"install_id": install_id, "user_id": str(st.user_id) if st.user_id else None, "status": None},
+        )
     await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
     await session.execute(delete(EngagementState).where(EngagementState.install_id == install_id))
     # Status-change history must not keep the device's id either.
     await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
     session.add(AnonEvent(install_id=None, type="opt_out", day=now.astimezone(RIYADH).date()))
+    await scrub_snapshots(session, [f"i:{install_id}"])
+
+
+async def scrub_snapshots(session: AsyncSession, keys: list[str]) -> None:
+    """MOT-07 R4 (error example): the frozen daily snapshots keep their
+    counts (MOT-08 R2), but the per-subject keys used for rates (a device or
+    an account id) are removed, so nothing links the history to the person."""
+    for key in keys:
+        await session.execute(
+            update(DailySnapshot).where(DailySnapshot.transitions.has_key(key)).values(transitions=DailySnapshot.transitions.op("-")(key))
+        )
+
+
+@subscribe("AccountDeleted")
+async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
+    """rules.md §4 / MOT-07 R4: deleting the account unlinks its devices'
+    events and status exactly like an opt-out, and removes its keys from the
+    snapshots. Streak days, badges and the learning log cascade on users.id."""
+    uid = payload.get("user_id")
+    if not uid:
+        return
+    user_id = uuid.UUID(str(uid))
+    installs = list(await session.scalars(select(EngagementState.install_id).where(EngagementState.user_id == user_id)))
+    for install_id in installs:
+        await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
+        await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
+    await session.execute(delete(EngagementState).where(EngagementState.user_id == user_id))
+    await scrub_snapshots(session, [f"u:{user_id}", *(f"i:{i}" for i in installs)])
 
 
 class InstallIn(BaseModel):
@@ -132,8 +174,15 @@ class InstallIn(BaseModel):
 @router.post("/me/install", status_code=204)
 async def link_install(body: InstallIn, session: Session, user: CurrentUser) -> None:
     """MOT-07 R4: a guest who signs up keeps their status and history; they
-    are the same learner, not a second new one."""
-    await session.execute(update(EngagementState).where(EngagementState.install_id == body.install_id).values(user_id=user.id))
+    are the same learner, not a second new one. The status is published with
+    the account so Companion's copy for the mentor fills (MOT-07 R3/R6)."""
+    st = await session.get(EngagementState, body.install_id)
+    if st is not None and st.user_id != user.id:
+        st.user_id = user.id
+        if st.status is not None:
+            await publish(
+                session, "EngagementStatusChanged", "MOT", {"install_id": st.install_id, "user_id": str(user.id), "status": st.status}
+            )
     await session.commit()
 
 
@@ -170,10 +219,37 @@ async def merge_motivation(body: MotivationSync, session: Session, user: Current
         await session.execute(delete(StreakDay).where(StreakDay.user_id == user.id))
         session.add_all(StreakDay(user_id=user.id, day=d) for d in sorted(set(body.days)))
     for bid, b in body.badges.items():
+        if not BADGE_ID.fullmatch(bid):
+            continue  # MOT-03 R1: unit badges and 7/30/66 learning days only
         row = await session.get(EarnedBadge, (user.id, bid))
         if row is None:
             session.add(EarnedBadge(user_id=user.id, badge_id=bid, earned_at=b.earnedAt))
+            # MOT-03 R1: BadgeEarned, to Companion (the mentor sees it only with permission, R6).
+            await publish(session, "BadgeEarned", "MOT", {"user_id": str(user.id), "badge_id": bid, "earned_at": b.earnedAt.isoformat()})
         elif b.earnedAt < row.earned_at:
             row.earned_at = b.earnedAt
     await session.commit()
     return await _motivation_of(session, user.id)
+
+
+class MenteeBadges(BaseModel):
+    learner_id: uuid.UUID
+    badges: list[Badge]
+
+
+@router.get("/mentor/mentee-badges")
+async def mentee_badges(session: Session, user: CurrentUser) -> list[MenteeBadges]:
+    """MOT-03 R6: a mentor sees the badges of the learners who chose them
+    and share progress with them now; the permission is asked live from
+    Companion's read interface (never copied), so withdrawing it hides the
+    badges at once. Nobody else (group members included) gets them."""
+    from app.companion.public import shared_learner_ids
+
+    ids = await shared_learner_ids(session, user.id)
+    if not ids:
+        return []
+    rows = await session.scalars(select(EarnedBadge).where(EarnedBadge.user_id.in_(ids)).order_by(EarnedBadge.earned_at))
+    out: dict[uuid.UUID, list[Badge]] = {}
+    for b in rows:
+        out.setdefault(b.user_id, []).append(Badge(id=b.badge_id, earnedAt=b.earned_at))
+    return [MenteeBadges(learner_id=k, badges=v) for k, v in out.items()]

@@ -66,7 +66,14 @@ async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
         "my_mentor": {"share_progress": link.share_progress, "chosen_at": link.chosen_at} if link else None,
         "engagement_shared_with_mentor": status.status if status else None,
         "mentor_profile": (
-            {"capacity": profile.capacity, "about": profile.about, "availability": profile.availability, "accepting": profile.accepting}
+            {
+                "capacity": profile.capacity,
+                "about": profile.about,
+                "availability": profile.availability,
+                "accepting": profile.accepting,
+                "mentor_rules_accepted_at": profile.rules_accepted_at,  # ORG-02 R2
+                "suspended": profile.suspended,  # ORG-02 R5
+            }
             if profile
             else None
         ),

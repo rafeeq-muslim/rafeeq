@@ -43,7 +43,6 @@ import {
   StreakChip,
   TopBar,
   UserMessage,
-  XpChip,
   type NavKey,
 } from "@/components/rafeeq"
 import { NoteButton } from "./notes"
@@ -167,7 +166,6 @@ function HomeAside() {
       <section className="flex flex-col gap-4 rounded-card border-2 bg-card p-5">
         <div className="flex items-center justify-between gap-2">
           <p className="font-heading text-h3 font-bold">أوسمتك</p>
-          <XpChip points={1240} />
         </div>
         <div className="flex justify-between">
           <MilestoneBadge icon={IconStar} label="الشهادتان" earned size={72} />
@@ -206,7 +204,6 @@ function LearnScreen() {
             end={
               <div className="flex gap-1.5">
                 <StreakChip days={7} />
-                <XpChip points={1240} />
               </div>
             }
           />
@@ -327,7 +324,7 @@ function CelebrationPhone() {
         badgeLabel="وسام الوضوء"
         title="أتممت مرحلة الوضوء"
         message="صرت تعرف كيف تتطهّر للصلاة. خطوتك التالية: الصلاة نفسها."
-        stats={["5 دروس", "120 نقطة تعلّم", "سلسلتك 7 أيام"]}
+        stats={["5 دروس", "سلسلتك 7 أيام"]}
         primaryLabel="تابع إلى درس الصلاة"
         className="h-full"
       />

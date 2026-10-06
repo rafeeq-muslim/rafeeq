@@ -8,7 +8,6 @@ import pytest
 from app.core.config import get_settings
 from app.learning import content
 from app.platform.home import MAIN, OPTIONAL, check_order
-from tests.conftest import with_roles
 
 pytest_plugins = ["tests.knw_fakes"]  # the `ai` fixture
 
@@ -36,30 +35,40 @@ def on(monkeypatch):
     monkeypatch.setattr(get_settings(), "plt09_organized_home", True)
 
 
+@pytest.fixture
+def off(monkeypatch):
+    """The roll-back switch: PLT09_ORGANIZED_HOME=false."""
+    monkeypatch.setattr(get_settings(), "plt09_organized_home", False)
+
+
 # --- the setting -------------------------------------------------------------
 
 
-async def test_plt09_setting_is_off_by_default(client):
-    assert get_settings().plt09_organized_home is False
-    assert (await client.get("/api/home/config")).json() == {"organized": False}
+def test_plt09_setting_is_on_by_default(monkeypatch):
+    """Approved (PR #37); on by default by the product owner's instruction, 2026-10-06."""
+    from app.core.config import Settings
+
+    monkeypatch.delenv("PLT09_ORGANIZED_HOME", raising=False)
+    assert Settings(_env_file=None).plt09_organized_home is True
 
 
 async def test_plt09_setting_on_is_reported(client, on):
     assert (await client.get("/api/home/config")).json() == {"organized": True}
 
 
-async def test_plt09_setting_off_never_calls_the_model(client, ai, seed):
+async def test_plt09_setting_switched_off_is_reported_and_never_calls_the_model(client, ai, seed, off):
+    assert (await client.get("/api/home/config")).json() == {"organized": False}
     ai.on("home_order", MODEL_ORDER)
     r = await client.post("/api/home/order", json=SUMMARY)
     assert r.json() == {"order": None}
     assert ai.calls == []
 
 
-async def test_plt09_setting_off_team_preview_gets_the_order(client, ai, seed):
-    token = await with_roles(client, "team-1", "team")
-    ai.on("home_order", MODEL_ORDER)
-    r = await client.post("/api/home/order", json=SUMMARY, headers={"Authorization": f"Bearer {token}"})
-    assert r.json()["order"] == MODEL_ORDER
+def test_plt09_setting_env_false_switches_it_off(monkeypatch):
+    from app.core.config import Settings
+
+    monkeypatch.setenv("PLT09_ORGANIZED_HOME", "false")
+    assert Settings(_env_file=None).plt09_organized_home is False
 
 
 # --- R4 ----------------------------------------------------------------------

@@ -31,8 +31,26 @@ async def person(client, username: str, *, roles=("learner",), gender=None, lang
     async with SessionLocal() as s:
         await s.execute(update(User).where(User.username == username).values(roles=list(roles), gender=gender, languages=list(languages)))
         await s.commit()
+    if "mentor" in roles:
+        await accept_mentor_rules(data["user"]["id"])
     data["user"]["display_name"] = display_name or username.title()
     return Person(data)
+
+
+async def accept_mentor_rules(user_id) -> None:
+    """ORG-02 R2: a mentor's inbox opens once the mentor rules are accepted."""
+    from datetime import UTC, datetime
+
+    from app.companion.models import MentorProfile
+
+    async with SessionLocal() as s:
+        uid = uuid.UUID(str(user_id))
+        prof = await s.get(MentorProfile, uid)
+        if prof is None:
+            s.add(MentorProfile(user_id=uid, capacity=8, about="", availability="", accepting=True, rules_accepted_at=datetime.now(UTC)))
+        else:
+            prof.rules_accepted_at = datetime.now(UTC)
+        await s.commit()
 
 
 def record_pushes(monkeypatch) -> list[tuple[str, dict]]:

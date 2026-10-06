@@ -7,15 +7,19 @@ import InboxHome from "@/app/companion/mentor/InboxHome"
 import InboxThread from "@/app/companion/mentor/InboxThread"
 import MentorGroup from "@/app/companion/mentor/MentorGroup"
 import MentorProfile from "@/app/companion/mentor/MentorProfile"
+import { MentorRulesGate } from "@/app/companion/mentor/MentorRulesGate"
 
 export default function Inbox() {
   return (
-    <Routes>
-      <Route index element={<InboxHome />} />
-      <Route path="r/:id" element={<InboxThread />} />
-      <Route path="g/:id" element={<MentorGroup />} />
-      <Route path="profile" element={<MentorProfile />} />
-      <Route path="*" element={<InboxHome />} />
-    </Routes>
+    // ORG-02 R2/R5: the mentor rules first; a suspended mentor has no inbox.
+    <MentorRulesGate>
+      <Routes>
+        <Route index element={<InboxHome />} />
+        <Route path="r/:id" element={<InboxThread />} />
+        <Route path="g/:id" element={<MentorGroup />} />
+        <Route path="profile" element={<MentorProfile />} />
+        <Route path="*" element={<InboxHome />} />
+      </Routes>
+    </MentorRulesGate>
   )
 }

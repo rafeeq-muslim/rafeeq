@@ -39,10 +39,13 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { nextLesson, unitDone } from "@/app/learning/path"
+import { nextLesson, unitDone, unitLessonIds } from "@/app/learning/path"
 import { progressOf } from "@/app/learning/session"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { streakView } from "@/app/motivation/streak"
+// MOT audit gaps, as on the previous Home: badges missed while closed (MOT-03 R4); in-app reminder (MOT-05)
+import { PendingBadges } from "@/app/motivation/PendingBadges"
+import { InAppReminder } from "@/app/motivation/InAppReminder"
 import { HijriToday } from "@/app/practice/HijriToday"
 import { useNow, useRamadan } from "@/app/practice/api"
 import { dayTimes, formatTime, nextPrayer } from "@/app/practice/times"
@@ -95,6 +98,7 @@ export default function OrganizedHome() {
       <JourneySheet className="pb-8">
         <HijriToday />
         {streak.paused && <p className="text-body text-muted-foreground">{t("home.welcomeBack")}</p>}
+        <InAppReminder />
 
         <NextStep content={content} lessons={lessons} isError={isError} refetch={refetch} />
 
@@ -115,6 +119,7 @@ export default function OrganizedHome() {
           </div>
         )}
       </JourneySheet>
+      <PendingBadges />
     </>
   )
 }
@@ -172,7 +177,7 @@ function NextStep({
         <LessonCard
           icon={IconBook2}
           title={next.title}
-          meta={t("home.lessonMeta", { i: num(unit.lessons.indexOf(next.id) + 1), n: num(unit.lessons.length) })}
+          meta={t("home.lessonMeta", { i: num(unitLessonIds(unit).indexOf(next.id) + 1), n: num(unitLessonIds(unit).length) })}
           progress={session ? progressOf(next, session) : 0}
           actionLabel={t(session ? "home.continue" : "home.start")}
           onContinue={() => navigate(`/learn/lesson/${next.id}`)}

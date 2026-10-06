@@ -1,5 +1,5 @@
-"""PLT-09: the organized home (draft behind the `PLT09_ORGANIZED_HOME` setting,
-off by default until the product owner and the PLT owner approve it).
+"""PLT-09: the organized home (approved; on by default, `PLT09_ORGANIZED_HOME=false`
+switches it off to roll back).
 
 - GET /api/home/config -> {"organized": bool}: the server setting the app reads
   (the app keeps the last answer, so offline it uses what it knew).
@@ -50,9 +50,8 @@ class OrderIn(BaseModel):
     next: NextStep | None = None
 
 
-def enabled(user) -> bool:
-    """On for everyone with the setting; team accounts may preview it (their device switch)."""
-    return get_settings().plt09_organized_home or bool(user and user.has("team"))
+def enabled() -> bool:
+    return get_settings().plt09_organized_home
 
 
 def check_order(data: Any) -> dict[str, list[str]] | None:
@@ -78,7 +77,7 @@ async def config() -> dict:
 
 @router.post("/order")
 async def order(body: OrderIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    if not enabled(user):
+    if not enabled():
         return {"order": None}
     ratelimit.hit(f"home-order:{client_key(request, user)}", 10, 60)
     ratelimit.hit(f"home-order:d:{client_key(request, user)}", 20, 86400)  # R5: once a day per device in normal use

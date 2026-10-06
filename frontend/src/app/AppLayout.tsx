@@ -122,10 +122,17 @@ export default function AppLayout() {
       window.location.replace("/landing/")
       return null
     }
-    // PLT-01 R2: a link may carry the language, and nothing else goes on.
-    const lang = new URLSearchParams(location.search).get("lang")
+    // PLT-01 R2: a link may carry the language, and nothing else goes on,
+    // except an organisation's code (ORG-01 R1/R2), which is asked about once.
+    const q = new URLSearchParams(location.search)
+    const lang = q.get("lang")
     const known = LOCALES.some((l) => l.code === lang)
-    return <Navigate to={known ? `/welcome?lang=${lang}` : "/welcome"} replace />
+    const org = q.get("org")
+    const keep = new URLSearchParams()
+    if (known && lang) keep.set("lang", lang)
+    if (org && /^[A-Za-z0-9]{4,16}$/.test(org)) keep.set("org", org)
+    const qs = keep.toString()
+    return <Navigate to={qs ? `/welcome?${qs}` : "/welcome"} replace />
   }
 
   const fullscreen = FULLSCREEN.some((r) => r.test(location.pathname))

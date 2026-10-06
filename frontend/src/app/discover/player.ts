@@ -120,8 +120,9 @@ export function savePosition(sura: number, pos: Position, storage: Pick<Storage,
   }
 }
 
-// PLT-09 R2: the last surah listened to, on this device only (like R6).
-const LAST_KEY = "rafeeq.quranLast"
+// PLT-09 R2: which surah the learner last stopped in, kept with the stop
+// positions on this device only (R6); not a history or a counter.
+const LAST_KEY = "rafeeq.quranPos.last"
 
 export function lastSura(storage: Pick<Storage, "getItem"> = localStorage): number | null {
   try {

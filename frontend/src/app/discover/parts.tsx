@@ -8,14 +8,14 @@ import { Button } from "@/components/ui/button"
 import { TopBar } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useSaved, type SavedKind } from "./savedStore"
-import { useOrganizedHome } from "@/app/home/setting"
+import { useOrganizedHomeCached } from "@/app/home/setting"
 
 /** Sticky bar with a back arrow (mirrors in LTR). */
 export function DiscoverBar({ title, back = "/discover", end }: { title: React.ReactNode; back?: string; end?: React.ReactNode }) {
   const { t } = useT()
   const navigate = useNavigate()
   // PLT-09: without the Discover hub, its screens go back to where they now live (Home; «محفوظاتي» to «حسابي»).
-  const organized = useOrganizedHome()
+  const organized = useOrganizedHomeCached()
   const { pathname } = useLocation()
   const to = organized && back === "/discover" ? (pathname.startsWith("/discover/saved") ? "/me" : "/") : back
   return (

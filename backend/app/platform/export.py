@@ -24,6 +24,7 @@ from app.core.deps import CurrentUser, Session
 from app.knowledge.export import export_user as knowledge_export
 from app.learning.export import export_user as learning_export
 from app.motivation.export import export_user as motivation_export
+from app.organizations.export import export_user as organizations_export
 from app.platform.models import PushSubscription, RefreshSession, User
 
 router = APIRouter(prefix="/api/me", tags=["me"])
@@ -74,6 +75,7 @@ async def export_account(session: AsyncSession, user_id: uuid.UUID) -> dict:
         "motivation": await motivation_export(session, user.id),
         "companion": await companion_export(session, user.id),
         "knowledge": await knowledge_export(session, user.id),
+        "organizations": await organizations_export(session, user.id),  # ORG-02 membership
     }
 
 

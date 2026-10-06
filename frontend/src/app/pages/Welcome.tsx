@@ -6,6 +6,13 @@
  * then starts in it; nothing else in the link is read or kept. R3: three
  * promises and one button. R4: nothing personal is asked (PLT-02 R1). The
  * privacy policy is one tap away before anything is entered (PLT-05 R1).
+ *
+ * ORG-01 R1/R2: an organisation's link also carries its code
+ * (`/welcome?lang=tl&org=K7M2QX9P`), never anything about the person. The
+ * code stays in memory only; after the introduction the app asks once
+ * whether to count the journey in that organisation's numbers. Only «نعم»
+ * sends it to the server; «لا» keeps nothing. (PLT-01 R2 conflict resolved as
+ * research/10 §3 proposes; docs/engineering/decisions-for-review.md.)
  */
 import * as React from "react"
 import { useNavigate, useSearchParams } from "react-router"
@@ -19,13 +26,21 @@ import { LOCALES, dirOf, translate, useT, type Locale } from "@/app/i18n"
 import { guessLocale, useDevice } from "@/app/stores/device"
 import { useDocumentLocale } from "@/app/AppLayout"
 import { PrivacyLink } from "@/app/pages/Privacy"
+import { codeInfo, linkOrg, type CodeInfo } from "@/app/org/api"
+import { OrgQuestion } from "@/app/org/OrgQuestion"
 
-type Step = "lang" | "intro" | "placement"
+type Step = "lang" | "intro" | "org" | "placement"
 
 /** R2: only a known language code is taken from a link. */
 export function linkLocale(search: URLSearchParams): Locale | null {
   const l = search.get("lang")
   return LOCALES.some((x) => x.code === l) ? (l as Locale) : null
+}
+
+/** ORG-01 R1: an organisation's code, if the link has a well-formed one. */
+export function linkOrgCode(search: URLSearchParams): string | null {
+  const c = search.get("org")
+  return c && /^[A-Za-z0-9]{4,16}$/.test(c) ? c.toUpperCase() : null
 }
 
 export default function Welcome() {
@@ -36,14 +51,41 @@ export default function Welcome() {
   const [search] = useSearchParams()
   const fromLink = React.useMemo(() => linkLocale(search), [search])
   const [step, setStep] = React.useState<Step>(fromLink ? "intro" : "lang")
+  // ORG-01: held in memory for the one question, never stored.
+  const [orgCode] = React.useState(() => linkOrgCode(search))
+  const [org, setOrg] = React.useState<CodeInfo | null>(null)
+  const [busy, setBusy] = React.useState(false)
   const suggested = React.useMemo(() => guessLocale(), [])
   const navigate = useNavigate()
 
   React.useEffect(() => {
-    if (!fromLink) return
-    set({ locale: fromLink })
+    if (!fromLink && !search.get("org")) return
+    if (fromLink) set({ locale: fromLink })
     navigate("/welcome", { replace: true }) // the link's query is not kept anywhere
-  }, [fromLink, set, navigate])
+  }, [fromLink, search, set, navigate])
+
+  React.useEffect(() => {
+    if (!orgCode) return
+    let alive = true
+    codeInfo(orgCode).then(
+      (info) => alive && setOrg(info),
+      () => undefined, // a retired or wrong code: no question, nothing said about any organisation
+    )
+    return () => {
+      alive = false
+    }
+  }, [orgCode])
+
+  const afterIntro = () => setStep(org ? "org" : "placement")
+  const answer = async (yes: boolean) => {
+    if (yes && orgCode) {
+      setBusy(true)
+      await linkOrg(orgCode).catch(() => undefined)
+      setBusy(false)
+    }
+    setOrg(null)
+    setStep("placement")
+  }
 
   const finish = (placement: boolean) => {
     set({ onboarded: true, placementOffered: true })
@@ -121,11 +163,17 @@ export default function Welcome() {
                 ))}
               </ul>
               <div className="mt-auto">
-                <Button size="lg" variant="celebrate" className="w-full" onClick={() => setStep("placement")}>
+                <Button size="lg" variant="celebrate" className="w-full" onClick={afterIntro}>
                   {t("onb.intro.cta")}
                 </Button>
               </div>
             </section>
+          )}
+
+          {step === "org" && org && (
+            <div className="mt-6 flex flex-1 flex-col justify-end">
+              <OrgQuestion night name={org.name} busy={busy} onYes={() => void answer(true)} onNo={() => void answer(false)} />
+            </div>
           )}
 
           {step === "placement" && (

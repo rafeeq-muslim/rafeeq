@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, func
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base
@@ -46,6 +46,8 @@ class ObjectiveMastery(Base):
     mastered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     last_exercise_id: Mapped[str | None] = mapped_column(String(24), nullable=True)
     checks_done: Mapped[int] = mapped_column(Integer, default=0)  # LRN-04: 7- and 30-day rechecks
+    # LRN-04 R2: exercises already answered, so review prefers an unseen one on any device.
+    seen_exercises: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
 
 
 class ExplanationBlock(Base):

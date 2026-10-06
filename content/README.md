@@ -40,7 +40,7 @@ Every user-facing text is an object `{"ar": …, "en": …, "tl": …}`.
 | `omitted` | What was deliberately left out, and why |
 | `lessons[]` | `id`, `order`, `title`, `support_video` (key into `media`, optional), `objectives`, `cards`, `exercises` |
 | `objectives[]` | `id`, `text` (the team's wording, never shown to learners), `label` (the short name a learner reads, from `objective_labels.json`; LRN-10 R1) |
-| `cards[]` | `id`, `kind` (`text`, `quran`, `hadith`, `fatiha`, `reassurance`), `text`, `provenance` (source and section, never shown on the card), `objectives`, optional `image`, `extra_images`, `ref` (surah:ayah), `quran_ref`, `quran_text`, `audio`, `edited`, `note`, `verify`, `excerpt`, `contains_hadith` |
+| `cards[]` | `id`, `kind` (`text`, `quran`, `hadith`, `fatiha`, `reassurance`), `text`, `provenance` (source and section, never shown on the card), `objectives`, optional `image`, `extra_images`, `ref` (surah:ayah), `quran_ref`, `quran_text`, `audio`, `edited`, `note`, `verify`, `excerpt`, `contains_hadith`, `hadith_ids` (HadeethEnc ids the card cites: the review desk shows each one's stored text, grade and reference beside the card, and `check_content.py` refuses an id that is not in the stored corpus, KNW-05 R2) |
 | `exercises[]` | `id`, `type` (`choice`, `order`, `match`), `objectives`, `prompt`, `explain_card` (the card shown after a mistake and used for «لماذا؟»), and `options` + `answer`, or `items` + `answer` (correct order of ids), or `pairs` |
 
 Rules the checker enforces: every objective has at least two exercises and at least one card; every card is linked to an objective; IDs are unique; answers exist; images exist; no transliterated adhkar or Quran in English or Filipino.
@@ -189,7 +189,7 @@ Arabic script (other than ﷺ ﷻ) in en/tl text, no verse text in cards, every 
    absent from the spreadsheet. Its three-language text is in `unplaced.json`.
 6. **Lesson boundaries**: u1-l2 also takes the verse on p. 60; u1-l5 also takes the "five prayers" sentence that
    opens the prayer section; u2-l1/u2-l2 split at «من أسمائه الحسنى»; u3-l1 = pillars intro + one review card
-   (its exercise counts toward the u1-l1 objectives; the two pillar-1 verses are not repeated); u6-l3/u6-l4 split
+   (its exercise counts toward the day-one shahada objectives `u01-l1-o1`, `u01-l1-o2`; the two pillar-1 verses are not repeated); u6-l3/u6-l4 split
    at the paragraph «تلك الحلاوة» (spreadsheet rows 252/253, p. 122).
 7. **Verse references** follow the Arabic where translations cite wrongly: 2:222 (spreadsheet/tl say 2:22), 2:183
    for fasting (spreadsheet ar/en and tl say 2:110), 16:97 for u6-l3 (tl quotes a different verse, 4:124).

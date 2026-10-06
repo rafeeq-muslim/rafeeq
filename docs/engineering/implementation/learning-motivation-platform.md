@@ -21,7 +21,8 @@ Updated for the PR #25 documents in `PLT-02.md` (and PLT-01, 03, 05, 06, 07 in t
 | Rule | Code | Tests |
 | --- | --- | --- |
 | R1 only approved text is shown; approval emits `ContentApproved` | `backend/app/knowledge/review.py` (registry, desk API), `backend/app/learning/content.py` (`build_content`) | `test_knw05_r1_*` |
-| R2 citation beside the stored source | `ReviewDesk.tsx` renders each verse with `VerseBlock` from `/api/scripture/quran` | UI |
+| R2 citation beside the stored source | `ReviewDesk.tsx` renders each verse with `VerseBlock` from `/api/scripture/quran`, and each cited hadith (team unit cards' `hadith_ids`, HadeethEnc ids) from the stored record with its grade and reference (`hadith` per language in `GET /api/review/items/…`, `DeskCitations.tsx`) | `test_knw05_r2_reviewer_sees_the_cited_hadith_text_grade_and_reference_from_the_record`; vitest `DeskCitations.test.tsx` |
+| R2 ex2 a citation to an unknown id is refused | `content/check_content.py` refuses a Quran reference to a verse that does not exist and a `hadith_ids` entry not in the stored HadeethEnc corpus (`$RAFEEQ_DATA_DIR/corpus/hadeethenc.jsonl`; without the corpus it warns that ids were not checked) | `test_knw05_r2_content_check_refuses_an_unknown_ayah`, `…_refuses_a_hadith_id_missing_from_the_record`, `…_shipped_unit_has_no_unknown_citation` |
 | R3 approval bound to the exact version; old approved text stays visible after an edit | `ContentApproval.snapshot`, hash check (409) | `test_knw05_r3_*` |
 | R4 return needs a written reason the writer sees | `decide()` | `test_knw05_r4_*` |
 | R5 only the Sharia reviewer decides | `decide()` checks `sharia_reviewer` | `test_knw05_r5_*` |

@@ -14,9 +14,10 @@ import { num, useT } from "@/app/i18n"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
-import { nextLesson } from "@/app/learning/path"
+import { nextLesson, unitLessonIds } from "@/app/learning/path"
 import type { Completion } from "@/app/learning/complete"
 import { GuideNote } from "@/app/learning/GuideNote"
+import { badgeView } from "@/app/motivation/badges"
 import type { Lesson } from "@/app/learning/types"
 
 export function LessonDone({ lesson, completion }: { lesson: Lesson; completion: Completion }) {
@@ -30,19 +31,22 @@ export function LessonDone({ lesson, completion }: { lesson: Lesson; completion:
   const unit = content?.units.find((u) => u.id === lesson.unit)
   const next = nextLesson(lessons, progress)
 
-  if (badges.length > 0) {
-    const id = badges[0]
+  // MOT-03 R3: a badge whose name is not approved in this language stays
+  // queued (pending) and unseen; R4: each shown badge leaves the queue once.
+  const shown = badges.map((id) => [id, badgeView(id, content, (n) => t("lesson.streakBadge", { n: num(n) }))] as const).find(([, v]) => v)
+  if (shown) {
+    const [id, view] = shown
     const dismiss = () => {
-      popPending()
-      setBadges((b) => b.slice(1))
+      popPending(id)
+      setBadges((b) => b.filter((x) => x !== id))
     }
-    const streakDays = id.startsWith("days-") ? Number(id.slice(5)) : null
+    const streakDays = view!.days ?? null
     return (
       <CelebrationScreen
         className="min-h-dvh"
         icon={streakDays ? IconFlame : IconFlower}
-        badgeLabel={streakDays ? t("lesson.streakBadge", { n: num(streakDays) }) : (unit?.badge_name ?? "")}
-        title={streakDays ? t("lesson.streakTitle", { n: num(streakDays) }) : t("lesson.unitDone", { name: unit?.title ?? "" })}
+        badgeLabel={view!.label}
+        title={streakDays ? t("lesson.streakTitle", { n: num(streakDays) }) : t("lesson.unitDone", { name: view!.unitTitle ?? unit?.title ?? "" })}
         primaryLabel={t("common.continue")}
         onPrimary={dismiss}
         secondaryLabel={t("lesson.backHome")}
@@ -54,9 +58,11 @@ export function LessonDone({ lesson, completion }: { lesson: Lesson; completion:
     )
   }
 
-  const total = unit?.lessons.length ?? 1
-  const done = unit ? unit.lessons.filter((id) => progress.completed[id]).length : 1
-  const fresh = unit ? unit.lessons.indexOf(lesson.id) : 0
+  // LRN-02 R3: count every lesson of the unit, including one not yet live in this language.
+  const ids = unit ? unitLessonIds(unit) : []
+  const total = unit ? ids.length : 1
+  const done = unit ? ids.filter((id) => progress.completed[id]).length : 1
+  const fresh = unit ? ids.indexOf(lesson.id) : 0
 
   return (
     <section

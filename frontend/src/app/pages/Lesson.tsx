@@ -32,7 +32,7 @@ import { completeLesson, type Completion } from "@/app/learning/complete"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
-import { lessonStatus, nextLesson } from "@/app/learning/path"
+import { isPending, lessonStatus, nextLesson } from "@/app/learning/path"
 import { GlossaryText, useGlossary } from "@/app/lesson/GlossaryText"
 import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
@@ -56,9 +56,11 @@ export default function LessonPage() {
     )
   }
   if (!lesson) {
+    // LRN-01 R6: a lesson of the path not yet live in the learner's language is in preparation.
+    const pending = content?.units.some((u) => isPending(u, lessonId))
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
-        <p className="text-body text-muted-foreground">{t("lesson.notFound")}</p>
+        <p className="text-body text-muted-foreground">{t(pending ? "path.inReview" : "lesson.notFound")}</p>
         <Button onClick={() => navigate("/learn")}>{t("path.title")}</Button>
       </div>
     )
@@ -183,7 +185,9 @@ function Player({ lesson }: { lesson: LessonT }) {
                       <span className="font-bold">{t("lesson.aiLabel")}:</span> {why.text}
                     </p>
                   )}
-                  {quotesCard(shown.exercise) && (
+                  {/* R3: ordering quotes no card; R6: when «لماذا؟» brings no explanation
+                      (one in five, offline, refused) the card text itself is the answer. */}
+                  {(quotesCard(shown.exercise) || (why !== null && why !== "loading" && !why.text)) && (
                     <p className="whitespace-pre-line">
                       <span className="font-bold">{t("lesson.cardText")}:</span> {cardText(shown.exercise.cards)}
                     </p>
@@ -247,12 +251,13 @@ function Player({ lesson }: { lesson: LessonT }) {
   )
 }
 
+/** LRN-01 R3 / LRN-09 R2: the card shows the book's text with no source on
+ * it; the unit's source credit is on the path (once per unit, always there to
+ * read). The page reference stays in the content for the Sharia reviewer. */
 function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
   const { t, locale } = useT()
   const card = lesson.cards[index]
   const glossary = useGlossary(locale) // PLT-03 R5: approved terms only; none → plain text
-  const p = locale === "ar" ? lesson.source?.page_ar : lesson.source?.page
-  const page = p && t("lesson.source", { p })
   return (
     <article className="flex flex-col gap-5" aria-roledescription="card">
       {index === 0 && <h1 className="font-heading text-h1 font-bold text-balance">{lesson.title}</h1>}
@@ -279,21 +284,38 @@ function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
       )}
       {card.quran && <VerseBlock quran={card.quran} />}
       {card.audio && card.audio.length > 0 && <Recitation files={card.audio} />}
-      {index === lesson.cards.length - 1 && page && <p className="text-caption text-muted-foreground">{page}</p>}
     </article>
   )
 }
 
 /** Al-Fatihah and similar recitations: one file or verse by verse, plain
- * players, no music (rules.md). Audio is part of the approved lesson. */
+ * players, no music (rules.md). Audio is part of the approved lesson.
+ * LRN-01 R4: when a file cannot load (weak or no connection) the text and
+ * translation stay and a message says the audio is unavailable now; never a
+ * transliterated substitute. */
 function Recitation({ files }: { files: string[] }) {
   const { t } = useT()
+  const [failed, setFailed] = React.useState(() => typeof navigator !== "undefined" && !navigator.onLine)
   return (
     <figure className="flex flex-col gap-2 rounded-card bg-card p-4">
       <figcaption className="text-label font-bold text-muted-foreground">{t("lesson.listen")}</figcaption>
       {files.map((src, i) => (
-        <audio key={src} controls preload="none" src={src} className="w-full" aria-label={`${t("lesson.listen")} ${i + 1}`} />
+        <audio
+          key={src}
+          controls
+          preload="none"
+          src={src}
+          className="w-full"
+          aria-label={`${t("lesson.listen")} ${i + 1}`}
+          onError={() => setFailed(true)}
+          onCanPlay={() => setFailed(false)}
+        />
       ))}
+      {failed && (
+        <p role="status" className="text-label text-muted-foreground">
+          {t("lesson.audioUnavailable")}
+        </p>
+      )}
     </figure>
   )
 }

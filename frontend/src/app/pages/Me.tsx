@@ -12,6 +12,7 @@ import {
   IconArrowLeft,
   IconBellOff,
   IconBook,
+  IconBuildingCommunity,
   IconBookmark,
   IconChecklist,
   IconCompass,
@@ -31,6 +32,7 @@ import {
 import { toast } from "sonner"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -56,9 +58,14 @@ import { usePractice } from "@/app/practice/store"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
+import { badgeView } from "@/app/motivation/badges"
+import { useInAppReminder } from "@/app/motivation/reminder"
 import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
-import { useOrganizedHome } from "@/app/home/setting" // PLT-09
+// ORG-01 R3/R4 (org-01-03-organizations-build)
+import { OrgSection } from "@/app/org/OrgSection"
+import { unlinkOrg } from "@/app/org/api"
+import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
 
 export default function Me() {
   const { t } = useT()
@@ -70,7 +77,7 @@ export default function Me() {
   const me = useAuth((s) => s.me)
   const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
-  const organized = useOrganizedHome() // PLT-09 R2: «أدوات يومية» leaves «حسابي» only when the setting is on
+  const organized = useOrganizedHomeCached() // PLT-09 R2: «أدوات يومية» leaves «حسابي» (unless PLT-09 is switched off)
 
   const signOut = async () => {
     await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
@@ -84,6 +91,7 @@ export default function Me() {
     { to: "/referrals", key: "role.referrals", icon: IconHelpCircle, show: has("sharia_reviewer") },
     { to: "/team", key: "role.team", icon: IconUsersGroup, show: has("team") },
     { to: "/admin", key: "role.admin", icon: IconSettings, show: has("admin") },
+    { to: "/org", key: "org.role.link", icon: IconBuildingCommunity, show: !!me?.roles.includes("org_coordinator") }, // ORG-02, ORG-03
   ]
 
   return (
@@ -118,6 +126,10 @@ export default function Me() {
           {me && <ShareProgressToggle />}
         </Section>
 
+        <Section title={t("org.me.title")} id="org">
+          <OrgSection />
+        </Section>
+
         {roleLinks.some((r) => r.show) && (
           <Section title={t("me.team")}>
             {roleLinks
@@ -125,7 +137,6 @@ export default function Me() {
               .map((r) => (
                 <LinkRow key={r.to} icon={r.icon} title={t(r.key)} onClick={() => navigate(r.to)} />
               ))}
-            {has("team") && <OrganizedHomePreview />}
           </Section>
         )}
 
@@ -213,7 +224,13 @@ function Badges() {
   const { t } = useT()
   const badges = useMotivation((s) => s.badges)
   const { content } = useContent()
-  const list = Object.values(badges).sort((a, b) => a.earnedAt.localeCompare(b.earnedAt))
+  // MOT-03 R3: only badges whose name is approved in this language show.
+  const list = Object.values(badges)
+    .sort((a, b) => a.earnedAt.localeCompare(b.earnedAt))
+    .flatMap((b) => {
+      const view = badgeView(b.id, content, (n) => t("lesson.streakBadge", { n: num(n) }))
+      return view ? [{ ...b, view }] : []
+    })
   return (
     <section className="flex flex-col gap-3" aria-labelledby="badges-title">
       <h2 id="badges-title" className="text-label font-bold text-muted-foreground">
@@ -223,21 +240,11 @@ function Badges() {
         <p className="text-body text-muted-foreground">{t("me.badgesNone")}</p>
       ) : (
         <ul className="-mx-4 flex snap-x gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2">
-          {list.map((b) => {
-            const days = b.id.startsWith("days-") ? Number(b.id.slice(5)) : null
-            const unit = content?.units.find((u) => `unit-${u.id}` === b.id)
-            return (
-              <li key={b.id} className="snap-start">
-                <MilestoneBadge
-                  icon={days ? IconFlame : IconFlower}
-                  earned
-                  size={76}
-                  label={days ? t("lesson.streakBadge", { n: num(days) }) : (unit?.title ?? b.id)}
-                  className="w-24 text-center"
-                />
-              </li>
-            )
-          })}
+          {list.map((b) => (
+            <li key={b.id} className="snap-start">
+              <MilestoneBadge icon={b.view.kind === "days" ? IconFlame : IconFlower} earned size={76} label={b.view.label} className="w-24 text-center" />
+            </li>
+          ))}
         </ul>
       )}
     </section>
@@ -310,6 +317,44 @@ function NotificationSettings() {
   const [busy, setBusy] = React.useState(false)
   const state = pushState()
   const pushOk = state === "ok"
+  // MOT-05 R1: turning the reminder on first asks for its time; nothing is
+  // saved until the person confirms one. A device without push gets its own
+  // switch for the reminder shown inside Rafeeq (MOT-05 open-question default).
+  const inApp = useInAppReminder()
+  const [picking, setPicking] = React.useState<{ mode: "push" | "app"; time: string } | null>(null)
+  const startPicking = (mode: "push" | "app") => setPicking({ mode, time: (mode === "app" && inApp.time) || d.reminderTime || "20:00" })
+  const confirmReminder = () => {
+    if (!picking?.time) return
+    const { mode, time: at } = picking
+    setPicking(null)
+    d.set({ reminderTime: at })
+    if (mode === "push") void learning(true, at)
+    else {
+      inApp.set({ on: true, time: at })
+      toast(t("mot.reminder.inAppSaved", { time: at }))
+    }
+  }
+  const pickTime = (mode: "push" | "app") =>
+    picking?.mode === mode && (
+      <div className="flex flex-col gap-3" data-slot="reminder-pick">
+        <div className="flex items-center justify-between gap-3">
+          <Label htmlFor={`rem-pick-${mode}`} className="text-label text-muted-foreground">
+            {t("mot.reminder.pickTime")}
+          </Label>
+          <Input
+            id={`rem-pick-${mode}`}
+            type="time"
+            dir="ltr"
+            className="w-32"
+            value={picking.time}
+            onChange={(e) => setPicking({ mode, time: e.target.value })}
+          />
+        </div>
+        <Button className="self-start" disabled={!picking.time || busy} onClick={confirmReminder}>
+          {t("mot.reminder.confirm")}
+        </Button>
+      </div>
+    )
 
   React.useEffect(() => {
     void syncPushSwitches().catch(() => undefined)
@@ -372,11 +417,12 @@ function NotificationSettings() {
           id="notif-learning"
           label={t("reminder.toggle")}
           hint={t("reminder.hint")}
-          checked={pushOk && d.reminderOn}
+          checked={pushOk && (d.reminderOn || picking?.mode === "push")}
           disabled={!pushOk || busy}
-          onChange={(v) => void learning(v)}
+          onChange={(v) => (v ? startPicking("push") : picking?.mode === "push" ? setPicking(null) : void learning(false))}
         >
-          {pushOk && d.reminderOn && (
+          {pickTime("push")}
+          {picking?.mode !== "push" && pushOk && d.reminderOn && (
             <div className="flex items-center justify-between gap-3">
               <Label htmlFor="rem-time" className="text-label text-muted-foreground">
                 {t("reminder.time")}
@@ -393,6 +439,37 @@ function NotificationSettings() {
             </div>
           )}
         </SwitchRow>
+        {!pushOk && (
+          <SwitchRow
+            id="notif-learning-app"
+            label={t("mot.reminder.inAppToggle")}
+            hint={t("mot.reminder.inAppHint")}
+            checked={inApp.on || picking?.mode === "app"}
+            onChange={(v) => {
+              if (v) return startPicking("app")
+              if (picking?.mode === "app") return setPicking(null)
+              inApp.set({ on: false })
+              toast(t("reminder.off"))
+            }}
+          >
+            {pickTime("app")}
+            {picking?.mode !== "app" && inApp.on && (
+              <div className="flex items-center justify-between gap-3">
+                <Label htmlFor="rem-time-app" className="text-label text-muted-foreground">
+                  {t("reminder.time")}
+                </Label>
+                <Input
+                  id="rem-time-app"
+                  type="time"
+                  dir="ltr"
+                  className="w-32"
+                  value={inApp.time ?? ""}
+                  onChange={(e) => e.target.value && inApp.set({ time: e.target.value })}
+                />
+              </div>
+            )}
+          </SwitchRow>
+        )}
         <SwitchRow
           id="notif-replies"
           label={t("notif.replies")}
@@ -448,6 +525,12 @@ function PrivacySettings() {
         <SwitchRow key={r.id} id={`p-${r.id}`} label={t(r.key)} hint={t(r.hint)} checked={r.value} onChange={r.change}>
           {/* PLT-05 R2 ex3: honest that the browser history may keep Rafeeq. */}
           {r.id === "exit" && <p className="text-label text-muted-foreground" data-slot="history-note">{t("privacy.historyNote")}</p>}
+          {/* MOT-07 open question: provisional text until the privacy notice is approved. */}
+          {r.id === "events" && (
+            <Badge variant="warning" className="w-fit" data-slot="unapproved">
+              {t("mot.unapproved")}
+            </Badge>
+          )}
         </SwitchRow>
       ))}
       <div className="flex flex-col items-start gap-1 p-4">
@@ -537,6 +620,7 @@ function DeleteAccount() {
             className="bg-destructive text-white"
             onClick={async () => {
               try {
+                await unlinkOrg().catch(() => undefined) // ORG-01 R4: the organisation link goes with the account
                 await api("/api/me", { method: "DELETE" })
                 setAuth({ token: null, me: null })
                 toast(t("me.deleted"))
@@ -553,7 +637,7 @@ function DeleteAccount() {
   )
 }
 
-// --- PLT-09 organized home (plt-09-organized-home-build), behind its setting ---------
+// --- PLT-09 organized home (plt-09-organized-home-build) ------------------------------
 
 /** PLT-09 R2: with the organized home, «محفوظاتي» moves here (the Discover hub is gone). */
 function OrganizedSaved() {
@@ -563,17 +647,5 @@ function OrganizedSaved() {
     <Section title={t("discover.saved")}>
       <LinkRow icon={IconBookmark} title={t("home.org.openSaved")} hint={t("discover.savedBody")} onClick={() => navigate("/discover/saved")} />
     </Section>
-  )
-}
-
-/** PLT-09: team accounts preview the draft on this device only (like the lesson preview). */
-function OrganizedHomePreview() {
-  const { t } = useT()
-  const on = useDevice((s) => s.organizedHomePreview)
-  const set = useDevice((s) => s.set)
-  return (
-    <div className="rounded-card border-2 bg-card">
-      <SwitchRow id="plt09-preview" label={t("home.org.preview")} hint={t("home.org.previewHint")} checked={on} onChange={(v) => set({ organizedHomePreview: v })} />
-    </div>
   )
 }

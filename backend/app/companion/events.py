@@ -13,16 +13,23 @@
   memberships, mentor link and blocks already cascade on users.id; replies
   they wrote as a mentor stay in the learners' own conversations without a
   name (author SET NULL), and reports they filed stay without a reporter.
+- MentorApproved (ORG-02 R1): `{mentor_id}`. The mentor's profile exists and
+  is not suspended; the inbox still waits for the mentor rules (ORG-02 R2).
+- MentorSuspended (ORG-02 R5): `{mentor_id}`. The mentor loses the inbox and
+  is no longer suggested; each mentee's link ends (thread closed) and they get
+  a neutral notice to choose another mentor (no reason, no organisation); the
+  mentor's open requests return to the pool, where the same-gender rule
+  (CMP-01 R3) applies as always.
 """
 
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import delete
+from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion import notify
-from app.companion.models import GroupMessage, HelpRequest, MenteeStatus
+from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorEnded, MentorLink
 from app.core.events import subscribe
 
 LANGS = {"ar", "en", "tl"}
@@ -67,3 +74,35 @@ async def on_engagement(session: AsyncSession, payload: dict) -> None:
         session.add(row)
     row.status = payload.get("status")
     row.changed_at = datetime.now(UTC)
+
+
+@subscribe("MentorApproved")
+async def on_mentor_approved(session: AsyncSession, payload: dict) -> None:
+    from app.companion.inbox import profile_of
+
+    prof = await profile_of(session, uuid.UUID(str(payload["mentor_id"])))
+    prof.suspended = False
+
+
+@subscribe("MentorSuspended")
+async def on_mentor_suspended(session: AsyncSession, payload: dict) -> None:
+    from app.companion.inbox import profile_of
+    from app.companion.mentors import end_link
+
+    mentor_id = uuid.UUID(str(payload["mentor_id"]))
+    prof = await profile_of(session, mentor_id)
+    prof.suspended = True
+    learners = []
+    for link in list(await session.scalars(select(MentorLink).where(MentorLink.mentor_id == mentor_id))):
+        learners.append(link.learner_id)
+        await end_link(session, link)
+        if await session.get(MentorEnded, link.learner_id) is None:
+            session.add(MentorEnded(learner_id=link.learner_id, at=datetime.now(UTC)))
+    # His open requests go back to every matching inbox (CMP-02 R1, R3).
+    await session.execute(
+        update(HelpRequest)
+        .where(HelpRequest.mentor_id == mentor_id, HelpRequest.kind != "mentor", HelpRequest.status != "closed")
+        .values(mentor_id=None, status="open")
+    )
+    for learner_id in learners:
+        notify.later(notify.to_user, learner_id, "mentor_change", "/mentor")
