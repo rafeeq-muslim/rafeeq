@@ -32,6 +32,14 @@ def _image(unit_dir: str, rel: str | None) -> str | None:
     return f"{MEDIA_ROUTE}/{unit_dir}/{rel}" if rel else None
 
 
+def _playable(video: dict | None) -> dict | None:
+    """LRN-01 R5: a language whose video URL is missing or not https gets no
+    player at all (null), never an empty or broken one."""
+    if not isinstance(video, dict):
+        return None
+    return {lg: url if isinstance(url, str) and url.startswith("https://") else None for lg, url in video.items()}
+
+
 def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
     media = unit.get("media") or {}
     lessons: list[dict] = []
@@ -108,7 +116,7 @@ def convert(unit: dict, unit_dir: str) -> tuple[dict, list[dict]]:
                 "cards": cards,
                 "objectives": objectives,
                 "exercises": exercises,
-                "media": {"video": (media.get("support_video") or {}).get(video_key)} if video_key else None,
+                "media": {"video": _playable((media.get("support_video") or {}).get(video_key))} if video_key else None,
                 "source": None,
             }
         )
