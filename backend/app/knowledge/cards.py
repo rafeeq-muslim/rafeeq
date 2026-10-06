@@ -38,7 +38,7 @@ log = logging.getLogger("rafeeq.cards")
 SOURCE_ID = "rafeeq_cards"
 KIND = "approved_card"
 LANGS = ("ar", "en", "tl")
-LESSON_URL = "/learn/lesson/{}"
+LESSON_URL = "/app/learn/lesson/{}"  # PLT-10 R2
 
 
 def _ensure_registered() -> None:
