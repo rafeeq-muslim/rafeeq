@@ -10,7 +10,9 @@ on:
   pull_request_target:
     types: [opened, reopened, synchronize, ready_for_review]
 permissions: {}
-concurrency: { group: notify, cancel-in-progress: false }
+# No concurrency group: GitHub keeps only one pending run per group and
+# cancels the older one, which dropped events while CI or a deploy held the
+# runners. Each run appends a single short line, so runs need no serialising.
 jobs:
   notify:
     # Claude's own commits carry a Claude-Session trailer: no need to wake for them.
