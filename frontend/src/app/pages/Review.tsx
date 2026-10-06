@@ -10,6 +10,7 @@ import { IconFlame, IconX } from "@tabler/icons-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
 import { CelebrationScreen, ExerciseFeedback, HumanHelpButton, SpotIllustration, UnitBloom } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { sendEvent } from "@/app/lib/api"
@@ -22,13 +23,28 @@ import { reviewItems } from "@/app/learning/reviewItems"
 import { levelOf } from "@/app/learning/bkt"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { GuideNote, noteGuideFollowed } from "@/app/learning/GuideNote"
-import type { Exercise } from "@/app/learning/types"
+import type { Content, Exercise } from "@/app/learning/types"
 import { check, emptyValue, ExerciseView, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 
 export default function Review() {
+  const { content, isLoading } = useContent()
+  // Issue #9 item 17: opened by its link or after a reload, the content
+  // arrives after the first render; the session is built only once it is
+  // here, and stays fixed after it starts.
+  if (!content && isLoading) {
+    return (
+      <div className="flex flex-col gap-4 p-5">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-64 rounded-card" />
+      </div>
+    )
+  }
+  return <ReviewSession content={content} />
+}
+
+function ReviewSession({ content }: { content: Content | undefined }) {
   const { t } = useT()
   const navigate = useNavigate()
-  const { content } = useContent()
   const learning = useLearning()
   const [items] = React.useState(() => (content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []))
   const [queue, setQueue] = React.useState(() => items.map((i) => i.exercise.id))

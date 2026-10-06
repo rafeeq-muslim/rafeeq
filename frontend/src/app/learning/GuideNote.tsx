@@ -12,6 +12,7 @@ import * as React from "react"
 import { IconSparkles } from "@tabler/icons-react"
 
 import { useT } from "@/app/i18n"
+import { isolateArabic } from "@/app/i18n/bidi"
 import { sendEvent } from "@/app/lib/api"
 import { useLearning } from "@/app/stores/learning"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
@@ -46,7 +47,7 @@ export function GuideNote({ lessons, objectives, returning = false }: { lessons:
   return (
     <p className="mt-5 flex max-w-sm items-start gap-2 rounded-card bg-white/8 px-4 py-3 text-start text-label text-white/85" aria-live="polite">
       <IconSparkles className="mt-0.5 size-4 shrink-0 text-apricot" stroke={1.75} aria-hidden="true" />
-      <span>{text ?? fixed}</span>
+      <span>{text && locale !== "ar" ? isolateArabic(text) : (text ?? fixed)}</span>
     </p>
   )
 }
