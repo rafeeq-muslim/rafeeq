@@ -7,6 +7,8 @@
  * before writing (CMP-02 R4 ex1). A question referred to scholars says so,
  * and their answer is signed «أهل العلم» (CMP-02 R5). Replies can be
  * reported (CMP-04 R1), and the person replying can be blocked (CMP-04 R6).
+ * A former mentor's thread stays readable; what is written in it goes to the
+ * current mentor's thread or to the pool, and the screen follows it (CMP-03 R4).
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
@@ -119,18 +121,23 @@ export default function HelpThread() {
             </Badge>
           )
         )}
-        {data?.kind === "mentor" && mine.data?.mentor?.availability && (
+        {data?.kind === "mentor" && !data.link_ended && mine.data?.mentor?.availability && (
           <p className="flex items-center gap-1 text-label text-muted-foreground">
             <IconClock className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
             <span dir="auto">{t("cmp.hub.availability", { time: mine.data.mentor.availability })}</span>
           </p>
         )}
         {thread.isLoading ? <Skeleton className="h-40 rounded-card" /> : <ChatList items={items} className="flex-1" />}
-        {data?.status === "closed" && <p className="text-center text-label text-muted-foreground">{t("cmp.thread.closedNote")}</p>}
+        {data?.link_ended ? (
+          <p className="text-center text-label text-muted-foreground">{t("cmp.thread.endedNote")}</p>
+        ) : (
+          data?.status === "closed" && <p className="text-center text-label text-muted-foreground">{t("cmp.thread.closedNote")}</p>
+        )}
         <Composer
           placeholder={t("human.reply")}
           onSend={async (text) => {
-            await post.mutateAsync(text)
+            const went = await post.mutateAsync(text)
+            if (went.id !== id) navigate(`/mentor/help/${went.id}`, { replace: true }) // CMP-03 R4: it went elsewhere
           }}
         />
       </div>
