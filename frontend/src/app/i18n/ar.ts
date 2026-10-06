@@ -1571,4 +1571,8 @@ export const ar = {
   "plt17.team.reportsTitle": "البلاغات",
   "plt17.team.reportsBody": "تُراجع البلاغات في مكان واحد: تبويب «البلاغات» في صندوق الطلبات.",
   "plt17.team.reportsOpen": "افتح البلاغات",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty ---
+  "plt17.org.none": "لا جهة نشطة مرتبطة بحسابك",
+  "plt17.org.noneBody": "ربما أُوقف ارتباطك بجهتك. تواصل مع فريق رفيق ليعيد ربطك بها.",
+  "plt17.org.loadError": "تعذّر تحميل بيانات الجهة.",
 } as const

@@ -1572,4 +1572,8 @@ export const en: Dict = {
   "plt17.team.reportsTitle": "Reports",
   "plt17.team.reportsBody": "Reports are reviewed in one place: the «Reports» tab of the inbox.",
   "plt17.team.reportsOpen": "Open reports",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty ---
+  "plt17.org.none": "No active organisation is linked to your account",
+  "plt17.org.noneBody": "Your link to your organisation may have been suspended. Contact the Rafeeq team to be linked again.",
+  "plt17.org.loadError": "We couldn't load your organisation's data.",
 }

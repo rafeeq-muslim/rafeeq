@@ -1573,4 +1573,8 @@ export const tl: Dict = {
   "plt17.team.reportsTitle": "Mga ulat",
   "plt17.team.reportsBody": "Sa iisang lugar sinusuri ang mga ulat: ang tab na «Mga ulat» sa inbox.",
   "plt17.team.reportsOpen": "Buksan ang mga ulat",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty. ⚠️ Tagalog needs native review ---
+  "plt17.org.none": "Walang aktibong organisasyong naka-link sa iyong account",
+  "plt17.org.noneBody": "Maaaring nasuspinde ang link mo sa iyong organisasyon. Makipag-ugnayan sa team ng Rafeeq para ma-link muli.",
+  "plt17.org.loadError": "Hindi namin ma-load ang datos ng iyong organisasyon.",
 }
