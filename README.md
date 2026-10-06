@@ -216,12 +216,12 @@ All backend settings live in `backend/app/core/config.py`. Each field is read fr
 | `ASK_REPAIR_ENABLED` | `true` | One bounded repair of a failed draft |
 | `ASK_APPROVED_FAQ_ENABLED` | `true` | Serve Sharia-reviewer-approved FAQ answers |
 
-**Live sources (feature flag, off by default)**
+**Live sources (on by default since the go-live approval; they need an OpenRouter key like any answer)**
 
 | Variable | Default | What it is |
 | --- | --- | --- |
-| `ASK_SOURCE_POLICY` | `local-index-v2` | `live-enabled-sources-any-sufficient-v3` also searches the sites below live |
-| `ASK_LIVE_SOURCES` | empty | e.g. `islamqa,binbaz` |
+| `ASK_SOURCE_POLICY` | `live-enabled-sources-any-sufficient-v3` | Also searches the sites in `ASK_LIVE_SOURCES` live at question time. `local-index-v2` answers from the local index only |
+| `ASK_LIVE_SOURCES` | `islamqa,binbaz` | Live connectors; empty or a shorter list switches them off |
 | `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED` | `false` | Keep `false` until the encyclopedia grants access in writing |
 | `ASK_LIVE_DEADLINE_SECONDS` | `60.0` | |
 | `ASK_LIVE_WINDOW_SECONDS` | `20.0` | |
