@@ -89,6 +89,16 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | الوضع الخفي | `discreet_mode` | Neutral name, icon and notifications |
 | الخروج السريع | `quick_exit` | Instantly leave to a neutral page |
 
+## Organisations (`ORG`, postponed)
+
+| Arabic | English | Meaning |
+| --- | --- | --- |
+| الجهة | `organization` | A da'wa office, community association or dialogue platform approved by the Rafeeq team |
+| منسّق الجهة | `org_coordinator` | Staff member who manages the organisation's codes, mentors and dashboard |
+| رمز الجهة | `org_code` | Code, link and QR per organisation and language; never per person |
+| الارتباط بالجهة | `org_link` | The learner's explicit consent to be counted in the organisation's numbers; revocable |
+| لوحة الجهة | `org_dashboard` | Aggregated numbers about linked learners; any figure under 10 shows «أقل من 10» |
+
 ## Domain events
 
 | Event | From → To |
@@ -103,3 +113,4 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | `HabitKept` (non-worship only), `HabitGraduated` (non-worship only) | PRC → MOT |
 | `EscalationRequested`, `DangerDetected` | KNW → CMP |
 | `AccountCreated`, `AccountDeleted` | PLT → LRN, MOT, PRC |
+| `MentorApproved`, `MentorSuspended` | ORG → CMP |
