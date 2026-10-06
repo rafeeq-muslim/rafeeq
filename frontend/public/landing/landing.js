@@ -69,7 +69,6 @@
       "bloom.note": "Free, in Arabic, English and Tagalog.",
       "bloom.mentor": "For mentors and da'wa organisations: mentors join with an invite code from the Rafeeq team.",
       "bloom.mentorLink": "Join as a mentor",
-      "foot.made": "Built for Bathel's AI Challenge for Serving Islamic Content, Track 3.",
       "foot.privacy": "No ads, no trackers."
     },
     tl: {
@@ -118,7 +117,6 @@
       "bloom.note": "Libre, sa Arabic, English at Tagalog.",
       "bloom.mentor": "Para sa mga mentor at organisasyong pang-da'wa: sumasali ang mga mentor gamit ang invite code mula sa team ng Rafeeq.",
       "bloom.mentorLink": "Sumali bilang mentor",
-      "foot.made": "Ginawa para sa AI Challenge for Serving Islamic Content ng Bathel, Track 3.",
       "foot.privacy": "Walang ads, walang tracker."
     }
   };
