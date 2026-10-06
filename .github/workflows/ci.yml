@@ -1,7 +1,8 @@
 name: CI
-# Runs on the team's self-hosted runner: GitHub-hosted runners are not
-# available to this private organisation. The repo is private, so only
-# members can open pull requests that reach the runner.
+# Runs on the team's self-hosted runners, which sit on the production server.
+# The repo is public, so every job is limited to pushes and to pull requests
+# from branches of THIS repository: a fork's pull request never reaches the
+# runners (it could run arbitrary code there).
 # On main and on pull requests only: a pushed branch with a PR was tested
 # twice (push and pull_request), which kept both shared runners busy.
 on:
@@ -11,6 +12,7 @@ permissions: { contents: read }
 concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }
 jobs:
   backend:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, rafeeq]
     services:
       db:
@@ -29,6 +31,7 @@ jobs:
       - run: uv run ruff check . && uv run ruff format --check .
       - run: uv run pytest -q
   frontend:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, rafeeq]
     defaults: { run: { working-directory: frontend } }
     steps:
@@ -45,6 +48,7 @@ jobs:
   # LRN-03 R1 / LRN-10 R2: every card covered by an exercise, every objective by two,
   # answers and ids valid, no transliteration; the pipeline units are traced to the book.
   content:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, rafeeq]
     steps:
       - uses: actions/checkout@v5
