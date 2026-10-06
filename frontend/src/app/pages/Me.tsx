@@ -1,11 +1,10 @@
 /**
  * Me: who I am here (guest or account, display name only), my badges, my
- * language and appearance (PLT-04), notifications (PLT-06: three types,
- * each with its own switch; MOT-05, CMP-01, PRC-05; the Rafeeq tone,
- * PLT-07), privacy (PLT-05: the policy, quick exit, discreet mode, a copy
- * of my data, erase this device; MOT-07 R4 opt out), daily tools, team
- * areas by role, and leaving (sign out, delete the account with a
- * confirmation).
+ * language, notifications (PLT-06: three types, each with its own switch;
+ * MOT-05, CMP-01, PRC-05; the Rafeeq tone, PLT-07), privacy (PLT-05: the
+ * policy, quick exit, discreet mode, a copy of my data, erase this device;
+ * MOT-07 R4 opt out), daily tools, team areas by role, and leaving (sign
+ * out, delete the account with a confirmation).
  */
 import * as React from "react"
 import { useLocation, useNavigate } from "react-router"
@@ -46,7 +45,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { IconTile, LanguageSwitcher, MilestoneBadge, ThemeSwitcher, TopBar, YearFlower } from "@/components/rafeeq"
+import { LanguageSwitcher, MilestoneBadge, TopBar, YearFlower } from "@/components/rafeeq"
 import { num, useT, type Key, type Locale } from "@/app/i18n"
 import { api, sendEvent } from "@/app/lib/api"
 import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
@@ -94,10 +93,6 @@ export default function Me() {
 
         <Section title={t("me.language")}>
           <LanguagePicker />
-        </Section>
-
-        <Section title={t("me.theme")}>
-          <ThemePicker />
         </Section>
 
         <Section title={t("me.tools")}>
@@ -161,7 +156,9 @@ function LinkRow({ icon: Icon, title, hint, onClick }: { icon: TablerIcon; title
       onClick={onClick}
       className="tactile flex min-h-16 items-center gap-3 rounded-card border-2 bg-card px-4 py-3 text-start [--lip:var(--outline-lip)]"
     >
-      <IconTile icon={Icon} size="sm" />
+      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+        <Icon className="size-5" stroke={1.75} aria-hidden="true" />
+      </span>
       <span className="min-w-0 flex-1">
         <span className="block text-body font-bold">{title}</span>
         {hint && <span className="block text-label text-muted-foreground">{hint}</span>}
@@ -251,21 +248,6 @@ function LanguagePicker() {
         set({ locale: code as Locale })
         if (me) void api("/api/me", { method: "PATCH", body: { locale: code } }).then((m) => setAuth({ me: m as typeof me }), () => undefined)
       }}
-    />
-  )
-}
-
-/** PLT-04: light by default; the choice stays on this device. */
-function ThemePicker() {
-  const { t } = useT()
-  const theme = useDevice((s) => s.theme)
-  const set = useDevice((s) => s.set)
-  return (
-    <ThemeSwitcher
-      value={theme}
-      onValueChange={(v) => set({ theme: v })}
-      label={t("me.theme")}
-      labels={{ light: t("theme.light"), dark: t("theme.dark") }}
     />
   )
 }

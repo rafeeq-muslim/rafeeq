@@ -16,9 +16,6 @@ execSync("npx vite build --mode review", { cwd: root, stdio: "inherit" })
 
 const out = path.join(root, "dist-review")
 let html = readFileSync(path.join(out, "index.html"), "utf8")
-  // The app's saved-theme script is not part of the single file; the
-  // gallery sets its own theme.
-  .replace(/<script src="\/theme\.js"><\/script>\s*/, "")
 
 // Repo copy (committed): same page without Thmanyah, which may not be
 // redistributed. It renders with the fallback fonts (IBM Plex Sans Arabic,

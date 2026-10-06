@@ -10,7 +10,7 @@ import { SuggestionCard } from "@/app/guide/SuggestionCard"
 
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { IconTile, JourneySheet, JourneySky, LessonCard, SpotIllustration } from "@/components/rafeeq"
+import { JourneySheet, JourneySky, LessonCard, SpotIllustration } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
@@ -97,7 +97,9 @@ export default function Home() {
             onClick={() => navigate("/learn/review")}
             className="tactile flex items-center gap-3 rounded-card border-2 bg-card p-4 text-start [--lip:var(--outline-lip)]"
           >
-            <IconTile icon={IconRefresh} size="lg" />
+            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+              <IconRefresh className="size-6" stroke={1.75} aria-hidden="true" />
+            </span>
             <span className="min-w-0 flex-1">
               <span className="block text-body font-bold">{t("home.review")}</span>
               <span className="block text-label text-muted-foreground tabular-nums">{t("home.reviewBody", { n: num(review.length) })}</span>
@@ -137,7 +139,9 @@ export default function Home() {
           onClick={() => navigate("/guide")}
           className="flex items-center gap-3 border-t pt-5 text-start"
         >
-          <IconTile icon={IconLayoutGrid} size="sm" />
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+            <IconLayoutGrid className="size-5" stroke={1.75} aria-hidden="true" />
+          </span>
           <span className="min-w-0 flex-1">
             <span className="block text-body font-bold">{t("guide.homeLink")}</span>
             <span className="block text-label text-muted-foreground">{t("guide.homeLinkBody")}</span>

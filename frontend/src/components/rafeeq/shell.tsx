@@ -2,7 +2,6 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import { RafeeqLogo, RafeeqSymbol } from "./brand"
-import { Backdrop } from "./graphics"
 import { BottomNav, NAV, type NavKey } from "./platform"
 
 /*
@@ -46,9 +45,8 @@ function AppShell({
   return (
     <div
       data-slot="app-shell"
-      className={cn("@container/shell relative isolate flex h-full min-h-0 bg-background text-foreground", className)}
+      className={cn("@container/shell relative flex h-full min-h-0 bg-background text-foreground", className)}
     >
-      <Backdrop />
       {bottomNav && <NavRail active={active} onNavigate={onNavigate} labels={labels} navLabel={navLabel} />}
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -108,20 +106,17 @@ function NavRail({
             className={cn(
               "group relative flex w-20 flex-col items-center gap-1 rounded-card py-2 text-caption font-medium transition-colors",
               "@min-[75rem]/shell:w-full @min-[75rem]/shell:flex-row @min-[75rem]/shell:gap-3 @min-[75rem]/shell:px-3 @min-[75rem]/shell:py-3 @min-[75rem]/shell:text-body",
-              on ? "font-bold text-primary" : "text-foreground hover:bg-muted"
+              on
+                ? "bg-secondary text-secondary-foreground ring-2 ring-primary/20"
+                : "text-foreground hover:bg-muted"
             )}
           >
-            <span
-              className={cn(
-                "relative grid h-8 w-14 place-items-center rounded-full @min-[75rem]/shell:w-11",
-                on && "bg-primary bg-grad-action text-primary-foreground"
-              )}
-            >
+            <span className="relative grid h-8 w-14 place-items-center @min-[75rem]/shell:w-auto">
               <Icon className="size-6" stroke={on ? 2 : 1.75} aria-hidden="true" />
               {on && (
                 <span
                   aria-hidden="true"
-                  className="absolute -top-0.5 -end-0.5 size-2.5 rounded-full border-2 border-card bg-celebrate"
+                  className="absolute top-0 end-3 size-2 rounded-full bg-celebrate @min-[75rem]/shell:-end-1"
                 />
               )}
             </span>
