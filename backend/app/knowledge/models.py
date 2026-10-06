@@ -182,9 +182,10 @@ class EvalAnswer(IdMixin, Base):
 
 class ContentApproval(IdMixin, Base):
     """KNW-05: the version of a team-written item that learners see, per
-    language (R6). Written only when the Sharia reviewer approves (R5); an
-    edit after that leaves this row, so the old approved text stays visible
-    until the new one is approved (R3). `snapshot` is the approved text in
+    language (R6). Written when the Sharia reviewer approves (R5), or at start
+    for a version the product owner approved (owner_approvals.py, reviewer_id
+    NULL, the approver in `note`); an edit after that leaves this row, so the
+    old approved text stays visible until the new one is approved (R3). `snapshot` is the approved text in
     that language and `content_hash` its fingerprint."""
 
     __tablename__ = "content_approvals"

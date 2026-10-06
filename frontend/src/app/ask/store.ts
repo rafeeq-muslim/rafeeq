@@ -11,7 +11,7 @@
  *   double tap or a fast Enter sends one request;
  * - every attempt ends: answer, error (network, timeout, 422, 429, 5xx,
  *   unreadable reply) or cancelled; never a pending bubble forever. The
- *   50-second deadline covers the whole attempt, auth refresh included;
+ *   65-second deadline (PRD live v3 §9) covers the whole attempt, auth refresh included;
  * - a retry re-sends the original snapshot (question, language, consent,
  *   entry point) into the same assistant message, adds no user bubble and
  *   never touches the draft; a late reply of an older attempt is dropped.
@@ -21,8 +21,12 @@ import { ApiError, api } from "@/app/lib/api"
 import { useDevice } from "@/app/stores/device"
 import type { AskResponse, AskSnapshot, Entrypoint, ErrorCode, Turn } from "./types"
 
-/** Whole-attempt deadline in the app; the server stops at 45 s (ASK_DEADLINE_SECONDS). */
-export const ASK_CLIENT_DEADLINE_MS = 50_000
+/**
+ * Whole-attempt deadline in the app, auth refresh included. The server stops
+ * at 45 s (ASK_DEADLINE_SECONDS), or 60 s with live sources on
+ * (ASK_LIVE_DEADLINE_SECONDS, PRD live v3 §9: the app waits 65 s).
+ */
+export const ASK_CLIENT_DEADLINE_MS = 65_000
 export const QUESTION_MIN = 2
 export const QUESTION_MAX = 600
 

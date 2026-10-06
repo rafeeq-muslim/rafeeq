@@ -57,5 +57,42 @@ export type VerseReciter = { id: string; quranpedia_id: number; reciter: string;
 
 export type RecitationResponse = { lang: string; recitation: Recitation | null; reciters?: VerseReciter[] }
 
+/** KNW-06 library live search (POST /api/discover/library/search): external material, never reviewed items. */
+export type LibrarySourceId = "islamic_content" | "islamhouse"
+export type LibrarySearchType = "book" | "article" | "audio" | "video" | "fatwa" | "poster" | "khutbah" | "qa"
+export type LibrarySourceStatus =
+  | "ok"
+  | "no_results"
+  | "timeout"
+  | "unavailable"
+  | "not_connected"
+  | "unsupported_language"
+  | "unsupported_type"
+
+export type LibrarySearchItem = {
+  id: string
+  source_id: LibrarySourceId
+  source_name: string
+  title: string
+  snippet: string | null
+  type: LibrarySearchType | null
+  lang: string
+  url: string
+  retrieved_at: string
+}
+
+export type LibrarySearchResponse = {
+  search_id: string | null
+  status: "success" | "partial"
+  items: LibrarySearchItem[]
+  source_status: { source_id: LibrarySourceId; status: LibrarySourceStatus }[]
+  next_cursor: string | null
+}
+
+export type LibrarySearchSources = {
+  enabled: boolean
+  sources: { id: LibrarySourceId; name: string; available: boolean; langs: string[]; types: LibrarySearchType[] }[]
+}
+
 export type Aya = { aya: number; arabic: string; translation: string | null; url: string }
 export type Verses = { sura: number; ayat: Aya[]; source: { name: string; translation: string | null; version: string } }

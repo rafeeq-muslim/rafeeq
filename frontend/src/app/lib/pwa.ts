@@ -11,10 +11,12 @@
  */
 import * as React from "react"
 
+import { stripBase } from "@/app/lib/base"
+
 const LEARNING_FLOW = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placement/]
 const HOUR = 60 * 60 * 1000
 
-export const inLearningFlow = (path = location.pathname) => LEARNING_FLOW.some((r) => r.test(path))
+export const inLearningFlow = (path = stripBase(location.pathname)) => LEARNING_FLOW.some((r) => r.test(path))
 
 let updateReady = false
 const listeners = new Set<() => void>()
@@ -53,7 +55,7 @@ function reloadWhenOnline() {
     "online",
     () => {
       waitingForOnline = false
-      maybeApplyUpdate(location.pathname)
+      maybeApplyUpdate(stripBase(location.pathname))
     },
     { once: true },
   )

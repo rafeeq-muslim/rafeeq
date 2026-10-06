@@ -33,7 +33,6 @@ import {
 import { toast } from "sonner"
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -55,7 +54,7 @@ import { api, sendEvent } from "@/app/lib/api"
 import { pushState, setReminder, setReplies, syncPushSwitches } from "@/app/lib/push"
 import { downloadMyData, wipeDevice } from "@/app/lib/privacy"
 import { usableTone } from "@/app/lib/tone"
-import { usePractice } from "@/app/practice/store"
+import { usePrayerReminderSwitch } from "@/app/practice/PrayerNameAsk" // PLT-06 R3 / PRC-05 R2 ask once (approvals-ui)
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
@@ -65,6 +64,7 @@ import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 // ORG-01 R3/R4 (org-01-03-organizations-build)
 import { OrgSection } from "@/app/org/OrgSection"
+import { SignOutButton } from "@/app/privacy/SignOutButton" // PLT-05 R7
 import { unlinkOrg } from "@/app/org/api"
 import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
 
@@ -76,15 +76,8 @@ export default function Me() {
     if (hash === "#privacy") document.getElementById("privacy")?.scrollIntoView?.()
   }, [hash])
   const me = useAuth((s) => s.me)
-  const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
   const organized = useOrganizedHomeCached() // PLT-09 R2: «أدوات يومية» leaves «حسابي» (unless PLT-09 is switched off)
-
-  const signOut = async () => {
-    await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
-    setAuth({ token: null, me: null })
-    toast(t("acct.signedOut"))
-  }
 
   const roleLinks: { to: string; key: Key; icon: TablerIcon; show: boolean }[] = [
     { to: "/inbox", key: "role.mentorInbox", icon: IconInbox, show: has("mentor") },
@@ -149,9 +142,7 @@ export default function Me() {
           <Section title={t("acct.settings")}>
             <LinkRow icon={IconChecklist} title={t("me.account")} onClick={() => navigate("/me/account")} />
             <div className="flex flex-wrap gap-2 pt-2">
-              <Button variant="outline" onClick={signOut}>
-                {t("me.signout")}
-              </Button>
+              <SignOutButton />
               <DeleteAccount />
             </div>
           </Section>
@@ -330,8 +321,7 @@ function NotificationSettings() {
   const { t } = useT()
   const navigate = useNavigate()
   const d = useDevice()
-  const prayer = usePractice((s) => s.reminders)
-  const setPractice = usePractice((s) => s.set)
+  const prayer = usePrayerReminderSwitch() // PLT-06 R3 / PRC-05 R2: first turn-on asks once about the prayer name
   const [busy, setBusy] = React.useState(false)
   const state = pushState()
   const pushOk = state === "ok"
@@ -501,8 +491,9 @@ function NotificationSettings() {
           label={t("practice.reminders")}
           hint={t("notif.prayerHint")}
           checked={prayer.enabled}
-          onChange={(v) => setPractice({ reminders: { ...prayer, enabled: v } })}
+          onChange={prayer.setEnabled}
         >
+          {prayer.dialog}
           <Button
             variant="link"
             className="h-auto w-fit px-0"
@@ -543,12 +534,6 @@ function PrivacySettings() {
         <SwitchRow key={r.id} id={`p-${r.id}`} label={t(r.key)} hint={t(r.hint)} checked={r.value} onChange={r.change}>
           {/* PLT-05 R2 ex3: honest that the browser history may keep Rafeeq. */}
           {r.id === "exit" && <p className="text-label text-muted-foreground" data-slot="history-note">{t("privacy.historyNote")}</p>}
-          {/* MOT-07 open question: provisional text until the privacy notice is approved. */}
-          {r.id === "events" && (
-            <Badge variant="warning" className="w-fit" data-slot="unapproved">
-              {t("mot.unapproved")}
-            </Badge>
-          )}
         </SwitchRow>
       ))}
       <div className="flex flex-col items-start gap-1 p-4">

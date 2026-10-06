@@ -5,7 +5,7 @@ Content the Ask assistant (KNW-01) reads at run time, and the question sets that
 | File | What it holds |
 | --- | --- |
 | `approved-answers.json` | Saved answers for frequent questions (KNW-01 R7). Only `status: "approved"` is ever served. |
-| `danger-phrases.json`, `screen-phrases.json`, `fixed-replies.json` | Danger and manipulation screening, and the fixed replies. |
+| `danger-phrases.json`, `screen-phrases.json`, `fixed-replies.json` | Danger and manipulation screening, and the fixed replies. `status: "approved"` since 2026-10-06 by the product owner's blanket approval (`approved_by`, `approved_on`); not reviewed by the Sharia reviewer (`reviewed_by` empty). |
 | `eval/questions.jsonl` | KNW-04 reliability set (see `eval/README.md`). |
 | `eval/reference-set.jsonl` | Reference set with expected sources for KNW-01 §10.2 and KNW-02 §9. |
 
@@ -35,10 +35,11 @@ Both files below were **drafted by Claude on 2026-10-06** from passages in the p
 | `expected_outcome` | `answered`, `referral`, `danger`, `refused` or `no_source` |
 | `expected_sources` | The passages checked to contain the answer: `id`, `source_id`, `ref_key`, `version`. `must_cite` holds the same ids. A trailing `:` (e.g. `islamqa:ar:83172:`) accepts any part of a split passage |
 | `evidence`, `suggestion_key` | What the passage says, and which Ask suggestion the question tests |
-| `status`, `reviewer` | `"draft"` and `null` until reviewed |
+| `status`, `reviewer` | `"draft"` and `null` until reviewed; `"confirmed"` and who confirmed |
 
 What "islamqa family" and "binbaz family" mean here: the evidence was confirmed in that source, and a title search found no matching passage in the other one. binbaz has no English passages. A title search is not proof that the other source has nothing, so the reviewer confirms the family.
 
 - **مسلّم بن عبدالعزيز العمير (Knowledge owner) must confirm every row's expected sources before the row counts toward an acceptance gate**: Recall@8 per source family (KNW-02 §9) and first-attempt success (KNW-01 §10). Until then, a gate result on this set is only an indication.
+- **2026-10-06:** all 62 rows are `"confirmed"` by the product owner's blanket approval (`reviewer`: "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)"). مسلّم has not checked them row by row; when he does, he fixes rows and sets `reviewer` to his name.
 - To confirm a row, set `status` to `"confirmed"` and `reviewer` to his name. Fix or remove expected sources that don't actually answer the question. Don't remove hard questions after seeing results (KNW-02 §9).
 - `uncovered` rows were written so that no source should answer them. مسلّم confirms that no passage does.

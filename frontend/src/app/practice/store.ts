@@ -18,6 +18,8 @@ export type ReminderSettings = {
   offset: number
   /** R2: neutral «تذكير» unless the learner chooses to show the prayer name. */
   showName: boolean
+  /** PLT-06 R3 / PRC-05 R2 (owner 2026-10-06): the one-time «show the prayer name?» question was answered. */
+  askedName?: boolean
   /** R1: Ramadan only, off until chosen. */
   suhoor: boolean
   iftar: boolean

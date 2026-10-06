@@ -265,22 +265,23 @@ function ItemView() {
           ) : returning ? (
             <>
               <Textarea dir="auto" placeholder={t("desk.reason")} aria-label={t("desk.reason")} value={note} onChange={(e) => setNote(e.target.value)} className="min-h-24" />
-              <div className="flex gap-2">
-                <Button className="flex-1" variant="destructive" disabled={!note.trim() || decide.isPending} onClick={() => decide.mutate("returned")}>
+              <div className="flex flex-wrap gap-2">
+                <Button className="grow" variant="destructive" disabled={!note.trim() || decide.isPending} onClick={() => decide.mutate("returned")}>
                   {t("desk.sendReturn")}
                 </Button>
-                <Button variant="ghost" onClick={() => setReturning(false)}>
+                <Button variant="ghost" className="grow" onClick={() => setReturning(false)}>
                   {t("common.cancel")}
                 </Button>
               </div>
             </>
           ) : (
-            <div className="flex gap-2">
-              <Button size="lg" className="flex-1" disabled={!l || l.status === "approved" || decide.isPending} onClick={() => decide.mutate("approved")}>
+            // Side by side when both labels fit, stacked full width on a narrow phone (360–390px), in every language.
+            <div className="flex flex-wrap gap-2">
+              <Button size="lg" className="grow" disabled={!l || l.status === "approved" || decide.isPending} onClick={() => decide.mutate("approved")}>
                 <IconCheck data-icon="inline-start" />
                 {t("desk.approve")}
               </Button>
-              <Button size="lg" variant="outline" disabled={!l || decide.isPending} onClick={() => setReturning(true)}>
+              <Button size="lg" variant="outline" className="grow" disabled={!l || decide.isPending} onClick={() => setReturning(true)}>
                 <IconCornerUpLeft data-icon="inline-start" />
                 {t("desk.return")}
               </Button>

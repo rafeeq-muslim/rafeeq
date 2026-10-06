@@ -1,0 +1,14 @@
+{
+ "_about": "KNW-05 / KNW-08 R4: versions approved by the product owner's blanket decision of 2026-10-06 (ناصر بن عبدالعزيز العويمر): «everything waiting for an internal person's approval is approved». At every start the backend records each listed version in the review desk's tables (content_approvals and knw_reviews, no reviewer account, the approver in the note) when that item and language has no reviewer decision yet (backend/app/knowledge/owner_approvals.py). It is not the Sharia reviewer's approval and not a listening review: the reviewer can still return any of these in the desk, and a return wins. A version edited after this file no longer matches its content_hash and goes back to review. Third-party permissions (licences, Quranpedia's written confirmation) are not covered.",
+ "approver": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
+ "label": "مالك المنتج — اعتماد عام 2026-10-06",
+ "decided_on": "2026-10-06",
+ "items": [
+  {"item_type": "recitation", "item_id": "quranpedia-248", "lang": "ar", "content_hash": "13e639e0011e1dc60ee37e733d8520b7e59040641e15060bb09a6c3463b76de5"},
+  {"item_type": "recitation", "item_id": "quranpedia-249", "lang": "ar", "content_hash": "a1f08a127009002a1e4db84612a7c2618eac717f40fac657c272805cb3188ac5"},
+  {"item_type": "recitation", "item_id": "quranpedia-251", "lang": "ar", "content_hash": "a0f6a44be3f1a18a52ef44ee34f585724d914e29db709629a1d26d59836c002b"},
+  {"item_type": "recitation", "item_id": "quranpedia-253", "lang": "ar", "content_hash": "cce5781cd6697561e6ae46a24265f8b6fd412b65e0b5a862c8e4caff0bccf7c6"},
+  {"item_type": "recitation", "item_id": "quranpedia-254", "lang": "ar", "content_hash": "734ddaa28b0359ba65b60bd67f21f935ac074fbd6888e634c6c42432dec4daa3"},
+  {"item_type": "recitation", "item_id": "quranpedia-255", "lang": "ar", "content_hash": "ebd5e07a8010e0081f690c6988b9886591fd9817892ab1b925b32920f7f74738"}
+ ]
+}
