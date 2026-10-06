@@ -31,6 +31,10 @@
 | R2 ex1/ex2 (meanings label; Arabic alone without translation) | `R2: verse without stored translation shows Arabic only` (vitest, `quran.test.ts`) |
 | R3 (meaning stops recitation first) | `R3: playing a meaning stops the recitation first` (vitest) |
 | R6 ex1/ex2 (resume on this device; other device starts at 1) | `R6: position is kept per surah on this device only` (vitest) |
+| R1 ex1 (the reciter alone) | `R1: playing a surah plays the reciter's file on the one audio element, and nothing else` (vitest, `quran.rules.test.tsx`) |
+| R1 ex2 (an in-app notice during the recitation is silent) | `R1: an in-app notice during the recitation is shown without sound and leaves the recitation playing` (vitest) |
+| R5 ex1 (no points, streak or message when a surah ends) | `R5: finishing a surah changes no progress, shows no completion message and sends nothing` (vitest); `test_knw08_r5_no_endpoint_records_listening` |
+| R5 ex2 (the mentor sees nothing of the listening) | `test_knw08_r5_mentor_summary_has_nothing_about_listening` |
 
 ## 5. Open decisions
 
