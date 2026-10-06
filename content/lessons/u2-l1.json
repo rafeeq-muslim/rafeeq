@@ -52,7 +52,29 @@
         "ayat": [
           22,
           22
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              7
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              7
+            ],
+            "translation": "He is Allah, other than whom there is no deity"
+          },
+          "tl": {
+            "words": [
+              1,
+              13
+            ],
+            "translation": "Siya ang Allah, bukod sa Kanya’y wala ng iba pang Diyos, Sya ang nakakaalam sa mga bagay na di nakikita at nakikita. Sya ang Mahabagin, Ang Maawain."
+          }
+        }
       },
       "source_ref": "my lord"
     },
@@ -70,7 +92,29 @@
         "ayat": [
           11,
           11
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              14,
+              19
+            ]
+          },
+          "en": {
+            "words": [
+              14,
+              19
+            ],
+            "translation": "There is nothing like unto Him, and He is the All-Hearing, the All-Seeing."
+          },
+          "tl": {
+            "words": [
+              14,
+              19
+            ],
+            "translation": "Walang bagay ang makakahalintulad sa Kanya, at Siya ang Lubos na Nakakarinig, ang Lubos na Nakakakita."
+          }
+        }
       },
       "source_ref": "my lord"
     },

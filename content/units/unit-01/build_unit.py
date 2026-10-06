@@ -132,8 +132,8 @@ L1["exercises"] = [
                 opt("c", "أن الإنسان يعبد ما يشاء", "That a person may worship whatever he wishes", "Na maaaring sambahin ng tao ang anumang nais niya")],
        answer="a"),
     ex("u01-l1-e2", "choice", ["u01-l1-o2"],
-       T("أيّ هذه من معنى «محمد رسول الله»؟", "Which of these is part of the meaning of “Muhammad is the Messenger of Allah”?",
-         "Alin dito ang bahagi ng kahulugan ng “si Muhammad ay Sugo ng Allah”?"),
+       T("أيّ هذه من معنى «أشهد أنّ محمدًا رسول الله»؟", "Which of these is part of the meaning of “I bear witness that Muhammad is the Messenger of Allah”?",
+         "Alin dito ang bahagi ng kahulugan ng “Sumasaksi ako na si Muhammad ay Sugo ng Allah”?"),
        "u01-l1-c5",
        options=[opt("a", "طاعته فيما أمر", "To obey his orders", "Ang pagsunod sa kanyang utos"),
                 opt("b", "أن يُعبد هو مع الله", "To worship him alongside Allah", "Ang sambahin siya kasama ng Allah"),
@@ -661,6 +661,16 @@ for lesson in (L1, L2, L3, L4, L5):
             c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + ARABIC_NOTE).strip()
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
+
+# Verses the book quotes only in part: show only the quoted words (reviewer, 2026-10-06).
+EXCERPTS = json.loads((Path(__file__).parents[2] / "quran_excerpts.json").read_text(encoding="utf8"))["cards"]
+for les in LESSONS:
+    for c in les["cards"]:
+        e = EXCERPTS.get(c["id"])
+        if e:
+            if c.get("kind") != "quran" or c.get("ref") != e["ref"]:
+                raise SystemExit(f"{c['id']}: excerpt for {e['ref']} but the card is {c.get('kind')} {c.get('ref')}")
+            c["excerpt"] = {lg: {k: v for k, v in e[lg].items() if k != "shown"} for lg in ("ar", "en", "tl")}
 
 # The name a learner reads for each objective (LRN-10 R1); `text` stays the team's wording.
 LABELS = json.loads((Path(__file__).parents[2] / "objective_labels.json").read_text(encoding="utf8"))

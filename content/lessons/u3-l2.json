@@ -34,7 +34,29 @@
         "ayat": [
           110,
           110
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              2
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              2
+            ],
+            "translation": "And establish prayer"
+          },
+          "tl": {
+            "words": [
+              1,
+              2
+            ],
+            "translation": "At inyong itaguyod ang pagdarasal."
+          }
+        }
       },
       "source_ref": "pillar 2"
     },
@@ -64,7 +86,29 @@
         "ayat": [
           110,
           110
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              3,
+              4
+            ]
+          },
+          "en": {
+            "words": [
+              3,
+              4
+            ],
+            "translation": "and give Zakah"
+          },
+          "tl": {
+            "words": [
+              3,
+              4
+            ],
+            "translation": "At magbigay kayo ng Zakah o Obligadong Kawang gawa."
+          }
+        }
       },
       "source_ref": "pillar 3"
     },

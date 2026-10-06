@@ -398,6 +398,26 @@ def tab_image(tab):
     raise SystemExit(f'ERROR: no image in {tab}')
 
 
+# Verses the book quotes only in part: show only the quoted words (reviewer, 2026-10-06).
+with open(os.path.join(ROOT, 'quran_excerpts.json'), encoding='utf-8') as f:
+    EXCERPTS = json.load(f)['cards']
+
+def excerpt_view(e):
+    """The served form of a quran_excerpts.json entry: per language, the word span and the book's translation."""
+    return {lg: {k: v for k, v in e[lg].items() if k != 'shown'} for lg in ('ar', 'en', 'tl')}
+
+
+def attach_excerpts(docs):
+    for doc in docs:
+        for card in doc['cards']:
+            e = EXCERPTS.get(card['id'])
+            if e:
+                q = card.get('quran')
+                if not q or f"{q['sura']}:{q['ayat'][0]}" != e['ref'] or q['ayat'][0] != q['ayat'][1]:
+                    sys.exit(f"{card['id']}: excerpt for {e['ref']} but the card shows {q}")
+                q['excerpt'] = excerpt_view(e)
+
+
 def main():
     from spec_units import UNITS
     import spec_u1, spec_u2, spec_u3, spec_u4, spec_u5, spec_u6
@@ -411,6 +431,7 @@ def main():
         b.check_coverage(les)
     import edits  # reviewer-decided edits, after coverage (recorded in each lesson's `edited`)
     edits.apply({d['id']: d for d in out})
+    attach_excerpts(out)
     os.makedirs(os.path.join(ROOT, 'lessons'), exist_ok=True)
     for doc in out:
         with open(os.path.join(ROOT, 'lessons', f"{doc['id']}.json"), 'w', encoding='utf-8') as f:

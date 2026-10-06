@@ -8,6 +8,7 @@
 
 | Path | What it is |
 | --- | --- |
+| `quran_excerpts.json` | Verses the book quotes only in part (14 cards in units 1–6): the word span of the stored verse to show per language, and the book's own translation of the quoted part; read by both builders and checked by both checkers |
 | `objective_labels.json` | The learner's name for every objective of units 1–6 (ar/en/tl), read by both builders; a missing name stops the build |
 | `units/unit-01/unit.json` | Unit 1 «دليل اليوم الأول» (LRN-01): 7 lessons, 21 learning objectives, 39 cards, 43 exercises, in Arabic, English and Filipino |
 | `units/unit-01/images/` | 21 step photos from the Arabic edition (WebP, transparent background, no text), about 0.6 MB |

@@ -124,7 +124,29 @@
         "ayat": [
           19,
           19
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              5
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "Indeed, the religion in the sight of Allah is Islam"
+          },
+          "tl": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "Katotohanan ang tanging relihiyon sa paningin ng Allah ay ang Islam lamang."
+          }
+        }
       },
       "source_ref": "iman pillar 3"
     },

@@ -4,7 +4,7 @@ Sharia reviewer: مهند بن صالح الفوزان. Review done in conversat
 
 | Lesson | Date | Decision | Changes asked | Notes |
 | --- | --- | --- | --- | --- |
-| u01-l1 «أشهد» | 2026-10-06 | Approved | None | Wrong option «أن يُعبد هو مع الله» kept on purpose: a wrong choice shows the card and, on «لماذا؟», the AI explanation |
+| u01-l1 «أشهد» | 2026-10-06 | Approved; one change after testing the site | Exercise 2 question reworded to «أيّ هذه من معنى «أشهد أنّ محمدًا رسول الله»؟» (was «…«محمد رسول الله»؟») | Wrong option «أن يُعبد هو مع الله» kept on purpose: a wrong choice shows the card and, on «لماذا؟», the AI explanation |
 | u01-l2 «قبل الوضوء» | 2026-10-06 | Approved after one change | Exercise 2 question reworded to «الطهارة للصلاة هي:» (it referred to "the book") | The three hadiths kept in the book's wording: the author is a scholar; `verify` notes stay for linking to HadeethEnc |
 | u01-l3 «أتوضأ (1)» | 2026-10-06 | Approved; one change after testing the site | Exercise 6 («إدخال الماء في الفم… هو:») repeated the matching exercise just before it; replaced with «أدخلتَ الماء إلى أنفك بنفَسك ثم أخرجته. ماذا فعلت؟» (answer: الاستنشاق ثم الاستنثار) | Wrong option «قول الوضوء بصوت عالٍ» kept by the reviewer's decision, after Claude flagged that saying the intention aloud is a matter of madhhab difference |
 | u01-l4 «أتوضأ (2)» | 2026-10-06 | Approved after one change | Exercise 2 (ordering the last four steps) was redundant with exercise 1; replaced with a choice «ما الخطوة بعد غسل الوجه؟» so the objective keeps two different exercises | Face card kept whole (book text) |
@@ -13,3 +13,5 @@ Sharia reviewer: مهند بن صالح الفوزان. Review done in conversat
 | u01-l7 «أصلي (2)» | 2026-10-06 | Approved after one change | Exercise 4 (between the prostrations) repeated the matching exercise; replaced with «ماذا أقول إذا اعتدلت قائمًا بعد الركوع؟» (ربنا ولك الحمد) | — |
 
 **Unit 1 reviewed in full on 2026-10-06.** Next: the reviewer approves each lesson and language in the app's review desk; verses are shown from QuranEnc and the four hadiths keep their `verify` notes for linking to HadeethEnc.
+
+**Verses quoted in part (2026-10-06, reviewer's decision after testing the site):** u01-l1-c2 (محمد: 19) and u01-l2-c1 (البقرة: 222) show only the words the book quotes, from the stored verse, with the book's translation of that part (`content/quran_excerpts.json`). Before this, the app showed all of البقرة 222, including the ruling on menstruation, on the first purification card.
