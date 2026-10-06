@@ -423,8 +423,8 @@ describe("plt-09-r5 the order is set once a day; contents change, places don't",
     expect(soon.getAttribute("data-highlight")).toBe("true")
     const rowsBefore = screen.getAllByRole("button").length
     unmount()
-    // After Asr: the adhkar line becomes the evening adhkar; same four rows.
-    vi.setSystemTime(new Date(t.asr.getTime() + 5 * 60_000))
+    // After Asr (past the half hour of after-prayer adhkar, PRC-07 R6): the evening adhkar; same four rows.
+    vi.setSystemTime(new Date(t.asr.getTime() + 35 * 60_000))
     expect(adhkarLine(t, new Date())).toBe("evening")
     render(
       <QueryClientProvider client={new QueryClient()}>
