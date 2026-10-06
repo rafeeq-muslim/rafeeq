@@ -24,6 +24,7 @@ const Me = lazy(() => import("@/app/pages/Me"))
 const Account = lazy(() => import("@/app/pages/Account"))
 const Practice = lazy(() => import("@/app/pages/Practice"))
 const Discover = lazy(() => import("@/app/pages/Discover"))
+const Guide = lazy(() => import("@/app/guide/GuideScreen"))
 const Inbox = lazy(() => import("@/app/pages/roles/Inbox"))
 const ReviewDesk = lazy(() => import("@/app/pages/roles/ReviewDesk"))
 const Team = lazy(() => import("@/app/pages/roles/Team"))
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       { path: "me/account", element: <Account /> },
       { path: "practice/*", element: <Practice /> },
       { path: "discover/*", element: <Discover /> },
+      { path: "guide", element: <Guide /> }, // PLT-08 «كل ما في رفيق»
       { path: "inbox/*", element: <RequireRole roles={["mentor", "team"]}><Inbox /></RequireRole> }, // team: urgent requests (CMP-01 R6) + report queue (CMP-04 R3)
       { path: "review-desk/*", element: <RequireRole roles={["sharia_reviewer", "team"]}><ReviewDesk /></RequireRole> },
       { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5

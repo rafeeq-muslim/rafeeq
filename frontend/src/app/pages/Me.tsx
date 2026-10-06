@@ -15,6 +15,7 @@ import {
   IconFlower,
   IconHelpCircle,
   IconInbox,
+  IconLayoutGrid,
   IconSettings,
   IconShieldCheck,
   IconUsersGroup,
@@ -81,6 +82,7 @@ export default function Me() {
         </Section>
 
         <Section title={t("me.tools")}>
+          <LinkRow icon={IconLayoutGrid} title={t("guide.homeLink")} hint={t("guide.homeLinkBody")} onClick={() => navigate("/guide")} />
           <LinkRow icon={IconCompass} title={t("practice.prayer")} hint={t("me.practiceHint")} onClick={() => navigate("/practice")} />
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
