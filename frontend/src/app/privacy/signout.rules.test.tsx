@@ -135,7 +135,7 @@ describe("plt-05 r7 sign-out erases this device", () => {
     expect(useAuth.getState().token).toBeNull()
     expect(useAuth.getState().me).toBeNull()
     expect(calls.some((c) => c.url === "/api/auth/logout" && c.method === "POST")).toBe(true)
-    expect(go).toHaveBeenCalledWith("/welcome")
+    expect(go).toHaveBeenCalledWith("/app/welcome")
   })
 
   it("plt05_r7_ex1_app_shell_cache_survives_while_content_caches_and_the_discreet_copy_go", async () => {
@@ -157,7 +157,7 @@ describe("plt-05 r7 sign-out erases this device", () => {
     render(<SignOutButton leave={() => signOutAndErase(go)} />)
 
     fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
-    await waitFor(() => expect(go).toHaveBeenCalledWith("/welcome"))
+    await waitFor(() => expect(go).toHaveBeenCalledWith("/app/welcome"))
 
     const order = calls.map((c) => c.url)
     const putLearning = order.indexOf("/api/me/learning")

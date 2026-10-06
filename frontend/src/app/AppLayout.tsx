@@ -114,12 +114,6 @@ export default function AppLayout() {
   useGuideTracker(location.pathname) // PLT-08 R3
 
   if (!onboarded) {
-    // First visit at the bare address: the public landing page, whose call to
-    // action opens /welcome. Any deeper link (QR codes use /welcome) goes on.
-    if (location.pathname === "/" && !location.search) {
-      window.location.replace("/landing/")
-      return null
-    }
     // PLT-01 R2: a link may carry the language, and nothing else goes on,
     // except an organisation's code (ORG-01 R1/R2), which is asked about once.
     const q = new URLSearchParams(location.search)

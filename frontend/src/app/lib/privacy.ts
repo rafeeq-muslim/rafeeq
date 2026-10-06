@@ -17,6 +17,7 @@
  *   (ORG-01). Erasing the device also removes that link.
  */
 import { api } from "@/app/lib/api"
+import { appUrl } from "@/app/lib/base"
 import { useAuth } from "@/app/stores/auth"
 import { helpHeaders } from "@/app/companion/store"
 import { linkState, unlinkOrg } from "@/app/org/api"
@@ -134,7 +135,7 @@ export async function wipeDevice(go: (url: string) => void = (url) => window.loc
   await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
   await clearBrowserStorage()
   if (typeof caches !== "undefined") for (const k of await caches.keys()) await caches.delete(k)
-  go("/welcome")
+  go(appUrl("/welcome"))
 }
 
 /** R7: sign out, then erase this device like R4 but keep the app shell. Only
@@ -146,5 +147,5 @@ export async function signOutAndErase(go: (url: string) => void = (url) => windo
   await clearBrowserStorage()
   // Runtime caches (content, media) and the discreet-mode copy (rafeeq-prefs) go.
   if (typeof caches !== "undefined") for (const k of await caches.keys()) if (!isAppShellCache(k)) await caches.delete(k)
-  go("/welcome")
+  go(appUrl("/welcome")) // PLT-10 R2
 }
