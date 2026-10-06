@@ -796,4 +796,6 @@ export const en: Dict = {
   "ask.you": "You",
   "ask.input": "Your question",
   "ask.tooMany": "You've sent many questions in a short time. Wait a minute, then try again.",
+  "ask.more": "Read the full hadith",
+  "ask.less": "Show less",
 }

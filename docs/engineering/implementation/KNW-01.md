@@ -46,7 +46,7 @@ Response (plan §12.2 plus what the UI needs):
 }
 ```
 
-**CMP hand-off contract** (Companion builds the human side): on `danger`, the UI shows `DangerHelpPanel` only and links «أريد إنسانًا» to `/mentor/help?kind=urgent&from=ask`. On `no_source` and personal answers it links to `/mentor/help?kind=escalation&from=ask`. The question text is never in the URL, the event or the request; the user retypes or pastes it if they choose (rules §2.9). Events published by KNW (outbox, `source="KNW"`):
+**CMP hand-off contract** (Companion builds the human side): on `danger`, the UI shows `DangerHelpPanel` only and links «أريد إنسانًا» to `/mentor/help?kind=urgent&from=ask&ask=<ask_id>` (Companion opens the urgent request on arrival). On `no_source`, `unavailable`, personal and sensitive answers it links to `/mentor/help?kind=escalation&from=ask&ask=<ask_id>`; the always-visible top-bar button links to `/mentor/help?from=ask`. `ask_id` is random and links the request to the `DangerDetected`/`EscalationRequested` event only. The question text is never in the URL, the event or the request; the user retypes or pastes it if they choose (rules §2.9). Events published by KNW (outbox, `source="KNW"`):
 
 | Event | Payload |
 | --- | --- |
@@ -85,6 +85,6 @@ Plus plan 4.12: every phrase in the danger file returns `danger` with network bl
 ## 6. Open decisions (recorded, not blocking)
 
 - Danger phrase list and the five fixed replies are drafts written by Claude; مهند and the CMP owner must approve them (plan 4.2, 4.7).
-- `KNW_MIN_SIMILARITY` stays 0 until the KNW-04 calibration (plan 5.5) runs on the full 80-question set.
+- `KNW_MIN_SIMILARITY` stays 0. First calibration (plan 5.5, `python -m app.knowledge.eval calibrate`, 2026-10-05, 31-question starter set): answerable questions scored 0.51–0.76, the two "no source" questions 0.57 and 0.63, so the groups overlap and a threshold of 0.63 would drop half the answerable questions. Until the full 80-question set separates them, the gates are the composer's `sufficient` and the verifier (plan 4.4).
 - Helpline numbers per country: none shown (feature open question; `DangerHelpPanel` never invents numbers).
 - `sensitive` route: answered from sources like `general`, with `should_escalate = true` so the human button is offered (the feature has no example; plan §4.3 only says it continues to retrieval).

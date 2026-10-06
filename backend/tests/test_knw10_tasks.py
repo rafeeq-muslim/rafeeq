@@ -221,3 +221,18 @@ async def test_knw10_r5_no_consent_no_event(client, ai):
     assert b["outcome"] == "answered" and b["objective_id"] is None
     assert "tagger" not in ai.agents_called()
     assert not [e for e in await rows(OutboxEvent) if e.name == "ObjectiveAsked"]
+
+
+# --- R6 -----------------------------------------------------------------------
+
+
+async def test_knw10_r6_reliability_test_blocks_planted_additions(ai):
+    from app.knowledge.eval.runner import task_checks
+
+    unsupported = {"supported": False, "unsupported": ["added"]}
+    ai.on("support", unsupported, unsupported, SUPPORTED)
+    ai.on("explainer", {"text": "It must be done before the prayer, as the card explains."})
+    r = await task_checks()
+    assert r["planted_blocked"] == "3/3"
+    clean = r["rows"][-1]
+    assert clean["planted"] is False and clean["blocked"] is False

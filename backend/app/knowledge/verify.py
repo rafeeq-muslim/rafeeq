@@ -44,6 +44,8 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
     ids = cited_ids(out)
     if not ids:
         fails.append("no_citation")
+    if "{{" in body or "}}" in body:
+        fails.append("malformed_marker")  # e.g. {{binbaz:ar:1}} without "q:": never shown as text
     if any(i not in retrieved for i in ids):
         fails.append("unretrieved_reference")  # 2
     if lang != "ar" and has_arabic(body):

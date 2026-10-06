@@ -797,4 +797,6 @@ export const tl: Dict = {
   "ask.you": "Ikaw",
   "ask.input": "Ang iyong tanong",
   "ask.tooMany": "Marami kang naipadalang tanong sa maikling panahon. Maghintay ng isang minuto, saka subukang muli.",
+  "ask.more": "Basahin ang buong hadith",
+  "ask.less": "Ipakita nang mas kaunti",
 }

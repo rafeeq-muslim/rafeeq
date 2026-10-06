@@ -10,13 +10,20 @@ export type Segment = { type: "text"; text: string } | { type: "quote"; source: 
 
 const MARKER = /\{\{q:([^{}\s]+)\}\}/g
 
+/** Trim, and drop punctuation stranded at the start by a marker («{{q:x}}. Then…»). */
+const tidy = (s: string) =>
+  s
+    .replace(/\{\{[^{}]*\}\}/g, " ") // a malformed marker is never shown (the server rejects it too)
+    .trim()
+    .replace(/^[.,،;؛:]+\s*/u, "")
+
 export function segments(answer: string, sources: SourceCard[]): Segment[] {
   const byId = new Map(sources.map((s) => [s.id, s]))
   const out: Segment[] = []
   const shown = new Set<string>()
   let last = 0
   for (const m of answer.matchAll(MARKER)) {
-    const before = answer.slice(last, m.index).trim()
+    const before = tidy(answer.slice(last, m.index))
     if (before) out.push({ type: "text", text: before })
     const src = byId.get(m[1])
     // One quote per record: a second marker for the same id adds nothing.
@@ -26,7 +33,7 @@ export function segments(answer: string, sources: SourceCard[]): Segment[] {
     }
     last = (m.index ?? 0) + m[0].length
   }
-  const rest = answer.slice(last).trim()
+  const rest = tidy(answer.slice(last))
   if (rest) out.push({ type: "text", text: rest })
   // Drop bits that are only punctuation left over after a marker («… {{q:x}}.»).
   return out.filter((s) => s.type === "quote" || /[\p{L}\p{N}]/u.test(s.text))

@@ -356,3 +356,14 @@ async def test_knw01_rate_limit(client, ai):
         await post(client, "They beat me at home")
     r = await client.post("/api/ask", json={"question": "They beat me at home", "lang": "en"})
     assert r.status_code == 429
+
+
+async def test_knw01_malformed_marker_is_rejected(client, ai):
+    await add_passages(SHAHADA)
+    ai.on("router", ROUTE_GENERAL)
+    ai.on(
+        "composer",
+        {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]},
+    )
+    b = await post(client, "What does la ilaha illa allah mean?")
+    assert b["outcome"] == "no_source"

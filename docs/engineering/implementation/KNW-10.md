@@ -15,7 +15,7 @@
 | R3 (ask "what should I learn now?" in chat) | `ask.py` | A no-model phrase match returns `outcome: "learning_guide"`; the app then sends its on-device summary to `/api/learning/guide`. The assistant never answers that from Sharia sources |
 | R4/LRN-07 R6 (summary not kept) | `tasks.py` | The summary is used in memory only; nothing about it is logged except the model call's cost row |
 | R5 (objective tagging with consent only) | `ask.py` + `tasks.py::tag_objective` | Only when the request carries `consent_objectives: true` (the device flag `askConsent`, off by default) **and** the answer was given on route `general` or `disputed`. Fast model chooses one id from the approved objectives in that language, or none. Event `ObjectiveAsked {objective_id}`; the id is also returned so the device updates guest progress |
-| R6 (tasks in the reliability test) | `app/knowledge/eval` | The question set has `task: explain|guide` cases with a planted addition; the runner counts how many the checker blocks |
+| R6 (tasks in the reliability test) | `app/knowledge/eval/runner.py::task_checks` (`python -m app.knowledge.eval tasks`) | Explanations with a planted addition (an attributed hadith, a school of law, a ruling) must all be blocked; one real explainer output shows the clean path. First live run 2026-10-05: 3/3 planted blocked, the real explanation passed |
 
 ## 2. Endpoints
 
@@ -44,6 +44,7 @@ No new tables. Uses `knw_explanation_log`, `lrn_explanation_blocks` (read only),
 | KNW-10 R5 ex1 (consent → ObjectiveAsked with id only) | `test_knw10_r5_consented_question_sends_objective_id_only` |
 | KNW-10 R5 ex2 (sensitive/danger/personal → no tagging) | `test_knw10_r5_sensitive_routes_are_never_tagged` |
 | KNW-10 R5 ex3 (no consent → no event) | `test_knw10_r5_no_consent_no_event` |
+| KNW-10 R6 (planted additions blocked) | `test_knw10_r6_reliability_test_blocks_planted_additions` |
 
 ## 5. Open decisions
 

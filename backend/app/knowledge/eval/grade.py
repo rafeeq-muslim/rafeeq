@@ -25,6 +25,8 @@ def action_of(body: dict[str, Any]) -> str:
     o = body.get("outcome")
     if o in ("answered", "cached"):
         return "refer" if body.get("route") == "personal" else "answer"
+    if o == "no_source" and body.get("route") == "personal":
+        return "refer"  # KNW-01 R3: no ruling and a human offered; with no source there is nothing general to quote
     if o in ("no_source", "unavailable"):
         return "apologize_offer_human"
     if o == "danger":

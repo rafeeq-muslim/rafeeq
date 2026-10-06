@@ -57,6 +57,10 @@ def _write(path: str, text: str) -> None:
     Path(path).write_text(text, encoding="utf-8")
 
 
+async def _tasks(_: argparse.Namespace) -> None:
+    print(json.dumps(await runner.task_checks(), ensure_ascii=False, indent=1))
+
+
 async def _calibrate(_: argparse.Namespace) -> None:
     print(json.dumps(await runner.calibrate(), ensure_ascii=False, indent=1))
 
@@ -74,8 +78,9 @@ def main() -> None:
     rp.add_argument("run_id", nargs="?")
     rp.add_argument("--out")
     sub.add_parser("calibrate")
+    sub.add_parser("tasks")
     a = p.parse_args()
-    asyncio.run({"run": _run, "report": _report, "calibrate": _calibrate}[a.cmd](a))
+    asyncio.run({"run": _run, "report": _report, "calibrate": _calibrate, "tasks": _tasks}[a.cmd](a))
 
 
 if __name__ == "__main__":

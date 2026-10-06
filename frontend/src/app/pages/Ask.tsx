@@ -23,7 +23,7 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
-import { ErrorTurn, GuideTurn, HELP_ESCALATION, PendingTurn, QuestionTurn, ResponseTurn } from "@/app/ask/parts"
+import { ErrorTurn, GuideTurn, HELP_HUMAN, PendingTurn, QuestionTurn, ResponseTurn } from "@/app/ask/parts"
 import { useAsk } from "@/app/ask/store"
 import type { AskResponse } from "@/app/ask/types"
 
@@ -94,7 +94,7 @@ export default function Ask() {
       <TopBar
         className="sticky top-0"
         title={<span className="font-heading text-h3">{t("ask.title")}</span>}
-        end={<HumanHelpButton label={t("ask.human")} onClick={() => navigate(HELP_ESCALATION)} />}
+        end={<HumanHelpButton label={t("ask.human")} onClick={() => navigate(HELP_HUMAN)} />}
       />
 
       <div className="flex flex-1 flex-col gap-5 px-4 pt-4 pb-4">

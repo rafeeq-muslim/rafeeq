@@ -13,6 +13,7 @@ import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
 import { Message, MessageContent } from "@/components/ui/message"
 import { Spinner } from "@/components/ui/spinner"
+import { cn } from "@/lib/utils"
 import { AssistantMessage, DangerHelpPanel, HumanHelpButton, ReferralCard, UserMessage } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { suraName } from "@/app/lesson/suras"
@@ -20,9 +21,9 @@ import { isHadith, isQuran, segments } from "./answer"
 import { useSaveAnswer } from "./saved"
 import type { AskResponse, SourceCard } from "./types"
 
-/** CMP hand-off (Companion builds /mentor/help). The question text never travels in the URL. */
-export const HELP_URGENT = "/mentor/help?kind=urgent&from=ask"
-export const HELP_ESCALATION = "/mentor/help?kind=escalation&from=ask"
+/** CMP hand-off (Companion's /mentor/help). Only the random ask id travels, never the question text. */
+export const HELP_HUMAN = "/mentor/help?from=ask"
+const helpUrl = (kind: "urgent" | "escalation", askId: string) => `/mentor/help?kind=${kind}&from=ask&ask=${encodeURIComponent(askId)}`
 
 const SOURCE_SHORT: Record<string, string> = {
   quranenc: "QuranEnc.com",
@@ -47,9 +48,9 @@ function useRefLabel() {
       return s.translation ? `${ayah} · ${TRANSLATION_NAME[s.translation] ?? s.translation}` : ayah
     }
     if (isHadith(s) && s.ref.hadith_id) {
-      return [t("ask.ref.hadith", { n: num(s.ref.hadith_id) }), s.grade].filter(Boolean).join(" · ")
+      return [t("ask.ref.hadith", { n: String(s.ref.hadith_id) }), s.grade].filter(Boolean).join(" · ")
     }
-    return s.title ?? s.ref_key
+    return s.title ? `${s.title} (${s.ref_key})` : s.ref_key
   }
 }
 
@@ -57,6 +58,8 @@ function useRefLabel() {
 export function ScriptureQuote({ source }: { source: SourceCard }) {
   const { t, locale } = useT()
   const refLabel = useRefLabel()(source)
+  const [open, setOpen] = React.useState(false)
+  const long = source.quote_text.length > 420
   if (isQuran(source)) {
     const arabic = source.kind === "quran_arabic" ? source.quote_text : source.arabic_text
     const meaning = source.kind === "quran_arabic" ? null : source.quote_text
@@ -86,10 +89,19 @@ export function ScriptureQuote({ source }: { source: SourceCard }) {
   if (isHadith(source)) {
     return (
       <figure className="rounded-card bg-secondary/60 px-4 py-4 text-secondary-foreground">
-        <blockquote dir="auto" lang={source.lang} className="font-reading text-reading text-foreground">
+        <blockquote
+          dir="auto"
+          lang={source.lang}
+          className={cn("font-reading text-reading text-foreground", long && !open && "line-clamp-6")}
+        >
           {source.quote_text}
         </blockquote>
-        {source.arabic_text && locale !== "ar" && (
+        {long && (
+          <Button variant="ghost" size="xs" className="-ms-2 mt-1" aria-expanded={open} onClick={() => setOpen(!open)}>
+            {t(open ? "ask.less" : "ask.more")}
+          </Button>
+        )}
+        {source.arabic_text && locale !== "ar" && (!long || open) && (
           <p lang="ar" dir="rtl" className="mt-3 border-t border-primary/15 pt-3 font-reading text-body text-foreground/80">
             {source.arabic_text}
           </p>
@@ -163,13 +175,13 @@ export function AnswerTurn({ response }: { response: AskResponse }) {
           title={t("ask.personal.title")}
           description={t("ask.personal.body")}
           actionLabel={t("ask.human")}
-          onRefer={() => navigate(HELP_ESCALATION)}
+          onRefer={() => navigate(helpUrl("escalation", response.ask_id))}
         />
       )}
       {response.route === "sensitive" && (
         <div className="flex flex-col items-start gap-2 ps-2">
           <p className="text-label text-muted-foreground">{t("ask.sensitive.body")}</p>
-          <HumanHelpButton label={t("ask.human")} onClick={() => navigate(HELP_ESCALATION)} />
+          <HumanHelpButton label={t("ask.human")} onClick={() => navigate(helpUrl("escalation", response.ask_id))} />
         </div>
       )}
     </div>
@@ -205,8 +217,8 @@ export function ResponseTurn({ response }: { response: AskResponse }) {
           description={t("ask.danger.body")}
           primaryLabel={t("ask.danger.primary")}
           secondaryLabel={t("ask.danger.secondary")}
-          onPrimary={() => navigate(HELP_URGENT)}
-          onSecondary={() => navigate(`${HELP_URGENT}&numbers=1`)}
+          onPrimary={() => navigate(helpUrl("urgent", response.ask_id))}
+          onSecondary={() => navigate(helpUrl("urgent", response.ask_id))}
         />
       )
     case "no_source":
@@ -217,7 +229,7 @@ export function ResponseTurn({ response }: { response: AskResponse }) {
           title={t(`ask.${key}.title`)}
           description={t(`ask.${key}.body`)}
           actionLabel={t("ask.human")}
-          onRefer={() => navigate(HELP_ESCALATION)}
+          onRefer={() => navigate(helpUrl("escalation", response.ask_id))}
         />
       )
     }

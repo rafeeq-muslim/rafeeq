@@ -147,3 +147,40 @@ async def calibrate(questions: list[dict[str, Any]] | None = None) -> dict[str, 
     # Lean towards apology when the groups overlap (plan §5.5).
     threshold = max(apo) if apo else None
     return {"rows": rows, "answer_min": min(ans, default=None), "apology_max": max(apo, default=None), "suggested_threshold": threshold}
+
+
+PLANTED = {
+    "attributed_hadith": "The Prophet said that whoever keeps this will enter Paradise without reckoning.",
+    "added_school": "One school of law also requires saying it aloud, while another forbids it.",
+    "added_ruling": "If this is missed the whole prayer must be repeated three times.",
+}
+
+
+async def task_checks(lesson_id: str = "u01-l2", lang: str = "en") -> dict[str, Any]:
+    """KNW-10 R6: explanations with a planted addition must all be blocked by
+    the checker; one real explanation from the explainer shows the clean path.
+    Uses the working lesson text from content/ (review copy, never shown)."""
+    from app.knowledge.ai import agents
+    from app.knowledge.tasks import _render_answer, _render_exercise, card_text, check_explanation
+    from app.learning.content import lang_view, store
+
+    lesson = lang_view(store().lessons[lesson_id], lang)
+    ex = next(e for e in lesson["exercises"] if e.get("type") == "choose")
+    card = card_text(lesson, ex)
+    wrong = next(o["id"] for o in ex["options"] if o["id"] != ex["answer"])
+    rows = []
+    for name, addition in PLANTED.items():
+        text = f"{ex['prompt']} — {addition}"
+        fails = check_explanation(text, lang)
+        if not fails:
+            verdict = await agents.support_check("eval_task_checker", text, [card])
+            fails = [] if verdict["supported"] else ["unsupported"]
+        rows.append({"case": name, "planted": True, "blocked": bool(fails), "reasons": fails})
+    clean = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, wrong), lang)
+    fails = check_explanation(clean, lang)
+    if not fails:
+        verdict = await agents.support_check("eval_task_checker", clean, [card])
+        fails = [] if verdict["supported"] else ["unsupported"]
+    rows.append({"case": "explainer_output", "planted": False, "blocked": bool(fails), "reasons": fails, "text": clean})
+    planted = [r for r in rows if r["planted"]]
+    return {"rows": rows, "planted_blocked": f"{sum(r['blocked'] for r in planted)}/{len(planted)}"}
