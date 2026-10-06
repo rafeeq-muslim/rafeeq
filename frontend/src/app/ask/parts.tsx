@@ -3,7 +3,8 @@
  * - Quran and hadith words come only from `sources` (stored records by id);
  *   the model's text is labelled as Rafeeq's wording (rules.md §1.3).
  * - Every answer ends with source strips; no source → ReferralCard.
- * - Danger → DangerHelpPanel only, no AI text, no invented numbers.
+ * - Danger → DangerHelpPanel only, no AI text; the verified helplines are
+ *   bundled (CMP, research/08), never an invented number.
  * - KNW-01 reliability R4/R6: "not enough in the sources", "could not
  *   verify" and "could not complete now" are different messages; only a
  *   retryable failure offers a retry; an unknown outcome is a safe failure;
@@ -24,6 +25,7 @@ import { num, useT } from "@/app/i18n"
 import { suraName } from "@/app/lesson/suras"
 import { groupSources, isHadith, isQuran, segments, sourceLabel } from "./answer"
 import { useSaveAnswer } from "./saved"
+import { Helplines } from "@/app/companion/Helplines"
 import type { AskResponse, ErrorCode, SourceCard } from "./types"
 
 /** CMP hand-off (Companion's /mentor/help). Only the random ask id travels, never the question text. */
@@ -256,10 +258,10 @@ export function ResponseTurn({ response, onRetry, onEdit }: { response: AskRespo
           title={t("ask.danger.title")}
           description={t("ask.danger.body")}
           primaryLabel={t("ask.danger.primary")}
-          secondaryLabel={t("ask.danger.secondary")}
           onPrimary={() => navigate(helpUrl("urgent", response.ask_id))}
-          onSecondary={() => navigate(helpUrl("urgent", response.ask_id))}
-        />
+        >
+          <Helplines />
+        </DangerHelpPanel>
       )
     case "no_source":
       return <FailureCard kind="noSource" askId={response.ask_id} onEdit={onEdit} />

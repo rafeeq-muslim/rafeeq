@@ -1,11 +1,13 @@
-"""CMP-01 «أريد إنسانًا» and danger hand-off: one test per example."""
+"""CMP-01 «أريد إنسانًا» (rewrite, PR #21): one test per example.
+
+Danger handling left CMP-01 but stays in the companion domain: see
+test_cmp_danger.py."""
 
 import pytest
-from sqlalchemy import select
+from sqlalchemy import inspect, select
 
 from app.companion.models import HelpMessage, HelpRequest
 from app.core.db import SessionLocal
-from app.core.events import publish
 from tests.cmp_helpers import person, record_pushes, settle
 
 
@@ -18,10 +20,19 @@ def guest(token: str) -> dict:
     return {"X-Help-Token": token}
 
 
-async def ask_as_guest(client, body="أحتاج من أكلمه", **extra):
-    r = await client.post("/api/help/requests", json={"lang": "en", "body": body, **extra})
+async def ask_as_guest(client, body="أحتاج من أكلمه", gender="m", token=None, **extra):
+    json = {"lang": "en", "body": body, **extra}
+    if gender:
+        json["gender"] = gender
+    r = await client.post("/api/help/requests", json=json, headers=guest(token) if token else {})
     assert r.status_code == 201, r.text
     return r.json()
+
+
+async def inbox_ids(client, who) -> list[str]:
+    r = await client.get("/api/inbox/requests", headers=who.h)
+    assert r.status_code == 200, r.text
+    return [x["id"] for x in r.json()]
 
 
 # R1 -----------------------------------------------------------------------
@@ -32,10 +43,24 @@ async def test_cmp01_r1_request_from_lesson_keeps_only_the_source(client):
     assert out["request"]["source"] == "lesson"
     async with SessionLocal() as s:
         req = await s.get(HelpRequest, out["request"]["id"])
-        columns = {c.name: getattr(req, c.key) for c in HelpRequest.__table__.columns}
+        columns = {a.key: getattr(req, a.key) for a in inspect(HelpRequest).column_attrs}
     # nothing about the lesson itself: only the word "lesson"
     assert req.source == "lesson"
     assert not any(isinstance(v, str) and "u1-" in v for v in columns.values())
+
+
+async def test_cmp01_r1_assistant_question_is_not_attached_unless_chosen(client):
+    # Daniel asked the assistant, then asked for a human without attaching his question:
+    # only what he typed travels, with the random ask id; the server never adds the question.
+    out = await ask_as_guest(client, body="I want to talk to someone", kind="escalation", source="ask", ask_id="ask-42")
+    async with SessionLocal() as s:
+        bodies = [m.body for m in await s.scalars(select(HelpMessage).where(HelpMessage.request_id == out["request"]["id"]))]
+    assert bodies == ["I want to talk to someone"]
+    # When he chooses to attach it, the app puts it in his own message (frontend test covers the choice).
+    out = await ask_as_guest(
+        client, body="My question to the assistant: …\n\nCan someone explain?", kind="escalation", source="ask", token=out["guest_token"]
+    )
+    assert out["request"]["source"] == "ask"
 
 
 # R2 -----------------------------------------------------------------------
@@ -56,8 +81,8 @@ async def test_cmp01_r2_guest_request_returns_token_and_sees_reply(client, pushe
 
 
 async def test_cmp01_r2_other_device_cannot_open_guest_request(client):
-    out = await ask_as_guest(client)
-    other = (await client.post("/api/help/requests", json={"lang": "en", "body": "hello"})).json()["guest_token"]
+    out = await ask_as_guest(client, gender="f")
+    other = (await ask_as_guest(client, body="hello"))["guest_token"]
     r = await client.get(f"/api/help/requests/{out['request']['id']}", headers=guest(other))
     assert r.status_code == 404
     assert (await client.get(f"/api/help/requests/{out['request']['id']}")).status_code == 404
@@ -66,7 +91,7 @@ async def test_cmp01_r2_other_device_cannot_open_guest_request(client):
 
 
 async def test_cmp01_r2_guest_requests_move_to_new_account(client):
-    out = await ask_as_guest(client)
+    out = await ask_as_guest(client, gender="f")
     layla = await person(client, "layla-1")
     r = await client.post("/api/help/claim", headers={**layla.h, **guest(out["guest_token"])})
     assert r.json()["moved"] == 1
@@ -78,12 +103,85 @@ async def test_cmp01_r2_guest_requests_move_to_new_account(client):
 # R3 -----------------------------------------------------------------------
 
 
+async def test_cmp01_r3_sister_request_is_seen_by_sisters_only(client):
+    abu = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
+    sara = await person(client, "um-sara", roles=("mentor",), gender="f", languages=("en",))
+    team_sister = await person(client, "team-sister", roles=("team",), gender="f", languages=("en",))
+    team_brother = await person(client, "team-brother", roles=("team",), gender="m", languages=("en",))
+    out = await ask_as_guest(client, gender="f")
+    rid = out["request"]["id"]
+    assert out["request"]["gender"] == "f"
+    assert rid in await inbox_ids(client, sara)
+    assert rid in await inbox_ids(client, team_sister)
+    assert rid not in await inbox_ids(client, abu)
+    assert rid not in await inbox_ids(client, team_brother)
+    # a brother cannot open or answer it either
+    assert (await client.get(f"/api/inbox/requests/{rid}", headers=abu.h)).status_code == 404
+    r = await client.post(f"/api/inbox/requests/{rid}/messages", json={"body": "hello"}, headers=abu.h)
+    assert r.status_code == 404
+
+
+async def test_cmp01_r3_guest_is_asked_once(client):
+    sara = await person(client, "um-sara", roles=("mentor",), gender="f", languages=("en",))
+    abu = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
+    # never asked yet: the request cannot go out without the answer
+    r = await client.post("/api/help/requests", json={"lang": "en", "body": "hello"})
+    assert r.status_code == 422 and r.json()["detail"] == "gender_required"
+    first = await ask_as_guest(client, gender="f")
+    # a new request from the same device, without asking again
+    second = await ask_as_guest(client, body="another question", gender=None, token=first["guest_token"])
+    assert second["request"]["gender"] == "f"
+    assert second["request"]["id"] in await inbox_ids(client, sara)
+    assert second["request"]["id"] not in await inbox_ids(client, abu)
+
+
+async def test_cmp01_r3_account_uses_its_own_gender(client):
+    layla = await person(client, "layla-1", gender="f", languages=("en",))
+    r = await client.post("/api/help/requests", json={"lang": "en", "body": "hello", "gender": "m"}, headers=layla.h)
+    assert r.status_code == 201 and r.json()["request"]["gender"] == "f"
+
+
+async def test_cmp01_r3_no_sister_free_waits_and_never_goes_to_a_brother(client):
+    abu = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
+    await person(client, "ar-sister", roles=("mentor",), gender="f", languages=("ar",))  # a sister, not in Layla's language
+    paused = await person(client, "paused-sister", roles=("mentor",), gender="f", languages=("en",))
+    await client.put("/api/inbox/profile", json={"accepting": False}, headers=paused.h)
+    out = await ask_as_guest(client, gender="f")
+    token = out["guest_token"]
+    assert out["request"]["awaiting_same_gender"] is True  # «ستردّ عليك أخت حين تتاح»
+    assert out["request"]["id"] not in await inbox_ids(client, abu)
+    # a sister in her language becomes available: the same request reaches her
+    sara = await person(client, "um-sara", roles=("mentor",), gender="f", languages=("en",))
+    threads = (await client.get("/api/help/requests", headers=guest(token))).json()
+    assert threads[0]["awaiting_same_gender"] is False
+    assert out["request"]["id"] in await inbox_ids(client, sara)
+    assert out["request"]["id"] not in await inbox_ids(client, abu)
+
+
+# R4 -----------------------------------------------------------------------
+
+
+async def test_cmp01_r4_topic_is_shown_to_responder(client):
+    await ask_as_guest(client, body="I lost my room", topic="work_housing")
+    mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
+    rows = (await client.get("/api/inbox/requests", headers=mentor.h)).json()
+    assert rows[0]["topic"] == "work_housing"
+
+
+@pytest.mark.parametrize("topic", ["religion", "family", "work_housing", "money", "feeling_low", "other"])
+async def test_cmp01_r4_topics_include_non_religious_ones(client, topic):
+    assert (await ask_as_guest(client, topic=topic))["request"]["topic"] == topic
+
+
+# R5 -----------------------------------------------------------------------
+
+
 @pytest.mark.parametrize(
     "body",
     ["call me on 0551234567", "رقمي +966 55 123 4567", "رقمي ٠٥٥١٢٣٤٥٦٧", "mail me daniel@example.com", "join t.me/somegroup"],
 )
-async def test_cmp01_r3_phone_number_is_rejected_and_not_stored(client, body):
-    r = await client.post("/api/help/requests", json={"lang": "en", "body": body})
+async def test_cmp01_r5_contact_details_are_not_sent(client, body):
+    r = await client.post("/api/help/requests", json={"lang": "en", "body": body, "gender": "m"})
     assert r.status_code == 422
     assert r.json()["detail"]["code"] == "contact_not_allowed"
     async with SessionLocal() as s:
@@ -91,20 +189,18 @@ async def test_cmp01_r3_phone_number_is_rejected_and_not_stored(client, body):
         assert list(await s.scalars(select(HelpRequest))) == []
 
 
-# R4 -----------------------------------------------------------------------
+async def test_cmp01_r5_contact_details_refused_in_follow_up_messages(client):
+    out = await ask_as_guest(client)
+    r = await client.post(
+        f"/api/help/requests/{out['request']['id']}/messages", json={"body": "my whatsapp wa.me/123"}, headers=guest(out["guest_token"])
+    )
+    assert r.status_code == 422 and r.json()["detail"] == {"code": "contact_not_allowed", "kind": "link"}
 
 
-async def test_cmp01_r4_topic_is_shown_to_mentor(client):
-    await ask_as_guest(client, body="I lost my room", topic="work_housing")
-    mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
-    rows = (await client.get("/api/inbox/requests", headers=mentor.h)).json()
-    assert rows[0]["topic"] == "work_housing"
+# R6 -----------------------------------------------------------------------
 
 
-# R5 -----------------------------------------------------------------------
-
-
-async def test_cmp01_r5_reply_push_is_neutral(client, pushes):
+async def test_cmp01_r6_reply_push_is_neutral(client, pushes):
     layla = await person(client, "layla-1", gender="f", languages=("en",))
     req = (await client.post("/api/help/requests", json={"lang": "en", "body": "My family found out"}, headers=layla.h)).json()["request"]
     mentor = await person(client, "um-sara", roles=("mentor",), gender="f", languages=("en",), display_name="Um Sara")
@@ -121,7 +217,16 @@ async def test_cmp01_r5_reply_push_is_neutral(client, pushes):
         assert word not in blob
 
 
-async def test_cmp01_r5_unread_reply_shows_in_threads(client):
+async def test_cmp01_r6_arabic_push_reads_lak_rad_jadid(client, pushes):
+    layla = await person(client, "layla-ar", gender="f", languages=("ar",), locale="ar")
+    req = (await client.post("/api/help/requests", json={"lang": "ar", "body": "أحتاج أختًا"}, headers=layla.h)).json()["request"]
+    sara = await person(client, "um-sara", roles=("mentor",), gender="f", languages=("ar",))
+    await client.post(f"/api/inbox/requests/{req['id']}/messages", json={"body": "حياك الله"}, headers=sara.h)
+    await settle()
+    assert [p["title"] for uid, p in pushes if uid == str(layla.id)] == ["لديك رد جديد"]
+
+
+async def test_cmp01_r6_unread_reply_shows_in_threads(client):
     out = await ask_as_guest(client)
     mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
     await client.post(f"/api/inbox/requests/{out['request']['id']}/messages", json={"body": "I'm here"}, headers=mentor.h)
@@ -130,46 +235,3 @@ async def test_cmp01_r5_unread_reply_shows_in_threads(client):
     await client.get(f"/api/help/requests/{out['request']['id']}", headers=guest(out["guest_token"]))
     threads = (await client.get("/api/help/requests", headers=guest(out["guest_token"]))).json()
     assert threads[0]["unread"] == 0
-
-
-# R6 -----------------------------------------------------------------------
-
-
-async def danger(ask_id="ask-123", lang="en"):
-    async with SessionLocal() as s:
-        await publish(s, "DangerDetected", "KNW", {"ask_id": ask_id, "lang": lang, "detector": "phrase"})
-        await s.commit()
-
-
-async def test_cmp01_r6_danger_event_creates_urgent_alert_first_in_inbox(client, pushes):
-    mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
-    team = await person(client, "team-one", roles=("team",), languages=("ar",))
-    await ask_as_guest(client, body="older ordinary request")
-    await danger(lang="tl")
-    await settle()
-    for who in (mentor, team):
-        rows = (await client.get("/api/inbox/requests", headers=who.h)).json()
-        assert rows[0]["kind"] == "urgent" and rows[0]["lang"] == "tl"
-    notified = {uid for uid, p in pushes if p["title"] == "An urgent request is waiting"}
-    assert {str(mentor.id), str(team.id)} <= notified
-
-
-async def test_cmp01_r6_urgent_request_carries_no_question_text(client):
-    await danger()
-    out = (await client.post("/api/help/requests", json={"kind": "urgent", "source": "ask", "lang": "en", "ask_id": "ask-123"})).json()
-    mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
-    thread = (await client.get(f"/api/inbox/requests/{out['request']['id']}", headers=mentor.h)).json()
-    assert thread["kind"] == "urgent" and thread["lang"] == "en" and thread["messages"] == [] and thread["preview"] is None
-
-
-async def test_cmp01_r6_opening_urgent_reuses_the_alert(client):
-    await danger(ask_id="ask-777")
-    first = (await client.post("/api/help/requests", json={"kind": "urgent", "lang": "en", "ask_id": "ask-777"})).json()
-    token = first["guest_token"]
-    again = (
-        await client.post("/api/help/requests", json={"kind": "urgent", "lang": "en", "ask_id": "ask-777"}, headers=guest(token))
-    ).json()
-    assert again["request"]["id"] == first["request"]["id"]
-    async with SessionLocal() as s:
-        urgent = list(await s.scalars(select(HelpRequest).where(HelpRequest.kind == "urgent")))
-    assert len(urgent) == 1 and urgent[0].ask_id == "ask-777" and urgent[0].guest_token_hash is not None

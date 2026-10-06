@@ -1,6 +1,7 @@
 /**
- * CMP-04 R3: the team's review queue, high risk first, then oldest. Keep a
- * message hidden, show it again, or remove its author from the group.
+ * CMP-04 R3–R4: the team's review queue: «خطر على أحد» first, then the
+ * dangerous reasons, then the oldest. Keep a message hidden, show it again,
+ * or remove its author from the group.
  * Exported for the Team screen as well as the inbox's «البلاغات» tab.
  */
 import { useQueryClient } from "@tanstack/react-query"
@@ -29,6 +30,7 @@ function ReportCard({ item }: { item: QueueItem }) {
   return (
     <article className="flex flex-col gap-3 rounded-card bg-card p-4 shadow-card">
       <div className="flex flex-wrap items-center gap-1.5">
+        {item.priority === "danger" && <Badge variant="destructive">{t("cmp.reports.danger")}</Badge>}
         {item.priority === "high" && <Badge variant="destructive">{t("cmp.reports.high")}</Badge>}
         <Badge variant="secondary">{t(`cmp.reason.${item.reason}`)}</Badge>
         {item.hidden && <Badge variant="warning">{t("cmp.reports.hiddenNow")}</Badge>}

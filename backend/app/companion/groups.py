@@ -1,7 +1,8 @@
 """CMP-05 small groups.
 
 Only a mentor creates a group, in their own gender and one of their
-languages, capped at 15 (R1). Joining is by code, with an account, for the
+languages, 10 members by default and at most 15; all of a mentor's groups
+together hold at most 25 places, apart from his personal mentees' cap (R1). Joining is by code, with an account, for the
 group's gender and language, one group at a time (R2). Members see display
 names only (R3). The chat is text, members and mentor only, with reporting,
 and refuses contact details (R4). Leaving and removal are silent (R5).
@@ -27,7 +28,9 @@ from app.platform.models import User
 
 router = APIRouter(prefix="/api/groups", tags=["companion"])
 CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"  # no 0/O, 1/I/L
+DEFAULT_CAPACITY = 10
 MAX_CAPACITY = 15
+MENTOR_MEMBER_LIMIT = 25  # R1: across all of one mentor's groups
 
 
 async def mentor_only(user: CurrentUser) -> User:
@@ -42,7 +45,11 @@ Mentor = Annotated[User, Depends(mentor_only)]
 class GroupIn(BaseModel):
     name: str = Field(min_length=2, max_length=60)
     lang: Lang
-    capacity: int = Field(default=10, ge=2, le=MAX_CAPACITY)
+    capacity: int = Field(default=DEFAULT_CAPACITY, ge=2, le=MAX_CAPACITY)
+
+
+class CapacityIn(BaseModel):
+    capacity: int = Field(ge=2, le=MAX_CAPACITY)
 
 
 class MemberOut(BaseModel):
@@ -78,7 +85,7 @@ class GroupMessageOut(BaseModel):
     author_name: str
     from_mentor: bool
     mine: bool
-    hidden: bool  # only ever true on the author's own message (CMP-04 R4)
+    hidden: bool  # only ever true on the author's own message (CMP-04 R5)
     body: str
     created_at: datetime
 
@@ -128,6 +135,20 @@ async def access(session, group_id: uuid.UUID, me: User) -> tuple[Group, bool]:
     return g, False
 
 
+async def _check_member_limit(session, mentor_id: uuid.UUID, capacity: int, *, besides: uuid.UUID | None = None) -> None:
+    """R1 ex3: the places in all of a mentor's groups stay within 25. A group's
+    places are its cap, so raising a cap counts like a new group."""
+    q = select(func.coalesce(func.sum(Group.capacity), 0)).where(Group.mentor_id == mentor_id)
+    if besides is not None:
+        q = q.where(Group.id != besides)
+    used = await session.scalar(q) or 0
+    if used + capacity > MENTOR_MEMBER_LIMIT:
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            {"code": "mentor_member_limit", "limit": MENTOR_MEMBER_LIMIT, "remaining": max(0, MENTOR_MEMBER_LIMIT - used)},
+        )
+
+
 async def remove(session, g: Group, user_id: uuid.UUID) -> bool:
     res = await session.execute(delete(GroupMember).where(GroupMember.group_id == g.id, GroupMember.user_id == user_id))
     if res.rowcount:  # type: ignore[attr-defined]
@@ -143,6 +164,7 @@ async def create(body: GroupIn, session: Session, me: Mentor) -> GroupOut:
     if body.lang not in (me.languages or [me.locale]):
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "language_not_spoken")
     clean_body(body.name)
+    await _check_member_limit(session, me.id, body.capacity)
     g = Group(
         name=" ".join(body.name.split()), lang=body.lang, gender=me.gender, mentor_id=me.id, capacity=body.capacity, join_code=_code()
     )
@@ -189,6 +211,20 @@ async def join(body: JoinIn, session: Session, me: CurrentUser) -> GroupOut:
 @router.get("/{group_id}", response_model=GroupOut)
 async def detail(group_id: uuid.UUID, session: Session, me: CurrentUser) -> GroupOut:
     g, _ = await access(session, group_id, me)
+    return await _out(session, g, me, with_members=True)
+
+
+@router.put("/{group_id}/capacity", response_model=GroupOut)
+async def set_capacity(group_id: uuid.UUID, body: CapacityIn, session: Session, me: CurrentUser) -> GroupOut:
+    """R1: the mentor changes his group's cap, within 15 and his 25 places."""
+    g, is_mentor = await access(session, group_id, me)
+    if not is_mentor:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    if body.capacity < await _count(session, g.id):
+        raise HTTPException(status.HTTP_409_CONFLICT, "below_members")
+    await _check_member_limit(session, me.id, body.capacity, besides=g.id)
+    g.capacity = body.capacity
+    await session.commit()
     return await _out(session, g, me, with_members=True)
 
 
@@ -268,7 +304,7 @@ async def post(group_id: uuid.UUID, body: MessageIn, session: Session, me: Curre
 
 @router.post("/{group_id}/messages/{message_id}/hide", status_code=204)
 async def hide(group_id: uuid.UUID, message_id: uuid.UUID, session: Session, me: CurrentUser) -> None:
-    """CMP-04 R3 ex3: the group's mentor hides at once; the team keeps a record."""
+    """CMP-04 R4 ex3: the group's mentor hides at once; the team keeps a record."""
     g, is_mentor = await access(session, group_id, me)
     if not is_mentor:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")

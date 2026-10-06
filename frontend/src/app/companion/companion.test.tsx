@@ -43,18 +43,18 @@ const members = [
 beforeEach(() => useDevice.getState().set({ locale: "ar" }))
 afterEach(cleanup)
 
-describe("CMP-01 R6 urgent conversation", () => {
-  it("cmp01_r6_urgent_screen_shows_emergency_guidance_first", () => {
+describe("Danger case: urgent conversation (companion README; tests of the helplines in companion.rules.test.tsx)", () => {
+  it("cmp_danger_urgent_screen_shows_emergency_guidance_first", () => {
     render(<UrgentNotice />)
     const alert = screen.getByRole("alert")
     expect(alert.textContent).toContain("اتصل بالطوارئ في بلدك")
     expect(alert.textContent).toContain("لست وحدك")
-    // no helpline number we have not verified, and no "numbers" button
+    // the guidance itself carries no number; the verified ones are listed beside it
     expect(alert.textContent).not.toMatch(/\d/)
-    expect(screen.queryByRole("button")).toBeNull()
+    expect(document.querySelector("[data-slot=helplines]")).not.toBeNull()
   })
 
-  it("cmp01_r6_guidance_reads_in_the_learner_language", () => {
+  it("cmp_danger_guidance_reads_in_the_learner_language", () => {
     useDevice.getState().set({ locale: "en" })
     render(<UrgentNotice />)
     expect(screen.getByRole("alert").textContent).toContain("emergency number")

@@ -37,3 +37,7 @@
 | R5 ex2 first message clears | `test_cmp03_r5_first_message_clears_welcome_flag` |
 | R6 ex1 private thread | `test_cmp03_r6_private_thread_reaches_own_mentor_only` |
 | R6 ex2 permission off | `test_cmp03_r6_share_progress_is_off_until_turned_on` |
+
+## Rewrite (PR #21, 2026-10-06)
+
+Rules unchanged in substance. The cap comes from CMP-02 R4 (8, at most 10; group members not counted); a paused mentor is not suggested. R2 ex3 copy says «لا مرشدة متاحة بلغتك الآن» to a sister. Tests: `backend/tests/test_cmp03_mentors.py`.

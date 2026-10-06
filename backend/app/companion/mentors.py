@@ -20,7 +20,7 @@ from sqlalchemy import ARRAY, String, cast, func, or_, select, update
 
 from app.companion import notify
 from app.companion.common import Gender, Lang, is_blocked, not_found, now
-from app.companion.inbox import profile_of
+from app.companion.inbox import MENTEE_CAP_DEFAULT, profile_of
 from app.companion.models import Block, HelpRequest, MentorLink, MentorProfile
 from app.core.deps import CurrentUser, Session
 from app.platform.models import User
@@ -83,7 +83,7 @@ async def eligible_mentors(session, learner: User) -> list[User]:
             User.gender == learner.gender,
             User.languages.op("&&")(cast(_learner_langs(learner), ARRAY(String(5)))),
             or_(MentorProfile.user_id.is_(None), MentorProfile.accepting.is_(True)),
-            func.coalesce(load.c.n, 0) < func.coalesce(MentorProfile.capacity, 8),
+            func.coalesce(load.c.n, 0) < func.coalesce(MentorProfile.capacity, MENTEE_CAP_DEFAULT),  # group members not counted
             User.id.not_in(blocked),
             User.id.not_in(blocking),
         )
@@ -228,7 +228,7 @@ async def thread(session: Session, user: CurrentUser) -> dict:
 
 @router.post("/mine/block", status_code=204)
 async def block_mentor(session: Session, user: CurrentUser) -> None:
-    """CMP-04 R5 ex2: the link ends and the mentor no longer sees the learner."""
+    """CMP-04 R6 ex2: the link ends and the mentor no longer sees the learner."""
     link = await session.get(MentorLink, user.id)
     if link is None:
         raise not_found()

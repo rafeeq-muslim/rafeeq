@@ -1,7 +1,8 @@
 /**
  * A mentor's group — /inbox/g/:id. Share the join code (CMP-05 R1), set
  * the week's goal (MOT-06), moderate the chat: hide a message at once with
- * a record for the team (CMP-04 R3) or remove a member silently (CMP-05 R5).
+ * a record for the team (CMP-04 R4) or remove a member silently (CMP-05 R5),
+ * and change the group's cap within 15 and his 25 places (CMP-05 R1).
  */
 import * as React from "react"
 import { useParams } from "react-router"
@@ -21,7 +22,7 @@ import { Confirm } from "../Confirm"
 import { initial, langName, weekdayDate } from "../format"
 import { ScreenBar, SectionTitle } from "../Screen"
 import { CreateChallenge } from "./CreateChallenge"
-import { CopyCode } from "./MentorGroupsTab"
+import { CopyCode, GroupCapacity } from "./MentorGroupsTab"
 
 export default function MentorGroup() {
   const { id } = useParams()
@@ -130,6 +131,9 @@ export default function MentorGroup() {
                 <DrawerHeader className="text-start">
                   <DrawerTitle className="font-heading text-h3">{t("cmp.group.members")}</DrawerTitle>
                 </DrawerHeader>
+                <div className="px-4 pb-2">
+                  <GroupCapacity key={g.capacity} group={g} />
+                </div>
                 <ul className="flex flex-col divide-y overflow-y-auto overscroll-contain px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]">
                   {g.members.map((m) => (
                     <li key={m.id} className="flex items-center gap-3 py-2">

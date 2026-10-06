@@ -16,9 +16,11 @@ _user_fk = lambda: ForeignKey("users.id", ondelete="CASCADE")  # noqa: E731
 class MentorProfile(Base):
     __tablename__ = "cmp_mentor_profiles"
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), primary_key=True)
-    capacity: Mapped[int] = mapped_column(Integer, default=8)  # Osool p.102: 5–10 per mentor
+    capacity: Mapped[int] = mapped_column(Integer, default=8)  # CMP-02 R4: 8 by default, at most 10 (Osool p.102: 5–10)
     about: Mapped[str] = mapped_column(Text, default="")
     availability: Mapped[str] = mapped_column(String(120), default="")
+    # CMP-02 R4: paused = not suggested to new learners and no new requests
+    # from the pool; current mentees, own threads and urgent requests stay.
     accepting: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
@@ -58,7 +60,11 @@ class HelpRequest(IdMixin, Base):
     kind: Mapped[str] = mapped_column(String(10))  # human | escalation | urgent | mentor
     topic: Mapped[str | None] = mapped_column(String(24), nullable=True)
     source: Mapped[str | None] = mapped_column(String(12), nullable=True)  # lesson | review | ask | home | mentor
-    prefer_gender: Mapped[str | None] = mapped_column(String(1), nullable=True)
+    # CMP-01 R3: the requester's own gender (m | f); only someone of the same
+    # gender answers. Null only on urgent requests (anyone answers) and on
+    # requests made before the rule. The column keeps its first name so the
+    # previous image still runs on this schema (additive migrations only).
+    requester_gender: Mapped[str | None] = mapped_column("prefer_gender", String(1), nullable=True)
     ask_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
     push_endpoint: Mapped[str | None] = mapped_column(String(1024), nullable=True)
     status: Mapped[str] = mapped_column(String(10), default="open")  # open | answered | closed
@@ -73,7 +79,7 @@ class HelpRequest(IdMixin, Base):
 class HelpMessage(IdMixin, Base):
     __tablename__ = "cmp_help_messages"
     request_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cmp_help_requests.id", ondelete="CASCADE"), index=True)
-    author: Mapped[str] = mapped_column(String(8))  # learner | mentor | system
+    author: Mapped[str] = mapped_column(String(8))  # learner | mentor | scholar | system
     author_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     body: Mapped[str] = mapped_column(Text)
     hidden: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -81,8 +87,29 @@ class HelpMessage(IdMixin, Base):
     read_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 
+class ScholarReferral(IdMixin, Base):
+    """CMP-02 R5: a mentor gives no fatwa; he refers one learner message (a
+    personal Sharia question) to the Sharia reviewer, who answers it in the
+    same conversation as «أهل العلم». The reviewer sees the question and its
+    language only, never who asked."""
+
+    __tablename__ = "cmp_scholar_referrals"
+    request_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cmp_help_requests.id", ondelete="CASCADE"), index=True)
+    message_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("cmp_help_messages.id", ondelete="CASCADE"), unique=True)
+    lang: Mapped[str] = mapped_column(String(5))
+    status: Mapped[str] = mapped_column(String(10), default="open")  # open | answered
+    referred_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    answered_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    answer_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("cmp_help_messages.id", ondelete="SET NULL"), nullable=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    answered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
 class Group(IdMixin, Base):
-    """CMP-05: small, same-gender, same-language, with a mentor."""
+    """CMP-05: small, same-gender, same-language, with a mentor. 10 members
+    by default, at most 15; at most 25 across all of a mentor's groups."""
 
     __tablename__ = "cmp_groups"
     name: Mapped[str] = mapped_column(String(60))
@@ -120,8 +147,8 @@ class Report(IdMixin, Base):
     target_type: Mapped[str] = mapped_column(String(16))  # group_message | help_message
     target_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), index=True)
     group_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), nullable=True)
-    reason: Mapped[str] = mapped_column(String(24))  # marriage | money | recruitment | abuse | other | mentor_hidden
-    priority: Mapped[str] = mapped_column(String(6), default="normal")  # high | normal
+    reason: Mapped[str] = mapped_column(String(24))  # marriage | money | recruitment | danger | abuse | other | mentor_hidden
+    priority: Mapped[str] = mapped_column(String(6), default="normal")  # danger | high | normal
     note: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(10), default="open")  # open | actioned | dismissed
     handled_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)

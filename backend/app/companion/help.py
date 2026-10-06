@@ -1,10 +1,19 @@
 """CMP-01 «أريد إنسانًا»: the learner's side of help requests.
 
-No account is needed (R2): a guest device gets a random token once; only its
-hash is stored, and the device sends it back in `X-Help-Token`. Messages
-never carry phone numbers, e-mails or messenger links (R3). Replies are
-announced with a neutral push (R5). A danger case becomes an urgent request
-at once and never carries the question text (R6, rules.md §2.8–2.9).
+Only what the person writes is sent, with where they came from (R1). No
+account is needed (R2): a guest device gets a random token once; only its
+hash is stored, and the device sends it back in `X-Help-Token`. Someone of
+the requester's own gender answers (R3): an account uses its gender, a guest
+is asked once («أخ أم أخت؟») and the device remembers; with nobody of that
+gender free in that language the request waits for one and is never routed
+to the other gender. Optional topics include non-religious ones (R4).
+Messages never carry phone numbers, e-mails or messenger links (R5).
+Replies are announced with a neutral push «لديك رد جديد» (R6).
+
+Danger cases are out of CMP-01 now but stay in the companion domain (README
+fixed rule): DangerDetected becomes an urgent request at once, answered by
+the first available person whatever their gender, and never carrying the
+question text (rules.md §2.8–2.9).
 """
 
 import uuid
@@ -16,7 +25,17 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, select, update
 
 from app.companion import notify
-from app.companion.common import CurrentOwner, Gender, Lang, Owner, guest_handle, new_guest_token, not_found, now
+from app.companion.common import (
+    CurrentOwner,
+    Gender,
+    Lang,
+    Owner,
+    guest_handle,
+    new_guest_token,
+    not_found,
+    now,
+    same_gender_available,
+)
 from app.companion.models import Block, HelpMessage, HelpRequest, MentorLink, Report
 from app.companion.text import clean_body
 from app.core import ratelimit
@@ -37,7 +56,7 @@ class RequestIn(BaseModel):
     kind: Kind = "human"
     source: Source | None = None
     topic: Topic | None = None
-    prefer_gender: Gender | None = None
+    gender: Gender | None = None  # R3: the requester's own gender (a guest is asked once)
     lang: Lang = "ar"
     body: str | None = Field(default=None, max_length=4000)
     ask_id: str | None = Field(default=None, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
@@ -59,11 +78,13 @@ class ThreadSummary(BaseModel):
     unread: int
     preview: str | None
     responder_name: str | None
+    gender: str | None  # the requester's own, to word «أخ» / «أخت»
+    awaiting_same_gender: bool  # R3 ex3: nobody of this gender is free in this language now
 
 
 class MessageOut(BaseModel):
     id: uuid.UUID
-    author: Literal["me", "mentor", "system"]
+    author: Literal["me", "mentor", "scholar", "system"]
     name: str | None
     body: str
     created_at: datetime
@@ -82,12 +103,18 @@ class CreatedOut(BaseModel):
 # --- helpers -----------------------------------------------------------
 
 
+REPLY_AUTHORS = ("mentor", "scholar")
+
+
 async def _summary(session, req: HelpRequest) -> ThreadSummary:
     unread = await session.scalar(
         select(func.count())
         .select_from(HelpMessage)
         .where(
-            HelpMessage.request_id == req.id, HelpMessage.author == "mentor", HelpMessage.read_at.is_(None), HelpMessage.hidden.is_(False)
+            HelpMessage.request_id == req.id,
+            HelpMessage.author.in_(REPLY_AUTHORS),
+            HelpMessage.read_at.is_(None),
+            HelpMessage.hidden.is_(False),
         )
     )
     last = await session.scalar(
@@ -97,6 +124,13 @@ async def _summary(session, req: HelpRequest) -> ThreadSummary:
         .limit(1)
     )
     responder = (await session.get(User, req.mentor_id)).display_name if req.mentor_id and req.first_reply_at else None
+    waiting = (
+        req.kind in ("human", "escalation")
+        and req.status == "open"
+        and req.first_reply_at is None
+        and req.mentor_id is None
+        and not await same_gender_available(session, req.requester_gender, req.lang)
+    )
     return ThreadSummary(
         id=req.id,
         kind=req.kind,
@@ -108,6 +142,8 @@ async def _summary(session, req: HelpRequest) -> ThreadSummary:
         unread=unread or 0,
         preview=last[:140] if last else None,
         responder_name=responder,
+        gender=req.requester_gender,
+        awaiting_same_gender=waiting,
     )
 
 
@@ -165,6 +201,25 @@ async def _claim_alert(session, ask_id: str) -> HelpRequest | None:
     )
 
 
+async def _requester_gender(session, owner: Owner, given: str | None) -> str:
+    """R3: an account's own gender wins; a guest's device answers «أخ أم أخت؟»
+    once, and a later request from the same device reuses that answer."""
+    if owner.user is not None and owner.user.gender:
+        return owner.user.gender
+    if given:
+        return given
+    if owner.token_hash is not None:
+        earlier = await session.scalar(
+            select(HelpRequest.requester_gender)
+            .where(HelpRequest.guest_token_hash == owner.token_hash, HelpRequest.requester_gender.is_not(None))
+            .order_by(HelpRequest.created_at.desc())
+            .limit(1)
+        )
+        if earlier:
+            return earlier
+    raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "gender_required")
+
+
 async def _handle_for(session, owner: Owner) -> str:
     if owner.user is not None:
         return owner.user.display_name
@@ -190,7 +245,8 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
     if owner.user is None and owner.token_hash is None:
         token = new_guest_token()
         owner = Owner(user=None, token_hash=sha256(token))
-    text = clean_body(body.body, required=body.kind != "urgent")  # R6: urgent needs no words
+    text = clean_body(body.body, required=body.kind != "urgent")  # urgent needs no words
+    gender = None if body.kind == "urgent" else await _requester_gender(session, owner, body.gender)  # danger: first available
     t = now()
 
     req: HelpRequest | None = None
@@ -221,7 +277,7 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
             kind=body.kind,
             topic=body.topic,
             source=body.source,
-            prefer_gender=body.prefer_gender,
+            requester_gender=gender,
             ask_id=body.ask_id,
             mentor_id=mentor_id,
             created_at=t,
@@ -266,7 +322,7 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
     for m in msgs:
         if m.id in hidden_for_me:
             continue
-        name = None
+        name = None  # a scholar's answer is signed «أهل العلم» by the app, never by name
         if m.author == "mentor" and m.author_id:
             if m.author_id not in names:
                 u = await session.get(User, m.author_id)
@@ -275,7 +331,7 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
         out.append(MessageOut(id=m.id, author="me" if m.author == "learner" else m.author, name=name, body=m.body, created_at=m.created_at))  # type: ignore[arg-type]
     await session.execute(
         update(HelpMessage)
-        .where(HelpMessage.request_id == req.id, HelpMessage.author == "mentor", HelpMessage.read_at.is_(None))
+        .where(HelpMessage.request_id == req.id, HelpMessage.author.in_(REPLY_AUTHORS), HelpMessage.read_at.is_(None))
         .values(read_at=now())
     )
     await session.commit()
@@ -318,7 +374,7 @@ async def claim(session: Session, user: CurrentUser, owner: CurrentOwner) -> dic
 
 @router.post("/requests/{request_id}/block", status_code=204)
 async def block_responder(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -> None:
-    """CMP-04 R5 ex3: the request goes back to the pool; the blocked mentor no longer sees it."""
+    """CMP-04 R6 ex3: the request goes back to the pool (same gender); the blocked mentor no longer sees it."""
     req = await owned(session, owner, request_id)
     if req.mentor_id is None:
         raise HTTPException(status.HTTP_409_CONFLICT, "no_responder")

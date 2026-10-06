@@ -1,4 +1,4 @@
-"""CMP-03 choose a mentor: one test per example."""
+"""CMP-03 choose a mentor (rewrite, PR #21): one test per example."""
 
 import pytest
 
@@ -32,7 +32,8 @@ async def test_cmp03_r1_guest_cannot_choose_a_mentor(client):
     assert (await client.get("/api/mentors/suggestions")).status_code == 401
     assert (await client.post("/api/mentors/choose", json={"mentor_id": "00000000-0000-0000-0000-000000000000"})).status_code == 401
     # «أريد إنسانًا» stays open to the guest
-    assert (await client.post("/api/help/requests", json={"lang": "en", "body": "Can someone talk to me?"})).status_code == 201
+    r = await client.post("/api/help/requests", json={"lang": "en", "body": "Can someone talk to me?", "gender": "m"})
+    assert r.status_code == 201
 
 
 # R2 -----------------------------------------------------------------------
@@ -67,7 +68,7 @@ async def test_cmp03_r2_full_or_paused_mentor_is_not_suggested(client):
     assert (await client.post("/api/mentors/choose", json={"mentor_id": str(full.id)}, headers=daniel.h)).status_code == 409
 
 
-async def test_cmp03_r2_no_mentor_available_returns_empty(client):
+async def test_cmp03_r2_no_sister_in_her_language_returns_empty(client):
     await person(client, "en-sister", roles=("mentor",), gender="f", languages=("en",))
     maria = await person(client, "maria-1", gender=None, languages=("tl",), locale="tl")
     r = await client.get("/api/mentors/suggestions", headers=maria.h)

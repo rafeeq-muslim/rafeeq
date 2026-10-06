@@ -1,13 +1,17 @@
 /**
  * A learner's conversation with a human (CMP-01, CMP-03 R6). Polls every
  * 10 s while open. An urgent conversation always starts with what to do if
- * in danger now (CMP-01 R6). Mentor messages can be reported (CMP-04 R1),
- * and the person replying can be blocked (CMP-04 R5).
+ * in danger now and the verified helplines (companion README). While nobody
+ * of the learner's gender is free, it says a brother or sister will reply
+ * when available (CMP-01 R3 ex3). With one's mentor, his availability shows
+ * before writing (CMP-02 R4 ex1). A question referred to scholars says so,
+ * and their answer is signed «أهل العلم» (CMP-02 R5). Replies can be
+ * reported (CMP-04 R1), and the person replying can be blocked (CMP-04 R6).
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { IconDots } from "@tabler/icons-react"
+import { IconClock, IconDots } from "@tabler/icons-react"
 import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
@@ -15,12 +19,26 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
-import { safetyApi, usePostToThread, useThread } from "./api"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { REFERRAL_NOTICE, type ThreadMessage, safetyApi, useMine, usePostToThread, useThread } from "./api"
 import { type ChatItem, ChatList, Composer } from "./Chat"
 import { Confirm } from "./Confirm"
-import { UrgentNotice } from "./HelpScreen"
+import { UrgentNotice, awaitingText } from "./HelpScreen"
 import { ReportSheet, type ReportTarget } from "./ReportSheet"
 import { ScreenBar } from "./Screen"
+
+/** One message of the learner's thread as the chat shows it. */
+export function learnerChatItem(m: ThreadMessage, t: ReturnType<typeof useT>["t"], onReport: () => void): ChatItem {
+  const reply = m.author === "mentor" || m.author === "scholar"
+  return {
+    id: m.id,
+    mine: m.author === "me",
+    name: m.author === "scholar" ? t("cmp.referral.scholars") : m.author === "mentor" ? m.name : null,
+    body: m.author === "system" && m.body === REFERRAL_NOTICE ? t("cmp.referral.notice") : m.body,
+    at: m.created_at,
+    actions: reply ? [{ label: t("cmp.thread.report"), onSelect: onReport }] : undefined,
+  }
+}
 
 export default function HelpThread() {
   const { id } = useParams()
@@ -31,6 +49,7 @@ export default function HelpThread() {
   const post = usePostToThread(id ?? "")
   const [report, setReport] = React.useState<ReportTarget | null>(null)
   const [blocking, setBlocking] = React.useState(false)
+  const mine = useMine()
   const unread = thread.data?.messages.length
 
   React.useEffect(() => {
@@ -49,14 +68,7 @@ export default function HelpThread() {
   const data = thread.data
   const title = data?.responder_name ?? (data?.kind === "mentor" ? t("cmp.hub.mentorTitle") : t("cmp.help.team"))
 
-  const items: ChatItem[] = (data?.messages ?? []).map((m) => ({
-    id: m.id,
-    mine: m.author === "me",
-    name: m.author === "mentor" ? m.name : null,
-    body: m.body,
-    at: m.created_at,
-    actions: m.author === "mentor" ? [{ label: t("cmp.thread.report"), onSelect: () => setReport({ type: "help_message", id: m.id }) }] : undefined,
-  }))
+  const items: ChatItem[] = (data?.messages ?? []).map((m) => learnerChatItem(m, t, () => setReport({ type: "help_message", id: m.id })))
 
   const block = async () => {
     try {
@@ -93,10 +105,24 @@ export default function HelpThread() {
       <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-4 px-4 pt-4">
         {data?.kind === "urgent" && <UrgentNotice />}
         {data?.kind === "urgent" && data.messages.length === 0 && <p className="text-body text-muted-foreground">{t("cmp.urgent.sent")}</p>}
-        {data && data.kind !== "urgent" && data.status === "open" && (
-          <Badge variant="warning" className="w-fit">
-            {t("cmp.help.waiting")}
-          </Badge>
+        {data?.awaiting_same_gender ? (
+          <Alert data-slot="awaiting-same-gender">
+            <AlertDescription>{awaitingText(t, data.gender)}</AlertDescription>
+          </Alert>
+        ) : (
+          data &&
+          data.kind !== "urgent" &&
+          data.status === "open" && (
+            <Badge variant="warning" className="w-fit">
+              {t("cmp.help.waiting")}
+            </Badge>
+          )
+        )}
+        {data?.kind === "mentor" && mine.data?.mentor?.availability && (
+          <p className="flex items-center gap-1 text-label text-muted-foreground">
+            <IconClock className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
+            <span dir="auto">{t("cmp.hub.availability", { time: mine.data.mentor.availability })}</span>
+          </p>
         )}
         {thread.isLoading ? <Skeleton className="h-40 rounded-card" /> : <ChatList items={items} className="flex-1" />}
         {data?.status === "closed" && <p className="text-center text-label text-muted-foreground">{t("cmp.thread.closedNote")}</p>}

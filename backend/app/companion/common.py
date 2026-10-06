@@ -9,10 +9,10 @@ from datetime import UTC, datetime
 from typing import Annotated, Literal
 
 from fastapi import Depends, Header, HTTPException, status
-from sqlalchemy import and_, exists, or_, select
+from sqlalchemy import ARRAY, String, and_, cast, exists, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion.models import Block, HelpRequest
+from app.companion.models import Block, HelpRequest, MentorProfile
 from app.core.deps import OptionalUser
 from app.core.security import sha256
 from app.platform.models import User
@@ -95,6 +95,50 @@ async def is_blocked(session: AsyncSession, a: uuid.UUID, b: uuid.UUID) -> bool:
             .limit(1)
         )
     )
+
+
+RESPONDER_ROLES = ("mentor", "team", "admin")
+
+
+def is_team(user: User) -> bool:
+    return user.has("team") or user.has("admin")
+
+
+def langs_of(user: User) -> list[str]:
+    return user.languages or [user.locale]
+
+
+async def is_paused(session: AsyncSession, user: User) -> bool:
+    """CMP-02 R4: a mentor who paused takes no new requests from the pool.
+    Team members have no pause."""
+    if is_team(user) or not user.has("mentor"):
+        return False
+    prof = await session.get(MentorProfile, user.id)
+    return prof is not None and not prof.accepting
+
+
+async def same_gender_available(session: AsyncSession, gender: str | None, lang: str) -> bool:
+    """CMP-01 R3 ex3: is someone of this gender who speaks `lang` taking
+    requests now (a mentor who has not paused, or a team member)?"""
+    if gender is None:
+        return True  # urgent or legacy: anyone answers
+    team = User.roles.op("&&")(cast(["team", "admin"], ARRAY(String(20))))
+    speaks = or_(
+        User.languages.op("@>")(cast([lang], ARRAY(String(5)))),
+        and_(func.cardinality(User.languages) == 0, User.locale == lang),
+    )
+    found = await session.scalar(
+        select(User.id)
+        .outerjoin(MentorProfile, MentorProfile.user_id == User.id)
+        .where(
+            User.roles.op("&&")(cast(list(RESPONDER_ROLES), ARRAY(String(20)))),
+            User.gender == gender,
+            speaks,
+            or_(team, MentorProfile.user_id.is_(None), MentorProfile.accepting.is_(True)),
+        )
+        .limit(1)
+    )
+    return found is not None
 
 
 def forbidden(detail: str = "forbidden") -> HTTPException:

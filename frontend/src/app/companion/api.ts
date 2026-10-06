@@ -1,5 +1,6 @@
 /**
- * Companion (CMP-01..05) and group challenge (MOT-06) API.
+ * Companion (CMP-01..05) and group challenge (MOT-06) API. CMP-06 (the
+ * private notebook) has no API: it never leaves the device (notebook.ts).
  *
  * Real-time is polling with TanStack Query: 10 s while a conversation is
  * open, 15–30 s for lists, paused in background tabs. Help is asynchronous
@@ -19,8 +20,12 @@ export const POLL = { thread: 10_000, inbox: 15_000, list: 30_000 } as const
 export type Topic = "religion" | "family" | "work_housing" | "money" | "feeling_low" | "other"
 export const TOPICS: Topic[] = ["religion", "family", "work_housing", "money", "feeling_low", "other"]
 export type Source = "lesson" | "review" | "ask" | "home" | "mentor"
-export type ReportReason = "marriage" | "money" | "recruitment" | "abuse" | "other"
-export const REASONS: ReportReason[] = ["marriage", "money", "recruitment", "abuse", "other"]
+export type Gender = "m" | "f"
+/** CMP-04: the first three hide the message for everyone (R2); «خطر على أحد» tops the team's queue (R3). */
+export type ReportReason = "marriage" | "money" | "recruitment" | "danger" | "abuse" | "other"
+export const REASONS: ReportReason[] = ["marriage", "money", "recruitment", "danger", "abuse", "other"]
+/** The system line the server adds when a mentor refers a question to scholars (CMP-02 R5). */
+export const REFERRAL_NOTICE = "scholar_referral"
 export type EngagementStatus = "new" | "active" | "at_risk" | "lapsed" | "returning"
 
 export type ThreadSummary = {
@@ -34,8 +39,12 @@ export type ThreadSummary = {
   unread: number
   preview: string | null
   responder_name: string | null
+  /** The requester's own gender, to word «أخ» / «أخت» (CMP-01 R3). */
+  gender: Gender | null
+  /** CMP-01 R3 ex3: nobody of this gender is free in this language now; it waits, never routed to the other gender. */
+  awaiting_same_gender: boolean
 }
-export type ThreadMessage = { id: string; author: "me" | "mentor" | "system"; name: string | null; body: string; created_at: string }
+export type ThreadMessage = { id: string; author: "me" | "mentor" | "scholar" | "system"; name: string | null; body: string; created_at: string }
 export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean }
 
 export type InboxRow = {
@@ -54,8 +63,17 @@ export type InboxRow = {
   assigned_to_me: boolean
   can_reply: boolean
 }
-export type InboxMessage = { id: string; author: "learner" | "mentor" | "system"; name: string | null; mine: boolean; body: string; created_at: string }
-export type InboxThread = InboxRow & { messages: InboxMessage[] }
+export type InboxMessage = { id: string; author: "learner" | "mentor" | "scholar" | "system"; name: string | null; mine: boolean; body: string; created_at: string }
+export type InboxThread = InboxRow & { messages: InboxMessage[]; referred: string[] }
+export type Referral = {
+  id: string
+  lang: string
+  question: string
+  status: "open" | "answered"
+  created_at: string
+  answer: string | null
+  answered_at: string | null
+}
 
 export type MentorCardData = { id: string; display_name: string; languages: string[]; about: string; availability: string }
 export type Mine = {
@@ -63,7 +81,7 @@ export type Mine = {
   share_progress: boolean
   chosen_at: string | null
   thread_id: string | null
-  gender: "m" | "f" | null
+  gender: Gender | null
   languages: string[]
 }
 export type Mentee = {
@@ -128,7 +146,7 @@ export type QueueItem = {
   target_type: "group_message" | "help_message"
   target_id: string
   reason: ReportReason | "mentor_hidden"
-  priority: "high" | "normal"
+  priority: "danger" | "high" | "normal"
   note: string | null
   status: string
   created_at: string
@@ -152,7 +170,8 @@ export type NewRequest = {
   kind: "human" | "escalation" | "urgent"
   source?: Source | null
   topic?: Topic | null
-  prefer_gender?: "m" | "f" | null
+  /** CMP-01 R3: the requester's own gender; a guest answers once and the device remembers. */
+  gender?: Gender | null
   lang: string
   body?: string
   ask_id?: string | null
@@ -166,6 +185,7 @@ export async function createRequest(body: NewRequest) {
     headers: helpHeaders(),
   })
   if (out.guest_token) useCompanion.getState().set({ helpToken: out.guest_token })
+  if (out.request.gender) useCompanion.getState().set({ helpGender: out.request.gender })
   return out.request
 }
 
@@ -269,6 +289,7 @@ export function useGroupMessages(id: string | undefined) {
 export const groupApi = {
   join: (code: string) => api<Group>("/api/groups/join", { method: "POST", body: { code } }),
   create: (name: string, lang: string, capacity: number) => api<Group>("/api/groups", { method: "POST", body: { name, lang, capacity } }),
+  setCapacity: (id: string, capacity: number) => api<Group>(`/api/groups/${id}/capacity`, { method: "PUT", body: { capacity } }),
   leave: (id: string) => api(`/api/groups/${id}/leave`, { method: "POST" }),
   remove: (id: string, userId: string) => api(`/api/groups/${id}/members/${userId}`, { method: "DELETE" }),
   post: (id: string, body: string) => api<GroupMessage>(`/api/groups/${id}/messages`, { method: "POST", body: { body } }),
@@ -337,9 +358,21 @@ export const inboxApi = {
   reply: (id: string, body: string) => api(`/api/inbox/requests/${id}/messages`, { method: "POST", body: { body } }),
   close: (id: string) => api(`/api/inbox/requests/${id}/close`, { method: "POST" }),
   urgent: (id: string) => api(`/api/inbox/requests/${id}/urgent`, { method: "POST" }),
+  /** CMP-02 R5: a personal Sharia question goes to the Sharia reviewer; the mentor gives no fatwa. */
+  refer: (id: string, messageId: string) => api(`/api/inbox/requests/${id}/refer`, { method: "POST", body: { message_id: messageId } }),
   menteeThread: (learnerId: string) => api<InboxRow>(`/api/inbox/mentees/${learnerId}/thread`, { method: "POST" }),
   saveProfile: (p: Pick<MentorProfile, "about" | "availability" | "accepting" | "capacity">) =>
     api<MentorProfile>("/api/inbox/profile", { method: "PUT", body: p }),
   act: (reportId: string, action: "keep_hidden" | "restore" | "remove_member") =>
     api<QueueItem>(`/api/team/reports/${reportId}`, { method: "POST", body: { action } }),
+}
+
+// --- CMP-02 R5: the Sharia reviewer's referrals -------------------------------
+
+export function useReferrals(enabled: boolean) {
+  return useQuery({ queryKey: ["cmp", "referrals"], queryFn: () => api<Referral[]>("/api/referrals"), enabled, refetchInterval: POLL.list })
+}
+
+export const referralApi = {
+  answer: (id: string, body: string) => api<Referral>(`/api/referrals/${id}/answer`, { method: "POST", body: { body } }),
 }

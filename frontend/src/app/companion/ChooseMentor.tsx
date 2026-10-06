@@ -199,7 +199,7 @@ export default function ChooseMentor() {
         ) : list.length === 0 ? (
           <section className="flex flex-col items-center gap-3 py-8 text-center">
             <SpotIllustration kind="offline" size={96} />
-            <h2 className="font-heading text-h3 font-bold">{t("cmp.choose.none")}</h2>
+            <h2 className="font-heading text-h3 font-bold">{t(mine.data?.gender === "f" ? "cmp.choose.noneF" : "cmp.choose.none")}</h2>
             <p className="max-w-sm text-body text-muted-foreground">{t("cmp.choose.noneBody")}</p>
             <Button onClick={() => navigate("/mentor/help?from=mentor")}>{t("ask.human")}</Button>
           </section>

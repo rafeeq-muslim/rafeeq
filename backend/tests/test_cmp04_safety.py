@@ -1,11 +1,17 @@
-"""CMP-04 report and block: one test per example."""
+"""CMP-04 report and block (rewrite, PR #21): one test per example."""
 
+import pytest
 from sqlalchemy import select
 
 from app.companion.models import Report
 from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
-from tests.cmp_helpers import bodies, group_with, person, say
+from tests.cmp_helpers import bodies, group_with, person, record_pushes, say, settle
+
+
+@pytest.fixture
+def pushes(monkeypatch):
+    return record_pushes(monkeypatch)
 
 
 async def setup_group(client):
@@ -44,7 +50,7 @@ async def test_cmp04_r1_report_reaches_team_queue(client):
 
 
 async def test_cmp04_r1_guest_can_report_mentor_message(client):
-    out = (await client.post("/api/help/requests", json={"lang": "en", "body": "hello"})).json()
+    out = (await client.post("/api/help/requests", json={"lang": "en", "body": "hello", "gender": "m"})).json()
     token = {"X-Help-Token": out["guest_token"]}
     mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
     await client.post(f"/api/inbox/requests/{out['request']['id']}/messages", json={"body": "Give me your address"}, headers=mentor.h)
@@ -78,7 +84,36 @@ async def test_cmp04_r2_other_reason_hides_only_for_reporter(client):
 # R3 -----------------------------------------------------------------------
 
 
-async def test_cmp04_r3_team_restores_message(client):
+async def test_cmp04_r3_danger_to_someone_tops_the_queue_and_alerts_the_team(client, pushes):
+    _, layla, other, third, g = await setup_group(client)
+    team = await person(client, "team-one", roles=("team",))
+    money = await say(client, other, g["id"], "Send me money")
+    await report(client, layla, money, "money")  # older, dangerous
+    hurt = await say(client, third, g["id"], "I keep thinking about hurting myself")
+    out = await report(client, layla, hurt, "danger")
+    assert out["hidden_for_all"] is False  # not one of the three dangerous reasons: the group still sees it
+    items = await queue(client, team)
+    assert [(i["target_id"], i["reason"], i["priority"]) for i in items] == [(hurt, "danger", "danger"), (money, "money", "high")]
+    await settle()
+    titles = [p["title"] for uid, p in pushes if uid == str(team.id)]
+    assert "An urgent report is waiting" in titles
+    assert all("hurt" not in str(p) for _, p in pushes)  # neutral: no message text
+
+
+async def test_cmp04_r3_dangerous_reason_also_alerts_the_team(client, pushes):
+    _, layla, other, _, g = await setup_group(client)
+    team = await person(client, "team-one", roles=("team",))
+    await report(client, layla, await say(client, other, g["id"], "Marry me"), "marriage")
+    abuse = await say(client, other, g["id"], "You are slow")
+    await report(client, layla, abuse, "abuse")
+    await settle()
+    assert [p["title"] for uid, p in pushes if uid == str(team.id)] == ["A report is waiting for review"]
+
+
+# R4 -----------------------------------------------------------------------
+
+
+async def test_cmp04_r4_team_restores_message(client):
     _, layla, other, third, g = await setup_group(client)
     team = await person(client, "team-one", roles=("team",))
     mid = await say(client, other, g["id"], "Marriage is half of the religion, they say")
@@ -89,7 +124,7 @@ async def test_cmp04_r3_team_restores_message(client):
     assert "Marriage is half of the religion, they say" in await bodies(client, third, g["id"])
 
 
-async def test_cmp04_r3_team_removes_member_and_emits_group_left(client):
+async def test_cmp04_r4_team_removes_member_and_emits_group_left(client):
     mentor, layla, other, _, g = await setup_group(client)
     team = await person(client, "team-one", roles=("team",))
     mid = await say(client, other, g["id"], "Join our special group, the only true path")
@@ -104,7 +139,7 @@ async def test_cmp04_r3_team_removes_member_and_emits_group_left(client):
     assert left == [{"group_id": g["id"], "user_id": str(other.id)}]
 
 
-async def test_cmp04_r3_group_mentor_hides_message_with_record(client):
+async def test_cmp04_r4_group_mentor_hides_message_with_record(client):
     mentor, _, other, third, g = await setup_group(client)
     mid = await say(client, other, g["id"], "rude words")
     assert (await client.post(f"/api/groups/{g['id']}/messages/{mid}/hide", headers=mentor.h)).status_code == 204
@@ -116,15 +151,15 @@ async def test_cmp04_r3_group_mentor_hides_message_with_record(client):
     assert (await client.post(f"/api/groups/{g['id']}/messages/{mid}/hide", headers=third.h)).status_code == 403
 
 
-async def test_cmp04_r3_learner_cannot_open_report_queue(client):
+async def test_cmp04_r4_learner_cannot_open_report_queue(client):
     joseph = await person(client, "joseph-1", gender="m")
     assert (await client.get("/api/team/reports", headers=joseph.h)).status_code == 403
 
 
-# R4 -----------------------------------------------------------------------
+# R5 -----------------------------------------------------------------------
 
 
-async def test_cmp04_r4_author_sees_hidden_without_reporter(client):
+async def test_cmp04_r5_author_sees_hidden_without_reporter(client):
     _, layla, other, _, g = await setup_group(client)
     mid = await say(client, other, g["id"], "Send me 100 riyals")
     await report(client, layla, mid, "money")
@@ -134,10 +169,10 @@ async def test_cmp04_r4_author_sees_hidden_without_reporter(client):
     assert str(layla.id) not in str(msgs) and "Layla" not in str(msgs)
 
 
-# R5 -----------------------------------------------------------------------
+# R6 -----------------------------------------------------------------------
 
 
-async def test_cmp04_r5_blocked_member_messages_are_hidden_for_blocker(client):
+async def test_cmp04_r6_blocked_member_messages_are_hidden_for_blocker(client):
     _, layla, other, third, g = await setup_group(client)
     await say(client, other, g["id"], "hello sisters")
     assert (await client.post("/api/blocks", json={"user_id": str(other.id)}, headers=layla.h)).status_code == 204
@@ -145,7 +180,7 @@ async def test_cmp04_r5_blocked_member_messages_are_hidden_for_blocker(client):
     assert "hello sisters" in await bodies(client, third, g["id"])
 
 
-async def test_cmp04_r5_blocking_mentor_ends_link(client):
+async def test_cmp04_r6_blocking_mentor_ends_link(client):
     abu = await person(client, "abu-abdullah", roles=("mentor",), gender="m", languages=("en",))
     daniel = await person(client, "daniel-1", gender="m", languages=("en",))
     await client.post("/api/mentors/choose", json={"mentor_id": str(abu.id)}, headers=daniel.h)
@@ -156,19 +191,21 @@ async def test_cmp04_r5_blocking_mentor_ends_link(client):
     assert (await client.get("/api/mentors/suggestions", headers=daniel.h)).json() == []
 
 
-async def test_cmp04_r5_blocking_responder_returns_request_to_pool(client):
+async def test_cmp04_r6_blocking_responder_returns_request_to_other_sisters(client):
     layla = await person(client, "layla-1", gender="f", languages=("en",))
     m1 = await person(client, "mentor-one", roles=("mentor",), gender="f", languages=("en",))
     m2 = await person(client, "mentor-two", roles=("mentor",), gender="f", languages=("en",))
+    brother = await person(client, "mentor-three", roles=("mentor",), gender="m", languages=("en",))
     rid = (await client.post("/api/help/requests", json={"lang": "en", "body": "hi"}, headers=layla.h)).json()["request"]["id"]
     await client.post(f"/api/inbox/requests/{rid}/messages", json={"body": "hi, I'm here"}, headers=m1.h)
     assert (await client.post(f"/api/help/requests/{rid}/block", headers=layla.h)).status_code == 204
     assert rid in [r["id"] for r in (await client.get("/api/inbox/requests", headers=m2.h)).json()]
     assert rid not in [r["id"] for r in (await client.get("/api/inbox/requests", headers=m1.h)).json()]
     assert (await client.get(f"/api/inbox/requests/{rid}", headers=m1.h)).status_code == 404
+    assert rid not in [r["id"] for r in (await client.get("/api/inbox/requests", headers=brother.h)).json()]
 
 
-async def test_cmp04_r5_cannot_block_self(client):
+async def test_cmp04_r6_cannot_block_self(client):
     daniel = await person(client, "daniel-1", gender="m")
     r = await client.post("/api/blocks", json={"user_id": str(daniel.id)}, headers=daniel.h)
     assert r.status_code == 400 and r.json()["detail"] == "cannot_block_self"

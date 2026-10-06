@@ -1,12 +1,13 @@
 /**
  * «مرشدي» — /mentor. One place for the human side of Rafeeq:
  * your mentor and the share permission (CMP-03), your group and its week
- * (CMP-05, MOT-06), and a human now (CMP-01), which never needs an account.
+ * (CMP-05, MOT-06), a human now (CMP-01), which never needs an account,
+ * and the private questions notebook on this device (CMP-06).
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { IconChevronLeft, IconClock, IconDots, IconHeadset, IconMessageCircle } from "@tabler/icons-react"
+import { IconChevronLeft, IconClock, IconDots, IconHeadset, IconLock, IconMessageCircle } from "@tabler/icons-react"
 import { toast } from "sonner"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -205,6 +206,24 @@ function HumanNow() {
   )
 }
 
+/** CMP-06: the notebook lives on this device; this is only the way in. */
+function NotebookEntry() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <section className="flex flex-col gap-3 border-t pt-6" aria-labelledby="notebook-title">
+      <div className="flex flex-col gap-1">
+        <SectionTitle id="notebook-title">{t("cmp.notebook.title")}</SectionTitle>
+        <p className="text-body text-muted-foreground">{t("cmp.notebook.hubBody")}</p>
+      </div>
+      <Button variant="outline" size="lg" className="w-full" onClick={() => navigate("/mentor/notebook")}>
+        <IconLock data-icon="inline-start" stroke={1.75} />
+        {t("cmp.notebook.open")}
+      </Button>
+    </section>
+  )
+}
+
 export default function MentorHub() {
   const { t } = useT()
   const navigate = useNavigate()
@@ -239,6 +258,7 @@ export default function MentorHub() {
           </section>
         )}
         <HumanNow />
+        <NotebookEntry />
       </div>
     </>
   )

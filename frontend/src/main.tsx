@@ -28,6 +28,7 @@ const Inbox = lazy(() => import("@/app/pages/roles/Inbox"))
 const ReviewDesk = lazy(() => import("@/app/pages/roles/ReviewDesk"))
 const Team = lazy(() => import("@/app/pages/roles/Team"))
 const Admin = lazy(() => import("@/app/pages/roles/Admin"))
+const Referrals = lazy(() => import("@/app/companion/mentor/Referrals"))
 const Gallery = lazy(() => import("./App"))
 
 const router = createBrowserRouter([
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       { path: "discover/*", element: <Discover /> },
       { path: "inbox/*", element: <RequireRole roles={["mentor", "team"]}><Inbox /></RequireRole> }, // team: urgent requests (CMP-01 R6) + report queue (CMP-04 R3)
       { path: "review-desk/*", element: <RequireRole roles={["sharia_reviewer", "team"]}><ReviewDesk /></RequireRole> },
+      { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5
       { path: "team", element: <RequireRole roles={["team"]}><Team /></RequireRole> },
       { path: "admin", element: <RequireRole roles={["admin"]}><Admin /></RequireRole> },
     ],

@@ -151,7 +151,7 @@ import { IconDroplet } from "@tabler/icons-react"
 | تعرض محادثة السؤال | `MessageScroller` + `UserMessage` + `AssistantMessage` + `AiDisclosure` | KNW-01 |
 | تذكر مصدر الإجابة | `SourceStrip` (داخل `AssistantMessage` تلقائيًا) | KNW-01 |
 | تحيل السؤال إلى إنسان | `ReferralCard`، `HumanHelpButton` | KNW-01 ← CMP-01 |
-| تتعامل مع حالة خطر | `DangerHelpPanel` | CMP-01 |
+| تتعامل مع حالة خطر | `DangerHelpPanel` | المرافقة والمجتمع (القاعدة الثابتة لحالات الخطر) |
 | تعرض طلبات المرشد | `HelpRequestItem` | CMP-02 |
 | تقترح مرشدًا | `MentorCard` | CMP-03 |
 | تعرض المواقيت | `PrayerTimesCard`، `HijriDate` | PRC-01، PRC-04 |
@@ -190,7 +190,7 @@ import { IconDroplet } from "@tabler/icons-react"
 | `UserMessage`، `AssistantMessage` | فقاعتا السؤال والإجابة، ولا تُقبل إجابة بلا مصدر | `sources` إلزامية |
 | `SourceStrip`، `AiDisclosure` | شريط المصدر، والتنبيه الدائم إلى الذكاء الاصطناعي | `href` |
 | `ReferralCard`، `AskComposer` | الإحالة إلى المرشد، وخانة السؤال بالنص أو الصوت | `onRefer` / `onSend`، `onVoice` |
-| `HumanHelpButton`، `DangerHelpPanel` | «أريد إنسانًا»، ولوحة حالة الخطر | `onPrimary`، `onSecondary` |
+| `HumanHelpButton`، `DangerHelpPanel` | «أريد إنسانًا»، ولوحة حالة الخطر | `onPrimary`، `onSecondary` (يظهر الزر الثاني إن مُرّر فقط)، `children` لأرقام المساعدة |
 | `HelpRequestItem`، `MentorCard` | طلب في صندوق المرشد، ومرشد مقترح | `status`: new أو waiting أو answered أو urgent |
 | `PrayerTimesCard`، `HijriDate`، `HabitItem` | المواقيت، والتاريخ الهجري، والعادة | `next`، `times` / `worship` |
 | `BottomNav`، `AppHeader` | التنقل بخمسة تبويبات، والتحية | `active`، `labels` / `name` |
@@ -258,7 +258,7 @@ import { IconDroplet } from "@tabler/icons-react"
 ## مسائل مفتوحة
 
 - 💬 ملفات خط ثمانية: تُنزّل من الموقع الرسمي وتوضع محليًا (لا تُرفع).
-- ⚠️ أرقام الطوارئ في `DangerHelpPanel`: لا تُضاف إلا موثّقة لكل بلد، ومسجّلة في `agents/sources.md`.
+- أرقام المساعدة في `DangerHelpPanel`: تُعرض فورًا من `frontend/src/app/companion/helplines.ts` (مضمّنة في التطبيق فتعمل دون اتصال)، وهي الموثّقة في `agents/research/08` و`agents/sources.md` وحدها (السعودية والفلبين). لا يُضاف رقم لم يُتحقق منه.
 - 💬 وجهة «الخروج السريع» (`QuickExitButton href`): صفحة محايدة تُحدد لكل سوق.
 - ⚠️ النصوص الشرعية في أمثلة المعرض نموذجية لعرض المكوّنات، ويراجعها مهند بن صالح الفوزان قبل أي استعمال.
 - 💬 اسم التبويب «مرشدي» حين لا يكون للمستخدم مرشد بعد.

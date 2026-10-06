@@ -23,6 +23,11 @@ TEXTS: dict[str, dict[str, str]] = {
     "message": {"ar": "لديك رسالة جديدة", "en": "You have a new message", "tl": "May bago kang mensahe"},
     "urgent": {"ar": "طلب عاجل ينتظر ردًا", "en": "An urgent request is waiting", "tl": "May agarang kahilingang naghihintay"},
     "new_mentee": {"ar": "اختارك مستفيد جديد", "en": "A new learner chose you", "tl": "May bagong learner na pumili sa iyo"},
+    # to the Sharia reviewer (CMP-02 R5)
+    "referral": {"ar": "لديك سؤال جديد", "en": "You have a new question", "tl": "May bago kang tanong"},
+    # to the team (CMP-04 R3 and its open question: dangerous reports and «خطر على أحد» alert at once)
+    "report": {"ar": "بلاغ ينتظر المراجعة", "en": "A report is waiting for review", "tl": "May ulat na naghihintay ng pagsusuri"},
+    "report_danger": {"ar": "بلاغ عاجل ينتظر المراجعة", "en": "An urgent report is waiting", "tl": "May agarang ulat na naghihintay"},
 }
 
 _pending: set[asyncio.Task] = set()
@@ -55,6 +60,15 @@ async def to_endpoint(session: AsyncSession, endpoint: str, kind: str, locale: s
 async def to_responders(session: AsyncSession, kind: str, url: str) -> int:
     """Every mentor and team member (urgent requests, CMP-01 R6)."""
     users = await session.scalars(select(User).where(User.roles.op("&&")(cast(["mentor", "team", "admin"], ARRAY(String(20))))))
+    sent = 0
+    for u in users:
+        sent += await push.send_to_user(session, u.id, payload(kind, u.locale, url))
+    return sent
+
+
+async def to_role(session: AsyncSession, roles: list[str], kind: str, url: str) -> int:
+    """Everyone holding one of `roles` (the team for reports, the Sharia reviewer for referrals)."""
+    users = await session.scalars(select(User).where(User.roles.op("&&")(cast(roles, ARRAY(String(20))))))
     sent = 0
     for u in users:
         sent += await push.send_to_user(session, u.id, payload(kind, u.locale, url))

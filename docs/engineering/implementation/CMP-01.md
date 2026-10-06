@@ -52,3 +52,16 @@ Polling with TanStack Query: 10 s while a thread is open, 30 s for lists, paused
 | R6 ex2 no question text | `test_cmp01_r6_urgent_request_carries_no_question_text` |
 | R6 ex3 same request, not a second | `test_cmp01_r6_opening_urgent_reuses_the_alert` |
 | R6 ex4 emergency guidance first, no invented numbers | `cmp01_r6_urgent_screen_shows_emergency_guidance_first` (vitest) |
+
+## Rewrite (PR #21, 2026-10-06)
+
+Danger left CMP-01 (still in the companion domain: README fixed rule). Rules renumbered: R1 source only (+ the assistant question only if chosen), R2 guest device, R3 same gender, R4 topics, R5 no contact details, R6 neutral notice.
+
+| Rule | Change |
+| --- | --- |
+| R1 ex2 | `HelpScreen.tsx`: «أرفق سؤالي للمساعد», off by default, only when the ask turn is still in memory (`questionOf`); ticked → the question goes inside the person's own message (`composeHelpBody`) |
+| R3 | `RequestIn.gender` replaces `prefer_gender`; stored as `requester_gender` (same column). Account gender wins; a guest's earlier answer on the same token is reused; none → `422 gender_required`. Urgent requests ask nothing. `ThreadSummary` gains `gender` and `awaiting_same_gender` (no same-gender responder free in that language) |
+| R3 ex3 | `common.py::same_gender_available`; the thread and the list say «ستردّ عليك أخت حين تتاح» |
+| R6 | Scholar answers count as replies (unread, neutral push) |
+
+Tests: `backend/tests/test_cmp01_help.py` (R1–R6), `test_cmp_danger.py` (danger, incl. first-available across genders), vitest `companion.rules.test.tsx` (`cmp01_*`, `cmp_danger_*`).
