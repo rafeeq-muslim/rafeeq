@@ -7,6 +7,7 @@
 import { useNavigate } from "react-router"
 import { IconArrowLeft, IconBook2, IconLayoutGrid, IconRefresh, IconSparkles } from "@tabler/icons-react"
 import { SuggestionCard } from "@/app/guide/SuggestionCard"
+import { HijriToday } from "@/app/practice/HijriToday"
 
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -61,6 +62,8 @@ export default function Home() {
         label={t("app.tagline")}
       />
       <JourneySheet className="pb-8">
+        {/* PRC-04 R1 (prc-audit-gaps): today's Hijri date, small and quiet, computed on the device. */}
+        <HijriToday />
         {streak.paused && <p className="text-body text-muted-foreground">{t("home.welcomeBack")}</p>}
 
         {/* Issue #9 item 19: until the content is here (loading, paused offline,

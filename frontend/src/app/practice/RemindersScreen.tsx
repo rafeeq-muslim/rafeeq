@@ -16,12 +16,10 @@ import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { useNow, useRamadan } from "./api"
 import { countOf } from "./plural"
-import { reminderText, upcomingReminders } from "./reminders"
+import { REMINDER_OFFSETS as OFFSETS, reminderText, upcomingReminders } from "./reminders"
 import { usePractice, type ReminderSettings } from "./store"
 import { formatTimeFull, PRAYER_KEYS, type PrayerKey } from "./times"
 import { BackBar, prayerName } from "./ui"
-
-const OFFSETS = [0, 5, 10, 15, 30]
 
 function Row({ id, label, checked, onChange, hint }: { id: string; label: string; checked: boolean; onChange: (v: boolean) => void; hint?: string }) {
   return (

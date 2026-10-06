@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
-import { cityName, countryName, deviceTimeZone, loadCities, nearestCity, searchCities, suggestCities, toCity, type CityRow } from "./cities"
+import { cityName, countryName, deviceTimeZone, loadCities, locateCity, searchCities, suggestCities, toCity, type CityRow } from "./cities"
 import { BackBar } from "./ui"
 
 export default function CityPicker() {
@@ -46,8 +46,10 @@ export default function CityPicker() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setLocating(false)
-        const r = nearestCity(rows, pos.coords.latitude, pos.coords.longitude)
-        if (r) choose(r)
+        // R2/R3: never a far city in another time zone; say so honestly instead.
+        const found = locateCity(rows, pos.coords.latitude, pos.coords.longitude)
+        if (found.kind === "city") choose(found.row)
+        else setNotice(t(found.kind === "highLatitude" ? "practice.city.farAwayHigh" : "practice.city.farAway"))
       },
       () => {
         // R2 (error): back to the list with a calm message; prayer times stay available.
@@ -58,7 +60,8 @@ export default function CityPicker() {
     )
   }
 
-  const results = rows ? (q.trim() ? searchCities(rows, q) : suggestCities(rows, deviceTimeZone())) : []
+  const searching = q.trim() !== ""
+  const results = rows ? (searching ? searchCities(rows, q) : suggestCities(rows, deviceTimeZone())) : []
 
   return (
     <>
@@ -84,8 +87,8 @@ export default function CityPicker() {
         )}
 
         <section aria-labelledby="city-list" className="flex flex-col gap-1">
-          <h2 id="city-list" className="text-label font-medium text-muted-foreground">
-            {q.trim() ? t("practice.city.results") : t("practice.city.suggested")}
+          <h2 id="city-list" className={rows && !searching && !results.length ? "sr-only" : "text-label font-medium text-muted-foreground"}>
+            {searching ? t("practice.city.results") : t("practice.city.suggested")}
           </h2>
           {!rows ? (
             <div className="flex flex-col gap-2">
@@ -112,8 +115,9 @@ export default function CityPicker() {
               ))}
             </ul>
           ) : (
-            // R2 (error): a village that is not listed.
-            <p className="py-3 text-body text-muted-foreground">{t("practice.city.none")}</p>
+            // R2 (error): a village that is not listed. With nothing typed and no
+            // listed city in the device's zone (e.g. Europe/London), invite a search.
+            <p className="py-3 text-body text-muted-foreground">{t(searching ? "practice.city.none" : "practice.city.typeToSearch")}</p>
           )}
         </section>
 

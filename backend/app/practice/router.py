@@ -115,8 +115,9 @@ class SightingIn(BaseModel):
     hijri_year: int = Field(ge=1440, le=1600)
     hijri_month: int = Field(ge=1, le=12)
     start: date
-    expected: date = Field(description="Umm al-Qura date of day 1 of that month")
     source_url: HttpUrl
+    # PRC-04 R2: the expected date is computed by the server (sightings.expected_start);
+    # an "expected" sent by older callers is ignored.
 
 
 @router.post("/sightings", status_code=status.HTTP_201_CREATED)
@@ -129,7 +130,6 @@ async def sightings_publish(body: SightingIn, session: Session, _: Annotated[Use
         hijri_year=body.hijri_year,
         hijri_month=body.hijri_month,
         start=body.start,
-        expected=body.expected,
         source_url=str(body.source_url),
     )
     return {"start": row.start_date.isoformat()}

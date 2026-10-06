@@ -4,7 +4,7 @@
  *
  * One table of moments, highest first. A moment is "ready" when the journey
  * reaches it; it stops for good once dismissed or once the learner opened
- * the feature. Within one day the card stays the same; a new suggestion
+ * the feature (for adhkar, without recording the opening: QUIET_MOMENTS). Within one day the card stays the same; a new suggestion
  * appears at most once a day.
  */
 
@@ -107,10 +107,29 @@ export function suggestion(c: GuideContext, m: GuideMemory): Suggestion | null {
   return list[0] ?? null
 }
 
-/** Keys the learner "used" by opening this path (R3: no suggestion after). */
+/**
+ * PRC-07 R4 («لا يُحفظ أنه فتحها»): opening the adhkar is never recorded, not
+ * even on the device. Opening a quiet moment's feature switches its
+ * suggestion off exactly like a dismissal, with no date, so the stored state
+ * cannot tell an opening from a «not now» (R3 still holds: no suggestion
+ * after the learner opened it). Their keys are fixed (key === id).
+ */
+export const QUIET_MOMENTS: ReadonlySet<string> = new Set<MomentId>(["adhkar"])
+
+const opened = (path: string, c: GuideContext) =>
+  MOMENTS.filter((x) => x.opens.some((r) => r.test(path))).filter((x) => x.id !== "ramadan" || x.ready(c))
+
+/** Keys the learner "used" by opening this path (R3: no suggestion after). Quiet moments are left out. */
 export function usedKeys(path: string, c: GuideContext): string[] {
-  return MOMENTS.filter((x) => x.opens.some((r) => r.test(path)))
-    .filter((x) => x.id !== "ramadan" || x.ready(c))
+  return opened(path, c)
+    .filter((x) => !QUIET_MOMENTS.has(x.id))
+    .map((x) => x.key(c))
+}
+
+/** Quiet moments whose suggestion ends because this path was opened (stored as a dateless dismissal). */
+export function quietKeys(path: string, c: GuideContext): string[] {
+  return opened(path, c)
+    .filter((x) => QUIET_MOMENTS.has(x.id))
     .map((x) => x.key(c))
 }
 

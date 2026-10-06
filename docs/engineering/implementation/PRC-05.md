@@ -36,7 +36,7 @@ None.
 | R1 ignored a week → still sent | "never backs off" |
 | R1 Ramadan suhoor/iftar off until enabled | "Ramadan reminders listed, off" |
 | R2 neutral / named | "neutral text by default" / "named when chosen" |
-| R3 10 min before Asr in Riyadh 5 Oct → 2:55 | "fires 10 minutes before" |
+| R3 10 min before Asr in Riyadh 5 Oct → 2:55 | "fires 10 minutes before"; offsets 0/5/10/15/20/30 (`reminders.ts::REMINDER_OFFSETS`, used by `RemindersScreen`) and 20 min → 2:45 |
 | R3 city changed to Manila | "recomputed from Manila times" |
 | R5 missed prayer → no second reminder | "no reminder for a time that passed" |
 | R6 offline | pure function, no fetch |

@@ -8,7 +8,7 @@ import { ymdKey } from "@/app/practice/times"
 import { useLearning } from "@/app/stores/learning"
 import { useMotivation } from "@/app/stores/motivation"
 import { useGuide } from "./store"
-import { localDay, suggestion, usedKeys, type GuideContext } from "./suggest"
+import { localDay, quietKeys, suggestion, usedKeys, type GuideContext } from "./suggest"
 
 export function useGuideContext(): GuideContext {
   const completed = useLearning((s) => s.completed)
@@ -48,12 +48,15 @@ export function useSuggestion() {
   return { current, dismiss: () => current && dismiss(current.key, ctx.today) }
 }
 
-/** Opening a feature anywhere ends its suggestion (R3). */
+/** Opening a feature anywhere ends its suggestion (R3); for adhkar without recording the opening (PRC-07 R4). */
 export function useGuideTracker(pathname: string) {
   const ctx = useGuideContext()
   const markUsed = useGuide((s) => s.markUsed)
+  const switchOff = useGuide((s) => s.switchOff)
   React.useEffect(() => {
     const keys = usedKeys(pathname, ctx)
     if (keys.length) markUsed(keys)
-  }, [pathname, ctx, markUsed])
+    const quiet = quietKeys(pathname, ctx)
+    if (quiet.length) switchOff(quiet)
+  }, [pathname, ctx, markUsed, switchOff])
 }

@@ -1032,4 +1032,10 @@ export const ar = {
   "cmp.gaps.gender.lockedErr": "لا يتغير الجنس بعد تحديده إلا من أحد المديرين.",
   "cmp.gaps.admin.gender": "الجنس",
   "cmp.gaps.admin.saveGender": "احفظ الجنس",
+
+  // --- PRC audit gap fixes (prc-audit-gaps): PRC-01 R2/R3, PRC-02 R1 ---
+  "practice.city.farAwayHigh": "منطقتك لم تُدعم بعد: المواقيت شمال خط عرض 48 أو جنوبه تحتاج حسابًا خاصًا لم نُضفه بعد. ولم نختر لك مدينة بعيدة، حتى لا ترى أوقاتًا غير أوقاتك.",
+  "practice.city.farAway": "لا توجد في قائمتنا مدينة قريبة من موقعك، فلم نختر لك مدينة بعيدة. ابحث عن أقرب مدينة إليك باسمها.",
+  "practice.city.typeToSearch": "اكتب اسم مدينتك للبحث عنها، أو حدّد أقرب مدينة من موقعك إن أردت.",
+  "practice.habits.kindTagWorship": "عبادة، خاص بك",
 } as const

@@ -65,21 +65,61 @@ export function deviceTimeZone(): string {
   }
 }
 
-/** R2 (optional location): the nearest listed city; the position itself is never stored. */
-export function nearestCity(rows: CityRow[], lat: number, lng: number): CityRow | null {
+/** The list's latitude limit (owner decision 2026-10-05, until the 45° rule of PRC-01 R3 is built). */
+export const MAX_LISTED_LATITUDE = 48
+
+/**
+ * R2/R3: the farthest a located position may be from the city it is given.
+ * Beyond it we pick nothing rather than a far city in another time zone
+ * (London → Lyon 737 km, Oslo → Milan 1610 km, Edmonton → Seattle 908 km).
+ * 150 km keeps the suburbs and satellite towns of every listed city (Riyadh →
+ * Al-Kharj ≈ 80 km, Mecca → Jeddah ≈ 70 km) while bounding the east–west
+ * error to about 4 min per degree of longitude: ≈ 5½ min at the equator,
+ * ≈ 6 min at 25°, ≈ 8 min at 48° — the same order as a village using its
+ * nearest city's times, which R2 already accepts. ⚠️ Technical default, for
+ * the domain owner to confirm.
+ */
+export const NEAREST_MAX_KM = 150
+
+const EARTH_KM = 6371
+
+/** Great-circle distance in km (haversine). */
+export function distanceKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const rad = Math.PI / 180
+  const dLat = (lat2 - lat1) * rad
+  const dLng = (lng2 - lng1) * rad
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLng / 2) ** 2
+  return 2 * EARTH_KM * Math.asin(Math.min(1, Math.sqrt(a)))
+}
+
+/**
+ * R2 (optional location): the nearest listed city within `maxKm`, or null.
+ * The position itself is never stored.
+ */
+export function nearestCity(rows: CityRow[], lat: number, lng: number, maxKm = NEAREST_MAX_KM): CityRow | null {
   let best: CityRow | null = null
   let bestD = Infinity
   for (const r of rows) {
-    const dLat = (r.lat - lat) * rad
-    const dLng = (r.lng - lng) * rad
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat * rad) * Math.cos(r.lat * rad) * Math.sin(dLng / 2) ** 2
-    if (a < bestD) {
-      bestD = a
+    const d = distanceKm(lat, lng, r.lat, r.lng)
+    if (d < bestD) {
+      bestD = d
       best = r
     }
   }
-  return best
+  return bestD <= maxKm ? best : null
+}
+
+/**
+ * R2 (optional location) with an honest answer when no listed city is near:
+ * `highLatitude` when the person is beyond 48° (their area is not supported
+ * yet), `farAway` when they are simply far from every listed city.
+ */
+export type Located = { kind: "city"; row: CityRow } | { kind: "highLatitude" } | { kind: "farAway" }
+
+export function locateCity(rows: CityRow[], lat: number, lng: number): Located {
+  const row = nearestCity(rows, lat, lng)
+  if (row) return { kind: "city", row }
+  return Math.abs(lat) > MAX_LISTED_LATITUDE ? { kind: "highLatitude" } : { kind: "farAway" }
 }
 
 export function toCity(r: CityRow): City {

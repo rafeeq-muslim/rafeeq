@@ -5,6 +5,7 @@
  * never listed. Nothing here imports Motivation.
  */
 import type { Habit } from "./store"
+import { ymdIn, ymdKey } from "./times"
 
 export type Suggestion = { key: string; worship: boolean }
 
@@ -33,8 +34,21 @@ export function newHabit(input: { title?: string; suggested?: string; worship?: 
   }
 }
 
-export const localDay = (d = new Date()) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+/**
+ * Today's key, YYYY-MM-DD, in the chosen city's time zone (like the prayer
+ * times, PRC-01 R4), so a device set to another zone does not move the day
+ * early or late. No city chosen → the device's own day.
+ */
+export function localDay(d = new Date(), tz?: string): string {
+  if (tz) {
+    try {
+      return ymdKey(ymdIn(tz, d))
+    } catch {
+      // An unknown zone falls back to the device's day.
+    }
+  }
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+}
 
 export type HabitView = { id: string; checkedToday: boolean; daysKept?: number; private: boolean }
 
