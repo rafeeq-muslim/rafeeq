@@ -10,10 +10,15 @@
  * stored verse being recited is highlighted and kept in view; until then,
  * al-Muaiqly's per-surah file plays as before. Nothing is shown outside the
  * page (no lock-screen metadata), so discreet mode stays discreet.
+ *
+ * R2 (learning owner's request, 2026-10-06): tapping a verse recites from it,
+ * then the verses after it follow as usual; «الآية السابقة» / «الآية التالية»
+ * next to play jump one verse and recite it (VerseControls). Per-verse
+ * reciters only: al-Muaiqly's single surah file has no verse boundaries.
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
-import { IconArrowLeft, IconPlayerPauseFilled, IconPlayerPlayFilled, IconSearch, IconVolume } from "@tabler/icons-react"
+import { IconArrowLeft, IconSearch, IconVolume } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -28,6 +33,7 @@ import { ListeningPlayer, loadPosition, meaningAudioUrl, nextAya, savePosition }
 import { useRecitation } from "./queries"
 import { followVerse, loadReciterChoice, pickReciter, saveReciterChoice, verseUrl } from "./reciters"
 import { meaningLines, useSuraText } from "./verses"
+import { PlayButton, VerseControls } from "./VerseControls"
 
 const normalize = (s: string) => s.toLowerCase().replace(/[ً-ْٰ'\-\s]/g, "").replace(/^(ال|al|an|ar|as|at|ad|adh|az|ash)/, "")
 
@@ -98,6 +104,8 @@ export function SuraPage() {
     currentRef.current = current
   }, [current])
   const saved = React.useMemo(() => loadPosition(sura), [sura])
+  // The verse play starts from, and the one the previous/next jumps count from.
+  const at = Math.min(count, Math.max(1, current ?? saved?.aya ?? 1))
   const topAya = React.useRef(saved?.aya ?? 1)
   const listRef = React.useRef<HTMLOListElement>(null)
 
@@ -138,9 +146,9 @@ export function SuraPage() {
     if (el) followVerse(el)
   }, [current])
 
-  const playVerse = (aya: number) => {
+  const playVerse = (aya: number, fromStart = false) => {
     if (!reciter) return
-    player().playVerse(sura, aya, verseUrl(reciter, sura, aya))
+    player().playVerse(sura, aya, verseUrl(reciter, sura, aya), fromStart)
     setCurrent(aya)
     setPlaying("recitation")
   }
@@ -151,7 +159,7 @@ export function SuraPage() {
       setPlaying(null)
       remember()
     } else if (reciter) {
-      playVerse(Math.min(count, Math.max(1, current ?? saved?.aya ?? 1)))
+      playVerse(at)
     } else if (recUrl) {
       player().playRecitation(sura, recUrl, saved?.time ?? 0)
       setPlaying("recitation")
@@ -187,6 +195,9 @@ export function SuraPage() {
     setPlaying(aya)
     remember()
   }
+
+  // R2: tapping a verse, or «الآية السابقة/التالية», recites that verse from its start.
+  const reciteFrom = (aya: number) => playVerse(aya, true)
 
   const lines = text.data ? meaningLines(text.data.ayat) : []
   const source = text.data?.source
@@ -247,9 +258,18 @@ export function SuraPage() {
                   className={cn("flex scroll-mt-20 flex-col gap-3 border-s-4 py-5 ps-3", now ? "rounded-md border-primary bg-secondary" : "border-transparent")}
                 >
                   {now && <span className="sr-only">{t("discover.quran.nowReciting")}</span>}
-                  <p lang="ar" dir="rtl" className="font-quran text-[1.6rem] leading-[2.4] text-foreground">
-                    {l.arabic} <span className="whitespace-nowrap text-primary">﴿{num(l.aya)}﴾</span>
-                  </p>
+                  {reciter ? (
+                    <button
+                      type="button"
+                      onClick={() => reciteFrom(l.aya)}
+                      className="w-full rounded-md text-start outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                    >
+                      <span className="sr-only">{t("discover.quran.reciteFrom", { n: num(l.aya) })}</span>
+                      <VerseText arabic={l.arabic} aya={l.aya} />
+                    </button>
+                  ) : (
+                    <VerseText arabic={l.arabic} aya={l.aya} />
+                  )}
                   {l.meaning && (
                     <div className="flex items-start gap-2">
                       <p dir="auto" className="min-w-0 flex-1 font-reading text-reading text-foreground/90">
@@ -295,9 +315,11 @@ export function SuraPage() {
       {canRecite && reciterName && (
         <div className="sticky bottom-3 z-20 px-4">
           <div className="flex items-center gap-3 rounded-panel bg-card p-3 shadow-raised">
-            <Button size="icon-lg" aria-label={t(playing === "recitation" ? "discover.quran.pause" : "discover.quran.play")} onClick={toggleRecitation}>
-              {playing === "recitation" ? <IconPlayerPauseFilled /> : <IconPlayerPlayFilled />}
-            </Button>
+            {reciter ? (
+              <VerseControls playing={playing === "recitation"} at={at} count={count} onToggle={toggleRecitation} onJump={reciteFrom} />
+            ) : (
+              <PlayButton playing={playing === "recitation"} onToggle={toggleRecitation} />
+            )}
             <div className="min-w-0 flex-1">
               <p className="truncate text-label font-bold">
                 {playing === "recitation" && current
@@ -312,5 +334,14 @@ export function SuraPage() {
         </div>
       )}
     </>
+  )
+}
+
+/** The stored verse text and its number (R2: never generated). */
+function VerseText({ arabic, aya }: { arabic: string; aya: number }) {
+  return (
+    <span lang="ar" dir="rtl" className="block font-quran text-[1.6rem] leading-[2.4] text-foreground">
+      {arabic} <span className="whitespace-nowrap text-primary">﴿{num(aya)}﴾</span>
+    </span>
   )
 }
