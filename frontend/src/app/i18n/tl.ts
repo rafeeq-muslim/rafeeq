@@ -999,4 +999,10 @@ export const tl: Dict = {
   "guide.suggest.discover.title": "Tuklasin",
   "guide.suggest.discover.body": "Isang maikling aral bawat araw, pagbigkas na may kahulugan sa iyong wika, at mapagkakatiwalaang aklatan.",
   "guide.suggest.discover.cta": "Buksan ang Tuklasin",
+
+  // --- PRC audit gap fixes (prc-audit-gaps): PRC-01 R2/R3, PRC-02 R1 ---
+  "practice.city.farAwayHigh": "Hindi pa suportado ang iyong lugar: ang oras ng pagdarasal lampas sa latitude 48° ay nangangailangan ng espesyal na pagkalkula na hindi pa namin naidaragdag. Hindi kami pumili ng malayong lungsod, para hindi mo makita ang mga oras na hindi sa iyo.",
+  "practice.city.farAway": "Walang nakalistang lungsod na malapit sa iyo, kaya hindi kami pumili ng malayo. Hanapin sa pangalan ang pinakamalapit na lungsod sa iyo.",
+  "practice.city.typeToSearch": "I-type ang pangalan ng iyong lungsod para hanapin ito, o gamitin ang iyong lokasyon kung gusto mo.",
+  "practice.habits.kindTagWorship": "Pagsamba, pribado",
 }

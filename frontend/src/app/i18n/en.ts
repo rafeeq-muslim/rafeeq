@@ -998,4 +998,10 @@ export const en: Dict = {
   "guide.suggest.discover.title": "Discover",
   "guide.suggest.discover.body": "A short benefit each day, recitation with its meanings in your language, and a trusted library.",
   "guide.suggest.discover.cta": "Open Discover",
+
+  // --- PRC audit gap fixes (prc-audit-gaps): PRC-01 R2/R3, PRC-02 R1 ---
+  "practice.city.farAwayHigh": "Your area isn't supported yet: prayer times beyond latitude 48° need a special calculation we haven't added yet. We didn't pick a far-away city, so you won't see times that aren't yours.",
+  "practice.city.farAway": "There's no listed city near you, so we didn't pick a far-away one. Search for the nearest city to you by name.",
+  "practice.city.typeToSearch": "Type your city's name to find it, or use your location if you like.",
+  "practice.habits.kindTagWorship": "Worship, private",
 }
