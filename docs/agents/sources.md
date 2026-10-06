@@ -74,6 +74,7 @@ Every video must be watched in full by the Sharia reviewer before use (no music 
 | IBM Plex Sans Arabic, Noto Naskh Arabic (`@fontsource`) | Self-hosted fallback fonts for UI and reading | SIL OFL 1.1 |
 | Tabler Icons (`@tabler/icons-react`) | Icon set named in the brand guide | MIT |
 | shadcn/ui, Radix UI, Tailwind CSS, Vite, React, sonner, vaul, input-otp, `@shadcn/react` | Design-system code (`frontend/`) | MIT |
+| `uqr` (unjs, npm 0.1.x, no dependencies) | QR codes of an organisation's links on its coordinator page (ORG-01 R1), rendered as SVG in the browser and bundled with the app; no network call | MIT |
 | Agent skills in `.claude/skills/` | shadcn (MIT), Anthropic Design plugin (Apache-2.0), cuellarfr/design-skills (MIT), design-system-ops subset (MIT), Emil Kowalski mobile-native/animate/break-ui (MIT), pwa-skill-suite pwa-rtl (MIT); licence file kept in each skill folder. `frontend-design` is Anthropic's official plugin (installed via the plugin directory, not vendored) | As listed |
 
 ## Avoid
