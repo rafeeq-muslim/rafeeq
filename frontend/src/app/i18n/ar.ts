@@ -1363,4 +1363,14 @@ export const ar = {
   "downloads.offline": "أنت دون اتصال. ترى هنا ما نزّلته فقط، وتنزّل غيره حين تتصل.",
   "downloads.loadError": "تعذّر تحميل قائمة التنزيلات. تحقق من اتصالك ثم أعد المحاولة.",
   "downloads.empty": "لا شيء في هذا القسم بلغتك بعد.",
+  // PLT-11 R5: the whole-surah file never plays before its size is shown and accepted
+  "plt11.wholeSurah": "السورة كاملة في ملف واحد",
+  "plt11.mb": "{n} ميغابايت",
+  "plt11.size.title": "حجم هذه التلاوة {size}",
+  "plt11.size.unknown": "غير معروف",
+  "plt11.size.body": "تُبثّ سورة {sura} كاملة في ملف واحد، فيأخذ الاستماع إليها من باقة بياناتك قدر حجمها. لا يُنزَّل شيء قبل أن تختار.",
+  "plt11.size.listen": "استمع ({size})",
+  "plt11.size.download": "نزّلها من مركز التنزيلات",
+  "plt11.size.perVerse": "استمع آيةً آيةً بصوت {name}",
+  "plt11.size.cancel": "ليس الآن",
 } as const

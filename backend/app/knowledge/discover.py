@@ -47,6 +47,10 @@ async def recitations(session: Session, response: Response, lang: Lang = "ar") -
     verse by verse); the app offers those reciters instead once there is one."""
     live = await published(session, recitation.ITEM_TYPE, lang)
     rec = next((live[r["id"]] for r in recitation.load() if r["id"] in live), None)
+    # PLT-11 R5 / PLT-12: each surah file's size, shown before it plays or downloads.
+    # Added here, not to the reviewed view, so the approved version is unchanged.
+    if rec is not None:
+        rec = {**rec, "sizes": recitation.sizes(rec["id"])}
     reciters = await recitation.approved_reciters(session, lang)
     response.headers["Cache-Control"] = PUBLIC
     return {"lang": lang, "recitation": rec, "reciters": reciters}

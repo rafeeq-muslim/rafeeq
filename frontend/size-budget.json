@@ -1,0 +1,8 @@
+{
+  "note": "PLT-11 R6: precache budget. Change it only on purpose (npm run check:size -- --update) and say why in the commit message.",
+  "files": 112,
+  "raw": 1765315,
+  "gzip": 652549,
+  "tolerance": 0.1,
+  "maxDataFileBytes": 512000
+}

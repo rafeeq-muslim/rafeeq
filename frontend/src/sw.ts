@@ -13,6 +13,7 @@ import "./sw/plt15-offline" // PLT-15: adhkar text, glossary and saved-item list
 import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
 import { registerPushHandler } from "./sw/plt13-push"
 import { registerDownloads } from "./sw/plt12-downloads" // PLT-12
+import { registerPlt11Caching } from "./sw/plt11-caching" // PLT-11 R1/R3/R4
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -39,6 +40,7 @@ registerRoute(
   ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content/media/") || /\.(jpg|jpeg|png|webp)$/.test(url.pathname)),
   new StaleWhileRevalidate({ cacheName: "rafeeq-media" }),
 )
+registerPlt11Caching(self) // PLT-11: hashed shell files and fonts, cache first; never audio/video
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 

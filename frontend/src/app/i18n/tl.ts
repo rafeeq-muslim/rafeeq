@@ -1365,4 +1365,14 @@ export const tl: Dict = {
   "downloads.offline": "Offline ka. Ang mga na-download mo lang ang makikita rito; mag-download pa kapag may koneksyon.",
   "downloads.loadError": "Hindi ma-load ang listahan ng download. Tingnan ang koneksyon mo at subukan muli.",
   "downloads.empty": "Wala pang laman ang seksyong ito sa wika mo.",
+  // PLT-11 R5: the whole-surah file never plays before its size is shown and accepted
+  "plt11.wholeSurah": "Buong sūrah sa isang file",
+  "plt11.mb": "{n} MB",
+  "plt11.size.title": "Ang laki ng pagbigkas na ito: {size}",
+  "plt11.size.unknown": "hindi alam",
+  "plt11.size.body": "Ang Sūrah {sura} ay isang buong file, kaya halos ganito karami ang magagamit sa iyong data. Walang mada-download hangga't hindi ka pumipili.",
+  "plt11.size.listen": "Makinig ({size})",
+  "plt11.size.download": "I-download sa download center",
+  "plt11.size.perVerse": "Makinig bawat talata ({name})",
+  "plt11.size.cancel": "Hindi muna",
 }

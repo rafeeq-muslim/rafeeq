@@ -333,7 +333,8 @@ function SupportVideo({ src }: { src: string }) {
   const [failed, setFailed] = React.useState(false)
   if (!online || failed) return <OfflineNote text="offline.video" />
   return open ? (
-    <video controls playsInline preload="metadata" src={src} onError={() => setFailed(!navigator.onLine)} className="w-full rounded-card bg-black" />
+    // PLT-11 R4: nothing loads before the learner asks; the button is that ask, so it starts playing.
+    <video controls playsInline autoPlay preload="none" src={src} onError={() => setFailed(!navigator.onLine)} className="w-full rounded-card bg-black" />
   ) : (
     <Button variant="secondary" className="w-fit" onClick={() => setOpen(true)}>
       {t("lesson.video")}

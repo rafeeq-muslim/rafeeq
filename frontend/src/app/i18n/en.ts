@@ -1364,4 +1364,14 @@ export const en: Dict = {
   "downloads.offline": "You're offline. You only see your downloads here; download more when you're connected.",
   "downloads.loadError": "Couldn't load the downloads list. Check your connection and try again.",
   "downloads.empty": "Nothing in this section in your language yet.",
+  // PLT-11 R5: the whole-surah file never plays before its size is shown and accepted
+  "plt11.wholeSurah": "Whole surah in one file",
+  "plt11.mb": "{n} MB",
+  "plt11.size.title": "This recitation is {size}",
+  "plt11.size.unknown": "of unknown size",
+  "plt11.size.body": "Surah {sura} plays as one file, so listening uses about that much of your data. Nothing downloads until you choose.",
+  "plt11.size.listen": "Listen ({size})",
+  "plt11.size.download": "Download it in the download center",
+  "plt11.size.perVerse": "Listen verse by verse ({name})",
+  "plt11.size.cancel": "Not now",
 }
