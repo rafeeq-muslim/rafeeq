@@ -6,12 +6,12 @@ The lines are merged content: since 2026-10-06 (rules.md §1.4) they are
 reviewed before merging and shown directly; a line the reviewer returns is
 withdrawn in that language until corrected."""
 
-from datetime import date
+from datetime import date, timedelta
 
 import pytest
 
 from app.practice import router as practice
-from app.practice.sightings import validate
+from app.practice.sightings import expected_start, validate
 from tests.conftest import auth, with_roles, withdraw
 
 BODY = {
@@ -37,6 +37,29 @@ async def test_prc04_r2_more_than_one_day_from_expected_is_rejected(client):
     assert r.status_code == 422 and r.json()["detail"] == "too_far_from_expected"
     assert (await client.get("/api/practice/sightings")).json()["items"] == []
     assert validate(date(2027, 2, 8), date(2027, 2, 7)) and not validate(date(2027, 2, 8), date(2027, 2, 6))
+
+
+async def test_prc04_r2_server_computes_the_expected_date(client):
+    # A caller cannot widen the ±1 day check by sending its own "expected":
+    # 1 Ramadan 1448 is expected on 8 Feb 2027 whatever the body says.
+    team = await with_roles(client, "nasser-1", "team")
+    lie = {**BODY, "expected": "2027-02-11", "start": "2027-02-11"}
+    r = await client.post("/api/practice/sightings", json=lie, headers=auth(team))
+    assert r.status_code == 422 and r.json()["detail"] == "too_far_from_expected"
+    assert (await client.get("/api/practice/sightings")).json()["items"] == []
+    no_expected = {k: v for k, v in BODY.items() if k != "expected"}
+    r = await client.post("/api/practice/sightings", json={**no_expected, "start": "2027-02-09"}, headers=auth(team))
+    assert r.status_code == 201, r.text
+
+
+def test_prc04_r2_expected_dates_match_umm_al_qura():
+    # research/06 §3: 1 Ramadan 1447 = 18 Feb 2026, 1 Ramadan 1448 = 8 Feb 2027, 1 Shawwal 1448 = 9 Mar 2027;
+    # PRC-04 R1: 5 Oct 2026 = 24 Rabi' al-Akhir 1448.
+    assert expected_start(1447, 9) == date(2026, 2, 18)
+    assert expected_start(1448, 9) == date(2027, 2, 8)
+    assert expected_start(1448, 10) == date(2027, 3, 9)
+    assert expected_start(1448, 4) + timedelta(days=23) == date(2026, 10, 5)
+    assert expected_start(1439, 9) is None and expected_start(1601, 1) is None
 
 
 async def test_prc04_r2_learners_cannot_publish(client):
