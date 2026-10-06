@@ -19,8 +19,8 @@ Outcomes keep "no evidence" apart from failures (reliability R4):
 The internal `detail` code (e.g. verifier_unavailable) and the stage trace
 go to `knw_answer_log` with the random `ask_id`, never to the app.
 
-PRD live v3 (ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3, off
-by default): step 7 also reads the enabled live connectors (islamqa.info,
+PRD live v3 (ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3, the
+default since the owner's go-live approval of 2026-10-06): step 7 also reads the enabled live connectors (islamqa.info,
 binbaz.org.sa, islamenc.com) at question time, in parallel with the local
 index of the other approved sources, inside one bounded window
 (live_sources/). Any one suitable source is enough; only the sources the

@@ -1254,6 +1254,9 @@ export const ar = {
   "ask.live.fetchedAt": "قُرئ من المصدر في {d}",
   "ask.live.openSource": "افتح النص كاملًا في المصدر",
   "ask.live.savedNote": "لا يُحفظ نص المصدر على جهازك؛ افتحه في موقعه.",
+  // GO-LIVE (go-live-approved, PLT-05, owner 2026-10-06): live source search in the privacy policy
+  "policy.live.title": "حين يبحث المساعد في المصادر مباشرة",
+  "policy.live.body": "للعثور على الجواب تُرسَل حتى 12 كلمة بحث مأخوذة من سؤالك، من خادم رفيق إلى islamqa.info وbinbaz.org.sa. ولا يُرسَل معها شيء يدل عليك: لا اسم ولا حساب ولا رقم جهاز ولا ملفات تعريف الارتباط (cookies)، وتُحذف عناوين البريد والروابط والأرقام الطويلة قبل الإرسال.",
   // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06)
   "practice.reminders.ask.title": "هل تريد أن يظهر اسم الصلاة في التذكير؟",
   "practice.reminders.ask.body": "قد يراه من ينظر إلى شاشة جوالك.",
@@ -1303,6 +1306,8 @@ export const ar = {
   "discover.lib.search.type.poster": "تصميم",
   "discover.lib.search.type.khutbah": "خطبة",
   "discover.lib.search.type.qa": "سؤال وجواب",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ---
+  "discover.lib.topic.general": "عام",
 
   // PLT-13 notifications on iPhone
   "plt13.iosUpdateTitle": "يحتاج جهازك تحديثًا لتصله الإشعارات",

@@ -2,6 +2,10 @@ import os
 
 os.environ.setdefault("DATABASE_URL", "postgresql+asyncpg://rafeeq:rafeeq_dev@127.0.0.1:5442/rafeeq_test")
 os.environ.setdefault("JWT_SECRET", "test-secret-test-secret-test-secret-0")
+# The shipped default reads islamqa.info and binbaz.org.sa live (go-live approval,
+# 2026-10-06). Tests never call real sites: the suite runs the local index, and the
+# live tests switch the policy on with fake sites (knw_live_fakes.live).
+os.environ.setdefault("ASK_SOURCE_POLICY", "local-index-v2")
 
 import pytest  # noqa: E402
 from httpx import ASGITransport, AsyncClient  # noqa: E402

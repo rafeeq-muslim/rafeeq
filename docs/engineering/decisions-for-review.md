@@ -395,3 +395,15 @@ Implements `docs/domains/knowledge/features/PRD-LIBRARY-LIVE-SEARCH.md`. Report:
 **Pending a human:** written access to islamenc.com's search (then set `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`); IslamHouse's written confirmation for the live site search (same email as the API key); the owner to confirm «موسوعة المحتوى الإسلامي» = islamenc.com (the live agent's identification); native review of the new Tagalog strings (`discover.lib.search.*`) and the changed privacy line.
 
 **Feature documents:** not edited (the PRD already links from KNW-06).
+
+## Go-live approvals (2026-10-06)
+
+Product owner's decisions for going live, recorded here so the open items above can be read against them.
+
+| Decision | Where |
+| --- | --- |
+| **Live sources on** for the assistant: islamqa and binbaz (`ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3`, `ASK_LIVE_SOURCES=islamqa,binbaz`). islamenc stays off (`ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=false`, its robots.txt disallows search). Rollback: `ASK_SOURCE_POLICY=local-index-v2`. The privacy policy names the live search (PLT-05 R1, keys `policy.live.*`) | `core/config.py`, `Privacy.tsx` |
+| **The Hisn al-Muslim adhkar stay published** (PRC-07) | `content/practice/` |
+| **The Al-Fatiha audio and the support videos are approved as served** (LRN-01 R4/R5). Exception: the English prayer video (IslamHouse 2838921) stays hidden in lessons and in the library, because its only file is HEVC and most browsers can't play it (PRs #59, #69), until a playable copy is approved | `content/units/unit-01/unit.json`, `content/discover/library-unplayable.json` |
+| **Ramadan stays «متوقع» per country until the team enters the announcement** (PRC-04 R2, PR #60): the calculation alone never starts Ramadan mode (suhoor/iftar, fasting reminders, Umm al-Qura Isha +30). The team enters the sighting for each country users are in | `practice/hijri.ts`, `practice/router.py` |
+| **A country with no announcement of its own follows Saudi Arabia's** (owner, 2026-10-06; follow-up to #60): its own entry wins when one exists; with no Saudi announcement either, the day stays «متوقع». The Isha +30 delay stays Umm al-Qura only | `practice/hijri.ts` (`monthStart`) |

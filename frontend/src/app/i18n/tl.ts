@@ -1256,6 +1256,9 @@ export const tl: Dict = {
   "ask.live.fetchedAt": "Binasa mula sa pinagmulan noong {d}",
   "ask.live.openSource": "Buksan ang buong teksto sa pinagmulan",
   "ask.live.savedNote": "Hindi naka-save sa iyong device ang teksto ng pinagmulan; buksan ito sa pinagmulan.",
+  // GO-LIVE (go-live-approved, PLT-05, owner 2026-10-06): live source search in the privacy policy
+  "policy.live.title": "Kapag direktang naghahanap ang assistant sa mga pinagmulan",
+  "policy.live.body": "Para mahanap ang sagot, hanggang 12 salitang panghanap mula sa tanong mo ang ipinapadala mula sa server ng Rafeeq sa islamqa.info at binbaz.org.sa. Walang kasamang anumang tumuturo sa iyo: walang pangalan, walang account, walang numero ng device at walang cookies, at inaalis muna ang mga e-mail address, link at mahahabang numero.",
   // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06; written by Claude)
   "practice.reminders.ask.title": "Gusto mo bang lumabas ang pangalan ng dasal sa paalala?",
   "practice.reminders.ask.body": "Maaari itong makita ng sinumang tumitingin sa screen ng iyong telepono.",
@@ -1305,6 +1308,8 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ⚠️ Tagalog needs native review ---
+  "discover.lib.topic.general": "Pangkalahatan",
 
   // PLT-13 notifications on iPhone
   "plt13.iosUpdateTitle": "Kailangang i-update ang iPhone mo para sa mga abiso",

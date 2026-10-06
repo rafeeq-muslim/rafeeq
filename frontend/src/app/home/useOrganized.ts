@@ -19,10 +19,12 @@ import { useMine } from "@/app/companion/api"
 import { lastSura } from "@/app/discover/player"
 import { loadReciterChoice } from "@/app/discover/reciters"
 import { useLibrary } from "@/app/discover/queries"
-import type { LibraryItemData, RecitationResponse } from "@/app/discover/types"
+import type { LibraryItemData, LibraryTopic, RecitationResponse } from "@/app/discover/types"
 import { useGuide } from "@/app/guide/store"
 import { useGuideContext } from "@/app/guide/useGuide"
+import { nextLesson } from "@/app/learning/path"
 import type { Lesson } from "@/app/learning/types"
+import { useContent } from "@/app/learning/useContent"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
@@ -84,12 +86,13 @@ export function useDayOrder(lessons: Lesson[] | null, today: string): Order | nu
 const reciterChosen = () => loadReciterChoice() != null
 
 /**
- * KNW-06: «كتاب أو مقطع معتمد يناسب وحدته». The library has no unit tags
- * yet, so the pick is the first approved item of the new-Muslim basics
- * topic in the learner's language (a decision for the PLT owner).
+ * PLT-09 R3 «كتاب أو مقطع معتمد يناسب وحدته», with KNW-06 R2 topics = path
+ * units: the first approved item of the learner's current unit; a unit with
+ * no library item yet falls back to the first «عام» item.
  */
-export function libraryPick(topics: { id: string; items: LibraryItemData[] }[] | undefined): LibraryItemData | null {
-  return topics?.find((t) => t.id === "basics")?.items[0] ?? null
+export function libraryPick(topics: LibraryTopic[] | undefined, unit: string | undefined): LibraryItemData | null {
+  const ofUnit = unit ? topics?.find((t) => t.unit === unit)?.items[0] : undefined
+  return ofUnit ?? topics?.find((t) => t.id === "general")?.items[0] ?? null
 }
 
 export function useEligibility(): { ctx: Eligibility; library: LibraryItemData | null } {
@@ -107,7 +110,9 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
     staleTime: 60 * 60_000,
   })
   const library = useLibrary(locale, Boolean(completed[LESSON_LAST_DAY_ONE]))
-  const pick = libraryPick(library.data?.topics)
+  const { lessons } = useContent()
+  const unlockedUnits = useLearning((s) => s.unlockedUnits)
+  const pick = libraryPick(library.data?.topics, nextLesson(lessons, { completed, unlockedUnits })?.unit)
   // PLT-08 R3: the guide records Ramadan and «لست وحدك» openings; Home records the others.
   const used = useGuide((s) => s.used)
   const homeOpened = useHome((s) => s.opened)

@@ -41,8 +41,25 @@ describe("PRC-04 R2: expected until announced", () => {
     expect(ramadan - plain).toBe(30 * 60_000)
   })
 
-  it("prc04_r2_ex5_manila_without_its_announcement_stays_expected_and_isha_unchanged", () => {
-    expect(isRamadan(day("2027-02-10"), SA_9_FEB, "PH")).toBe(false)
+  it("prc04_r2_country_without_its_own_announcement_follows_the_saudi_one", () => {
+    expect(isRamadan(day("2027-02-08"), SA_9_FEB, "PH")).toBe(false)
+    expect(isRamadan(day("2027-02-09"), SA_9_FEB, "PH")).toBe(true)
+    expect(ramadanState(day("2027-02-09"), SA_9_FEB, "PH")).toMatchObject({ kind: "ramadan", day: 1, announced: true })
+  })
+
+  it("prc04_r2_country_own_announcement_wins_over_the_saudi_one", () => {
+    const both: Sighting[] = [...SA_9_FEB, { country: "PH", hijri_year: 1448, hijri_month: 9, start: "2027-02-10" }]
+    expect(isRamadan(day("2027-02-09"), both, "PH")).toBe(false)
+    expect(ramadanState(day("2027-02-10"), both, "PH")).toMatchObject({ kind: "ramadan", day: 1, announced: true })
+    expect(ramadanState(day("2027-02-10"), both, "SA")).toMatchObject({ kind: "ramadan", day: 2, announced: true })
+  })
+
+  it("prc04_r2_no_saudi_and_no_own_announcement_stays_expected", () => {
+    expect(ramadanState(day("2027-02-08"), [], "PH")).toMatchObject({ kind: "ramadan", day: 1, announced: false })
+    expect(isRamadan(day("2027-02-08"), [], "PH")).toBe(false)
+  })
+
+  it("prc04_r2_isha_delay_stays_umm_al_qura_only_when_following_saudi", () => {
     const d = day("2027-02-10")
     expect(dayTimes(MANILA, d, { ramadan: isRamadan(d, SA_9_FEB, "PH") }).isha.getTime()).toBe(dayTimes(MANILA, d).isha.getTime())
   })
@@ -62,7 +79,7 @@ describe("PRC-04 R2 on the practice screen", () => {
   })
 
   it("prc04_r2_ex5_local_announcement_line_stays_after_the_expected_day_arrives", () => {
-    card(ramadanState(day("2027-02-08"), SA_9_FEB, "PH"), MANILA, "يبدأ الصوم مع إعلان بلدك أو مسجدك.")
+    card(ramadanState(day("2027-02-08"), [], "PH"), MANILA, "يبدأ الصوم مع إعلان بلدك أو مسجدك.")
     expect(screen.getByText("يبدأ الصوم مع إعلان بلدك أو مسجدك.")).toBeTruthy()
   })
 

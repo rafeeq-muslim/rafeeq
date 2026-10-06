@@ -5,7 +5,7 @@
 | Governing document | `docs/domains/knowledge/features/PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md`, version 3 (PR #35) |
 | Handoff | `docs/engineering/implementation/KNW-live-source-access-handoff.md` |
 | Branch | `knw-live-source-access-build` (not pushed, not merged) |
-| Setting | `ASK_SOURCE_POLICY`, default **`local-index-v2` (off)**. The live mode is `live-enabled-sources-any-sufficient-v3`. |
+| Setting | `ASK_SOURCE_POLICY`, default **`live-enabled-sources-any-sufficient-v3` (on)** with `ASK_LIVE_SOURCES=islamqa,binbaz`, since the owner's go-live approval of 2026-10-06 (branch `go-live-approved`; it was `local-index-v2` (off) when this report was written). `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED` stays `false`. |
 | Status | IslamQA and Ibn Baz are integrated and verified live from this backend. **The Islamic Content Encyclopedia is identified and partly verified (fetch works; search is not allowed).** Full integration is **not** claimed. |
 | Date | 2026-10-06 |
 
@@ -215,13 +215,15 @@ The run used live policy with `ASK_LIVE_SOURCES=islamqa,binbaz,islamic_content`;
 2. **Encyclopedia access:** written permission or an official search API from islamenc.com / ICSA. Its robots.txt forbids `/*/search` and its content is «جميع الحقوق محفوظة». Until then the connector is blocked and reports `not_connected`. Then set `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true` and re-run the smoke test with the search case added.
 3. **islamqa permission:** personal, non-commercial terms. Already an owner decision for the index, and live reading does not change it. Still on the permission list.
 4. **binbaz AI-assistant use:** to confirm (sources.md).
-5. **Privacy wording:** in live mode a short search form of the question goes to the source sites (no identity, no cookies kept, no question stored). Add this to the privacy page before rollout (rules.md §2.6 covers the model provider; this is a new flow).
+5. **Privacy wording:** in live mode a short search form of the question goes to the source sites (no identity, no cookies kept, no question stored). Add this to the privacy page before rollout (rules.md §2.6 covers the model provider; this is a new flow). *Done on `go-live-approved` (2026-10-06): the privacy page names islamqa.info and binbaz.org.sa and the 12-word limit.*
 6. **Live evaluation set and Sharia review** (PRD §14), and a P95 latency run on more questions.
-7. **Owner:** the v3 reading that turns off the islamqa near-tie preference (decisions-for-review.md).
+7. **Owner:** the v3 reading that turns off the islamqa near-tie preference (decisions-for-review.md). *Approved 2026-10-06: the preference stays off.*
 
 ## 8. Rollout and rollback
 
-Rollout follows PRD step 8. The defaults keep production unchanged.
+Go-live (2026-10-06): the owner approved live sources; the defaults are now `ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3` and `ASK_LIVE_SOURCES=islamqa,binbaz` (`backend/app/core/config.py`), so a deploy without these variables reads both sites live. Steps 3 and 4 below still apply after the deploy. The backend test suite pins `ASK_SOURCE_POLICY=local-index-v2` (`tests/conftest.py`) so no test calls a real site.
+
+The steps as first written (when the defaults were off):
 
 1. Merge the branch. With the defaults nothing changes: `ASK_SOURCE_POLICY=local-index-v2` and `ASK_LIVE_SOURCES=` (empty).
 2. On staging, add to the backend environment (`infra/compose.prod.yml` `environment:` or `~/.config/rafeeq/secrets.env`):
@@ -235,7 +237,7 @@ Rollout follows PRD step 8. The defaults keep production unchanged.
 5. Roll out to production the same way, after the privacy wording (§7.5).
 
 Rollback:
-- Set `ASK_SOURCE_POLICY=local-index-v2`, or remove it, and restart the backend.
+- Set `ASK_SOURCE_POLICY=local-index-v2` in the backend environment and restart the backend (since 2026-10-06 removing the variable means live, the default). To drop one site only, set `ASK_LIVE_SOURCES` to the other one.
 - No data or index is deleted. The local corpus, embeddings and `knw_answer_log` stay as they are.
 - Saved live answers stay readable: they keep their link and read time.
 - After a rollback the app is local-only again, and nothing claims live retrieval: `live_search` is absent and `source_policy` says `local-index-v2`.
