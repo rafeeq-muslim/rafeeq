@@ -128,7 +128,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
-      <header className="sticky top-0 z-10 flex items-center gap-3 bg-background/90 px-3 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] pb-2 backdrop-blur">
+      <header className="sticky top-0 z-10 flex items-center gap-3 border-b bg-background px-3 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] pb-2">
         <Button variant="ghost" size="icon" aria-label={t("common.close")} onClick={() => navigate("/")}>
           <IconX />
         </Button>
@@ -157,7 +157,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
             className="mx-auto max-w-xl"
           />
         ) : (
-          <div className="mx-auto flex max-w-xl border-t bg-background/95 px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] backdrop-blur">
+          <div className="mx-auto flex max-w-xl border-t bg-background px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
             <Button size="lg" className="flex-1" disabled={!exercise || !ready(exercise, value)} onClick={onCheck}>
               {t("lesson.check")}
             </Button>

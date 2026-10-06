@@ -53,7 +53,7 @@ export default function App() {
       <TooltipProvider>
         <NotesProvider>
         <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)} className="min-h-svh gap-0">
-          <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
+          <header className="sticky top-0 z-20 border-b bg-background">
             <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 md:px-8">
               <div className="flex items-center gap-3">
                 <RafeeqSymbol size={40} />

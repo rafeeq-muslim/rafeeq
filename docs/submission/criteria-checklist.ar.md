@@ -3,7 +3,7 @@
 **الملخص:** كل شرط ومعيار في دليل المشارك (44 صفحة)، ومعه أين يوجد دليله في رفيق: رابط حي، أو قسم في العرض، أو ميزة، أو ملف في المستودع. أرقام الصفحات أرقام صفحات ملف PDF.
 
 - الحل الحي: https://rafeeq.nan.sa (صفحة التعريف) و https://rafeeq.nan.sa/app (التطبيق، دون حساب).
-- العرض: `docs/submission/rafeeq-deck.pdf` و`rafeeq-deck.pptx` (21 شريحة).
+- العرض: `docs/submission/rafeeq-deck.pdf` و`rafeeq-deck.pptx` (28 شريحة).
 - الفيديو: https://youtube.com/shorts/NN3KVPgEf-4
 - الكود: https://github.com/rafeeq-muslim/rafeeq
 
@@ -16,7 +16,7 @@
 | A1 | حل رقمي متكامل يعمل بالكامل، جاهز للتشغيل والاستخدام الفعلي | https://rafeeq.nan.sa/app (يعيد 301 إلى `/app/` ثم يعمل)؛ `docs/engineering/STATUS.md` قسم State: كل ميزات الوثائق مبنية ومختبرة (335 اختبارًا للخادم و131 للواجهة) ومنشورة |
 | A2 | مستودع GitHub عام يضم الشفرة والملفات المسموح بنشرها، مع توثيق التشغيل ودون بيانات حساسة أو أسرار | https://github.com/rafeeq-muslim/rafeeq ؛ الأسرار خارج git (`STATUS.md` قسم Credentials)؛ فحص سجل git للقراءة فقط لم يجد أسرارًا (أجراه الوكيل المنسّق، لم أُعِده) |
 | A3 | فيديو توضيحي لا يتجاوز دقيقتين | https://youtube.com/shorts/NN3KVPgEf-4 (دقيقة و25 ثانية)؛ الملف `media/promo/rafeeq-promo-ar.mp4` |
-| A4 | عرض PDF أو PowerPoint: المشكلة، والحل، وآلية العمل، والقيمة المضافة، والتقنيات، والنتائج، وخطة الاستمرار | `docs/submission/rafeeq-deck.pdf` و`rafeeq-deck.pptx`: 21 شريحة تغطي هذه الأقسام كلها، ومعها الميزات بالتفصيل وصور من الموقع الحي |
+| A4 | عرض PDF أو PowerPoint: المشكلة، والحل، وآلية العمل، والقيمة المضافة، والتقنيات، والنتائج، وخطة الاستمرار | `docs/submission/rafeeq-deck.pdf` و`rafeeq-deck.pptx`: 28 شريحة تغطي هذه الأقسام كلها، ومعها الميزات بالتفصيل وصور من الموقع الحي |
 | A5 | توثيق المحتوى والمصادر الشرعية والمعرفية وكيفية استخدامها والتحقق منها | `docs/agents/sources.md` (كل مصدر وترخيصه ووضعه: فهرسة أو رابط)؛ `docs/agents/rules.md` §1 (مستويات المحتوى وقواعد الإسناد)؛ `docs/agents/evidence.md`؛ سجلات المراجعة الشرعية `content/units/unit-01/review.md` و`content/lessons/REVIEW.md` |
 | A6 | رابط مباشر للحل يعمل بالكامل ومتاح للتجربة والمراجعة | https://rafeeq.nan.sa (صفحة التعريف) و https://rafeeq.nan.sa/app (التطبيق، دون حساب) |
 
