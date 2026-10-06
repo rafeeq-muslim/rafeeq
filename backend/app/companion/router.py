@@ -18,5 +18,16 @@ from app.companion import (
 )
 
 router = APIRouter()
-for _r in (help.router, inbox.router, referrals.router, mentors.router, groups.router, safety.router, coverage.router, applications.public, applications.staff, applications.org):
+for _r in (
+    help.router,
+    inbox.router,
+    referrals.router,
+    mentors.router,
+    groups.router,
+    safety.router,
+    coverage.router,
+    applications.public,
+    applications.staff,
+    applications.org,
+):
     router.include_router(_r)
