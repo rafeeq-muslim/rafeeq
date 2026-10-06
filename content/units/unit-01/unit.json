@@ -272,9 +272,9 @@
             "u01-l1-o2"
           ],
           "prompt": {
-            "ar": "أيّ هذه من معنى «محمد رسول الله»؟",
-            "en": "Which of these is part of the meaning of “Muhammad is the Messenger of Allah”?",
-            "tl": "Alin dito ang bahagi ng kahulugan ng “si Muhammad ay Sugo ng Allah”?"
+            "ar": "أيّ هذه من معنى «أشهد أنّ محمدًا رسول الله»؟",
+            "en": "Which of these is part of the meaning of “I bear witness that Muhammad is the Messenger of Allah”?",
+            "tl": "Alin dito ang bahagi ng kahulugan ng “Sumasaksi ako na si Muhammad ay Sugo ng Allah”?"
           },
           "explain_card": "u01-l1-c5",
           "options": [
