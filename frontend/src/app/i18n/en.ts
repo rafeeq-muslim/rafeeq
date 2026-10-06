@@ -1492,4 +1492,8 @@ export const en: Dict = {
   "ask.lesson.back": "Back to the lesson",
   "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
   "ask.review.back": "Back to the review",
+  // KNW-01 R7 follow-up (knw-01-r7-ask-update-wording): the update bar outside a lesson; the Ask conversation in the policy
+  "app.updateWaiting": "A new version of Rafeeq is ready. Update when you're done.",
+  "policy.device.ask": "Your conversation with the assistant stays in this browser tab for this visit and is never kept on our server; quick exit, erasing this device's data and signing out clear it, and so does a day without use.",
+  "policy.revisedAsk": "Updated on {date}: added where your conversation with the assistant stays.",
 }

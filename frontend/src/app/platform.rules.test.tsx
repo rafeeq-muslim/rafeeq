@@ -28,7 +28,7 @@ vi.mock("@/app/learning/useContent", () => ({
 }))
 
 const { default: Welcome, linkLocale } = await import("@/app/pages/Welcome")
-const { default: Privacy, POLICY_SECTIONS } = await import("@/app/pages/Privacy")
+const { default: Privacy, POLICY_SECTIONS, POLICY_REVISED_ASK } = await import("@/app/pages/Privacy")
 const { default: Me } = await import("@/app/pages/Me")
 const { default: Account } = await import("@/app/pages/Account")
 const { default: AppLayout, QuickExit } = await import("@/app/AppLayout")
@@ -443,6 +443,34 @@ describe("plt-05-r1 a short privacy policy, before any data and without an accou
     }
     expect(screen.getByText(ar_("policy.updated", { date: "⁦2026-10-06⁩" }))).toBeTruthy()
     expect(screen.getByText(ar_("policy.revised", { date: "⁦2026-10-06⁩" }))).toBeTruthy()
+  })
+
+  // KNW-01 R7: the Ask conversation is kept in the tab for the visit (ask/session.ts).
+  it("plt05_r1_policy_says_where_the_ask_conversation_stays_in_all_three_languages", () => {
+    const words = {
+      ar: ["محادثتك مع المساعد", "التبويب", "لا تُحفظ في خادمنا", "الخروج السريع", "مسح بيانات جهازك", "تسجيل الخروج", "يوم بلا استعمال"],
+      en: ["conversation with the assistant", "browser tab", "never kept on our server", "quick exit", "erasing this device's data", "signing out", "a day without use"],
+      tl: ["usapan mo sa assistant", "tab na ito ng browser", "hindi kailanman itinatago sa aming server", "mabilisang paglabas", "pagbura ng data ng device", "pag-sign out", "isang araw na hindi ginagamit"],
+    }
+    for (const { code } of LOCALES) {
+      const line = translate(code, "policy.device.ask")
+      for (const w of words[code as keyof typeof words]) expect(line, `${code} ${w}`).toContain(w)
+      expect(translate(code, "policy.revisedAsk", { date: POLICY_REVISED_ASK }), code).toContain("2026-10-06")
+    }
+  })
+
+  it("plt05_r1_the_device_section_shows_the_ask_sentence_and_its_dated_line", () => {
+    for (const { code } of LOCALES) {
+      useDevice.setState({ onboarded: false, locale: code })
+      wrap(<Privacy />, "/privacy", "/privacy")
+      const section = screen.getByRole("heading", { name: translate(code, "policy.device.title") }).closest("section")!
+      expect(within(section).getByText(translate(code, "policy.device.body"))).toBeTruthy() // the approved text is unchanged
+      expect(within(section).getByText(translate(code, "policy.device.ask"))).toBeTruthy()
+      expect(screen.getByText(translate(code, "policy.revisedAsk", { date: `⁦${POLICY_REVISED_ASK}⁩` }))).toBeTruthy()
+      expect(screen.getByText(translate(code, "policy.updated", { date: "⁦2026-10-06⁩" }))).toBeTruthy() // approval line stays
+      cleanup()
+    }
+    useDevice.setState({ locale: "ar" })
   })
 
   it("plt05_r1_opened_from_me_as_a_guest", () => {

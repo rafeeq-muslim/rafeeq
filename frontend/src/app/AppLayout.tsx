@@ -12,7 +12,7 @@ import { LOCALES, useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { useGuideTracker } from "@/app/guide/useGuide"
 import { flushEvents } from "@/app/lib/api"
-import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
+import { applyUpdate, inLearningFlow, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
 import { saveDiscreet } from "@/app/lib/discreetPref"
 import { followTheme } from "@/app/lib/theme"
@@ -106,8 +106,10 @@ export function PublicFrame() {
   )
 }
 
-/** Issue #9 item 11: a newer version during a lesson waits for the learner. */
-function UpdateBar() {
+/** Issue #9 item 11: a newer version during a lesson waits for the learner.
+ * KNW-01 R7: it also waits under an open Ask conversation; only a lesson,
+ * review or placement says «تقدّمك في الدرس محفوظ». */
+export function UpdateBar() {
   const { t } = useT()
   const ready = useUpdateReady()
   const location = useLocation()
@@ -115,7 +117,7 @@ function UpdateBar() {
   if (!ready) return null
   return (
     <div role="status" className="fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+6rem)] z-40 mx-auto flex w-fit items-center gap-3 rounded-full bg-card px-4 py-2 text-label shadow-raised">
-      <span>{t("app.updateReady")}</span>
+      <span>{t(inLearningFlow(location.pathname) ? "app.updateReady" : "app.updateWaiting")}</span>
       <button type="button" onClick={applyUpdate} className="font-bold text-primary">
         {t("app.updateNow")}
       </button>

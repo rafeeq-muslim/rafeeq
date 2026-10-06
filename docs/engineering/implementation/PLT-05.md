@@ -56,6 +56,17 @@ A new section «ما نحفظه إن قدّمت لتكون مرشدًا» (`poli
 
 Not said in the policy: the contact is stored unencrypted, like the 2FA email (see `implementation/CMP-08.md` §2).
 
+### 2.3 Added with KNW-01 R7 (2026-10-06, branch `knw-01-r7-ask-update-wording`)
+
+One sentence under «ما نحفظه على جهازك وحده» (`policy.device.ask`, a second paragraph of the `"device"` section; the approved `policy.device.body` is unchanged) and a fourth date line (`policy.revisedAsk`, `POLICY_REVISED_ASK`). **Lead decision under the product owner's blanket approval; the owner has not approved this sentence himself.** Arabic written first; en/tl written by Claude from the Arabic.
+
+| The policy says | The code does |
+| --- | --- |
+| The conversation with the assistant stays in this browser tab for the visit | `frontend/src/app/ask/session.ts`: sessionStorage keys `rafeeq.ask.thread` / `rafeeq.ask.draft`; never localStorage. With quick exit or discreet mode on it is not written at all and lives in the page's memory (still this tab) |
+| Not kept on our server | The Ask request carries one question and no history and the thread is never uploaded. Same statement as the AI section («ولا نحفظ نص سؤالك عندنا»), whose exception stands: a saved answer whose question the person chose to keep (KNW-09) |
+| Cleared by quick exit, erasing the device's data and sign-out | `lib/privacy.ts`: `exitNow` removes the copy; `wipeDevice` and `signOutAndErase` clear sessionStorage |
+| And after a day without use | `ASK_SESSION_IDLE_MS` = 24 h, checked on load |
+
 Still missing (not covered by the approval, not invented): the data controller's name and contact. Rights are exercised in the app («حسابي»), as the policy's rights section says. Conversations are kept until account deletion or device erase.
 
 ## 3. Tests

@@ -1493,4 +1493,8 @@ export const tl: Dict = {
   "ask.lesson.back": "Bumalik sa aralin",
   "ask.review.from": "Galing ka sa pagbabalik-aral ng araling “{name}”. Itanong ang anumang hindi malinaw dito.",
   "ask.review.back": "Bumalik sa pagbabalik-aral",
+  // KNW-01 R7 follow-up (knw-01-r7-ask-update-wording): the update bar outside a lesson; the Ask conversation in the policy
+  "app.updateWaiting": "May bagong bersyon ng Rafeeq. I-update kapag tapos ka na.",
+  "policy.device.ask": "Ang usapan mo sa assistant ay nananatili sa tab na ito ng browser habang tumatagal ang pagbisita mo at hindi kailanman itinatago sa aming server; nabubura ito sa mabilisang paglabas, sa pagbura ng data ng device na ito at sa pag-sign out, at pagkalipas ng isang araw na hindi ginagamit.",
+  "policy.revisedAsk": "In-update noong {date}: idinagdag kung saan nananatili ang usapan mo sa assistant.",
 }

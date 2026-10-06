@@ -30,6 +30,8 @@ export const POLICY_UPDATED = "2026-10-06"
 export const POLICY_REVISED = "2026-10-06"
 /** CMP-08: the day the "apply" section (mentor applications) was added. Not yet confirmed by the product owner. */
 export const POLICY_REVISED_APPLY = "2026-10-06"
+/** KNW-01 R7: the day the sentence on the Ask conversation was added to the "device" section (lead decision, not the owner's own approval). */
+export const POLICY_REVISED_ASK = "2026-10-06"
 
 // "apply": CMP-08 what a mentor application keeps, who reads it and when it is deleted
 // (backend/app/companion/applications.py: KEEP_DAYS, _reject, purge).
@@ -71,6 +73,7 @@ export default function Privacy() {
             </p>
             <p className="text-label text-muted-foreground">{t("policy.revised", { date: `⁦${POLICY_REVISED}⁩` })}</p>
             <p className="text-label text-muted-foreground">{t("policy.revisedApply", { date: `⁦${POLICY_REVISED_APPLY}⁩` })}</p>
+            <p className="text-label text-muted-foreground">{t("policy.revisedAsk", { date: `⁦${POLICY_REVISED_ASK}⁩` })}</p>
           </header>
 
           {POLICY_SECTIONS.map((s) => (
@@ -79,6 +82,8 @@ export default function Privacy() {
                 {t(`policy.${s}.title` as Key)}
               </h2>
               <p className="text-body">{t(`policy.${s}.body` as Key)}</p>
+              {/* KNW-01 R7: the Ask conversation (ask/session.ts: sessionStorage, 24 h idle; lib/privacy.ts clears it). */}
+              {s === "device" && <p className="text-body">{t("policy.device.ask")}</p>}
             </section>
           ))}
 
