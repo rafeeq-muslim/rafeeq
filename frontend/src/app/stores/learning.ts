@@ -21,6 +21,9 @@ type LearningState = Progress & {
   mastery: Record<string, ObjectiveState>
   sessions: Record<string, LessonSession>
   placementDone: boolean
+  /** LRN-02 R2: the unit the path scrolls to on its first opening after
+   * placement (the starting unit); cleared once the path has scrolled there. */
+  landingUnit: string | null
   markSeen: (objectiveIds: string[]) => void
   firstAnswer: (objectiveIds: string[], exerciseId: string, type: ExerciseType, correct: boolean) => void
   markChecked: (objectiveId: string) => void
@@ -40,6 +43,7 @@ export const useLearning = create<LearningState>()(
       mastery: {},
       sessions: {},
       placementDone: false,
+      landingUnit: null,
       markSeen: (ids) =>
         set((s) => {
           const mastery = { ...s.mastery }

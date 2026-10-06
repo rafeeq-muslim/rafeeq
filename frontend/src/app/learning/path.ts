@@ -1,7 +1,8 @@
 /**
  * LRN-02: path state. Pure functions over content + device progress.
  * R1 lessons are done / next / locked; R2 a lesson opens after the previous
- * one (placement unlocks whole units); R3 one clear next step.
+ * one (placement unlocks whole units, which never become the next step);
+ * R3 one clear next step.
  */
 import type { Lesson, Unit } from "./types"
 
@@ -25,17 +26,35 @@ export function orderedLessons(units: Unit[], lessons: Record<string, Lesson>): 
 
 export function lessonStatus(lesson: Lesson, all: Lesson[], p: Progress): LessonStatus {
   if (p.completed[lesson.id]) return "done"
-  if (p.unlockedUnits.includes(lesson.unit)) return firstIncomplete(all, p)?.id === lesson.id ? "next" : "open"
+  const isNext = nextLesson(all, p)?.id === lesson.id
+  if (p.unlockedUnits.includes(lesson.unit)) return isNext ? "next" : "open"
   const idx = all.findIndex((l) => l.id === lesson.id)
   const prev = all[idx - 1]
   const prevOk = !prev || !!p.completed[prev.id] || p.unlockedUnits.includes(prev.unit)
   if (!prevOk) return "locked"
-  return firstIncomplete(all, p)?.id === lesson.id ? "next" : "open"
+  return isNext ? "next" : "open"
 }
 
-/** R3: the first lesson not completed, in order. */
-export function firstIncomplete(all: Lesson[], p: Progress): Lesson | undefined {
-  return all.find((l) => !p.completed[l.id])
+/** The learner's one next step (R2, R3), used everywhere a next step is
+ * shown: the first lesson not completed after the last unit passed in
+ * placement (LRN-05); when everything after it is completed, the first
+ * lesson not completed anywhere. Passed units stay open but never become
+ * the next step while a later lesson is left. */
+export function nextLesson(all: Lesson[], p: Progress): Lesson | undefined {
+  let from = 0
+  for (let i = all.length - 1; i >= 0; i--) {
+    if (p.unlockedUnits.includes(all[i].unit)) {
+      from = i + 1
+      break
+    }
+  }
+  return all.slice(from).find((l) => !p.completed[l.id]) ?? all.find((l) => !p.completed[l.id])
+}
+
+/** A unit opened by placement (LRN-05 R4) and not yet completed lesson by
+ * lesson: the path says it was passed instead of «0 من 7» (R2). */
+export function unitPassed(unit: Unit, p: Progress): boolean {
+  return p.unlockedUnits.includes(unit.id) && !unitDone(unit, p)
 }
 
 export function unitDone(unit: Unit, p: Progress): boolean {

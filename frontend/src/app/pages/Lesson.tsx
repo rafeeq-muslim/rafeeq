@@ -32,7 +32,7 @@ import { completeLesson, type Completion } from "@/app/learning/complete"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
-import { firstIncomplete, lessonStatus } from "@/app/learning/path"
+import { lessonStatus, nextLesson } from "@/app/learning/path"
 import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
@@ -64,7 +64,7 @@ export default function LessonPage() {
   }
   // LRN-02 R2 (issue #9): a locked lesson stays locked even when opened by its link.
   if (!preview && lessonStatus(lesson, lessons, progress) === "locked") {
-    const next = firstIncomplete(lessons, progress)
+    const next = nextLesson(lessons, progress)
     return (
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
         <p className="max-w-sm text-body text-muted-foreground">{t("lesson.locked", { name: next?.title ?? "" })}</p>

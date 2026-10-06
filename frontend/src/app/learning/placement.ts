@@ -1,10 +1,13 @@
 /**
  * LRN-05 adaptive placement test as pure functions.
  * Each unit is probed with two questions on two of its key objectives
- * (LRN-10). R2 "more than a month" starts at unit 2; a miss there falls
- * back to unit 1. R3 a unit passes when both its questions are right; the
- * test moves on, and stops at the first unit not passed or after 8
- * questions. R4 passed units open; they are not completed.
+ * (LRN-10). R2 "this week" asks nothing and starts at the first lesson, as
+ * if the test was skipped; "more than a month" starts at unit 2; a miss
+ * there falls back to unit 1. R3 a unit passes when both its questions are
+ * right; the test moves on, and stops at the first unit not passed or after
+ * 6 questions; when all of them were right it offers «اختبر وحدات أخرى؟»,
+ * which goes on the same way for up to 6 more. R4 passed units open; they
+ * are not completed.
  */
 import type { Content, Exercise } from "./types"
 import { visibleUnits } from "./path"
@@ -12,7 +15,8 @@ import { visibleUnits } from "./path"
 export type Since = "week" | "month" | "more" | "skip"
 export type Probe = { unitId: string; questions: Exercise[] }
 
-export const MAX_QUESTIONS = 8
+/** Questions in one round (R3); «اختبر وحدات أخرى؟» adds another round. */
+export const MAX_QUESTIONS = 6
 
 /** Two questions per unit on its key objectives (first exercise of each). */
 export function probes(content: Content): Probe[] {
@@ -41,16 +45,31 @@ export type PlacementState = {
   asked: number
   passed: number[] // probe indexes passed
   fellBack: boolean
+  limit: number // questions allowed so far: MAX_QUESTIONS per round (R3)
+  offer: boolean // a round ended with every answer right: «اختبر وحدات أخرى؟»
   done: boolean
 }
 
+/** R2: "this week" asks no questions. */
+export const asksQuestions = (since: Since) => since !== "week"
+
 export function begin(since: Since, available: number): PlacementState {
   const start = since === "more" && available > 1 ? 1 : 0
-  return { start, unit: start, q: 0, asked: 0, passed: [], fellBack: false, done: available === 0 }
+  return {
+    start,
+    unit: start,
+    q: 0,
+    asked: 0,
+    passed: [],
+    fellBack: false,
+    limit: MAX_QUESTIONS,
+    offer: false,
+    done: available === 0 || !asksQuestions(since),
+  }
 }
 
 export function question(s: PlacementState, all: Probe[]): Exercise | null {
-  return s.done ? null : (all[s.unit]?.questions[s.q] ?? null)
+  return s.done || s.offer ? null : (all[s.unit]?.questions[s.q] ?? null)
 }
 
 export function record(s: PlacementState, all: Probe[], correct: boolean): PlacementState {
@@ -68,8 +87,21 @@ export function record(s: PlacementState, all: Probe[], correct: boolean): Place
   } else {
     next = { ...s, asked, done: true } // R3: stop at the first unit not passed
   }
-  if (next.asked >= MAX_QUESTIONS) next = { ...next, done: true }
+  if (!next.done && next.asked >= next.limit) {
+    // R3: a round is over. Every answer right (no fall back, so no miss) → offer more units.
+    next = !next.fellBack && next.q === 0 ? { ...next, offer: true } : { ...next, done: true }
+  }
   return next
+}
+
+/** R3: «اختبر وحدات أخرى؟» accepted: up to MAX_QUESTIONS more, the same way. */
+export function testMore(s: PlacementState): PlacementState {
+  return s.offer ? { ...s, offer: false, limit: s.limit + MAX_QUESTIONS } : s
+}
+
+/** R3: «اختبر وحدات أخرى؟» declined: the result shows. */
+export function stop(s: PlacementState): PlacementState {
+  return { ...s, offer: false, done: true }
 }
 
 /** Unit ids that the result opens (R4). */
