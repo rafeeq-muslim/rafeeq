@@ -1038,4 +1038,13 @@ export const ar = {
   "practice.city.farAway": "لا توجد في قائمتنا مدينة قريبة من موقعك، فلم نختر لك مدينة بعيدة. ابحث عن أقرب مدينة إليك باسمها.",
   "practice.city.typeToSearch": "اكتب اسم مدينتك للبحث عنها، أو حدّد أقرب مدينة من موقعك إن أردت.",
   "practice.habits.kindTagWorship": "عبادة، خاص بك",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "القارئ",
+  "discover.quran.nowReciting": "الآية التي تُتلى الآن",
+  "discover.quran.nowVerse": "تُتلى الآية {n}",
+  "desk.type.recitation": "تلاوة",
+  "desk.reciter.hint": "استمع إلى عيّنة من سور هذا القارئ آيةً آية، ثم اعتمده أو أعده مع السبب. لا يظهر للمتعلمين قبل اعتماده.",
+  "desk.reciter.riwaya": "الرواية",
+  "desk.reciter.sample": "العيّنة",
+  "desk.reciter.otherSura": "سورة أخرى",
 } as const

@@ -1040,4 +1040,13 @@ export const tl: Dict = {
   "practice.city.farAway": "Walang nakalistang lungsod na malapit sa iyo, kaya hindi kami pumili ng malayo. Hanapin sa pangalan ang pinakamalapit na lungsod sa iyo.",
   "practice.city.typeToSearch": "I-type ang pangalan ng iyong lungsod para hanapin ito, o gamitin ang iyong lokasyon kung gusto mo.",
   "practice.habits.kindTagWorship": "Pagsamba, pribado",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "Tagabigkas",
+  "discover.quran.nowReciting": "Talatang binibigkas ngayon",
+  "discover.quran.nowVerse": "Binibigkas ang talata {n}",
+  "desk.type.recitation": "Pagbigkas",
+  "desk.reciter.hint": "Pakinggan ang ilang sūrah ng tagabigkas na ito, talata por talata, saka aprubahan o ibalik nang may dahilan. Hindi ito makikita ng mga nag-aaral hangga't hindi mo inaaprubahan.",
+  "desk.reciter.riwaya": "Riwāyah",
+  "desk.reciter.sample": "Halimbawa",
+  "desk.reciter.otherSura": "Ibang sūrah",
 }

@@ -1,0 +1,46 @@
+{
+ "_about": "KNW-08 R2/R4 (decision 2026-10-06): Quranpedia per-verse Hafs recitations for Quran listening, played verse by verse with the recited verse highlighted. Hafs only (Rafeeq's mushaf text is Hafs). Each reciter is a review-desk item `recitation` and is shown to learners only after the Sharia reviewer has listened to a sample of its surahs and approved it; al-Muaiqly (IslamHouse, per surah) stays until then. Names and riwaya checked against api.quranpedia.net/v1/reciters on 2026-10-06.",
+ "source": "Quranpedia",
+ "origin_url": "https://quranpedia.net",
+ "url_pattern": "https://files.quranpedia.net/recitations/{id}/{sura:03d}{aya:03d}.mp3",
+ "license": "Quranpedia API terms: free in live apps, credit optional. The recordings belong to the reciters: written confirmation pending (Musallam, product owner) before public launch.",
+ "sample_suras": [1, 103, 108, 112, 113, 114],
+ "reciters": [
+  {
+   "quranpedia_id": 248,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف محمد صديق المنشاوي برواية حفص عن عاصم",
+   "reciter": {"ar": "محمد صديق المنشاوي", "en": "Mohamed Siddiq El-Minshawi", "tl": "Mohamed Siddiq El-Minshawi"}
+  },
+  {
+   "quranpedia_id": 249,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف محمد أيوب برواية حفص عن عاصم",
+   "reciter": {"ar": "محمد أيوب", "en": "Muhammad Ayyub", "tl": "Muhammad Ayyub"}
+  },
+  {
+   "quranpedia_id": 251,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف إبراهيم الأخضر برواية حفص عن عاصم",
+   "reciter": {"ar": "إبراهيم الأخضر", "en": "Ibrahim Al-Akhdar", "tl": "Ibrahim Al-Akhdar"}
+  },
+  {
+   "quranpedia_id": 253,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف عبد الله بصفر برواية حفص عن عاصم",
+   "reciter": {"ar": "عبد الله بصفر", "en": "Abdullah Basfar", "tl": "Abdullah Basfar"}
+  },
+  {
+   "quranpedia_id": 254,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف علي عبد الرحمن الحذيفي برواية حفص عن عاصم",
+   "reciter": {"ar": "علي الحذيفي", "en": "Ali Al-Hudhaify", "tl": "Ali Al-Hudhaify"}
+  },
+  {
+   "quranpedia_id": 255,
+   "riwaya": "hafs",
+   "edition_ar": "مصحف مشاري راشد العفاسي برواية حفص عن عاصم",
+   "reciter": {"ar": "مشاري راشد العفاسي", "en": "Mishary Rashid Alafasy", "tl": "Mishary Rashid Alafasy"}
+  }
+ ]
+}
