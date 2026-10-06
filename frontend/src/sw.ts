@@ -18,7 +18,14 @@ registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { deny
 
 // Approved lesson content and Quran passages: usable offline.
 registerRoute(({ url }) => url.pathname.startsWith("/api/content") || url.pathname.startsWith("/api/scripture"), new NetworkFirst({ cacheName: "rafeeq-content", networkTimeoutSeconds: 4 }))
-registerRoute(({ url }) => url.pathname.startsWith("/content-media/") || /\.(mp3|mp4|jpg|jpeg|png|webp)$/.test(url.pathname), new StaleWhileRevalidate({ cacheName: "rafeeq-media" }))
+// Images from Rafeeq itself only (issue #9 item 12). Audio and video bypass the
+// worker: other origins (IslamHouse) are loaded by the browser under media-src
+// (the worker's connect-src 'self' cannot fetch them), and cached responses
+// would break the range requests players need for seeking.
+registerRoute(
+  ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content/media/") || /\.(jpg|jpeg|png|webp)$/.test(url.pathname)),
+  new StaleWhileRevalidate({ cacheName: "rafeeq-media" }),
+)
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 
