@@ -4,7 +4,7 @@
 | --- | --- |
 | المعرّف | KNW-02-Source-Coverage |
 | التاريخ | 6 أكتوبر 2026 |
-| الحالة | تحليل كود ومواصفات تنفيذ؛ لم تُختبر بيئة الإنتاج |
+| الحالة | نُفّذ في الكود واختُبر محليًا، وislamqa ضمن مصادر الإجابة الافتراضية (`docs/engineering/implementation/KNW-02-source-coverage-report.md`)؛ مجموعة المرجع (62 سطرًا، `content/knowledge/eval/reference-set.jsonl`) موجودة، لكن قياس Recall@8 لكل مصدر (§9) لم يُشغَّل بعد |
 | الأولوية | P1 لتفعيل المصادر المقصودة وكشف استبعادها؛ تحسين الترتيب مشروط بالقياس |
 | المصدر | نسخة `rafeeq-main(1).zip` وبلاغ المستخدم |
 | المكان داخل المشروع | `docs/domains/knowledge/features/KNW-02-source-coverage-and-retrieval-prd.md` |

@@ -29,7 +29,7 @@
 | R1 ex1 guest invited | `test_cmp03_r1_guest_cannot_choose_a_mentor` |
 | R2 ex1 three same-gender, least loaded first | `test_cmp03_r2_suggests_three_same_gender_least_loaded_first` |
 | R2 ex2 full or paused hidden | `test_cmp03_r2_full_or_paused_mentor_is_not_suggested` |
-| R2 ex3 none available | `test_cmp03_r2_no_mentor_available_returns_empty` |
+| R2 ex3 none available | `test_cmp03_r2_no_sister_in_her_language_returns_empty` |
 | R3 ex1 no username | `test_cmp03_r3_card_shows_no_username_or_contact` |
 | R4 ex1 change mentor | `test_cmp03_r4_changing_mentor_removes_old_and_resets_permission` |
 | R4 ex2 end | `test_cmp03_r4_ending_leaves_no_mentor` |

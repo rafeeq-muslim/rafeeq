@@ -7,7 +7,7 @@
 
 | Rule | Module | Behaviour |
 | --- | --- | --- |
-| R1 (only curated, reviewer-approved items) | `backend/app/knowledge/library.py` | `python -m app.knowledge.library --fetch` pulls **candidates** from IslamHouse API v3 (documented public key) — categories 179666 «Matters of New Muslim» and 221824 «New Muslims' Stories», source languages ar/en/tl, types books/articles/videos/audios — into `content/discover/library.json` (metadata and file URLs only). Every candidate is a review-desk item `library_item` (one language each); learners see only approved ones |
+| R1 (only curated, reviewer-approved items) | `backend/app/knowledge/library.py` | `python -m app.knowledge.library --fetch` pulls **candidates** from IslamHouse API v3 (documented public key) — categories 179666 «Matters of New Muslim» and 221824 «New Muslims' Stories», source languages ar/en/tl, types books/articles/videos/audios — into `content/discover/library.json` (metadata and file URLs only). Every merged candidate is a review-desk item `library_item` (one language each); learners see the merged items through `review.published()` (rules.md §1.4 (2026-10-06): merged content is shown directly; a version the reviewer returns in the desk is withdrawn in that language until corrected) |
 | R1 error (removed item / dead link hidden) | `library.py::check_library_links` (job, daily 03:00 UTC, `app/knowledge/jobs.py`) | HEADs every attachment URL of approved items; a dead item gets a `knw_library_items` row with `status = "hidden"`; the learner endpoint drops hidden ids. A link that works again is set back to `approved` |
 | R2 (learner's language by topic; English on request) | `GET /api/discover/library?lang=` + `frontend/src/app/discover/Library.tsx` | Topics: `basics` (category 179666) and `stories` (221824). Tagalog topic with no items → empty note and a "show English items" button, which fetches `lang=en` |
 | R2 error (mislabelled language) | reviewer | The desk view shows the item's declared language and file; the reviewer returns mislabelled ones (no code heuristic) |
@@ -28,8 +28,8 @@
 
 | Example | Test |
 | --- | --- |
-| R1 ex1 (approved Tagalog book shown) | `test_knw06_r1_approved_item_is_listed` |
-| R1 ex2 (unapproved never shown) | `test_knw06_r1_unapproved_item_is_hidden` |
+| R1 ex1 (merged Tagalog book shown) | `test_knw06_r1_merged_item_is_listed_without_approval` |
+| R1 ex2 (returned item withdrawn) | `test_knw06_r1_returned_item_withdrawn_until_corrected` |
 | R1 ex3 (dead link hidden) | `test_knw06_r1_dead_link_is_hidden_after_check` |
 | R2 ex1 (Tagalog items under topic) | `test_knw06_r2_items_in_learner_language_only` |
 | R2 ex2 (no Tagalog → empty topic, English on request) | `test_knw06_r2_empty_topic_and_english_on_request` |
