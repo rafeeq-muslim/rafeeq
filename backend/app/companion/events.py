@@ -5,7 +5,10 @@
   mentors and team members get a neutral push (CMP-01 R6). The device that
   opens `/mentor/help?kind=urgent&ask=<ask_id>` becomes its owner.
 - EngagementStatusChanged (MOT-07 R3): CMP keeps the status for accounts so
-  a mentor sees it while the learner shares progress (CMP-02 R6).
+  a mentor sees it while the learner shares progress (CMP-02 R6). Only the
+  account events `{user_id, status}` are kept: Motivation sends ONE status
+  per account across its devices (MOT-07 R2/R6); device events
+  `{install_id, status}` (for Organisations) carry no user_id and are ignored.
 - EscalationRequested (KNW-01 R2/R3) creates nothing: a request exists only
   when the person asks for a human.
 - AccountDeleted (PLT-05 R5): the person's own group messages go with the
@@ -68,7 +71,7 @@ async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
 async def on_engagement(session: AsyncSession, payload: dict) -> None:
     uid = payload.get("user_id")
     if not uid:
-        return  # guests have no mentor
+        return  # a device's own status (for ORG), or a guest: no mentor
     user_id = uuid.UUID(str(uid))
     row = await session.get(MenteeStatus, user_id)
     if row is None:
