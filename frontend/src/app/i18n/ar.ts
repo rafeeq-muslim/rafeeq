@@ -1428,7 +1428,7 @@ export const ar = {
   "lesson.help": "مساعدة",
   "ask.needHuman": "تحتاج إنسانًا؟",
   "ask.lesson.from": "جئت من درس «{name}». اسأل عمّا أشكل عليك فيه.",
-  "ask.lesson.back": "عُد إلى الدرس",
+  "ask.lesson.back": "ارجع إلى الدرس", // LRN-03 R5 (lrn-03-r5-return-to-lesson-build): the feature document's wording
   "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
   "ask.review.back": "عُد إلى المراجعة",
 } as const

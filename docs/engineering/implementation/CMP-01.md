@@ -87,7 +87,7 @@ Docs PR #79 (learning owner's decision 2026-10-07). Frontend only; no endpoint, 
 | Part of R1 | Module | Behaviour |
 | --- | --- | --- |
 | Help button in the lesson and the review | `frontend/src/app/lesson/LessonHelpButton.tsx` (used by `pages/Lesson.tsx`, `pages/Review.tsx`) | Named «مساعدة» (`lesson.help`). Opens `/ask` with the route state `{lessonHelp: {from: "lesson" \| "review", topic}}` built by `ask/lessonHelp.ts`. `topic` is the lesson's title (in a review: the title of the lesson the exercise on screen belongs to). Nothing in the URL. Below 380px it is a 44px icon with the label kept for screen readers |
-| Topic only, never the answers | `ask/lessonHelp.ts::readLessonHelp` | Reads only `from` and `topic` (≤ 120 characters); any other field is dropped. The topic is shown in the assistant (`pages/Ask.tsx`, `data-slot="lesson-topic"`, with «عُد إلى الدرس») and stays on the device: `POST /api/ask` is unchanged (open question in the feature document) |
+| Topic only, never the answers | `ask/lessonHelp.ts::readLessonHelp` | Reads only `from` and `topic` (≤ 120 characters); any other field is dropped. The topic is shown in the assistant (`pages/Ask.tsx`, `data-slot="lesson-topic"`, with «ارجع إلى الدرس», which since LRN-03 R5 opens that lesson at the point it was left: `implementation/learning-motivation-platform.md`) and stays on the device: `POST /api/ask` is unchanged (open question in the feature document) |
 | «تحتاج إنسانًا؟» | `ask/parts.tsx` (`FailureCard` for `no_source`, `AnswerTurn` for `route=personal`), `ReferralCard question` | The card asks «تحتاج إنسانًا؟» (`ask.needHuman`) above its one button, which opens `/mentor/help?kind=escalation&from=<origin>&ask=<ask_id>`. `verification_failed` and `unavailable` still lead with retry (KNW-01 answer rate), with «أريد إنسانًا» beside it |
 | «أريد إنسانًا» always visible in the assistant | `pages/Ask.tsx` top bar (sticky) | Opens `/mentor/help?from=<origin>` |
 | Where the request came from | `ask/parts.tsx::HelpOriginContext` | `origin` is `lesson` or `review` when the assistant was opened from there, else `ask`. The request stores that source only: no lesson name, no answers. For `lesson`/`review` no `ask_id` is sent either (it is sent for `ask`, as before) |
@@ -107,3 +107,8 @@ Tests (vitest, `frontend/src/app/companion/cmp01.r1.rules.test.tsx`):
 | Always visible in the assistant | `cmp01_r1_i_want_a_person_is_visible_in_the_assistant_at_every_moment` |
 | Danger at once | `cmp01_r1_danger_goes_to_a_human_at_once_without_an_answer` |
 | Narrow screens | `cmp01_r1_help_button_stays_reachable_and_named_below_380px`, `cmp01_r1_lesson_human_button_visible_below_380px`, `cmp01_r1_review_human_button_visible_below_380px` (`cmp-audit-gaps.test.tsx`, now on the «مساعدة» button) |
+
+### LRN-03 R5 on top of R1 (branch `lrn-03-r5-return-to-lesson-build`, 2026-10-07)
+
+- `LessonHelpButton` takes an optional `onLeave`; the lesson uses it to keep, in the device's memory only (`lesson/helpReturn.ts`), which lesson to return to and the exercise as it was on screen. The route state is still exactly `{lessonHelp: {from, topic}}`, the URL is still empty, and neither `POST /api/ask` nor `POST /api/help/requests` gained a field.
+- The request screen (`HelpScreen.tsx`) shows «ارجع إلى الدرس» when `from=lesson`. The request itself is unchanged: `source` only, no lesson name, no answers (`lrn03_r5_cmp01_r1_ex2_the_help_request_still_carries_no_lesson_name_or_answer`, beside the R1 ex2 test above).

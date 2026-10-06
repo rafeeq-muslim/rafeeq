@@ -39,10 +39,43 @@ Updated for the PR #25 documents in `PLT-02.md` (and PLT-01, 03, 05, 06, 07 in t
 | LRN-03 R3 safe mistakes, exercise returns | `answer()` re-queues | `session.test.ts` R3 |
 | LRN-03 R4 complete when all right | `isComplete()`, `learning/complete.ts` | `session.test.ts` R4 |
 | LRN-03 R5 resume; choose after 24 h; offline | `needsResumeChoice()`, persisted sessions, SW NetworkFirst for content | `session.test.ts` R5 |
+| LRN-03 R5 back from help at the same point (docs PR #82) | `lesson/helpReturn.ts`, `pages/Lesson.tsx`, `lesson/LessonHelpButton.tsx`, `pages/Ask.tsx`, `companion/HelpScreen.tsx`; see «LRN-03 R5: back from help» below | `pages/Lesson.r5.rules.test.tsx` |
 | LRN-03 R6 «لماذا؟» | `lesson/why.ts` → `/api/learning/explain` (Knowledge) | KNW-10 tests |
 | LRN-04 R1–R6 adaptive review | `learning/review.ts`, `reviewItems.ts`, `pages/Review.tsx` | review helpers |
 | LRN-05 R1–R6 placement | `learning/placement.ts`, `pages/Placement.tsx` | `placement.test.ts` |
 | LRN-10 BKT and first answers | `learning/bkt.ts`, `learning/answers.ts` | bkt helpers |
+
+## LRN-03 R5: back from help (branch `lrn-03-r5-return-to-lesson-build`, 2026-10-07)
+
+Docs PR #82 (learning owner's decision 2026-10-07), on top of CMP-01 R1 (PR #79/#86). Frontend only; no endpoint, model or migration changed.
+
+| Part of R5 | Module | Behaviour |
+| --- | --- | --- |
+| Same card or exercise, remaining exercises | `stores/learning.ts` `sessions` (already persisted on the device) | Unchanged: the card index and the exercise queue were already saved at every step, so the lesson reopens on them |
+| The choice not yet checked | `lesson/helpReturn.ts`, `pages/Lesson.tsx` | The lesson's help button calls `holdLessonForHelp(lessonId, {exerciseId, value, round, result})` before leaving. Opening that lesson again reads it once (`heldDraft`) and restores the choice, the option order (`round`) and, if the answer had already been checked, its result panel (so it is the same exercise, not the next one). An unchecked choice is restored only onto the exercise the session is on; a session old enough to ask continue-or-restart (24 h) restores nothing |
+| Where it is held, and until when | `lesson/helpReturn.ts` | One module variable in memory. Never the URL, the route state, `localStorage`/`sessionStorage`, `POST /api/ask` or the help request. Dropped when any lesson is opened (`dropLessonHelpReturn` on the player's mount), when the assistant is opened from its own tab (no lesson origin), and with the page (reload, app closed) |
+| «ارجع إلى الدرس» in the assistant | `pages/Ask.tsx` (`data-slot="back-to-lesson"` in the topic line) | Shown when the route state says `from: "lesson"`. Goes to `/learn/lesson/{id}` through the router (basename `/app`), replacing the assistant's entry; if the device no longer knows the lesson (reload), one step back as before. The Arabic text of `ask.lesson.back` is now the document's «ارجع إلى الدرس». A review keeps «عُد إلى المراجعة» and `navigate(-1)` |
+| «ارجع إلى الدرس» in the human request | `companion/HelpScreen.tsx::BackToLesson` | Shown when `from=lesson`. Goes to `/learn/lesson/{id}`; if the device no longer knows the lesson, to `/learn` (the path) |
+
+Not built (open questions in the feature document): the button on the conversation screen after the request is sent; keeping the choice across a reload; the same for a review (LRN-04).
+
+Tests (vitest, `frontend/src/app/pages/Lesson.r5.rules.test.tsx`):
+
+| Example | Test |
+| --- | --- |
+| R5 ex1 help on exercise 2, asks the assistant, «ارجع إلى الدرس» → exercise 2, choice kept, not checked, rest unchanged | `lrn03_r5_ex1_help_on_exercise_2_then_back_to_the_lesson_resumes_exercise_2_with_the_choice_kept` |
+| R5 ex1 the same through the human request | `lrn03_r5_ex1_help_on_exercise_2_then_back_from_the_human_request_resumes_exercise_2_with_the_choice_kept` |
+| R5 ex1 the same with the browser's back | `lrn03_r5_ex1_the_browsers_own_back_from_the_assistant_resumes_exercise_2_with_the_choice_kept` |
+| R5 ex1 «أو يعود بعد ثلاث ساعات» | `lrn03_r5_ex1_back_after_three_hours_resumes_exercise_2_without_asking` (and `session.test.ts` R5) |
+| R5 ex2 two days → continue or restart | `lrn03_r5_ex2_two_days_later_the_lesson_asks_and_an_old_choice_is_not_brought_back` (and `session.test.ts` R5) |
+| R5 ex3 offline completion | `lrn03_r5_ex3_offline_the_lesson_completes_and_its_completion_is_sent_when_the_connection_returns` (and `lib/sync.plt15.test.ts`) |
+| Same card | `lrn03_r5_help_on_a_card_then_back_lands_on_the_same_card` |
+| Help after a checked answer | `lrn03_r5_help_after_a_checked_answer_then_back_shows_the_same_exercise_and_its_result` |
+| Button shown from a lesson | `lrn03_r5_back_to_the_lesson_is_shown_in_the_assistant_when_coming_from_a_lesson`, `lrn03_r5_back_to_the_lesson_is_shown_in_the_human_request_when_coming_from_a_lesson` |
+| Button absent otherwise | `lrn03_r5_back_to_the_lesson_is_absent_when_the_assistant_is_opened_from_its_tab`, `lrn03_r5_back_to_the_lesson_is_absent_in_a_human_request_not_made_from_a_lesson`, `lrn03_r5_a_review_keeps_its_own_way_back_and_never_says_lesson` |
+| Lesson forgotten (reload) | `lrn03_r5_back_to_the_lesson_still_leads_somewhere_when_the_device_forgot_which_lesson` |
+| Nothing leaves the device (CMP-01 R1 ex2) | `lrn03_r5_the_route_and_the_assistant_carry_no_lesson_id_choice_or_progress`, `lrn03_r5_cmp01_r1_ex2_the_help_request_still_carries_no_lesson_name_or_answer`, `lrn03_r5_nothing_is_written_to_storage_for_the_return` |
+| Kept only as long as needed | `lrn03_r5_the_kept_choice_is_dropped_once_the_lesson_is_open_again`, `lrn03_r5_the_kept_choice_is_dropped_when_the_assistant_is_opened_from_its_tab` |
 
 ## Motivation
 
