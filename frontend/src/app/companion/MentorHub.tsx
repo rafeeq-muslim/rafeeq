@@ -7,9 +7,10 @@
 import * as React from "react"
 import { useNavigate } from "react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { IconChevronLeft, IconClock, IconDots, IconHeadset, IconLock, IconMessageCircle } from "@tabler/icons-react"
+import { IconChevronLeft, IconClock, IconDots, IconHeadset, IconInfoCircle, IconLock, IconMessageCircle } from "@tabler/icons-react"
 import { toast } from "sonner"
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -39,6 +40,23 @@ function MyMentor() {
   if (!m)
     return (
       <section className="flex flex-col items-start gap-4" aria-labelledby="mentor-title">
+        {mine.data?.mentor_ended && (
+          // ORG-02 R5: neutral, no reason and no organisation.
+          <Alert variant="info" data-slot="mentor-ended">
+            <IconInfoCircle stroke={1.75} />
+            <AlertTitle>{t("org.ended.title")}</AlertTitle>
+            <AlertDescription className="flex flex-col items-start gap-2">
+              {t("org.ended.body")}
+              <Button
+                variant="link"
+                className="h-auto px-0"
+                onClick={() => void mentorApi.dismissNotice().then(() => qc.invalidateQueries({ queryKey: ["cmp"] }), () => undefined)}
+              >
+                {t("org.ended.dismiss")}
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="flex items-center gap-4">
           <SpotIllustration kind="companion" size={80} />
           <div className="flex flex-col gap-1">

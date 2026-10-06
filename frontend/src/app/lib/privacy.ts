@@ -9,11 +9,15 @@
  *   guest's conversations with a person and the push subscription on the
  *   server; then the first-run language screen.
  * - Download a copy of my data (R6): one JSON file with this device's data
- *   and, for an account, what the server keeps (GET /api/me/export).
+ *   and, for an account, what the server keeps (GET /api/me/export), plus
+ *   the server's copy of this device's organisation link if it has one
+ *   (ORG-01). Erasing the device also removes that link.
  */
 import { api } from "@/app/lib/api"
 import { useAuth } from "@/app/stores/auth"
 import { helpHeaders } from "@/app/companion/store"
+import { linkState, unlinkOrg } from "@/app/org/api"
+import { useOrgLink } from "@/app/org/store"
 
 export const EXIT_URL = "https://www.bbc.com/weather"
 const PREFIX = "rafeeq."
@@ -66,9 +70,18 @@ export function deviceData(storage: Storage = localStorage): Record<string, unkn
   return out
 }
 
-export async function myData(): Promise<{ format: string; exported_at: string; device: Record<string, unknown>; account: unknown }> {
+export async function myData(): Promise<{
+  format: string
+  exported_at: string
+  device: Record<string, unknown>
+  account: unknown
+  organization_link?: unknown
+}> {
   const account = useAuth.getState().me ? await api<unknown>("/api/me/export") : null
-  return { format: "rafeeq-my-data/1", exported_at: new Date().toISOString(), device: deviceData(), account }
+  const out = { format: "rafeeq-my-data/1", exported_at: new Date().toISOString(), device: deviceData(), account }
+  // ORG-01: what the server keeps about this device's organisation link (asked only when there is one).
+  if (useOrgLink.getState().link) return { ...out, organization_link: await linkState().catch(() => null) }
+  return out
 }
 
 export async function downloadMyData() {
@@ -89,6 +102,7 @@ export async function wipeDevice(go: (url: string) => void = (url) => window.loc
   const guest = !useAuth.getState().me
   const headers = helpHeaders()
   if (guest && headers["X-Help-Token"]) await api("/api/help/guest", { method: "DELETE", headers }).catch(() => undefined)
+  await unlinkOrg().catch(() => undefined) // ORG-01 R4: an organisation link goes with the device
   await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
   try {
     const regs = (await navigator.serviceWorker?.getRegistrations?.()) ?? []

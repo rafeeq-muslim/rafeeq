@@ -31,6 +31,7 @@ const ReviewDesk = lazy(() => import("@/app/pages/roles/ReviewDesk"))
 const Team = lazy(() => import("@/app/pages/roles/Team"))
 const Admin = lazy(() => import("@/app/pages/roles/Admin"))
 const Referrals = lazy(() => import("@/app/companion/mentor/Referrals"))
+const Org = lazy(() => import("@/app/pages/roles/Org")) // ORG-01..03 coordinator
 const Gallery = lazy(() => import("./App"))
 
 const router = createBrowserRouter([
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
       { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5
       { path: "team", element: <RequireRole roles={["team"]}><Team /></RequireRole> },
       { path: "admin", element: <RequireRole roles={["admin"]}><Admin /></RequireRole> },
+      { path: "org", element: <RequireRole roles={["org_coordinator"]}><Org /></RequireRole> }, // ORG-02, ORG-03 (the API checks the organisation too)
     ],
   },
 ])
