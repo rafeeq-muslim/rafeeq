@@ -8,15 +8,21 @@
   a mentor sees it while the learner shares progress (CMP-02 R6).
 - EscalationRequested (KNW-01 R2/R3) creates nothing: a request exists only
   when the person asks for a human.
+- AccountDeleted (PLT-05 R5): the person's own group messages go with the
+  account, so nothing they wrote stays in the group. Their help requests,
+  memberships, mentor link and blocks already cascade on users.id; replies
+  they wrote as a mentor stay in the learners' own conversations without a
+  name (author SET NULL), and reports they filed stay without a reporter.
 """
 
 import uuid
 from datetime import UTC, datetime
 
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion import notify
-from app.companion.models import HelpRequest, MenteeStatus
+from app.companion.models import GroupMessage, HelpRequest, MenteeStatus
 from app.core.events import subscribe
 
 LANGS = {"ar", "en", "tl"}
@@ -40,6 +46,13 @@ async def on_danger(session: AsyncSession, payload: dict) -> None:
         )
     )
     notify.later(notify.to_responders, "urgent", "/inbox")
+
+
+@subscribe("AccountDeleted")
+async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
+    uid = payload.get("user_id")
+    if uid:
+        await session.execute(delete(GroupMessage).where(GroupMessage.author_id == uuid.UUID(str(uid))))
 
 
 @subscribe("EngagementStatusChanged")

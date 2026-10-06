@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { TopBar } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
-import { useSaved, type SavedKind } from "./saved"
+import { useSaved, type SavedKind } from "./savedStore"
 
 /** Sticky bar with a back arrow (mirrors in LTR). */
 export function DiscoverBar({ title, back = "/discover", end }: { title: React.ReactNode; back?: string; end?: React.ReactNode }) {

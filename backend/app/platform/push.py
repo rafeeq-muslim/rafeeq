@@ -1,5 +1,13 @@
 """PLT-06 web push and the MOT-05 gentle reminder.
 
+PLT-06 R2: two of the three notification types travel by push and each has
+its own switch on the device's subscription: the learning reminder
+(`reminder_enabled`) and replies from a human (`replies_enabled`). Both are
+off until the person turns them on (R1); turning one off leaves the other.
+The third type, the prayer reminder, is computed and shown on the device
+while Rafeeq is open and never reaches the server (PRC-05; PLT-06 open
+question default).
+
 A device subscribes with its push endpoint (no account needed). The
 reminder is off until the learner turns it on and picks a time (R1). The
 device tells us the days it learned (a date, nothing else) so we never
@@ -98,6 +106,11 @@ class ReminderIn(BaseModel):
     timezone: str | None = Field(default=None, max_length=64)
 
 
+class RepliesIn(BaseModel):
+    endpoint: str = Field(max_length=1024)
+    enabled: bool
+
+
 class LearnedIn(BaseModel):
     endpoint: str = Field(max_length=1024)
     day: date
@@ -151,6 +164,25 @@ async def set_reminder(body: ReminderIn, session: Session) -> dict:
         sub.timezone = body.timezone
     await session.commit()
     return {"enabled": sub.reminder_enabled, "time": sub.reminder_time}
+
+
+@router.post("/state")
+async def state(body: EndpointIn, session: Session) -> dict:
+    """The switches stored for this device, so «حسابي» shows what the server
+    will really do (the endpoint goes in the body, never in a URL)."""
+    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.endpoint))
+    if sub is None:
+        return {"subscribed": False, "reminder": False, "time": None, "replies": False}
+    return {"subscribed": True, "reminder": sub.reminder_enabled, "time": sub.reminder_time, "replies": sub.replies_enabled}
+
+
+@router.put("/replies")
+async def set_replies(body: RepliesIn, session: Session) -> dict:
+    """PLT-06 R2: this device's «replies from a human» switch."""
+    sub = await _by_endpoint(session, body.endpoint)
+    sub.replies_enabled = body.enabled
+    await session.commit()
+    return {"enabled": sub.replies_enabled}
 
 
 @router.post("/learned", status_code=204)
@@ -236,8 +268,15 @@ async def send(sub: PushSubscription, payload: dict) -> bool:
 
 
 async def send_to_user(session, user_id, payload: dict) -> int:
-    """PLT-06: e.g. a mentor's reply. Neutral text is the caller's job."""
-    subs = await session.scalars(select(PushSubscription).where(PushSubscription.user_id == user_id, PushSubscription.failed_at.is_(None)))
+    """PLT-06: e.g. a mentor's reply, to the account's devices whose replies
+    switch is on (R2). Neutral text is the caller's job."""
+    subs = await session.scalars(
+        select(PushSubscription).where(
+            PushSubscription.user_id == user_id,
+            PushSubscription.failed_at.is_(None),
+            PushSubscription.replies_enabled.is_(True),
+        )
+    )
     return sum([await send(s, payload) for s in subs])
 
 

@@ -27,11 +27,10 @@ import type { Content, Exercise } from "@/app/learning/types"
 import { check, emptyValue, ExerciseView, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 
 export default function Review() {
-  const { content, isLoading } = useContent()
+  const { content, isError } = useContent()
   // Issue #9 item 17: opened by its link or after a reload, the content
-  // arrives after the first render; the session is built only once it is
-  // here, and stays fixed after it starts.
-  if (!content && isLoading) {
+  // arrives after the first render (or the request waits, offline).
+  if (!content && !isError) {
     return (
       <div className="flex flex-col gap-4 p-5">
         <Skeleton className="h-4 w-full" />
@@ -46,8 +45,17 @@ function ReviewSession({ content }: { content: Content | undefined }) {
   const { t } = useT()
   const navigate = useNavigate()
   const learning = useLearning()
-  const [items] = React.useState(() => (content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []))
-  const [queue, setQueue] = React.useState(() => items.map((i) => i.exercise.id))
+  // Issue #9 item 17: the list follows the content and the progress (which
+  // may arrive after the first render, e.g. from the account) until the
+  // first answer; from then on it stays fixed for the session.
+  const live = React.useMemo(
+    () => (content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []),
+    [content, learning.mastery, learning.completed],
+  )
+  const [frozen, setFrozen] = React.useState<typeof live | null>(null)
+  const items = frozen ?? live
+  const [queueState, setQueue] = React.useState<string[] | null>(null)
+  const queue = queueState ?? items.map((i) => i.exercise.id)
   const [tried, setTried] = React.useState<string[]>([])
   const [value, setValue] = React.useState<Value>(null)
   const [result, setResult] = React.useState<Result>(null)
@@ -79,6 +87,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
   const onCheck = () => {
     if (!exercise || !item || !ready(exercise, value)) return
     const correct = check(exercise, value)
+    if (!frozen) setFrozen(items)
     if (!tried.includes(exercise.id)) {
       const wasMastered = levelOf(learning.mastery[item.objectiveId]) === "mastered"
       recordFirstAnswer(exercise, correct, "review")

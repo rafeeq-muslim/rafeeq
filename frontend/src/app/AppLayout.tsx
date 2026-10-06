@@ -8,10 +8,12 @@ import { DirectionProvider } from "@/components/ui/direction"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
 import { AppShell, type NavKey } from "@/components/rafeeq"
-import { useT } from "@/app/i18n"
+import { LOCALES, useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
+import { useGuideTracker } from "@/app/guide/useGuide"
 import { flushEvents } from "@/app/lib/api"
 import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
+import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
 import { applyTheme } from "@/app/lib/theme"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
@@ -45,14 +47,24 @@ export function useDocumentLocale() {
   }, [])
 }
 
-export function QuickExit() {
+/** PLT-05 R2: for those who turn it on, a button at the top of every screen
+ * and Shift pressed three times both leave at once (GOV.UK «Exit this page»). */
+const leave = () => exitNow()
+
+export function QuickExit({ exit = leave }: { exit?: () => void }) {
   const { t } = useT()
   const on = useDevice((s) => s.quickExit)
+  React.useEffect(() => {
+    if (!on) return
+    const onKey = shiftTimesThree(exit)
+    window.addEventListener("keyup", onKey)
+    return () => window.removeEventListener("keyup", onKey)
+  }, [on, exit])
   if (!on) return null
   return (
     <button
       type="button"
-      onClick={() => window.location.replace("https://www.bbc.com/weather")}
+      onClick={exit}
       className="fixed top-[calc(env(safe-area-inset-top,0px)+0.5rem)] end-3 z-50 flex items-center gap-1.5 rounded-full bg-card/95 px-3 py-2 text-caption font-bold text-foreground shadow-raised backdrop-blur"
     >
       <IconDoorExit className="size-4" stroke={2} aria-hidden="true" />
@@ -85,6 +97,7 @@ export default function AppLayout() {
   const theme = useDevice((s) => s.theme)
   const location = useLocation()
   const navigate = useNavigate()
+  useGuideTracker(location.pathname) // PLT-08 R3
 
   if (!onboarded) {
     // First visit at the bare address: the public landing page, whose call to
@@ -93,7 +106,10 @@ export default function AppLayout() {
       window.location.replace("/landing/")
       return null
     }
-    return <Navigate to="/welcome" replace />
+    // PLT-01 R2: a link may carry the language, and nothing else goes on.
+    const lang = new URLSearchParams(location.search).get("lang")
+    const known = LOCALES.some((l) => l.code === lang)
+    return <Navigate to={known ? `/welcome?lang=${lang}` : "/welcome"} replace />
   }
 
   const fullscreen = FULLSCREEN.some((r) => r.test(location.pathname))

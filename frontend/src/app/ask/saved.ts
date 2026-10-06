@@ -5,7 +5,7 @@
  * view can show it. The question text is never kept (plan §8.6: only with
  * explicit consent, which is not built yet).
  */
-import { useSaved } from "@/app/discover/saved"
+import { useSaved } from "@/app/discover/savedStore"
 import type { AskResponse } from "./types"
 
 export type SavedAnswer = { ask_id: string; lang: string; answer: string; source_ids: string[]; saved_at: string }

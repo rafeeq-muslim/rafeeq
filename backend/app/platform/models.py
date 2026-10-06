@@ -81,6 +81,8 @@ class PushSubscription(IdMixin, TimestampMixin, Base):
     # MOT-05 reminder: off until the learner turns it on.
     reminder_enabled: Mapped[bool] = mapped_column(Boolean, default=False)
     reminder_time: Mapped[str | None] = mapped_column(String(5), nullable=True)  # "21:00" local
+    # PLT-06 R2: replies from a human (CMP) have their own switch, off until turned on.
+    replies_enabled: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
     timezone: Mapped[str] = mapped_column(String(64), default="Asia/Riyadh")
     ignored_in_row: Mapped[int] = mapped_column(Integer, default=0)
     last_reminder_on: Mapped[str | None] = mapped_column(String(10), nullable=True)  # local date

@@ -28,6 +28,10 @@ type DeviceState = {
   /** MOT-05: mirrors the server reminder for this device's push subscription. */
   reminderOn: boolean
   reminderTime: string
+  /** PLT-06 R2: mirrors the server «replies from a person» switch of this device. */
+  repliesOn: boolean
+  /** PLT-07 R3: the Rafeeq tone (plays only once an approved tone exists). */
+  toneOn: boolean
   set: (patch: Partial<Omit<DeviceState, "set">>) => void
 }
 
@@ -36,8 +40,9 @@ const newId = () =>
     ? crypto.randomUUID()
     : Math.random().toString(36).slice(2) + Date.now().toString(36)
 
-function guessLocale(): Locale {
-  const l = (typeof navigator !== "undefined" ? navigator.language : "ar").toLowerCase()
+/** PLT-01 R1: the device's language, suggested on the first screen. */
+export function guessLocale(language = typeof navigator !== "undefined" ? navigator.language : "ar"): Locale {
+  const l = (language || "ar").toLowerCase()
   if (l.startsWith("ar")) return "ar"
   if (l.startsWith("tl") || l.startsWith("fil")) return "tl"
   if (l.startsWith("en")) return "en"
@@ -62,6 +67,8 @@ export const useDevice = create<DeviceState>()(
       preview: false,
       reminderOn: false,
       reminderTime: "20:00",
+      repliesOn: false,
+      toneOn: true,
       set: (patch) => set(patch),
     }),
     { name: "rafeeq.device", version: 1 },

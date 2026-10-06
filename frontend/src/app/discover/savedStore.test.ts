@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest"
-import { mergeSaved, useSaved, type SavedEntry } from "./saved"
+import { mergeSaved, useSaved, type SavedEntry } from "./savedStore"
 import { resolveSaved } from "./resolve"
 
 const e = (ref: string, at: string, kind: SavedEntry["kind"] = "card"): SavedEntry => ({ kind, ref, saved_at: at })

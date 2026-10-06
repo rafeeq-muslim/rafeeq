@@ -160,7 +160,12 @@
     });
     // "Start your journey": hand the chosen language to the app, but only for
     // a device that has not been through onboarding (frontend/src/app/stores/device.ts).
+    // PLT-01 R2: a language the visitor chose here travels in the link
+    // (/welcome?lang=tl), so the app starts in it; the link carries nothing else.
+    var chosen = null;
+    try { chosen = new URL(location.href).searchParams.get("lang") || localStorage.getItem("rafeeq.landing.lang"); } catch (err) {}
     document.querySelectorAll("[data-start]").forEach(function (a) {
+      if (chosen) a.setAttribute("href", "/welcome?lang=" + encodeURIComponent(LANG));
       a.addEventListener("click", function () {
         try {
           var raw = localStorage.getItem("rafeeq.device"), cur = raw ? JSON.parse(raw) : null;

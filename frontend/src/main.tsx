@@ -12,6 +12,7 @@ import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
+const Privacy = lazy(() => import("@/app/pages/Privacy"))
 const Home = lazy(() => import("@/app/pages/Home"))
 const Learn = lazy(() => import("@/app/pages/Learn"))
 const Lesson = lazy(() => import("@/app/pages/Lesson"))
@@ -24,6 +25,7 @@ const Me = lazy(() => import("@/app/pages/Me"))
 const Account = lazy(() => import("@/app/pages/Account"))
 const Practice = lazy(() => import("@/app/pages/Practice"))
 const Discover = lazy(() => import("@/app/pages/Discover"))
+const Guide = lazy(() => import("@/app/guide/GuideScreen"))
 const Inbox = lazy(() => import("@/app/pages/roles/Inbox"))
 const ReviewDesk = lazy(() => import("@/app/pages/roles/ReviewDesk"))
 const Team = lazy(() => import("@/app/pages/roles/Team"))
@@ -33,6 +35,7 @@ const Gallery = lazy(() => import("./App"))
 
 const router = createBrowserRouter([
   { path: "/welcome", element: <Welcome /> },
+  { path: "/privacy", element: <Privacy /> }, // PLT-05 R1: readable before onboarding and without an account
   { path: "/design", element: <Gallery /> },
   {
     path: "/",
@@ -50,6 +53,7 @@ const router = createBrowserRouter([
       { path: "me/account", element: <Account /> },
       { path: "practice/*", element: <Practice /> },
       { path: "discover/*", element: <Discover /> },
+      { path: "guide", element: <Guide /> }, // PLT-08 «كل ما في رفيق»
       { path: "inbox/*", element: <RequireRole roles={["mentor", "team"]}><Inbox /></RequireRole> }, // team: urgent requests (CMP-01 R6) + report queue (CMP-04 R3)
       { path: "review-desk/*", element: <RequireRole roles={["sharia_reviewer", "team"]}><ReviewDesk /></RequireRole> },
       { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5

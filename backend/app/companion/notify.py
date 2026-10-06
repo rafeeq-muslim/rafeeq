@@ -51,7 +51,13 @@ async def to_user(session: AsyncSession, user_id: uuid.UUID, kind: str, url: str
 
 async def to_endpoint(session: AsyncSession, endpoint: str, kind: str, locale: str, url: str) -> int:
     """A guest's own device (CMP-01 R5): the endpoint it gave with its request."""
-    sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == endpoint, PushSubscription.failed_at.is_(None)))
+    sub = await session.scalar(
+        select(PushSubscription).where(
+            PushSubscription.endpoint == endpoint,
+            PushSubscription.failed_at.is_(None),
+            PushSubscription.replies_enabled.is_(True),  # PLT-06 R2: the replies switch
+        )
+    )
     if sub is None:
         return 0
     return int(await push.send(sub, payload(kind, locale, url)))

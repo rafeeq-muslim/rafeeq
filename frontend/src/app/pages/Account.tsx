@@ -21,6 +21,7 @@ import { useT, type Key } from "@/app/i18n"
 import { ApiError, api } from "@/app/lib/api"
 import { onSignedIn } from "@/app/lib/sync"
 import { useAuth, type Me } from "@/app/stores/auth"
+import { PrivacyLink } from "@/app/pages/Privacy"
 
 type Tokens = { access_token: string; user: Me }
 
@@ -38,6 +39,9 @@ function errorKey(e: unknown): Key {
 export default function Account() {
   const me = useAuth((s) => s.me)
   const [mode, setMode] = React.useState<"create" | "signin">("create")
+  // PLT-02 R3: the new account's credentials stay on screen (once) even though
+  // the person is now signed in; without this the settings replaced them at once.
+  const [showingCredentials, setShowingCredentials] = React.useState(false)
   const { t } = useT()
   const navigate = useNavigate()
   return (
@@ -49,10 +53,16 @@ export default function Account() {
             {t("common.back")}
           </Button>
         }
-        title={me ? t("acct.settings") : mode === "create" ? t("acct.create") : t("acct.signinTitle")}
+        title={me && !showingCredentials ? t("acct.settings") : mode === "create" ? t("acct.create") : t("acct.signinTitle")}
       />
       <div className="mx-auto flex w-full max-w-md flex-col gap-6 px-4 pt-5 pb-12">
-        {me ? <Settings me={me} /> : mode === "create" ? <Create onSignin={() => setMode("signin")} /> : <SignIn onCreate={() => setMode("create")} />}
+        {me && !showingCredentials ? (
+          <Settings me={me} />
+        ) : mode === "create" ? (
+          <Create onSignin={() => setMode("signin")} onCreated={() => setShowingCredentials(true)} />
+        ) : (
+          <SignIn onCreate={() => setMode("create")} />
+        )}
       </div>
     </>
   )
@@ -68,7 +78,7 @@ function DataPromise() {
   )
 }
 
-function Create({ onSignin }: { onSignin: () => void }) {
+function Create({ onSignin, onCreated }: { onSignin: () => void; onCreated: () => void }) {
   const { t, locale } = useT()
   const setAuth = useAuth((s) => s.set)
   const [form, setForm] = React.useState({ display_name: "", username: "", password: "" })
@@ -101,9 +111,10 @@ function Create({ onSignin }: { onSignin: () => void }) {
         method: "POST",
         body: { ...form, locale, invite_code: invite || undefined, gender: gender || undefined },
       })
+      onCreated()
+      setCreated({ username: out.user.username, password: form.password })
       setAuth({ token: out.access_token, me: out.user, ready: true })
       await onSignedIn()
-      setCreated({ username: out.user.username, password: form.password })
     } catch (err) {
       if (err instanceof ApiError && err.code === "username_taken") {
         setTaken((err.detail as { suggestions: string[] }).suggestions)
@@ -152,6 +163,7 @@ function Create({ onSignin }: { onSignin: () => void }) {
   return (
     <form onSubmit={submit} className="flex flex-col gap-6" noValidate>
       <p className="text-body text-muted-foreground">{t("me.saveBody")}</p>
+      <PrivacyLink className="-mt-3" />
       <Button type="button" variant="secondary" className="w-fit" onClick={() => suggest()}>
         <IconDice5 data-icon="inline-start" stroke={1.75} />
         {t("acct.suggest")}
@@ -248,6 +260,10 @@ function Create({ onSignin }: { onSignin: () => void }) {
       </FieldGroup>
 
       <DataPromise />
+      {/* PLT-02 R4: known before the account exists, not only after. */}
+      <p className="text-label text-warning" data-slot="no-recovery">
+        {t("acct.noRecoveryBefore")}
+      </p>
       {error && <p role="alert" className="text-label text-destructive">{t(error)}</p>}
       <Button type="submit" size="lg" disabled={!valid || busy}>
         {busy && <Spinner data-icon="inline-start" />}

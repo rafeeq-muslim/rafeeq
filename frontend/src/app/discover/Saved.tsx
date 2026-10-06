@@ -27,7 +27,7 @@ import { CardBody } from "./CardView"
 import { DiscoverBar } from "./parts"
 import { useCards, useLibrary } from "./queries"
 import { resolveSaved } from "./resolve"
-import { pushSaved, useSaved } from "./saved"
+import { pushSaved, useSaved } from "./savedStore"
 import type { DailyCardData, LibraryItemData } from "./types"
 
 export default function Saved() {
