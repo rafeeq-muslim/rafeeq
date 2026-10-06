@@ -31,6 +31,7 @@ import { ErrorTurn, GuideTurn, HELP_HUMAN, PendingTurn, QuestionTurn, ResponseTu
 import { QUESTION_MAX, useAsk } from "@/app/ask/store"
 import type { AskResponse, Entrypoint } from "@/app/ask/types"
 import { SUGGESTIONS } from "@/app/ask/suggestions"
+import { PrivacyLink } from "@/app/pages/Privacy"
 
 function useOnline() {
   const [online, setOnline] = React.useState(() => (typeof navigator === "undefined" ? true : navigator.onLine))
@@ -137,6 +138,7 @@ export default function Ask() {
 
       <div className="flex flex-1 flex-col gap-5 px-4 pt-4 pb-4">
         <AiDisclosure>{t("ask.disclosure")}</AiDisclosure>
+        {turns.length === 0 && <PrivacyLink className="-mt-2" />}{/* PLT-05 R1: the question leaves the device for the AI */}
 
         {turns.length === 0 ? (
           <section className="flex flex-1 flex-col items-center gap-4 py-6 text-center">

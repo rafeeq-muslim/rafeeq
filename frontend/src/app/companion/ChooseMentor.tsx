@@ -24,6 +24,7 @@ import { useAuth } from "@/app/stores/auth"
 import { type MentorCardData, errorCode, mentorApi, useMine, useSuggestions } from "./api"
 import { initial, langName } from "./format"
 import { ScreenBar, SectionTitle } from "./Screen"
+import { PrivacyLink } from "@/app/pages/Privacy"
 
 /** «أنا أخ / أخت» + my languages — asked only where matching needs it. */
 export function MatchForm({
@@ -62,6 +63,7 @@ export function MatchForm({
       <div className="flex flex-col gap-1">
         <SectionTitle>{t("cmp.choose.aboutYou")}</SectionTitle>
         <p className="text-body text-muted-foreground">{t("cmp.choose.why")}</p>
+        <PrivacyLink label="privacy.beforeYouChoose" />{/* PLT-05 R1: gender is kept for matching */}
       </div>
       <FieldGroup>
         <FieldSet>

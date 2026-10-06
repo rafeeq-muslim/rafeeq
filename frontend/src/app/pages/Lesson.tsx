@@ -33,6 +33,7 @@ import { recordFirstAnswer } from "@/app/learning/answers"
 import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
 import { lessonStatus, nextLesson } from "@/app/learning/path"
+import { GlossaryText, useGlossary } from "@/app/lesson/GlossaryText"
 import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
@@ -249,6 +250,7 @@ function Player({ lesson }: { lesson: LessonT }) {
 function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
   const { t, locale } = useT()
   const card = lesson.cards[index]
+  const glossary = useGlossary(locale) // PLT-03 R5: approved terms only; none → plain text
   const p = locale === "ar" ? lesson.source?.page_ar : lesson.source?.page
   const page = p && t("lesson.source", { p })
   return (
@@ -271,7 +273,9 @@ function CardView({ lesson, index }: { lesson: LessonT; index: number }) {
         </div>
       )}
       {typeof card.text === "string" && card.text && (
-        <p className={cn("font-reading text-reading whitespace-pre-line text-foreground", card.hadith && "border-s-4 border-primary/30 ps-4")}>{card.text}</p>
+        <p className={cn("font-reading text-reading whitespace-pre-line text-foreground", card.hadith && "border-s-4 border-primary/30 ps-4")}>
+          <GlossaryText text={card.text} terms={card.hadith ? undefined : glossary.data} />
+        </p>
       )}
       {card.quran && <VerseBlock quran={card.quran} />}
       {card.audio && card.audio.length > 0 && <Recitation files={card.audio} />}
