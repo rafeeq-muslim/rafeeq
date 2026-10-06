@@ -11,7 +11,7 @@
 | R2 (join by code) | `groups.py::join` | Account; `409 match_profile_required` without a gender; gender mismatch or language not spoken → `403 group_not_suitable` (no details); full → `409 group_full`; already in a group → `409 already_in_group`. Publishes `GroupJoined {group_id, user_id}` |
 | R3 (display name only) | `groups.py::detail` | Members `{id, display_name, is_me}` + mentor display name. No username, status or progress |
 | R4 (text chat with reporting, no contacts) | `groups.py::messages` / `post` | Members + group mentor only (`403` otherwise). `text.contact_violation` → `422`. Hidden messages and blocked authors are filtered (CMP-04). Rate limit 20/min |
-| R5 (leave / remove, silently) | `groups.py::leave` / `remove_member` | Deletes the membership, no system message, publishes `GroupLeft {group_id, user_id}` |
+| R5 (leave / remove, silently) | `groups.py::leave` / `remove_member` | Deletes the membership, no system message, publishes `GroupLeft {group_id, user_id}`. A removal (mentor, or the team's `remove_member` in CMP-04) also writes `cmp_group_removals (group_id, user_id)`; `join` then answers `403 group_unavailable` for that group only (see "Removed members" below) |
 | R6 (challenge on the group page) | frontend `ChallengeCard` | Reads MOT-06 `GET /api/groups/{id}/challenge`; shows «6 من 8 أتمّوا» |
 
 ## 2. Endpoints
@@ -38,8 +38,17 @@ Learner: `/mentor/group` (join by code, or the group: challenge, members, chat).
 | R4 ex3 telegram link | `test_cmp05_r4_messenger_link_is_rejected` |
 | R5 ex1 leave silently | `test_cmp05_r5_leaving_is_silent_and_emits_group_left` |
 | R5 ex2 mentor removes | `test_cmp05_r5_mentor_removes_member` |
+| R5 ex3 removed member can't rejoin by code | `test_cmp05_r5_removed_member_cannot_rejoin_with_the_same_code`, `test_cmp05_r5_removal_does_not_affect_other_groups_or_members`; team removal: `test_cmp04_r4_team_removes_member_and_emits_group_left`, `test_cmp04_r4_team_removal_holds_even_if_the_author_left_first` (`test_cmp04_safety.py`) |
+| R5 ex4 left on his own, rejoins | `test_cmp05_r5_member_who_left_can_rejoin` |
+| PLT-05 R5 deletion clears the removal | `test_cmp05_r5_account_deletion_clears_the_removal` |
 | R6 ex1 «6 من 8» | `test_cmp05_r6_group_page_challenge_shows_count_only` (in `test_mot06_challenges.py`) |
 
 ## Rewrite (PR #21, 2026-10-06)
 
 R1: `DEFAULT_CAPACITY = 10`, `MAX_CAPACITY = 15`, `MENTOR_MEMBER_LIMIT = 25` as the sum of the mentor's group caps (`409 {code: mentor_member_limit, limit, remaining}`); `PUT /api/groups/{id}/capacity` for the mentor (2–15, not below current members, within 25). Frontend: cap editor in the members drawer and the hint in the create form. Tests: `backend/tests/test_cmp05_groups.py` (`test_cmp05_r1_*`).
+
+## Removed members (cmp-05-r5-removed-rejoin, 2026-10-06)
+
+A member the mentor removed (`DELETE /api/groups/{id}/members/{user_id}`) or the team removed (CMP-04 `remove_member`) used to rejoin at once with the same code. `remove(..., removed=True)` now also writes one row in `cmp_group_removals (group_id, user_id, created_at)` (migration `2b3c4d5e6f7a`, additive); `join` answers `403 group_unavailable` for that group only, shown as `cmp.group.err.unavailable` (neutral, no reason, CMP-04 R5). Leaving on one's own writes nothing, so that member can rejoin. The team's removal is recorded even when the author left before the team acted. The row cascades with the group and with the person's account (PLT-05 R5). No undo yet: an open question in the feature doc.
+
+Why a per-person record and not a new code: rotating the code would lock out every other person the mentor already gave it to, and a removed member would still learn the new code from any member; the record blocks only the removed person and only for that group.

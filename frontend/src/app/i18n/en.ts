@@ -658,6 +658,7 @@ export const en: Dict = {
   "cmp.group.err.notSuitable": "This code isn't for you. Ask your mentor for another group's code.",
   "cmp.group.err.full": "The group is full. Ask your mentor for another group.",
   "cmp.group.err.already": "You're in a group now. Leave it first to join another.",
+  "cmp.group.err.unavailable": "You can't join this group. Ask your mentor for another group.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "Members",
   "cmp.group.membersCount": "Members: {n}",
   "cmp.group.ledBy": "Led by {name}",

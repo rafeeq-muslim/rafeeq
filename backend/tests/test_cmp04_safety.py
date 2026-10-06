@@ -137,6 +137,20 @@ async def test_cmp04_r4_team_removes_member_and_emits_group_left(client):
     async with SessionLocal() as s:
         left = [e.payload for e in await s.scalars(select(OutboxEvent).where(OutboxEvent.name == "GroupLeft"))]
     assert left == [{"group_id": g["id"], "user_id": str(other.id)}]
+    r = await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=other.h)
+    assert r.status_code == 403 and r.json()["detail"] == "group_unavailable"  # no rejoin with the same code
+
+
+async def test_cmp04_r4_team_removal_holds_even_if_the_author_left_first(client):
+    _, layla, other, _, g = await setup_group(client)
+    team = await person(client, "team-one", roles=("team",))
+    mid = await say(client, other, g["id"], "Join our special group, the only true path")
+    await report(client, layla, mid, "recruitment")
+    await client.post(f"/api/groups/{g['id']}/leave", headers=other.h)
+    rid = (await queue(client, team))[0]["id"]
+    assert (await client.post(f"/api/team/reports/{rid}", json={"action": "remove_member"}, headers=team.h)).status_code == 200
+    r = await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=other.h)
+    assert r.status_code == 403 and r.json()["detail"] == "group_unavailable"
 
 
 async def test_cmp04_r4_group_mentor_hides_message_with_record(client):

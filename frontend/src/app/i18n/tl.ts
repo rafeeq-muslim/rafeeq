@@ -659,6 +659,7 @@ export const tl: Dict = {
   "cmp.group.err.notSuitable": "Hindi para sa iyo ang code na ito. Humingi sa mentor mo ng code ng ibang grupo.",
   "cmp.group.err.full": "Puno na ang grupo. Humingi sa mentor mo ng ibang grupo.",
   "cmp.group.err.already": "Nasa isang grupo ka na. Umalis muna para sumali sa iba.",
+  "cmp.group.err.unavailable": "Hindi ka makakasali sa grupong ito. Humingi sa mentor mo ng ibang grupo.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "Mga miyembro",
   "cmp.group.membersCount": "Mga miyembro: {n}",
   "cmp.group.ledBy": "Pinangungunahan ni {name}",
