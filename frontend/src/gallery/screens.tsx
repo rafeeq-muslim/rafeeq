@@ -308,7 +308,7 @@ function AskScreen() {
             </MessageScrollerViewport>
           </MessageScroller>
         </MessageScrollerProvider>
-        <div className="sticky bottom-0 bg-background/90 px-3 pt-2 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur">
+        <div className="sticky bottom-0 border-t bg-card px-3 pt-2 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]">
           <AskComposer />
         </div>
       </AppShell>

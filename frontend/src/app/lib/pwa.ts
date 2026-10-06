@@ -7,7 +7,9 @@
  * - check for a new version when the app becomes visible again, and hourly;
  * - when the new version takes over, reload quietly unless the learner is in
  *   a lesson, review or placement (LRN-03 R5: never interrupt one); there an
- *   update bar offers it, and the reload happens as soon as they leave.
+ *   update bar offers it, and the reload happens as soon as they leave;
+ * - the same wait applies while a screen holds something a reload would cut
+ *   (`holdUpdateWhile`: the Ask conversation, KNW-01 R7).
  */
 import * as React from "react"
 
@@ -19,6 +21,19 @@ export const SW_URL = "/sw.js"
 export const SW_SCOPE = "/"
 
 export const inLearningFlow = (path = stripBase(location.pathname)) => LEARNING_FLOW.some((r) => r.test(path))
+
+/** Reasons, other than a learning flow, to keep the page as it is for now. */
+const holds = new Set<(path: string) => boolean>()
+export function holdUpdateWhile(hold: (path: string) => boolean) {
+  holds.add(hold)
+  return () => void holds.delete(hold)
+}
+/** True while an automatic reload would interrupt the learner at `path`. */
+export function updateMustWait(path = stripBase(location.pathname)): boolean {
+  if (inLearningFlow(path)) return true
+  for (const hold of holds) if (hold(path)) return true
+  return false
+}
 
 let updateReady = false
 const listeners = new Set<() => void>()
@@ -42,7 +57,9 @@ export function applyUpdate() {
 
 /** Called on every route change: a pending update applies once the learner leaves a lesson. */
 export function maybeApplyUpdate(path: string) {
-  if (updateReady && !inLearningFlow(path)) reloadWhenOnline()
+  if (!updateReady) return
+  if (updateMustWait(path)) notify() // the update bar offers it meanwhile
+  else reloadWhenOnline()
 }
 
 // PLT-15 R6: an update never reloads the app by itself while offline; it
@@ -63,15 +80,20 @@ function reloadWhenOnline() {
   )
 }
 
+/** A newer version took over this page. */
+export function onNewVersion(path = stripBase(location.pathname)) {
+  if (updateReady) return
+  updateReady = true
+  if (updateMustWait(path)) notify()
+  else reloadWhenOnline()
+}
+
 export function registerServiceWorker() {
   if (import.meta.env.DEV || !("serviceWorker" in navigator)) return
   const hadController = !!navigator.serviceWorker.controller // first install: nothing to replace
 
   navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (!hadController || updateReady) return
-    updateReady = true
-    if (inLearningFlow()) notify()
-    else reloadWhenOnline()
+    if (hadController) onNewVersion()
   })
 
   window.addEventListener("load", () => {
