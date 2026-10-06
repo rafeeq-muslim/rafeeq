@@ -4,6 +4,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { MemoryRouter } from "react-router"
 
 import { translate, type Key } from "@/app/i18n"
 import { useAuth, type Me as MeUser } from "@/app/stores/auth"
@@ -15,6 +16,14 @@ import { useOrgLink } from "@/app/org/store"
 import { signOutAndErase } from "@/app/lib/privacy"
 import { DISCREET_PREF, PREF_CACHE } from "@/app/lib/discreetPref"
 import { SignOutButton } from "@/app/privacy/SignOutButton"
+import { useNotebook, type Note } from "@/app/companion/notebook"
+import { usePractice, type Habit } from "@/app/practice/store"
+import { useSaved, type SavedEntry } from "@/app/discover/savedStore"
+import { ar } from "@/app/i18n/ar"
+import { en } from "@/app/i18n/en"
+import { tl } from "@/app/i18n/tl"
+
+const { default: Privacy, POLICY_SECTIONS } = await import("@/app/pages/Privacy")
 
 const ar_ = (k: Key) => translate("ar", k)
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } })
@@ -51,6 +60,7 @@ function stubFetch(handler: (url: string, method: string) => Response | undefine
 const merged = (url: string) => {
   if (url === "/api/me/learning") return json({ completed: { "u1-l1": { first: "2026-10-06", last: "2026-10-06", times: 1 } }, unlockedUnits: ["u1"], mastery: {} })
   if (url === "/api/me/motivation") return json({ days: ["2026-10-06"], badges: {} })
+  if (url === "/api/me/saved") return json({ items: [] })
   return undefined
 }
 
@@ -90,6 +100,9 @@ beforeEach(() => {
   useAuth.setState({ token: "t", me: ME })
   useLearning.setState({ completed: {}, unlockedUnits: [], mastery: {} })
   useMotivation.setState({ days: [], badges: {} })
+  useNotebook.setState({ notes: [] })
+  usePractice.setState({ habits: [] })
+  useSaved.setState({ items: [] })
   deviceDataAtLogout = undefined
   setOnline(true)
 })
@@ -155,7 +168,7 @@ describe("plt-05 r7 sign-out erases this device", () => {
     expect(putLearning).toBeLessThan(order.indexOf("/api/auth/logout"))
     expect(deviceDataAtLogout).not.toBeNull() // erased only after logout
     expect(localStorage.getItem("rafeeq.learning")).toBeNull()
-    expect(screen.queryByText(ar_("acct.signOut.unsavedTitle"))).toBeNull()
+    expect(screen.queryByText(ar_("acct.signOut.lostTitle"))).toBeNull()
   })
 
   it("plt05_r7_ex3_offline_with_unsaved_progress_asks_and_waiting_keeps_everything", async () => {
@@ -168,10 +181,10 @@ describe("plt-05 r7 sign-out erases this device", () => {
     const before = localStorage.getItem("rafeeq.learning")
 
     fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
-    expect(await screen.findByText(ar_("acct.signOut.unsavedTitle"))).toBeTruthy()
+    expect(await screen.findByText(ar_("acct.signOut.lostTitle"))).toBeTruthy()
     fireEvent.click(screen.getByRole("button", { name: ar_("acct.signOut.wait") }))
 
-    await waitFor(() => expect(screen.queryByText(ar_("acct.signOut.unsavedTitle"))).toBeNull())
+    await waitFor(() => expect(screen.queryByText(ar_("acct.signOut.lostTitle"))).toBeNull())
     expect(leave).not.toHaveBeenCalled()
     expect(calls).toEqual([])
     expect(useAuth.getState().token).toBe("t")
@@ -181,7 +194,7 @@ describe("plt-05 r7 sign-out erases this device", () => {
   it("plt05_r7_ex3_offline_with_unsaved_progress_can_still_sign_out_and_erase", async () => {
     learnedOneLesson()
     setOnline(false)
-    stubFetch()
+    stubFetch(merged)
     const leave = vi.fn(async () => undefined)
     render(<SignOutButton leave={leave} />)
 
@@ -193,26 +206,26 @@ describe("plt-05 r7 sign-out erases this device", () => {
 
   it("plt05_r7_ex3_server_unreachable_with_progress_asks_too", async () => {
     learnedOneLesson()
-    stubFetch((url) => (url.startsWith("/api/me/") ? json({ detail: "down" }, 503) : undefined))
+    stubFetch((url) => (url.startsWith("/api/me/") ? json({ detail: "down" }, 503) : merged(url)))
     const leave = vi.fn(async () => undefined)
     render(<SignOutButton leave={leave} />)
 
     fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
 
-    expect(await screen.findByText(ar_("acct.signOut.unsavedTitle"))).toBeTruthy()
+    expect(await screen.findByText(ar_("acct.signOut.lostTitle"))).toBeTruthy()
     expect(leave).not.toHaveBeenCalled()
   })
 
   it("plt05_r7_offline_with_no_progress_on_the_device_signs_out_without_asking", async () => {
     setOnline(false)
-    stubFetch()
+    stubFetch(merged)
     const leave = vi.fn(async () => undefined)
     render(<SignOutButton leave={leave} />)
 
     fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
 
     await waitFor(() => expect(leave).toHaveBeenCalledOnce())
-    expect(screen.queryByText(ar_("acct.signOut.unsavedTitle"))).toBeNull()
+    expect(screen.queryByText(ar_("acct.signOut.lostTitle"))).toBeNull()
   })
 
   it("plt05_r7_ex4_permissions_org_link_and_conversations_stay_and_this_device_gets_no_more_pushes", async () => {
@@ -229,5 +242,100 @@ describe("plt-05 r7 sign-out erases this device", () => {
     expect(calls.some((c) => c.url.startsWith("/api/me") && c.method === "DELETE")).toBe(false)
     expect(calls).toContainEqual({ url: "/api/push/unsubscribe", method: "POST", body: { endpoint: sub.endpoint } })
     expect(sub.unsubscribe).toHaveBeenCalledOnce()
+  })
+
+  // --- owner's follow-up on PR #42 ------------------------------------------
+
+  const note: Note = { id: "n1", text: "سؤال", createdAt: "2026-10-06T10:00:00Z", sentTo: null, sentAt: null }
+  const habit: Habit = { id: "h1", title: "المشي", worship: false, createdAt: "2026-10-06T10:00:00Z" }
+  const savedItem: SavedEntry = { kind: "card", ref: "c1", saved_at: "2026-10-06T10:00:00Z" }
+  const dialogText = () => screen.getByRole("alertdialog").textContent ?? ""
+
+  it("plt05_r7_device_only_notebook_and_habits_are_named_in_one_dialog_with_cancel", async () => {
+    useNotebook.setState({ notes: [note] })
+    usePractice.setState({ habits: [habit] })
+    stubFetch(merged)
+    const leave = vi.fn(async () => undefined)
+    render(<SignOutButton leave={leave} />)
+
+    fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
+    await screen.findByText(ar_("acct.signOut.lostTitle"))
+
+    expect(screen.getAllByRole("alertdialog")).toHaveLength(1)
+    expect(dialogText()).toContain(ar_("acct.signOut.deviceOnly"))
+    expect(dialogText()).toContain(ar_("acct.signOut.lost.notebook"))
+    expect(dialogText()).toContain(ar_("acct.signOut.lost.habits"))
+    expect(dialogText()).not.toContain(ar_("acct.signOut.lost.progress"))
+    expect(dialogText()).not.toContain(ar_("acct.signOut.lost.saved"))
+    fireEvent.click(screen.getByRole("button", { name: ar_("common.cancel") }))
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    expect(leave).not.toHaveBeenCalled()
+    expect(useNotebook.getState().notes).toHaveLength(1)
+  })
+
+  it("plt05_r7_saved_items_that_reached_the_account_are_not_named", async () => {
+    useSaved.setState({ items: [savedItem] })
+    stubFetch((url) => (url === "/api/me/saved" ? json({ items: [savedItem] }) : merged(url)))
+    const leave = vi.fn(async () => undefined)
+    render(<SignOutButton leave={leave} />)
+
+    fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
+
+    await waitFor(() => expect(leave).toHaveBeenCalledOnce())
+    expect(calls.some((c) => c.url === "/api/me/saved" && c.method === "PUT")).toBe(true)
+  })
+
+  it("plt05_r7_offline_progress_saved_items_and_notebook_share_one_dialog_that_offers_waiting", async () => {
+    learnedOneLesson()
+    useSaved.setState({ items: [savedItem] })
+    useNotebook.setState({ notes: [note] })
+    setOnline(false)
+    stubFetch(merged)
+    render(<SignOutButton leave={vi.fn(async () => undefined)} />)
+
+    fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
+    await screen.findByText(ar_("acct.signOut.lostTitle"))
+
+    expect(screen.getAllByRole("alertdialog")).toHaveLength(1)
+    for (const k of ["acct.signOut.offline", "acct.signOut.lost.progress", "acct.signOut.lost.saved", "acct.signOut.lost.notebook"] as Key[]) expect(dialogText()).toContain(ar_(k))
+    expect(screen.getByRole("button", { name: ar_("acct.signOut.wait") })).toBeTruthy()
+    expect(screen.getByRole("button", { name: ar_("acct.signOut.anyway") })).toBeTruthy()
+  })
+
+  it("plt05_r7_server_rejection_says_waiting_will_not_help_and_offers_cancel", async () => {
+    learnedOneLesson()
+    stubFetch((url) => (url === "/api/me/learning" ? json({ detail: "invalid" }, 422) : merged(url)))
+    render(<SignOutButton leave={vi.fn(async () => undefined)} />)
+
+    fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
+    await screen.findByText(ar_("acct.signOut.lostTitle"))
+
+    expect(dialogText()).toContain(ar_("acct.signOut.rejected"))
+    expect(dialogText()).not.toContain(ar_("acct.signOut.offline"))
+    expect(screen.getByRole("button", { name: ar_("common.cancel") })).toBeTruthy()
+    expect(screen.queryByRole("button", { name: ar_("acct.signOut.wait") })).toBeNull()
+  })
+
+  it("plt05_r7_server_unavailable_is_treated_like_offline_not_as_a_rejection", async () => {
+    learnedOneLesson()
+    stubFetch((url) => (url === "/api/me/learning" ? json({ detail: "down" }, 503) : merged(url)))
+    render(<SignOutButton leave={vi.fn(async () => undefined)} />)
+
+    fireEvent.click(screen.getByRole("button", { name: ar_("me.signout") }))
+    await screen.findByText(ar_("acct.signOut.lostTitle"))
+
+    expect(dialogText()).toContain(ar_("acct.signOut.offline"))
+    expect(screen.getByRole("button", { name: ar_("acct.signOut.wait") })).toBeTruthy()
+  })
+
+  it("plt05_r7_privacy_policy_says_sign_out_erases_the_device_in_all_three_languages", () => {
+    expect(POLICY_SECTIONS).toContain("signout")
+    for (const d of [ar, en, tl] as Record<string, string>[]) {
+      expect(d["policy.signout.title"]).toBeTruthy()
+      expect(d["policy.signout.body"]).toBeTruthy()
+    }
+    render(<MemoryRouter><Privacy /></MemoryRouter>)
+    expect(screen.getByRole("heading", { name: ar_("policy.signout.title") })).toBeTruthy()
+    expect(screen.getByText(ar_("policy.signout.body"))).toBeTruthy()
   })
 })

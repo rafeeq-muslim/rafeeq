@@ -2,7 +2,7 @@
  * source of truth while offline; each sync merges both sides on the server
  * (union of lessons, latest answer per objective, larger set of learning
  * days) and the device takes the merged result. Guests never call this. */
-import { api } from "@/app/lib/api"
+import { ApiError, api } from "@/app/lib/api"
 import { claimGuestRequests } from "@/app/companion/api"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
@@ -24,8 +24,17 @@ let running: Promise<void> | null = null
 
 const offline = () => typeof navigator !== "undefined" && !navigator.onLine
 
-/** One merge with the account copy; true when the server has the device's progress. */
-async function pushAndMerge(): Promise<boolean> {
+/** PLT-05 R7: how saving to the account went. Waiting helps only for
+ * "offline" and "unreachable"; "rejected" is the server refusing the data. */
+export type SaveResult = "ok" | "offline" | "unreachable" | "rejected"
+
+export function saveFailure(e: unknown): SaveResult {
+  const s = e instanceof ApiError ? e.status : 0
+  return s >= 400 && s < 500 && s !== 408 && s !== 429 ? "rejected" : "unreachable"
+}
+
+/** One merge with the account copy. */
+async function pushAndMerge(): Promise<SaveResult> {
   try {
     const L = useLearning.getState()
     const M = useMotivation.getState()
@@ -41,9 +50,9 @@ async function pushAndMerge(): Promise<boolean> {
       mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
     })
     M.replaceAll({ days: m.days, badges: m.badges })
-    return true
-  } catch {
-    return false /* next change or sign-in retries */
+    return "ok"
+  } catch (e) {
+    return saveFailure(e) /* next change or sign-in retries */
   }
 }
 
@@ -70,10 +79,10 @@ export function hasLocalProgress(): boolean {
   )
 }
 
-/** PLT-05 R7: save this device's progress to the account before signing out.
- * True when it is saved now; false offline or when the server is unreachable. */
-export async function flushProgress(): Promise<boolean> {
-  if (!useAuth.getState().token || offline()) return false
+/** PLT-05 R7: save this device's progress to the account before signing out. */
+export async function flushProgress(): Promise<SaveResult> {
+  if (!useAuth.getState().token) return "rejected"
+  if (offline()) return "offline"
   if (running) await running
   return pushAndMerge()
 }
