@@ -34,8 +34,14 @@ Live: https://rafeeq.nan.sa (every push to `main` deploys; health check + automa
 ## 2026-10-06 08:25
 - Merged PR #7 (مهند): lesson-by-lesson Sharia review of unit 1 (`content/units/unit-01/review.md`; 22 objectives, 46 exercises). Next step is his: approve each lesson per language in the review desk, which now also plays each lesson's audio and support video.
 
+## 2026-10-06 afternoon
+- Merged PRs #8–#14, #16–#20 (مهند, Musallam) and built each the same day: issue #9 items 1–16 (crashes, review timing, guide message, stale app version, media, mistake feedback), learner names for objectives, verse excerpts, KNW-01/02 chatbot reliability and source coverage, islamqa as a main source with a weekly refresh.
+- Status of every issue #9 item, with commits: https://github.com/rafeeq-muslim/rafeeq/issues/9#issuecomment-6019884860. Open there: serving the support videos from Rafeeq's own store (item 12, part 2).
+- Fixed the wake-up workflow: its concurrency group cancelled pending runs while CI or a deploy held the runners, so some teammate events were never delivered.
+- PR #15 (draft starter answers and reference set) waits for مهند and Musallam; not self-merged.
+
 ## State
-All features in the PRDs are built, tested (237 backend, 86 frontend) and deployed. What remains needs people: Sharia approval of the content (nothing is shown to learners before it), the five postponed items, and the four server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
+All features in the PRDs are built, tested (247 backend, 131 frontend) and deployed. Content merged to `main` is shown directly (rules.md §1.4, changed 2026-10-06); the review desk withdraws a version by returning it. What remains needs people: PR #15, the five postponed items, and the server-owner security items. New PRs or teammate commits follow the PRD → plan → code → tests procedure.
 
 ## Credentials and access (never in git)
 - Secrets: `/home/naser/.config/rafeeq/secrets.env` (OpenRouter key, DB, JWT, VAPID, bootstrap admin `rafeeq-admin`).
@@ -46,4 +52,4 @@ See `decisions-for-review.md` → "Postponed: needs you" (email provider, helpli
 
 ## Next
 1. Keep watching GitHub for new PRs and commits; apply the PRD → plan → code → tests procedure to anything new.
-2. When مهند approves content, walk every learner screen on the live site in all three languages.
+2. Walk every learner screen on the live site in all three languages after each content merge.
