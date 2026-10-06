@@ -33,6 +33,36 @@ def strip_markers(text: str) -> str:
     return MARKER.sub(" ", text)
 
 
+_BRACED = re.compile(r"\{\{([^{}]*)\}\}")
+_Q_PREFIX = re.compile(r"^\s*q\s*:\s*", re.I)
+_Q_ANY = re.compile(r"(^|[\s,;،])q\s*:\s*", re.I)  # a «q:» that starts an id, not the «qa:» inside «islamqa:»
+_ID_SEP = re.compile(r"[\s,;،]+")
+
+
+def fix_marker_id(raw: str, ids: set[str] | frozenset[str]) -> str | None:
+    """`raw` as a retrieved id, with a stray «q:» prefix or spaces removed; None if it is not one."""
+    i = _Q_PREFIX.sub("", raw).strip()
+    return i if i in ids else None
+
+
+def fix_markers(text: str, ids: set[str] | frozenset[str]) -> str:
+    """KNW-01 answer rate: the composer often writes a marker as {{ID}},
+    {{q: ID}}, {{Q:ID}} or {{q:ID1, q:ID2}}; each was rejected as
+    `malformed_marker` (prod 2026-10-06). A braced span becomes {{q:ID}}
+    markers only when EVERY id in it is one of `ids` (this attempt's
+    retrieved passages); anything else is left as written, so the checks
+    still reject it. Never invents an id."""
+
+    def one(m: re.Match[str]) -> str:
+        span = _Q_ANY.sub(r"\1", m.group(1))
+        fixed = [fix_marker_id(p, ids) for p in _ID_SEP.split(span) if p]
+        if not fixed or any(f is None for f in fixed):
+            return m.group(0)
+        return " ".join(f"{{{{q:{f}}}}}" for f in fixed)
+
+    return _BRACED.sub(one, text)
+
+
 def has_arabic(text: str) -> bool:
     return bool(ARABIC.search(text.replace(SALLA, "")))
 
@@ -114,11 +144,48 @@ FORMULAE = [
 ]
 
 
+# KNW-01 answer rate: the same honorifics in the stored English and Tagalog
+# translations. 1,875 of 2,328 English HadeethEnc passages contain «may
+# Allah's peace and blessings be upon him» and 1,895 «may Allah be pleased
+# with him» (dev corpus, 2026-10-06), so an answer that honours the Prophet
+# or a Companion the way the sources do repeated 6 words of a hadith and was
+# rejected as copied scripture. Honorifics only: never a phrase of a verse or
+# hadith. Written as `latin_fold` leaves them (no apostrophes, no macrons);
+# longest first, so a long form is replaced before the short form inside it.
+LATIN_FORMULAE = [
+    "may allah s peace and blessings be upon him",
+    "may allah exalt his mention",
+    "peace and blessings be upon him",
+    "may allah be pleased with both of them",
+    "may allah be pleased with them both",
+    "may allah be pleased with them",
+    "may allah be pleased with him",
+    "may allah be pleased with her",
+    "may allah have mercy on him",
+    "may allah have mercy upon him",
+    "peace be upon him",
+    "basbasan siya ni allah at pangalagaan",
+    "pagpalain siya ni allah at pangalagaan",
+    "malugod si allah sa kanilang dalawa",
+    "malugod si allah sa kanila",
+    "malugod si allah sa kanya",
+]
+
+
+def latin_fold(text: str) -> str:
+    """`normalize`, then Latin accents dropped (Allāh → allah) and apostrophes
+    to spaces (Allah's / Allah’s → allah s). Used on both sides of the overlap
+    check, so it can only find more copying, never less."""
+    t = unicodedata.normalize("NFKD", normalize(text))
+    t = "".join(c for c in t if not unicodedata.combining(c)).replace("'", " ")
+    return re.sub(r"\s+", " ", t).strip()
+
+
 def _without_formulae(text: str, sentinel: str) -> str:
     """Formulae replaced by a sentinel word, so they neither match nor join
     the words around them into a longer run."""
-    t = f" {normalize(text)} "
-    for f in FORMULAE:
+    t = f" {latin_fold(text)} "
+    for f in (*FORMULAE, *LATIN_FORMULAE):
         t = t.replace(f" {f} ", f" {sentinel} ")
     return t
 

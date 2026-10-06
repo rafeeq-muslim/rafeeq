@@ -15,11 +15,12 @@ export function suggestGroup(t: DayTimes | null, now: Date): GroupKey | null {
   const n = now.getTime()
   for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const) {
     const at = t[k].getTime()
-    if (n >= at && n < at + HALF_HOUR && k !== "fajr" && k !== "asr") return "after_prayer"
+    if (n >= at && n < at + HALF_HOUR) return "after_prayer"
   }
   if (n >= t.fajr.getTime() && n < t.dhuhr.getTime()) return "morning_evening"
   if (n >= t.asr.getTime() && n < t.isha.getTime()) return "morning_evening"
-  if (n >= t.isha.getTime()) return "sleep"
+  // After Isha, and after midnight until Fajr (still the night after Isha).
+  if (n >= t.isha.getTime() || n < t.fajr.getTime()) return "sleep"
   return null
 }
 

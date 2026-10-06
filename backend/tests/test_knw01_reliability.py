@@ -427,8 +427,10 @@ async def test_knw01_t12_wrong_language_is_repaired_once_then_fully_checked(clie
 async def test_knw01_t12_marker_not_fixed_is_refused_safely(client, ai):
     await add_passages(SHAHADA_EN)
     ai.on("router", ROUTE_GENERAL)
-    bad = {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]}
-    worse = {**bad, "answer": "Nothing at all deserves worship but Allah. {{hadeethenc:en:101}}"}
+    # Broken braces: no id can be read from them (a missing «q:» is now written
+    # in the valid form when the id was retrieved: test_knw01_answer_rate.py).
+    bad = {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{q:hadeethenc:en:101}", "sources": ["hadeethenc:en:101"]}
+    worse = {**bad, "answer": "Nothing at all deserves worship but Allah. {{q:hadeethenc:en:101}"}
     ai.on("composer", bad, worse)
     b = await post(client, Q_EN)
     assert b["outcome"] == "verification_failed" and b["sources"] == [] and "{{" not in b["answer"]
