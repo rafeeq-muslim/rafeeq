@@ -21,14 +21,29 @@ type Rate = number | null
 type Indicators = {
   users: number
   counts: Record<string, number>
-  rates: { active: Rate; at_risk: Rate; dropout: Rate; return: Rate; mentor_contact: Rate }
-  learning: { lessons_per_day: { day: string; count: number }[]; per_lesson: Record<string, number>; units_completed: Record<string, number>; opted_out: number }
+  rates: { active: Rate; at_risk: Rate; dropout: Rate; return: Rate }
+  /** MOT-08 R5: each day's return rate over the 7 days before it. */
+  return_series: { day: string; rate: Rate }[]
+  /** MOT-08 R6: null until both groups have 10 people (and Companion sends contact events). */
+  mentor_contact: { contacted: Rate; not_contacted: Rate }
+  learning: {
+    lessons_per_day: { day: string; count: number }[]
+    /** MOT-08 R4: people per lesson and per unit, in path order. */
+    per_lesson: { lesson_id: string; unit_id: string | null; people: number }[]
+    units_completed: { unit_id: string; people: number }[]
+    opted_out: number
+  }
   markers: { day: string; label: string }[]
   understanding: {
     objectives: Record<string, { lesson: Rate; review: Rate }>
+    /** MOT-09 R1: per unit. */
+    units: Record<string, { lesson: Rate; review: Rate }>
     placement: { distribution: Record<string, number>; skipped: number }
+    /** MOT-09 R3: share of people who mastered each objective. */
+    mastery: Record<string, Rate>
     weakest: string[]
-    why_experiment: { ai_explanation: Rate; card_only: Rate }
+    /** MOT-09 R4: explanation vs the random fifth (offline card text excluded). */
+    why_experiment: { ai_explanation: Rate; card_holdout: Rate; difference: Rate }
     guide_followed: Rate
   }
 }
@@ -42,6 +57,7 @@ export default function Team() {
   const q = useQuery({ queryKey: ["indicators", days], queryFn: () => api<Indicators>(`/api/team/indicators?days=${days}`) })
   const { content } = useContent()
   const lessonTitle = (id: string) => content?.lessons[id]?.title ?? id
+  const unitTitle = (id: string) => content?.units.find((u) => u.id === id)?.title ?? id
   const objectiveText = (id: string) => {
     for (const l of Object.values(content?.lessons ?? {})) {
       const o = l.objectives.find((x) => x.id === id)
@@ -95,11 +111,35 @@ export default function Team() {
                   ["team.rate.at_risk", d.rates.at_risk],
                   ["team.rate.dropout", d.rates.dropout],
                   ["team.rate.return", d.rates.return],
-                  ["team.rate.mentor", d.rates.mentor_contact],
                 ] as [Key, Rate][]
               ).map(([k, v]) => (
                 <Stat key={k} label={t(k)} value={pct(v)} />
               ))}
+            </section>
+
+            <section className="flex flex-col gap-3" aria-labelledby="rs">
+              <h2 id="rs" className="font-heading text-h3 font-bold">
+                {t("mot.team.returnSeries")}
+              </h2>
+              <Bars
+                rows={d.return_series.map((r) => ({
+                  label: r.day.slice(5),
+                  value: r.rate === null ? 0 : Math.round(r.rate * 100),
+                  marker: d.markers.find((m) => m.day === r.day)?.label,
+                }))}
+                vertical
+              />
+              {d.return_series.every((r) => r.rate === null) && <p className="text-label text-muted-foreground">{t("team.notEnough")}</p>}
+            </section>
+
+            <section className="flex flex-col gap-3" aria-labelledby="mc">
+              <h2 id="mc" className="font-heading text-h3 font-bold">
+                {t("team.rate.mentor")}
+              </h2>
+              <div className="grid grid-cols-2 gap-3">
+                <Stat label={t("mot.team.mentorContacted")} value={pct(d.mentor_contact.contacted)} />
+                <Stat label={t("mot.team.mentorNotContacted")} value={pct(d.mentor_contact.not_contacted)} />
+              </div>
             </section>
 
             <section className="flex flex-col gap-3" aria-labelledby="lpd">
@@ -114,7 +154,14 @@ export default function Team() {
               <h2 id="pl" className="font-heading text-h3 font-bold">
                 {t("team.perLesson")}
               </h2>
-              <Bars rows={Object.entries(d.learning.per_lesson).map(([id, v]) => ({ label: lessonTitle(id), value: v }))} />
+              <Bars rows={d.learning.per_lesson.map((r) => ({ label: lessonTitle(r.lesson_id), value: r.people }))} />
+            </section>
+
+            <section className="flex flex-col gap-3" aria-labelledby="uc">
+              <h2 id="uc" className="font-heading text-h3 font-bold">
+                {t("mot.team.unitsCompleted")}
+              </h2>
+              <Bars rows={d.learning.units_completed.map((r) => ({ label: unitTitle(r.unit_id), value: r.people }))} />
             </section>
 
             <section className="flex flex-col gap-4 border-t pt-6" aria-labelledby="und">
@@ -123,8 +170,21 @@ export default function Team() {
               </h2>
               <div className="grid grid-cols-2 gap-3">
                 <Stat label={t("team.whyAi")} value={pct(d.understanding.why_experiment.ai_explanation)} />
-                <Stat label={t("team.whyCard")} value={pct(d.understanding.why_experiment.card_only)} />
+                <Stat label={t("mot.team.whyHoldout")} value={pct(d.understanding.why_experiment.card_holdout)} />
                 <Stat label={t("team.guide")} value={pct(d.understanding.guide_followed)} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-label font-bold text-muted-foreground">{t("mot.team.perUnit")}</h3>
+                <ul className="flex flex-col gap-1.5">
+                  {Object.entries(d.understanding.units).map(([id, r]) => (
+                    <li key={id} className="flex items-center gap-3 rounded-md bg-card px-3 py-2 text-label">
+                      <span className="min-w-0 flex-1 truncate">{unitTitle(id)}</span>
+                      <span className="tabular-nums">{pct(r.lesson) ?? t("team.notEnough")}</span>
+                      <span className="text-muted-foreground">→</span>
+                      <span className="tabular-nums font-bold">{pct(r.review) ?? t("team.notEnough")}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-label font-bold text-muted-foreground">{t("team.lessonVsReview")}</h3>
@@ -135,6 +195,17 @@ export default function Team() {
                       <span className="tabular-nums">{pct(r.lesson) ?? "—"}</span>
                       <span className="text-muted-foreground">→</span>
                       <span className="tabular-nums font-bold">{pct(r.review) ?? "—"}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-label font-bold text-muted-foreground">{t("mot.team.mastery")}</h3>
+                <ul className="flex flex-col gap-1.5">
+                  {Object.entries(d.understanding.mastery).map(([id, r]) => (
+                    <li key={id} className="flex items-center gap-3 rounded-md bg-card px-3 py-2 text-label">
+                      <span className="min-w-0 flex-1 truncate">{objectiveText(id)}</span>
+                      <span className="tabular-nums font-bold">{pct(r) ?? t("team.notEnough")}</span>
                     </li>
                   ))}
                 </ul>
