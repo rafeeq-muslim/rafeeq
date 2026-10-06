@@ -76,7 +76,29 @@
         "ayat": [
           97,
           97
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              10,
+              18
+            ]
+          },
+          "en": {
+            "words": [
+              10,
+              18
+            ],
+            "translation": "And it is due from Allah upon people the pilgrimage to the House, for those who can make their way to it."
+          },
+          "tl": {
+            "words": [
+              10,
+              18
+            ],
+            "translation": "At iniatang ng Allah para sa mga tao ang [tungkuling magsagawa ng] Hajj sa bahay-dalanginan [ang Ka’bah], sa sinumang may kakayahang maglakbay para rito."
+          }
+        }
       },
       "source_ref": "pillar 5"
     },

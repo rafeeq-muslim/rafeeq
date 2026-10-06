@@ -107,6 +107,26 @@ def main(path):
             if o not in covered_by_cards:
                 errors.append(f"{o}: no card teaches this objective")
 
+    # verses the book quotes only in part (content/quran_excerpts.json)
+    excerpts = json.loads((Path(__file__).parent / "quran_excerpts.json").read_text(encoding="utf8"))["cards"]
+    unit_cards = {c["id"]: c for l in unit["lessons"] for c in l["cards"]}
+    err = errors.append
+    def check_excerpt(cid, ex, verse_words):
+        for lg in ("ar", "en", "tl"):
+            w = (ex.get(lg) or {}).get("words")
+            if not (isinstance(w, list) and len(w) == 2 and 1 <= w[0] <= w[1] <= verse_words):
+                err(f"{cid}: excerpt words {w} for {lg} outside the verse (1..{verse_words})")
+            if lg != "ar" and not (ex.get(lg) or {}).get("translation", "").strip():
+                err(f"{cid}: excerpt has no {lg} translation from the book")
+    for cid, e in excerpts.items():
+        if cid.split("-")[0] != unit["id"]:
+            continue
+        c = unit_cards.get(cid)
+        if not c or "excerpt" not in c:
+            err(f"{cid}: listed in quran_excerpts.json but the card has no excerpt")
+            continue
+        check_excerpt(cid, c["excerpt"], e["verse_words"])
+
     dupes = {i for i in ids if ids.count(i) > 1}
     if dupes:
         errors.append(f"duplicate ids: {sorted(dupes)}")

@@ -34,7 +34,29 @@
         "ayat": [
           36,
           36
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              11
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              11
+            ],
+            "translation": "And We certainly sent into every nation a messenger, [saying], “Worship Allah and shun false gods.”"
+          },
+          "tl": {
+            "words": [
+              1,
+              11
+            ],
+            "translation": "At katiyakan, Aming ipinadala sa bawa’t pamayanan ang isang sugo [na nag-aanyaya]: “Sambahin ang Allah [tanging Siya], at iwasan ang [pagsamba sa] mga huwad na diyos.”"
+          }
+        }
       },
       "source_ref": "iman pillar 4"
     },

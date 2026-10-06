@@ -1,0 +1,305 @@
+{
+ "_about": "Verses the book quotes only in part (LRN-01 R2, LRN-09; Sharia reviewer's decision 2026-10-06). The app shows only words [from, to] (1-based) of the stored verse, split on spaces, and nothing else of it; 'shown' is that span as stored, for review. Under it the app shows the book's own translation of the quoted part, verbatim without the outer quote marks and the citation. A verse card not listed here shows the whole verse with the stored translation.",
+ "cards": {
+  "u2-l1-c3": {
+   "ref": "42:11",
+   "verse_words": 19,
+   "ar": {
+    "words": [
+     14,
+     19
+    ],
+    "shown": "لَيۡسَ كَمِثۡلِهِۦ شَيۡءٞۖ وَهُوَ ٱلسَّمِيعُ ٱلۡبَصِيرُ"
+   },
+   "en": {
+    "words": [
+     14,
+     19
+    ],
+    "translation": "There is nothing like unto Him, and He is the All-Hearing, the All-Seeing."
+   },
+   "tl": {
+    "words": [
+     14,
+     19
+    ],
+    "translation": "Walang bagay ang makakahalintulad sa Kanya, at Siya ang Lubos na Nakakarinig, ang Lubos na Nakakakita."
+   }
+  },
+  "u2-l1-c2": {
+   "ref": "59:22",
+   "verse_words": 13,
+   "ar": {
+    "words": [
+     1,
+     7
+    ],
+    "shown": "هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَۖ"
+   },
+   "en": {
+    "words": [
+     1,
+     7
+    ],
+    "translation": "He is Allah, other than whom there is no deity"
+   },
+   "tl": {
+    "words": [
+     1,
+     13
+    ],
+    "translation": "Siya ang Allah, bukod sa Kanya’y wala ng iba pang Diyos, Sya ang nakakaalam sa mga bagay na di nakikita at nakikita. Sya ang Mahabagin, Ang Maawain."
+   }
+  },
+  "u3-l2-c1": {
+   "ref": "2:110",
+   "verse_words": 17,
+   "ar": {
+    "words": [
+     1,
+     2
+    ],
+    "shown": "وَأَقِيمُواْ ٱلصَّلَوٰةَ"
+   },
+   "en": {
+    "words": [
+     1,
+     2
+    ],
+    "translation": "And establish prayer"
+   },
+   "tl": {
+    "words": [
+     1,
+     2
+    ],
+    "translation": "At inyong itaguyod ang pagdarasal."
+   }
+  },
+  "u3-l2-c3": {
+   "ref": "2:110",
+   "verse_words": 17,
+   "ar": {
+    "words": [
+     3,
+     4
+    ],
+    "shown": "وَءَاتُواْ ٱلزَّكَوٰةَۚ"
+   },
+   "en": {
+    "words": [
+     3,
+     4
+    ],
+    "translation": "and give Zakah"
+   },
+   "tl": {
+    "words": [
+     3,
+     4
+    ],
+    "translation": "At magbigay kayo ng Zakah o Obligadong Kawang gawa."
+   }
+  },
+  "u3-l3-c4": {
+   "ref": "3:97",
+   "verse_words": 25,
+   "ar": {
+    "words": [
+     10,
+     18
+    ],
+    "shown": "وَلِلَّهِ عَلَى ٱلنَّاسِ حِجُّ ٱلۡبَيۡتِ مَنِ ٱسۡتَطَاعَ إِلَيۡهِ سَبِيلٗاۚ"
+   },
+   "en": {
+    "words": [
+     10,
+     18
+    ],
+    "translation": "And it is due from Allah upon people the pilgrimage to the House, for those who can make their way to it."
+   },
+   "tl": {
+    "words": [
+     10,
+     18
+    ],
+    "translation": "At iniatang ng Allah para sa mga tao ang [tungkuling magsagawa ng] Hajj sa bahay-dalanginan [ang Ka’bah], sa sinumang may kakayahang maglakbay para rito."
+   }
+  },
+  "u4-l1-c5": {
+   "ref": "24:62",
+   "verse_words": 39,
+   "ar": {
+    "words": [
+     1,
+     5
+    ],
+    "shown": "إِنَّمَا ٱلۡمُؤۡمِنُونَ ٱلَّذِينَ ءَامَنُواْ بِٱللَّهِ"
+   },
+   "en": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "The believers are only those who believe in Allah"
+   },
+   "tl": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "Katiyakan, ang tunay na mga mananampalataya ay yaong mga naniniwala sa Allah."
+   }
+  },
+  "u4-l2-c7": {
+   "ref": "3:19",
+   "verse_words": 26,
+   "ar": {
+    "words": [
+     1,
+     5
+    ],
+    "shown": "إِنَّ ٱلدِّينَ عِندَ ٱللَّهِ ٱلۡإِسۡلَٰمُۗ"
+   },
+   "en": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "Indeed, the religion in the sight of Allah is Islam"
+   },
+   "tl": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "Katotohanan ang tanging relihiyon sa paningin ng Allah ay ang Islam lamang."
+   }
+  },
+  "u4-l3-c1": {
+   "ref": "16:36",
+   "verse_words": 28,
+   "ar": {
+    "words": [
+     1,
+     11
+    ],
+    "shown": "وَلَقَدۡ بَعَثۡنَا فِي كُلِّ أُمَّةٖ رَّسُولًا أَنِ ٱعۡبُدُواْ ٱللَّهَ وَٱجۡتَنِبُواْ ٱلطَّٰغُوتَۖ"
+   },
+   "en": {
+    "words": [
+     1,
+     11
+    ],
+    "translation": "And We certainly sent into every nation a messenger, [saying], “Worship Allah and shun false gods.”"
+   },
+   "tl": {
+    "words": [
+     1,
+     11
+    ],
+    "translation": "At katiyakan, Aming ipinadala sa bawa’t pamayanan ang isang sugo [na nag-aanyaya]: “Sambahin ang Allah [tanging Siya], at iwasan ang [pagsamba sa] mga huwad na diyos.”"
+   }
+  },
+  "u6-l3-c3": {
+   "ref": "40:60",
+   "verse_words": 13,
+   "ar": {
+    "words": [
+     1,
+     5
+    ],
+    "shown": "وَقَالَ رَبُّكُمُ ٱدۡعُونِيٓ أَسۡتَجِبۡ لَكُمۡۚ"
+   },
+   "en": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "And your Lord says, “Call upon Me; I will respond to you.”"
+   },
+   "tl": {
+    "words": [
+     1,
+     5
+    ],
+    "translation": "At ang inyong Panginoon ay nagsabi: “Manalangin kayo sa akin at kayo ay Aking diringgin.”"
+   }
+  },
+  "u6-l3-c6": {
+   "ref": "2:257",
+   "verse_words": 24,
+   "ar": {
+    "words": [
+     1,
+     9
+    ],
+    "shown": "ٱللَّهُ وَلِيُّ ٱلَّذِينَ ءَامَنُواْ يُخۡرِجُهُم مِّنَ ٱلظُّلُمَٰتِ إِلَى ٱلنُّورِۖ"
+   },
+   "en": {
+    "words": [
+     1,
+     9
+    ],
+    "translation": "Allah is the ally of those who believe. He brings them out from darknesses into the light"
+   },
+   "tl": {
+    "words": [
+     1,
+     9
+    ],
+    "translation": "Ang Allah ay Wali [tagapangalaga] ng yaong mga naniniwala. Sila ay Kanyang hinahango mula sa mga kadiliman tungo sa liwanag."
+   }
+  },
+  "u01-l1-c2": {
+   "ref": "47:19",
+   "verse_words": 14,
+   "ar": {
+    "words": [
+     1,
+     6
+    ],
+    "shown": "فَٱعۡلَمۡ أَنَّهُۥ لَآ إِلَٰهَ إِلَّا ٱللَّهُ"
+   },
+   "en": {
+    "words": [
+     1,
+     6
+    ],
+    "translation": "So know [O Muhammad], that there is no deity except Allah"
+   },
+   "tl": {
+    "words": [
+     1,
+     6
+    ],
+    "translation": "At iyong alamin, (O Muhammad), na katiyakang walang ibang diyos na karapat-dapat sambahin maliban sa Allah."
+   }
+  },
+  "u01-l2-c1": {
+   "ref": "2:222",
+   "verse_words": 27,
+   "ar": {
+    "words": [
+     22,
+     27
+    ],
+    "shown": "إِنَّ ٱللَّهَ يُحِبُّ ٱلتَّوَّٰبِينَ وَيُحِبُّ ٱلۡمُتَطَهِّرِينَ"
+   },
+   "en": {
+    "words": [
+     22,
+     27
+    ],
+    "translation": "Indeed, Allah loves those who are constantly repentant and loves those who purify themselves."
+   },
+   "tl": {
+    "words": [
+     22,
+     27
+    ],
+    "translation": "Ang Allâh, samakatuwid, ay nagmamahal sa Kanyang mga alipin, na palaging humihingi ng kanilang kapatawaran at pagsisisi, at nagmamahal sa Kanyang mga aliping malilinis."
+   }
+  }
+ }
+}

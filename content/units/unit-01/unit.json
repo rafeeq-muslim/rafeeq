@@ -143,7 +143,29 @@
           "objectives": [
             "u01-l1-o1"
           ],
-          "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release."
+          "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release.",
+          "excerpt": {
+            "ar": {
+              "words": [
+                1,
+                6
+              ]
+            },
+            "en": {
+              "words": [
+                1,
+                6
+              ],
+              "translation": "So know [O Muhammad], that there is no deity except Allah"
+            },
+            "tl": {
+              "words": [
+                1,
+                6
+              ],
+              "translation": "At iyong alamin, (O Muhammad), na katiyakang walang ibang diyos na karapat-dapat sambahin maliban sa Allah."
+            }
+          }
         },
         {
           "id": "u01-l1-c3",
@@ -432,7 +454,29 @@
             "u01-l2-o1"
           ],
           "verify": "Check the Arabic against the King Fahd Complex text and the translations against QuranEnc before release.",
-          "note": "The Filipino page cites this verse as (Qur’an 2:22); the correct reference is 2:222. Fix during verification."
+          "note": "The Filipino page cites this verse as (Qur’an 2:22); the correct reference is 2:222. Fix during verification.",
+          "excerpt": {
+            "ar": {
+              "words": [
+                22,
+                27
+              ]
+            },
+            "en": {
+              "words": [
+                22,
+                27
+              ],
+              "translation": "Indeed, Allah loves those who are constantly repentant and loves those who purify themselves."
+            },
+            "tl": {
+              "words": [
+                22,
+                27
+              ],
+              "translation": "Ang Allâh, samakatuwid, ay nagmamahal sa Kanyang mga alipin, na palaging humihingi ng kanilang kapatawaran at pagsisisi, at nagmamahal sa Kanyang mga aliping malilinis."
+            }
+          }
         },
         {
           "id": "u01-l2-c2",

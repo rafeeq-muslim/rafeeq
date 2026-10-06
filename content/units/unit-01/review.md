@@ -13,3 +13,5 @@ Sharia reviewer: مهند بن صالح الفوزان. Review done in conversat
 | u01-l7 «أصلي (2)» | 2026-10-06 | Approved after one change | Exercise 4 (between the prostrations) repeated the matching exercise; replaced with «ماذا أقول إذا اعتدلت قائمًا بعد الركوع؟» (ربنا ولك الحمد) | — |
 
 **Unit 1 reviewed in full on 2026-10-06.** Next: the reviewer approves each lesson and language in the app's review desk; verses are shown from QuranEnc and the four hadiths keep their `verify` notes for linking to HadeethEnc.
+
+**Verses quoted in part (2026-10-06, reviewer's decision after testing the site):** u01-l1-c2 (محمد: 19) and u01-l2-c1 (البقرة: 222) show only the words the book quotes, from the stored verse, with the book's translation of that part (`content/quran_excerpts.json`). Before this, the app showed all of البقرة 222, including the ruling on menstruation, on the first purification card.

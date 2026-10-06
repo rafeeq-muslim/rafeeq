@@ -82,7 +82,29 @@
         "ayat": [
           62,
           62
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              5
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "The believers are only those who believe in Allah"
+          },
+          "tl": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "Katiyakan, ang tunay na mga mananampalataya ay yaong mga naniniwala sa Allah."
+          }
+        }
       },
       "source_ref": "iman pillar 1"
     },

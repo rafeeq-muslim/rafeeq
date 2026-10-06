@@ -330,6 +330,26 @@ def main():
                 if k not in item:
                     err(f'day-one-media: item missing {k}: {item}')
 
+    # verses the book quotes only in part (content/quran_excerpts.json)
+    with open(os.path.join(ROOT, 'quran_excerpts.json'), encoding='utf-8') as f:
+        excerpts = json.load(f)['cards']
+    cards_by_id = {c['id']: c for d in lessons.values() for c in d['cards']}
+    def check_excerpt(cid, ex, verse_words):
+        for lg in ("ar", "en", "tl"):
+            w = (ex.get(lg) or {}).get("words")
+            if not (isinstance(w, list) and len(w) == 2 and 1 <= w[0] <= w[1] <= verse_words):
+                err(f"{cid}: excerpt words {w} for {lg} outside the verse (1..{verse_words})")
+            if lg != "ar" and not (ex.get(lg) or {}).get("translation", "").strip():
+                err(f"{cid}: excerpt has no {lg} translation from the book")
+    for cid, e in excerpts.items():
+        if cid.startswith('u01-'):
+            continue  # unit 1 is checked by content/check_content.py
+        q = (cards_by_id.get(cid) or {}).get('quran') or {}
+        if 'excerpt' not in q:
+            err(f'{cid}: listed in quran_excerpts.json but its card shows no excerpt')
+            continue
+        check_excerpt(cid, q['excerpt'], e['verse_words'])
+
     print(f'{"lesson":8} cards objectives exercises dropped')
     for lid in sorted(counts, key=lambda s: (int(s[1]), int(s.split("-l")[1]))):
         print(f'{lid:8} {counts[lid][0]:5} {counts[lid][1]:10} {counts[lid][2]:9} {counts[lid][3]:7}')

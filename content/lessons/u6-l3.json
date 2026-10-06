@@ -70,7 +70,29 @@
         "ayat": [
           60,
           60
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              5
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "And your Lord says, “Call upon Me; I will respond to you.”"
+          },
+          "tl": {
+            "words": [
+              1,
+              5
+            ],
+            "translation": "At ang inyong Panginoon ay nagsabi: “Manalangin kayo sa akin at kayo ay Aking diringgin.”"
+          }
+        }
       },
       "source_ref": "happiness"
     },
@@ -112,7 +134,29 @@
         "ayat": [
           257,
           257
-        ]
+        ],
+        "excerpt": {
+          "ar": {
+            "words": [
+              1,
+              9
+            ]
+          },
+          "en": {
+            "words": [
+              1,
+              9
+            ],
+            "translation": "Allah is the ally of those who believe. He brings them out from darknesses into the light"
+          },
+          "tl": {
+            "words": [
+              1,
+              9
+            ],
+            "translation": "Ang Allah ay Wali [tagapangalaga] ng yaong mga naniniwala. Sila ay Kanyang hinahango mula sa mga kadiliman tungo sa liwanag."
+          }
+        }
       },
       "source_ref": "happiness"
     },

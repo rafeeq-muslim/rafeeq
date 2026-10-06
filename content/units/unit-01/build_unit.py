@@ -662,6 +662,16 @@ for lesson in (L1, L2, L3, L4, L5):
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
 
+# Verses the book quotes only in part: show only the quoted words (reviewer, 2026-10-06).
+EXCERPTS = json.loads((Path(__file__).parents[2] / "quran_excerpts.json").read_text(encoding="utf8"))["cards"]
+for les in LESSONS:
+    for c in les["cards"]:
+        e = EXCERPTS.get(c["id"])
+        if e:
+            if c.get("kind") != "quran" or c.get("ref") != e["ref"]:
+                raise SystemExit(f"{c['id']}: excerpt for {e['ref']} but the card is {c.get('kind')} {c.get('ref')}")
+            c["excerpt"] = {lg: {k: v for k, v in e[lg].items() if k != "shown"} for lg in ("ar", "en", "tl")}
+
 # The name a learner reads for each objective (LRN-10 R1); `text` stays the team's wording.
 LABELS = json.loads((Path(__file__).parents[2] / "objective_labels.json").read_text(encoding="utf8"))
 for les in LESSONS:
