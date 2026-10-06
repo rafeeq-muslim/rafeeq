@@ -80,6 +80,7 @@ async def passages(session: Session, response: Response, ids: Annotated[list[str
     response.headers["Cache-Control"] = "public, max-age=300"
     return {"cards": await source_cards(session, wanted, allowed)}
 
+
 # --- KNW-02 R3: a hadith by its id ---------------------------------------------
 
 
