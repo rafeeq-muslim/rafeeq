@@ -1493,4 +1493,7 @@ export const tl: Dict = {
   "ask.lesson.back": "Bumalik sa aralin",
   "ask.review.from": "Galing ka sa pagbabalik-aral ng araling “{name}”. Itanong ang anumang hindi malinaw dito.",
   "ask.review.back": "Bumalik sa pagbabalik-aral",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
+  "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
+  "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
 }

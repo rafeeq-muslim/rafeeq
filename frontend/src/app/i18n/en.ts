@@ -1492,4 +1492,7 @@ export const en: Dict = {
   "ask.lesson.back": "Back to the lesson",
   "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
   "ask.review.back": "Back to the review",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
+  "cmp.inbox.closeConfirmTitle": "End this conversation?",
+  "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
 }
