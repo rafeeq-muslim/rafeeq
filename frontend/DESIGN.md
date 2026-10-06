@@ -245,7 +245,7 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - **Icon tiles:** `IconTile` (sm 40, md 44, lg 48) puts a white icon on the violet tile gradient for every row or tool that opens something. Violet only.
 - **Appearance:** `ThemeSwitcher` (فاتح / داكن / حسب الجهاز) in «حسابي», next to the language.
 - **Motivation:** no points and no leaderboard at all (rules.md §3); streaks and badges count learning only. The streak pauses, it never resets. Worship habits are private and never rewarded.
-- **Safety:** `HumanHelpButton` is visible on Ask and lesson screens. `DangerHelpPanel` replaces any AI answer in a danger case and never shows invented helpline numbers.
+- **Safety:** `HumanHelpButton` is always visible on Ask; the lesson and review help button opens Ask first (CMP-01 R1). `DangerHelpPanel` replaces any AI answer in a danger case and never shows invented helpline numbers.
 
 ## Do's and Don'ts
 

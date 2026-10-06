@@ -1425,4 +1425,11 @@ export const en: Dict = {
   "desk.ch.gone": "This text was already decided or withdrawn by its mentor",
   "desk.ch.empty": "No texts are waiting for approval right now.",
   "cmp.ch.reason": "Reviewer's reason:",
+  // CMP-01 R1 (cmp-01-r1-lesson-help-ai-first-build): the lesson's help opens the assistant first, which offers a human
+  "lesson.help": "Help",
+  "ask.needHuman": "Need a person?",
+  "ask.lesson.from": "You came from the lesson “{name}”. Ask about anything in it that isn't clear.",
+  "ask.lesson.back": "Back to the lesson",
+  "ask.review.from": "You came from reviewing the lesson “{name}”. Ask about anything in it that isn't clear.",
+  "ask.review.back": "Back to the review",
 }

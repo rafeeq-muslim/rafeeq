@@ -1424,4 +1424,11 @@ export const ar = {
   "desk.ch.gone": "قُرّر في هذا النص من قبل أو سحبه المرشد",
   "desk.ch.empty": "لا نصوص تنتظر الاعتماد الآن.",
   "cmp.ch.reason": "سبب المراجع:",
+  // CMP-01 R1 (cmp-01-r1-lesson-help-ai-first-build): the lesson's help opens the assistant first, which offers a human
+  "lesson.help": "مساعدة",
+  "ask.needHuman": "تحتاج إنسانًا؟",
+  "ask.lesson.from": "جئت من درس «{name}». اسأل عمّا أشكل عليك فيه.",
+  "ask.lesson.back": "عُد إلى الدرس",
+  "ask.review.from": "جئت من مراجعة درس «{name}». اسأل عمّا أشكل عليك فيه.",
+  "ask.review.back": "عُد إلى المراجعة",
 } as const

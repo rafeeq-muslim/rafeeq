@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Skeleton } from "@/components/ui/skeleton"
-import { CelebrationScreen, ExerciseFeedback, HumanHelpButton, SpotIllustration, UnitBloom } from "@/components/rafeeq"
+import { CelebrationScreen, ExerciseFeedback, SpotIllustration, UnitBloom } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { sendEvent } from "@/app/lib/api"
 import { reportLearnedToday } from "@/app/lib/push"
@@ -24,6 +24,7 @@ import { levelOf } from "@/app/learning/bkt"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { GuideNote, noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Content, Exercise } from "@/app/learning/types"
+import { LessonHelpButton } from "@/app/lesson/LessonHelpButton"
 import { check, emptyValue, ExerciseView, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 
 export default function Review() {
@@ -122,6 +123,8 @@ function ReviewSession({ content }: { content: Content | undefined }) {
         .join("\n")
     : ""
   const done = items.length - new Set(queue).size
+  // CMP-01 R1: the assistant gets the topic of the lesson this exercise belongs to, nothing else.
+  const topic = exercise ? (Object.values(content.lessons).find((l) => l.exercises.some((e) => e.id === exercise.id))?.title ?? "") : ""
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
@@ -130,7 +133,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
           <IconX />
         </Button>
         <Progress value={(done / items.length) * 100} aria-label={t("review.title")} className="h-3.5 flex-1" />
-        <HumanHelpButton compact label={t("ask.human")} onClick={() => navigate("/mentor/help?from=review")} />
+        <LessonHelpButton from="review" topic={topic} />
       </header>
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         {exercise && (

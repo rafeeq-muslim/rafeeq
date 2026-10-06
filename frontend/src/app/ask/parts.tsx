@@ -28,9 +28,17 @@ import { useSaveAnswer } from "./saved"
 import { Helplines } from "@/app/companion/Helplines"
 import type { AskResponse, ErrorCode, LiveSearchEntry, SourceCard } from "./types"
 
-/** CMP hand-off (Companion's /mentor/help). Only the random ask id travels, never the question text. */
-export const HELP_HUMAN = "/mentor/help?from=ask"
-const helpUrl = (kind: "urgent" | "escalation", askId: string) => `/mentor/help?kind=${kind}&from=ask&ask=${encodeURIComponent(askId)}`
+/**
+ * CMP hand-off (Companion's /mentor/help). Only the random ask id travels,
+ * never the question text. CMP-01 R1: when the assistant was opened from a
+ * lesson or a review, the request says it came from there («درس» / «مراجعة»),
+ * with no lesson name and none of the answers.
+ */
+export type HelpOrigin = "ask" | "lesson" | "review"
+export const HelpOriginContext = React.createContext<HelpOrigin>("ask")
+export const humanUrl = (from: HelpOrigin) => `/mentor/help?from=${from}`
+const helpUrl = (kind: "urgent" | "escalation", askId: string, from: HelpOrigin) =>
+  `/mentor/help?kind=${kind}&from=${from}&ask=${encodeURIComponent(askId)}`
 
 /** Names of the stored translations and tafsir (source titles, not UI copy). */
 const TRANSLATION_NAME: Record<string, string> = {
@@ -224,6 +232,7 @@ export function AnswerMessage({
 export function AnswerTurn({ response }: { response: AskResponse }) {
   const { t } = useT()
   const navigate = useNavigate()
+  const from = React.useContext(HelpOriginContext)
   return (
     <div className="flex flex-col gap-3">
       <AnswerMessage answer={response.answer} sources={response.sources} footer={<SaveAnswer response={response} />}>
@@ -238,14 +247,15 @@ export function AnswerTurn({ response }: { response: AskResponse }) {
         <ReferralCard
           title={t("ask.personal.title")}
           description={t("ask.personal.body")}
+          question={t("ask.needHuman")}
           actionLabel={t("ask.human")}
-          onRefer={() => navigate(helpUrl("escalation", response.ask_id))}
+          onRefer={() => navigate(helpUrl("escalation", response.ask_id, from))}
         />
       )}
       {response.route === "sensitive" && (
         <div className="flex flex-col items-start gap-2 ps-2">
           <p className="text-label text-muted-foreground">{t("ask.sensitive.body")}</p>
-          <HumanHelpButton label={t("ask.human")} onClick={() => navigate(helpUrl("escalation", response.ask_id))} />
+          <HumanHelpButton label={t("ask.human")} onClick={() => navigate(helpUrl("escalation", response.ask_id, from))} />
         </div>
       )}
     </div>
@@ -282,6 +292,7 @@ function FailureCard({
 }) {
   const { t } = useT()
   const navigate = useNavigate()
+  const from = React.useContext(HelpOriginContext)
   if (kind !== "noSource") {
     // KNW-01 answer rate: a failed check or a technical failure is not a
     // reason to hand the question to a person. Retry (or edit) comes first;
@@ -311,7 +322,7 @@ function FailureCard({
                     {t("ask.editQuestion")}
                   </Button>
                 )}
-                <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => navigate(helpUrl("escalation", askId))}>
+                <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => navigate(helpUrl("escalation", askId, from))}>
                   {t("ask.human")}
                 </Button>
               </div>
@@ -321,13 +332,15 @@ function FailureCard({
       </Message>
     )
   }
+  // CMP-01 R1: no sourced answer → the assistant asks «تحتاج إنسانًا؟» and one tap opens the request.
   return (
     <div className="flex flex-col gap-2">
       <ReferralCard
         title={t(`ask.${kind}.title`)}
         description={t(`ask.${kind}.body`)}
+        question={t("ask.needHuman")}
         actionLabel={t("ask.human")}
-        onRefer={() => navigate(helpUrl("escalation", askId))}
+        onRefer={() => navigate(helpUrl("escalation", askId, from))}
       />
       <LiveSearchNote entries={live} />
       {(onRetry || onEdit) && (
@@ -352,6 +365,7 @@ function FailureCard({
 export function ResponseTurn({ response, onRetry, onEdit }: { response: AskResponse; onRetry?: () => void; onEdit?: () => void }) {
   const { t } = useT()
   const navigate = useNavigate()
+  const from = React.useContext(HelpOriginContext)
   switch (response.outcome) {
     case "answered":
     case "cached":
@@ -362,7 +376,7 @@ export function ResponseTurn({ response, onRetry, onEdit }: { response: AskRespo
           title={t("ask.danger.title")}
           description={t("ask.danger.body")}
           primaryLabel={t("ask.danger.primary")}
-          onPrimary={() => navigate(helpUrl("urgent", response.ask_id))}
+          onPrimary={() => navigate(helpUrl("urgent", response.ask_id, from))}
         >
           <Helplines />
         </DangerHelpPanel>

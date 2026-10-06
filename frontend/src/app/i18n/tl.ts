@@ -1426,4 +1426,11 @@ export const tl: Dict = {
   "desk.ch.gone": "Napagpasyahan na ang tekstong ito o binawi ng mentor",
   "desk.ch.empty": "Walang tekstong naghihintay ng pag-apruba ngayon.",
   "cmp.ch.reason": "Dahilan ng tagasuri:",
+  // CMP-01 R1 (cmp-01-r1-lesson-help-ai-first-build): the lesson's help opens the assistant first, which offers a human
+  "lesson.help": "Tulong",
+  "ask.needHuman": "Kailangan mo ba ng tao?",
+  "ask.lesson.from": "Galing ka sa araling “{name}”. Itanong ang anumang hindi malinaw dito.",
+  "ask.lesson.back": "Bumalik sa aralin",
+  "ask.review.from": "Galing ka sa pagbabalik-aral ng araling “{name}”. Itanong ang anumang hindi malinaw dito.",
+  "ask.review.back": "Bumalik sa pagbabalik-aral",
 }
