@@ -90,8 +90,8 @@ describe("PLT-17 R5 team month-start announcements", () => {
     items = [SAVED]
     view()
     await settle()
-    fireEvent.click(screen.getByRole("button", { name: ar("plt17.sight.remove") }))
-    expect(screen.getByText(ar("plt17.sight.removeTitle"))).toBeTruthy()
+    fireEvent.click(await screen.findByRole("button", { name: ar("plt17.sight.remove") }))
+    expect(await screen.findByText(ar("plt17.sight.removeTitle"))).toBeTruthy()
     fireEvent.click(screen.getByRole("button", { name: ar("common.cancel") }))
     await settle()
     expect(calls.some((c) => c.method === "DELETE")).toBe(false)

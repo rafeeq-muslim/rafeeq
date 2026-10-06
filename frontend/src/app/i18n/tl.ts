@@ -1556,4 +1556,28 @@ export const tl: Dict = {
   "admin.confirm.cancel": "Bumalik",
   "admin.err.ownAdmin": "Hindi mo maaaring alisin ang tungkuling admin sa sarili mo.",
   "admin.err.lastAdmin": "Ito ang huling admin ng Rafeeq, kaya mananatili ang tungkuling admin.",
+  // --- PLT-17 R6-R7 (plt-17-team-rest): confirm removing a member; team dashboard error, sections, reports. ⚠️ Tagalog needs native review ---
+  "plt17.reports.removeTitle": "Aalisin si {name} sa grupo?",
+  "plt17.reports.removeTitleNoName": "Aalisin ang sumulat ng mensahe sa grupo?",
+  "plt17.reports.removeBody": "Hindi na niya makikita ang grupo o ang mga mensahe nito.",
+  "plt17.reports.removeCancel": "Huwag na",
+  "plt17.team.sections": "Mga bahagi ng dashboard",
+  "plt17.team.nav.people": "Mga tao",
+  "plt17.team.nav.learning": "Pag-aaral",
+  "plt17.team.nav.understanding": "Pag-unawa",
+  "plt17.team.nav.sightings": "Anunsyo ng simula ng buwan",
+  "plt17.team.nav.coverage": "Sino ang sumasagot sa bawat wika",
+  "plt17.team.nav.reports": "Mga ulat",
+  "plt17.team.loadErrorTitle": "Hindi ma-load ang mga indicator",
+  "plt17.team.loadErrorBody": "Hindi sumagot ang server. Walang nagbago; subukan ulit maya-maya.",
+  "plt17.team.reportsTitle": "Mga ulat",
+  "plt17.team.reportsBody": "Sa iisang lugar sinusuri ang mga ulat: ang tab na «Mga ulat» sa inbox.",
+  "plt17.team.reportsOpen": "Buksan ang mga ulat",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty. ⚠️ Tagalog needs native review ---
+  "plt17.org.none": "Walang aktibong organisasyong naka-link sa iyong account",
+  "plt17.org.noneBody": "Maaaring nasuspinde ang link mo sa iyong organisasyon. Makipag-ugnayan sa team ng Rafeeq para ma-link muli.",
+  "plt17.org.loadError": "Hindi namin ma-load ang datos ng iyong organisasyon.",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
+  "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
+  "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
 }

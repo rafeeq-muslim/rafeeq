@@ -1555,4 +1555,28 @@ export const en: Dict = {
   "admin.confirm.cancel": "Go back",
   "admin.err.ownAdmin": "You can't remove the admin role from yourself.",
   "admin.err.lastAdmin": "This is Rafeeq's last admin, so the admin role stays.",
+  // --- PLT-17 R6-R7 (plt-17-team-rest): confirm removing a member; team dashboard error, sections, reports ---
+  "plt17.reports.removeTitle": "Remove {name} from the group?",
+  "plt17.reports.removeTitleNoName": "Remove the message's author from the group?",
+  "plt17.reports.removeBody": "They will no longer see the group or its messages.",
+  "plt17.reports.removeCancel": "Cancel",
+  "plt17.team.sections": "Dashboard sections",
+  "plt17.team.nav.people": "People",
+  "plt17.team.nav.learning": "Learning",
+  "plt17.team.nav.understanding": "Understanding",
+  "plt17.team.nav.sightings": "Month-start announcements",
+  "plt17.team.nav.coverage": "Who answers in each language",
+  "plt17.team.nav.reports": "Reports",
+  "plt17.team.loadErrorTitle": "Couldn't load the indicators",
+  "plt17.team.loadErrorBody": "The server didn't respond. Nothing changed; try again in a moment.",
+  "plt17.team.reportsTitle": "Reports",
+  "plt17.team.reportsBody": "Reports are reviewed in one place: the «Reports» tab of the inbox.",
+  "plt17.team.reportsOpen": "Open reports",
+  // --- PLT-17 R15 (plt-17-coordinator): the coordinator's screen says why it is empty ---
+  "plt17.org.none": "No active organisation is linked to your account",
+  "plt17.org.noneBody": "Your link to your organisation may have been suspended. Contact the Rafeeq team to be linked again.",
+  "plt17.org.loadError": "We couldn't load your organisation's data.",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
+  "cmp.inbox.closeConfirmTitle": "End this conversation?",
+  "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
 }
