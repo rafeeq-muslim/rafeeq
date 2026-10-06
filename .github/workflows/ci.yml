@@ -47,4 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: for f in content/units/*/unit.json; do python3 content/check_content.py "$f"; done
+      # KNW-05 R2 ex2: verses and hadiths cited by the pipeline lessons, excerpts,
+      # recitations and daily cards exist (corpus parts are skipped when absent).
+      - run: python3 content/check_content.py --learner-content
       - run: python3 content/tools/validate.py
