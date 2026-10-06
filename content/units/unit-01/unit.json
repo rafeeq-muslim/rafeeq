@@ -528,9 +528,9 @@
             "u01-l2-o1"
           ],
           "prompt": {
-            "ar": "ماذا سمّى الكتاب الطهارة؟",
-            "en": "What does the book call purification?",
-            "tl": "Ano ang tawag ng aklat sa paglilinis?"
+            "ar": "الطهارة للصلاة هي:",
+            "en": "For prayer, purification is:",
+            "tl": "Para sa salah, ang paglilinis ay:"
           },
           "explain_card": "u01-l2-c2b",
           "options": [
@@ -1353,27 +1353,19 @@
         },
         {
           "id": "u01-l4-e2",
-          "type": "order",
+          "type": "choice",
           "objectives": [
             "u01-l4-o1"
           ],
           "prompt": {
-            "ar": "رتّب آخر أربع خطوات في الوضوء",
-            "en": "Put the last four steps of wudu’ in order",
-            "tl": "Isaayos ang huling apat na hakbang ng wudhu"
+            "ar": "ما الخطوة بعد غسل الوجه؟",
+            "en": "What comes after washing the face?",
+            "tl": "Ano ang kasunod ng paghugas ng mukha?"
           },
-          "explain_card": "u01-l4-c3",
-          "items": [
+          "explain_card": "u01-l4-c2",
+          "options": [
             {
-              "id": "face",
-              "text": {
-                "ar": "غسل الوجه",
-                "en": "Washing the face",
-                "tl": "Paghugas ng mukha"
-              }
-            },
-            {
-              "id": "arms",
+              "id": "a",
               "text": {
                 "ar": "غسل اليدين إلى المرفقين",
                 "en": "Washing the hands to the elbows",
@@ -1381,28 +1373,23 @@
               }
             },
             {
-              "id": "head",
-              "text": {
-                "ar": "مسح الرأس مع الأذنين",
-                "en": "Wiping the head and ears",
-                "tl": "Pagpunas ng ulo at tainga"
-              }
-            },
-            {
-              "id": "feet",
+              "id": "b",
               "text": {
                 "ar": "غسل الرجلين",
                 "en": "Washing the feet",
                 "tl": "Paghugas ng paa"
               }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "المضمضة",
+                "en": "Rinsing the mouth",
+                "tl": "Pagmumog"
+              }
             }
           ],
-          "answer": [
-            "face",
-            "arms",
-            "head",
-            "feet"
-          ]
+          "answer": "a"
         },
         {
           "id": "u01-l4-e3",
@@ -1930,37 +1917,77 @@
           "id": "u01-l5-e4",
           "type": "choice",
           "objectives": [
+            "u01-l5-o3"
+          ],
+          "prompt": {
+            "ar": "ما الذي لا يجوز للرجل أن يبديه في الصلاة؟",
+            "en": "What may a man not uncover in prayer?",
+            "tl": "Ano ang hindi maaaring ipakita ng lalaki sa salah?"
+          },
+          "explain_card": "u01-l5-c3",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "ما بين السرة والركبة",
+                "en": "The area between his navel and knees",
+                "tl": "Ang pagitan ng pusod at tuhod"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "رأسه",
+                "en": "His head",
+                "tl": "Ang kanyang ulo"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "يديه",
+                "en": "His hands",
+                "tl": "Ang kanyang mga kamay"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l5-e9",
+          "type": "choice",
+          "objectives": [
             "u01-l5-o2"
           ],
           "prompt": {
-            "ar": "الحدث الأكبر يوجب:",
-            "en": "Major impurity requires:",
-            "tl": "Ang Hadath Akbar ay nangangailangan ng:"
+            "ar": "متى يتطهّر المسلم للصلاة؟",
+            "en": "When does the Muslim purify himself for prayer?",
+            "tl": "Kailan naglilinis ang Muslim para sa salah?"
           },
           "explain_card": "u01-l5-c2",
           "options": [
             {
               "id": "a",
               "text": {
-                "ar": "الغسل",
-                "en": "Ghusl",
-                "tl": "Ghusl"
+                "ar": "إذا دخل وقت الصلاة ولم يكن على طهارة",
+                "en": "When the time of prayer starts and he is not in a state of purity",
+                "tl": "Kapag pumasok ang oras ng salah at hindi siya malinis"
               }
             },
             {
               "id": "b",
               "text": {
-                "ar": "غسل الكفين فقط",
-                "en": "Washing the hands only",
-                "tl": "Paghugas ng kamay lamang"
+                "ar": "بعد انتهاء الصلاة",
+                "en": "After the prayer ends",
+                "tl": "Pagkatapos ng salah"
               }
             },
             {
               "id": "c",
               "text": {
-                "ar": "لا شيء",
-                "en": "Nothing",
-                "tl": "Wala"
+                "ar": "مرة في الأسبوع",
+                "en": "Once a week",
+                "tl": "Isang beses sa isang linggo"
               }
             }
           ],
@@ -2956,34 +2983,34 @@
             "u01-l7-o2"
           ],
           "prompt": {
-            "ar": "ماذا أقول بين السجدتين؟",
-            "en": "What do I say between the two prostrations?",
-            "tl": "Ano ang sasabihin ko sa pagitan ng dalawang sujud?"
+            "ar": "ماذا أقول إذا اعتدلت قائمًا بعد الركوع؟",
+            "en": "What do I say when I stand straight after bowing?",
+            "tl": "Ano ang sasabihin ko kapag ganap na akong nakatayo pagkatapos ng pagyuko?"
           },
-          "explain_card": "u01-l7-c3",
+          "explain_card": "u01-l7-c1",
           "options": [
             {
               "id": "a",
               "text": {
-                "ar": "ربي اغفر لي",
-                "en": "ربي اغفر لي (Meaning: My Lord, forgive my sins)",
-                "tl": "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)"
+                "ar": "ربنا ولك الحمد",
+                "en": "ربنا ولك الحمد (Meaning: Our Lord, and to You is all praise)",
+                "tl": "ربنا ولك الحمد (Kahulugan: Panginoon namin, tanging sa Iyo lamang ang papuri)"
               }
             },
             {
               "id": "b",
               "text": {
-                "ar": "سبحان ربي الأعلى",
-                "en": "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)",
-                "tl": "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"
+                "ar": "سبحان ربي العظيم",
+                "en": "سبحان ربي العظيم (Meaning: Glory is to my Lord, the Great)",
+                "tl": "سبحان ربي العظيم (Kahulugan: Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)"
               }
             },
             {
               "id": "c",
               "text": {
-                "ar": "سمع الله لمن حمده",
-                "en": "سمع الله لمن حمده (Meaning: Allah hears the one who praises Him)",
-                "tl": "سمع الله لمن حمده (Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya)"
+                "ar": "ربي اغفر لي",
+                "en": "ربي اغفر لي (Meaning: My Lord, forgive my sins)",
+                "tl": "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)"
               }
             }
           ],
