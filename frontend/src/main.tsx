@@ -1,4 +1,4 @@
-import { StrictMode, lazy } from "react"
+import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -10,6 +10,7 @@ import { registerServiceWorker } from "@/app/lib/pwa"
 import "@/app/practice/start-reminders"
 import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
+import { lazy } from "@/app/offline/lazyRoute" // PLT-15 R1: a screen not yet on the device says it needs a connection
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
 const Privacy = lazy(() => import("@/app/pages/Privacy"))

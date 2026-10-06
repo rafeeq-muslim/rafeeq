@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
+import { OfflineNote } from "@/app/offline/NeedsConnection"
+import { useOnline } from "@/app/offline/online"
 import { cityName, countryName, deviceTimeZone, loadCities, locateCity, searchCities, suggestCities, toCity, type CityRow } from "./cities"
 import { BackBar } from "./ui"
 
@@ -26,9 +28,14 @@ export default function CityPicker() {
   const [locating, setLocating] = React.useState(false)
   const [notice, setNotice] = React.useState<string | null>(null)
 
+  // PLT-15 R3: the list loads on first use; offline before that, say it needs a connection.
+  const [listFailed, setListFailed] = React.useState(false)
+  const online = useOnline()
   React.useEffect(() => {
-    void loadCities().then(setRows)
-  }, [])
+    if (rows) return
+    setListFailed(false)
+    void loadCities().then(setRows, () => setListFailed(true))
+  }, [rows, online])
 
   const choose = (r: CityRow) => {
     setDevice({ city: toCity(r) })
@@ -90,7 +97,9 @@ export default function CityPicker() {
           <h2 id="city-list" className={rows && !searching && !results.length ? "sr-only" : "text-label font-medium text-muted-foreground"}>
             {searching ? t("practice.city.results") : t("practice.city.suggested")}
           </h2>
-          {!rows ? (
+          {!rows && listFailed ? (
+            <OfflineNote text="offline.cityList" className="py-3" />
+          ) : !rows ? (
             <div className="flex flex-col gap-2">
               <Skeleton className="h-14 rounded-md" />
               <Skeleton className="h-14 rounded-md" />

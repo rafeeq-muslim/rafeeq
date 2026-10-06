@@ -10,6 +10,7 @@ import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
 import { notificationLook, readDiscreet } from "./app/lib/discreetPref"
+import "./sw/plt15-offline" // PLT-15: adhkar text, glossary and saved-item lists kept for offline use
 
 declare const self: ServiceWorkerGlobalScope
 

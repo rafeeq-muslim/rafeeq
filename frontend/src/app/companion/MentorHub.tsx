@@ -18,6 +18,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Skeleton } from "@/components/ui/skeleton"
 import { SpotIllustration } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
+import { OfflineOnly } from "@/app/offline/NeedsConnection"
 import { useAuth } from "@/app/stores/auth"
 import { claimGuestRequests, mentorApi, useChallenge, useMine, useMyGroups, useMyRequests } from "./api"
 import { ChallengeCard } from "./ChallengeCard"
@@ -255,6 +256,7 @@ export default function MentorHub() {
     <>
       <ScreenBar title={t("mentor.title")} />
       <div className="flex flex-col gap-6 px-4 pt-5 pb-4">
+        <OfflineOnly text="offline.mentor" />{/* PLT-15 R5 */}
         {signedIn ? (
           <>
             <MyMentor />

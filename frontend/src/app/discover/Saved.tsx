@@ -34,6 +34,7 @@ import { usePassages, useCards, useLibrary } from "./queries"
 import { resolveAnswer, resolveSaved, type SavedAnswerView } from "./resolve"
 import { pushSaved, savedAnswer, useSaved } from "./savedStore"
 import type { DailyCardData, LibraryItemData } from "./types"
+import { unreachable } from "@/app/offline/online"
 
 const DATE_TAG: Record<string, string> = { ar: "ar-u-nu-latn", en: "en-US", tl: "fil-PH" }
 
@@ -109,13 +110,18 @@ export default function Saved() {
               )
               if (!row.available) {
                 // Offline: the sources could not be fetched, which is not a withdrawal.
-                const offline = row.entry.kind === "answer" && answerTexts.has(row.entry.ref) && passages.isError
+                const answerOffline = row.entry.kind === "answer" && answerTexts.has(row.entry.ref) && unreachable(passages)
+                // PLT-15 R4: nor is a card or library list that never reached this device.
+                const listOffline =
+                  (row.entry.kind === "card" && unreachable(cards)) ||
+                  (row.entry.kind === "library" && [libAr, libEn, libTl].some((q) => unreachable(q)))
+                const offline = answerOffline || listOffline
                 return (
                   <li key={key} className="flex items-center gap-3 rounded-card border border-dashed p-4">
                     <div className="min-w-0 flex-1">
                       <p className="text-caption text-muted-foreground">{kindLabel}</p>
                       {offline ? (
-                        <p className="text-label text-muted-foreground">{t("discover.saved.answerOffline")}</p>
+                        <p className="text-label text-muted-foreground">{t(answerOffline ? "discover.saved.answerOffline" : "offline.savedItem")}</p>
                       ) : (
                         <>
                           <p className="text-body font-bold">{t("discover.saved.unavailable")}</p>

@@ -15,6 +15,8 @@ import { LOCALES, useT, type Key } from "@/app/i18n"
 import { DiscoverBar, SaveToggle, SourceLine } from "./parts"
 import { useLibrary } from "./queries"
 import type { LibraryItemData } from "./types"
+import { OfflineNote, OfflineOnly } from "@/app/offline/NeedsConnection"
+import { unreachable } from "@/app/offline/online"
 
 const typeKey = (type: string) => `discover.lib.type.${type}` as Key
 const langLabel = (code: string) => LOCALES.find((l) => l.code === code)?.label ?? code
@@ -145,6 +147,8 @@ export function LibraryItemPage() {
       <div className="flex flex-col gap-6 px-4 pt-5 pb-12">
         {lib.isLoading ? (
           <Skeleton className="h-64 rounded-card" />
+        ) : !item && unreachable(lib) ? (
+          <OfflineNote text="offline.libraryList" />
         ) : !item ? (
           <p className="text-body text-muted-foreground">{t("discover.lib.notFound")}</p>
         ) : (
@@ -179,6 +183,7 @@ export function LibraryItemPage() {
             </dl>
 
             <div className="flex flex-col gap-3">
+              <OfflineOnly text="offline.libraryFile" />{/* PLT-15 R4: files open online or once downloaded (PLT-12) */}
               {item.files.map((f, i) => (
                 <Button key={f.url} asChild size="lg" variant={i === 0 ? "default" : "secondary"}>
                   <a href={f.url} target="_blank" rel="noopener noreferrer">

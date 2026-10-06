@@ -38,7 +38,25 @@ export function applyUpdate() {
 
 /** Called on every route change: a pending update applies once the learner leaves a lesson. */
 export function maybeApplyUpdate(path: string) {
-  if (updateReady && !inLearningFlow(path)) applyUpdate()
+  if (updateReady && !inLearningFlow(path)) reloadWhenOnline()
+}
+
+// PLT-15 R6: an update never reloads the app by itself while offline; it
+// waits for the connection (the learner may still tap «حدّث الآن»).
+let waitingForOnline = false
+function reloadWhenOnline() {
+  if (typeof navigator === "undefined" || navigator.onLine) return applyUpdate()
+  notify() // the update bar offers it meanwhile
+  if (waitingForOnline) return
+  waitingForOnline = true
+  window.addEventListener(
+    "online",
+    () => {
+      waitingForOnline = false
+      maybeApplyUpdate(location.pathname)
+    },
+    { once: true },
+  )
 }
 
 export function registerServiceWorker() {
@@ -49,7 +67,7 @@ export function registerServiceWorker() {
     if (!hadController || updateReady) return
     updateReady = true
     if (inLearningFlow()) notify()
-    else applyUpdate()
+    else reloadWhenOnline()
   })
 
   window.addEventListener("load", () => {

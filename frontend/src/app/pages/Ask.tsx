@@ -8,7 +8,9 @@
  *   from the on-device summary, never from Sharia sources.
  * - KNW-10 R5: the learner's consent switch (off by default) lets an
  *   answered question nudge their learning; only the objective id is used.
- * - Offline: asking is disabled with a clear note; nothing is queued.
+ * - Offline: asking is disabled with a clear note; nothing is queued. The
+ *   typed question stays as a draft in the Ask store until the owner sends
+ *   it online (PLT-15 R5); saved answers are one tap away.
  * - KNW-01 reliability R1/R6: typed questions and suggestions go through
  *   one `submitQuestion` (a suggestion has a stable id and sends its shown
  *   text); the draft is cleared only once the store accepted it; a retry
@@ -58,7 +60,8 @@ export default function Ask() {
   const setDevice = useDevice((s) => s.set)
   const markSeen = useLearning((s) => s.markSeen)
   const { lessons } = useContent()
-  const [draft, setDraft] = React.useState("")
+  const draft = useAsk((s) => s.draft)
+  const setDraft = useAsk((s) => s.setDraft)
   const [notice, setNotice] = React.useState<"tooLong" | null>(null)
   const endRef = React.useRef<HTMLDivElement>(null)
 
@@ -214,10 +217,14 @@ export default function Ask() {
           </p>
         )}
         {!online && (
-          <p role="status" className="flex items-center gap-2 px-2 text-label text-muted-foreground">
+          <div role="status" className="flex flex-wrap items-center gap-x-2 px-2 text-label text-muted-foreground">
             <IconWifiOff className="size-4 shrink-0" stroke={1.75} aria-hidden="true" />
-            {t("ask.offline")}
-          </p>
+            <span className="min-w-0 flex-1">{t("ask.offline")}</span>
+            {/* PLT-15 R5: saved answers stay readable offline */}
+            <Button variant="link" size="sm" className="px-0" onClick={() => navigate("/discover/saved")}>
+              {t("home.org.openSaved")}
+            </Button>
+          </div>
         )}
         <AskComposer
           placeholder={t("ask.placeholder")}
