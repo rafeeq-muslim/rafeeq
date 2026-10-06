@@ -27,7 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { SpotIllustration } from "@/components/rafeeq"
+import { IconTile, SpotIllustration } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
 import { useAsk } from "@/app/ask/store"
@@ -100,9 +100,7 @@ export function ThreadList({ threads, onOpen }: { threads: ThreadSummary[]; onOp
             <Item asChild variant="outline" className="bg-card text-start">
               <button type="button" onClick={() => onOpen(s.id)} className="min-h-16">
                 <ItemMedia>
-                  <span className="grid size-10 place-items-center rounded-full bg-secondary text-secondary-foreground">
-                    <Icon className="size-5" stroke={1.75} aria-hidden="true" />
-                  </span>
+                  <IconTile icon={Icon} size="sm" />
                 </ItemMedia>
                 <ItemContent className="min-w-0">
                   <ItemTitle className="text-body">
