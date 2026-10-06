@@ -65,6 +65,7 @@ export default function InboxThread() {
   const qc = useQueryClient()
   const thread = useInboxThread(id)
   const [confirmUrgent, setConfirmUrgent] = React.useState(false)
+  const [confirmClose, setConfirmClose] = React.useState(false) // PLT-17 R4
   const [referring, setReferring] = React.useState<string | null>(null)
   const [report, setReport] = React.useState<ReportTarget | null>(null)
   const myGender = useAuth((s) => s.me?.gender ?? null)
@@ -129,7 +130,7 @@ export default function InboxThread() {
                     {t("cmp.inbox.urgent")}
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem className="min-h-11 text-label" onSelect={() => void close()}>
+                <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
                   {t("cmp.inbox.close")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -191,6 +192,15 @@ export default function InboxThread() {
         cancelLabel={t("common.cancel")}
         destructive
         onConfirm={() => void urgent()}
+      />
+      <Confirm
+        open={confirmClose}
+        onOpenChange={setConfirmClose}
+        title={t("cmp.inbox.closeConfirmTitle")}
+        description={t("cmp.inbox.closeConfirmBody")}
+        confirmLabel={t("cmp.inbox.close")}
+        cancelLabel={t("common.cancel")}
+        onConfirm={() => void close()}
       />
     </>
   )

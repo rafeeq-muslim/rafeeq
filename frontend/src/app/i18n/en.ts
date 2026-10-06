@@ -1576,4 +1576,7 @@ export const en: Dict = {
   "plt17.org.none": "No active organisation is linked to your account",
   "plt17.org.noneBody": "Your link to your organisation may have been suspended. Contact the Rafeeq team to be linked again.",
   "plt17.org.loadError": "We couldn't load your organisation's data.",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
+  "cmp.inbox.closeConfirmTitle": "End this conversation?",
+  "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
 }

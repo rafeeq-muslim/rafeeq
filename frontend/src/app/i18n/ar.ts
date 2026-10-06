@@ -1575,4 +1575,7 @@ export const ar = {
   "plt17.org.none": "لا جهة نشطة مرتبطة بحسابك",
   "plt17.org.noneBody": "ربما أُوقف ارتباطك بجهتك. تواصل مع فريق رفيق ليعيد ربطك بها.",
   "plt17.org.loadError": "تعذّر تحميل بيانات الجهة.",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
+  "cmp.inbox.closeConfirmTitle": "أتُنهي هذه المحادثة؟",
+  "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
 } as const

@@ -1577,4 +1577,7 @@ export const tl: Dict = {
   "plt17.org.none": "Walang aktibong organisasyong naka-link sa iyong account",
   "plt17.org.noneBody": "Maaaring nasuspinde ang link mo sa iyong organisasyon. Makipag-ugnayan sa team ng Rafeeq para ma-link muli.",
   "plt17.org.loadError": "Hindi namin ma-load ang datos ng iyong organisasyon.",
+  // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
+  "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
+  "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
 }
