@@ -81,6 +81,6 @@ Newest first. "Why" and "rejected" let anyone revisit a decision without re-argu
 | Named scholar review of the motivation design | مهند بن صالح | Before public launch |
 | Open-source license for the repo | ناصر بن عبدالعزيز | Oct 6 |
 | Notifications (PLT-06) are P2, but MOT-05 reminders are now included: include PLT-06 now? Web push is unreliable without a native app | ناصر بن عبدالعزيز | Oct 6 |
-| Prayer reminders: the Sharia reviewer asks for «أظهر اسم الصلاة» (show the prayer name) to be **on** by default. This conflicts with rules.md §4 (neutral notifications by default; learners who hide their Islam). Approve the exception? | ناصر بن عبدالعزيز | — |
+| Prayer reminders: the Sharia reviewer asks for «أظهر اسم الصلاة» (show the prayer name) to be **on** by default. This conflicts with rules.md §4 (neutral notifications by default; learners who hide their Islam). Reviewer's argument: a learner who hides her Islam can turn it off. Counter-point: the first reminder may reach a lock screen before she knows the switch exists. Approve the exception? | ناصر بن عبدالعزيز | — |
 | Reporting and moderation (CMP-04) is "a prerequisite for any group" and still P3 while groups (CMP-05) are now P1: include CMP-04 now, or launch groups without it? | ناصر بن عبدالعزيز | Oct 5 |
 | Owner of Companion & Community (the colleague building groups?) and the group events «انضم إلى مجموعة» / «غادر مجموعة» for MOT-06 | ناصر بن عبدالعزيز | Oct 5 |
