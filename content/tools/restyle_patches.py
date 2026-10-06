@@ -34,10 +34,25 @@ PATCHES = {
             "add": ["T('يشبه الإنسانَ في صفاته', 'He resembles people in His attributes', 'Kahawig Niya ang tao sa Kanyang mga katangian')"]},
     },
     "u2-l2": {
+        2: {"replace": "choose([1], [1], T('أيّ اسم معناه: ذو القدرة الكاملة الذي لا يعتريه عجز ولا فتور؟', "
+                       "'Which name means: the One who never experiences inability or weariness?', "
+                       "'Aling pangalan ang nangangahulugang: hindi nakakaranas ng pagkapagod o kawalan ng kakayahan?'), "
+                       "[T('القدير', 'The All-Powerful', 'Ang ganap na Makapangyarihan'), T('الرزّاق', 'The Provider', 'Ang Tagapanustos'), "
+                       "T('الملك', 'The King and Sovereign', 'Ang Kataas-taasang Hari')])"},
+        4: {"replace": "choose([2], [2], T('أيّ اسم معناه: الذي أحاط بصره بكل شيء وإن دقّ وصغر؟', "
+                       "'Which name means: the One whose sight encompasses everything, however small?', "
+                       "'Aling pangalan ang nangangahulugang: nakikita ang lahat ng bagay, malaki man o maliit?'), "
+                       "[T('البصير', 'The All-Seeing', 'Ang ganap na Nakakakita'), T('السميع', 'The All-Hearing', 'Ang Nakakarinig'), "
+                       "T('الوكيل', 'The Trustee', 'Ang Ganap na Tagapagkupkop')])"},
+        6: {"replace": "choose([3], [3], T('أيّ اسم معناه: الذي يكفي عباده جميع ما يحتاجون إليه؟', "
+                       "'Which name means: the One who provides His servants with all they need?', "
+                       "'Aling pangalan ang nangangahulugang: nagbibigay sa Kanyang mga alipin ng lahat ng kanilang pangangailangan?'), "
+                       "[T('الكافي', 'The Sufficient', 'Ang Sapat'), T('الخالق', 'The Creator', 'Ang Tagapaglikha'), "
+                       "T('اللطيف', 'The Subtle and Kind', 'Ang Banayad at ang Mabait')])"},
         7: {"prompt": "T('ماذا يفعل المسلم حين يرى عناية المخلوقات بصغارها؟', "
                       "'What does a Muslim do when he sees creatures caring for their young?', "
                       "'Ano ang ginagawa ng Muslim kapag nakita niya ang pag-aalaga ng mga nilalang sa kanilang mga anak?')",
-            "add": ["T('يظن أن ذلك حدث مصادفة', 'He thinks it happened by chance', 'Iniisip niyang nangyari ito nang nagkataon lamang')"]},
+            "add": ["T('أن يظن أن ذلك حدث مصادفة', 'To think it happened by chance', 'Isipin na nangyari ito nang nagkataon lamang')"]},
         8: {"add": ["T('الإنسان وحده', 'People alone', 'Ang tao lamang')"]},
     },
     "u2-l3": {
