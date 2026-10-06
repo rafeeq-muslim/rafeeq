@@ -26,8 +26,8 @@ from app.platform.models import User
 router = APIRouter(prefix="/api/team", tags=["team"])
 Team = Annotated[User, Depends(require_role("team"))]
 MIN_PEOPLE = 10
-# MOT-08 R6 open question: Companion has no "the mentor got in touch" event
-# yet. Proposed name; until it arrives the comparison shows not enough data.
+# MOT-08 R6: Companion publishes it when a learner's own mentor writes to them
+# (app/companion/contact.py; at most one per learner per Riyadh day).
 CONTACT_EVENT = "MentorContacted"
 _MIN_TIME = datetime.min.replace(tzinfo=UTC)
 
