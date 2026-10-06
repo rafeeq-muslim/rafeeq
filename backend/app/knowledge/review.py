@@ -48,6 +48,9 @@ class ReviewItem:
     order: tuple = ()
     group: str = ""  # e.g. the unit a lesson belongs to, for the desk's grouping
     views: dict[str, Any] = field(default_factory=dict)  # lang -> learner view (only languages that exist)
+    # KNW-08 R4: content a feature decision keeps from learners until the reviewer approves it
+    # (e.g. a new reciter, approved on a sample of surahs); see approved_ids().
+    gated: bool = False
 
     def hash(self, lang: str) -> str:
         return fingerprint(self.views[lang])
@@ -78,11 +81,12 @@ def find(item_type: str, item_id: str) -> ReviewItem:
 
 async def published(session: AsyncSession, item_type: str, lang: str) -> dict[str, Any]:
     """item_id -> what learners see in `lang`: the merged text, except a
-    version the reviewer returned (withdrawn until corrected)."""
+    version the reviewer returned (withdrawn until corrected). Gated items are
+    left out: they wait for approval (approved_ids)."""
     decisions = await _latest_decisions(session, item_type)
     out: dict[str, Any] = {}
     for it in items(item_type):
-        if lang not in it.views:
+        if lang not in it.views or it.gated:
             continue
         last = decisions.get((item_type, it.item_id, lang))
         if last is not None and last.decision == "returned" and last.content_hash == it.hash(lang):
@@ -100,11 +104,27 @@ async def _latest_decisions(session: AsyncSession, item_type: str | None = None)
 
 def _status(item: ReviewItem, lang: str, approval: ContentApproval | None, last: ContentReview | None) -> str:
     h = item.hash(lang)
-    if approval is not None and approval.content_hash == h:
-        return "approved"
+    # The newest decision wins: a version approved and then returned is returned.
     if last is not None and last.decision == "returned" and last.content_hash == h:
         return "returned"
+    if approval is not None and approval.content_hash == h:
+        return "approved"
     return "in_review"
+
+
+async def approved_ids(session: AsyncSession, item_type: str, lang: str) -> set[str]:
+    """Items whose current version in `lang` the reviewer approved (and did not
+    return since). For gated content, which waits for approval (KNW-08 R4)."""
+    approvals = {
+        a.item_id: a
+        for a in await session.scalars(select(ContentApproval).where(ContentApproval.item_type == item_type, ContentApproval.lang == lang))
+    }
+    decisions = await _latest_decisions(session, item_type)
+    return {
+        it.item_id
+        for it in items(item_type)
+        if lang in it.views and _status(it, lang, approvals.get(it.item_id), decisions.get((item_type, it.item_id, lang))) == "approved"
+    }
 
 
 router = APIRouter(prefix="/api/review", tags=["review"])
@@ -123,8 +143,10 @@ async def queue(session: Session, _: Desk, item_type: str | None = None) -> dict
                 continue
             key = (it.item_type, it.item_id, lg)
             st = _status(it, lg, approvals.get(key), decisions.get(key))
-            # live: learners see it (merged content is shown unless this version was returned)
-            langs[lg] = {"status": st, "live": st != "returned", "note": decisions[key].note if st == "returned" else None}
+            # live: learners see it (merged content is shown unless this version was returned;
+            # gated content only once approved)
+            live = st == "approved" if it.gated else st != "returned"
+            langs[lg] = {"status": st, "live": live, "note": decisions[key].note if st == "returned" else None}
         rows.append({"item_type": it.item_type, "item_id": it.item_id, "group": it.group, "title": _title(it), "langs": langs})
     counts = {s: sum(1 for r in rows for v in r["langs"].values() if v["status"] == s) for s in ("in_review", "returned", "approved")}
     return {"items": rows, "counts": counts}

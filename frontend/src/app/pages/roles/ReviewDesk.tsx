@@ -23,6 +23,7 @@ import { ApiError, api } from "@/app/lib/api"
 import { useAuth } from "@/app/stores/auth"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import type { QuranRef } from "@/app/learning/types"
+import { ReciterSample } from "@/app/discover/ReciterSample" // KNW-08 R4
 
 type Status = "in_review" | "returned" | "approved"
 type Row = { item_type: string; item_id: string; group: string; title: Record<string, string>; langs: Record<string, { status: Status; live: boolean; note: string | null }> }
@@ -371,6 +372,7 @@ function Render({ type, view, lang }: { type: string; view: View; lang: Locale }
       </div>
     )
   }
+  if (type === "recitation" && view?.quranpedia_id) return <ReciterSample view={view} /> // KNW-08 R4: listen to a sample, then decide
   return <Generic view={view} />
 }
 

@@ -41,11 +41,14 @@ async def library_list(session: Session, response: Response, lang: Lang = "ar") 
 
 @router.get("/discover/recitations")
 async def recitations(session: Session, response: Response, lang: Lang = "ar") -> dict:
-    """KNW-08 R4: the approved recited mushaf, or none."""
+    """KNW-08 R4: the recited mushaf (al-Muaiqly, per surah), or none, and the
+    Quranpedia per-verse reciters the Sharia reviewer has approved (R2: played
+    verse by verse); the app offers those reciters instead once there is one."""
     live = await published(session, recitation.ITEM_TYPE, lang)
     rec = next((live[r["id"]] for r in recitation.load() if r["id"] in live), None)
+    reciters = await recitation.approved_reciters(session, lang)
     response.headers["Cache-Control"] = PUBLIC
-    return {"lang": lang, "recitation": rec}
+    return {"lang": lang, "recitation": rec, "reciters": reciters}
 
 
 @router.get("/glossary")

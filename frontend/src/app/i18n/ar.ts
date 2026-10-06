@@ -997,4 +997,13 @@ export const ar = {
   "guide.suggest.discover.title": "اكتشف",
   "guide.suggest.discover.body": "فائدة قصيرة كل يوم، وتلاوة مع معانيها بلغتك، ومكتبة موثوقة.",
   "guide.suggest.discover.cta": "افتح اكتشف",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "القارئ",
+  "discover.quran.nowReciting": "الآية التي تُتلى الآن",
+  "discover.quran.nowVerse": "تُتلى الآية {n}",
+  "desk.type.recitation": "تلاوة",
+  "desk.reciter.hint": "استمع إلى عيّنة من سور هذا القارئ آيةً آية، ثم اعتمده أو أعده مع السبب. لا يظهر للمتعلمين قبل اعتماده.",
+  "desk.reciter.riwaya": "الرواية",
+  "desk.reciter.sample": "العيّنة",
+  "desk.reciter.otherSura": "سورة أخرى",
 } as const

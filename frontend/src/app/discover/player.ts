@@ -13,12 +13,20 @@ export type AudioLike = {
   pause: () => void
 }
 
-export type Track = { kind: "recitation"; sura: number } | { kind: "meaning"; sura: number; aya: number }
+export type Track =
+  | { kind: "recitation"; sura: number }
+  | { kind: "verse"; sura: number; aya: number }
+  | { kind: "meaning"; sura: number; aya: number }
+
+/** KNW-08 R2: after a verse's file ends, the next verse of the surah; null at its end. */
+export const nextAya = (aya: number, count: number): number | null => (aya < count ? aya + 1 : null)
 
 export class ListeningPlayer {
   track: Track | null = null
   private recitationTime = 0
   private recSura = 0
+  /** The verse file last played (per-verse recitation), and where it stopped. */
+  private verseAt: { sura: number; aya: number; url: string; time: number } | null = null
   private el: AudioLike
   constructor(el: AudioLike) {
     this.el = el
@@ -39,9 +47,26 @@ export class ListeningPlayer {
     void this.el.play()
   }
 
+  /**
+   * R2/R4: one verse of a per-verse recitation (Quranpedia), so the verse
+   * highlighted is exactly the file playing. Unpausing, or coming back from
+   * a meaning, resumes the same verse where it stopped.
+   */
+  playVerse(sura: number, aya: number, url: string) {
+    this.el.pause()
+    const same = this.verseAt?.sura === sura && this.verseAt.aya === aya && this.verseAt.url === url
+    if (!(same && this.track?.kind === "verse")) {
+      this.el.src = url
+      this.el.currentTime = same ? this.verseAt!.time : 0
+    }
+    this.verseAt = { sura, aya, url, time: 0 }
+    this.track = { kind: "verse", sura, aya }
+    void this.el.play()
+  }
+
   /** R3: the recitation stops first, then the meaning plays alone. */
   playMeaning(sura: number, aya: number, url: string) {
-    if (this.track?.kind === "recitation") this.recitationTime = this.el.currentTime
+    this.keepTime()
     this.el.pause()
     this.el.src = url
     this.el.currentTime = 0
@@ -50,8 +75,13 @@ export class ListeningPlayer {
   }
 
   pause() {
-    if (this.track?.kind === "recitation") this.recitationTime = this.el.currentTime
+    this.keepTime()
     this.el.pause()
+  }
+
+  private keepTime() {
+    if (this.track?.kind === "recitation") this.recitationTime = this.el.currentTime
+    if (this.track?.kind === "verse" && this.verseAt) this.verseAt.time = this.el.currentTime
   }
 
   /** Seconds into the surah's recitation (for R6). */

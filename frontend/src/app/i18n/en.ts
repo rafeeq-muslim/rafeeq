@@ -998,4 +998,13 @@ export const en: Dict = {
   "guide.suggest.discover.title": "Discover",
   "guide.suggest.discover.body": "A short benefit each day, recitation with its meanings in your language, and a trusted library.",
   "guide.suggest.discover.cta": "Open Discover",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "Reciter",
+  "discover.quran.nowReciting": "Verse being recited now",
+  "discover.quran.nowVerse": "Reciting verse {n}",
+  "desk.type.recitation": "Recitation",
+  "desk.reciter.hint": "Listen to a sample of this reciter's surahs, verse by verse, then approve it or return it with a reason. Learners don't get it until you approve it.",
+  "desk.reciter.riwaya": "Riwaya",
+  "desk.reciter.sample": "Sample",
+  "desk.reciter.otherSura": "Another surah",
 }

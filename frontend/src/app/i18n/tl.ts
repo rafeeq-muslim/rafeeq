@@ -999,4 +999,13 @@ export const tl: Dict = {
   "guide.suggest.discover.title": "Tuklasin",
   "guide.suggest.discover.body": "Isang maikling aral bawat araw, pagbigkas na may kahulugan sa iyong wika, at mapagkakatiwalaang aklatan.",
   "guide.suggest.discover.cta": "Buksan ang Tuklasin",
+  // KNW-08 R2/R4: Quranpedia reciters, verse highlighting, reviewer sample (knw-08-r2-r4-reciters)
+  "discover.quran.reciterPick": "Tagabigkas",
+  "discover.quran.nowReciting": "Talatang binibigkas ngayon",
+  "discover.quran.nowVerse": "Binibigkas ang talata {n}",
+  "desk.type.recitation": "Pagbigkas",
+  "desk.reciter.hint": "Pakinggan ang ilang sūrah ng tagabigkas na ito, talata por talata, saka aprubahan o ibalik nang may dahilan. Hindi ito makikita ng mga nag-aaral hangga't hindi mo inaaprubahan.",
+  "desk.reciter.riwaya": "Riwāyah",
+  "desk.reciter.sample": "Halimbawa",
+  "desk.reciter.otherSura": "Ibang sūrah",
 }
