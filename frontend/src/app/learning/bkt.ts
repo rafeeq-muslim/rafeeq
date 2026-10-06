@@ -28,6 +28,8 @@ export type ObjectiveState = {
   masteredAt?: string
   lastExerciseId?: string
   checksDone: number // LRN-04: rechecks after 7 and 30 days
+  /** Exercises already answered for this objective (review prefers a new one). */
+  seenExercises?: string[]
 }
 
 export const fresh = (): ObjectiveState => ({ p: P_L0, seen: false, answered: false, checksDone: 0 })
@@ -51,6 +53,7 @@ export function applyAnswer(s: ObjectiveState | undefined, correct: boolean, typ
     answered: true,
     lastAnswerAt: now.toISOString(),
     lastExerciseId: exerciseId,
+    seenExercises: [...new Set([...(prev.seenExercises ?? []), exerciseId])],
     masteredAt: isMastered ? (wasMastered ? prev.masteredAt : now.toISOString()) : undefined,
     checksDone: isMastered ? (wasMastered ? prev.checksDone : 0) : 0,
   }

@@ -64,8 +64,15 @@ describe("knw-10-r3 learning guide summary", () => {
     const s = buildSummary("en", lessons, progress as never)
     const t = (k: string, v?: Record<string, string>) => `${k}:${JSON.stringify(v ?? {})}`
     const msg = fixedMessage(s, lessons, t as never)
-    expect(msg).toContain("TEXT_o1")
-    expect(msg).toContain("TEXT_o2")
+    // issue #9: lesson titles, never the team-facing objective texts
+    expect(msg).toContain("TITLE_l1")
+    expect(msg).not.toContain("TEXT_o1")
     expect(msg).toContain("TITLE_l2")
+  })
+
+  it("leaves out lessons not yet completed (issue #9)", () => {
+    const s = buildSummary("en", lessons, { ...progress, completed: {} } as never)
+    expect(s.mastered).toEqual([])
+    expect(s.reviewing).toEqual([])
   })
 })

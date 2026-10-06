@@ -50,6 +50,14 @@ Written by Claude during the overnight build (2026-10-05/06), at the product own
 | Placement asks knowledge questions only, offers «لا أعرف», and never marks answers | LRN-05 R5 and rules.md (no "do you pray") | — |
 | Lesson completion shows a **unit flower** gaining the earned petal; badges are celebrated first | One orchestrated moment of delight, from the brand's petal geometry | — |
 
+## Fixes from the reviewer's site test (issue #9, 2026-10-06)
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| An objective enters review only after its lesson is completed (seeing a card in an unfinished lesson does not count) | The reviewer saw «2 objectives to strengthen» before finishing any lesson; LRN-04 R1 counts «اطّلع», which LRN-10 defines as seeing the cards, so this narrows it to completed lessons | `completedObjectives` in `frontend/src/app/learning/reviewItems.ts` |
+| An objective answered less than an hour ago waits before it returns in review; review prefers an exercise the learner has never answered | The reviewer met the question he had just answered twice; LRN-04 R2 asks for an exercise not answered last time | `REVIEW_PAUSE_MS` in `frontend/src/app/learning/review.ts` |
+| The guide's fixed message names lessons («أشهد»), not objective texts, with Arabic punctuation in Arabic | Objective texts are written for the team in the third person («يعرف…») | `fixedMessage` in `frontend/src/app/ask/guide.ts` |
+
 ## Motivation and indicators
 
 | Decision | Why |

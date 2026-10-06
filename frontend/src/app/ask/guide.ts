@@ -29,7 +29,8 @@ export function buildSummary(
   progress: Progress & { mastery: Record<string, ObjectiveState> },
   now = new Date(),
 ): Summary {
-  const known = new Set(lessons.flatMap((l) => l.objectives.map((o) => o.id)))
+  // Only lessons the learner has completed (issue #9: no review of lessons not yet studied).
+  const known = new Set(lessons.filter((l) => progress.completed[l.id]).flatMap((l) => l.objectives.map((o) => o.id)))
   const entries = Object.entries(progress.mastery).filter(([id]) => known.has(id))
   const mastered = entries
     .filter(([, s]) => levelOf(s) === "mastered")
@@ -46,21 +47,24 @@ export function buildSummary(
   return { lang, mastered, reviewing, next }
 }
 
-/** The fixed message (LRN-07 R4): «أتقنت: … · راجع: … · خطوتك التالية: …». */
+/** The fixed message (LRN-07 R4). Names lessons, not objective texts (those
+ * are written for the team, in the third person), in the learner's own list
+ * punctuation (issue #9). */
 export function fixedMessage(
   s: Summary,
   lessons: Lesson[],
   t: (key: "ask.guide.mastered" | "ask.guide.review" | "ask.guide.next" | "ask.guide.reviewStep" | "ask.guide.start", vars?: Record<string, string>) => string,
-  sep = ", ",
 ): string {
-  const names = new Map(lessons.flatMap((l) => l.objectives.map((o) => [o.id, o.text] as const)))
+  const sep = s.lang === "ar" ? "، " : ", "
+  const lessonOf = new Map(lessons.flatMap((l) => l.objectives.map((o) => [o.id, l.title] as const)))
   const titles = new Map(lessons.map((l) => [l.id, l.title]))
+  const lessonList = (ids: string[]) => [...new Set(ids.map((id) => lessonOf.get(id)).filter(Boolean))].map((x) => `«${x}»`).join(sep)
   const parts: string[] = []
-  if (s.mastered.length) parts.push(t("ask.guide.mastered", { list: s.mastered.map((id) => names.get(id)).join(sep) }))
-  if (s.reviewing.length) parts.push(t("ask.guide.review", { list: s.reviewing.map((id) => names.get(id)).join(sep) }))
-  if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.next", { step: titles.get(s.next.lesson_id) ?? "" }))
+  if (s.mastered.length) parts.push(t("ask.guide.mastered", { list: lessonList(s.mastered) }))
+  if (s.reviewing.length) parts.push(t("ask.guide.review", { list: lessonList(s.reviewing) }))
+  if (s.next && "lesson_id" in s.next) parts.push(t("ask.guide.next", { step: `«${titles.get(s.next.lesson_id) ?? ""}»` }))
   else if (s.next) parts.push(t("ask.guide.next", { step: t("ask.guide.reviewStep") }))
-  return parts.length ? parts.join(" · ") : t("ask.guide.start")
+  return parts.length ? parts.join(s.lang === "ar" ? ". " : ". ") + "." : t("ask.guide.start")
 }
 
 export function nextHref(s: Summary): string | null {

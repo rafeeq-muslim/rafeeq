@@ -7,6 +7,7 @@ import { useDevice } from "@/app/stores/device"
 import { ar } from "./ar"
 import { en } from "./en"
 import { tl } from "./tl"
+import { pluralForm } from "./plurals"
 
 export type Locale = "ar" | "en" | "tl"
 export type Dict = Record<keyof typeof ar, string>
@@ -29,7 +30,10 @@ function fill(s: string, vars?: Record<string, string | number>) {
 }
 
 export function translate(locale: Locale, key: Key, vars?: Record<string, string | number>) {
-  return fill(dicts[locale][key] ?? dicts.en[key] ?? String(key), vars)
+  // Numbers arrive formatted ("1,200"); the plural form needs the value.
+  const n = vars?.n !== undefined ? Number(String(vars.n).replace(/,/g, "")) : NaN
+  const form = Number.isFinite(n) ? pluralForm(locale, key, n) : undefined
+  return fill(form ?? dicts[locale][key] ?? dicts.en[key] ?? String(key), vars)
 }
 
 export function useT() {

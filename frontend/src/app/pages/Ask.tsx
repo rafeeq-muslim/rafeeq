@@ -62,7 +62,7 @@ export default function Ask() {
     async (turnId: string) => {
       const summary = buildSummary(locale, lessons, useLearning.getState())
       const ai = await requestGuide(summary)
-      const text = ai ?? fixedMessage(summary, lessons, t, locale === "ar" ? "، " : ", ")
+      const text = ai ?? fixedMessage(summary, lessons, t)
       put(turnId, { id: turnId, role: "assistant", state: "guide", text, nextHref: nextHref(summary), ai: !!ai })
     },
     [locale, lessons, t, put],

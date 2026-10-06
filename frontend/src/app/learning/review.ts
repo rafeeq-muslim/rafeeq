@@ -24,18 +24,27 @@ export function inReview(s: ObjectiveState | undefined, now = new Date()): boole
 
 const ts = (s: ObjectiveState) => (s.lastAnswerAt ? new Date(s.lastAnswerAt).getTime() : 0)
 
+/** Issue #9: an objective just answered waits before it returns in review. */
+export const REVIEW_PAUSE_MS = 60 * 60 * 1000
+
 export function selectReview(
   mastery: Record<string, ObjectiveState>,
   exercisesByObjective: Record<string, Exercise[]>,
   now = new Date(),
   max = 5,
+  /** Objectives of completed lessons only (issue #9: no review before the lesson is done). */
+  eligible?: Set<string>,
 ): { objectiveId: string; exercise: Exercise }[] {
-  const entries = Object.entries(mastery).filter(([id, s]) => inReview(s, now) && (exercisesByObjective[id]?.length ?? 0) > 0)
+  const rested = (s: ObjectiveState) => !s.lastAnswerAt || now.getTime() - new Date(s.lastAnswerAt).getTime() >= REVIEW_PAUSE_MS
+  const entries = Object.entries(mastery).filter(
+    ([id, s]) => (!eligible || eligible.has(id)) && inReview(s, now) && rested(s) && (exercisesByObjective[id]?.length ?? 0) > 0,
+  )
   const rank = (s: ObjectiveState) => (levelOf(s) === "practising" ? 0 : levelOf(s) === "exposed" ? 1 : 2)
   entries.sort(([, a], [, b]) => rank(a) - rank(b) || (rank(a) === 0 ? a.p - b.p : 0) || ts(a) - ts(b))
   return entries.slice(0, max).map(([objectiveId, s]) => {
     const pool = exercisesByObjective[objectiveId]
-    const exercise = pool.find((e) => e.id !== s.lastExerciseId) ?? pool[0]
+    const seen = new Set(s.seenExercises ?? [])
+    const exercise = pool.find((e) => !seen.has(e.id)) ?? pool.find((e) => e.id !== s.lastExerciseId) ?? pool[0]
     return { objectiveId, exercise }
   })
 }

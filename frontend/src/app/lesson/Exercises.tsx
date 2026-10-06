@@ -30,21 +30,28 @@ export function check(e: Exercise, v: Value): boolean {
   return checkMatch(e, v as [string, string][])
 }
 
-type Props<E, V> = { exercise: E; value: V; onChange: (v: V) => void; result: Result }
+type Props<E, V> = {
+  exercise: E
+  value: V
+  onChange: (v: V) => void
+  result: Result
+  /** Attempt number: a returning exercise gets a new option order (LRN-03 R3, issue #9). */
+  round?: number
+}
 
-export function ExerciseView({ exercise, value, onChange, result }: Props<Exercise, Value>) {
+export function ExerciseView({ exercise, value, onChange, result, round = 0 }: Props<Exercise, Value>) {
   // A value left over from the previous exercise must never reach the next one
   // in the wrong shape (issue #9: review crashed going from choose to match).
   if (exercise.type === "choose")
-    return <Choose exercise={exercise} value={typeof value === "string" ? value : null} onChange={onChange} result={result} />
+    return <Choose exercise={exercise} value={typeof value === "string" ? value : null} onChange={onChange} result={result} round={round} />
   const list = Array.isArray(value) ? value : []
-  if (exercise.type === "order") return <Order exercise={exercise} value={list as string[]} onChange={onChange} result={result} />
-  return <Match exercise={exercise} value={list as [string, string][]} onChange={onChange} result={result} />
+  if (exercise.type === "order") return <Order exercise={exercise} value={list as string[]} onChange={onChange} result={result} round={round} />
+  return <Match exercise={exercise} value={list as [string, string][]} onChange={onChange} result={result} round={round} />
 }
 
-function Choose({ exercise, value, onChange, result }: Props<ChooseExercise, string | null>) {
+function Choose({ exercise, value, onChange, result, round = 0 }: Props<ChooseExercise, string | null>) {
   const { t } = useT()
-  const options = React.useMemo(() => shuffle(exercise.options, exercise.id), [exercise])
+  const options = React.useMemo(() => shuffle(exercise.options, `${exercise.id}:${round}`), [exercise, round])
   return (
     <RadioGroup value={value ?? ""} onValueChange={(v) => !result && onChange(v)} className="gap-3" aria-label={exercise.prompt}>
       {options.map((o) => (
@@ -109,9 +116,9 @@ const Num = ({ n, tone = "primary" }: { n: number; tone?: "primary" | "success" 
   </span>
 )
 
-function Order({ exercise, value, onChange, result }: Props<OrderExercise, string[]>) {
+function Order({ exercise, value, onChange, result, round = 0 }: Props<OrderExercise, string[]>) {
   const { t } = useT()
-  const bank = React.useMemo(() => shuffleAway(exercise.items, exercise.answer, exercise.id), [exercise])
+  const bank = React.useMemo(() => shuffleAway(exercise.items, exercise.answer, `${exercise.id}:${round}`), [exercise, round])
   const byId = (id: string) => exercise.items.find((i) => i.id === id) as Item
   const shown = result === "incorrect" ? exercise.answer : value
 
@@ -150,11 +157,11 @@ function Order({ exercise, value, onChange, result }: Props<OrderExercise, strin
   )
 }
 
-function Match({ exercise, value, onChange, result }: Props<MatchExercise, [string, string][]>) {
+function Match({ exercise, value, onChange, result, round = 0 }: Props<MatchExercise, [string, string][]>) {
   const { t } = useT()
   const [left, setLeft] = React.useState<string | null>(null)
-  const lefts = React.useMemo(() => shuffle(exercise.left, `${exercise.id}:l`), [exercise])
-  const rights = React.useMemo(() => shuffle(exercise.right, `${exercise.id}:r`), [exercise])
+  const lefts = React.useMemo(() => shuffle(exercise.left, `${exercise.id}:l:${round}`), [exercise, round])
+  const rights = React.useMemo(() => shuffle(exercise.right, `${exercise.id}:r:${round}`), [exercise, round])
   const pairs = result === "incorrect" ? exercise.answer : value
   const pairOf = (id: string, side: 0 | 1) => pairs.findIndex((p) => p[side] === id)
 

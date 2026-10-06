@@ -30,7 +30,7 @@ export default function Review() {
   const navigate = useNavigate()
   const { content } = useContent()
   const learning = useLearning()
-  const [items] = React.useState(() => (content ? reviewItems(content, learning.mastery) : []))
+  const [items] = React.useState(() => (content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []))
   const [queue, setQueue] = React.useState(() => items.map((i) => i.exercise.id))
   const [tried, setTried] = React.useState<string[]>([])
   const [value, setValue] = React.useState<Value>(null)
@@ -113,7 +113,7 @@ export default function Review() {
               {t("review.title")}
             </Badge>
             <h1 className="font-heading text-h2 font-bold text-balance">{exercise.prompt}</h1>
-            <ExerciseView key={`${exercise.id}:${attempt}`} exercise={exercise} value={value} onChange={setValue} result={result} />
+            <ExerciseView key={`${exercise.id}:${attempt}`} round={attempt} exercise={exercise} value={value} onChange={setValue} result={result} />
           </>
         )}
       </main>

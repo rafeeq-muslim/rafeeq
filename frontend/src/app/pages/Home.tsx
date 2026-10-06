@@ -42,7 +42,7 @@ export default function Home() {
   const next = firstIncomplete(lessons, learning)
   const unit = next && content?.units.find((u) => u.id === next.unit)
   const session = next ? learning.sessions[next.id] : undefined
-  const review = content ? reviewItems(content, learning.mastery) : []
+  const review = content ? reviewItems(content, learning.mastery, new Date(), learning.completed) : []
   const completedCount = Object.keys(learning.completed).length
 
   return (

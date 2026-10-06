@@ -381,7 +381,7 @@ function ExerciseFeedback({
 }: {
   result: "correct" | "incorrect"
   title?: string
-  explanation?: string
+  explanation?: React.ReactNode
   actionLabel?: string
   onContinue?: () => void
   className?: string
@@ -407,7 +407,7 @@ function ExerciseFeedback({
           <p className="font-heading text-h3 font-bold">
             {title ?? (ok ? "أحسنت" : "ليست هذه، والصواب موضّح أعلاه")}
           </p>
-          {explanation && <p className="text-label text-foreground/80">{explanation}</p>}
+          {explanation && <div className="flex flex-col gap-2 text-label text-foreground/80">{explanation}</div>}
         </div>
       </div>
       <Button

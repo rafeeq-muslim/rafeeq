@@ -34,7 +34,10 @@ export async function syncNow(): Promise<void> {
       L.replaceAll({
         completed: l.completed,
         unlockedUnits: l.unlockedUnits,
-        mastery: Object.fromEntries(Object.entries(l.mastery).map(([k, v]) => [k, noNulls(v) as ObjectiveState])),
+        // seenExercises lives on the device only: keep it across the merge
+        mastery: Object.fromEntries(
+          Object.entries(l.mastery).map(([k, v]) => [k, { ...(noNulls(v) as ObjectiveState), seenExercises: L.mastery[k]?.seenExercises }]),
+        ),
       })
       M.replaceAll({ days: m.days, badges: m.badges })
     } catch {

@@ -12,6 +12,6 @@ export default function Next() {
   if (isLoading && !content) return null
   const next = firstIncomplete(lessons, progress)
   if (next) return <Navigate to={`/learn/lesson/${next.id}`} replace />
-  if (content && reviewItems(content, progress.mastery).length) return <Navigate to="/learn/review" replace />
+  if (content && reviewItems(content, progress.mastery, new Date(), progress.completed).length) return <Navigate to="/learn/review" replace />
   return <Navigate to="/" replace />
 }

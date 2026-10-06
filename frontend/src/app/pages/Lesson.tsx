@@ -32,6 +32,7 @@ import { completeLesson, type Completion } from "@/app/learning/complete"
 import { recordFirstAnswer } from "@/app/learning/answers"
 import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
+import { firstIncomplete, lessonStatus } from "@/app/learning/path"
 import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
@@ -41,7 +42,8 @@ export default function LessonPage() {
   const { lessonId = "" } = useParams()
   const { t } = useT()
   const navigate = useNavigate()
-  const { content, isLoading } = useContent()
+  const { content, isLoading, lessons, preview } = useContent()
+  const progress = useLearning()
   const lesson = content?.lessons[lessonId]
 
   if (isLoading && !content) {
@@ -57,6 +59,16 @@ export default function LessonPage() {
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
         <p className="text-body text-muted-foreground">{t("lesson.notFound")}</p>
         <Button onClick={() => navigate("/learn")}>{t("path.title")}</Button>
+      </div>
+    )
+  }
+  // LRN-02 R2 (issue #9): a locked lesson stays locked even when opened by its link.
+  if (!preview && lessonStatus(lesson, lessons, progress) === "locked") {
+    const next = firstIncomplete(lessons, progress)
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
+        <p className="max-w-sm text-body text-muted-foreground">{t("lesson.locked", { name: next?.title ?? "" })}</p>
+        {next && <Button onClick={() => navigate(`/learn/lesson/${next.id}`, { replace: true })}>{t("lesson.nextLesson", { name: next.title })}</Button>}
       </div>
     )
   }
@@ -147,7 +159,7 @@ function Player({ lesson }: { lesson: LessonT }) {
               {t(exercise.type === "choose" ? "lesson.choose" : exercise.type === "order" ? "lesson.orderHint" : "lesson.matchHint")}
             </Badge>
             <h1 className="font-heading text-h2 font-bold text-balance">{exercise.prompt}</h1>
-            <ExerciseView key={`${exercise.id}:${attempt}`} exercise={exercise} value={value} onChange={setValue} result={shown?.result ?? null} />
+            <ExerciseView key={`${exercise.id}:${attempt}`} round={attempt} exercise={exercise} value={value} onChange={setValue} result={shown?.result ?? null} />
           </>
         )}
       </main>
@@ -161,11 +173,19 @@ function Player({ lesson }: { lesson: LessonT }) {
             onContinue={onContinue}
             className="mx-auto max-w-xl"
             explanation={
-              shown.result === "incorrect"
-                ? why && why !== "loading" && why.text
-                  ? `${t("lesson.aiLabel")}: ${why.text}`
-                  : `${t("lesson.cardText")}: ${cardText(shown.exercise.cards)}`
-                : undefined
+              shown.result === "incorrect" ? (
+                <>
+                  {/* LRN-03 R6: the AI explanation sits above the card text, which stays visible */}
+                  {why && why !== "loading" && why.text && (
+                    <p className="rounded-md bg-card/70 px-3 py-2">
+                      <span className="font-bold">{t("lesson.aiLabel")}:</span> {why.text}
+                    </p>
+                  )}
+                  <p className="whitespace-pre-line">
+                    <span className="font-bold">{t("lesson.cardText")}:</span> {cardText(shown.exercise.cards)}
+                  </p>
+                </>
+              ) : undefined
             }
           />
         ) : (

@@ -1,0 +1,45 @@
+/** Number-aware forms (issue #9: «سلسلتك 1 أيام» → «سلسلتك يوم واحد»).
+ * Keys mirror the dictionary keys; categories are CLDR plural categories
+ * from Intl.PluralRules. A missing category falls back to the plain string
+ * in the dictionary. Tagalog uses the same word for one and many. */
+import type { Locale } from "./index"
+
+type Forms = Partial<Record<Intl.LDMLPluralRule, string>>
+
+export const PLURALS: Partial<Record<Locale, Record<string, Forms>>> = {
+  ar: {
+    "streak.days": { one: "سلسلتك يوم واحد", two: "سلسلتك يومان", few: "سلسلتك {n} أيام", many: "سلسلتك {n} يومًا", other: "سلسلتك {n} يوم" },
+    "streak.paused": {
+      one: "سلسلتك يوم واحد · متوقفة مؤقتًا",
+      two: "سلسلتك يومان · متوقفة مؤقتًا",
+      few: "سلسلتك {n} أيام · متوقفة مؤقتًا",
+      many: "سلسلتك {n} يومًا · متوقفة مؤقتًا",
+      other: "سلسلتك {n} يوم · متوقفة مؤقتًا",
+    },
+    "home.reviewBody": {
+      one: "هدف واحد يحتاج تثبيتًا",
+      two: "هدفان يحتاجان تثبيتًا",
+      few: "{n} أهداف تحتاج تثبيتًا",
+      many: "{n} هدفًا يحتاج تثبيتًا",
+      other: "{n} هدف يحتاج تثبيتًا",
+    },
+    "lesson.streakBadge": { one: "يوم واحد من التعلّم", two: "يومان من التعلّم", few: "{n} أيام من التعلّم", many: "{n} يومًا من التعلّم", other: "{n} يوم من التعلّم" },
+    "lesson.streakTitle": { one: "تعلّمت يومًا واحدًا", two: "تعلّمت يومين", few: "تعلّمت {n} أيام", many: "تعلّمت {n} يومًا", other: "تعلّمت {n} يوم" },
+    "path.lessonsCount": { one: "درس واحد", two: "درسان", few: "{n} دروس", many: "{n} درسًا", other: "{n} درس" },
+  },
+  en: {
+    "home.reviewBody": { one: "1 objective to strengthen" },
+    "lesson.streakBadge": { one: "1 day of learning" },
+    "lesson.streakTitle": { one: "You learned on 1 day" },
+    "path.lessonsCount": { one: "1 lesson" },
+  },
+}
+
+const rules = new Map<Locale, Intl.PluralRules>()
+
+export function pluralForm(locale: Locale, key: string, n: number): string | undefined {
+  const forms = PLURALS[locale]?.[key]
+  if (!forms) return undefined
+  if (!rules.has(locale)) rules.set(locale, new Intl.PluralRules(locale === "tl" ? "fil" : locale))
+  return forms[rules.get(locale)!.select(n)]
+}
