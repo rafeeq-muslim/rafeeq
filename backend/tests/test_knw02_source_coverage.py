@@ -239,7 +239,10 @@ async def test_knw02_s19_other_model_vectors_are_never_mixed(ai):
 # --- SC4: selection by quality, owner's near-tie preference ------------------------
 
 
-async def test_knw02_owner_near_tie_prefers_islamqa(ai):
+async def test_knw02_owner_near_tie_prefers_islamqa(ai, monkeypatch):
+    # PRD live v3 §1/§7.2 (A25): no site is preferred by default; the near-tie
+    # mechanism applies only when KNW_PREFERRED_SOURCE is set explicitly.
+    monkeypatch.setattr(get_settings(), "knw_preferred_source", "islamqa")
     same = "TEST_QUOTE_TEXT zakat gold threshold"
     await add_passages({**IQA, "quote_text": same}, {**BBZ, "quote_text": same})
     async with SessionLocal() as s:
@@ -247,6 +250,15 @@ async def test_knw02_owner_near_tie_prefers_islamqa(ai):
     assert [p["source_id"] for p in res.passages][:2] == ["islamqa", "binbaz"]
     cand = {c["source_id"]: c["rrf"] for c in res.candidates}
     assert abs(cand["binbaz"] - cand["islamqa"]) <= get_settings().knw_near_tie_epsilon
+
+
+async def test_knw_live_a25_no_site_preference_by_default(ai):
+    assert get_settings().knw_preferred_source == ""
+    same = "TEST_QUOTE_TEXT zakat gold threshold"
+    await add_passages({**IQA, "quote_text": same}, {**BBZ, "quote_text": same})
+    async with SessionLocal() as s:
+        res = await retrieve(s, "zakat gold threshold", "en")
+    assert [p["source_id"] for p in res.passages][:2] == ["binbaz", "islamqa"]  # fixed id tie-break only
 
 
 async def test_knw02_owner_near_tie_off_keeps_the_plain_order(ai, monkeypatch):

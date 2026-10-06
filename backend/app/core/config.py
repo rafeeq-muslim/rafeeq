@@ -57,7 +57,10 @@ class Settings(BaseSettings):
     # of the two channels at the top of the list (2 × (1/60 − 1/61) = 0.00055):
     # two passages of equal relevance differ by that much only because each
     # channel must put one of them first.
-    knw_preferred_source: str = "islamqa"
+    # PRD live v3 §1, §7.2 (final user clarification, supersedes the near-tie
+    # preference for islamqa): no site gets a preference by its name. The
+    # mechanism stays for an explicit env value; empty disables it.
+    knw_preferred_source: str = ""
     knw_near_tie_epsilon: float = 0.0006
 
     # KNW-01 reliability (docs/domains/knowledge/features/KNW-01-chatbot-reliability-prd.md §14.5).
@@ -68,6 +71,27 @@ class Settings(BaseSettings):
     ask_query_normalization_enabled: bool = True  # search-only canonical query (R2); evidence in the KNW-01 report
     ask_repair_enabled: bool = True  # one bounded repair, then every check again (R5); evidence in the KNW-01 report
     ask_approved_faq_enabled: bool = True  # R7: serves only entries approved by the Sharia reviewer; env false turns it off
+
+    # --- PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK v3 (knw-live-source-access) -------------
+    # Off by default: `local-index-v2` answers from the local index only (KNW-01/02).
+    # `live-enabled-sources-any-sufficient-v3` also reads the connectors listed in
+    # ASK_LIVE_SOURCES live at question time, in parallel; any one suitable source is
+    # enough (no minimum, no mandatory source, no primary/fallback order). Rollout and
+    # rollback: docs/engineering/implementation/KNW-live-source-access-report.md.
+    ask_source_policy: str = "local-index-v2"
+    ask_live_sources: str = ""  # e.g. "islamqa,binbaz"; names from app.knowledge.live_sources.registry
+    # islamenc.com's robots.txt disallows /*/search for every agent: its search is
+    # called only once the encyclopedia grants access in writing.
+    ask_live_islamic_content_search_permitted: bool = False
+    ask_live_deadline_seconds: float = 60.0  # §9: whole request in live mode (the app waits 65 s)
+    ask_live_window_seconds: float = 20.0  # §9: one shared search + fetch window
+    ask_live_max_calls_per_source: int = 4  # §9: transport calls per connector, retries included
+    ask_live_max_calls: int = 16  # §9: transport calls per attempt
+    ask_live_max_ai_calls: int = 6  # §9: model + embedding calls per attempt in live mode
+    ask_live_records_per_source: int = 2  # records fetched in full per connector
+    ask_live_chunks_per_record: int = 2  # most relevant parts of one record given to the composer
+    ask_live_request_timeout_seconds: float = 8.0
+    ask_live_user_agent: str = "RafeeqBot/1.0 (+https://rafeeq.nan.sa)"
 
     # Web Push (VAPID).
     vapid_public_key: str = ""
