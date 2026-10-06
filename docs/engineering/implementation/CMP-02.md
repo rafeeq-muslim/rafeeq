@@ -64,3 +64,11 @@ Blocks (CMP-04 R5) are applied in `_visible`: a request whose owner blocked this
 | R6 | «زائرة» label for sisters (frontend); fields unchanged |
 
 Tests: `backend/tests/test_cmp02_inbox.py` (every example), vitest `cmp02_*`.
+
+## MentorContacted for MOT-08 R6 (owner approval 2026-10-06)
+
+| Rule | Module | Behaviour |
+| --- | --- | --- |
+| R7 (MOT-08 R6) | `app/companion/contact.py::mentor_contacted`, called from `inbox.py::reply` | Publishes `MentorContacted {user_id}` (learner's account id only, source `CMP`) through `app.core.events.publish` when the replier is the learner's chosen mentor (`MentorLink.mentor_id`) and `MentorLink.share_progress` is on, in any of that learner's requests (mentor thread or help request). At most one per learner per Asia/Riyadh day (checked in the outbox). Never for guests, team members or other mentors, or Sharia-reviewer answers (`referrals.py`). Account deletion removes the rows with every outbox row naming the account (`platform/auth.py::delete_account`) |
+
+Tests: `backend/tests/test_mot08_r6_mentor_contacted.py`.

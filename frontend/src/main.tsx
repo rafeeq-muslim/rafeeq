@@ -10,6 +10,7 @@ import { registerServiceWorker } from "@/app/lib/pwa"
 import "@/app/practice/start-reminders"
 import "@/app/companion/learningLog" // MOT-06: group members' learning log
 import { RequireRole } from "@/app/RequireRole"
+import { APP_BASE } from "@/app/lib/base"
 
 const Welcome = lazy(() => import("@/app/pages/Welcome"))
 const Privacy = lazy(() => import("@/app/pages/Privacy"))
@@ -68,7 +69,7 @@ const router = createBrowserRouter([
       { path: "org", element: <RequireRole roles={["org_coordinator"]}><Org /></RequireRole> }, // ORG-02, ORG-03 (the API checks the organisation too)
     ],
   },
-])
+], { basename: APP_BASE }) // PLT-10 R2: the whole app lives under /app; the landing page is at /
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 60_000, retry: 1, refetchOnWindowFocus: false, networkMode: "offlineFirst" } },

@@ -1,6 +1,6 @@
 # PLT-05 privacy and discreet mode: implementation
 
-**Feature:** `docs/domains/platform/features/PLT-05-privacy-and-discreet-mode.md` (PR #25) · **Rules touched:** `rules.md` §4 (minimum data, delete at any time, no third parties), PDPL art. 4, 12 · **Written:** 2026-10-06 by Claude.
+**Feature:** `docs/domains/platform/features/PLT-05-privacy-and-discreet-mode.md` (PR #25) · **Rules touched:** `rules.md` §4 (minimum data, delete at any time, no third parties), PDPL art. 4, 12 · **Written:** 2026-10-06 by Claude. · **Policy text approved** by the product owner 2026-10-06 (§2).
 
 ## 1. Rules → modules
 
@@ -28,7 +28,9 @@ The text is research/09 §7, kept in its order, with these corrections so every 
 | Rights: download, delete, erase | Display name can also be corrected (PDPL art. 4) | Adds correcting the display name |
 | «Kept until you delete your account or erase your device» | After deletion, reports the person filed and a mentor's replies in others' conversations stay without any link to them; anonymous events stay | Says what stays, without a name |
 
-Open questions kept at their «حتى يُحسم»: no controller contact (rights are exercised in the app); conversations kept until account deletion or device erase; the text is the proposed one until the product owner approves it.
+**Status: final.** The product owner (ناصر بن عبدالعزيز العويمر) approved the text on 2026-10-06. The page's date line (`policy.updated`, `POLICY_UPDATED` in `Privacy.tsx`) now reads «آخر تحديث، واعتمده مالك المنتج: 2026-10-06» (en/tl alike); the page carried no draft marker to remove. This is the owner's approval only: no legal review is claimed.
+
+Still missing (not covered by the approval, not invented): the data controller's name and contact. Rights are exercised in the app («حسابي»), as the policy's rights section says. Conversations are kept until account deletion or device erase.
 
 ## 3. Tests
 

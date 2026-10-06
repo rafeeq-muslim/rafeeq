@@ -4,7 +4,7 @@
  * that id from `sources`; the model never supplies the words. A marker whose
  * record is missing is dropped, never shown as text.
  */
-import type { SourceCard } from "./types"
+import type { LiveSearchEntry, SourceCard } from "./types"
 
 export type Segment = { type: "text"; text: string } | { type: "quote"; source: SourceCard }
 
@@ -72,6 +72,22 @@ const SOURCE_SHORT: Record<string, string> = {
 /** Source names that differ by language (KNW-02 SC5; product owner 2026-10-06). The link is the passage's own origin_url. */
 const SOURCE_BY_LOCALE: Record<string, Partial<Record<string, string>> & { default: string }> = {
   islamqa: { ar: "الإسلام سؤال وجواب", default: "IslamQA" },
+  // PRD live v3: the Islamic Content Encyclopedia (islamenc.com), read live.
+  islamic_content: { ar: "موسوعة المحتوى الإسلامي", default: "IslamEnc.com" },
+}
+
+/**
+ * PRD live v3 §10: the live-search line is built only from the attempt's
+ * real events. A connector that was not called (language not served, not
+ * connected) is not mentioned; one that was called is "searched" if it
+ * answered (with or without results) and "unreachable" if it failed.
+ */
+export function liveSummary(entries: LiveSearchEntry[] | undefined): { searched: string[]; unreachable: string[] } {
+  const called = (entries ?? []).filter((e) => e.attempted)
+  return {
+    searched: called.filter((e) => e.status === "ok" || e.status === "no_results").map((e) => e.source_id),
+    unreachable: called.filter((e) => e.status === "unavailable" || e.status === "cancelled").map((e) => e.source_id),
+  }
 }
 
 /** The site the passage came from, never the author quoted inside it (KNW-02 S16). */

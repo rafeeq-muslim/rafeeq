@@ -688,8 +688,10 @@ for les in LESSONS:
 unit = {
     "schema_version": 1,
     "id": "u01", "order": 1, "feature": "LRN-01",
-    "status": "draft_unreviewed",
-    "review_note": "Prepared without item-by-item Sharia review (decision 2026-10-05). Must be re-reviewed and approved by the Sharia reviewer, per language, before it is shown to users (rules.md §1.4).",
+    "status": "approved",
+    "approved_by": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
+    "approved_on": "2026-10-06",
+    "review_note": "Reviewed lesson by lesson by the Sharia reviewer (مهند بن صالح الفوزان) on 2026-10-06 (review.md). Approved on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر), not per language in the review desk, where the reviewer can still return a lesson.",
     "title": T("دليل اليوم الأول", "My First Day Guide", "Gabay sa Unang Araw"),
     "badge": T("أكملت دليل اليوم الأول", "I completed My First Day Guide", "Natapos ko ang Gabay sa Unang Araw"),
     "credit": T("دروس هذه الوحدة من كتاب «المختصر المفيد للمسلم الجديد» لمحمد بن الشيبة الشهري (newmuslimguideline.com)، والصور منه. وصوت الفاتحة وترجمة معانيها من IslamHouse.",

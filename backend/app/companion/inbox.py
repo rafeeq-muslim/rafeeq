@@ -24,6 +24,7 @@ from sqlalchemy import and_, case, func, not_, or_, select, update
 
 from app.companion import notify
 from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
+from app.companion.contact import mentor_contacted
 from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, Report, ScholarReferral
 from app.companion.text import clean_body
 from app.core import ratelimit
@@ -243,6 +244,7 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
         link = await session.get(MentorLink, req.learner_id)
         if link is not None and link.mentor_id == me.id and link.welcomed_at is None:
             link.welcomed_at = t  # CMP-03 R5 ex2
+        await mentor_contacted(session, link, me.id, t)  # MOT-08 R6
     await session.commit()
     url = f"/mentor/help/{req.id}"
     if req.learner_id is not None:

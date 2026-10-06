@@ -39,7 +39,7 @@ Sources: the challenge's Reference & Scientific Package (v. 1448/3/20) ✅, team
 - **No ads next to Quran or hadith** (QuranEnc/HadeethEnc terms).
 - **No transliteration of Al-Fatiha or adhkar in non-Arabic letters** (team decision after Muhannad's Sharia concern 💬). Teach pronunciation by listening and repetition.
 - **Content is reviewed by the Sharia reviewer before it is merged into the repository; merged content is shown to learners directly** (product owner's decision, 2026-10-06; replaces "no content is shown before in-app approval"). Each review is recorded (`content/units/*/review.md`, `content/lessons/REVIEW.md`); the in-app review desk stays for later corrections. Sharia reviewer: مهند بن صالح الفوزان.
-- **No madhhab is chosen silently.** Where practice differs by madhhab, say so (`research/01` §6). **Exception (product owner, 2026-10-05):** the day-one unit (LRN-01) shows wudu and prayer as its approved source describes them, without the note, to avoid planting doubt in the first hours; differences are taught in a later unit.
+- **No madhhab is chosen silently.** Where practice differs by madhhab, say so (`research/01` §6). **Exception (product owner, 2026-10-05):** the day-one unit (LRN-01) shows wudu and prayer as its approved source describes them, without the note, to avoid planting doubt in the first hours; differences are taught in a later unit. **Exception (product owner, 2026-10-06, PRC-01):** prayer times follow the country's official calendar (what its mosques call the adhan by; the Muslim World League method where none exists), and the new Muslim is not asked about calculation methods or madhhabs.
 
 ## 2. AI assistant rules (Knowledge & Ask domain)
 
@@ -66,7 +66,7 @@ Team decisions 💬, with the research position noted where it differs.
 | Streaks pause on a missed day and never reset to zero; return is welcomed, never blamed | Decided (supported by Silverman & Barasch 2023, `research/02` [25]) |
 | No hearts, lives or energy; mistakes are safe, retries unlimited, mistakes feed review | Decided |
 | No leagues, no shop, no currency, no purchases of motivation items | Decided |
-| Notifications: user-chosen time, at most one per day, positive copy, back off when ignored, never about missed worship | Decided |
+| Notifications: user-chosen time, at most one per day, positive copy, back off when ignored, never about missed worship. The one-a-day and back-off limits apply to learning (motivation) reminders; **prayer reminders** (PRC-05) are the learner's own tool: up to five a day, at the times they choose, and they never back off | Decided; prayer-reminder wording approved by the product owner 2026-10-06 |
 | Habit graduation is user-confirmed, reversible, and never implies an obligation is "done" | Decided; threshold to be set by the Practice owner (habit formation median 59–66 days, range 4–335, `research/02` [26][27]) |
 | A named scholar reviews the motivation design before public launch (no fatwa exists on app streaks/points specifically) | Recommended (`research/02` §6) |
 

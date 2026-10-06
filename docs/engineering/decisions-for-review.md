@@ -2,6 +2,48 @@
 
 Written by Claude during the overnight build (2026-10-05/06), at the product owner's request to decide as an expert product engineer and gather every decision here. Each line says what was decided, why, and what it would take to change it. Product rules in `docs/agents/rules.md` were never changed; where a PRD and a rule disagreed, the rule won (see `conflicts.md`).
 
+## Product owner's blanket approval (2026-10-06)
+
+ناصر بن عبدالعزيز العويمر decided on 2026-10-06: (a) everything in this file and in the feature documents that waited for his confirmation is confirmed; (b) everything that waited only on an internal person's approval is approved; (c) anything without a feature document that is not built stays unbuilt. Every decision Claude listed below for review is therefore confirmed, and each feature document's open question now carries «قرار مالك المنتج 2026-10-06». Where the approval stands in for someone's review, it is recorded under the product owner's name, never the reviewer's.
+
+**Approved and applied in code** (branches of the approvals pass; PRs listed in their descriptions):
+
+| Item | Approved | Where |
+| --- | --- | --- |
+| Prayer name in reminders (postponed item 4; PLT-06, PRC-05) | The Sharia reviewer's proposal: no default; ask once when prayer reminders are first turned on, «هل تريد أن يظهر اسم الصلاة في التذكير؟ قد يراه من ينظر إلى شاشة جوالك.» | branch `approvals-ui` |
+| Six KNW-08 Quranpedia reciters | Recorded in the review desk (`content_approvals`, `knw_reviews`) as «product owner blanket approval 2026-10-06», not as a Sharia reviewer's listening review; a later return by the reviewer still withdraws a reciter | branch `approvals-content-gates` |
+| Danger phrases, fixed replies, screen phrases (`content/knowledge/*.json`) | `draft` → `approved`, `approved_by` the product owner; `reviewed_by` stays empty (no Sharia reviewer review) | branch `approvals-content-gates` |
+| Privacy policy (PLT-05) | Final, approved 2026-10-06. Not a legal review | branch `approvals-ui` |
+| MOT-07 anonymous-events notice | Text approved; the «غير معتمد» marker is gone | branch `approvals-ui` |
+| MOT-08 R6 mentor-contact comparison | The proposed `MentorContacted {user_id}` event; Companion publishes it | branch `mot-08-r6-mentor-contacted` |
+| PLT-09 ranking model | The guide's model (LRN-07, fast tier), fixed order as fallback (already built) | — |
+| `rules.md` wording | §3: the one-a-day/back-off limit is for learning reminders; prayer reminders up to five a day, never back off (PRC-05). §1.4: prayer times follow the country's official calendar without asking about methods or madhhabs (PRC-01) | `docs/agents/rules.md` |
+| Lessons u2-l3…u6-l4, AUTHORED Tagalog, en/tl practice lines («Live now without a review log entry» above) | Approved by the product owner as merged; recorded in `content/lessons/REVIEW.md` | — |
+| Review desk fixes (not approvals) | «أعِده للتعديل» no longer overflows at 390px; the bottom bar no longer highlights Home on `/review-desk` | branch `knw-05-review-desk-fixes` |
+
+**Confirmed as built** (no code change): every row in the sections below, including the ⚠️ items: the danger exception to same-gender routing; the PLT-01 R2 / ORG-01 organisation link (`/welcome?lang=xx&org=CODE`, nothing kept before «نعم»); one «replies and messages» switch for staff; the 2-minute gap between suhoor end and Fajr; Kuwait/Qatar/UAE methods; worship habits keep today's mark only; no adhkar counter (rules kept); the ORG language split as in ORG-03 R5 ex1; linked devices without anonymous numbers counted under «لم يُتمّ درسًا بعد»; mentor gender locked once set (admin changes it); org mentor invites expire in 7 days; no consent step before a scholar referral (CMP-02 asks for none); requests, conversations and reports kept until the account is deleted or the device erased; no push for group messages; the notebook stays on the device; the in-app review desk for mentors' free-text challenges (each new text still needs the Sharia reviewer: the blanket approval covers what exists today, not text written later).
+
+**Still blocked: a third party, a legal read, or content that does not exist** (not covered by the approval):
+
+| Item | Waiting on |
+| --- | --- |
+| islamenc.com | Its robots.txt blocks crawling; stays link-only |
+| IslamHouse (own API key, self-hosting the Osoul videos and Al-Fatiha audio), Bayan al-Islam | Written permission (LRN-01, KNW-06) |
+| Quranpedia recordings; 38 more per-verse reciters on mp3quran.net | Written licence confirmation; mp3quran.net terms (KNW-08, PLT-12) |
+| Haramain adhan (two takbirs) | Permission from the General Authority for the Affairs of the Two Holy Mosques (PRC-05) |
+| Hisn al-Muslim | hisnmuslim.com written permission; Tagalog translation permission (PRC-07, PLT-12) |
+| islamqa.info, binbaz.org.sa, dorar.net, terminologyenc.com | Permission letters (postponed item 3; KNW-02, KNW-03) |
+| Privacy policy | PDPL legal read; the data controller's name and contact (PLT-05) |
+| Email codes (postponed item 1) | An email provider account in the organisation's name (PLT-02) |
+| Rafeeq tone | The tone file itself (PLT-07, PRC-05) |
+| Glossary | The terms themselves: `content/glossary/terms.json` is empty (KNW-03) |
+| People not yet named | Night watch of urgent requests (postponed item 2); a female scholar for sisters' referrals; owners for Companion, danger handling and Organizations; a named scholar's review of the motivation design; a native Tagalog read (postponed item 5, welcome but no longer blocking) |
+| Outside the repo | Removing `no-store` from the host router (PLT-11); copying the adhkar audio to the server; a real-iPhone trial (PLT-13) |
+
+**Left unbuilt (no feature document):** PRC-03 habit graduation, PRC-06 Hijri occasions and LRN-08 exercises generated at run time are the only ids in `docs/features.md` with no document (LRN-06, MOT-01 and MOT-04 are cancelled; PLT-04 is the design system). They stay unbuilt.
+
+**Open questions with no proposal to approve** stay open in their documents, marked so (e.g. KNW-03 transliterating term names; PRC-05 when to build a mobile app; the open-source licence).
+
 ## Postponed: needs you (5)
 
 | # | What | Why it waits for you | Until then |
@@ -297,3 +339,40 @@ Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No 
 | «تابع سورة …» reads the last surah from `rafeeq.quranPos.last`, kept with the stop positions | KNW-08 R6 keeps only stop positions on the device, no history | `discover/player.ts` |
 
 **Pending a human:** the ranking model (open question 2); until decided, the guide's model with the fixed order as fallback.
+
+## Live source access v3 (knw-live-source-access-build, 2026-10-06)
+
+Implements `PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK.md` v3; details and evidence in `implementation/KNW-live-source-access-report.md`.
+
+**Decided by the agent (reversible):**
+- **Off by default.** `ASK_SOURCE_POLICY=local-index-v2`; the live path needs `ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3` and `ASK_LIVE_SOURCES=…`, because one of the three connectors (the encyclopedia) is not usable from the backend.
+- **The near-tie preference for islamqa is off** (`KNW_PREFERRED_SOURCE` default empty): v3 §1/§7.2 (no site preferred by its name) supersedes the 2026-10-06 near-tie decision. The mechanism stays; setting the env value restores it.
+- **The «Islamic Content Encyclopedia» is islamenc.com** («موسوعة المحتوى الإسلامي» in its own schema.org record). Not `islamhouse_enc`, not the ICSA `islamic-content-mcp-server`.
+- **islamenc's search is not called**: its robots.txt disallows `/*/search` for every agent, including user-triggered ones (ChatGPT-User, Perplexity-User). The connector stays blocked until written access arrives (`ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`).
+- In live mode, the **local copy of a live connector is not used** as evidence (v3 §8). The other approved sources (QuranEnc, HadeethEnc, IslamHouse enc) are still searched locally, in parallel.
+- **A saved live answer keeps the source's link, identity and read time, not its text** (licences; rules.md §1.3).
+- **A repeated transport with the same `client_request_id` returns the same result** (A15). The app's manual retry sends a new id.
+
+**Pending a human:**
+1. Product owner: confirm that islamenc.com is the intended encyclopedia, and request data/search access from it (ICSA?).
+2. islamqa permission (personal-use terms) and binbaz AI-assistant use. Both are already on the permission list; live reading does not change the licence question.
+3. Privacy: in live mode, a search form of the question (at most 12 words, with e-mail addresses, links and long digit runs removed) is sent to the source sites. No identity is sent and no cookies are kept. The privacy policy page should say so before rollout.
+4. Sharia reviewer: review a live evaluation set (PRD §14, ≥95% target). Only a 4-question smoke run was done.
+
+## KNW-06 library live search (branch `knw-06-library-live-search-build`, 2026-10-06)
+
+Implements `docs/domains/knowledge/features/PRD-LIBRARY-LIVE-SEARCH.md`. Report: `docs/engineering/implementation/KNW-06-library-live-search-report.md`.
+
+| Decision | Why | Where |
+| --- | --- | --- |
+| **IslamHouse is searched through the site's own search** (`POST https://islamhouse.com/search/search.php`), not API v3, which has no search operation (nor does the ICSA SDK/MCP server). Undocumented endpoint; robots.txt allows it; IslamHouse's policy allows apps | PRD §5: "verify the real IslamHouse search; do not invent endpoints" | `live_sources/islamhouse.py` (library-only, not in the chat registry) |
+| **The encyclopedia is the live agent's `islamic_content` adapter (islamenc.com), reused as is** and gated by the same `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED` (robots.txt disallows its search). Until then it shows as "not connected yet" and is never called; "All" means the sources that can be searched now | PRD §5: no second adapter; do not claim both sources | `library_search.py` |
+| **On by default** (`LIBRARY_SEARCH_ENABLED=true`, IslamHouse only in practice). Rollback: `LIBRARY_SEARCH_ENABLED=false` hides the field; the catalogue is untouched | The PRD is the owner's spec; IslamHouse was verified live from the backend | `core/config.py` |
+| Results skip IslamHouse items that are not materials (category lists, app-store links, reading lists, publisher/author pages); unknown kinds get no badge; other-language items are dropped | PRD §3 «لا تُصنف مادة عشوائيًا»; B13 | `islamhouse.py`, `library_search.py` |
+| Privacy line changed from «لا نسجّل ما تفتحه، ولا يراه أحد غيرك» to «لا نحفظ في رفيق سجلًّا لما تفتحه أو تبحث عنه» (en/tl too) plus «يُرسل نص البحث إلى المصادر لجلب النتائج» | PRD §4: the old line promised that nobody else sees anything, which an external search cannot keep | `i18n/*.ts` (`discover.lib.private`) |
+| **httpx/httpcore loggers raised to WARNING**: at INFO, httpx logs every request URL, which put GET search words (encyclopedia, and the chat's live islamqa/binbaz searches) into the backend log | PRD §8 / B14 (and live PRD A26) | `library_search.py` (imported by the app) |
+| Paging: an in-memory session of 5 minutes in this single backend process; at most 10 result pages and 15 site pages per search | PRD §7 (no new storage service) | `library_search.py` |
+
+**Pending a human:** written access to islamenc.com's search (then set `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`); IslamHouse's written confirmation for the live site search (same email as the API key); the owner to confirm «موسوعة المحتوى الإسلامي» = islamenc.com (the live agent's identification); native review of the new Tagalog strings (`discover.lib.search.*`) and the changed privacy line.
+
+**Feature documents:** not edited (the PRD already links from KNW-06).
