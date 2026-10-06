@@ -8,7 +8,7 @@ KNW-07 R5, KNW-08 R5). Saved items have an optional account copy (KNW-09 R3).
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Response
-from pydantic import AwareDatetime, BaseModel, Field
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, ValidationError, model_validator
 from sqlalchemy import delete, select
 
 from app.core.deps import CurrentUser, Session
@@ -60,19 +60,47 @@ async def glossary_terms(session: Session, response: Response, lang: Lang = "ar"
 Kind = Literal["card", "library", "answer"]
 
 
+class SavedAnswer(BaseModel):
+    """R2: a saved answer keeps its text, its source ids and its language,
+    never the question (the consent rule for the question is still open, so
+    it is not stored; an extra field is refused). The Quran and hadith words
+    are never kept here: they are shown from the stored records by id."""
+
+    model_config = ConfigDict(extra="forbid")
+    lang: Lang
+    answer: Annotated[str, Field(min_length=1, max_length=12000)]
+    source_ids: Annotated[list[Annotated[str, Field(min_length=1, max_length=96)]], Field(min_length=1, max_length=40)]
+
+
 class Saved(BaseModel):
     kind: Kind
     ref: Annotated[str, Field(min_length=1, max_length=96)]
     saved_at: AwareDatetime
+    answer: SavedAnswer | None = None
+
+    @model_validator(mode="after")
+    def _answer_only_for_answers(self) -> "Saved":
+        if self.answer is not None and self.kind != "answer":
+            raise ValueError("answer payload only for kind=answer")
+        return self
 
 
 class SavedList(BaseModel):
     items: list[Saved] = Field(default_factory=list, max_length=2000)
 
 
+def _answer_of(row: SavedItem) -> SavedAnswer | None:
+    if row.kind != "answer" or not row.payload:
+        return None
+    try:
+        return SavedAnswer.model_validate(row.payload)
+    except ValidationError:
+        return None  # an old or damaged copy is never shown
+
+
 async def _saved_of(session, user_id) -> list[Saved]:
     rows = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()))
-    return [Saved(kind=r.kind, ref=r.ref_id, saved_at=r.saved_at) for r in rows]
+    return [Saved(kind=r.kind, ref=r.ref_id, saved_at=r.saved_at, answer=_answer_of(r)) for r in rows]
 
 
 @router.get("/me/saved")
@@ -82,16 +110,21 @@ async def get_saved(session: Session, user: CurrentUser) -> SavedList:
 
 @router.put("/me/saved")
 async def merge_saved(body: SavedList, session: Session, user: CurrentUser) -> SavedList:
-    """R3: union of the device and the account, one copy each, earliest date kept."""
+    """R3: union of the device and the account, one copy each, earliest date
+    kept. A saved answer moves with its text and source ids (R2), never its question."""
     rows = {(r.kind, r.ref_id): r for r in await session.scalars(select(SavedItem).where(SavedItem.user_id == user.id))}
     for it in body.items:
+        payload = it.answer.model_dump() if it.answer else {}
         row = rows.get((it.kind, it.ref))
         if row is None:
-            row = SavedItem(user_id=user.id, kind=it.kind, ref_id=it.ref, payload={}, saved_at=it.saved_at)
+            row = SavedItem(user_id=user.id, kind=it.kind, ref_id=it.ref, payload=payload, saved_at=it.saved_at)
             session.add(row)
             rows[(it.kind, it.ref)] = row
-        elif it.saved_at < row.saved_at:
+            continue
+        if it.saved_at < row.saved_at:
             row.saved_at = it.saved_at
+        if payload and not row.payload:
+            row.payload = payload
     await session.commit()
     return SavedList(items=await _saved_of(session, user.id))
 

@@ -198,7 +198,7 @@ export const en: Dict = {
   "privacy.quickExit": "Quick-exit button",
   "privacy.quickExitHint": "A button at the top of every screen, or press Shift three times on a computer, and Rafeeq switches at once to a neutral weather page.",
   "privacy.discreet": "Discreet mode",
-  "privacy.discreetHint": "The page title becomes «Notes», and every reminder shows without Rafeeq's name or any religious word, even if you chose to show the prayer's name. The installed app's name and icon are already neutral.",
+  "privacy.discreetHint": "The page title becomes «Notes», every reminder shows without any religious word even if you chose to show the prayer's name, and notifications use a plain note icon. The installed app's name and icon don't change; they have no religious word or symbol.",
   "privacy.wipe": "Erase this device's data",
 
   "reminder.toggle": "Remind me about a short lesson",
@@ -236,6 +236,9 @@ export const en: Dict = {
   "home.ask": "Ask anything about your faith",
   "lesson.verseRef": "Surah {s}, verse {a}",
   "lesson.verseOffline": "The verse text appears when you are back online.",
+  // LRN-01 R4 / LRN-09 R2: recitation under whole-verse cards
+  "lesson.recite.stop": "Stop the recitation",
+  "lesson.recite.offline": "The recitation plays when you are back online.",
   "lesson.translation": "Translation of the meanings: {name}",
   "lesson.orderHint": "Tap the steps in order",
   "lesson.matchHint": "Pick a word, then pick its meaning",
@@ -909,13 +912,15 @@ export const en: Dict = {
   "privacy.policyLink": "Privacy policy",
   "privacy.policyHint": "What we keep, why, when it is deleted, and your rights",
   "privacy.beforeYouWrite": "Before you write: read what we keep and why in the privacy policy.",
+  "privacy.beforeYouChoose": "Before you choose: read what we keep and why in the privacy policy.", // PLT-05 R1: mentor matching asks gender
+  "lesson.glossary.approved": "Rafeeq's approved term", // PLT-03 R5: glossary term in a lesson
   "privacy.historyNote": "No web page can erase your browser history, so Rafeeq may stay in it. To remove it, open your browser history and delete Rafeeq, or use a private window.",
   "privacy.download": "Download a copy of my data",
   "privacy.downloadHint": "One file with what this device keeps, and what we keep about your account if you have one. Free, whenever you like.",
   "privacy.downloaded": "A copy of your data was downloaded.",
   "acct.noRecoveryBefore": "Without email two-step sign-in, a forgotten password means the account cannot be recovered.",
   "me.notifications": "Notifications",
-  "notif.neutral": "What shows on your lock screen is neutral: no Rafeeq name, no religious word, no message text.",
+  "notif.neutral": "What shows on your lock screen has no religious word and no message text. Your phone may show the site address or the installed app's name with it, and the app's icon unless discreet mode is on.",
   "notif.replies": "Replies from a person",
   "notif.repliesHint": "When someone answers you. It shows only «You have a new reply».",
   "notif.repliesOn": "Replies will reach you.",
@@ -1089,4 +1094,9 @@ export const en: Dict = {
   "cmp.rules.suspendedBody": "Your organisation has stopped your requests. Contact your organisation's coordinator.",
   "policy.org.title": "If you link to a da'wa organisation",
   "policy.org.body": "An organisation's link or code carries the organisation and the language only, nothing about you. If you answer “Yes”, we keep the organisation, its code's language, the date, a random number for your device and your learning status (new, active, at risk, stopped, back) to count you in its combined numbers; we do not tie this to your account. The organisation never sees your name or anything about you, nor any figure under 10. If you answer “No”, we keep nothing. You can unlink any time in Me: it is deleted at once and nobody is told; combined numbers counted before stay. It is also deleted if you erase this device or delete your account. If you are a mentor or coordinator for an organisation, we keep its approval of you and when you accepted the mentor rules.",
+
+  // KNW-09 saved answers
+  "discover.saved.kind.answer": "Answer",
+  "discover.saved.answerOn": "Saved on {d}",
+  "discover.saved.answerOffline": "This answer can't be shown right now. It will appear when you're back online.",
 }

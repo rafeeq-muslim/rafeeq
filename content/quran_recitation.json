@@ -1,0 +1,167 @@
+{
+ "_about": "Arabic recitation played under verse cards in the learning path (LRN-01 R4, LRN-09 R2; product owner's request, Sharia reviewer's decision 2026-10-06). Recitation only, no spoken meaning (the card gives the meaning), the same file in every language. Only cards that show a whole verse; a card in quran_excerpts.json gets no audio, because a per-verse file would recite the words the card hides. A file is played only when its verse has status 'approved' (the Sharia reviewer listened to it in full: no music or effects).",
+ "source": "Quranpedia (quranpedia.net), per-verse recitation 255: مصحف مشاري العفاسي برواية حفص عن عاصم",
+ "url_pattern": "https://files.quranpedia.net/recitations/255/{sura:03d}{aya:03d}.mp3",
+ "license": "Quranpedia API terms: free in live apps, credit optional. The recordings belong to the reciter: written confirmation pending (Musallam, product owner) before public launch.",
+ "reciter": {
+  "ar": "مشاري راشد العفاسي",
+  "en": "Mishary Rashid Alafasy",
+  "tl": "Mishary Rashid Alafasy"
+ },
+ "verses": [
+  {
+   "ref": "2:21",
+   "cards": [
+    "u2-l1-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "2:136",
+   "cards": [
+    "u4-l2-c4"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "2:183",
+   "cards": [
+    "u3-l3-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "2:186",
+   "cards": [
+    "u6-l3-c2"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "4:87",
+   "cards": [
+    "u4-l3-c5"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "4:174",
+   "cards": [
+    "u2-l4-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "8:2",
+   "cards": [
+    "u6-l2-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "9:128",
+   "cards": [
+    "u01-l1-c3",
+    "u2-l3-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "13:28",
+   "cards": [
+    "u6-l4-c4"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "15:9",
+   "cards": [
+    "u4-l2-c6"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "16:97",
+   "cards": [
+    "u6-l3-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "21:107",
+   "cards": [
+    "u2-l3-c2"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "22:27",
+   "cards": [
+    "u3-l3-c5"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "33:36",
+   "cards": [
+    "u6-l4-c6"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "33:59",
+   "cards": [
+    "u6-l1-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "35:1",
+   "cards": [
+    "u4-l2-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  },
+  {
+   "ref": "54:49",
+   "cards": [
+    "u4-l4-c1"
+   ],
+   "status": "approved",
+   "reviewer": "مهند بن صالح الفوزان",
+   "approved_at": "2026-10-06"
+  }
+ ]
+}

@@ -14,6 +14,7 @@ import { useGuideTracker } from "@/app/guide/useGuide"
 import { flushEvents } from "@/app/lib/api"
 import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 import { exitNow, shiftTimesThree } from "@/app/lib/privacy"
+import { saveDiscreet } from "@/app/lib/discreetPref"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
@@ -36,6 +37,8 @@ export function useDocumentLocale() {
     document.documentElement.dir = dir
     document.title = discreet ? "Notes" : locale === "ar" ? "رفيق" : "Rafeeq"
   }, [locale, dir, discreet])
+  // PLT-05 R3 / PLT-06 R6: the service worker picks a neutral notification icon.
+  React.useEffect(() => void saveDiscreet(discreet), [discreet])
   React.useEffect(() => {
     const dark = window.matchMedia("(prefers-color-scheme: dark)")
     const apply = () => document.documentElement.classList.toggle("dark", dark.matches)
@@ -73,6 +76,17 @@ export function QuickExit({ exit = leave }: { exit?: () => void }) {
       <IconDoorExit className="size-4" stroke={2} aria-hidden="true" />
       {t("exit.weather")}
     </button>
+  )
+}
+
+/** PLT-05 R2: the screens outside AppLayout (/welcome, /privacy) keep the
+ * quick exit button and Shift ×3 too, so it works on every screen. */
+export function PublicFrame() {
+  return (
+    <>
+      <QuickExit />
+      <Outlet />
+    </>
   )
 }
 

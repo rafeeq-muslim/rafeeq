@@ -52,5 +52,6 @@
 | PLT-05 | الخصوصية والوضع الخفي | [PLT-05](features/PLT-05-privacy-and-discreet-mode.md) |
 | PLT-06 | الإشعارات | [PLT-06](features/PLT-06-notifications.md) |
 | PLT-07 | صوت رفيق | [PLT-07](features/PLT-07-rafeeq-tone.md) |
+| PLT-08 | دليل رفيق | [PLT-08](features/PLT-08-rafeeq-guide.md) |
 
 القائمة بأولوياتها في قسم «المنصة» من [features.md](../../features.md). المصادر والتحقق في [research/09](../../agents/research/09-platform-privacy-and-notifications.md).

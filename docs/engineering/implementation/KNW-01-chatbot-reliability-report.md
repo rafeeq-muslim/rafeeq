@@ -52,7 +52,7 @@ This report does not say the problem is fully solved: the live acceptance runs o
 ### Phase 4: shared budget, bounded repair, approved answers, cards
 - `RequestContext` (context variable): max 8 external calls (every model and embedding call, JSON retries and fallback included), max 2 retrieval rounds, max 2 compose rounds; time for the verifier (8 s) is reserved before composing, and no composition starts without room for its verification.
 - One bounded repair (`agents.repair_answer`, composer prompt rule 10): same passages, the failure codes and the verifier's unsupported quotes; the repaired output goes through **every** check again; an unchanged repair is refused without asking the checker again; an expansion after `insufficient` uses the second compose round, so repair and expansion never both happen.
-- Approved answers (`approved.py`) behind `ASK_APPROVED_FAQ_ENABLED=false`: served only if approved with a reviewer and a date, same language, every cited passage present with the approved version from a source the policy allows now; exact match always; approximate match only for router `general` A/B with the same negation words, no personal detail and at most two extra words; router down → exact match only. `content/knowledge/approved-answers.json` is still empty: tested with fixtures only.
+- Approved answers (`approved.py`) behind `ASK_APPROVED_FAQ_ENABLED` (true by default since 2026-10-06): served only if approved with a reviewer and a date, same language, every cited passage present with the approved version from a source the policy allows now; exact match always; approximate match only for router `general` A/B with the same negation words, no personal detail and at most two extra words; router down → exact match only. `content/knowledge/approved-answers.json` holds 9 answers (three starter suggestions × ar, en, tl), all approved by the Sharia reviewer on 2026-10-06; `source_versions` is read in the file's list form (`{id, source_id, ref_key, version}`). Tested with fixtures and with the real file entries (`test_knw01_r7_*`).
 - Source cards: the server keeps one card per cited passage (every id stays for markers and verification); the app groups strips by `(source_id, ref_key, lang, version)` (`groupSources` in `answer.ts`).
 - Objective tagging stays optional: if it fails the verified answer is returned with `objective_id = null` and no event.
 
@@ -66,7 +66,7 @@ This report does not say the problem is fully solved: the live acceptance runs o
 | `ASK_MAX_COMPOSE_ROUNDS` | 2 | PRD value (1 disables repair and recomposition) |
 | `ASK_QUERY_NORMALIZATION_ENABLED` | **true** | Acceptance and safety cases pass: `t04` (four photo forms → identical passages, one embedding), `t05` ×3 («مالك», first-word-only rule, negation and personal details kept, negated question gets its own embedding, personal question never matches a general approved answer), `t07` ×2 (cache key = embedded text; version/model change never reuses). Smoke (dev): both photo forms answered from the same source |
 | `ASK_REPAIR_ENABLED` | **true** | `t12` ×2, `t13` ×3 (repair fixes, unsupported text never shown, full re-verification, unchanged repair never re-checked, repair off refuses), `t21` (personal note kept after a repair), `t28` ×2 (caps). Smoke (dev): 2 of 6 real questions were answered only thanks to the repair; it added one composer and one verifier call (≈ $0.0013) and 5–9 s (totals 18.7 s and 14.0 s, under the 45 s deadline) |
-| `ASK_APPROVED_FAQ_ENABLED` | **false** | No approved content exists; enabling it serves nothing until the reviewer approves entries |
+| `ASK_APPROVED_FAQ_ENABLED` | **true** | The Sharia reviewer approved the 9 starter answers (2026-10-06); only `approved` entries with a reviewer and a date are served: `test_knw01_r7_*`, `t19` ×7, `t30`, `t16` |
 | `AI_EMBED_DAILY_BUDGET_USD` | 1.00 | Embedding job's own daily ceiling (KNW-02 SC3); answers keep `AI_DAILY_BUDGET_USD` 0.75; `AI_BUDGET_USD` 10 total unchanged |
 
 ## 4. Acceptance tables
@@ -81,7 +81,7 @@ This report does not say the problem is fully solved: the live acceptance runs o
 | R4 outcome ≠ failure reason | implemented · tested locally | `t11` ×2, `t08`, `t16`, `t24` ×2, updated `test_knw01_ask.py` cases |
 | R5 bounded recovery | implemented · tested locally · smoke (dev) | `t12` ×2, `t13` ×3, `t28` ×2 |
 | R6 every wait ends; retry | implemented · tested locally | `store.test.ts` t14 ×3, t15, t17, t18, t27 ×2; `Ask.test.tsx` t18, t31; backend `t14` ×2, `t15` ×3 |
-| R7 approved answers | implemented behind flag (off) · tested with fixtures | `t19` ×7, `t30`, `t16`; content approval **blocked** on the Sharia reviewer |
+| R7 approved answers | implemented, flag on by default · tested with fixtures and the real file | `test_knw01_r7_*`, `t19` ×7, `t30`, `t16`; 9 entries approved by the Sharia reviewer on 2026-10-06 |
 | R8 one card per reference | implemented · tested locally | backend `t20`; `Ask.test.tsx` t20 |
 
 ### T01–T32 (backend tests in `backend/tests/test_knw01_reliability.py` unless noted)

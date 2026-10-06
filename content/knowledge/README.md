@@ -15,13 +15,13 @@ Both files below were **drafted by Claude on 2026-10-06** from passages in the p
 
 ### Approved answers: مهند approves
 
-`approved-answers.json` holds draft answers to the three knowledge starter suggestions in Ask (`ask.suggest.1–3`: the meaning of the shahadatayn, the virtue of wudu, treating parents well), in Arabic, English and Tagalog. Tagalog is included because HadeethEnc and QuranEnc have Tagalog passages for all three.
+`approved-answers.json` holds answers to the three knowledge starter suggestions in Ask (`ask.suggest.1–3`: the meaning of the shahadatayn, the virtue of wudu, treating parents well), in Arabic, English and Tagalog. Tagalog is included because HadeethEnc and QuranEnc have Tagalog passages for all three.
 
-- Every entry has `status: "draft"`, `reviewer: null`, `approved_at: null` and a `note`. The server serves only `approved` entries (`backend/app/knowledge/ai/screen.py`), so drafts are never shown to users.
+- All 9 entries have `status: "approved"`, `reviewer: "مهند بن صالح الفوزان"` and `approved_at: "2026-10-06"`, with a `note`; the Tagalog wording still needs a native reader. They are served by default (`ASK_APPROVED_FAQ_ENABLED`, false turns it off). The server serves only `approved` entries with a reviewer and a date (`backend/app/knowledge/ai/screen.py`, `backend/app/knowledge/approved.py`), so a draft or returned entry is never shown to users.
 - Each answer is built only from its cited passages. `{{q:ID}}` markers show the stored Quran or hadith text, and `source_versions` records the version of each source that was used.
 - **The Sharia reviewer مهند بن صالح الفوزان approves each answer.** To approve one, set `status` to `"approved"`, `reviewer` to his name and `approved_at` to the date. If a cited source is removed or its version changes, set the answer back to `draft` until he reviews it again (R7).
-- A Tagalog reader should check the Tagalog wording before it goes to مهند.
-- The drafts cite only sources that are on the default answer list (`KNW_ANSWER_SOURCES`). They don't cite islamqa, which is still off by default (KNW-02).
+- A Tagalog reader should still check the Tagalog wording (مهند approved the Tagalog and English answers on the strength of the approved Arabic ones).
+- The answers cite only sources that are on the default answer list (`KNW_ANSWER_SOURCES`). They don't cite islamqa.
 
 ### Reference set: مسلّم confirms the expected sources
 

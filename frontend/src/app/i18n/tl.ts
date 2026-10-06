@@ -199,7 +199,7 @@ export const tl: Dict = {
   "privacy.quickExit": "Button na mabilisang paglabas",
   "privacy.quickExitHint": "Isang button sa itaas ng bawat screen, o pindutin ang Shift nang tatlong beses sa computer, at agad lilipat ang Rafeeq sa isang neutral na pahina ng panahon.",
   "privacy.discreet": "Discreet mode",
-  "privacy.discreetHint": "Nagiging «Notes» ang pamagat ng pahina, at lumalabas ang bawat paalala nang walang pangalan ng Rafeeq o anumang salitang panrelihiyon, kahit pinili mong ipakita ang pangalan ng dasal. Neutral na ang pangalan at icon ng naka-install na app.",
+  "privacy.discreetHint": "Nagiging «Notes» ang pamagat ng pahina, lumalabas ang bawat paalala nang walang salitang panrelihiyon kahit pinili mong ipakita ang pangalan ng dasal, at simpleng icon ng papel ang gamit ng mga notification. Hindi nagbabago ang pangalan at icon ng naka-install na app; walang salita o simbolong panrelihiyon ang mga ito.",
   "privacy.wipe": "Burahin ang data sa device na ito",
 
   "reminder.toggle": "Paalalahanan ako tungkol sa maikling aralin",
@@ -237,6 +237,9 @@ export const tl: Dict = {
   "home.ask": "Magtanong tungkol sa iyong pananampalataya",
   "lesson.verseRef": "Surah {s}, talata {a}",
   "lesson.verseOffline": "Lalabas ang teksto ng talata kapag may koneksiyon na ulit.",
+  // LRN-01 R4 / LRN-09 R2: recitation under whole-verse cards
+  "lesson.recite.stop": "Ihinto ang pagbigkas",
+  "lesson.recite.offline": "Maririnig ang pagbigkas kapag may koneksiyon na ulit.",
   "lesson.translation": "Salin ng mga kahulugan: {name}",
   "lesson.orderHint": "Pindutin ang mga hakbang nang sunod-sunod",
   "lesson.matchHint": "Pumili ng salita, saka piliin ang kahulugan nito",
@@ -910,13 +913,15 @@ export const tl: Dict = {
   "privacy.policyLink": "Patakaran sa privacy",
   "privacy.policyHint": "Ano ang itinatago namin, bakit, kailan binubura, at ang iyong mga karapatan",
   "privacy.beforeYouWrite": "Bago ka sumulat: basahin sa patakaran sa privacy kung ano ang itinatago namin at bakit.",
+  "privacy.beforeYouChoose": "Bago ka pumili: basahin sa patakaran sa privacy kung ano ang itinatago namin at bakit.", // PLT-05 R1: mentor matching asks gender
+  "lesson.glossary.approved": "Aprubadong termino ng Rafeeq", // PLT-03 R5: glossary term in a lesson
   "privacy.historyNote": "Walang web page na makakabura sa history ng browser mo, kaya maaaring manatili roon ang Rafeeq. Para alisin ito, buksan ang history ng browser at burahin ang Rafeeq, o gumamit ng private window.",
   "privacy.download": "I-download ang kopya ng aking data",
   "privacy.downloadHint": "Isang file na may itinatago ng device na ito, at ng itinatago namin tungkol sa account mo kung mayroon ka. Libre, kahit kailan mo gusto.",
   "privacy.downloaded": "Na-download na ang kopya ng iyong data.",
   "acct.noRecoveryBefore": "Kung walang email two-step sign-in, kapag nakalimutan mo ang password ay hindi na mababawi ang account.",
   "me.notifications": "Mga abiso",
-  "notif.neutral": "Neutral ang lumalabas sa lock screen mo: walang pangalang Rafeeq, walang salitang panrelihiyon, walang laman ng mensahe.",
+  "notif.neutral": "Walang salitang panrelihiyon at walang laman ng mensahe ang lumalabas sa lock screen mo. Maaaring ipakita ng phone mo ang address ng site o ang pangalan ng naka-install na app, at ang icon nito maliban kung naka-on ang discreet mode.",
   "notif.replies": "Mga sagot mula sa isang tao",
   "notif.repliesHint": "Kapag may sumagot sa iyo. «May bago kang sagot» lang ang lumalabas.",
   "notif.repliesOn": "Matatanggap mo ang mga sagot.",
@@ -1090,4 +1095,9 @@ export const tl: Dict = {
   "cmp.rules.suspendedBody": "Itinigil ng organisasyon mo ang pagtanggap mo ng mga kahilingan. Makipag-ugnayan sa coordinator ng organisasyon mo.",
   "policy.org.title": "Kung iuugnay mo ang sarili sa isang organisasyon ng da'wah",
   "policy.org.body": "Ang link o code ng isang organisasyon ay may dalang organisasyon at wika lamang, walang tungkol sa iyo. Kung sasagot ka ng “Oo”, itatago namin ang organisasyon, ang wika ng code, ang petsa, isang random na numero para sa device mo at ang kalagayan ng pag-aaral mo (bago, aktibo, nanganganib, tumigil, bumalik) para maisama ka sa pinagsamang bilang nito; hindi namin ito iniuugnay sa account mo. Hindi kailanman nakikita ng organisasyon ang pangalan mo o anumang tungkol sa iyo, o anumang bilang na wala pang 10. Kung “Hindi”, wala kaming itatago. Maaari mong putulin ang ugnayan anumang oras sa Ako: buburahin ito agad at walang sasabihan; mananatili ang pinagsamang bilang na nabilang na bago iyon. Buburahin din ito kung buburahin mo ang data ng device o ang account mo. Kung mentor o coordinator ka ng isang organisasyon, itinatago namin ang pag-apruba nito sa iyo at kung kailan mo tinanggap ang mga patakaran ng mentor.",
+
+  // KNW-09 saved answers
+  "discover.saved.kind.answer": "Sagot",
+  "discover.saved.answerOn": "Na-save noong {d}",
+  "discover.saved.answerOffline": "Hindi maipakita ang sagot na ito ngayon. Lalabas ito kapag may koneksyon ka na.",
 }
