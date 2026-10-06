@@ -1,0 +1,55 @@
+Rafeeq (رفيق) — Evaluation-Only Licence
+
+Copyright (c) 2026 The Rafeeq team. All rights reserved.
+
+1. Purpose. This repository and the Rafeeq application (the "Software") are
+   published only so that the organisers and judges of the AI Challenge for
+   Serving Islamic Content (the "Hackathon") can review and evaluate the
+   project.
+
+2. Permitted use. The Hackathon's organisers and judges may view, clone,
+   build and run the Software, and use the live demo, solely to evaluate the
+   project for the Hackathon.
+
+3. No other use. No other person or organisation is granted any right.
+   Without prior written permission from the Rafeeq team you may not use,
+   copy, modify, merge, publish, distribute, sublicense, sell, host or deploy
+   the Software or any part of it, offer it as a service, or use its code,
+   design, text or content to build or train another product or model.
+
+4. Third-party material. Content, data, fonts, models and libraries that
+   belong to others remain under their own licences and terms, listed in
+   docs/agents/sources.md. This licence grants no rights in them, and their
+   terms continue to apply.
+
+5. Names and marks. The name "Rafeeq" / «رفيق», its logo and its visual
+   identity may not be used without written permission.
+
+6. No warranty. The Software is provided "as is", without warranty of any
+   kind. The Rafeeq team is not liable for any claim or damage arising from
+   the Software or its use.
+
+7. Termination. Any use outside this licence ends the permission in section
+   2 automatically.
+
+Requests for permission: open an issue in this repository.
+
+---------------------------------------------------------------------------
+
+رفيق — رخصة للتقييم فقط
+
+جميع الحقوق محفوظة لفريق رفيق © 2026.
+
+نُشر هذا المستودع وتطبيق رفيق لغرض واحد: أن يراجعه منظّمو «تحدي الذكاء
+الاصطناعي في خدمة المحتوى الإسلامي» ومحكّموه ويقيّموه. يجوز لهم وحدهم
+الاطلاع على الكود ونسخه وبناؤه وتشغيله واستخدام النسخة الحية لغرض التقييم.
+
+ولا يُمنح أي شخص أو جهة أخرى أي حق. فلا يجوز دون إذن كتابي مسبق من فريق
+رفيق استخدام البرنامج أو نسخه أو تعديله أو نشره أو توزيعه أو بيعه أو
+استضافته أو تقديمه خدمةً، ولا استعمال كوده أو تصميمه أو نصوصه أو محتواه في
+بناء منتج آخر أو تدريب نموذج.
+
+المواد التي يملكها غيرنا (المحتوى والبيانات والخطوط والنماذج والمكتبات)
+تبقى خاضعة لتراخيصها وشروطها المذكورة في docs/agents/sources.md.
+
+يُقدَّم البرنامج «كما هو» دون أي ضمان.
