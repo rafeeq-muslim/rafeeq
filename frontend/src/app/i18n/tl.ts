@@ -237,6 +237,9 @@ export const tl: Dict = {
   "home.ask": "Magtanong tungkol sa iyong pananampalataya",
   "lesson.verseRef": "Surah {s}, talata {a}",
   "lesson.verseOffline": "Lalabas ang teksto ng talata kapag may koneksiyon na ulit.",
+  // LRN-01 R4 / LRN-09 R2: recitation under whole-verse cards
+  "lesson.recite.stop": "Ihinto ang pagbigkas",
+  "lesson.recite.offline": "Maririnig ang pagbigkas kapag may koneksiyon na ulit.",
   "lesson.translation": "Salin ng mga kahulugan: {name}",
   "lesson.orderHint": "Pindutin ang mga hakbang nang sunod-sunod",
   "lesson.matchHint": "Pumili ng salita, saka piliin ang kahulugan nito",

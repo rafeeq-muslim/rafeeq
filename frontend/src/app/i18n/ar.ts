@@ -235,6 +235,9 @@ export const ar = {
   "home.ask": "اسأل عن أي شيء في دينك",
   "lesson.verseRef": "سورة {s}، الآية {a}",
   "lesson.verseOffline": "يظهر نص الآية حين يعود الاتصال.",
+  // LRN-01 R4 / LRN-09 R2: recitation under whole-verse cards
+  "lesson.recite.stop": "أوقف التلاوة",
+  "lesson.recite.offline": "تُسمع التلاوة حين يعود الاتصال.",
   "lesson.translation": "ترجمة المعاني: {name}",
   "lesson.orderHint": "اضغط الخطوات بترتيبها",
   "lesson.matchHint": "اختر كلمة، ثم اختر معناها",
