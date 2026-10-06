@@ -1,0 +1,9 @@
+{
+  "note": "KNW-06 R1 (never show a broken player): approved items hidden from the library and downloads because their only file can't be played in most browsers. The daily link check can't catch these (the file answers 200). Remove an id once a playable file is approved.",
+  "items": [
+    "ih-2838921-en"
+  ],
+  "reasons": {
+    "ih-2838921-en": "IslamHouse 2838921 «HOW CAN I PRAY?»: the only file (en_Salah_With_al_Duaa.mp4, 34.3 MB) is HEVC (hev1/hvc1, no avc1); the API lists it as \"0 B\". Same finding as LRN-01 R5 (PR #59)."
+  }
+}
