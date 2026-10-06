@@ -10,7 +10,8 @@
   when the person asks for a human.
 - AccountDeleted (PLT-05 R5): the person's own group messages go with the
   account, so nothing they wrote stays in the group. Their help requests,
-  memberships, mentor link and blocks already cascade on users.id; replies
+  memberships, group removals (CMP-05 R5), mentor link and blocks already
+  cascade on users.id; replies
   they wrote as a mentor stay in the learners' own conversations without a
   name (author SET NULL), and reports they filed stay without a reporter.
 - MentorApproved (ORG-02 R1): `{mentor_id}`. The mentor's profile exists and

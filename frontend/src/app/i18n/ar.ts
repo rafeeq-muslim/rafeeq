@@ -659,6 +659,7 @@ export const ar = {
   "cmp.group.err.notSuitable": "هذا الرمز لا يناسبك. اطلب من مرشدك رمز مجموعة أخرى.",
   "cmp.group.err.full": "المجموعة مكتملة. اطلب من مرشدك مجموعة أخرى.",
   "cmp.group.err.already": "أنت في مجموعة الآن. غادرها أولًا لتنضم إلى غيرها.",
+  "cmp.group.err.unavailable": "لا يمكنك الانضمام إلى هذه المجموعة. اطلب من مرشدك مجموعة أخرى.", // CMP-05 R5: removed; neutral, no reason
   "cmp.group.members": "الأعضاء",
   "cmp.group.membersCount": "الأعضاء: {n}",
   "cmp.group.ledBy": "بإشراف {name}",
