@@ -11,7 +11,9 @@ jobs:
   deploy:
     # Security review #4: production deploys only ever come from main.
     if: github.ref == 'refs/heads/main'
-    runs-on: [self-hosted, rafeeq]
+    # Its own runner (label rafeeq-deploy, nothing else uses it), so a
+    # deploy starts at once instead of queueing behind CI on the shared ones.
+    runs-on: [self-hosted, rafeeq-deploy]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5

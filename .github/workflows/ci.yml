@@ -2,8 +2,10 @@ name: CI
 # Runs on the team's self-hosted runner: GitHub-hosted runners are not
 # available to this private organisation. The repo is private, so only
 # members can open pull requests that reach the runner.
+# On main and on pull requests only: a pushed branch with a PR was tested
+# twice (push and pull_request), which kept both shared runners busy.
 on:
-  push:
+  push: { branches: [main] }
   pull_request:
 permissions: { contents: read }
 concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }

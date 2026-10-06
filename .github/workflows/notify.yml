@@ -17,7 +17,8 @@ jobs:
   notify:
     # Claude's own commits carry a Claude-Session trailer: no need to wake for them.
     if: ${{ github.event_name == 'pull_request_target' || !contains(github.event.head_commit.message, 'Claude-Session:') }}
-    runs-on: [self-hosted, rafeeq]
+    # Its own runner (label rafeeq-events): a wake-up never waits behind CI or a deploy.
+    runs-on: [self-hosted, rafeeq-events]
     timeout-minutes: 2
     steps:
       - name: Append event to the session log
