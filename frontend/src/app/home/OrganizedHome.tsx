@@ -32,7 +32,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DailyCard, JourneySheet, JourneySky, LessonCard, SpotIllustration } from "@/components/rafeeq"
+import { DailyCard, IconTile, JourneySheet, JourneySky, LessonCard, SpotIllustration } from "@/components/rafeeq"
 import { num, useT, type Key } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
 import { useDevice } from "@/app/stores/device"
@@ -157,9 +157,7 @@ function NextStep({
         onClick={() => navigate("/learn/review")}
         className="tactile flex items-center gap-3 rounded-card border-2 bg-card p-4 text-start [--lip:var(--outline-lip)]"
       >
-        <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-          <IconRefresh className="size-6" stroke={1.75} aria-hidden="true" />
-        </span>
+        <IconTile icon={IconRefresh} size="lg" />
         <span className="min-w-0 flex-1">
           <span className="block text-body font-bold">{t("home.review")}</span>
           <span className="block text-label text-muted-foreground tabular-nums">{t("home.reviewBody", { n: num(review.length) })}</span>
@@ -250,9 +248,7 @@ function ToolRow({ icon: Icon, title, meta, highlight, onClick }: { icon: Tabler
       data-highlight={highlight ? "true" : undefined}
       className={cn("flex min-h-12 items-center gap-3 rounded-md px-1 py-2 text-start", highlight && "bg-secondary px-3 text-secondary-foreground")}
     >
-      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-        <Icon className="size-5" stroke={1.75} aria-hidden="true" />
-      </span>
+      <IconTile icon={Icon} size="sm" />
       <span className="min-w-0 flex-1">
         <span className="block text-body font-bold tabular-nums">{title}</span>
         {meta && <span className="block text-label text-muted-foreground">{meta}</span>}
@@ -335,9 +331,7 @@ export function OptionalCard({ id, library }: { id: OptionalId; library: Library
   const titleId = React.useId()
   return (
     <section aria-labelledby={titleId} data-optional={id} className="flex items-start gap-3 rounded-card bg-card p-4 shadow-card">
-      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-        <Icon className="size-6" stroke={1.75} aria-hidden="true" />
-      </span>
+      <IconTile icon={Icon} size="lg" />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <h2 id={titleId} className="text-body font-bold">
           {copy.title}

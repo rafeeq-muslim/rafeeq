@@ -1182,6 +1182,11 @@ export const tl: Dict = {
   "desk.cite.missing": "Wala sa nakatalang record ang hadith {id} sa wikang ito",
   "desk.glossary.title": "Mga baybay na hindi aprubado ng glosaryo",
   "desk.glossary.flag": "“{found}” sa halip na aprubadong termino na “{term}”",
+  // PLT-04 appearance (plt-04-light-theme-reapply): «المظهر» in «حسابي»
+  "me.theme": "Hitsura",
+  "theme.light": "Maliwanag",
+  "theme.dark": "Madilim",
+  "theme.system": "Ayon sa device",
 
   // --- PLT-09 organized home (plt-09-organized-home-build) ---
   "home.org.daily": "Ang araw ko",

@@ -8,6 +8,7 @@ import * as React from "react"
 import { useNavigate } from "react-router"
 import { IconArrowLeft, IconBook2 } from "@tabler/icons-react"
 
+import { IconTile } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
@@ -36,9 +37,7 @@ export function InAppReminder() {
       onClick={() => navigate("/next")}
       className="tactile flex items-center gap-3 rounded-card border-2 bg-card p-4 text-start [--lip:var(--outline-lip)]"
     >
-      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-        <IconBook2 className="size-6" stroke={1.75} aria-hidden="true" />
-      </span>
+      <IconTile icon={IconBook2} size="lg" />
       <span className="min-w-0 flex-1 text-body font-bold">{t("reminder.inApp")}</span>
       <IconArrowLeft className="size-5 text-primary ltr:rotate-180" aria-hidden="true" />
     </button>

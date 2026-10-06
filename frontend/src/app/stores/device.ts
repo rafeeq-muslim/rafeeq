@@ -7,10 +7,14 @@ import { persist } from "zustand/middleware"
 import type { Locale } from "@/app/i18n"
 
 export type City = { id: string; name: Record<string, string>; country: string; lat: number; lng: number; tz: string }
+/** PLT-04: light, dark, or "system" (follow the device's own setting). */
+export type Theme = "light" | "dark" | "system"
 
 type DeviceState = {
   installId: string
   locale: Locale
+  /** PLT-04: light unless the learner picks dark or «حسب الجهاز» in «حسابي». */
+  theme: Theme
   onboarded: boolean
   placementOffered: boolean
   shareEvents: boolean
@@ -53,6 +57,7 @@ export const useDevice = create<DeviceState>()(
     (set) => ({
       installId: newId(),
       locale: guessLocale(),
+      theme: "light",
       onboarded: false,
       placementOffered: false,
       shareEvents: true,

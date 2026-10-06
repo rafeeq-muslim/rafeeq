@@ -264,6 +264,19 @@ Branch `org-01-03-organizations-build`. Built now on the product owner's standin
 | Understanding: per-unit lesson/review first-answer rates; mastery % per objective counts people; «لماذا؟» experiment compares the explanation with the random fifth only (`shown = card_holdout`), never offline/failed card text (`card_only`); events carry a device counter `seq` so «the next answer» is right when an offline queue arrives at once | MOT-09 R1, R3, R4 | `indicators.py`, `lesson/why.ts`, `lib/api.ts`; migration `f7a8b9c0d1e2` (on ORG's `e5f6a7b8c9d0`) |
 
 **Pending a human:** Companion's owner to agree the `MentorContacted` event (name, payload `{user_id}`, when it is sent) for MOT-08 R6; the MOT-06 challenge pushes («لمجموعتك هدف جديد هذا الأسبوع») vs rules.md §3 «at most one notification per day» were not changed (needs the Motivation owner and product owner).
+
+## PLT-04 light theme re-applied (branch `plt-04-light-theme-reapply`, 2026-10-06)
+
+PR #30 re-applied on the product owner's instruction (2026-10-06); design owner ناصر بن خالد to review. PR #31 had reverted it with no reason given.
+
+| Decision | Rule | Where |
+| --- | --- | --- |
+| Light by default whatever the device says; «المظهر» in «حسابي» offers فاتح / داكن / حسب الجهاز. «حسب الجهاز» (follow the device, live) is new compared with PR #30, where it was an open question; the product owner asked for it | PLT-04 R1, R2 (`docs/design-system.md` «المظهر») | `lib/theme.ts`, `public/theme.js`, `stores/device.ts`, `ThemeSwitcher` |
+| `theme-color` and `color-scheme` follow the resolved mode (mist / ink; ink on Welcome) | PLT-04 R2 | `lib/theme.ts`, `index.html` |
+| Contrast fixes from PR #30 kept (muted grey #5C5982, full-colour alert text, inactive tabs, dark «عاجل», JourneyCard label/streak chip); `src/styles/contrast.test.ts` guards them | PLT-04 R4 | `index.css`, components |
+| Brand backdrop, gradient fills and `IconTile` kept; `IconTile` also on the MOT in-app reminder row | PLT-04 R5, R6 | `graphics.tsx`, `ui/button.tsx`, … |
+
+**Pending a human:** the design owner (ناصر بن خالد العويمر) to review the re-apply and the third option «حسب الجهاز».
 ## PLT-09 organized home (plt-09-organized-home-build)
 
 Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No migration.

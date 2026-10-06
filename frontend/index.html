@@ -5,9 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/brand/rafeeq-app-icon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f6fb" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1d1645" />
-    <meta name="color-scheme" content="light dark" />
+    <!-- PLT-04: light unless the learner chose dark (or follow device) in «حسابي»; theme.js applies the choice before the first paint -->
+    <meta name="theme-color" content="#f7f6fb" />
+    <meta name="color-scheme" content="light" />
+    <script src="/theme.js"></script>
     <!-- PLT-05 R3: sets the title (Notes in discreet mode) before anything is drawn; the static one below is only a fallback -->
     <script src="/boot-title.js"></script>
     <title>Rafeeq</title>
