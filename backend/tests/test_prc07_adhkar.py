@@ -5,6 +5,7 @@ every offered dhikr is shown directly; a dhikr the reviewer returns is
 withdrawn in that language until a corrected version exists."""
 
 import json
+import re
 
 from app.core.config import get_settings
 from app.practice import adhkar
@@ -100,7 +101,9 @@ async def test_prc07_r4_repeat_is_data_and_nothing_is_recorded(client):
     from app.main import app
 
     practice = [p for p in app.openapi()["paths"] if p.startswith("/api/practice")]
-    assert practice and not [p for p in practice if any(w in p for w in ("count", "read", "log", "done"))]
+    # whole words of the path, so "{country}" (the team's sighting entry) is not read as "count"
+    words = {p: set(re.split(r"[^a-z]+", p.lower())) for p in practice}
+    assert practice and not [p for p in practice if words[p] & {"count", "read", "log", "done"}]
 
     from sqlalchemy import select
 
