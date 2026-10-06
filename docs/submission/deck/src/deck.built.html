@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>رفيق - العرض الختامي</title>
+<style>
+@font-face{font-family:Plex;font-weight:400;src:url(fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2) format('woff2'),url(fonts/ibm-plex-sans-arabic-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:Plex;font-weight:400;src:url(fonts/ibm-plex-sans-arabic-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F;}
+@font-face{font-family:Plex;font-weight:500;src:url(fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2) format('woff2');}
+@font-face{font-family:Plex;font-weight:500;src:url(fonts/ibm-plex-sans-arabic-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F;}
+@font-face{font-family:Plex;font-weight:600;src:url(fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2) format('woff2');}
+@font-face{font-family:Plex;font-weight:600;src:url(fonts/ibm-plex-sans-arabic-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F;}
+@font-face{font-family:Plex;font-weight:700;src:url(fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2) format('woff2');}
+@font-face{font-family:Plex;font-weight:700;src:url(fonts/ibm-plex-sans-arabic-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F;}
+:root{--navy:#151a4b;--ink:#2a2f5c;--muted:#5d6185;--purple:#5a4fcf;--teal:#22cbb6;--card:#ffffff;--line:#e3e2f3;--soft:#f1effc;}
+@page{size:1920px 1080px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff;font-family:Plex,sans-serif;color:var(--ink)}
+.slide{width:1920px;height:1080px;position:relative;overflow:hidden;page-break-after:always;break-after:page;background:url(assets/bg-light.jpg) center/cover no-repeat;padding:96px 120px 120px}
+.slide.dark{background-image:url(assets/bg-dark.jpg);color:#fff}
+.kicker{display:flex;align-items:center;gap:16px;color:var(--purple);font-size:26px;font-weight:600;margin-bottom:18px}
+.kicker:before{content:"";width:48px;height:3px;background:var(--purple);display:block}
+h1{font-size:62px;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:14px}
+.sub{font-size:29px;color:var(--muted);line-height:1.55;margin-bottom:40px;max-width:1600px}
+.foot{position:absolute;bottom:40px;left:120px;right:120px;display:flex;justify-content:space-between;align-items:center;font-size:20px;color:var(--muted)}
+.foot img{height:50px}
+.foot .num{direction:ltr}
+.src{position:absolute;bottom:104px;right:120px;left:120px;font-size:18px;color:#7c7fa0;line-height:1.5}
+.grid{display:grid;gap:28px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border-radius:22px;padding:34px 36px;box-shadow:0 6px 24px rgba(40,40,110,.07);border:1px solid var(--line)}
+.card h3{font-size:32px;color:var(--navy);font-weight:700;margin-bottom:12px;line-height:1.35}
+.card p,.card li{font-size:25px;line-height:1.6;color:var(--ink)}
+.card ul{padding-right:28px}
+.card li{margin-bottom:6px}
+.tag{display:inline-block;font-size:19px;font-weight:600;padding:5px 14px;border-radius:30px;background:var(--soft);color:var(--purple);margin-bottom:14px}
+.tag.t{background:#dff7f3;color:#0f8a7b}
+.tag.w{background:#fff1dc;color:#9a5b00}
+.big{font-size:76px;font-weight:700;color:var(--purple);line-height:1.1;direction:ltr;text-align:right}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.small{font-size:20px;color:var(--muted)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:20px;overflow:hidden;border:1px solid var(--line);font-size:23px}
+th{background:var(--soft);color:var(--navy);font-weight:700;text-align:right;padding:16px 22px}
+td{padding:14px 22px;border-top:1px solid var(--line);vertical-align:top;line-height:1.5}
+td b{color:var(--navy)}
+.flow{display:flex;align-items:stretch;gap:0;justify-content:space-between}
+.step{flex:1;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 22px;text-align:center;box-shadow:0 6px 24px rgba(40,40,110,.07)}
+.step .n{width:54px;height:54px;border-radius:50%;background:var(--purple);color:#fff;font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.step h4{font-size:28px;color:var(--navy);margin-bottom:8px}
+.step p{font-size:22px;line-height:1.5;color:var(--ink)}
+.arrow{display:flex;align-items:center;justify-content:center;width:52px;color:var(--purple);font-size:40px;font-weight:700}
+.note{background:#fff;border-right:6px solid var(--teal);border-radius:14px;padding:20px 28px;font-size:25px;line-height:1.55;color:var(--ink)}
+.shots{display:flex;gap:30px;justify-content:center;align-items:flex-start}
+.shot{text-align:center}
+.shot img{width:300px;border-radius:26px;box-shadow:0 10px 30px rgba(20,20,80,.18);border:1px solid var(--line);display:block}
+.shot span{display:block;font-size:22px;color:var(--navy);font-weight:600;margin-top:14px;max-width:300px;line-height:1.4}
+</style>
+</head>
+<body>
+
+<!-- 1 Cover -->
+<section class="slide dark" style="padding:0">
+  <img src="assets/logos-light.png" style="position:absolute;top:64px;right:140px;height:96px">
+  <div style="position:absolute;right:140px;top:300px;width:1500px">
+    <div style="font-size:190px;font-weight:700;line-height:1">رفيق</div>
+    <div style="font-size:46px;font-weight:500;margin-top:36px;line-height:1.5">رفيق المسلم الجديد في سنته الأولى</div>
+    <div style="font-size:31px;margin-top:18px;line-height:1.6;color:#cfd2f5">يعلّمه بلغته خطوة خطوة، ويجيبه من مصادر معتمدة، ويصله بإنسان حين يحتاج.</div>
+    <div style="width:120px;height:4px;background:var(--teal);margin-top:40px"></div>
+    <div style="font-size:30px;margin-top:40px;direction:ltr;text-align:right;color:#fff;font-weight:600">rafeeq.nan.sa</div>
+  </div>
+  <div style="position:absolute;bottom:56px;right:140px;font-size:23px;color:#cfd2f5">المسار الثالث: التجارب التفاعلية والرحلة المعرفية للتعريف بالإسلام وتعلّمه</div>
+  <div style="position:absolute;bottom:56px;left:140px;font-size:23px;color:#cfd2f5">العرض الختامي · أكتوبر 2026</div>
+</section>
+
+<!-- 2 Problem -->
+<section class="slide">
+  <div class="kicker">المشكلة</div>
+  <h1>يُسلم الآلاف، ثم يُتركون وحدهم في سنتهم الأولى</h1>
+  <p class="sub">أغلب المحتوى الموثوق بالعربية، والمتاح بلغتهم متفرّق ومتضارب، والمتابعة بعد يوم الإسلام ضعيفة.</p>
+  <div class="grid g4" style="margin-bottom:30px">
+    <div class="card"><div class="big">347,646</div><p>مسلمًا جديدًا في المملكة بين 2019 و2023، منهم 163,319 في 2023 وحده</p></div>
+    <div class="card"><div class="big">43%</div><p>أصبحوا وحيدين بعد إعلان إسلامهم لمن حولهم</p></div>
+    <div class="card"><div class="big">54%</div><p>لم يجدوا أجوبة عن شكوكهم، وتلقّى مثلهم معلومات خاطئة</p></div>
+    <div class="card"><div class="big">38%</div><p>فقط وجدوا الإنترنت مفيدًا، مع أنه ثاني أكثر مصادر المساعدة استخدامًا</p></div>
+  </div>
+  <div class="grid g3">
+    <div class="card" style="padding:24px 30px"><h3 style="font-size:27px">جوزيف · عامل وافد</h3><p style="font-size:22px">يتكلم التاغالوغية، ووقته ورصيده محدودان، ولا دروس بلغته.</p></div>
+    <div class="card" style="padding:24px 30px"><h3 style="font-size:27px">دانيال · أسلم عبر الإنترنت</h3><p style="font-size:22px">لا يعرف مسلمين في مدينته، ولا يعرف بمن يثق من المحتوى.</p></div>
+    <div class="card" style="padding:24px 30px"><h3 style="font-size:27px">ليلى · تخفي إسلامها</h3><p style="font-size:22px">تخشى أن يرى أحد التطبيق، وتحتاج طريقًا فوريًا إلى إنسان.</p></div>
+  </div>
+  <div class="src">المصادر: وزارة الشؤون الإسلامية (عبر واس، يناير 2024)؛ استبانة مركز أصول على 114 مسلمًا جديدًا في الغرب (2015، عينة صغيرة). الشخصيات مسودات مبنية على البحث. التفاصيل في docs/agents/evidence.md</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">02 / 16</span></div>
+</section>
+
+<!-- 3 Beneficiary & success -->
+<section class="slide">
+  <div class="kicker">المستفيد ومعيار النجاح</div>
+  <h1>نقيس النجاح بما يطلبه المسار الثالث</h1>
+  <p class="sub">المستفيد: المسلم الجديد في سنته الأولى، بالعربية أو الإنجليزية أو التاغالوغية، ومن يرافقه من مرشدين ومراجعين.</p>
+  <div class="grid g2" style="grid-template-columns:1fr 1.25fr">
+    <div class="card" style="background:#f7f6ff">
+      <span class="tag">معيار نجاح المسار</span>
+      <p style="font-size:27px;line-height:1.7">هل أسهم الحل، عند اختباره مع الفئة المستهدفة، في تحسين فهم مفهوم إسلامي، أو في ملاءمة المحتوى وتسلسله واستمرارية الرحلة، مع الالتزام بالخصوصية وعدم استنتاج السمات الدينية أو الحساسة للمستخدم؟</p>
+    </div>
+    <table>
+      <tr><th>الجانب</th><th>كيف نقيسه في رفيق</th></tr>
+      <tr><td><b>الفهم</b></td><td>إتقان كل هدف تعلّمي في التمارين، ثم التحقق منه بعد 7 و30 يومًا في المراجعة</td></tr>
+      <tr><td><b>ملاءمة التسلسل</b></td><td>اختبار تحديد مستوى اختياري يفتح الوحدات المناسبة، ومسار متدرّج من 6 وحدات</td></tr>
+      <tr><td><b>الاستمرار</b></td><td>العودة بعد 7 و30 يومًا، والسلسلة، وإتمام الوحدات (مؤشرات الفريق)</td></tr>
+      <tr><td><b>الإحالة</b></td><td>كل سؤال خطِر أو شخصي يصل إلى إنسان، ويُختبر ذلك آليًا</td></tr>
+      <tr><td><b>الخصوصية</b></td><td>لا يُستنتج دين المستخدم ولا يُصنّف؛ لا يدخل أي معرّف في طلبات النموذج</td></tr>
+    </table>
+  </div>
+  <div class="src">الاختبار الميداني مع المسلمين الجدد لم يُجرَ بعد؛ المؤشرات مبنية في التطبيق وتنتظر الاستخدام الحقيقي.</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">03 / 16</span></div>
+</section>
+
+<!-- 4 Solution -->
+<section class="slide">
+  <div class="kicker">الحل</div>
+  <h1>رفيق: تطبيق ويب يرافق المسلم الجديد بلغته</h1>
+  <p class="sub">يعمل على أي جوال دون متجر، ويُثبّت من المتصفح، ويعمل دون اتصال بعد أول زيارة. الذكاء الاصطناعي يساند الإنسان ولا يحل محله.</p>
+  <div class="grid g2">
+    <div class="card"><span class="tag">01</span><h3>مسار تعلّم متدرّج</h3><p>6 وحدات و25 درسًا بثلاث لغات: الشهادتان، والطهارة، والصلاة… بطاقات قصيرة وتمارين، ومراجعة تكيّفية للأهداف الأقل إتقانًا.</p></div>
+    <div class="card"><span class="tag">02</span><h3>«اسأل رفيق» بمصادر معتمدة</h3><p>يجيب من نصوص معتمدة فقط، ويعرض المصدر مع كل إجابة، ولا تظهر إجابة قبل أن تجتاز التحقق.</p></div>
+    <div class="card"><span class="tag">03</span><h3>المرافقة البشرية والإحالة</h3><p>زر «أريد إنسانًا» في الدرس والمراجعة والمساعد، ومرشد من جنس المستفيد وبلغته، ومجموعات صغيرة.</p></div>
+    <div class="card"><span class="tag">04</span><h3>أدوات اليوم</h3><p>مواقيت الصلاة والقبلة محسوبة على الجهاز، وأذكار، واستماع للقرآن، ومكتبة مختارة لمرحلته.</p></div>
+  </div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">04 / 16</span></div>
+</section>
+
+<!-- 5 How it works -->
+<section class="slide">
+  <div class="kicker">آلية العمل</div>
+  <h1>رحلة المستفيد من أول فتح إلى المتابعة</h1>
+  <p class="sub">كل خطوة تقود إلى التي بعدها، والإنسان حاضر في كل مرحلة.</p>
+  <div class="flow" style="margin-top:20px">
+    <div class="step"><div class="n">1</div><h4>ترحيب</h4><p>يختار لغته، ثم ثلاثة وعود، واختبار مستوى اختياري. لا حساب مطلوب.</p></div>
+    <div class="arrow">←</div>
+    <div class="step"><div class="n">2</div><h4>مسار متدرّج</h4><p>الخطوة التالية أولًا في رئيسية مرتّبة، ودرس من دقائق.</p></div>
+    <div class="arrow">←</div>
+    <div class="step"><div class="n">3</div><h4>تمرين و«لماذا؟»</h4><p>عند الخطأ يُشرح السبب من نص البطاقة المعتمدة.</p></div>
+    <div class="arrow">←</div>
+    <div class="step"><div class="n">4</div><h4>مراجعة تكيّفية</h4><p>خمسة أهداف على الأكثر، والتحقق بعد 7 و30 يومًا.</p></div>
+    <div class="arrow">←</div>
+    <div class="step"><div class="n">5</div><h4>سؤال</h4><p>يسأل رفيق بلغته في أي لحظة.</p></div>
+    <div class="arrow">←</div>
+    <div class="step" style="border:2px solid var(--teal)"><div class="n" style="background:var(--teal)">6</div><h4>إجابة موثّقة أو إنسان</h4><p>إجابة بمصدرها، أو اعتذار واضح، أو إحالة إلى مرشد.</p></div>
+  </div>
+  <div class="grid g3" style="margin-top:46px">
+    <div class="note">ما يُفتح من المسار يبقى معه دون اتصال.</div>
+    <div class="note">الحساب اختياري، ويُعرض بهدوء بعد أول درس.</div>
+    <div class="note">في الخطر: إحالة فورية إلى إنسان دون أي طلب للنموذج.</div>
+  </div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">05 / 16</span></div>
+</section>
+
+<!-- 6 AI 1: ask pipeline -->
+<section class="slide">
+  <div class="kicker">الذكاء الاصطناعي (1 من 2)</div>
+  <h1>«اسأل رفيق»: لا يجيب إلا بما في المصادر</h1>
+  <p class="sub" style="margin-bottom:28px">ست مراحل لكل سؤال، وكل مرحلة تستطيع إيقاف الإجابة. سقف كل سؤال: 8 طلبات خارجية و45 ثانية.</p>
+  <table style="font-size:22px">
+    <tr><th style="width:15%">المرحلة</th><th style="width:15%">النموذج</th><th>ما تفعله</th><th style="width:28%">إذا فشلت أو رفضت</th></tr>
+    <tr><td><b>1. فحص الخطر</b></td><td>بلا نموذج</td><td>عبارات خطر معتمدة بثلاث لغات، تعمل أولًا</td><td>رد ثابت وإحالة فورية إلى إنسان، دون أي اتصال بالشبكة</td></tr>
+    <tr><td><b>2. الموجّه</b></td><td>سريع</td><td>يصنّف السؤال: عام، خلافي، شخصي، خطر، خارج النطاق، محاولة تجاوز… ودرجته من A إلى D</td><td>الشخصي يُحال إلى مرشد، والخطر إلى إنسان</td></tr>
+    <tr><td><b>3. الاسترجاع</b></td><td><span class="ltr">bge-m3</span></td><td>بحث دلالي ونصي معًا في المصادر المعتمدة بلغة السائل، حتى 8 مقاطع</td><td>إن تعطل البحث الدلالي يكمل بالنصي ويُعلَن ذلك</td></tr>
+    <tr><td><b>4. المؤلف</b></td><td>رئيسي</td><td>يكتب الإجابة من المقاطع وحدها، ويضع علامة مكان كل آية أو حديث بدل كتابة نصه</td><td>«لا يكفي» ← اعتذار واقتراح التواصل مع مرشد</td></tr>
+    <tr><td><b>5. المدقق</b></td><td>كود + سريع</td><td>7 فحوص آلية (المراجع مسترجعة فعلًا، لا نص منسوخ، اللغة…) ثم فحص دعم كل جملة بالمصدر</td><td>إصلاح واحد ثم فحص كامل من جديد، وإلا لا تظهر الإجابة</td></tr>
+    <tr><td><b>6. العرض</b></td><td>—</td><td>نص الآية والحديث يُعرض من قاعدة البيانات بمعرّفه، مع بطاقة المصدر</td><td>إن حُذف المصدر قبل العرض لا تُعرض الإجابة</td></tr>
+  </table>
+  <div class="src" style="bottom:100px">النماذج عبر OpenRouter: الرئيسي <span class="ltr">gemma-4-31b-it</span>، والسريع <span class="ltr">gemma-4-26b-a4b-it</span>، والاحتياطي <span class="ltr">deepseek-v4-pro</span>. حرارة 0، ومزوّدون لا يحتفظون بالطلبات. المصدر: docs/engineering/ai-agents.md</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">06 / 16</span></div>
+</section>
+
+<!-- 7 AI 2: learning agents -->
+<section class="slide">
+  <div class="kicker">الذكاء الاصطناعي (2 من 2)</div>
+  <h1>الذكاء الاصطناعي في خدمة التعلّم</h1>
+  <p class="sub">مهام صغيرة محددة، لكل منها مدخل محدود وفاحص، وإن فشلت يعود رفيق إلى نص ثابت.</p>
+  <div class="grid g2" style="gap:24px">
+    <div class="card" style="padding:26px 32px"><h3>«لماذا؟» شرح الخطأ</h3><p>المدخل: البطاقة المعتمدة والتمرين وإجابة المتعلّم. يكتب شرحًا في 60 كلمة على الأكثر، ثم يفحصه نموذج ثانٍ. إن فشل لا يظهر شيء.</p></div>
+    <div class="card" style="padding:26px 32px"><h3>الموجّه التعليمي</h3><p>من ملخّص تعلّم لا يحمل هوية، يقترح ما يتعلّمه الآن في 3 جمل، وكل اسم فيه من الملخّص. الملخّص لا يُحفظ.</p></div>
+    <div class="card" style="padding:26px 32px"><h3>ترتيب الرئيسية</h3><p>يرتّب مكوّنات الرئيسية بحسب وقت اليوم والتقدّم، مرة في اليوم. الخطوة التالية تبقى أولًا دائمًا، وعند الفشل ترتيب ثابت.</p></div>
+    <div class="card" style="padding:26px 32px"><h3>ربط السؤال بهدف تعلّمي</h3><p>بإذن المتعلّم فقط: يربط سؤاله المجاب بهدف من قائمة معتمدة، فيقترح الدرس المناسب. يُرسل المعرّف وحده.</p></div>
+  </div>
+  <div class="note" style="margin-top:28px">ضوابط مشتركة: لا يدخل اسم ولا معرّف ولا سجل في أي طلب · نص المستخدم يُعامل بيانات لا تعليمات · سقف إنفاق يومي وكلي يوقف الطلبات ويعرض ردًا ثابتًا · المراجعة التكيّفية خوارزمية مكتوبة، لا نموذج لغوي.</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">07 / 16</span></div>
+</section>
+
+<!-- 8 Reliability -->
+<section class="slide">
+  <div class="kicker">الموثوقية والسلامة العلمية</div>
+  <h1>متى يجيب رفيق، ومتى يمتنع أو يحيل؟</h1>
+  <p class="sub">النموذج لا يكتب آية ولا حديثًا من عنده، ولا يفتي في حالة شخصية، ولا يرجّح في مسألة خلافية.</p>
+  <div class="grid g2" style="grid-template-columns:1fr 1.15fr">
+    <div class="card">
+      <h3>المصادر المعتمدة في الإجابات</h3>
+      <ul>
+        <li>QuranEnc: نص القرآن وترجماته المعتمدة</li>
+        <li>HadeethEnc: الأحاديث مع درجتها وشرحها</li>
+        <li>موسوعة IslamHouse: المختصر المفيد للمسلم الجديد</li>
+        <li>فتاوى موقع الشيخ ابن باز</li>
+        <li>islamqa.info: مضاف بقرار مالك المنتج، <b>وإذن الموقع لم يصل بعد</b></li>
+      </ul>
+      <p class="small" style="margin-top:10px">نص القرآن والحديث يُعرض من قاعدة البيانات وحدها.</p>
+    </div>
+    <table style="font-size:22px">
+      <tr><th>الحالة</th><th>سلوك رفيق</th></tr>
+      <tr><td><b>لا يوجد مصدر</b></td><td>يعتذر بوضوح ويقترح التواصل مع مرشد</td></tr>
+      <tr><td><b>سؤال شخصي</b></td><td>يذكر ما في المصادر ويحيله إلى مرشد أو أهل العلم</td></tr>
+      <tr><td><b>مسألة خلافية</b></td><td>يبيّن أن فيها أقوالًا دون ترجيح</td></tr>
+      <tr><td><b>خطر على السائل</b></td><td>إحالة فورية إلى إنسان، دون نموذج</td></tr>
+      <tr><td><b>تعطل الخدمة</b></td><td>رسالة صادقة وإعادة المحاولة؛ لا يدّعي غياب المصدر</td></tr>
+    </table>
+  </div>
+  <div class="note" style="margin-top:26px">المراجع الشرعي: منصة مراجعة يعتمد فيها الدروس والبطاقات والإجابات الجاهزة أو يعيدها. اعتمد 9 إجابات جاهزة (3 أسئلة × 3 لغات) في 6 أكتوبر 2026.</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">08 / 16</span></div>
+</section>
+
+<!-- 9 Results -->
+<section class="slide">
+  <div class="kicker">النتائج</div>
+  <h1>ما قسناه فعلًا، وما لم نقسه بعد</h1>
+  <p class="sub">أرقام من سجلات الإنتاج (دون نص الأسئلة) ومن الاختبارات الآلية، في 5 و6 أكتوبر 2026.</p>
+  <div class="grid g4" style="margin-bottom:28px">
+    <div class="card"><div class="big">14/14</div><p>سؤالًا عربيًا أُجيب بعد التتبّع في الإنتاج (6 أكتوبر)</p></div>
+    <div class="card"><div class="big">0</div><p>إجابة رفضها فحص الدعم بالمصادر في تلك الفترة؛ كل الرفض كان من الفحوص الآلية</p></div>
+    <div class="card"><div class="big">9/9</div><p>تصنيف صحيح للموجّه في مقارنة النماذج، و7 من 9 للمؤلف بعد ضبط التعليمات</p></div>
+    <div class="card"><div class="big">$0.0015</div><p>تكلفة الإجابة الواحدة تقريبًا، في 9 إلى 15 ثانية</p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><span class="tag t">قيس وأُصلح</span><p>الإنجليزية: 4 من 8 أجيبت أولًا. وجدنا السبب (صيغ الصلاة على النبي ﷺ عُدّت نسخًا لنص الحديث) وأصلحناه؛ بعده اجتازت 8 من 11 إجابة إنجليزية من المحاولة الأولى، والثلاث الباقية بعد إصلاح واحد (بيئة التطوير).</p></div>
+    <div class="card"><span class="tag w">حدود نعلنها</span><p>العينات صغيرة. لم نُجرِ بعد القياس الحي الكامل (نسبة المحاولة الأولى ≥ 95%، تكرار 20 مرة لكل سؤال)، ولا الاختبار مع مسلمين جدد. الاختبارات الآلية: 335 في الخادم و131 في الواجهة، كلها ناجحة.</p></div>
+  </div>
+  <div class="src" style="bottom:100px">المصادر: docs/engineering/implementation/KNW-01-chatbot-reliability-report.md (§12)، docs/engineering/ai-agents.md (§3.2)، docs/engineering/STATUS.md</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">09 / 16</span></div>
+</section>
+
+<!-- 10 Screens 1 -->
+<section class="slide">
+  <div class="kicker">صور من المشروع (1 من 2)</div>
+  <h1>من الموقع الحي</h1>
+  <div class="shots" style="margin-top:20px">
+    <div class="shot"><img src="../../screenshots/02-welcome.png"><span>البداية: اختيار اللغة وحدها</span></div>
+<div class="shot"><img src="../../screenshots/03-home.png"><span>الرئيسية: الخطوة التالية أولًا</span></div>
+<div class="shot"><img src="../../screenshots/lesson-02.png"><span>درس: آية من قاعدة البيانات مع تلاوتها</span></div>
+<div class="shot"><img src="../../screenshots/lesson-05.png"><span>تمرين بعد البطاقات</span></div>
+<div class="shot"><img src="../../screenshots/landing-answers.png"><span>صفحة التعريف: كل إجابة معها مصدرها</span></div>
+  </div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">10 / 16</span></div>
+</section>
+
+<!-- 11 Screens 2 -->
+<section class="slide">
+  <div class="kicker">صور من المشروع (2 من 2)</div>
+  <h1>من الموقع الحي</h1>
+  <div class="shots" style="margin-top:20px">
+    <div class="shot"><img src="../../screenshots/07-practice.png"><span>مواقيت الصلاة محسوبة على الجهاز</span></div>
+<div class="shot"><img src="../../screenshots/08-adhkar.png"><span>الأذكار اليومية</span></div>
+<div class="shot"><img src="../../screenshots/10-library.png"><span>المكتبة والبحث في المصادر</span></div>
+<div class="shot"><img src="../../screenshots/11-me.png"><span>حسابي: زائر بلا حساب، واللغة والتنزيلات</span></div>
+<div class="shot"><img src="../../screenshots/11b-me-discreet.png"><span>الإشعارات المحايدة والخصوصية</span></div>
+  </div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">11 / 16</span></div>
+</section>
+
+<!-- 12 UX & privacy -->
+<section class="slide">
+  <div class="kicker">تجربة المستفيد والإتاحة والخصوصية</div>
+  <h1>مصمّم لجوزيف ودانيال وليلى</h1>
+  <p class="sub">كل قرار في الواجهة جاء من وضع مستفيد حقيقي: لغة، أو اتصال ضعيف، أو خوف من أن يُكشف.</p>
+  <div class="grid g3">
+    <div class="card"><h3>ثلاث لغات واتجاهان</h3><p>العربية والإنجليزية والتاغالوغية في كل شاشة، من اليمين ومن اليسار، والنص الشرعي العربي يبقى مع معناه.</p></div>
+    <div class="card"><h3>يعمل دون اتصال</h3><p>بعد أول زيارة: ما فتحه من المسار، والمواقيت والقبلة والأذكار. ومركز تنزيلات يختار فيه ما يبقى معه بحجمه.</p></div>
+    <div class="card"><h3>خفيف على الباقة</h3><p>واجهة المتعلّم وحدها في أول فتح (قرابة 1 ميجابايت مضغوطة)، والصوت والفيديو عند التشغيل فقط.</p></div>
+    <div class="card"><h3>الوضع الخفي والخروج السريع</h3><p>عنوان الصفحة يصبح «Notes» والإشعارات بلا اسم رفيق ولا كلمة دينية، وزر خروج سريع، ومسح بيانات الجهاز.</p></div>
+    <div class="card"><h3>أقل قدر من البيانات</h3><p>لا حساب مطلوب للتعلّم. الحساب اسم مستعار وكلمة مرور، والبريد اختياري.</p></div>
+    <div class="card"><h3>الموقع لا يغادر الجهاز</h3><p>المواقيت تُحسب على الجهاز من قائمة مدن، والإشعارات مغلقة حتى يفعّلها، ومحايدة على شاشة القفل.</p></div>
+  </div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">12 / 16</span></div>
+</section>
+
+<!-- 13 Tech -->
+<section class="slide">
+  <div class="kicker">التقنيات والبنية</div>
+  <h1>بنية بسيطة يمكن تشغيلها وصيانتها</h1>
+  <p class="sub">كل دفع إلى الفرع الرئيسي يمر بالاختبارات ثم يُنشر، مع فحص صحة وتراجع آلي.</p>
+  <div style="display:flex;gap:26px;align-items:stretch;margin-top:10px">
+    <div class="card" style="flex:1"><span class="tag">الجوال</span><h3>تطبيق ويب قابل للتثبيت</h3><p>React و Vite و TypeScript، وعامل خدمة للعمل دون اتصال، ونظام تصميم موحّد. إشعارات Web Push.</p></div>
+    <div class="arrow">⇄</div>
+    <div class="card" style="flex:1"><span class="tag">الخادم</span><h3>FastAPI (Python)</h3><p>مسار السؤال والتحقق، والمسار والمراجعة، والمرافقة، وواجهة النصوص الشرعية. مهام مجدولة للفهرسة.</p></div>
+    <div class="arrow">⇄</div>
+    <div class="card" style="flex:1"><span class="tag">البيانات</span><h3>PostgreSQL + pgvector</h3><p>المقاطع المعتمدة ومتجهاتها (1024 بُعدًا) وفهرس نصي، وسجل التكلفة دون نص.</p></div>
+    <div class="arrow">⇄</div>
+    <div class="card" style="flex:1"><span class="tag t">النماذج</span><h3>OpenRouter</h3><p>Gemma 4 للتأليف والتصنيف والفحص، و DeepSeek احتياطيًا، و bge-m3 للمتجهات.</p></div>
+  </div>
+  <div class="note" style="margin-top:34px">الاستضافة: حاويات Docker خلف nginx على خادم واحد، ونشر آلي من GitHub Actions. الكود: <span class="ltr">github.com/rafeeq-muslim/rafeeq</span></div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">13 / 16</span></div>
+</section>
+
+<!-- 14 Added value -->
+<section class="slide">
+  <div class="kicker">القيمة المضافة</div>
+  <h1>ما الذي يقدّمه رفيق ولا تقدّمه البدائل؟</h1>
+  <p class="sub">في مسح شمل 14 برنامجًا و9 تطبيقات، لم نجد منتجًا يجمع المسار التعلّمي والمساعد الموثّق والمرشد البشري وعدة لغات.</p>
+  <table>
+    <tr><th style="width:22%"></th><th>محادثة ذكاء اصطناعي عامة</th><th>كتيبات PDF ومواقع ثابتة</th><th>وسائل التواصل</th><th style="background:#e4e0fb">رفيق</th></tr>
+    <tr><td><b>المصدر</b></td><td>غير معروف، وقد يخترع نصًا</td><td>موثوق</td><td>متضارب</td><td>مصادر معتمدة، والنص من قاعدة البيانات</td></tr>
+    <tr><td><b>التدرّج</b></td><td>لا يوجد</td><td>كتاب واحد للجميع</td><td>لا يوجد</td><td>مسار ومراجعة بحسب الإتقان</td></tr>
+    <tr><td><b>لغته</b></td><td>نعم، دون ضمان</td><td>محدود، وقليل بالتاغالوغية</td><td>متفاوت</td><td>ثلاث لغات بمصطلحات معتمدة</td></tr>
+    <tr><td><b>الإنسان</b></td><td>لا</td><td>لا</td><td>غرباء</td><td>مرشد من جنسه وبلغته، وإحالة في الخطر</td></tr>
+    <tr><td><b>الخصوصية</b></td><td>المحادثة تُحفظ</td><td>جيدة</td><td>مكشوفة</td><td>وضع خفي، ولا هوية في طلبات النموذج</td></tr>
+  </table>
+  <div class="src" style="bottom:100px">المسح: docs/agents/evidence.md (قسم السوق، أكتوبر 2026، بحث مكتبي).</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">14 / 16</span></div>
+</section>
+
+<!-- 15 Operations, done vs next -->
+<section class="slide">
+  <div class="kicker">واقعية التشغيل وخطة الاستمرار</div>
+  <h1>ما أُنجز، وما يأتي لاحقًا</h1>
+  <div class="grid g3" style="margin-top:30px;grid-template-columns:1fr 1fr 1fr">
+    <div class="card"><span class="tag t">أُنجز ويعمل الآن</span><ul>
+      <li>الموقع الحي بثلاث لغات</li><li>6 وحدات و25 درسًا ومراجعة تكيّفية</li><li>«اسأل رفيق» بالتحقق والإحالة</li><li>المواقيت والأذكار والقرآن والمكتبة</li><li>المرشد والمجموعات ومنصة المراجعة</li><li>العمل دون اتصال والوضع الخفي</li></ul></div>
+    <div class="card"><span class="tag w">ينتظر أشخاصًا</span><ul>
+      <li>اعتماد المراجع الشرعي لكل درس بكل لغة</li><li>مراجعة التاغالوغية من متحدث أصلي</li><li>إذن islamqa.info ورسائل إذن المصادر</li><li>مرشدون متطوعون وأرقام دعم للطوارئ</li></ul></div>
+    <div class="card"><span class="tag">الخطوات التالية</span><ul>
+      <li>تجربة ميدانية مع مكتب دعوي ومسلمين جدد</li><li>القياس الحي الكامل لموثوقية الإجابات</li><li>إحالة مباشرة من منصات الحوار برمز أو رابط</li><li>لغات أخرى بالترجمات المعتمدة</li></ul></div>
+  </div>
+  <div class="note" style="margin-top:30px">التكلفة: ما يحددها هو عدد الأسئلة المجابة (قرابة $0.0015 للسؤال) والفهرسة الأولى للمصادر، مع سقف إنفاق يومي ($0.75 للإجابات و$1 للفهرسة) وسقف كلي ($10 حاليًا). الخادم واحد، ولم نحسب بعد تكلفة شهرية عند حجم استخدام حقيقي.</div>
+  <div class="foot"><img src="assets/logos-dark.png"><span class="num">15 / 16</span></div>
+</section>
+
+<!-- 16 Team -->
+<section class="slide dark">
+  <img src="assets/logos-light.png" style="position:absolute;top:64px;right:140px;height:84px">
+  <div style="margin-top:150px;font-size:26px;color:#a9adf0;font-weight:600">الفريق</div>
+  <div class="grid g4" style="margin-top:26px;gap:24px">
+    <div style="border-top:3px solid var(--teal);padding-top:20px"><div style="font-size:31px;font-weight:700;line-height:1.4">ناصر بن عبدالعزيز العويمر</div><div style="font-size:23px;color:#cfd2f5;margin-top:8px">المنصة</div></div>
+    <div style="border-top:3px solid var(--teal);padding-top:20px"><div style="font-size:31px;font-weight:700;line-height:1.4">ناصر بن خالد العويمر</div><div style="font-size:23px;color:#cfd2f5;margin-top:8px">نظام التصميم والممارسة اليومية</div></div>
+    <div style="border-top:3px solid var(--teal);padding-top:20px"><div style="font-size:31px;font-weight:700;line-height:1.4">مهند بن صالح الفوزان</div><div style="font-size:23px;color:#cfd2f5;margin-top:8px">التعلّم والتحفيز</div></div>
+    <div style="border-top:3px solid var(--teal);padding-top:20px"><div style="font-size:31px;font-weight:700;line-height:1.4">مسلّم بن عبدالعزيز العمير</div><div style="font-size:23px;color:#cfd2f5;margin-top:8px">المعرفة والأسئلة</div></div>
+  </div>
+  <div style="margin-top:110px;font-size:64px;font-weight:700">جرّبه بنفسك</div>
+  <div style="display:flex;gap:80px;margin-top:30px;font-size:30px">
+    <div><div style="color:#a9adf0;font-size:22px">الموقع</div><div class="ltr" style="font-weight:600">rafeeq.nan.sa</div></div>
+    <div><div style="color:#a9adf0;font-size:22px">التطبيق</div><div class="ltr" style="font-weight:600">rafeeq.nan.sa/app</div></div>
+    <div><div style="color:#a9adf0;font-size:22px">الكود</div><div class="ltr" style="font-weight:600">github.com/rafeeq-muslim/rafeeq</div></div>
+  </div>
+  <div style="position:absolute;bottom:56px;right:140px;font-size:23px;color:#cfd2f5">رفيق · يرافق المسلم الجديد في سنته الأولى بلغته، ويجيبه من مصادر موثوقة، ويصله بإنسان حين يحتاج.</div>
+</section>
+
+</body>
+</html>
