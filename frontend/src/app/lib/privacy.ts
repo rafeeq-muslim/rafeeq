@@ -147,5 +147,5 @@ export async function signOutAndErase(go: (url: string) => void = (url) => windo
   await clearBrowserStorage()
   // Runtime caches (content, media) and the discreet-mode copy (rafeeq-prefs) go.
   if (typeof caches !== "undefined") for (const k of await caches.keys()) if (!isAppShellCache(k)) await caches.delete(k)
-  go("/welcome")
+  go(appUrl("/welcome")) // PLT-10 R2
 }
