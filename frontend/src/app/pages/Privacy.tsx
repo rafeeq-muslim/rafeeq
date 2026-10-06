@@ -6,7 +6,9 @@
  *
  * The text is research/09 §7, checked line by line against the code on
  * 2026-10-06 (corrections are listed in docs/engineering/implementation/
- * PLT-05.md). Pending the product owner's approval (PLT-05 open question).
+ * PLT-05.md). Final: approved by the product owner on 2026-10-06 (the
+ * updated line says so). No legal review is claimed, and the data controller's
+ * name and contact are still missing: rights are exercised in the app.
  */
 import { Link, useNavigate } from "react-router"
 import { IconArrowRight, IconShieldLock } from "@tabler/icons-react"
@@ -19,6 +21,7 @@ import { useT, type Key } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { useDocumentLocale } from "@/app/AppLayout"
 
+/** Last update, which is also the day the product owner approved the text (2026-10-06). */
 export const POLICY_UPDATED = "2026-10-06"
 
 // "org": ORG-01 the organisation link (what the link carries, what «نعم» keeps, unlinking).
@@ -51,7 +54,8 @@ export default function Privacy() {
             <h1 className="font-heading text-h1 font-bold text-balance">{t("policy.title")}</h1>
             <p className="text-reading text-muted-foreground">{t("policy.intro")}</p>
             <p className="text-label text-muted-foreground">
-              {t("policy.updated", { date: POLICY_UPDATED })}
+              {/* LRI…PDI isolates the date so RTL keeps it as 2026-10-06. */}
+              {t("policy.updated", { date: `⁦${POLICY_UPDATED}⁩` })}
             </p>
           </header>
 

@@ -506,7 +506,7 @@ export const en: Dict = {
   "practice.reminders.atTime": "At the time",
   "practice.reminders.minutesBefore": "{count} before",
   "practice.reminders.showName": "Show the prayer's name",
-  "practice.reminders.showNameHint": "Off by default: only “Reminder” shows, with no religious word.",
+  "practice.reminders.showNameHint": "You choose this when you first turn reminders on, and you can change it here. While it is off, only “Reminder” shows, with no religious word.",
   "practice.reminders.preview": "Next reminder at {time}: “{text}”",
   "practice.reminders.suhoor": "Before suhoor ends",
   "practice.reminders.iftar": "At iftar",
@@ -950,7 +950,7 @@ export const en: Dict = {
 
   "policy.title": "Your privacy in Rafeeq",
   "policy.intro": "Using Rafeeq may point to your religion, so we keep as little as we can, and we tell you here everything we keep.",
-  "policy.updated": "Last updated: {date}",
+  "policy.updated": "Last updated and approved by the product owner: {date}",
   "policy.device.title": "What stays on your device only",
   "policy.device.body": "Your lesson progress, your city for prayer times, your private habits, what you saved, your question notebook and your settings. Your location never leaves your device: it is used to pick the nearest city and then forgotten.",
   "policy.account.title": "What we keep if you create an account",
@@ -1160,7 +1160,6 @@ export const en: Dict = {
   "discover.quran.reciteFrom": "Recite from verse {n}:",
   "discover.quran.verseControls": "Verse controls",
   // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
-  "mot.unapproved": "Not yet approved",
   "mot.reminder.pickTime": "Pick a time that suits you",
   "mot.reminder.confirm": "Turn on the reminder",
   "mot.reminder.inAppToggle": "Remind me inside Rafeeq",
@@ -1211,4 +1210,9 @@ export const en: Dict = {
   "home.org.library.title": "From the library",
   "home.org.library.cta": "Open it",
   "home.org.openSaved": "Open my saved items",
+  // PLT-06 R3 / PRC-05 R2: ask once whether to show the prayer name (approvals-ui, owner 2026-10-06; written by Claude)
+  "practice.reminders.ask.title": "Do you want the reminder to show the prayer's name?",
+  "practice.reminders.ask.body": "Anyone looking at your phone's screen may see it.",
+  "practice.reminders.ask.show": "Show the prayer's name",
+  "practice.reminders.ask.neutral": "Just “Reminder”",
 }
