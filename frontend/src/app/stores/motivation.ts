@@ -11,14 +11,17 @@ export type EarnedBadge = { id: string; earnedAt: string }
 type MotivationState = {
   days: string[]
   badges: Record<string, EarnedBadge>
-  /** Badges to celebrate once (MOT-03 R4). */
+  /** Badges to celebrate once (MOT-03 R4). A badge stays here until its
+   * celebration is dismissed, so one missed when the app closed is
+   * announced on the next open (PendingBadges). */
   pending: string[]
   /** For MOT-02 R4: welcome back after a pause. */
   lastSeenPausedAt?: string
   learnedToday: () => boolean
   recordLearningDay: () => { newBadges: string[]; resumedAfterPause: boolean }
   earn: (badgeId: string) => boolean
-  popPending: () => string | undefined
+  /** Remove `id` (or the first badge) from the queue once it was announced. */
+  popPending: (id?: string) => string | undefined
   replaceAll: (p: { days?: string[]; badges?: Record<string, EarnedBadge> }) => void
 }
 
@@ -48,10 +51,11 @@ export const useMotivation = create<MotivationState>()(
         set((s) => ({ badges: { ...s.badges, [badgeId]: { id: badgeId, earnedAt: now } }, pending: [...s.pending, badgeId] }))
         return true
       },
-      popPending: () => {
-        const [first, ...rest] = get().pending
-        set({ pending: rest })
-        return first
+      popPending: (id) => {
+        const q = get().pending
+        const gone = id ?? q[0]
+        set({ pending: q.filter((x) => x !== gone) })
+        return gone
       },
       replaceAll: (p) => set(p),
     }),

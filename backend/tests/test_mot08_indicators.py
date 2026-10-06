@@ -41,14 +41,22 @@ async def test_mot08_r1_only_the_team_sees_indicators(client):
 
 
 async def test_mot08_r4_lessons_completed_per_lesson(client):
+    """100 people completed «أشهد», 40 completed a later lesson: the team sees
+    the two counts in path order (people, not events: repeats count once)."""
     today = datetime.now(UTC).date()
     async with SessionLocal() as s:
-        s.add_all(AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u1-l1", day=today) for i in range(100))
         s.add_all(AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u2-l2", day=today) for i in range(40))
+        s.add_all(AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u01-l1", day=today) for i in range(100))
+        s.add_all(AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u01-l1", is_repeat=True, day=today) for i in range(30))
+        s.add_all(AnonEvent(install_id=f"d{i}", type="unit_completed", unit_id="u01", day=today) for i in range(25))
         await s.commit()
     team = await with_roles(client, "team-1", "team")
-    per = (await client.get("/api/team/indicators", headers=auth(team))).json()["learning"]["per_lesson"]
-    assert per == {"u1-l1": 100, "u2-l2": 40}
+    learning = (await client.get("/api/team/indicators", headers=auth(team))).json()["learning"]
+    shown = [(r["lesson_id"], r["people"]) for r in learning["per_lesson"] if r["people"]]
+    assert shown == [("u01-l1", 100), ("u2-l2", 40)]
+    ids = [r["lesson_id"] for r in learning["per_lesson"]]
+    assert ids.index("u01-l2") < ids.index("u2-l1")  # path order, lessons nobody finished included
+    assert {"unit_id": "u01", "people": 25} in learning["units_completed"]
 
 
 def test_mot09_r1_first_answers_in_lesson_then_review_a_day_later():

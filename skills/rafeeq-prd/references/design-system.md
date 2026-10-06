@@ -145,9 +145,8 @@ import { IconDroplet } from "@tabler/icons-react"
 | تعرض خريطة المسار | `LearningPath` + `PathUnitHeader` + `PathNode` | LRN-02 |
 | تبني تمرين اختيار | `RadioGroup` + `ExerciseOption`، ثم `ExerciseFeedback` | LRN-03 |
 | تعرض بطاقة اليوم | `DailyCard` | KNW-07 |
-| تعرض نقاط التعلّم أو السلسلة | `XpChip`، `StreakChip` | MOT-01، MOT-02 |
+| تعرض السلسلة | `StreakChip` (لا نقاط ولا لوحة ترتيب في رفيق، rules.md §3) | MOT-02 |
 | تحتفل بإتمام وحدة | `CelebrationScreen`، `MilestoneBadge` | MOT-03 |
-| تعرض لوحة الترتيب | `LeaderboardRow` | MOT-04 |
 | تعرض محادثة السؤال | `MessageScroller` + `UserMessage` + `AssistantMessage` + `AiDisclosure` | KNW-01 |
 | تذكر مصدر الإجابة | `SourceStrip` (داخل `AssistantMessage` تلقائيًا) | KNW-01 |
 | تحيل السؤال إلى إنسان | `ReferralCard`، `HumanHelpButton` | KNW-01 ← CMP-01 |
@@ -184,8 +183,7 @@ import { IconDroplet } from "@tabler/icons-react"
 | `ExerciseFeedback` | صفحة سفلية بلون النتيجة، فيها السبب والخطوة التالية في متناول الإبهام | `result`، `explanation` |
 | `FirstYearCounter` | 12 بتلة، تتلوّن واحدة مع كل شهر تعلّم | `month` (1 إلى 12) |
 | `MilestoneBadge` | وسام المرحلة: حلقة بتلات حول أيقونة | `icon`، `label`، `earned` |
-| `StreakChip`، `XpChip` | السلسلة الرحيمة ونقاط التعلّم | `days`، `paused` / `points` |
-| `LeaderboardRow` | صف في لوحة الترتيب بالاسم المعروض | `rank`، `displayName`، `points`، `isYou` |
+| `StreakChip` | السلسلة الرحيمة: أيام التعلّم، تتوقف ولا تعود إلى الصفر | `days`، `paused` |
 | `CelebrationScreen` | شاشة الاحتفال على السطح الحبري | `icon`، `badgeLabel`، `title`، `stats`، `primaryLabel` |
 | `UserMessage`، `AssistantMessage` | فقاعتا السؤال والإجابة، ولا تُقبل إجابة بلا مصدر | `sources` إلزامية |
 | `SourceStrip`، `AiDisclosure` | شريط المصدر، والتنبيه الدائم إلى الذكاء الاصطناعي | `href` |

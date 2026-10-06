@@ -17,7 +17,7 @@ No points, no ranking (rules.md §3).
 """
 
 import uuid
-from datetime import UTC, date, datetime, timedelta
+from datetime import UTC, date, datetime, time, timedelta
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -27,6 +27,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser, Session
 from app.core.events import subscribe
+from app.learning.public import is_live
 from app.motivation.models import Challenge, ChallengeCheck, ChallengeTemplate, GroupMembership, LearningLog
 from app.motivation.router import _when
 from app.platform import push
@@ -126,6 +127,8 @@ async def learning_log(body: LogIn, session: Session, user: CurrentUser) -> dict
                 day = date.fromisoformat(e.item_id)
             except ValueError:
                 continue
+            if e.at is None:  # a learning day carries its own date, never "now" (sync or sign-in copies)
+                at = _when(datetime.combine(day, time(12), UTC), now)
             dup = select(LearningLog.id).where(LearningLog.user_id == user.id, LearningLog.kind == "day", LearningLog.item_id == e.item_id)
         else:
             day = e.day or at.date()
@@ -203,8 +206,12 @@ async def _progress(session: AsyncSession, c: Challenge, members: list[uuid.UUID
         done = {u for u, n in per.items() if c.type == "lessons_each" and n >= (c.target_count or 0)}
         return done, sum(per.values()), per
     if c.type == "days_each":
+        # Learning days as in MOT-02: lessons (repeats included) and review days.
+        # A unit completion always comes with its lesson, so it adds no day.
         rows = await session.execute(
-            select(LearningLog.user_id, func.count(func.distinct(LearningLog.day))).where(*window).group_by(LearningLog.user_id)
+            select(LearningLog.user_id, func.count(func.distinct(LearningLog.day)))
+            .where(*window, LearningLog.kind.in_(("lesson", "day")))
+            .group_by(LearningLog.user_id)
         )
         return {u for u, n in rows if n >= (c.target_count or 0)}, 0, {}
     rows = await session.scalars(
@@ -290,6 +297,8 @@ async def create_challenge(group_id: uuid.UUID, body: ChallengeIn, session: Sess
         raise HTTPException(status.HTTP_403_FORBIDDEN, "group_mentor_only")
     if await _running(session, group_id):
         raise HTTPException(status.HTTP_409_CONFLICT, "challenge_running")  # R1 ex2
+    if body.type in ("lesson", "unit") and not await is_live(session, body.type, body.target_id or ""):
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "target_not_approved")  # R1: an approved lesson or unit
     c = Challenge(group_id=group_id, type=body.type, created_by=user.id)
     if body.type in ("lesson", "unit"):
         c.target_id = body.target_id

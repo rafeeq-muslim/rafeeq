@@ -193,7 +193,7 @@ export const ar = {
   "acct.deleteNo": "أبقِه",
 
   "privacy.events": "شارك أرقامًا مجهولة عن تعلّمي",
-  "privacy.eventsHint": "رقم عشوائي لجهازك ونوع الدرس وتاريخه فقط، إلى خادم رفيق وحده. لا عنوان ولا أسئلة. تساعدنا على معرفة ما ينفع.",
+  "privacy.eventsHint": "رقم عشوائي لجهازك، ونوع ما أتممته من التعلّم وتاريخه: الدرس والوحدة والمراجعة، ومعرّف الهدف وصحة إجابتك الأولى، وهل عُرض لك شرح أو نص البطاقة بعد الخطأ، وعدد الوحدات في اختبار تحديد المستوى. إلى خادم رفيق وحده، دون عنوان IP ولا نص أسئلتك. تساعدنا على معرفة ما ينفع.",
   "privacy.quickExit": "زر الخروج السريع",
   "privacy.quickExitHint": "زر في أعلى كل شاشة، أو اضغط Shift ثلاث مرات على الحاسب، فينتقل رفيق فورًا إلى صفحة طقس محايدة.",
   "privacy.discreet": "الوضع الخفي",
@@ -1139,4 +1139,19 @@ export const ar = {
   "desk.reciter.riwaya": "الرواية",
   "desk.reciter.sample": "العيّنة",
   "desk.reciter.otherSura": "سورة أخرى",
+  // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
+  "mot.unapproved": "غير معتمد",
+  "mot.reminder.pickTime": "اختر الوقت الذي يناسبك",
+  "mot.reminder.confirm": "فعّل التذكير",
+  "mot.reminder.inAppToggle": "ذكّرني داخل رفيق",
+  "mot.reminder.inAppHint": "هذا الجهاز لا تصله الإشعارات، فيظهر التذكير داخل رفيق حين تفتحه بعد الوقت الذي تختاره، مرة في اليوم على الأكثر.",
+  "mot.reminder.inAppSaved": "سيظهر لك تذكير لطيف داخل رفيق بعد الساعة {time}",
+  "mot.mentor.badges": "أوسمته",
+  "mot.team.unitsCompleted": "من أتمّ كل وحدة",
+  "mot.team.returnSeries": "معدل العودة يومًا بيوم (آخر 7 أيام لكل يوم)",
+  "mot.team.mentorContacted": "تواصل معهم مرشدهم",
+  "mot.team.mentorNotContacted": "لم يتواصل معهم مرشدهم",
+  "mot.team.perUnit": "الوحدات: الصواب في الدرس ثم في المراجعة",
+  "mot.team.mastery": "نسبة من أتقنوا كل هدف",
+  "mot.team.whyHoldout": "بعد نص البطاقة (الخُمس العشوائي)",
 } as const

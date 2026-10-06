@@ -108,9 +108,23 @@ export async function api<T = unknown>(path: string, opts: Opts = {}, retried = 
 /** Fire-and-forget anonymous event (MOT-07 R4). Queued offline, flushed later. */
 const QUEUE_KEY = "rafeeq.eventQueue"
 
+/** MOT-09 R4: a per-device order of events, so "the next answer after
+ * «لماذا؟»" is right even when a whole offline queue arrives at once. */
+const SEQ_KEY = "rafeeq.eventSeq"
+let memSeq = 0
+function nextSeq(): number {
+  try {
+    const n = Number(localStorage.getItem(SEQ_KEY) ?? "0") + 1
+    localStorage.setItem(SEQ_KEY, String(n))
+    return n
+  } catch {
+    return ++memSeq
+  }
+}
+
 export function sendEvent(event: Record<string, unknown>) {
   if (!useDevice.getState().shareEvents && event.type !== "opt_out") return
-  event = { at: new Date().toISOString(), ...event }
+  event = { at: new Date().toISOString(), ...(event.type === "opt_out" ? {} : { seq: nextSeq() }), ...event }
   try {
     const q: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
     q.push(event)

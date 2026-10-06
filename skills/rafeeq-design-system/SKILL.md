@@ -54,9 +54,9 @@ Run the gallery with `cd frontend && npm install && npm run dev`. It shows every
 **Product rules the UI enforces**
 - A Sharia answer renders with `AssistantMessage` and at least one source; it ends with `SourceStrip`. No source → `ReferralCard`, not an answer.
 - `HumanHelpButton` («أريد إنسانًا») is visible on Ask and lesson screens. Danger → `DangerHelpPanel` only, no AI text, no invented phone numbers.
-- Points, streaks, badges and leaderboards count learning only. `HabitItem worship` shows «خاص بك» and never points.
+- No points and no leaderboard at all (rules.md §3); streaks and badges count learning only. `HabitItem worship` shows «خاص بك» and never a count of worship.
 - A broken streak is «متوقفة مؤقتًا», never a loss screen.
-- Display name only on leaderboards and groups; no images of prophets or companions; no music under recitation.
+- Display name only in groups; no images of prophets or companions; no music under recitation.
 
 ## shadcn conventions (from the official shadcn skill in `.claude/skills/shadcn`)
 

@@ -194,7 +194,7 @@ export const en: Dict = {
   "acct.deleteNo": "Keep it",
 
   "privacy.events": "Share anonymous numbers about my learning",
-  "privacy.eventsHint": "Only a random number for your phone, the lesson and the date, sent to Rafeeq's server alone. No address, no questions. It helps us learn what works.",
+  "privacy.eventsHint": "A random number for your phone, and what you completed and when: lessons, units and reviews, the objective and whether your first answer was right, whether an explanation or the card text was shown after a mistake, and how many units you passed in the placement test. Sent to Rafeeq's server alone, with no IP address and none of your questions. It helps us learn what works.",
   "privacy.quickExit": "Quick-exit button",
   "privacy.quickExitHint": "A button at the top of every screen, or press Shift three times on a computer, and Rafeeq switches at once to a neutral weather page.",
   "privacy.discreet": "Discreet mode",
@@ -1140,4 +1140,19 @@ export const en: Dict = {
   "desk.reciter.riwaya": "Riwaya",
   "desk.reciter.sample": "Sample",
   "desk.reciter.otherSura": "Another surah",
+  // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
+  "mot.unapproved": "Not yet approved",
+  "mot.reminder.pickTime": "Pick a time that suits you",
+  "mot.reminder.confirm": "Turn on the reminder",
+  "mot.reminder.inAppToggle": "Remind me inside Rafeeq",
+  "mot.reminder.inAppHint": "This device doesn't get notifications, so the reminder shows inside Rafeeq when you open it after the time you pick, at most once a day.",
+  "mot.reminder.inAppSaved": "A gentle reminder will show inside Rafeeq after {time}",
+  "mot.mentor.badges": "Their badges",
+  "mot.team.unitsCompleted": "People who completed each unit",
+  "mot.team.returnSeries": "Return rate day by day (last 7 days for each day)",
+  "mot.team.mentorContacted": "Mentor got in touch",
+  "mot.team.mentorNotContacted": "Mentor did not get in touch",
+  "mot.team.perUnit": "Units: correct in the lesson, then in review",
+  "mot.team.mastery": "Share who mastered each objective",
+  "mot.team.whyHoldout": "After the card text (random fifth)",
 }

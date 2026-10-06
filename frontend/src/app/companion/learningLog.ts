@@ -35,11 +35,22 @@ export function diffEntries(
       out.push({ kind: "lesson", item_id: id, at: c.last, day: localDay(new Date(c.last)), is_repeat: c.times > 1 })
   }
   for (const [id, b] of Object.entries(next.badges)) {
-    if (id.startsWith("unit-") && !prev.badges[id]) out.push({ kind: "unit", item_id: id.slice(5), at: b.earnedAt })
+    // The learner's local day, not the server's UTC date (MOT-02 R2).
+    if (id.startsWith("unit-") && !prev.badges[id]) out.push({ kind: "unit", item_id: id.slice(5), at: b.earnedAt, day: localDay(new Date(b.earnedAt)) })
   }
   const had = new Set(prev.days)
-  for (const d of next.days) if (!had.has(d)) out.push({ kind: "day", item_id: d })
+  // A learning day brought in by sign-in or sync keeps its own date (`at` is
+  // that day's local noon), so it never counts as "now" in a running
+  // challenge; today's day, learned just now, carries the current time.
+  const today = localDay()
+  for (const d of next.days) if (!had.has(d)) out.push({ kind: "day", item_id: d, at: d === today ? new Date().toISOString() : dayNoon(d), day: d })
   return out
+}
+
+/** Local noon of a YYYY-MM-DD day, as an ISO instant. */
+export function dayNoon(day: string): string {
+  const [y, m, d] = day.split("-").map(Number)
+  return new Date(y, m - 1, d, 12).toISOString()
 }
 
 function readQueue(): LogEntry[] {

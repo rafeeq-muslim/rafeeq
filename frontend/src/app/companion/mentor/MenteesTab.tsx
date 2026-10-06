@@ -14,6 +14,7 @@ import { SpotIllustration } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { type EngagementStatus, type Mentee, inboxApi, useMentees } from "../api"
 import { dayMonth, initial } from "../format"
+import { MenteeBadges } from "@/app/motivation/MenteeBadges"
 
 const STATUS_VARIANT: Record<EngagementStatus, "success" | "info" | "warning" | "secondary"> = {
   active: "success",
@@ -55,6 +56,8 @@ function MenteeRow({ m }: { m: Mentee }) {
             <span className="text-caption text-muted-foreground">{t("cmp.inbox.notShared")}</span>
           )}
         </div>
+        {/* MOT-03 R6 (mot-audit-gaps): badges only while progress is shared */}
+        {m.shares_progress && <MenteeBadges learnerId={m.id} />}
         <p className="text-caption text-muted-foreground">{t("cmp.inbox.chosenOn", { date: dayMonth(m.chosen_at, locale) })}</p>
       </div>
       <Button size="sm" variant={m.needs_welcome ? "default" : "outline"} onClick={() => void open()}>

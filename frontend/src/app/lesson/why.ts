@@ -12,10 +12,16 @@ import type { Exercise } from "@/app/learning/types"
 
 export type Why = { text: string | null; ai: boolean }
 
-export async function askWhy(lessonId: string, exercise: Exercise, lang: string, answer: unknown): Promise<Why> {
-  const cardOnly = Math.random() < 0.2 || (typeof navigator !== "undefined" && !navigator.onLine)
+/** MOT-09 R4: the random fifth is the experiment's comparison group
+ * (`card_holdout`); card text shown because the device was offline, the
+ * call failed or the check refused is `card_only` and stays out of it. */
+export async function askWhy(lessonId: string, exercise: Exercise, lang: string, answer: unknown, random = Math.random): Promise<Why> {
   const objective_id = exercise.objectives[0]
-  if (cardOnly) {
+  if (random() < 0.2) {
+    sendEvent({ type: "why_shown", shown: "card_holdout", exercise_id: exercise.id, objective_id })
+    return { text: null, ai: false }
+  }
+  if (typeof navigator !== "undefined" && !navigator.onLine) {
     sendEvent({ type: "why_shown", shown: "card_only", exercise_id: exercise.id, objective_id })
     return { text: null, ai: false }
   }

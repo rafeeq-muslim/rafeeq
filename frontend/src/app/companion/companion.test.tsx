@@ -10,7 +10,7 @@ import type { Challenge } from "./api"
 import { ChallengeCard, progressText } from "./ChallengeCard"
 import { ago } from "./format"
 import { UrgentNotice } from "./HelpScreen"
-import { diffEntries } from "./learningLog"
+import { dayNoon, diffEntries } from "./learningLog"
 
 const wrap = (ui: React.ReactNode) =>
   render(<QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>{ui}</QueryClientProvider>)
@@ -102,8 +102,8 @@ describe("MOT-06 learning log from the device stores", () => {
     const out = diffEntries(empty, next)
     expect(out).toEqual([
       { kind: "lesson", item_id: "u1-l1", at: "2026-10-05T09:00:00Z", day: expect.any(String), is_repeat: true },
-      { kind: "unit", item_id: "u1", at: "2026-10-05T09:00:00Z" },
-      { kind: "day", item_id: "2026-10-05" },
+      { kind: "unit", item_id: "u1", at: "2026-10-05T09:00:00Z", day: expect.any(String) },
+      { kind: "day", item_id: "2026-10-05", at: dayNoon("2026-10-05"), day: "2026-10-05" },
     ])
   })
 

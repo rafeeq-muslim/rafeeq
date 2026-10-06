@@ -195,7 +195,7 @@ export const tl: Dict = {
   "acct.deleteNo": "Huwag burahin",
 
   "privacy.events": "Ibahagi ang mga anonimong numero tungkol sa aking pag-aaral",
-  "privacy.eventsHint": "Isang random na numero para sa iyong telepono, ang aralin at ang petsa lamang, ipinapadala sa server ng Rafeeq lamang. Walang address, walang tanong. Nakakatulong ito para malaman namin kung ano ang epektibo.",
+  "privacy.eventsHint": "Isang random na numero para sa iyong telepono, at kung ano ang natapos mo at kailan: mga aralin, unit at pagbabalik-aral, ang layunin at kung tama ang una mong sagot, kung paliwanag o teksto ng card ang ipinakita pagkatapos ng mali, at ilang unit ang naipasa mo sa placement test. Sa server ng Rafeeq lamang, walang IP address at wala ang iyong mga tanong. Nakakatulong ito para malaman namin kung ano ang epektibo.",
   "privacy.quickExit": "Button na mabilisang paglabas",
   "privacy.quickExitHint": "Isang button sa itaas ng bawat screen, o pindutin ang Shift nang tatlong beses sa computer, at agad lilipat ang Rafeeq sa isang neutral na pahina ng panahon.",
   "privacy.discreet": "Discreet mode",
@@ -1141,4 +1141,19 @@ export const tl: Dict = {
   "desk.reciter.riwaya": "Riwāyah",
   "desk.reciter.sample": "Halimbawa",
   "desk.reciter.otherSura": "Ibang sūrah",
+  // MOT audit gaps (mot-audit-gaps): MOT-03, MOT-05, MOT-07, MOT-08, MOT-09
+  "mot.unapproved": "Hindi pa aprubado",
+  "mot.reminder.pickTime": "Pumili ng oras na bagay sa iyo",
+  "mot.reminder.confirm": "I-on ang paalala",
+  "mot.reminder.inAppToggle": "Paalalahanan ako sa loob ng Rafeeq",
+  "mot.reminder.inAppHint": "Hindi nakakatanggap ng notification ang device na ito, kaya lalabas ang paalala sa loob ng Rafeeq kapag binuksan mo ito pagkatapos ng oras na pinili mo, hanggang isang beses sa isang araw.",
+  "mot.reminder.inAppSaved": "May banayad na paalala sa loob ng Rafeeq pagkatapos ng {time}",
+  "mot.mentor.badges": "Kanyang mga badge",
+  "mot.team.unitsCompleted": "Mga taong natapos ang bawat unit",
+  "mot.team.returnSeries": "Rate ng pagbabalik bawat araw (huling 7 araw sa bawat araw)",
+  "mot.team.mentorContacted": "Kinausap ng mentor",
+  "mot.team.mentorNotContacted": "Hindi kinausap ng mentor",
+  "mot.team.perUnit": "Mga unit: tama sa aralin, pagkatapos sa pagbabalik-aral",
+  "mot.team.mastery": "Bahagdan ng nakabisado ang bawat layunin",
+  "mot.team.whyHoldout": "Pagkatapos ng teksto ng card (random na ikalima)",
 }
