@@ -8,6 +8,9 @@ import { useNavigate } from "react-router"
 import { IconArrowLeft, IconBook2, IconLayoutGrid, IconRefresh, IconSparkles } from "@tabler/icons-react"
 import { SuggestionCard } from "@/app/guide/SuggestionCard"
 import { HijriToday } from "@/app/practice/HijriToday"
+// PLT-09 (plt-09-organized-home-build): the organized home, only when its setting is on.
+import OrganizedHome from "@/app/home/OrganizedHome"
+import { useOrganizedHome } from "@/app/home/setting"
 
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -28,7 +31,12 @@ import { InAppReminder } from "@/app/motivation/InAppReminder"
 
 const DAY = 86_400_000
 
+/** PLT-09: the draft organized home behind its setting (off by default); else the current Home, unchanged. */
 export default function Home() {
+  return useOrganizedHome() ? <OrganizedHome /> : <CurrentHome />
+}
+
+function CurrentHome() {
   const { t } = useT()
   const navigate = useNavigate()
   const me = useAuth((s) => s.me)

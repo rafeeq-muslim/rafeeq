@@ -14,6 +14,7 @@ import {
   IconBellOff,
   IconBook,
   IconBuildingCommunity,
+  IconBookmark,
   IconChecklist,
   IconCompass,
   IconDeviceMobile,
@@ -65,6 +66,7 @@ import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
 // ORG-01 R3/R4 (org-01-03-organizations-build)
 import { OrgSection } from "@/app/org/OrgSection"
 import { unlinkOrg } from "@/app/org/api"
+import { useOrganizedHomeCached } from "@/app/home/setting" // PLT-09
 
 export default function Me() {
   const { t } = useT()
@@ -76,6 +78,7 @@ export default function Me() {
   const me = useAuth((s) => s.me)
   const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
+  const organized = useOrganizedHomeCached() // PLT-09 R2: «أدوات يومية» leaves «حسابي» (unless PLT-09 is switched off)
 
   const signOut = async () => {
     await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
@@ -108,11 +111,15 @@ export default function Me() {
           <ThemePicker />
         </Section>
 
+        {organized ? (
+          <OrganizedSaved />
+        ) : (
         <Section title={t("me.tools")}>
           <LinkRow icon={IconLayoutGrid} title={t("guide.homeLink")} hint={t("guide.homeLinkBody")} onClick={() => navigate("/guide")} />
           <LinkRow icon={IconCompass} title={t("practice.prayer")} hint={t("me.practiceHint")} onClick={() => navigate("/practice")} />
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
+        )}
 
         <Section title={t("me.notifications")}>
           <NotificationSettings />
@@ -645,5 +652,18 @@ function DeleteAccount() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  )
+}
+
+// --- PLT-09 organized home (plt-09-organized-home-build) ------------------------------
+
+/** PLT-09 R2: with the organized home, «محفوظاتي» moves here (the Discover hub is gone). */
+function OrganizedSaved() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <Section title={t("discover.saved")}>
+      <LinkRow icon={IconBookmark} title={t("home.org.openSaved")} hint={t("discover.savedBody")} onClick={() => navigate("/discover/saved")} />
+    </Section>
   )
 }

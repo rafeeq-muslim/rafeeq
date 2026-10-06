@@ -11,8 +11,18 @@ import { useT } from "@/app/i18n"
 import { BackBar } from "@/app/practice/ui"
 import { useAuth } from "@/app/stores/auth"
 import { GROUPS } from "./catalogue"
+import { UnlessOrganized } from "@/app/home/UnlessOrganized"
 
+/** PLT-09: the page is removed when the organized home's setting is on (off by default). */
 export default function GuideScreen() {
+  return (
+    <UnlessOrganized>
+      <GuideList />
+    </UnlessOrganized>
+  )
+}
+
+function GuideList() {
   const { t } = useT()
   const navigate = useNavigate()
   const me = useAuth((s) => s.me)

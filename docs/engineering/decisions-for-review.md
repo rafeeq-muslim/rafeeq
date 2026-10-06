@@ -277,3 +277,23 @@ PR #30 re-applied on the product owner's instruction (2026-10-06); design owner 
 | Brand backdrop, gradient fills and `IconTile` kept; `IconTile` also on the MOT in-app reminder row | PLT-04 R5, R6 | `graphics.tsx`, `ui/button.tsx`, … |
 
 **Pending a human:** the design owner (ناصر بن خالد العويمر) to review the re-apply and the third option «حسب الجهاز».
+## PLT-09 organized home (plt-09-organized-home-build)
+
+Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No migration.
+
+**PLT-09 on by default: product owner's instruction 2026-10-06; PLT owner ناصر بن خالد informed.** The setting `PLT09_ORGANIZED_HOME` stays as a roll-back switch: `PLT09_ORGANIZED_HOME=false` on the API brings back the previous Home, «كل ما في رفيق», Discover and «أدوات يومية» in «حسابي».
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| One next-step card = the short review when it is due, else the next lesson | R1 «أو للمراجعة القصيرة حين تستحق، لا بطاقتان» | `NextStep` in `home/OrganizedHome.tsx` |
+| On the first opening of the day (online) the main components wait up to 4 s for the model's order behind a skeleton; offline the fixed order shows at once | R5: positions must not move once shown; R4 ex3: offline without waiting | `ORDER_TIMEOUT_MS` in `home/useOrganized.ts` |
+| «من المكتبة» picks the first approved item of the basics topic | Library items have no unit tags («يناسب وحدته») | `libraryPick` in `home/useOrganized.ts` |
+| «اختر قارئك»: "opened listening" = a surah was played on this device; only when two or more approved reciters exist | R3; KNW-08 R4 reciters are gated by the reviewer and the picker shows from two | `eligible()` in `home/layout.ts` |
+| Time-of-day bucket from the clock hour (04–06 fajr … 21–04 night), never from prayer times | R4: the location never reaches the model | `timeBucket()` |
+| The model is the guide's (fast tier) with its own prompt `home_order.md`; same budget and spend guard | Open question 2's proposal; until decided the fixed order stays the fallback | `agents.order_home` |
+| An optional component that stops being eligible leaves an empty slot for the rest of the day; a hidden one is replaced in its slot | R5 «يُحذف في مكانه دون أن يتحرك ما سواه»; R6 «يأخذ مكانه الاختياري التالي» | `daySlots()` |
+
+| MOT's in-app reminder (MOT-05) sits under the header, before the next step, and pending badges (MOT-03 R4) after the sheet, as on the previous Home | Keep MOT's behaviour on the new Home | `OrganizedHome.tsx` |
+| «تابع سورة …» reads the last surah from `rafeeq.quranPos.last`, kept with the stop positions | KNW-08 R6 keeps only stop positions on the device, no history | `discover/player.ts` |
+
+**Pending a human:** the ranking model (open question 2); until decided, the guide's model with the fixed order as fallback.
