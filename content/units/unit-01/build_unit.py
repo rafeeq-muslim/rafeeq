@@ -279,10 +279,11 @@ L3["exercises"] = [
               {"left": T("الاستنشاق", "Istinshāq", "Istinshaq"), "right": T("اجتذاب الماء بالنفس إلى أقصى الأنف", "Sniffing water deep into the nose", "Pagsinghot ng tubig papasok sa ilong")},
               {"left": T("الاستنثار", "Istinthār", "Istinthar"), "right": T("إخراج ما في الأنف بالنفس", "Blowing out what is in the nose", "Pagsinga ng tubig mula sa ilong")}]),
     ex("u01-l3-e6", "choice", ["u01-l3-o3"],
-       T("إدخال الماء في الفم وإدارته فيه ثم إخراجه هو:", "Letting water into the mouth, swirling it, then spitting it out is:",
-         "Ang pagpasok ng tubig sa bibig at paglabas nito ay:"), "u01-l3-c3",
-       options=[opt("a", "المضمضة", "Madmadah (rinsing the mouth)", "Madmada (pagmumog)"), opt("b", "الاستنشاق", "Istinshāq", "Istinshaq"),
-                opt("c", "الاستنثار", "Istinthār", "Istinthar")], answer="a"),
+       T("أدخلتَ الماء إلى أنفك بنفَسك ثم أخرجته. ماذا فعلت؟", "You sniffed water into your nose, then blew it out. What did you do?",
+         "Sininghot mo ang tubig papasok sa iyong ilong, saka mo ito isininga. Ano ang ginawa mo?"), "u01-l3-c4",
+       options=[opt("a", "الاستنشاق ثم الاستنثار", "Istinshāq, then istinthār", "Istinshaq, saka istinthar"),
+                opt("b", "المضمضة", "Madmadah (rinsing the mouth)", "Madmada (pagmumog)"),
+                opt("c", "غسل الوجه", "Washing the face", "Paghugas ng mukha")], answer="a"),
 ]
 
 # ---------------------------------------------------------------- lesson 4

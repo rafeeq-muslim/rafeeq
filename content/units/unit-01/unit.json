@@ -1071,14 +1071,22 @@
             "u01-l3-o3"
           ],
           "prompt": {
-            "ar": "إدخال الماء في الفم وإدارته فيه ثم إخراجه هو:",
-            "en": "Letting water into the mouth, swirling it, then spitting it out is:",
-            "tl": "Ang pagpasok ng tubig sa bibig at paglabas nito ay:"
+            "ar": "أدخلتَ الماء إلى أنفك بنفَسك ثم أخرجته. ماذا فعلت؟",
+            "en": "You sniffed water into your nose, then blew it out. What did you do?",
+            "tl": "Sininghot mo ang tubig papasok sa iyong ilong, saka mo ito isininga. Ano ang ginawa mo?"
           },
-          "explain_card": "u01-l3-c3",
+          "explain_card": "u01-l3-c4",
           "options": [
             {
               "id": "a",
+              "text": {
+                "ar": "الاستنشاق ثم الاستنثار",
+                "en": "Istinshāq, then istinthār",
+                "tl": "Istinshaq, saka istinthar"
+              }
+            },
+            {
+              "id": "b",
               "text": {
                 "ar": "المضمضة",
                 "en": "Madmadah (rinsing the mouth)",
@@ -1086,19 +1094,11 @@
               }
             },
             {
-              "id": "b",
-              "text": {
-                "ar": "الاستنشاق",
-                "en": "Istinshāq",
-                "tl": "Istinshaq"
-              }
-            },
-            {
               "id": "c",
               "text": {
-                "ar": "الاستنثار",
-                "en": "Istinthār",
-                "tl": "Istinthar"
+                "ar": "غسل الوجه",
+                "en": "Washing the face",
+                "tl": "Paghugas ng mukha"
               }
             }
           ],
