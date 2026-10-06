@@ -186,3 +186,71 @@ async def delete_all_saved(session: Session, user: CurrentUser) -> None:
 async def delete_saved(kind: Kind, ref: str, session: Session, user: CurrentUser) -> None:
     await session.execute(delete(SavedItem).where(SavedItem.user_id == user.id, SavedItem.kind == kind, SavedItem.ref_id == ref))
     await session.commit()
+
+
+# --- KNW-06 library live search (PRD-LIBRARY-LIVE-SEARCH; knw-06-library-live-search-build) ---
+# A separate contract next to GET /discover/library, which is unchanged: search
+# results are external material, never reviewed catalogue items (B15, B19).
+
+from fastapi import HTTPException, Request  # noqa: E402
+from pydantic import StringConstraints  # noqa: E402
+
+from app.core import ratelimit  # noqa: E402
+from app.core.config import get_settings  # noqa: E402
+from app.core.deps import OptionalUser  # noqa: E402
+from app.knowledge import library_search  # noqa: E402
+from app.knowledge.tasks import client_key  # noqa: E402
+
+NO_STORE = {"Cache-Control": "no-store"}
+LibrarySourceId = Literal["islamic_content", "islamhouse"]  # §6: the library allowlist; anything else is a 422 (B21)
+LibraryType = Literal["book", "article", "audio", "video", "fatwa", "poster", "khutbah", "qa"]
+
+
+class LibrarySearchIn(BaseModel):
+    """§6. Omitted `sources` = every library source that can be searched now;
+    an empty list is refused, never read as "all"."""
+
+    model_config = ConfigDict(extra="forbid")
+    query: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=200)]
+    lang: Lang
+    sources: Annotated[list[LibrarySourceId], Field(min_length=1, max_length=2)] | None = None
+    type: LibraryType | None = None
+    page_size: Annotated[int, Field(ge=1, le=20)] = 12
+    cursor: Annotated[str, Field(min_length=8, max_length=96, pattern=r"^[A-Za-z0-9_.\-]+$")] | None = None
+
+
+def _no_store_error(status: int, detail) -> HTTPException:
+    return HTTPException(status, detail, headers=NO_STORE)
+
+
+@router.get("/discover/library/search/sources")
+async def library_search_sources(response: Response, lang: Lang = "ar") -> dict:
+    """Which library sources the screen may offer now (§5): the encyclopedia
+    stays unavailable until its search is permitted."""
+    response.headers.update(NO_STORE)
+    if not get_settings().library_search_enabled:
+        return {"enabled": False, "sources": []}
+    return {"enabled": True, "sources": library_search.availability(lang)}
+
+
+@router.post("/discover/library/search")
+async def library_search_route(body: LibrarySearchIn, request: Request, response: Response, user: OptionalUser) -> dict:
+    """§6: POST so the words never sit in a URL; no-store; nothing stored or logged
+    about the query or the person (B14). Guests may search (rate-limited)."""
+    if not get_settings().library_search_enabled:
+        raise _no_store_error(404, "library_search_off")
+    key = client_key(request, user)
+    try:
+        ratelimit.hit(f"libsearch:m:{key}", 20, 60)
+        ratelimit.hit(f"libsearch:d:{key}", 400, 86400)
+    except HTTPException as e:
+        raise _no_store_error(429, "rate_limited") from e
+    requested = list(dict.fromkeys(body.sources)) if body.sources is not None else None
+    try:
+        result = await library_search.search(
+            query=body.query, lang=body.lang, requested=requested, lib_type=body.type, page_size=body.page_size, cursor=body.cursor
+        )
+    except library_search.SearchError as e:
+        raise _no_store_error(e.status, {"code": e.code, **e.extra}) from None
+    response.headers.update(NO_STORE)
+    return result

@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { PetalBullet, RafeeqSymbol, SpotIllustration } from "@/components/rafeeq"
 import { LOCALES, useT, type Key } from "@/app/i18n"
 import { DiscoverBar, SaveToggle, SourceLine } from "./parts"
+import { LibrarySearch } from "./LibrarySearch"
 import { useLibrary } from "./queries"
 import type { LibraryItemData } from "./types"
 
@@ -74,59 +75,62 @@ export function LibraryList() {
           {t("discover.lib.private")}
         </p>
 
-        {lib.isLoading && <Skeleton className="h-64 rounded-card" />}
-        {lib.isError && <p className="text-body text-muted-foreground">{t("discover.loadError")}</p>}
-        {nothing && !lib.isError && !wantsEnglish && (
-          <section className="flex flex-col items-center gap-4 py-8 text-center">
-            <SpotIllustration kind="start" size={96} />
-            <p className="max-w-sm text-body text-muted-foreground">{t("discover.lib.none")}</p>
-            {locale !== "en" && !wantsEnglish && (
-              <Button variant="secondary" size="sm" onClick={() => setEnglish(Object.fromEntries(topics.map((tp) => [tp.id, true])))}>
-                {t("discover.lib.showEnglish")}
-              </Button>
-            )}
-          </section>
-        )}
+        {/* KNW-06 library live search: the catalogue below stays as it is before a search and after clearing it. */}
+        <LibrarySearch>
+          {lib.isLoading && <Skeleton className="h-64 rounded-card" />}
+          {lib.isError && <p className="text-body text-muted-foreground">{t("discover.loadError")}</p>}
+          {nothing && !lib.isError && !wantsEnglish && (
+            <section className="flex flex-col items-center gap-4 py-8 text-center">
+              <SpotIllustration kind="start" size={96} />
+              <p className="max-w-sm text-body text-muted-foreground">{t("discover.lib.none")}</p>
+              {locale !== "en" && !wantsEnglish && (
+                <Button variant="secondary" size="sm" onClick={() => setEnglish(Object.fromEntries(topics.map((tp) => [tp.id, true])))}>
+                  {t("discover.lib.showEnglish")}
+                </Button>
+              )}
+            </section>
+          )}
 
-        {(!nothing || wantsEnglish) &&
-          topics.map((topic) => {
-            const showEn = english[topic.id] && locale !== "en"
-            const enItems = showEn ? (en.data?.topics.find((x) => x.id === topic.id)?.items ?? []) : []
-            return (
-              <section key={topic.id} aria-labelledby={`topic-${topic.id}`} className="flex flex-col gap-2">
-                <h2 id={`topic-${topic.id}`} className="flex items-center gap-2 font-heading text-h3 font-bold">
-                  <PetalBullet />
-                  {t(`discover.lib.topic.${topic.id}` as Key)}
-                </h2>
-                {topic.items.length > 0 ? (
-                  <ul className="divide-y">
-                    {topic.items.map((it) => (
-                      <ItemRow key={it.id} item={it} onOpen={() => navigate(`/discover/library/${it.id}`)} />
-                    ))}
-                  </ul>
-                ) : (
-                  <div className="flex flex-col items-start gap-3 rounded-card bg-muted p-4">
-                    <p className="text-body text-muted-foreground">{t("discover.lib.empty")}</p>
-                    {locale !== "en" && !showEn && (
-                      <Button variant="secondary" size="sm" onClick={() => setEnglish((s) => ({ ...s, [topic.id]: true }))}>
-                        {t("discover.lib.showEnglish")}
-                      </Button>
-                    )}
-                  </div>
-                )}
-                {showEn && enItems.length > 0 && (
-                  <>
-                    <p className="mt-2 text-label font-bold text-muted-foreground">{t("discover.lib.inEnglish")}</p>
-                    <ul className="divide-y" lang="en">
-                      {enItems.map((it) => (
+          {(!nothing || wantsEnglish) &&
+            topics.map((topic) => {
+              const showEn = english[topic.id] && locale !== "en"
+              const enItems = showEn ? (en.data?.topics.find((x) => x.id === topic.id)?.items ?? []) : []
+              return (
+                <section key={topic.id} aria-labelledby={`topic-${topic.id}`} className="flex flex-col gap-2">
+                  <h2 id={`topic-${topic.id}`} className="flex items-center gap-2 font-heading text-h3 font-bold">
+                    <PetalBullet />
+                    {t(`discover.lib.topic.${topic.id}` as Key)}
+                  </h2>
+                  {topic.items.length > 0 ? (
+                    <ul className="divide-y">
+                      {topic.items.map((it) => (
                         <ItemRow key={it.id} item={it} onOpen={() => navigate(`/discover/library/${it.id}`)} />
                       ))}
                     </ul>
-                  </>
-                )}
-              </section>
-            )
-          })}
+                  ) : (
+                    <div className="flex flex-col items-start gap-3 rounded-card bg-muted p-4">
+                      <p className="text-body text-muted-foreground">{t("discover.lib.empty")}</p>
+                      {locale !== "en" && !showEn && (
+                        <Button variant="secondary" size="sm" onClick={() => setEnglish((s) => ({ ...s, [topic.id]: true }))}>
+                          {t("discover.lib.showEnglish")}
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                  {showEn && enItems.length > 0 && (
+                    <>
+                      <p className="mt-2 text-label font-bold text-muted-foreground">{t("discover.lib.inEnglish")}</p>
+                      <ul className="divide-y" lang="en">
+                        {enItems.map((it) => (
+                          <ItemRow key={it.id} item={it} onOpen={() => navigate(`/discover/library/${it.id}`)} />
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </section>
+              )
+            })}
+        </LibrarySearch>
       </div>
     </>
   )

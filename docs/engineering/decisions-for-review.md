@@ -264,3 +264,21 @@ Branch `org-01-03-organizations-build`. Built now on the product owner's standin
 | Understanding: per-unit lesson/review first-answer rates; mastery % per objective counts people; «لماذا؟» experiment compares the explanation with the random fifth only (`shown = card_holdout`), never offline/failed card text (`card_only`); events carry a device counter `seq` so «the next answer» is right when an offline queue arrives at once | MOT-09 R1, R3, R4 | `indicators.py`, `lesson/why.ts`, `lib/api.ts`; migration `f7a8b9c0d1e2` (on ORG's `e5f6a7b8c9d0`) |
 
 **Pending a human:** Companion's owner to agree the `MentorContacted` event (name, payload `{user_id}`, when it is sent) for MOT-08 R6; the MOT-06 challenge pushes («لمجموعتك هدف جديد هذا الأسبوع») vs rules.md §3 «at most one notification per day» were not changed (needs the Motivation owner and product owner).
+
+## KNW-06 library live search (branch `knw-06-library-live-search-build`, 2026-10-06)
+
+Implements `docs/domains/knowledge/features/PRD-LIBRARY-LIVE-SEARCH.md`. Report: `docs/engineering/implementation/KNW-06-library-live-search-report.md`.
+
+| Decision | Why | Where |
+| --- | --- | --- |
+| **IslamHouse is searched through the site's own search** (`POST https://islamhouse.com/search/search.php`), not API v3, which has no search operation (nor does the ICSA SDK/MCP server). Undocumented endpoint; robots.txt allows it; IslamHouse's policy allows apps | PRD §5: "verify the real IslamHouse search; do not invent endpoints" | `live_sources/islamhouse.py` (library-only, not in the chat registry) |
+| **The encyclopedia is the live agent's `islamic_content` adapter (islamenc.com), reused as is** and gated by the same `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED` (robots.txt disallows its search). Until then it shows as "not connected yet" and is never called; "All" means the sources that can be searched now | PRD §5: no second adapter; do not claim both sources | `library_search.py` |
+| **On by default** (`LIBRARY_SEARCH_ENABLED=true`, IslamHouse only in practice). Rollback: `LIBRARY_SEARCH_ENABLED=false` hides the field; the catalogue is untouched | The PRD is the owner's spec; IslamHouse was verified live from the backend | `core/config.py` |
+| Results skip IslamHouse items that are not materials (category lists, app-store links, reading lists, publisher/author pages); unknown kinds get no badge; other-language items are dropped | PRD §3 «لا تُصنف مادة عشوائيًا»; B13 | `islamhouse.py`, `library_search.py` |
+| Privacy line changed from «لا نسجّل ما تفتحه، ولا يراه أحد غيرك» to «لا نحفظ في رفيق سجلًّا لما تفتحه أو تبحث عنه» (en/tl too) plus «يُرسل نص البحث إلى المصادر لجلب النتائج» | PRD §4: the old line promised that nobody else sees anything, which an external search cannot keep | `i18n/*.ts` (`discover.lib.private`) |
+| **httpx/httpcore loggers raised to WARNING**: at INFO, httpx logs every request URL, which put GET search words (encyclopedia, and the chat's live islamqa/binbaz searches) into the backend log | PRD §8 / B14 (and live PRD A26) | `library_search.py` (imported by the app) |
+| Paging: an in-memory session of 5 minutes in this single backend process; at most 10 result pages and 15 site pages per search | PRD §7 (no new storage service) | `library_search.py` |
+
+**Pending a human:** written access to islamenc.com's search (then set `ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true`); IslamHouse's written confirmation for the live site search (same email as the API key); the owner to confirm «موسوعة المحتوى الإسلامي» = islamenc.com (the live agent's identification); native review of the new Tagalog strings (`discover.lib.search.*`) and the changed privacy line.
+
+**Feature documents:** not edited (the PRD already links from KNW-06).
