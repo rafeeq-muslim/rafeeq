@@ -206,3 +206,19 @@ Branch `cmp-audit-gaps`. Notes in `implementation/CMP-01.md` and `CMP-04.md` («
 - **Who watches urgent requests at night** (postponed item 2), and the copy «سيتواصل معك أحد فريقنا بلغتك» in the danger panel while nobody is on call.
 - **Group message notifications** (CMP-05 open question; product owner): until then no push for group messages.
 - **An encrypted copy of the notebook in the account** (CMP-06 open question «حفظ الدفتر مشفّرًا في الحساب»; product owner): until then the notebook stays on the device only.
+
+## PLT-09 organized home (plt-09-organized-home-build)
+
+Branch `plt-09-organized-home-build`. Details in `implementation/PLT-09.md`. No migration. **Built behind `PLT09_ORGANIZED_HOME` (off by default)**: until the product owner and the PLT owner approve PLT-09 (its open question 1), Home, «كل ما في رفيق», Discover and «حسابي» are unchanged. To try it: `PLT09_ORGANIZED_HOME=true` on the API (everyone), or the team switch «الرئيسية المرتّبة (معاينة)» in «حسابي» (one team device).
+
+| Decision | Why | To change |
+| --- | --- | --- |
+| One next-step card = the short review when it is due, else the next lesson | R1 «أو للمراجعة القصيرة حين تستحق، لا بطاقتان» | `NextStep` in `home/OrganizedHome.tsx` |
+| On the first opening of the day (online) the main components wait up to 4 s for the model's order behind a skeleton; offline the fixed order shows at once | R5: positions must not move once shown; R4 ex3: offline without waiting | `ORDER_TIMEOUT_MS` in `home/useOrganized.ts` |
+| «من المكتبة» picks the first approved item of the basics topic | Library items have no unit tags («يناسب وحدته») | `libraryPick` in `home/useOrganized.ts` |
+| «اختر قارئك»: "opened listening" = a surah was played on this device; only when approved reciters exist | R3; KNW-08 R4 reciters are gated by the reviewer | `eligible()` in `home/layout.ts` |
+| Time-of-day bucket from the clock hour (04–06 fajr … 21–04 night), never from prayer times | R4: the location never reaches the model | `timeBucket()` |
+| The model is the guide's (fast tier) with its own prompt `home_order.md`; same budget and spend guard | Open question 2's proposal; until decided the fixed order stays the fallback | `agents.order_home` |
+| An optional component that stops being eligible leaves an empty slot for the rest of the day; a hidden one is replaced in its slot | R5 «يُحذف في مكانه دون أن يتحرك ما سواه»; R6 «يأخذ مكانه الاختياري التالي» | `daySlots()` |
+
+**Pending a human:** approval of PLT-09 itself (open question 1), the ranking model (open question 2). MOT's pending badges / in-app reminder are mounted on the current Home only; add them to `OrganizedHome` when PLT-09 is approved.

@@ -69,6 +69,12 @@ class Settings(BaseSettings):
     ask_repair_enabled: bool = True  # one bounded repair, then every check again (R5); evidence in the KNW-01 report
     ask_approved_faq_enabled: bool = True  # R7: serves only entries approved by the Sharia reviewer; env false turns it off
 
+    # PLT-09 organized home: a draft awaiting the product owner and the PLT
+    # owner (feature doc, open question 1). Off by default: the current Home,
+    # «كل ما في رفيق», Discover and «حسابي» stay as they are. PLT09_ORGANIZED_HOME=true
+    # turns it on for everyone; team accounts can preview it on their own device.
+    plt09_organized_home: bool = False
+
     # Web Push (VAPID).
     vapid_public_key: str = ""
     vapid_private_key: str = ""

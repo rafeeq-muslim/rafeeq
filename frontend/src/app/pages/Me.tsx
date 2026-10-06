@@ -12,6 +12,7 @@ import {
   IconArrowLeft,
   IconBellOff,
   IconBook,
+  IconBookmark,
   IconChecklist,
   IconCompass,
   IconDeviceMobile,
@@ -57,6 +58,7 @@ import { useDevice } from "@/app/stores/device"
 import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
 import { ShareProgressToggle } from "@/app/companion/ShareProgressToggle"
+import { useOrganizedHome } from "@/app/home/setting" // PLT-09
 
 export default function Me() {
   const { t } = useT()
@@ -68,6 +70,7 @@ export default function Me() {
   const me = useAuth((s) => s.me)
   const setAuth = useAuth((s) => s.set)
   const has = useAuth((s) => s.has)
+  const organized = useOrganizedHome() // PLT-09 R2: «أدوات يومية» leaves «حسابي» only when the setting is on
 
   const signOut = async () => {
     await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
@@ -95,11 +98,15 @@ export default function Me() {
           <LanguagePicker />
         </Section>
 
+        {organized ? (
+          <OrganizedSaved />
+        ) : (
         <Section title={t("me.tools")}>
           <LinkRow icon={IconLayoutGrid} title={t("guide.homeLink")} hint={t("guide.homeLinkBody")} onClick={() => navigate("/guide")} />
           <LinkRow icon={IconCompass} title={t("practice.prayer")} hint={t("me.practiceHint")} onClick={() => navigate("/practice")} />
           <LinkRow icon={IconBook} title={t("discover.title")} hint={t("me.discoverHint")} onClick={() => navigate("/discover")} />
         </Section>
+        )}
 
         <Section title={t("me.notifications")}>
           <NotificationSettings />
@@ -118,6 +125,7 @@ export default function Me() {
               .map((r) => (
                 <LinkRow key={r.to} icon={r.icon} title={t(r.key)} onClick={() => navigate(r.to)} />
               ))}
+            {has("team") && <OrganizedHomePreview />}
           </Section>
         )}
 
@@ -542,5 +550,30 @@ function DeleteAccount() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  )
+}
+
+// --- PLT-09 organized home (plt-09-organized-home-build), behind its setting ---------
+
+/** PLT-09 R2: with the organized home, «محفوظاتي» moves here (the Discover hub is gone). */
+function OrganizedSaved() {
+  const { t } = useT()
+  const navigate = useNavigate()
+  return (
+    <Section title={t("discover.saved")}>
+      <LinkRow icon={IconBookmark} title={t("home.org.openSaved")} hint={t("discover.savedBody")} onClick={() => navigate("/discover/saved")} />
+    </Section>
+  )
+}
+
+/** PLT-09: team accounts preview the draft on this device only (like the lesson preview). */
+function OrganizedHomePreview() {
+  const { t } = useT()
+  const on = useDevice((s) => s.organizedHomePreview)
+  const set = useDevice((s) => s.set)
+  return (
+    <div className="rounded-card border-2 bg-card">
+      <SwitchRow id="plt09-preview" label={t("home.org.preview")} hint={t("home.org.previewHint")} checked={on} onChange={(v) => set({ organizedHomePreview: v })} />
+    </div>
   )
 }

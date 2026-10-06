@@ -84,7 +84,20 @@ export function loadPosition(sura: number, storage: Pick<Storage, "getItem"> = l
 export function savePosition(sura: number, pos: Position, storage: Pick<Storage, "setItem"> = localStorage) {
   try {
     storage.setItem(KEY(sura), JSON.stringify(pos))
+    storage.setItem(LAST_KEY, String(sura)) // PLT-09 R2: «يومي» continues the last surah
   } catch {
     /* storage blocked: start from the beginning next time */
+  }
+}
+
+// PLT-09 R2: the last surah listened to, on this device only (like R6).
+const LAST_KEY = "rafeeq.quranLast"
+
+export function lastSura(storage: Pick<Storage, "getItem"> = localStorage): number | null {
+  try {
+    const n = Number(storage.getItem(LAST_KEY))
+    return Number.isInteger(n) && n >= 1 && n <= 114 ? n : null
+  } catch {
+    return null
   }
 }
