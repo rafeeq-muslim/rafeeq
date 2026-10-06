@@ -30,6 +30,7 @@ import { useContent } from "@/app/learning/useContent"
 import { answer, current, isComplete, needsResumeChoice, nextCard, previousCard, progressOf, startSession } from "@/app/learning/session"
 import { completeLesson, type Completion } from "@/app/learning/complete"
 import { recordFirstAnswer } from "@/app/learning/answers"
+import { noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise, Lesson as LessonT } from "@/app/learning/types"
 import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
@@ -71,6 +72,7 @@ function Player({ lesson }: { lesson: LessonT }) {
   const markSeen = useLearning((s) => s.markSeen)
 
   const [askResume, setAskResume] = React.useState(() => needsResumeChoice(saved))
+  React.useEffect(() => noteGuideFollowed(`/learn/lesson/${lesson.id}`), [lesson.id])
   const session = saved ?? startSession(lesson)
   const screen = current(lesson, session)
 

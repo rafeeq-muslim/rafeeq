@@ -16,6 +16,7 @@ import { useMotivation } from "@/app/stores/motivation"
 import { useContent } from "@/app/learning/useContent"
 import { firstIncomplete } from "@/app/learning/path"
 import type { Completion } from "@/app/learning/complete"
+import { GuideNote } from "@/app/learning/GuideNote"
 import type { Lesson } from "@/app/learning/types"
 
 export function LessonDone({ lesson, completion }: { lesson: Lesson; completion: Completion }) {
@@ -70,6 +71,7 @@ export function LessonDone({ lesson, completion }: { lesson: Lesson; completion:
         {t("lesson.finish")}
       </h1>
       <p className="mt-2 max-w-xs text-body text-white/75">{completion.isRepeat ? lesson.title : t("lesson.doneBody")}</p>
+      <GuideNote lessons={lessons} returning={completion.resumedAfterPause} />
 
       <div className="mt-auto flex w-full max-w-sm flex-col gap-3 pt-10">
         {next ? (

@@ -17,6 +17,8 @@ export type Summary = {
   mastered: string[]
   reviewing: string[]
   next: { lesson_id: string } | { review: true } | null
+  /** LRN-07 R5: back after a pause; the message welcomes, never counts missed days. */
+  returning?: boolean
 }
 
 const MAX = 5

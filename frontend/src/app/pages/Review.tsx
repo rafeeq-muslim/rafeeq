@@ -21,6 +21,7 @@ import { useContent } from "@/app/learning/useContent"
 import { reviewItems } from "@/app/learning/reviewItems"
 import { levelOf } from "@/app/learning/bkt"
 import { recordFirstAnswer } from "@/app/learning/answers"
+import { GuideNote, noteGuideFollowed } from "@/app/learning/GuideNote"
 import type { Exercise } from "@/app/learning/types"
 import { ExerciseView, check, emptyValue, ready, type Result, type Value } from "@/app/lesson/Exercises"
 
@@ -36,6 +37,7 @@ export default function Review() {
   const [result, setResult] = React.useState<Result>(null)
   const [attempt, setAttempt] = React.useState(0)
   const [finished, setFinished] = React.useState<string[] | null>(null)
+  React.useEffect(() => noteGuideFollowed("/learn/review"), [])
 
   const byId = React.useMemo(() => new Map(items.map((i) => [i.exercise.id, i])), [items])
   const item = queue[0] ? byId.get(queue[0]) : undefined
@@ -137,6 +139,7 @@ export default function Review() {
 
 function ReviewDone({ badges: initial }: { badges: string[] }) {
   const { t } = useT()
+  const { lessons } = useContent()
   const navigate = useNavigate()
   const popPending = useMotivation((s) => s.popPending)
   const [badges, setBadges] = React.useState(initial)
@@ -163,6 +166,7 @@ function ReviewDone({ badges: initial }: { badges: string[] }) {
     <section className="dark flex min-h-dvh flex-col items-center bg-[radial-gradient(120%_70%_at_50%_25%,var(--rf-deep)_0%,var(--rf-ink)_72%)] px-6 pt-[calc(env(safe-area-inset-top,0px)+4rem)] pb-[calc(env(safe-area-inset-bottom,0px)+1.5rem)] text-center">
       <UnitBloom total={5} done={5} size={180} />
       <h1 className="mt-8 font-heading text-h1 font-bold text-white">{t("review.done")}</h1>
+      <GuideNote lessons={lessons} />
       <Button size="lg" variant="celebrate" className="mt-auto w-full max-w-sm" onClick={() => navigate("/", { replace: true })}>
         {t("lesson.backHome")}
       </Button>
