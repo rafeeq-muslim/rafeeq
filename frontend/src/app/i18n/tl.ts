@@ -999,4 +999,8 @@ export const tl: Dict = {
   "guide.suggest.discover.title": "Tuklasin",
   "guide.suggest.discover.body": "Isang maikling aral bawat araw, pagbigkas na may kahulugan sa iyong wika, at mapagkakatiwalaang aklatan.",
   "guide.suggest.discover.cta": "Buksan ang Tuklasin",
+  // KNW-09 saved answers
+  "discover.saved.kind.answer": "Sagot",
+  "discover.saved.answerOn": "Na-save noong {d}",
+  "discover.saved.answerOffline": "Hindi maipakita ang sagot na ito ngayon. Lalabas ito kapag may koneksyon ka na.",
 }

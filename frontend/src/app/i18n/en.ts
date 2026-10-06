@@ -998,4 +998,8 @@ export const en: Dict = {
   "guide.suggest.discover.title": "Discover",
   "guide.suggest.discover.body": "A short benefit each day, recitation with its meanings in your language, and a trusted library.",
   "guide.suggest.discover.cta": "Open Discover",
+  // KNW-09 saved answers
+  "discover.saved.kind.answer": "Answer",
+  "discover.saved.answerOn": "Saved on {d}",
+  "discover.saved.answerOffline": "This answer can't be shown right now. It will appear when you're back online.",
 }
