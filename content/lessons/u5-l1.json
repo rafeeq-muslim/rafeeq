@@ -176,6 +176,14 @@
             "en": "before wudu",
             "tl": "bago mag-wudhu"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "في أي وقت ولو بلا طهارة",
+            "en": "At any time, even without purity",
+            "tl": "Kahit kailan, kahit walang kalinisan"
+          }
         }
       ],
       "answer": "a"
@@ -191,9 +199,9 @@
         "u5-l1-c2"
       ],
       "prompt": {
-        "ar": "أيّ هذه من شروط المسح كما في الدرس؟",
-        "en": "Which of these is a condition for wiping, as the lesson says?",
-        "tl": "Alin dito ang kondisyon ng pagpahid ayon sa aralin?"
+        "ar": "أيّ هذه من شروط المسح؟",
+        "en": "Which of these is a condition for wiping?",
+        "tl": "Alin dito ang kondisyon sa pagpunas?"
       },
       "options": [
         {
@@ -210,6 +218,14 @@
             "ar": "أن يكونا طاهرين، حلالين غير مسروقين ولا مغصوبين",
             "en": "They must be pure, and lawfully owned — not stolen or seized",
             "tl": "Dapat malinis ang mga ito at mula sa halal, hindi ninakaw o kinuha nang sapilitan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أن يكونا جديدين",
+            "en": "That they are new",
+            "tl": "Na bago ang mga ito"
           }
         }
       ],
@@ -233,21 +249,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "التيسير والتخفيف على المسلمين، خاصة في الشتاء والبرد الشديد والسفر",
-            "en": "to make things easier for Muslims, especially in winter and severe cold, and in travel",
-            "tl": "upang mapadali para sa mga Muslim, lalo na sa panahon ng taglamig at sa paglalakbay"
+            "ar": "التشديد على المسلمين",
+            "en": "to make things harder for Muslims",
+            "tl": "upang pahirapan ang mga Muslim"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "التشديد على المسلمين",
-            "en": "to make things harder for Muslims",
-            "tl": "upang pahirapan ang mga Muslim"
+            "ar": "عادة لا حكمة فيها",
+            "en": "A habit with no wisdom behind it",
+            "tl": "Isang kaugalian lamang na walang karunungan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "التيسير والتخفيف على المسلمين، خاصة في الشتاء والبرد الشديد والسفر",
+            "en": "to make things easier for Muslims, especially in winter and severe cold, and in travel",
+            "tl": "upang mapadali para sa mga Muslim, lalo na sa panahon ng taglamig at sa paglalakbay"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u5-l1-e4",
@@ -328,21 +352,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "يوم وليلة (24 ساعة)",
+            "en": "One day and one night (24 hours)",
+            "tl": "Isang araw at gabi (24 na oras)"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "ثلاثة أيام بلياليها (72 ساعة)",
             "en": "Three days and three nights (72 hours)",
             "tl": "Tatlong araw at gabi (72 oras)"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "يوم وليلة (24 ساعة)",
-            "en": "One day and one night (24 hours)",
-            "tl": "Isang araw at gabi (24 na oras)"
+            "ar": "سبعة أيام",
+            "en": "Seven days",
+            "tl": "Pitong araw"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u5-l1-e6",
@@ -420,6 +452,14 @@
             "en": "with the left hand",
             "tl": "gamit ang kaliwang kamay"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بالرجل الأخرى",
+            "en": "With the other foot",
+            "tl": "Gamit ang kabilang paa"
+          }
         }
       ],
       "answer": "a"
@@ -434,9 +474,9 @@
         "u5-l1-c6"
       ],
       "prompt": {
-        "ar": "مما يبطل المسح كما في الدرس:",
-        "en": "Which of these invalidates the wiping, as the lesson says?",
-        "tl": "Alin dito ang nakasisira sa bisa ng pagpahid ayon sa aralin?"
+        "ar": "مما يبطل المسح:",
+        "en": "Among what makes the wiping invalid:",
+        "tl": "Kabilang sa nakakawala ng bisa ng pagpunas:"
       },
       "options": [
         {
@@ -453,6 +493,14 @@
             "ar": "انتهاء مدة المسح",
             "en": "The end of the time limit for wiping",
             "tl": "Kapag natapos na ang tagal ng pagpunas"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "المشي بهما",
+            "en": "Walking in them",
+            "tl": "Paglakad habang suot ang mga ito"
           }
         }
       ],
@@ -476,21 +524,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "بطل المسح",
-            "en": "the wiping is invalid",
-            "tl": "nawawalan ng bisa ang pagpahid"
+            "ar": "بقي المسح صحيحًا",
+            "en": "the wiping stays valid",
+            "tl": "may bisa pa rin ang pagpahid"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "بقي المسح صحيحًا",
-            "en": "the wiping stays valid",
-            "tl": "may bisa pa rin ang pagpahid"
+            "ar": "يمسح على الخفين بدل الغسل",
+            "en": "He wipes over the khuffs instead of ghusl",
+            "tl": "Magpupunas siya sa khuff sa halip na maligo"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بطل المسح",
+            "en": "the wiping is invalid",
+            "tl": "nawawalan ng bisa ang pagpahid"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     }
   ],
   "dropped": [

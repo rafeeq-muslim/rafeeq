@@ -90,7 +90,7 @@
       "id": "u4-l1-c6",
       "kind": "text",
       "text": {
-        "ar": "الإيمان بالله يقتضي توحيده في ربوبيته وألوهيته وأسمائه وصفاته، وهو متضمِّن ما يلي:\nالإيمان بوجوده سبحانه وتعالى.\nالإيمان بربوبيته سبحانه وتعالى، وأنه مالك كل شيء وخالقة ورازقه ومدبِّر أمره.",
+        "ar": "الإيمان بالله يقتضي توحيده في ربوبيته وألوهيته وأسمائه وصفاته، وهو متضمِّن ما يلي:\nالإيمان بوجوده سبحانه وتعالى.\nالإيمان بربوبيته سبحانه وتعالى، وأنه مالك كل شيء وخالقه ورازقه ومدبِّر أمره.",
         "en": "The belief in Allah requires the belief in His Oneness of Lordship, His Oneness of Worship, and the uniqueness of His Names and Attributes. This includes the following:\nThe belief in the existence of Allah (SWT)\nThe belief that Allah is the only Lord, and that He is the Owner, Creator, and Sustainer of everything, Who manages the affairs of everything.",
         "tl": "Ang paniniwala kay Allah ay nangangailangan ng paniniwala sa Kanyang kaisahan sa pagka-Panginoon (الربوبية), sa Kanyang kaisahan sa pagsamba (الألوهية), sa Kanyang mga pangalan at katangian (الأسماء والصفات), at kabilang na dito ang mga sumusunod:\nAng paniniwala sa pagka-iral ng Allahﷻ.\nAng paniniwala sa Kanyang pagka-Panginoon, Siya ang nagmamay-ari sa lahat ng bagay, Siya ang lumikha, Siya ang nagbigay biyaya, at Siya ang nangangasiwa sa lahat."
       },
@@ -102,7 +102,7 @@
       "id": "u4-l1-c7",
       "kind": "text",
       "text": {
-        "ar": "الإيمان بألوهيته سبحانه وأنه المستحق العبادة وحدة لا شريك له في شيء منها: كالصلاة، والدعاء، والنذر، والذبح، والاستعانة، والاستعاذة، وجميع العبادات الأخرى.\nالإيمان بأسمائه الحسنى وصفاته العلا التي أثبتها لنفسه أو أثبتها له نبيه ﷺ، ونفي ما نفى عن نفسه أو نفاه عنه النبي ﷺ من الأسماء والصفات، وأن أسماءه وصفاته بلغت الغاية في الكمال والحُسن، وأنه ليس كمثله شيء وهو السميع البصير.",
+        "ar": "الإيمان بألوهيته سبحانه وأنه المستحق العبادة وحده لا شريك له في شيء منها: كالصلاة، والدعاء، والنذر، والذبح، والاستعانة، والاستعاذة، وجميع العبادات الأخرى.\nالإيمان بأسمائه الحسنى وصفاته العلا التي أثبتها لنفسه أو أثبتها له نبيه ﷺ، ونفي ما نفى عن نفسه أو نفاه عنه النبي ﷺ من الأسماء والصفات، وأن أسماءه وصفاته بلغت الغاية في الكمال والحُسن، وأنه ليس كمثله شيء وهو السميع البصير.",
         "en": "The belief that Allah is the only God, and that He alone deserves to be worshiped. Acts of worship must be dedicated to Him alone without any partners, such as prayer, supplication, making vows, sacrificial animals, imploring for help and protection, and all other acts of worship.\nThe belief in His Names and Attributes that He affirmed for Himself or that His Prophet Muhammad (pbuh) affirmed for Him, and negating the names and attributes that He negated about Himself or negated by His Prophet about Him. This includes the belief that His Names and Attributes are the most superior in terms of perfection and beauty.",
         "tl": "Ang paniniwala sa kaisahan ng Kanyang pagka-Diyos, sa pagsamba sa Kanya, sa Kanya lamang iaalay ang lahat ng uri ng pagsamba tulad ng pagdarasal, pananalangin, panata, pagkatay, paghingi ng tulong, at iba pang uri ng pagsamba.\nAng paniniwala sa Kanyang mga magagandang pangalan at mararangal na katangian na inilarawan Niya sa Kanyang sarili at ng Kanyang sugo, at pagwaksi sa kung ano ang iwinaksi Niya sa Kanyang sarili at ng Kanyang Propeta ﷺ na mga pangalan at katangian. Ang Kanyang mga pangalan at katangian ay naabot ang sukdulan ng pagka-perpekto at kagandahan. Siya ay walang kahalintulad na kahit anong bagay, Siya ang labis na nakakarinig, at ang labis na nakakakita."
       },
@@ -361,21 +361,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "أركان الإسلام، وهي أعمال ظاهرة",
+            "en": "pillars of Islam: visible acts",
+            "tl": "mga haligi ng Islam: mga gawaing lantad"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "أركان الإيمان، وهي أعمال قلبية",
             "en": "pillars of faith: acts of the heart",
             "tl": "mga haligi ng Iman: mga gawain ng puso"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "أركان الإسلام، وهي أعمال ظاهرة",
-            "en": "pillars of Islam: visible acts",
-            "tl": "mga haligi ng Islam: mga gawaing lantad"
+            "ar": "ليست من أركان الدين",
+            "en": "Not pillars of the religion at all",
+            "tl": "Hindi mga haligi ng relihiyon"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u4-l1-e5",
@@ -395,21 +403,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "بالمعصية / بالطاعة",
+            "en": "disobedience / obedience",
+            "tl": "pagsuway / pagsunod"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "بالطاعة / بالمعصية",
             "en": "obedience / disobedience",
             "tl": "pagsunod / pagsuway"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "بالمعصية / بالطاعة",
-            "en": "disobedience / obedience",
-            "tl": "pagsuway / pagsunod"
+            "ar": "بكثرة المال / بقلّة المال",
+            "en": "With wealth / with poverty",
+            "tl": "Sa yaman / sa kahirapan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u4-l1-e6",
@@ -586,9 +602,9 @@
         "u4-l1-c5"
       ],
       "prompt": {
-        "ar": "أيّ العبادات تكون لله وحده كما في الدرس؟",
-        "en": "Which acts of worship are for Allah alone, as the lesson says?",
-        "tl": "Aling mga pagsamba ang para lamang sa Allah ayon sa aralin?"
+        "ar": "أيّ العبادات تكون لله وحده؟",
+        "en": "Which acts of worship are for Allah alone?",
+        "tl": "Aling mga pagsamba ang para lamang sa Allah?"
       },
       "options": [
         {
@@ -655,6 +671,20 @@
       "from": "mga pangalan at katangian, at kabilang",
       "to": "mga pangalan at katangian (الأسماء والصفات), at kabilang",
       "why": "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration; meaning precedes"
+    },
+    {
+      "card": "u4-l1-c6",
+      "lang": "ar",
+      "from": "وخالقة ورازقه",
+      "to": "وخالقه ورازقه",
+      "why": "spelling slip in the source corrected (letters only), reviewer's review of 2026-10-06"
+    },
+    {
+      "card": "u4-l1-c7",
+      "lang": "ar",
+      "from": "المستحق العبادة وحدة",
+      "to": "المستحق العبادة وحده",
+      "why": "spelling slip in the source corrected (letters only), reviewer's review of 2026-10-06"
     }
   ]
 }

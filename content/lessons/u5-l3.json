@@ -126,6 +126,14 @@
             "en": "when he has water and is able to use it",
             "tl": "kapag may tubig at kaya itong gamitin"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "إذا أراد أن يصلي بسرعة",
+            "en": "When he wants to pray quickly",
+            "tl": "Kapag nais niyang magdasal nang mabilis"
+          }
         }
       ],
       "answer": "a"
@@ -160,6 +168,14 @@
             "en": "With sand or dust (earth)",
             "tl": "Gamit ang lupa"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "بالزيت",
+            "en": "With oil",
+            "tl": "Gamit ang langis"
+          }
         }
       ],
       "answer": "b"
@@ -182,21 +198,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "الوجه والكفين",
-            "en": "The face and the hands",
-            "tl": "Ang mukha at mga kamay"
+            "ar": "الرأس والرجلين",
+            "en": "The head and the feet",
+            "tl": "Ang ulo at mga paa"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "الرأس والرجلين",
-            "en": "The head and the feet",
-            "tl": "Ang ulo at mga paa"
+            "ar": "الظهر والبطن",
+            "en": "The back and the stomach",
+            "tl": "Ang likod at ang tiyan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الوجه والكفين",
+            "en": "The face and the hands",
+            "tl": "Ang mukha at mga kamay"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u5-l3-e4",
@@ -216,21 +240,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "أن يكون طاهرًا",
+            "en": "pure",
+            "tl": "malinis"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "أن يكون مبلولًا بالماء",
             "en": "wet with water",
             "tl": "basa ng tubig"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "أن يكون طاهرًا",
-            "en": "pure",
-            "tl": "malinis"
+            "ar": "أن يكون من بلد معين",
+            "en": "That it comes from a certain land",
+            "tl": "Na ito ay mula sa isang tiyak na lugar"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u5-l3-e5",
@@ -250,21 +282,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "بمسح الوجه والكفين",
+            "en": "by wiping the face and hands",
+            "tl": "sa pagpunas ng mukha at kamay"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "بما يبطل به الوضوء، وإذا وُجد الماء قبل البدء في العبادة",
             "en": "by whatever invalidates wudu, and if water is found before starting the worship",
             "tl": "sa mga bagay na nakasisira sa wudhu, at kapag nakahanap ng tubig bago simulan ang pagsamba"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "بمسح الوجه والكفين",
-            "en": "by wiping the face and hands",
-            "tl": "sa pagpunas ng mukha at kamay"
+            "ar": "بمرور ساعة عليه",
+            "en": "When an hour has passed",
+            "tl": "Pagkalipas ng isang oras"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u5-l3-e6",
@@ -292,13 +332,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "يصلي بالتيمم ثم يتوضأ",
+            "en": "He prays with tayammum, then makes wudu",
+            "tl": "Magdarasal siya sa tayammum at saka magwudhu"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "بطل تيممه",
             "en": "the tayammum is invalid",
             "tl": "nawawalan ng bisa ang tayammum"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     }
   ],
   "dropped": [],

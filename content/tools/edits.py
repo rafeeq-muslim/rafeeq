@@ -16,6 +16,7 @@ native speaker's and the reviewer's check.
 
 D1 = "decision 2026-10-06 (1): Arabic wording restored in place of a transliteration"
 D2 = "decision 2026-10-06 (2): the printed Arabic edition is the reference"
+D3 = "spelling slip in the source corrected (letters only), reviewer's review of 2026-10-06"
 
 EDITS = [
     ("u3-l1", "u3-l1-c3", "tl", "Ang kahulugan ng pagsasaksi: Walang",
@@ -26,6 +27,10 @@ EDITS = [
      D1 + "; meaning precedes"),
     ("u4-l4", "u4-l4-c3", "tl", "pagsulat ng Allah ng lahat", "pagsulat ng Allah sa (اللوح المحفوظ) (Kahulugan: ang Iniingatang Talaan) ng lahat",
      D1 + "; AUTHORED: the Tagalog meaning is not in the edition"),
+    ("u2-l1", "u2-l1-c4", "tl", "Sya angTagapaglikha, ang Tagapagtustos,", "Sya ang Tagapagmay-ari, ang Tagapaglikha, ang Tagapagtustos,",
+     D2 + " (the Arabic names المالك, the Possessor); AUTHORED Tagalog word; also a missing space"),
+    ("u4-l1", "u4-l1-c6", "ar", "وخالقة ورازقه", "وخالقه ورازقه", D3),
+    ("u4-l1", "u4-l1-c7", "ar", "المستحق العبادة وحدة", "المستحق العبادة وحده", D3),
     ("u5-l1", "u5-l1-c6", "tl", "1 na magiging obligado ang paligo.", "1 Ang anumang nag-oobliga ng wudhu o paligo.",
      D2 + " (what requires wudu or ghusl); AUTHORED Tagalog wording"),
 ]

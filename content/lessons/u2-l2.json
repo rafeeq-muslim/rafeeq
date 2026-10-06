@@ -231,9 +231,9 @@
         "u2-l2-c1"
       ],
       "prompt": {
-        "ar": "ما معنى «الرحمن» كما في الدرس؟",
-        "en": "What does \"the Most Merciful\" mean, as in the lesson?",
-        "tl": "Ano ang kahulugan ng \"Ang Pinaka Maawain\" ayon sa aralin?"
+        "ar": "ما معنى «الرحمن»؟",
+        "en": "What does \"the Most Merciful\" mean?",
+        "tl": "Ano ang kahulugan ng \"Ang Pinaka Maawain\"?"
       },
       "options": [
         {
@@ -374,9 +374,9 @@
         "u2-l2-c2"
       ],
       "prompt": {
-        "ar": "ما معنى «السلام» كما في الدرس؟",
-        "en": "What does \"the Perfect\" mean, as in the lesson?",
-        "tl": "Ano ang kahulugan ng \"Ang Ligtas o Payapa\" ayon sa aralin?"
+        "ar": "ما معنى «السلام»؟",
+        "en": "What does \"the Perfect\" mean?",
+        "tl": "Ano ang kahulugan ng \"Ang Ligtas o Payapa\"?"
       },
       "options": [
         {
@@ -517,9 +517,9 @@
         "u2-l2-c3"
       ],
       "prompt": {
-        "ar": "ما معنى «الغفور» كما في الدرس؟",
-        "en": "What does \"the All-Forgiving\" mean, as in the lesson?",
-        "tl": "Ano ang kahulugan ng \"Ang Nagpapatawad\" ayon sa aralin?"
+        "ar": "ما معنى «الغفور»؟",
+        "en": "What does \"the All-Forgiving\" mean?",
+        "tl": "Ano ang kahulugan ng \"Ang Nagpapatawad\"?"
       },
       "options": [
         {
@@ -559,9 +559,9 @@
         "u2-l2-c4"
       ],
       "prompt": {
-        "ar": "ماذا يدعو الدرس المسلمَ أن يفعل؟",
-        "en": "What does the lesson invite the Muslim to do?",
-        "tl": "Ano ang hinihikayat ng aralin na gawin ng isang Muslim?"
+        "ar": "ماذا يفعل المسلم حين يرى عناية المخلوقات بصغارها؟",
+        "en": "What does a Muslim do when he sees creatures caring for their young?",
+        "tl": "Ano ang ginagawa ng Muslim kapag nakita niya ang pag-aalaga ng mga nilalang sa kanilang mga anak?"
       },
       "options": [
         {
@@ -578,6 +578,14 @@
             "ar": "أن يمرّ بالمخلوقات دون تفكر",
             "en": "To pass by the creatures without reflecting",
             "tl": "Lampasan ang mga nilikha nang hindi nagninilay"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "يظن أن ذلك حدث مصادفة",
+            "en": "He thinks it happened by chance",
+            "tl": "Iniisip niyang nangyari ito nang nagkataon lamang"
           }
         }
       ],
@@ -612,6 +620,14 @@
             "ar": "الله، الخالق لها واللطيف بها",
             "en": "Allah, Who created them and showed kindness to them",
             "tl": "Si Allah, na naglikha sa mga ito at naging banayad sa mga ito"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الإنسان وحده",
+            "en": "People alone",
+            "tl": "Ang tao lamang"
           }
         }
       ],

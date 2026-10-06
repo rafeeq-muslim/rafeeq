@@ -159,6 +159,14 @@
             "en": "sometimes lies",
             "tl": "paminsan-minsang nagsisinungaling"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "يكتم الحق",
+            "en": "He hides the truth",
+            "tl": "Itinatago niya ang katotohanan"
+          }
         }
       ],
       "answer": "a"
@@ -262,21 +270,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "يشكر الله في الرخاء، ويصبر في الضراء",
-            "en": "is grateful to Allah in prosperity and patient in adversity",
-            "tl": "nagpapasalamat sa Allah sa kasaganaan at nagtitimpi sa kagipitan"
+            "ar": "يسخط على قدر الله في الضراء",
+            "en": "is angry at Allah’s decree in adversity",
+            "tl": "nagagalit sa tadhana ng Allah sa kagipitan"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "يسخط على قدر الله في الضراء",
-            "en": "is angry at Allah’s decree in adversity",
-            "tl": "nagagalit sa tadhana ng Allah sa kagipitan"
+            "ar": "يشكر في الرخاء ويسخط في الضراء",
+            "en": "Grateful in ease, resentful in hardship",
+            "tl": "Nagpapasalamat sa ginhawa, nagagalit sa kahirapan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "يشكر الله في الرخاء، ويصبر في الضراء",
+            "en": "is grateful to Allah in prosperity and patient in adversity",
+            "tl": "nagpapasalamat sa Allah sa kasaganaan at nagtitimpi sa kagipitan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u6-l2-e4",
@@ -289,9 +305,9 @@
         "u6-l2-c3"
       ],
       "prompt": {
-        "ar": "صِل كل عبارة بتمامها كما في الدرس",
-        "en": "Match each phrase with its ending, as in the lesson",
-        "tl": "Itugma ang bawat parirala sa katapusan nito, ayon sa aralin"
+        "ar": "صِل كلًّا بحال المؤمن معه",
+        "en": "Match each with how the believer deals with it",
+        "tl": "Itugma ang bawat isa sa pakikitungo ng mananampalataya rito"
       },
       "left": [
         {
@@ -371,13 +387,21 @@
         "u6-l2-c4"
       ],
       "prompt": {
-        "ar": "مما يجتنبه المؤمن كما في الدرس:",
-        "en": "Which of these does the believer avoid, as the lesson says?",
-        "tl": "Alin dito ang iniiwasan ng mananampalataya ayon sa aralin?"
+        "ar": "مما يجتنبه المؤمن:",
+        "en": "Among what the believer avoids:",
+        "tl": "Kabilang sa iniiwasan ng mananampalataya:"
       },
       "options": [
         {
           "id": "a",
+          "text": {
+            "ar": "صلة الرحم، والإحسان إلى الجيران",
+            "en": "Upholding kinship ties and treating neighbours well",
+            "tl": "Pagbisita sa kamag-anak at mabuting pakikitungo sa kapitbahay"
+          }
+        },
+        {
+          "id": "b",
           "text": {
             "ar": "الربا، والزنا، وشرب الخمر",
             "en": "Usury, adultery and drinking alcohol",
@@ -385,15 +409,15 @@
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "صلة الرحم، والإحسان إلى الجيران",
-            "en": "Upholding kinship ties and treating neighbours well",
-            "tl": "Pagbisita sa kamag-anak at mabuting pakikitungo sa kapitbahay"
+            "ar": "الصدق، والوفاء بالعهد",
+            "en": "Truthfulness and keeping promises",
+            "tl": "Katapatan at pagtupad sa pangako"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u6-l2-e6",
@@ -421,13 +445,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "يطيعهما في كل شيء ولو في معصية",
+            "en": "He obeys them in everything, even in sin",
+            "tl": "Sinusunod niya sila sa lahat, kahit sa kasalanan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "بارّ بهما، ويطيعهما في المعروف",
             "en": "is dutiful to them and obeys them in doing good",
             "tl": "mabuti ang pakikitungo sa kanila at sumusunod sa kanilang mabubuting utos"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     },
     {
       "id": "u6-l2-e7",
@@ -458,6 +490,14 @@
             "ar": "يعتدي عليهم",
             "en": "harms them",
             "tl": "nananakit sa kanila"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "يقاطعهم",
+            "en": "He cuts them off",
+            "tl": "Pinuputol niya ang ugnayan sa kanila"
           }
         }
       ],
@@ -492,6 +532,14 @@
             "ar": "لا يسرق ولا يحتال",
             "en": "He does not steal or defraud",
             "tl": "Iniiwasan niya ang pagnanakaw at pandaraya"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "يسرق من غير المسلمين",
+            "en": "He steals from non-Muslims",
+            "tl": "Nagnanakaw siya sa mga hindi Muslim"
           }
         }
       ],

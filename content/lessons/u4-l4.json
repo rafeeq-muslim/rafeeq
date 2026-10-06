@@ -278,21 +278,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "قبل خلق الإنسان",
-            "en": "Before the creation of mankind",
-            "tl": "Bago pa man likhain ang tao"
+            "ar": "بعد وقوع الأحداث",
+            "en": "After the events happen",
+            "tl": "Pagkatapos mangyari ang mga bagay"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "بعد وقوع الأحداث",
-            "en": "After the events happen",
-            "tl": "Pagkatapos mangyari ang mga bagay"
+            "ar": "لم تُكتب أبدًا",
+            "en": "They were never written",
+            "tl": "Hindi kailanman isinulat ang mga ito"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "قبل خلق الإنسان",
+            "en": "Before the creation of mankind",
+            "tl": "Bago pa man likhain ang tao"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u4-l4-e4",
@@ -312,21 +320,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "نعم، وهو فاعل لأفعاله حقيقة، ولا يخرج ذلك عن علم الله ومشيئته",
+            "en": "Yes; he is the real doer of his actions, and this is not beyond Allah’s knowledge and will",
+            "tl": "Oo; siya ang totoong gumagawa nito, ngunit hindi ito lalabas sa kaalaman at kagustuhan ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "لا، ليس له إرادة ولا مشيئة",
             "en": "No, he has no will or choice",
             "tl": "Wala, wala siyang sariling kagustuhan"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "نعم، وهو فاعل لأفعاله حقيقة، ولا يخرج ذلك عن علم الله ومشيئته",
-            "en": "Yes; he is the real doer of his actions, and this is not beyond Allah’s knowledge and will",
-            "tl": "Oo; siya ang totoong gumagawa nito, ngunit hindi ito lalabas sa kaalaman at kagustuhan ng Allah"
+            "ar": "له إرادة تخرج عن مشيئة الله",
+            "en": "He has a will outside Allah’s will",
+            "tl": "May kalooban siyang labas sa kalooban ni Allah"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u4-l4-e5",
@@ -346,21 +362,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "خارج عن علم الله",
+            "en": "beyond Allah’s knowledge",
+            "tl": "labas sa kaalaman ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "بعلم الله وقدره وتدبيره وحده",
             "en": "by the knowledge and predestination of Allah alone",
             "tl": "itinakda ng Allah"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "خارج عن علم الله",
-            "en": "beyond Allah’s knowledge",
-            "tl": "labas sa kaalaman ng Allah"
+            "ar": "مصادفة لا تدبير فيها",
+            "en": "Chance with no planning",
+            "tl": "Nagkataon lamang nang walang pangangasiwa"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u4-l4-e6",
@@ -388,13 +412,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "لا يفعلها هو، بل تقع عليه بلا إرادة",
+            "en": "He does not do them; they happen to him without his will",
+            "tl": "Hindi siya ang gumagawa; nangyayari lamang sa kanya nang walang kalooban"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "يفعلها حقيقة، وهي لا تخرج عن علم الله وإرادته ومشيئته",
             "en": "are truly his, and are not beyond Allah’s knowledge and will",
             "tl": "ay talagang kanya, ngunit hindi lumalabas sa kaalaman at kagustuhan ng Allah"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     }
   ],
   "dropped": [

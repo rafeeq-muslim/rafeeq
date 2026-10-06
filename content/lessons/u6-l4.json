@@ -181,9 +181,9 @@
         "u6-l4-c1"
       ],
       "prompt": {
-        "ar": "أكمل قول النبي ﷺ كما في الدرس: «ذاق طعم الإيمان من رضي…»",
-        "en": "Complete the saying of the Prophet ﷺ, as in the lesson: whoever is content with…",
-        "tl": "Kumpletuhin ang sinabi ng Propeta ﷺ ayon sa aralin: sinumang nalugod sa…"
+        "ar": "أكمل قول النبي ﷺ: «ذاق طعم الإيمان من رضي…»",
+        "en": "Complete the Prophet’s saying (peace be upon him): “He has tasted the sweetness of faith who is pleased…”",
+        "tl": "Kumpletuhin ang sinabi ng Propeta: “Natikman ang tamis ng pananampalataya ng sinumang nalugod…”"
       },
       "left": [
         {
@@ -282,6 +282,14 @@
             "en": "the taste of faith",
             "tl": "ang tamis ng pananampalataya"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "مرارة الحياة",
+            "en": "The bitterness of life",
+            "tl": "Ang pait ng buhay"
+          }
         }
       ],
       "answer": "b"
@@ -304,21 +312,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "عاش الحياة الطيبة السعيدة في الدنيا، وحسن العاقبة في الآخرة",
-            "en": "lives a happy, blissful life in this world and has the best outcome in the Hereafter",
-            "tl": "mamumuhay nang mabuti at masaya sa mundong ito at may mabuting kalalabasan sa hinaharap"
+            "ar": "عاش حياة شقية",
+            "en": "lives a miserable life",
+            "tl": "mamumuhay nang miserable"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "عاش حياة شقية",
-            "en": "lives a miserable life",
-            "tl": "mamumuhay nang miserable"
+            "ar": "لا ينفعه ذلك في الآخرة",
+            "en": "It does not help him in the Hereafter",
+            "tl": "Hindi ito makabubuti sa kanya sa Kabilang Buhay"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "عاش الحياة الطيبة السعيدة في الدنيا، وحسن العاقبة في الآخرة",
+            "en": "lives a happy, blissful life in this world and has the best outcome in the Hereafter",
+            "tl": "mamumuhay nang mabuti at masaya sa mundong ito at may mabuting kalalabasan sa hinaharap"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u6-l4-e4",
@@ -330,13 +346,21 @@
         "u6-l4-c2"
       ],
       "prompt": {
-        "ar": "كيف يعبد المؤمن ربه كما في الدرس؟",
-        "en": "How does the believer worship his Lord, as the lesson says?",
-        "tl": "Paano sumasamba ang mananampalataya sa kanyang Panginoon ayon sa aralin?"
+        "ar": "كيف يعبد المؤمن ربه؟",
+        "en": "How does the believer worship his Lord?",
+        "tl": "Paano sumasamba ang mananampalataya sa kanyang Panginoon?"
       },
       "options": [
         {
           "id": "a",
+          "text": {
+            "ar": "كأنه يراه، مخلصًا له",
+            "en": "as if he sees Him, sincerely",
+            "tl": "na para bang nakikita Siya, nang taos-puso"
+          }
+        },
+        {
+          "id": "b",
           "text": {
             "ar": "يريد بعبادته غير الله",
             "en": "seeking someone other than Allah by it",
@@ -344,15 +368,15 @@
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "كأنه يراه، مخلصًا له",
-            "en": "as if he sees Him, sincerely",
-            "tl": "na para bang nakikita Siya, nang taos-puso"
+            "ar": "ليراه الناس",
+            "en": "So that people see him",
+            "tl": "Upang makita siya ng mga tao"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u6-l4-e5",
@@ -372,21 +396,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "بالسخط على قدر الله",
+            "en": "being angry at Allah’s decree",
+            "tl": "ang pagkagalit sa tadhana ng Allah"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "ببرد اليقين، والرضا بقدر الله، وحمده على أقداره",
             "en": "certitude, contentment with Allah’s predestination, and praising Him for what He decrees",
             "tl": "ang lamig ng katiyakan, pagkalugod sa tadhana ng Allah, at pagpuri sa Kanya"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "بالسخط على قدر الله",
-            "en": "being angry at Allah’s decree",
-            "tl": "ang pagkagalit sa tadhana ng Allah"
+            "ar": "بنسيان الله",
+            "en": "By forgetting Allah",
+            "tl": "Sa paglimot kay Allah"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u6-l4-e6",
@@ -401,9 +433,9 @@
         "u6-l4-c5"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل عبارة بما يتمّ معناها",
+        "en": "Match each statement with what completes its meaning",
+        "tl": "Itugma ang bawat pahayag sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {
@@ -482,9 +514,9 @@
         "u6-l4-c6"
       ],
       "prompt": {
-        "ar": "من أين يتعلّم المسلم أمور دينه كما في الدرس؟",
-        "en": "Where should the Muslim learn his religion, as the lesson says?",
-        "tl": "Saan dapat pag-aralan ng Muslim ang kanyang relihiyon ayon sa aralin?"
+        "ar": "من أين يتعلّم المسلم أمور دينه؟",
+        "en": "Where does the Muslim learn about his religion?",
+        "tl": "Saan natututo ang Muslim tungkol sa kanyang relihiyon?"
       },
       "options": [
         {
@@ -502,6 +534,14 @@
             "en": "from any source at all",
             "tl": "mula sa kahit anong mapagkukunan"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "مما يتناقله الناس دون تحقّق",
+            "en": "From whatever people pass around without checking",
+            "tl": "Mula sa anumang ipinapasa ng mga tao nang hindi sinusuri"
+          }
         }
       ],
       "answer": "a"
@@ -517,9 +557,9 @@
         "u6-l4-c7"
       ],
       "prompt": {
-        "ar": "صِل بداية كل جملة بتمامها",
-        "en": "Match the start of each sentence with its end",
-        "tl": "Itugma ang simula ng bawat pangungusap sa katapusan nito"
+        "ar": "صِل كل عبارة بما يتمّ معناها",
+        "en": "Match each statement with what completes its meaning",
+        "tl": "Itugma ang bawat pahayag sa kukumpleto ng kahulugan nito"
       },
       "left": [
         {

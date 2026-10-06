@@ -208,21 +208,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "لأن الإسلام مبنيّ عليها",
-            "en": "Because Islam is built on them",
-            "tl": "Sapagka’t dito naitayo ang Islam"
+            "ar": "لأنها لا تلزم المسلم",
+            "en": "Because a Muslim does not have to do them",
+            "tl": "Sapagka’t hindi ito kailangang gawin ng Muslim"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "لأنها لا تلزم المسلم",
-            "en": "Because a Muslim does not have to do them",
-            "tl": "Sapagka’t hindi ito kailangang gawin ng Muslim"
+            "ar": "لأنها من الآداب المستحبة فقط",
+            "en": "Because they are only recommended manners",
+            "tl": "Dahil ang mga ito ay mabubuting asal lamang na hindi obligado"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "لأن الإسلام مبنيّ عليها",
+            "en": "Because Islam is built on them",
+            "tl": "Sapagka’t dito naitayo ang Islam"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u3-l1-e4",
@@ -242,21 +250,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "تلزم كل مسلم، ولا يصح إسلامه إلا باعتقاد وجوبها والإتيان بها جميعًا",
+            "en": "are required of every Muslim, who must observe all of them and believe they are obligatory",
+            "tl": "ay dapat gampanan ng bawat Muslim; kailangang paniwalaan at itaguyod ang lahat ng ito"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "يكفي المسلم أن يأتي ببعضها",
             "en": "it is enough for a Muslim to do some of them",
             "tl": "sapat na sa Muslim ang gawin ang ilan lamang sa mga ito"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "تلزم كل مسلم، ولا يصح إسلامه إلا باعتقاد وجوبها والإتيان بها جميعًا",
-            "en": "are required of every Muslim, who must observe all of them and believe they are obligatory",
-            "tl": "ay dapat gampanan ng bawat Muslim; kailangang paniwalaan at itaguyod ang lahat ng ito"
+            "ar": "تلزم العلماء وحدهم",
+            "en": "They are required of scholars only",
+            "tl": "Obligado lamang ang mga ito sa mga iskolar"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u3-l1-e5",

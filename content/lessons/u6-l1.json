@@ -134,6 +134,14 @@
             "en": "From her husband",
             "tl": "Mula sa kanyang asawa"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "لا تستره عن أحد",
+            "en": "From no one",
+            "tl": "Hindi sa sinuman"
+          }
         }
       ],
       "answer": "a"
@@ -168,6 +176,14 @@
             "en": "Before her husband or her mahram",
             "tl": "Sa harap ng kanyang asawa o mga Mahram"
           }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "أمام كل من تعرفه",
+            "en": "In front of anyone she knows",
+            "tl": "Sa harap ng sinumang kakilala niya"
+          }
         }
       ],
       "answer": "b"
@@ -190,21 +206,29 @@
         {
           "id": "a",
           "text": {
-            "ar": "الذين لا يجوز للمرأة المسلمة الزواج بهم بشكل مؤبد",
-            "en": "the men she is permanently forbidden to marry",
-            "tl": "ang mga taong hindi kailanman maaaring pakasalan ng babaeng Muslim"
+            "ar": "الرجال الأجانب عنها",
+            "en": "men who are not related to her",
+            "tl": "mga lalaking hindi kaanu-ano"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "الرجال الأجانب عنها",
-            "en": "men who are not related to her",
-            "tl": "mga lalaking hindi kaanu-ano"
+            "ar": "كل الأقارب ولو جاز لها الزواج بهم",
+            "en": "All relatives, even those she may marry",
+            "tl": "Lahat ng kamag-anak, kahit yaong maaari niyang pakasalan"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
+            "ar": "الذين لا يجوز للمرأة المسلمة الزواج بهم بشكل مؤبد",
+            "en": "the men she is permanently forbidden to marry",
+            "tl": "ang mga taong hindi kailanman maaaring pakasalan ng babaeng Muslim"
           }
         }
       ],
-      "answer": "a"
+      "answer": "c"
     },
     {
       "id": "u6-l1-e4",
@@ -225,21 +249,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "باللباس المعتاد في بلادها",
+            "en": "With the traditional outfits of her country",
+            "tl": "Sa tradisyonal na kasuotan sa kanyang bansa"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "بلباس الرجل",
             "en": "With men’s clothing",
             "tl": "Sa kasuotan ng kalalakihan"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "باللباس المعتاد في بلادها",
-            "en": "With the traditional outfits of her country",
-            "tl": "Sa tradisyonal na kasuotan sa kanyang bansa"
+            "ar": "بلباس شفاف",
+            "en": "With see-through clothing",
+            "tl": "Gamit ang manipis na damit na nakikita ang katawan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "a"
     },
     {
       "id": "u6-l1-e5",
@@ -259,21 +291,29 @@
         {
           "id": "a",
           "text": {
+            "ar": "أن يكون شفافًا يُظهر البدن",
+            "en": "It must be transparent, showing the body",
+            "tl": "Dapat itong manipis upang lumitaw ang katawan"
+          }
+        },
+        {
+          "id": "b",
+          "text": {
             "ar": "أن يستوعب جميع البدن، وألّا يكون معطرًا",
             "en": "It must cover the whole body and must not be perfumed",
             "tl": "Sinasaklaw nito ang buong katawan at hindi ito dapat lagyan ng pabango"
           }
         },
         {
-          "id": "b",
+          "id": "c",
           "text": {
-            "ar": "أن يكون شفافًا يُظهر البدن",
-            "en": "It must be transparent, showing the body",
-            "tl": "Dapat itong manipis upang lumitaw ang katawan"
+            "ar": "أن يكون ضيقًا يصف الجسم",
+            "en": "That it is tight and shows the shape of the body",
+            "tl": "Na ito ay masikip at naglalarawan sa hugis ng katawan"
           }
         }
       ],
-      "answer": "a"
+      "answer": "b"
     },
     {
       "id": "u6-l1-e6",
@@ -301,13 +341,21 @@
         {
           "id": "b",
           "text": {
+            "ar": "نعم، إذا كان جميلًا",
+            "en": "Yes, if it looks nice",
+            "tl": "Oo, kung ito ay maganda"
+          }
+        },
+        {
+          "id": "c",
+          "text": {
             "ar": "لا، من ضوابطه ألّا يشبه لباس الرجل",
             "en": "No — one rule is that it must not resemble what men wear",
             "tl": "Hindi — isa sa mga panuntunan ay hindi ito dapat katulad ng kasuotan ng kalalakihan"
           }
         }
       ],
-      "answer": "b"
+      "answer": "c"
     }
   ],
   "dropped": [],
