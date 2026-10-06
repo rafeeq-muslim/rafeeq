@@ -1,0 +1,93 @@
+# Run Rafeeq locally with Docker only (no Python, uv or Node on the host):
+#
+#   cp .env.example .env                      # optional; every value has a default
+#   docker compose -f docker-compose.local.yml up --build
+#
+# Then open http://localhost:8380/ (landing) and http://localhost:8380/app/ (the app).
+# Ports, the admin account and optional keys come from `.env` (see .env.example).
+# Works on Linux, macOS (Intel and Apple Silicon) and Windows (Docker Desktop):
+# every image is multi-arch and nothing here uses host paths or host shells.
+# Production uses infra/compose.prod.yml instead; this file is for local runs only.
+
+name: ${COMPOSE_PROJECT_NAME:-rafeeq-local}
+
+x-backend-env: &backend-env
+  ENV: development
+  PUBLIC_URL: http://localhost:${WEB_PORT:-8380}
+  DATABASE_URL: postgresql+asyncpg://rafeeq:${POSTGRES_PASSWORD:-rafeeq_local}@db:5432/rafeeq
+  JWT_SECRET: ${JWT_SECRET:-local-only-change-me}
+  BOOTSTRAP_ADMIN_USERNAME: ${BOOTSTRAP_ADMIN_USERNAME:-admin}
+  BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:-change-me-local-admin}
+  RAFEEQ_DATA_DIR: /srv/rafeeq-data
+  CORPUS_DIR: /srv/rafeeq-data/corpus
+
+services:
+  db:
+    image: pgvector/pgvector:pg16 # multi-arch (amd64, arm64)
+    environment:
+      POSTGRES_USER: rafeeq
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rafeeq_local}
+      POSTGRES_DB: rafeeq
+    volumes: [pgdata:/var/lib/postgresql/data]
+    ports: ["127.0.0.1:${DB_PORT:-5444}:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rafeeq -d rafeeq"]
+      interval: 3s
+      retries: 30
+
+  # The API. Its image runs `alembic upgrade head` (safe to repeat) and then
+  # uvicorn; at startup it creates the first admin from BOOTSTRAP_ADMIN_* only
+  # if no admin exists yet.
+  backend:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    env_file:
+      - path: .env # optional extra settings (e.g. OPENROUTER_API_KEY); see backend/.env.example
+        required: false
+    environment: *backend-env
+    volumes: [rafeeqdata:/srv/rafeeq-data:ro]
+    ports: ["127.0.0.1:${API_PORT:-8390}:8000"]
+    depends_on: { db: { condition: service_healthy } }
+
+  # One-shot: fetch the QuranEnc corpus (no key, ~27 MB, ~2 min) on the first
+  # run only, then load it (an upsert, safe to repeat). Lessons show Quran
+  # verses from the database only. Skip it with LOAD_QURANENC=0. If it fails
+  # (e.g. no network) the app still runs; lessons just show no verse text.
+  loader:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    user: "0:0" # writes the named volume
+    environment:
+      <<: *backend-env
+      LOAD_QURANENC: ${LOAD_QURANENC:-1}
+    volumes: [rafeeqdata:/srv/rafeeq-data]
+    depends_on: { backend: { condition: service_healthy } }
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        set -e
+        if [ "$${LOAD_QURANENC}" != "1" ]; then echo "loader: LOAD_QURANENC is not 1, skipping"; exit 0; fi
+        if [ -s /srv/rafeeq-data/corpus/quranenc.jsonl ]; then
+          echo "loader: QuranEnc already fetched"
+        else
+          echo "loader: fetching QuranEnc (first run only, about 2 minutes)"
+          python -m app.knowledge.sources.quranenc --fetch
+        fi
+        python -m app.knowledge.load quranenc
+        echo "loader: done"
+
+  # The PWA, built and served by the same nginx image as production:
+  # the landing page at /, the app at /app/, and /api proxied to `backend`.
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+        VITE_BUILD_ID: local
+    ports: ["127.0.0.1:${WEB_PORT:-8380}:80"]
+    depends_on: { backend: { condition: service_healthy } }
+
+volumes:
+  pgdata:
+  rafeeqdata:
