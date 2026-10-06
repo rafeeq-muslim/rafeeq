@@ -1282,4 +1282,7 @@ export const ar = {
   "discover.lib.search.type.poster": "تصميم",
   "discover.lib.search.type.khutbah": "خطبة",
   "discover.lib.search.type.qa": "سؤال وجواب",
+
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
+  "practice.ramadan.expectedDay": "اليوم {n} من رمضان المتوقع، ولم يُعلن ثبوته بعد",
 } as const

@@ -1284,4 +1284,7 @@ export const tl: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Khutbah",
   "discover.lib.search.type.qa": "Tanong at sagot",
+
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected --- ⚠️ Tagalog needs native review
+  "practice.ramadan.expectedDay": "Ika-{n} araw ng inaasahang Ramadan; hindi pa inihahayag ang simula nito",
 }

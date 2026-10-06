@@ -1283,4 +1283,7 @@ export const en: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Sermon",
   "discover.lib.search.type.qa": "Q&A",
+
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
+  "practice.ramadan.expectedDay": "Day {n} of the expected Ramadan; its start has not been announced yet",
 }
