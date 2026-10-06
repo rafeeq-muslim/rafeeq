@@ -231,33 +231,33 @@
         "u2-l2-c1"
       ],
       "prompt": {
-        "ar": "ما معنى «الرحمن»؟",
-        "en": "What does \"the Most Merciful\" mean?",
-        "tl": "Ano ang kahulugan ng \"Ang Pinaka Maawain\"?"
+        "ar": "أيّ اسم معناه: ذو القدرة الكاملة الذي لا يعتريه عجز ولا فتور؟",
+        "en": "Which name means: the One who never experiences inability or weariness?",
+        "tl": "Aling pangalan ang nangangahulugang: hindi nakakaranas ng pagkapagod o kawalan ng kakayahan?"
       },
       "options": [
         {
           "id": "a",
           "text": {
-            "ar": "الذي يدرك جميع المسموعات سرّها وجهرها",
-            "en": "The One Who hears every heard thing, the secret and the revealed",
-            "tl": "Nakakaalam ng lahat ng sinasabi, lantaran man o palihim"
+            "ar": "الرزّاق",
+            "en": "The Provider",
+            "tl": "Ang Tagapanustos"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "ذو الرحمة الواسعة العظيمة التي وسعت كل شيء",
-            "en": "The One Whose mercy encompasses everything",
-            "tl": "Ang Kanyang Awa ay saklaw ang lahat ng bagay"
+            "ar": "القدير",
+            "en": "The All-Powerful",
+            "tl": "Ang ganap na Makapangyarihan"
           }
         },
         {
           "id": "c",
           "text": {
-            "ar": "الذي يكفي عباده جميع ما يحتاجون إليه",
-            "en": "The One Who provides His servants with all their needs",
-            "tl": "Nagbibigay sa Kanyang mga alipin ng lahat ng kanilang pangangailangan"
+            "ar": "الملك",
+            "en": "The King and Sovereign",
+            "tl": "Ang Kataas-taasang Hari"
           }
         }
       ],
@@ -374,33 +374,33 @@
         "u2-l2-c2"
       ],
       "prompt": {
-        "ar": "ما معنى «السلام»؟",
-        "en": "What does \"the Perfect\" mean?",
-        "tl": "Ano ang kahulugan ng \"Ang Ligtas o Payapa\"?"
+        "ar": "أيّ اسم معناه: الذي أحاط بصره بكل شيء وإن دقّ وصغر؟",
+        "en": "Which name means: the One whose sight encompasses everything, however small?",
+        "tl": "Aling pangalan ang nangangahulugang: nakikita ang lahat ng bagay, malaki man o maliit?"
       },
       "options": [
         {
           "id": "a",
           "text": {
-            "ar": "السالم من كل نقص وآفة وعيب",
-            "en": "The One free of every deficiency and defect",
-            "tl": "Ligtas sa lahat ng kakulangan, pagkababa at kapintasan"
+            "ar": "البصير",
+            "en": "The All-Seeing",
+            "tl": "Ang ganap na Nakakakita"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "ذو القدرة الكاملة الذي لا يعتريه عجز",
-            "en": "The One Who experiences no inability",
-            "tl": "Hindi nakakaranas ng kawalan ng kakayahan"
+            "ar": "السميع",
+            "en": "The All-Hearing",
+            "tl": "Ang Nakakarinig"
           }
         },
         {
           "id": "c",
           "text": {
-            "ar": "المالك لجميع الأشياء المتصرف فيها",
-            "en": "The One Who owns and directs everything",
-            "tl": "Ang Tagapangasiwa ng lahat ng bagay"
+            "ar": "الوكيل",
+            "en": "The Trustee",
+            "tl": "Ang Ganap na Tagapagkupkop"
           }
         }
       ],
@@ -517,33 +517,33 @@
         "u2-l2-c3"
       ],
       "prompt": {
-        "ar": "ما معنى «الغفور»؟",
-        "en": "What does \"the All-Forgiving\" mean?",
-        "tl": "Ano ang kahulugan ng \"Ang Nagpapatawad\"?"
+        "ar": "أيّ اسم معناه: الذي يكفي عباده جميع ما يحتاجون إليه؟",
+        "en": "Which name means: the One who provides His servants with all they need?",
+        "tl": "Aling pangalan ang nangangahulugang: nagbibigay sa Kanyang mga alipin ng lahat ng kanilang pangangailangan?"
       },
       "options": [
         {
           "id": "a",
           "text": {
-            "ar": "المالك لجميع الأشياء المتصرف فيها",
-            "en": "The One Who owns and directs everything",
-            "tl": "Ang Tagapangasiwa ng lahat ng bagay"
+            "ar": "الخالق",
+            "en": "The Creator",
+            "tl": "Ang Tagapaglikha"
           }
         },
         {
           "id": "b",
           "text": {
-            "ar": "الذي أحاط بصره بكل شيء",
-            "en": "The One Whose sight encompasses everything",
-            "tl": "Ang Nakakakita ng lahat"
+            "ar": "اللطيف",
+            "en": "The Subtle and Kind",
+            "tl": "Ang Banayad at ang Mabait"
           }
         },
         {
           "id": "c",
           "text": {
-            "ar": "الذي يقي عباده شرّ ذنوبهم ولا يعاقبهم عليها",
-            "en": "The One Who protects His servants from the evil of their sins and spares them the punishment",
-            "tl": "Pinapatawad ang mga kasalanan ng Kanyang mga alipin at hindi na sila paparusahan"
+            "ar": "الكافي",
+            "en": "The Sufficient",
+            "tl": "Ang Sapat"
           }
         }
       ],
@@ -583,9 +583,9 @@
         {
           "id": "c",
           "text": {
-            "ar": "يظن أن ذلك حدث مصادفة",
-            "en": "He thinks it happened by chance",
-            "tl": "Iniisip niyang nangyari ito nang nagkataon lamang"
+            "ar": "أن يظن أن ذلك حدث مصادفة",
+            "en": "To think it happened by chance",
+            "tl": "Isipin na nangyari ito nang nagkataon lamang"
           }
         }
       ],

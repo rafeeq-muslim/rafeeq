@@ -2,7 +2,8 @@
 
 Style: questions ask about meaning, never about recalling the lesson's wording; no
 sentence-fragment ordering; every choice question has at least three options; prompts
-never say "as in the lesson". Run on the unchanged spec files (git checkout tools/spec_u*.py first), then `python3 tools/build.py` and `python3 tools/validate.py`.
+never say "as in the lesson". A one-time migration (2026-10-06), already applied to spec_u2..u6: from now on edit the
+spec files directly. To re-run it, start from the pre-migration specs (commit 91175fb), then `python3 tools/build.py` and `python3 tools/validate.py`.
 
 Edits are located with the syntax tree of each spec file, so only exercise prompts,
 option lists and whole exercises named in PATCHES are touched.
