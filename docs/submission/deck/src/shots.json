@@ -1,0 +1,12 @@
+{"slide1": [
+ {"file":"02-welcome.png","caption":"البداية: اختيار اللغة وحدها"},
+ {"file":"03-home.png","caption":"الرئيسية: الخطوة التالية أولًا"},
+ {"file":"lesson-02.png","caption":"درس: آية من قاعدة البيانات مع تلاوتها"},
+ {"file":"lesson-05.png","caption":"تمرين بعد البطاقات"},
+ {"file":"landing-answers.png","caption":"صفحة التعريف: كل إجابة معها مصدرها"}],
+"slide2": [
+ {"file":"07-practice.png","caption":"مواقيت الصلاة محسوبة على الجهاز"},
+ {"file":"08-adhkar.png","caption":"الأذكار اليومية"},
+ {"file":"10-library.png","caption":"المكتبة والبحث في المصادر"},
+ {"file":"11-me.png","caption":"حسابي: زائر بلا حساب، واللغة والتنزيلات"},
+ {"file":"11b-me-discreet.png","caption":"الإشعارات المحايدة والخصوصية"}]}
