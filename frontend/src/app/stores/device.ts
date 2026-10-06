@@ -13,7 +13,7 @@ export type Theme = "light" | "dark" | "system"
 type DeviceState = {
   installId: string
   locale: Locale
-  /** PLT-04: light unless the learner picks dark or «حسب الجهاز» in «حسابي». */
+  /** PLT-04: follows the device («حسب الجهاز») unless the learner picks light or dark in «حسابي». */
   theme: Theme
   onboarded: boolean
   placementOffered: boolean
@@ -57,7 +57,7 @@ export const useDevice = create<DeviceState>()(
     (set) => ({
       installId: newId(),
       locale: guessLocale(),
-      theme: "light",
+      theme: "system",
       onboarded: false,
       placementOffered: false,
       shareEvents: true,
@@ -75,6 +75,17 @@ export const useDevice = create<DeviceState>()(
       organizedHome: true,
       set: (patch) => set(patch),
     }),
-    { name: "rafeeq.device", version: 1 },
+    {
+      name: "rafeeq.device",
+      version: 2,
+      // v1 stored "light" both as the default and as a choice, so a stored
+      // "light" can't be told apart; it becomes the new default, "system".
+      // Dark and «حسب الجهاز» were always explicit and stay.
+      migrate: (persisted, version) => {
+        const s = (persisted ?? {}) as Partial<DeviceState>
+        if (version < 2 && (s.theme === undefined || s.theme === "light")) s.theme = "system"
+        return s as DeviceState
+      },
+    },
   ),
 )

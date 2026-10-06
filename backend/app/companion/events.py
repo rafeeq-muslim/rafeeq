@@ -5,19 +5,24 @@
   mentors and team members get a neutral push (CMP-01 R6). The device that
   opens `/mentor/help?kind=urgent&ask=<ask_id>` becomes its owner.
 - EngagementStatusChanged (MOT-07 R3): CMP keeps the status for accounts so
-  a mentor sees it while the learner shares progress (CMP-02 R6).
+  a mentor sees it while the learner shares progress (CMP-02 R6). Only the
+  account events `{user_id, status}` are kept: Motivation sends ONE status
+  per account across its devices (MOT-07 R2/R6); device events
+  `{install_id, status}` (for Organisations) carry no user_id and are ignored.
 - EscalationRequested (KNW-01 R2/R3) creates nothing: a request exists only
   when the person asks for a human.
 - AccountDeleted (PLT-05 R5): the person's own group messages go with the
   account, so nothing they wrote stays in the group. Their help requests,
-  memberships, mentor link and blocks already cascade on users.id; replies
+  memberships, group removals (CMP-05 R5), mentor link and blocks already
+  cascade on users.id; replies
   they wrote as a mentor stay in the learners' own conversations without a
   name (author SET NULL), and reports they filed stay without a reporter.
 - MentorApproved (ORG-02 R1; CMP-08 R5 when an application made from an
   account is approved): `{mentor_id}`. The mentor's profile exists and
   is not suspended; the inbox still waits for the mentor rules (ORG-02 R2).
 - MentorSuspended (ORG-02 R5): `{mentor_id}`. The mentor loses the inbox and
-  is no longer suggested; each mentee's link ends (thread closed) and they get
+  is no longer suggested; each mentee's link ends (thread closed, and it never
+  reopens to him, even after MentorApproved: CMP-03 R4) and they get
   a neutral notice to choose another mentor (no reason, no organisation); the
   mentor's open requests return to the pool, where the same-gender rule
   (CMP-01 R3) applies as always.
@@ -69,7 +74,7 @@ async def on_account_deleted(session: AsyncSession, payload: dict) -> None:
 async def on_engagement(session: AsyncSession, payload: dict) -> None:
     uid = payload.get("user_id")
     if not uid:
-        return  # guests have no mentor
+        return  # a device's own status (for ORG), or a guest: no mentor
     user_id = uuid.UUID(str(uid))
     row = await session.get(MenteeStatus, user_id)
     if row is None:

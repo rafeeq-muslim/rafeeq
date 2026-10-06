@@ -46,7 +46,8 @@ export type ThreadSummary = {
 }
 /** `hidden`: only ever true on the learner's own message, hidden for review (CMP-04 R5). */
 export type ThreadMessage = { id: string; author: "me" | "mentor" | "scholar" | "system"; name: string | null; body: string; created_at: string; hidden?: boolean }
-export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean }
+/** `link_ended`: a former mentor's thread (CMP-03 R4): readable; what is written in it goes to the current mentor or the pool. */
+export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean; link_ended?: boolean }
 
 export type InboxRow = {
   id: string
@@ -151,6 +152,8 @@ export type Challenge = {
   mine: boolean | null
   my_lessons: number | null
   shared_done: string[] | null
+  /** Mentor only: the Sharia reviewer's reason for returning a free text (MOT-06 R3). */
+  review_note?: string | null
 }
 export type Template = { id: string; text: string; lang: string }
 export type QueueItem = {
@@ -224,7 +227,9 @@ export function useThread(id: string | undefined) {
 export function usePostToThread(id: string) {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (body: string) => api(`/api/help/requests/${id}/messages`, { method: "POST", body: { body }, headers: helpHeaders() }),
+    // CMP-03 R4: the summary says where the message went (another thread when this one's mentor link ended).
+    mutationFn: (body: string) =>
+      api<ThreadSummary>(`/api/help/requests/${id}/messages`, { method: "POST", body: { body }, headers: helpHeaders() }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["cmp"] }),
   })
 }

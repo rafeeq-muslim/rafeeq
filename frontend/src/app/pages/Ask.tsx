@@ -2,6 +2,9 @@
  * KNW-01 Ask: a chat that answers only from approved sources.
  * - The AI is always disclosed (rules.md §1.2) and «أريد إنسانًا» is always
  *   reachable (top bar).
+ * - CMP-01 R1: opened from a lesson's or a review's help button, it carries
+ *   the lesson's topic alone (ask/lessonHelp.ts) and a human request made
+ *   from here says it came from the lesson or the review.
  * - Answers end with source strips; Quran and hadith words come from the
  *   database; no source → ReferralCard; danger → DangerHelpPanel only.
  * - KNW-10 R3: "What should I learn now?" is answered by the learning guide
@@ -29,7 +32,8 @@ import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
-import { ErrorTurn, GuideTurn, HELP_HUMAN, PendingTurn, QuestionTurn, ResponseTurn } from "@/app/ask/parts"
+import { ErrorTurn, GuideTurn, HelpOriginContext, PendingTurn, QuestionTurn, ResponseTurn, humanUrl } from "@/app/ask/parts"
+import { readLessonHelp } from "@/app/ask/lessonHelp"
 import { QUESTION_MAX, useAsk } from "@/app/ask/store"
 import type { AskResponse, Entrypoint } from "@/app/ask/types"
 import { SUGGESTIONS } from "@/app/ask/suggestions"
@@ -118,6 +122,8 @@ export default function Ask() {
   // CMP-06 R2 ex2: a question its owner sent from the private notebook arrives
   // once, through the route state (never the URL), as an ordinary question.
   const location = useLocation()
+  const lessonHelp = readLessonHelp(location.state) // CMP-01 R1: topic and origin only
+  const origin = lessonHelp?.from ?? "ask"
   const handedOver = React.useRef(false)
   React.useEffect(() => {
     const q = (location.state as { notebookQuestion?: unknown } | null)?.notebookQuestion
@@ -137,11 +143,19 @@ export default function Ask() {
       <TopBar
         className="sticky top-0"
         title={<span className="font-heading text-h3">{t("ask.title")}</span>}
-        end={<HumanHelpButton label={t("ask.human")} onClick={() => navigate(HELP_HUMAN)} />}
+        end={<HumanHelpButton label={t("ask.human")} onClick={() => navigate(humanUrl(origin))} />}
       />
 
       <div className="flex flex-1 flex-col gap-5 px-4 pt-4 pb-4">
         <AiDisclosure>{t("ask.disclosure")}</AiDisclosure>
+        {lessonHelp?.topic && (
+          <div data-slot="lesson-topic" className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md bg-secondary px-4 py-3 text-secondary-foreground">
+            <p className="min-w-0 flex-1 text-label">{t(`ask.${lessonHelp.from}.from`, { name: lessonHelp.topic })}</p>
+            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
+              {t(`ask.${lessonHelp.from}.back`)}
+            </Button>
+          </div>
+        )}
         {turns.length === 0 && <PrivacyLink className="-mt-2" />}{/* PLT-05 R1: the question leaves the device for the AI */}
 
         {turns.length === 0 ? (
@@ -173,6 +187,7 @@ export default function Ask() {
           </section>
         ) : (
           <div className="flex flex-col gap-5" aria-live="polite">
+            <HelpOriginContext.Provider value={origin}>
             {turns.map((turn) => {
               if (turn.role === "user") return <QuestionTurn key={turn.id} text={turn.text} />
               if (turn.state === "pending") return <PendingTurn key={turn.id} />
@@ -205,6 +220,7 @@ export default function Ask() {
                 </React.Fragment>
               )
             })}
+            </HelpOriginContext.Provider>
           </div>
         )}
         <div ref={endRef} />

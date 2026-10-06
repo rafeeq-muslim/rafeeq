@@ -5,23 +5,32 @@ and when it happened. No IP is stored (the access log is off for this
 route, see infra/web.nginx.conf), no question text, no identity. A device
 that opts out sends one `opt_out` event; its install ID is then removed
 from every stored event and it has no status any more.
+
+`EngagementStatusChanged` has two subjects (MOT-07 R3/R6):
+- a device: `{install_id, status}`, for Organisations, whose links are per
+  device (ORG-01/ORG-03); it never names the account;
+- an account: `{user_id, status}`, ONE status across the account's devices
+  that share events (`engagement.account_timeline`), for Companion (what the
+  mentor sees, CMP-02 R6). It is sent only when that account status changes,
+  so an idle or opted-out second device never overwrites it.
 """
 
 import re
 import uuid
+from collections.abc import Iterable
 from datetime import UTC, date, datetime, timedelta
 from typing import Annotated, Literal
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, Request
 from pydantic import AwareDatetime, BaseModel, Field
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import OutboxEvent, publish, subscribe
-from app.motivation.engagement import after_interaction, status_at
+from app.motivation.engagement import account_status, after_interaction, status_at
 from app.motivation.models import AnonEvent, DailySnapshot, EarnedBadge, EngagementState, StreakDay
 
 RIYADH = ZoneInfo("Asia/Riyadh")
@@ -112,28 +121,68 @@ async def _interact(session: AsyncSession, install_id: str, ats: list[datetime],
         st.first_at, st.last_at, st.returned_at = after_interaction(at, st.first_at, st.last_at, st.returned_at)
     st.status = status_at(now, st.first_at, st.last_at, st.returned_at)
     if st.status != before:
-        await publish(
-            session,
-            "EngagementStatusChanged",
-            "MOT",
-            {"install_id": install_id, "user_id": str(st.user_id) if st.user_id else None, "status": st.status},
-        )
+        await publish_device_status(session, install_id, st.status)
+    if st.user_id is not None:
+        await publish_account_status(session, st.user_id, now)
+
+
+async def publish_device_status(session: AsyncSession, install_id: str, status: str | None) -> None:
+    """The device's own status, for Organisations (links are per device)."""
+    await publish(session, "EngagementStatusChanged", "MOT", {"install_id": install_id, "status": status})
+
+
+async def published_account_statuses(session: AsyncSession, user_id: uuid.UUID | None = None) -> dict[str, str | None]:
+    """The account status Motivation last announced, per account: the latest
+    `EngagementStatusChanged` naming the account in the outbox (the event
+    history, core/events.py). Older events that named both a device and the
+    account count too: they hold what the mentor's copy shows now."""
+    uid = OutboxEvent.payload["user_id"].astext
+    latest = func.row_number().over(partition_by=uid, order_by=OutboxEvent.created_at.desc()).label("n")
+    q = select(uid.label("u"), OutboxEvent.payload["status"].astext.label("s"), latest).where(
+        OutboxEvent.name == "EngagementStatusChanged", uid.is_not(None)
+    )
+    if user_id is not None:
+        q = q.where(uid == str(user_id))
+    sq = q.subquery()
+    return {u: st for u, st in (await session.execute(select(sq.c.u, sq.c.s).where(sq.c.n == 1))).all()}
+
+
+def account_status_of(now: datetime, devices: Iterable[EngagementState]) -> str | None:
+    """MOT-07 R2/R6: one status per account, from its devices that share
+    events (an opted-out device has no row any more). With no device left the
+    account has no status (None)."""
+    return account_status(now, ((d.first_at, d.last_at, d.returned_at) for d in devices))
+
+
+async def announce_account_status(
+    session: AsyncSession, user_id: uuid.UUID, status: str | None, published: dict[str, str | None] | None = None
+) -> None:
+    """Send the account's status only when it differs from the last one sent."""
+    if published is None:
+        published = await published_account_statuses(session, user_id)
+    if status != published.get(str(user_id)):
+        await publish(session, "EngagementStatusChanged", "MOT", {"user_id": str(user_id), "status": status})
+
+
+async def publish_account_status(session: AsyncSession, user_id: uuid.UUID, now: datetime) -> None:
+    rows = await session.scalars(select(EngagementState).where(EngagementState.user_id == user_id))
+    await announce_account_status(session, user_id, account_status_of(now, rows))
 
 
 async def opt_out(session: AsyncSession, install_id: str, now: datetime) -> None:
-    """MOT-07 R4 (error example): one bare opt-out event, then unlink everything."""
+    """MOT-07 R4 (error example): one bare opt-out event, then unlink everything.
+    The device leaves its account's status; the account keeps the status of
+    its other devices and has none only when no device of it is left."""
     st = await session.get(EngagementState, install_id)
+    user_id = st.user_id if st is not None else None
     if st is not None and st.status is not None:
-        # The device has no status any more: domains holding a copy (CMP-02 R6,
-        # ORG-03) drop it. The event row itself is removed just below.
-        await publish(
-            session,
-            "EngagementStatusChanged",
-            "MOT",
-            {"install_id": install_id, "user_id": str(st.user_id) if st.user_id else None, "status": None},
-        )
+        # The device has no status any more: Organisations' copy (ORG-03)
+        # drops it. The event row itself is removed just below.
+        await publish_device_status(session, install_id, None)
     await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
     await session.execute(delete(EngagementState).where(EngagementState.install_id == install_id))
+    if user_id is not None:
+        await publish_account_status(session, user_id, now)
     # Status-change history must not keep the device's id either.
     await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
     session.add(AnonEvent(install_id=None, type="opt_out", day=now.astimezone(RIYADH).date()))
@@ -174,15 +223,21 @@ class InstallIn(BaseModel):
 @router.post("/me/install", status_code=204)
 async def link_install(body: InstallIn, session: Session, user: CurrentUser) -> None:
     """MOT-07 R4: a guest who signs up keeps their status and history; they
-    are the same learner, not a second new one. The status is published with
-    the account so Companion's copy for the mentor fills (MOT-07 R3/R6)."""
+    are the same learner, not a second new one. The device joins the
+    account's one status (R2/R6), which is published with the account so
+    Companion's copy for the mentor fills (R3). A device that signs in before
+    its first lesson is kept as the account's (no status yet), so its lessons
+    count for the account later. The app links only devices that share events."""
+    now = datetime.now(UTC)
     st = await session.get(EngagementState, body.install_id)
-    if st is not None and st.user_id != user.id:
-        st.user_id = user.id
-        if st.status is not None:
-            await publish(
-                session, "EngagementStatusChanged", "MOT", {"install_id": st.install_id, "user_id": str(user.id), "status": st.status}
-            )
+    if st is None:
+        session.add(EngagementState(install_id=body.install_id, user_id=user.id))
+    elif st.user_id != user.id:
+        previous, st.user_id = st.user_id, user.id
+        await session.flush()
+        if previous is not None:
+            await publish_account_status(session, previous, now)
+        await publish_account_status(session, user.id, now)
     await session.commit()
 
 

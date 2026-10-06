@@ -5,9 +5,7 @@ schema. `org_id` has no foreign key (another domain's table, like
 `invites.org_id`).
 
 Revision ID: d4e5f6a7b8c9
-Revises: 1a9e0d5c3b7f (the head on main when this was written; if
-  2b3c4d5e6f7a (cmp-05 r5) and c3d4e5f6a7b8 (mot-06 r3) merge first, set
-  down_revision to c3d4e5f6a7b8)
+Revises: c3d4e5f6a7b8 (mot-06 r3, after cmp-05 r5 2b3c4d5e6f7a)
 Create Date: 2026-10-06 21:40:00
 
 """
@@ -20,7 +18,7 @@ from sqlalchemy.dialects import postgresql
 from alembic import op
 
 revision: str = "d4e5f6a7b8c9"
-down_revision: str | Sequence[str] | None = "1a9e0d5c3b7f"
+down_revision: str | Sequence[str] | None = "c3d4e5f6a7b8"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

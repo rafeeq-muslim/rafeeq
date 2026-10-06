@@ -2,7 +2,8 @@
  * LRN-03 lesson player (full screen). Cards, then exercises; a wrong answer
  * is safe and comes back before the end; the lesson completes when every
  * exercise is right; it resumes where it stopped and works offline once
- * opened. «أريد إنسانًا» stays visible (rules.md §2).
+ * opened. The help button opens the assistant with the lesson's topic alone
+ * (CMP-01 R1); «أريد إنسانًا» is always visible there.
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
@@ -23,7 +24,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { ExerciseFeedback, HumanHelpButton } from "@/components/rafeeq"
+import { ExerciseFeedback } from "@/components/rafeeq"
 import { num, useT } from "@/app/i18n"
 import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
@@ -37,6 +38,7 @@ import { GlossaryText, useGlossary } from "@/app/lesson/GlossaryText"
 import { ExerciseView, check, emptyValue, incorrectKey, quotesCard, ready, useFooterSpace, type Result, type Value } from "@/app/lesson/Exercises"
 import { VerseBlock } from "@/app/lesson/VerseBlock"
 import { LessonDone } from "@/app/lesson/LessonDone"
+import { LessonHelpButton } from "@/app/lesson/LessonHelpButton"
 import { askWhy, type Why } from "@/app/lesson/why"
 import { useWarmLesson } from "@/app/offline/warmup" // PLT-15 R2
 import { OfflineNote } from "@/app/offline/NeedsConnection"
@@ -147,7 +149,7 @@ function Player({ lesson }: { lesson: LessonT }) {
           <IconX />
         </Button>
         <Progress value={progressOf(lesson, session)} aria-label={t("lesson.progress")} className="h-3.5 flex-1" />
-        <HumanHelpButton compact label={t("ask.human")} onClick={() => navigate("/mentor/help?from=lesson")} />
+        <LessonHelpButton from="lesson" topic={lesson.title} />
       </header>
 
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>

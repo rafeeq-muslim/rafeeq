@@ -97,9 +97,11 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
     staleTime: Infinity,
     retry: 1,
   })
+  // A stored or malformed answer without verses is treated as no answer (never a crash mid-lesson).
+  const data = q.data && Array.isArray(q.data.ayat) && q.data.source ? q.data : undefined
   // An excerpt applies to a single verse whose span fits the stored text.
   const single = from === to
-  const excerptShown = !!(single && q.data && excerptOf(q.data.ayat[0]?.arabic ?? "", quran.excerpt?.words))
+  const excerptShown = !!(single && data && excerptOf(data.ayat[0]?.arabic ?? "", quran.excerpt?.words))
   // The book's translation of the quoted part replaces the full translation (QuranEnc text is never cut).
   const bookTranslation = excerptShown && locale !== "ar" ? quran.excerpt?.translation : undefined
   const recite = recitationOf(quran)
@@ -112,10 +114,10 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
           <Skeleton className="h-8 w-full" />
           <Skeleton className="h-8 w-2/3 self-center" />
         </div>
-      ) : q.data ? (
+      ) : data ? (
         <>
           <blockquote lang="ar" dir="rtl" className="text-center font-quran text-[1.65rem] leading-[2.6] text-foreground">
-            {q.data.ayat.map((a) => (
+            {data.ayat.map((a) => (
               <span key={a.aya}>
                 {(single && excerptOf(a.arabic, quran.excerpt?.words)) || a.arabic}{" "}
                 <span className="whitespace-nowrap text-primary">﴿{num(a.aya)}﴾</span>{" "}
@@ -127,9 +129,9 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
               <p>{bookTranslation}</p>
             </div>
           ) : (
-            q.data.ayat.some((a) => a.translation) && (
+            data.ayat.some((a) => a.translation) && (
               <div dir="auto" className="mt-4 flex flex-col gap-1 border-t border-primary/15 pt-4 font-reading text-reading text-foreground/90">
-                {q.data.ayat.map((a) => a.translation && <p key={a.aya}>{a.translation}</p>)}
+                {data.ayat.map((a) => a.translation && <p key={a.aya}>{a.translation}</p>)}
               </div>
             )
           )}
@@ -143,20 +145,20 @@ export function VerseBlock({ quran, lang }: { quran: QuranRef; /** Reviewer desk
         {bookTranslation ? (
           <span>{t("lesson.bookTranslation")}</span>
         ) : (
-          q.data?.source.translation && (
+          data?.source.translation && (
             // LRN-01 R3 (QuranEnc terms): the translation's version is shown with its name.
             <span>
-              {t("lesson.translation", { name: q.data.source.translation })}
-              {q.data.source.version && (
+              {t("lesson.translation", { name: data.source.translation })}
+              {data.source.version && (
                 <>
                   {" "}
-                  (<bdi className="tabular-nums">{q.data.source.version}</bdi>)
+                  (<bdi className="tabular-nums">{data.source.version}</bdi>)
                 </>
               )}
             </span>
           )
         )}
-        {q.data && !q.data.source.translation && <span>{q.data.source.name}</span>}
+        {data && !data.source.translation && <span>{data.source.name}</span>}
       </figcaption>
     </figure>
   )

@@ -19,7 +19,7 @@
 
 ## 2. Endpoints
 
-`GET /api/discover/recitations?lang=` → `{recitation: {id, reciter, title, source, origin_url, suras: {"1": url, …}} | null, reciters: [{id, quranpedia_id, reciter, source, origin_url}]}`. `recitation` is al-Muaiqly (merged, unless returned); `reciters` lists only Quranpedia reciters the reviewer approved (empty until then). The app builds each verse URL with `frontend/src/app/lib/quranpedia.ts` (shared with the lesson verse player, LRN-01 R4).
+`GET /api/discover/recitations?lang=` → `{recitation: {id, reciter, title, source, origin_url, suras: {"1": url, …}} | null, reciters: [{id, quranpedia_id, reciter, source, origin_url}]}`. `recitation` is al-Muaiqly (merged, unless returned); `reciters` lists only approved Quranpedia reciters: they stay **gated** (`gated=True`, the one exception to rules.md §1.4's «merged = shown»); the six were approved by the product owner's blanket approval on 2026-10-06 (`backend/app/knowledge/owner_approvals.py`, tests `backend/tests/test_knw08_owner_approval.py`), and a later return by the Sharia reviewer still withdraws a reciter. The app builds each verse URL with `frontend/src/app/lib/quranpedia.ts` (shared with the lesson verse player, LRN-01 R4).
 
 ## 3. Data
 
@@ -29,8 +29,8 @@
 
 | Example | Test |
 | --- | --- |
-| R4 ex1 (reciter and source shown) | `test_knw08_r4_approved_recitation_names_reciter_and_source` |
-| R4 ex2 (unclear terms / not reviewed → not listed) | `test_knw08_r4_unapproved_recitation_is_not_served` |
+| R4 ex1 (reciter and source shown) | `test_knw08_r4_merged_recitation_names_reciter_and_source` |
+| R4 ex2 (returned → not listed) | `test_knw08_r4_returned_recitation_withdrawn_until_corrected` |
 | R2 ex1/ex2 (meanings label; Arabic alone without translation) | `R2: verse without stored translation shows Arabic only` (vitest, `quran.test.ts`) |
 | R3 (meaning stops recitation first) | `R3: playing a meaning stops the recitation first` (vitest) |
 | R6 ex1/ex2 (resume on this device; other device starts at 1) | `R6: position is kept per surah on this device only` (vitest) |

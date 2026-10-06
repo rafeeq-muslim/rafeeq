@@ -22,7 +22,7 @@ from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
-from sqlalchemy import delete, func, select, update
+from sqlalchemy import and_, delete, exists, func, select, update
 
 from app.companion import notify
 from app.companion.common import (
@@ -94,6 +94,9 @@ class MessageOut(BaseModel):
 class ThreadOut(ThreadSummary):
     messages: list[MessageOut]
     can_block: bool
+    # CMP-03 R4: a conversation with a former mentor. It stays readable; what
+    # the learner writes here goes to their current mentor or to the pool.
+    link_ended: bool = False
 
 
 class CreatedOut(BaseModel):
@@ -221,6 +224,39 @@ async def _requester_gender(session, owner: Owner, given: str | None) -> str:
     raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "gender_required")
 
 
+async def _link_ended(session, req: HelpRequest) -> bool:
+    """CMP-03 R4: a mentor thread lives only as long as its link."""
+    if req.kind != "mentor" or req.learner_id is None:
+        return False
+    link = await session.get(MentorLink, req.learner_id)
+    return link is None or req.mentor_id is None or link.mentor_id != req.mentor_id
+
+
+async def _where_to_write(session, user: User, old: HelpRequest) -> HelpRequest:
+    """CMP-03 R4: writing in a former mentor's thread never reopens it to him.
+    The words go to the current mentor's thread; with no mentor they become a
+    request in the shared pool, answered by someone of the learner's own
+    gender in their language (CMP-01 R3)."""
+    from app.companion.mentors import get_or_create_thread
+
+    link = await session.get(MentorLink, user.id)
+    if link is not None:
+        return await get_or_create_thread(session, link)
+    t = now()
+    req = HelpRequest(
+        learner_id=user.id,
+        handle=user.display_name,
+        lang=user.locale if user.locale in ("ar", "en", "tl") else old.lang,
+        kind="human",
+        requester_gender=await _requester_gender(session, Owner(user=user, token_hash=None), None),
+        created_at=t,
+        last_activity_at=t,
+    )
+    session.add(req)
+    await session.flush()
+    return req
+
+
 async def _handle_for(session, owner: Owner) -> str:
     if owner.user is not None:
         return owner.user.display_name
@@ -305,7 +341,15 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
 async def my_requests(session: Session, owner: CurrentOwner) -> list[ThreadSummary]:
     if owner.anonymous:
         return []
-    rows = await session.scalars(select(HelpRequest).where(owner.clause()).order_by(HelpRequest.last_activity_at.desc()).limit(50))
+    # CMP-03 R4: a former mentor's thread with nothing in it (kept only as the record of the link) is not listed.
+    empty_ended = and_(
+        HelpRequest.kind == "mentor",
+        HelpRequest.status == "closed",
+        ~exists().where(HelpMessage.request_id == HelpRequest.id),
+    )
+    rows = await session.scalars(
+        select(HelpRequest).where(owner.clause(), ~empty_ended).order_by(HelpRequest.last_activity_at.desc()).limit(50)
+    )
     return [await _summary(session, r) for r in rows]
 
 
@@ -342,7 +386,12 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
     )
     await session.commit()
     summary = await _summary(session, req)
-    return ThreadOut(**summary.model_dump(), messages=out, can_block=req.mentor_id is not None and req.first_reply_at is not None)
+    return ThreadOut(
+        **summary.model_dump(),
+        messages=out,
+        can_block=req.mentor_id is not None and req.first_reply_at is not None,
+        link_ended=await _link_ended(session, req),
+    )
 
 
 @router.post("/requests/{request_id}/messages", status_code=201, response_model=ThreadSummary)
@@ -350,6 +399,8 @@ async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session,
     req = await owned(session, owner, request_id)
     ratelimit.hit(f"help-msg:{req.id}", 30, 60)
     text = clean_body(body.body)
+    if owner.user is not None and await _link_ended(session, req):
+        req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went
     t = now()
     session.add(HelpMessage(request_id=req.id, author="learner", author_id=owner.user.id if owner.user else None, body=text, created_at=t))
     req.status = "open"  # CMP-02 R4: writing in a closed request reopens it
@@ -412,5 +463,7 @@ async def block_responder(request_id: uuid.UUID, session: Session, owner: Curren
     if owner.user is not None:
         link = await session.get(MentorLink, owner.user.id)
         if link is not None and link.mentor_id == mentor_id:
-            await session.delete(link)
+            from app.companion.mentors import end_link
+
+            await end_link(session, link)  # CMP-03 R4: his other requests for this learner return to the pool
     await session.commit()

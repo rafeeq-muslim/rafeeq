@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | R1 | `frontend/src/app/companion/notebook.ts` | Zustand store persisted in this browser only (`rafeeq.notebook`); no API, no event. First use shows that it stays on this device and does not move between devices (`introSeen`) |
 | R2 | `notebook.ts::sendToMentor`, `assistantHandOff`; `pages/Ask.tsx` | One question at a time. Mentor: an ordinary message in the mentor thread (`/api/mentors/mine/thread`, then `/api/help/requests/{id}/messages`). Assistant: route state `{notebookQuestion}` read once by Ask and asked as a typed question. Offline: nothing leaves, the question stays marked «لم يُرسل بعد» |
-| R3 | — | Only `Notebook.tsx` reads the store; a test fails if any other source file imports it |
+| R3 | — | `Notebook.tsx` reads the store; the only other reader is `privacy/SignOutButton.tsx` (PLT-05 R7), which reads only the **number** of notes to warn that signing out would erase them, never their text. A test fails if any other source file imports it |
 | R4 | `notebook.ts` | Delete one question or the whole notebook; clearing site data removes it for good |
 | R5 | `Notebook.tsx` | «لا يوجد سؤال صغير أو بسيط. اكتب ما يخطر لك» and «أريد إنسانًا» (`/mentor/help?from=mentor`) |
 

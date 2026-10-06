@@ -117,12 +117,12 @@ afterEach(() => {
  * is never `display: none` at any width (no `hidden` class), it keeps its name,
  * and below 380px it becomes a 44px icon whose label is kept for screen readers. */
 function expectReachableAtNarrowWidths() {
-  const button = screen.getByRole("button", { name: ar("ask.human") })
+  const button = screen.getByRole("button", { name: ar("lesson.help") })
   const classes = button.className.split(/\s+/)
   expect(classes).not.toContain("hidden")
   expect(classes.some((c) => c.startsWith("min-[380px]:"))).toBe(false)
   expect(classes).toContain("max-[380px]:size-11")
-  const label = within(button).getByText(ar("ask.human"))
+  const label = within(button).getByText(ar("lesson.help"))
   expect(label.className).toBe("max-[380px]:sr-only")
   return button
 }

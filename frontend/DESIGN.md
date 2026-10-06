@@ -177,7 +177,7 @@ Rafeeq (رفيق, "companion") walks with a new Muslim through their first year,
 - Arabic first and right-to-left; every screen also works in English and Tagalog (left-to-right).
 - Mobile first: 375–390px is the design width, 44px is the minimum touch target.
 - Calm surfaces (mist background carrying the brand's spirit, white cards) with one strong action colour (violet). Amber is rare, so it means "you did it".
-- **Light by default; dark by choice.** The app opens light whatever the device says; in «حسابي» the learner can switch to dark (the ink world) or to «حسب الجهاز», which follows the device's own light/dark setting. The choice stays on the device.
+- **Follows the device by default.** With no choice made, the app follows `prefers-color-scheme` («حسب الجهاز», owner 2026-10-06; store v2 migrates the old v1 default "light" to "system"). In «حسابي» the learner can pin light, dark (the ink world) or go back to «حسب الجهاز». The choice stays on the device.
 - **Concept: «زهرة تكتمل», the year is a flower that completes petal by petal.** Every graphic is generated in code from the logo petal: the year flower (one petal coloured per month of learning, blooming once on Home), the halo framing it, the tone-on-tone petal pattern, the core glow behind numbers and badges, petal confetti, petal bullets and spot illustrations. No mascots, faces or living beings; no mosque or arch clichés.
 - **Mobile-game tactility:** pressable surfaces (main buttons, the continue tile, answer tiles, path steps) carry a 4px darker "lip" and press down on tap (Duolingo's pattern, in our pill shapes and colours). Informational surfaces stay flat.
 - **Night and day:** Home opens on a night-sky hero (ink to deep violet) with the year flower; content sits on a mist sheet that overlaps it with a 28px radius. Celebrations always happen at night.
@@ -245,7 +245,7 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - **Icon tiles:** `IconTile` (sm 40, md 44, lg 48) puts a white icon on the violet tile gradient for every row or tool that opens something. Violet only.
 - **Appearance:** `ThemeSwitcher` (فاتح / داكن / حسب الجهاز) in «حسابي», next to the language.
 - **Motivation:** no points and no leaderboard at all (rules.md §3); streaks and badges count learning only. The streak pauses, it never resets. Worship habits are private and never rewarded.
-- **Safety:** `HumanHelpButton` is visible on Ask and lesson screens. `DangerHelpPanel` replaces any AI answer in a danger case and never shows invented helpline numbers.
+- **Safety:** `HumanHelpButton` is always visible on Ask; the lesson and review help button opens Ask first (CMP-01 R1). `DangerHelpPanel` replaces any AI answer in a danger case and never shows invented helpline numbers.
 
 ## Do's and Don'ts
 
@@ -254,7 +254,7 @@ Primitives are shadcn/ui (radix-nova) in `src/components/ui`, re-themed to the t
 - Do say «متوقفة مؤقتًا» for a paused streak; don't say «خسرت سلسلتك» or show a broken-streak screen.
 - Do keep amber for celebration; don't use it for hovers, links or decoration.
 - Do pair each gradient utility with its flat colour and keep text on the stops that pass 4.5:1; don't put white text on the orchid or dawn end of a gradient.
-- Do open the app light and let the learner choose dark or «حسب الجهاز»; don't follow `prefers-color-scheme` unless the learner chose it.
+- Do follow the device by default («حسب الجهاز») and let the learner pin light or dark; an explicit choice always wins over the device.
 - Do use semantic tokens and shadcn variants; don't override component colours with `className` or add manual `dark:` colours.
 - Do use logical properties and test every screen in RTL and LTR; don't use `ml-*`, `pr-*`, `left-*` or `text-left`.
 - Do keep Arabic letter-spacing at 0 and line heights tall; don't apply `tracking-tight` to Arabic headings.

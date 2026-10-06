@@ -20,7 +20,8 @@ from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
-from sqlalchemy import and_, case, func, not_, or_, select, update
+from sqlalchemy import and_, case, exists, func, not_, or_, select, update
+from sqlalchemy.orm import aliased
 
 from app.companion import notify
 from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
@@ -67,6 +68,33 @@ Responder = Annotated[User, Depends(responder)]
 Mentor = Annotated[User, Depends(mentor_only)]
 
 
+def _live_link(mentor_id: uuid.UUID):
+    return exists().where(MentorLink.learner_id == HelpRequest.learner_id, MentorLink.mentor_id == mentor_id)
+
+
+def former_mentor_clause(mentor_id: uuid.UUID):
+    """CMP-03 R4: this mentor was the requester's mentor and the link ended
+    (changed, ended, blocked, suspended or approval withdrawn). Their private
+    thread, kept closed for the learner, is the record (`mentors.end_link`)."""
+    pair = aliased(HelpRequest)
+    return and_(
+        exists().where(pair.kind == "mentor", pair.learner_id == HelpRequest.learner_id, pair.mentor_id == mentor_id),
+        not_(_live_link(mentor_id)),
+    )
+
+
+def assigned_clause(mentor_id: uuid.UUID):
+    """Requests held by this mentor that are not closed. A private mentor
+    thread counts only while the learner's link with him lives (CMP-03 R4):
+    after the link ends he never sees that thread or the learner's new
+    words again, even if the thread were reopened."""
+    return and_(
+        HelpRequest.mentor_id == mentor_id,
+        HelpRequest.status != "closed",
+        or_(HelpRequest.kind != "mentor", _live_link(mentor_id)),
+    )
+
+
 def visible_clause(user: User, t: datetime, *, paused: bool = False):
     has_owner = or_(HelpRequest.learner_id.is_not(None), HelpRequest.guest_token_hash.is_not(None))
     urgent = and_(
@@ -90,9 +118,12 @@ def visible_clause(user: User, t: datetime, *, paused: bool = False):
                     HelpRequest.mentor_id.is_(None),
                     and_(HelpRequest.first_reply_at.is_(None), HelpRequest.created_at < t - OWN_MENTOR_FIRST),
                 ),
+                # CMP-03 R4: a former mentor never sees the learner's new words
+                # in the pool either. Urgent requests above keep danger routing.
+                not_(former_mentor_clause(user.id)),
             )
         )
-    conds.append(and_(HelpRequest.mentor_id == user.id, HelpRequest.status != "closed"))  # claimed, or own mentee
+    conds.append(assigned_clause(user.id))  # claimed, or own mentee
     return and_(or_(*conds), not_(blocked_by_owner_clause(user.id)))
 
 
@@ -164,12 +195,10 @@ async def visible_request(session, me: User, request_id: uuid.UUID) -> HelpReque
     req = await session.scalar(
         select(HelpRequest).where(
             HelpRequest.id == request_id,
-            # Security review #2: an assigned mentor keeps access only while the
-            # request is not closed (ending a mentor link closes its thread).
-            or_(
-                visible_clause(me, now(), paused=paused),
-                and_(HelpRequest.mentor_id == me.id, HelpRequest.status != "closed", not_(blocked_by_owner_clause(me.id))),
-            ),
+            # Security review #2 and CMP-03 R4: an assigned mentor keeps access
+            # only while the request is not closed, and to a private mentor
+            # thread only while the link lives (assigned_clause).
+            visible_clause(me, now(), paused=paused),
         )
     )
     if req is None:

@@ -176,3 +176,61 @@ async def test_cmp05_r5_mentor_removes_member(client):
     assert (await client.delete(f"/api/groups/{g['id']}/members/{joseph.id}", headers=mentor.h)).status_code == 204
     assert (await client.get("/api/groups/mine", headers=joseph.h)).json() == []
     assert await events("GroupLeft") == [{"group_id": g["id"], "user_id": str(joseph.id)}]
+
+
+async def join(client, who, g) -> int:
+    return (await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=who.h)).status_code
+
+
+async def removals(user_id) -> int:
+    from sqlalchemy import func
+
+    from app.companion.models import GroupRemoval
+
+    async with SessionLocal() as s:
+        return await s.scalar(select(func.count()).select_from(GroupRemoval).where(GroupRemoval.user_id == user_id)) or 0
+
+
+async def test_cmp05_r5_removed_member_cannot_rejoin_with_the_same_code(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    await client.delete(f"/api/groups/{g['id']}/members/{joseph.id}", headers=mentor.h)
+    r = await client.post("/api/groups/join", json={"code": g["join_code"]}, headers=joseph.h)
+    assert r.status_code == 403 and r.json()["detail"] == "group_unavailable"  # neutral: no "you were removed"
+    assert (await client.get("/api/groups/mine", headers=joseph.h)).json() == []
+    assert await events("GroupJoined") == [{"group_id": g["id"], "user_id": str(joseph.id)}]  # only the first join
+
+
+async def test_cmp05_r5_member_who_left_can_rejoin(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    await client.post(f"/api/groups/{g['id']}/leave", headers=joseph.h)
+    assert await join(client, joseph, g) == 200
+    assert await removals(joseph.id) == 0
+
+
+async def test_cmp05_r5_removal_does_not_affect_other_groups_or_members(client):
+    mentor = await abu(client)
+    other_mentor = await person(client, "abu-yusuf", roles=("mentor",), gender="m", languages=("en",))
+    joseph = await person(client, "joseph-1", gender="m")
+    daniel = await person(client, "daniel-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    await client.delete(f"/api/groups/{g['id']}/members/{joseph.id}", headers=mentor.h)
+    assert await join(client, daniel, g) == 200  # the code still works for everyone else
+    second = await group_with(client, mentor)
+    third = await group_with(client, other_mentor)
+    assert await join(client, joseph, second) == 200  # another group of the same mentor
+    await client.post(f"/api/groups/{second['id']}/leave", headers=joseph.h)
+    assert await join(client, joseph, third) == 200
+
+
+async def test_cmp05_r5_account_deletion_clears_the_removal(client):
+    mentor = await abu(client)
+    joseph = await person(client, "joseph-1", gender="m")
+    g = await group_with(client, mentor, joseph)
+    await client.delete(f"/api/groups/{g['id']}/members/{joseph.id}", headers=mentor.h)
+    assert await removals(joseph.id) == 1
+    assert (await client.delete("/api/me", headers=joseph.h)).status_code == 204
+    assert await removals(joseph.id) == 0  # PLT-05 R5: nothing about the person stays

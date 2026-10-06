@@ -53,11 +53,11 @@ Run the gallery with `cd frontend && npm install && npm run dev`. It shows every
 
 **Product rules the UI enforces**
 - A Sharia answer renders with `AssistantMessage` and at least one source; it ends with `SourceStrip`. No source → `ReferralCard`, not an answer.
-- `HumanHelpButton` («أريد إنسانًا») is visible on Ask and lesson screens. Danger → `DangerHelpPanel` only, no AI text, no invented phone numbers.
+- `HumanHelpButton` («أريد إنسانًا») is always visible on Ask; the lesson and review help button («مساعدة», `LessonHelpButton`) opens Ask with the lesson topic only (CMP-01 R1), and a `ReferralCard` with `question` asks «تحتاج إنسانًا؟». Danger → `DangerHelpPanel` only, no AI text, no invented phone numbers.
 - No points and no leaderboard at all (rules.md §3); streaks and badges count learning only. `HabitItem worship` shows «خاص بك» and never a count of worship.
 - A broken streak is «متوقفة مؤقتًا», never a loss screen.
 - Display name only in groups; no images of prophets or companions; no music under recitation.
-- Appearance (PLT-04, «المظهر» in `docs/design-system.md`): light by default, even on a dark device; dark or «حسب الجهاز» only by the learner's choice (`useDevice.theme`, `ThemeSwitcher`). Never follow `prefers-color-scheme` yourself. Night moments (Welcome, the Home sky, placement, celebrations) carry their own `dark` class.
+- Appearance (PLT-04, «المظهر» in `docs/design-system.md`): follows the device by default («حسب الجهاز», `theme: "system"`); light or dark only by the learner's choice (`useDevice.theme`, `ThemeSwitcher`). Only `lib/theme.ts` and `public/theme.js` read `prefers-color-scheme`. Night moments (Welcome, the Home sky, placement, celebrations) carry their own `dark` class.
 - Text 4.5:1 on its real background in both themes (large text and icons 3:1); add a row to `src/styles/contrast.test.ts` for any new token or gradient under text. Primary/secondary/celebrate fills are gradients (`bg-primary bg-grad-action`); a row or tool that opens something gets `IconTile`; screens inside `AppShell` sit on `Backdrop`.
 
 ## shadcn conventions (from the official shadcn skill in `.claude/skills/shadcn`)
