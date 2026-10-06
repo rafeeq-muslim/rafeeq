@@ -41,7 +41,10 @@ export type LibraryItemData = {
   files: LibraryFile[]
 }
 
-export type LibraryResponse = { lang: string; topics: { id: string; items: LibraryItemData[] }[] }
+/** KNW-06 R2: topics are the path's units (`unit`, localized `title`), then «عام» (id "general", no unit). */
+export type LibraryTopic = { id: string; unit?: string | null; title?: string; items: LibraryItemData[] }
+
+export type LibraryResponse = { lang: string; topics: LibraryTopic[] }
 
 export type Recitation = {
   id: string

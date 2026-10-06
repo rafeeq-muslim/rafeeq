@@ -352,7 +352,7 @@ describe("plt-09-r4 the model orders from the summary and the time of day only",
     useLearning.setState({ completed: { "u01-l1": DONE, "u01-l7": DONE } })
     routes["/api/home/order"] = () => ({ body: { order: { main: ["daily", "card", "ask"], optional: ["library", "reciter", "human", "save", "ramadan"] } } })
     routes["/api/discover/recitations"] = () => ({ body: { lang: "ar", recitation: null, reciters: [{ id: "quranpedia-255" }, { id: "quranpedia-250" }] } })
-    routes["/api/discover/library"] = () => ({ body: { lang: "ar", topics: [{ id: "basics", items: [{ id: "lib-1", title: "كتاب المسلم الجديد", topic: "basics" }] }] } })
+    routes["/api/discover/library"] = () => ({ body: { lang: "ar", topics: [{ id: "general", unit: null, items: [{ id: "lib-1", title: "كتاب المسلم الجديد", topic: "basics" }] }] } })
     seenBefore("library", "reciter")
     wrap("/")
     await waitFor(() => expect(sequence()).toEqual(["next", "daily", "card", "ask", "library", "reciter"]))

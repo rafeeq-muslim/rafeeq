@@ -1303,6 +1303,8 @@ export const ar = {
   "discover.lib.search.type.poster": "تصميم",
   "discover.lib.search.type.khutbah": "خطبة",
   "discover.lib.search.type.qa": "سؤال وجواب",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ---
+  "discover.lib.topic.general": "عام",
 
   // PLT-13 notifications on iPhone
   "plt13.iosUpdateTitle": "يحتاج جهازك تحديثًا لتصله الإشعارات",

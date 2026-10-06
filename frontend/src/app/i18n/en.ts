@@ -1304,6 +1304,8 @@ export const en: Dict = {
   "discover.lib.search.type.poster": "Poster",
   "discover.lib.search.type.khutbah": "Sermon",
   "discover.lib.search.type.qa": "Q&A",
+  // --- KNW-06 R2 (knw-06-r2-topics-are-path-units): library items without a path unit ---
+  "discover.lib.topic.general": "General",
 
   // PLT-13 notifications on iPhone
   "plt13.iosUpdateTitle": "Your iPhone needs an update for notifications",
