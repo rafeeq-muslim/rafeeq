@@ -239,7 +239,7 @@ export default function Ask() {
         <div ref={endRef} />
       </div>
 
-      <div className="sticky bottom-0 z-10 flex flex-col gap-2 bg-background/90 px-3 pt-2 pb-3 backdrop-blur">
+      <div className="sticky bottom-0 z-10 flex flex-col gap-2 border-t bg-card px-3 pt-2 pb-3">
         {notice === "tooLong" && (
           <p role="alert" className="px-2 text-label text-destructive">
             {t("ask.tooLong")}
