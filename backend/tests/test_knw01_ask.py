@@ -382,7 +382,8 @@ async def test_knw01_rate_limit(client, ai):
 async def test_knw01_malformed_marker_is_rejected(client, ai):
     await add_passages(SHAHADA)
     ai.on("router", ROUTE_GENERAL)
-    bad = {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{hadeethenc:en:101}}", "sources": ["hadeethenc:en:101"]}
+    # Broken braces (a missing «q:» with a retrieved id is now fixed: test_knw01_answer_rate.py).
+    bad = {"sufficient": True, "answer": "Nothing deserves worship but Allah. {{q:hadeethenc:en:101}", "sources": ["hadeethenc:en:101"]}
     ai.on("composer", bad, bad)  # the repair does not fix it
     b = await post(client, "What does la ilaha illa allah mean?")
     assert b["outcome"] == "verification_failed" and b["sources"] == []

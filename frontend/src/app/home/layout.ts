@@ -153,10 +153,11 @@ export function adhkarLine(t: DayTimes | null, now: Date): AdhkarLine {
   const n = now.getTime()
   for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const) {
     const at = t[k].getTime()
-    if (n >= at && n < at + AFTER_PRAYER_MS && k !== "fajr" && k !== "asr") return "afterPrayer"
+    if (n >= at && n < at + AFTER_PRAYER_MS) return "afterPrayer"
   }
   if (n >= t.fajr.getTime() && n < t.dhuhr.getTime()) return "morning"
   if (n >= t.asr.getTime() && n < t.isha.getTime()) return "evening"
-  if (n >= t.isha.getTime()) return "sleep"
+  // After Isha, and after midnight until Fajr (still the night after Isha).
+  if (n >= t.isha.getTime() || n < t.fajr.getTime()) return "sleep"
   return "any"
 }

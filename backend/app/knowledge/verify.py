@@ -19,6 +19,7 @@ Then a fast-model support check: every sentence is supported by the cited
 passages. If the checker cannot run, the answer is not shown (fail closed).
 """
 
+import re
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -86,12 +87,31 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
     return fails
 
 
+_SENTENCE_END = re.compile(r"(?<=[.!?؟。])\s+|\n+")
+
+
+def copied_sentences(out: dict[str, Any], retrieved: dict[str, dict[str, Any]]) -> list[str]:
+    """KNW-01 answer rate: the sentences that repeat scripture words (check 7),
+    handed to the one repair as sentences to remove or reword. Before this
+    the repair only heard "the answer repeated words of a verse or hadith"
+    and often repeated the same sentence (prod 2026-10-06, ask 5d062ba5)."""
+    st = get_settings()
+    scripture = [p["quote_text"] for p in retrieved.values() if p["kind"] in SCRIPTURE_KINDS]
+    found = []
+    for s in _SENTENCE_END.split(out.get("answer") or ""):
+        body = strip_markers(s)
+        if body.strip() and any(ngram_overlap(body, q, st.knw_scripture_overlap_words) for q in scripture):
+            found.append(s.strip()[:300])
+    return found[:6]
+
+
 async def verify(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, Any]]) -> VerificationResult:
     """Code checks, then the model support check (main model, then fallback,
     inside the request budget). Fails closed: nothing is shown unless passed."""
     fails = code_checks(out, lang, retrieved)
     if fails:
-        return VerificationResult("rejected", fails)
+        copied = copied_sentences(out, retrieved) if "scripture_copied_outside_marker" in fails else []
+        return VerificationResult("rejected", fails, copied)
     cited = [agents.passage_block(retrieved[i]) for i in cited_ids(out)]
     try:
         r = await agents.support_check("verifier", out["answer"], cited)

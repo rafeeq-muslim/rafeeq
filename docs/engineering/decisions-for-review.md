@@ -307,6 +307,25 @@ Branch `org-01-03-organizations-build`. Built now on the product owner's standin
 
 **Pending a human:** Companion's owner to agree the `MentorContacted` event (name, payload `{user_id}`, when it is sent) for MOT-08 R6; the MOT-06 challenge pushes («لمجموعتك هدف جديد هذا الأسبوع») vs rules.md §3 «at most one notification per day» were not changed (needs the Motivation owner and product owner).
 
+## KNW-01 answer rate (branch `knw-01-answer-rate`, 2026-10-06)
+
+Evidence and numbers: `docs/engineering/implementation/KNW-01-chatbot-reliability-report.md` §12.
+
+| Decision | Why | Where |
+| --- | --- | --- |
+| A malformed marker is rewritten as `{{q:ID}}` only when every id in it was retrieved this attempt; it never invents an id | 2 of 4 English failures (and 7 repairs) were `malformed_marker` from `{{ID}}` | `textcheck.fix_markers`, `agents._composer_out` |
+| English and Tagalog honorifics are exempt from the scripture-overlap check, as the Arabic formulae already were; n stays 6 | «may Allah's peace and blessings be upon him» is in 1,875 of 2,328 English hadith passages, so honouring the Prophet ﷺ counted as copying | `textcheck.LATIN_FORMULAE` |
+| The one repair is told which sentences copied scripture | repairs repeated the same sentence | `verify.copied_sentences` |
+| An approximate FAQ match needs the same topic words | «ما هو الوضوء؟» was served «ما فضل الوضوء؟» | `approved.matches` |
+| `verification_failed` is retryable by the user; on `verification_failed` and `unavailable` the person is a secondary button | the failure screen led with «أريد إنسانًا» | `ask.RETRYABLE`, `ask/parts.tsx` |
+| Router: `personal` only for rulings that depend on the asker's own facts; everyday Muslim life is in scope | "Can I pray in jeans?" was `personal`, «ماذا آكل في حفلة العمل؟» was `out_of_scope` | `prompts/router.md` |
+
+**Pending a human (knowledge owner مسلّم, Sharia reviewer):**
+- the PRD §5 R4 row for `verification_failed` (a user retry added);
+- the narrowed `personal` route;
+- the honorific list;
+- two answers seen while testing: hijab defined as covering the face, presented as settled; "five daily prayers" sourced only to 76:25.
+
 ## PLT-04 light theme re-applied (branch `plt-04-light-theme-reapply`, 2026-10-06)
 
 PR #30 re-applied on the product owner's instruction (2026-10-06); design owner ناصر بن خالد to review. PR #31 had reverted it with no reason given.
