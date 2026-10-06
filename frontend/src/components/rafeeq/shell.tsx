@@ -53,17 +53,20 @@ function AppShell({
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         {top}
-        <div className="flex min-h-0 flex-1 justify-center gap-8 overflow-y-auto overscroll-contain @min-[52.5rem]/shell:px-6 @min-[52.5rem]/shell:py-6">
+        {/* The column is as tall as its content (self-start), so a sticky bar stays
+            for the whole scroll. Expanded: the vertical padding is on the column, not on the scroller,
+            so a sticky bar reaches the scroller's edge and nothing shows past it. */}
+        <div className="flex min-h-0 flex-1 justify-center gap-8 overflow-y-auto overscroll-contain @min-[52.5rem]/shell:px-6">
           <main
             className={cn(
-              "flex w-full min-w-0 max-w-[37.5rem] flex-col gap-5 pb-6 *:shrink-0",
+              "flex min-h-full w-full min-w-0 max-w-[37.5rem] flex-col gap-5 self-start pb-6 *:shrink-0 @min-[52.5rem]/shell:py-6",
               contentClassName
             )}
           >
             {children}
           </main>
           {aside && (
-            <aside className="sticky top-0 hidden w-80 shrink-0 flex-col gap-4 self-start @min-[52.5rem]/shell:flex">
+            <aside className="sticky top-0 hidden w-80 shrink-0 flex-col gap-4 self-start py-6 @min-[52.5rem]/shell:flex">
               {aside}
             </aside>
           )}
@@ -134,8 +137,10 @@ function NavRail({
 }
 
 /**
- * Compact top bar: safe-area aware, sticky, translucent. On expanded widths
- * it reads as the column header.
+ * Compact top bar: safe-area aware, sticky, opaque (PLT-04: nothing shows
+ * through a bar). It sits on the backdrop, so it takes the card surface like
+ * the navigation, with a hairline under it. On expanded widths it reads as
+ * the column header.
  */
 function TopBar({
   start,
@@ -152,7 +157,7 @@ function TopBar({
     <header
       data-slot="top-bar"
       className={cn(
-        "z-10 flex min-h-14 shrink-0 items-center gap-2 border-b bg-background/85 px-4 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md",
+        "z-10 flex min-h-14 shrink-0 items-center gap-2 border-b bg-card px-4 pt-[env(safe-area-inset-top,0px)]",
         className
       )}
     >

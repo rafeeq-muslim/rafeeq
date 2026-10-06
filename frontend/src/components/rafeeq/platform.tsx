@@ -55,7 +55,7 @@ function BottomNav({
       data-slot="bottom-nav"
       aria-label="التنقل الرئيسي"
       className={cn(
-        "border-t bg-card/95 px-2 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.5rem)] backdrop-blur",
+        "border-t bg-card px-2 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.5rem)]",
         className
       )}
     >

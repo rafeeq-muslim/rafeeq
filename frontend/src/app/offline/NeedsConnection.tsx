@@ -22,7 +22,7 @@ export function OfflineIndicator() {
     <p
       role="status"
       data-slot="offline-indicator"
-      className="pointer-events-none fixed inset-x-0 top-[calc(env(safe-area-inset-top,0px)+0.75rem)] z-40 mx-auto flex w-fit items-center gap-1.5 rounded-full bg-card/95 px-3 py-1 text-caption text-muted-foreground shadow-raised backdrop-blur"
+      className="pointer-events-none fixed inset-x-0 top-[calc(env(safe-area-inset-top,0px)+0.75rem)] z-40 mx-auto flex w-fit items-center gap-1.5 rounded-full bg-card px-3 py-1 text-caption text-muted-foreground shadow-raised"
     >
       <IconWifiOff className="size-3.5 shrink-0" stroke={1.75} aria-hidden="true" />
       {t("offline.indicator")}

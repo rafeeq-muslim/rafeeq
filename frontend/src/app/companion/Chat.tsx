@@ -141,7 +141,7 @@ export function Composer({
   return (
     <div
       className={cn(
-        "sticky bottom-0 z-10 -mx-4 flex flex-col gap-1.5 border-t bg-background/95 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] backdrop-blur",
+        "sticky bottom-0 z-10 -mx-4 flex flex-col gap-1.5 border-t bg-card px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]",
         className
       )}
     >

@@ -144,7 +144,7 @@ function Player({ lesson }: { lesson: LessonT }) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
-      <header className="sticky top-0 z-10 flex items-center gap-3 bg-background/90 px-3 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] pb-2 backdrop-blur">
+      <header className="sticky top-0 z-10 flex items-center gap-3 border-b bg-background px-3 pt-[calc(env(safe-area-inset-top,0px)+0.5rem)] pb-2">
         <Button variant="ghost" size="icon" aria-label={t("lesson.exit")} onClick={() => navigate("/learn")}>
           <IconX />
         </Button>
@@ -219,7 +219,7 @@ function Player({ lesson }: { lesson: LessonT }) {
             }
           />
         ) : (
-          <div className="mx-auto flex max-w-xl gap-3 border-t bg-background/95 px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)] backdrop-blur">
+          <div className="mx-auto flex max-w-xl gap-3 border-t bg-background px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
             {screen.kind === "card" ? (
               <>
                 {screen.index > 0 && (
