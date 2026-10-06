@@ -33,7 +33,7 @@ function CelebrationScreen({
   title: string
   /** One encouraging sentence about what this unlocks. */
   message?: string
-  /** e.g. ["5 دروس", "120 نقطة تعلّم"] */
+  /** e.g. ["5 دروس"] — learning progress only, never points (rules.md §3) */
   stats?: React.ReactNode[]
   /** e.g. «تابع إلى درس الصلاة» */
   primaryLabel: string
