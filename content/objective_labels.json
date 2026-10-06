@@ -1,0 +1,417 @@
+{
+ "u01-l1-o1": {
+  "ar": "معنى «لا إله إلا الله»",
+  "en": "The meaning of “there is no god but Allah”",
+  "tl": "Ang kahulugan ng “walang diyos kundi si Allah”"
+ },
+ "u01-l1-o2": {
+  "ar": "معنى «محمد رسول الله»",
+  "en": "The meaning of “Muhammad is the Messenger of Allah”",
+  "tl": "Ang kahulugan ng “si Muhammad ay Sugo ni Allah”"
+ },
+ "u01-l2-o1": {
+  "ar": "الطهارة شرط للصلاة",
+  "en": "Purification as a condition of prayer",
+  "tl": "Ang kalinisan bilang kondisyon ng pagdarasal"
+ },
+ "u01-l2-o2": {
+  "ar": "ما يجب له الوضوء",
+  "en": "What wudu’ is required for",
+  "tl": "Kung para saan kailangan ang wudhu"
+ },
+ "u01-l2-o3": {
+  "ar": "الماء الطهور",
+  "en": "Purifying water",
+  "tl": "Ang tubig na naglilinis"
+ },
+ "u01-l3-o1": {
+  "ar": "موضع النية ومعناها",
+  "en": "Where intention is made and what it means",
+  "tl": "Kung saan ginagawa ang intensyon at ang kahulugan nito"
+ },
+ "u01-l3-o2": {
+  "ar": "أول أربع خطوات في الوضوء",
+  "en": "The first four steps of wudu’",
+  "tl": "Ang unang apat na hakbang ng wudhu"
+ },
+ "u01-l3-o3": {
+  "ar": "المضمضة والاستنشاق والاستنثار",
+  "en": "Rinsing the mouth and cleaning the nose",
+  "tl": "Ang pagmumog at paglinis ng ilong"
+ },
+ "u01-l4-o1": {
+  "ar": "خطوات الوضوء الثماني",
+  "en": "The eight steps of wudu’",
+  "tl": "Ang walong hakbang ng wudhu"
+ },
+ "u01-l4-o2": {
+  "ar": "حدود الغسل في الوضوء",
+  "en": "How far to wash in wudu’",
+  "tl": "Hanggang saan huhugasan sa wudhu"
+ },
+ "u01-l4-o3": {
+  "ar": "نواقض الوضوء",
+  "en": "What breaks wudu’",
+  "tl": "Ang nakakasira sa wudhu"
+ },
+ "u01-l4-o4": {
+  "ar": "الطهارة بعد قضاء الحاجة",
+  "en": "Cleaning after using the toilet",
+  "tl": "Ang paglilinis pagkatapos gumamit ng palikuran"
+ },
+ "u01-l5-o1": {
+  "ar": "الصلوات الخمس بترتيبها",
+  "en": "The five daily prayers in order",
+  "tl": "Ang limang pang-araw-araw na dasal ayon sa pagkakasunod"
+ },
+ "u01-l5-o2": {
+  "ar": "الوضوء والغسل: متى يجب كلٌّ منهما",
+  "en": "When wudu’ is needed and when ghusl is needed",
+  "tl": "Kailan kailangan ang wudhu at kailan ang ghusl"
+ },
+ "u01-l5-o3": {
+  "ar": "الطهارة والستر في الصلاة",
+  "en": "Cleanliness and covering in prayer",
+  "tl": "Ang kalinisan at pagtatakip sa pagdarasal"
+ },
+ "u01-l5-o4": {
+  "ar": "الصلاة قبل حفظ أقوالها",
+  "en": "Praying before you know its words by heart",
+  "tl": "Ang pagdarasal bago maisaulo ang mga salita nito"
+ },
+ "u01-l6-o1": {
+  "ar": "أفعال الصلاة حتى الركوع",
+  "en": "The actions of prayer up to bowing",
+  "tl": "Ang mga gawain sa pagdarasal hanggang sa pagyuko"
+ },
+ "u01-l6-o2": {
+  "ar": "الركوع وما يقال فيه",
+  "en": "Bowing and what is said in it",
+  "tl": "Ang pagyuko at ang sinasabi rito"
+ },
+ "u01-l6-o3": {
+  "ar": "قراءة الفاتحة في كل ركعة",
+  "en": "Reading al-Fātiḥah in every rak‘ah",
+  "tl": "Ang pagbasa ng Al-Fatiha sa bawat raka’a"
+ },
+ "u01-l7-o1": {
+  "ar": "أفعال الصلاة من الرفع من الركوع",
+  "en": "The actions of prayer after rising from bowing",
+  "tl": "Ang mga gawain sa pagdarasal pagkatapos tumayo mula sa pagyuko"
+ },
+ "u01-l7-o2": {
+  "ar": "أذكار الرفع والسجود والجلوس",
+  "en": "What is said when rising, prostrating and sitting",
+  "tl": "Ang sinasabi sa pagtayo, pagpapatirapa at pag-upo"
+ },
+ "u01-l7-o3": {
+  "ar": "التشهد وختام الصلاة",
+  "en": "The tashahhud and how prayer ends",
+  "tl": "Ang tashahhud at kung paano nagtatapos ang pagdarasal"
+ },
+ "u2-l1-o1": {
+  "ar": "الله ربي ورب كل شيء",
+  "en": "Allah, my Lord and the Lord of all things",
+  "tl": "Si Allah, ang aking Panginoon at Panginoon ng lahat"
+ },
+ "u2-l1-o2": {
+  "ar": "الله وحده المستحق للعبادة",
+  "en": "Allah alone is worthy of worship",
+  "tl": "Si Allah lamang ang karapat-dapat sambahin"
+ },
+ "u2-l1-o3": {
+  "ar": "أسماء الله الحسنى وصفاته",
+  "en": "Allah’s beautiful names and attributes",
+  "tl": "Ang magagandang pangalan at katangian ni Allah"
+ },
+ "u2-l2-o1": {
+  "ar": "معاني: الرزّاق، الرحمن، القدير، الملك",
+  "en": "The meanings of the Provider, the Most Merciful, the All-Powerful, the King",
+  "tl": "Ang kahulugan ng Tagapagtustos, Pinakamaawain, Makapangyarihan, Hari"
+ },
+ "u2-l2-o2": {
+  "ar": "معاني: السميع، السلام، البصير، الوكيل",
+  "en": "The meanings of the All-Hearing, the Perfect, the All-Seeing, the Trustee",
+  "tl": "Ang kahulugan ng Nakaririnig, Ganap, Nakakikita, Pinagkakatiwalaan"
+ },
+ "u2-l2-o3": {
+  "ar": "معاني: الخالق، اللطيف، الكافي، الغفور",
+  "en": "The meanings of the Creator, the Subtle, the Sufficient, the Forgiving",
+  "tl": "Ang kahulugan ng Tagapaglikha, Mabait, Sapat, Mapagpatawad"
+ },
+ "u2-l2-o4": {
+  "ar": "التفكّر في خلق الله ولطفه",
+  "en": "Reflecting on Allah’s creation and kindness",
+  "tl": "Ang pagninilay sa nilikha at kabaitan ni Allah"
+ },
+ "u2-l3-o1": {
+  "ar": "محمد ﷺ خاتم الأنبياء",
+  "en": "Muhammad ﷺ, the last of the prophets",
+  "tl": "Si Muhammad ﷺ, ang huling propeta"
+ },
+ "u2-l3-o2": {
+  "ar": "التوحيد والشرك",
+  "en": "Tawhid and shirk",
+  "tl": "Ang tawhid at shirk"
+ },
+ "u2-l3-o3": {
+  "ar": "من صفات النبي ﷺ",
+  "en": "Qualities of the Prophet ﷺ",
+  "tl": "Mga katangian ng Propeta ﷺ"
+ },
+ "u2-l4-o1": {
+  "ar": "القرآن كلام الله",
+  "en": "The Quran, the word of Allah",
+  "tl": "Ang Quran, ang salita ni Allah"
+ },
+ "u2-l4-o2": {
+  "ar": "لماذا أنزل الله القرآن",
+  "en": "Why Allah sent down the Quran",
+  "tl": "Kung bakit ipinahayag ni Allah ang Quran"
+ },
+ "u2-l4-o3": {
+  "ar": "فضل قراءة القرآن والعمل به",
+  "en": "The virtue of reading the Quran and following it",
+  "tl": "Ang kabutihan ng pagbasa sa Quran at pagsunod dito"
+ },
+ "u3-l1-o1": {
+  "ar": "أركان الإسلام الخمسة بترتيبها",
+  "en": "The five pillars of Islam in order",
+  "tl": "Ang limang haligi ng Islam ayon sa pagkakasunod"
+ },
+ "u3-l1-o2": {
+  "ar": "لماذا سُمّيت أركانًا",
+  "en": "Why they are called pillars",
+  "tl": "Kung bakit tinawag silang mga haligi"
+ },
+ "u3-l2-o1": {
+  "ar": "إقامة الصلاة",
+  "en": "Establishing the prayer",
+  "tl": "Ang pagtataguyod ng pagdarasal"
+ },
+ "u3-l2-o2": {
+  "ar": "الزكاة: حكمتها ولمن تُعطى",
+  "en": "Zakah: its purpose and who receives it",
+  "tl": "Ang zakah: ang layunin nito at kung kanino ibinibigay"
+ },
+ "u3-l2-o3": {
+  "ar": "مقدار زكاة المال ووقتها",
+  "en": "How much zakah on savings, and when",
+  "tl": "Gaano kalaki ang zakah sa ipon, at kailan"
+ },
+ "u3-l3-o1": {
+  "ar": "صيام رمضان ركن من أركان الإسلام",
+  "en": "Fasting Ramadan, a pillar of Islam",
+  "tl": "Ang pag-aayuno sa Ramadan, isang haligi ng Islam"
+ },
+ "u3-l3-o2": {
+  "ar": "معنى الصوم ووقته",
+  "en": "What fasting is and when it starts and ends",
+  "tl": "Ang kahulugan ng pag-aayuno at ang oras nito"
+ },
+ "u3-l3-o3": {
+  "ar": "الحج على المستطيع مرة في العمر",
+  "en": "Hajj once in a lifetime for those able",
+  "tl": "Ang Hajj minsan sa buhay para sa may kakayahan"
+ },
+ "u4-l1-o1": {
+  "ar": "أركان الإيمان الستة",
+  "en": "The six pillars of faith",
+  "tl": "Ang anim na haligi ng pananampalataya"
+ },
+ "u4-l1-o2": {
+  "ar": "الفرق بين أركان الإسلام وأركان الإيمان",
+  "en": "Pillars of Islam and pillars of faith: the difference",
+  "tl": "Ang pagkakaiba ng mga haligi ng Islam at ng pananampalataya"
+ },
+ "u4-l1-o3": {
+  "ar": "معنى الإيمان وأنه يزيد وينقص",
+  "en": "What faith is, and that it rises and falls",
+  "tl": "Ang kahulugan ng pananampalataya, at na ito ay nadaragdagan at nababawasan"
+ },
+ "u4-l1-o4": {
+  "ar": "ما يتضمنه الإيمان بالله",
+  "en": "What belief in Allah includes",
+  "tl": "Ang saklaw ng paniniwala kay Allah"
+ },
+ "u4-l2-o1": {
+  "ar": "الملائكة",
+  "en": "The angels",
+  "tl": "Ang mga anghel"
+ },
+ "u4-l2-o2": {
+  "ar": "جبريل عليه السلام والوحي",
+  "en": "Jibril (peace be upon him) and revelation",
+  "tl": "Si Jibril (sumakanya nawa ang kapayapaan) at ang rebelasyon"
+ },
+ "u4-l2-o3": {
+  "ar": "الإيمان بالكتب وحفظ القرآن",
+  "en": "Belief in the books, and the Quran’s preservation",
+  "tl": "Ang paniniwala sa mga kasulatan at ang pag-iingat sa Quran"
+ },
+ "u4-l2-o4": {
+  "ar": "الكتب السماوية والأنبياء",
+  "en": "The revealed books and their prophets",
+  "tl": "Ang mga ipinahayag na kasulatan at ang kanilang mga propeta"
+ },
+ "u4-l3-o1": {
+  "ar": "في كل أمة رسول",
+  "en": "A messenger to every nation",
+  "tl": "Isang sugo sa bawat bansa"
+ },
+ "u4-l3-o2": {
+  "ar": "صفات الرسل",
+  "en": "Qualities of the messengers",
+  "tl": "Mga katangian ng mga sugo"
+ },
+ "u4-l3-o3": {
+  "ar": "دعوة الرسل واحدة",
+  "en": "The messengers’ one message",
+  "tl": "Iisang mensahe ng mga sugo"
+ },
+ "u4-l3-o4": {
+  "ar": "الإيمان باليوم الآخر",
+  "en": "Belief in the Last Day",
+  "tl": "Ang paniniwala sa Huling Araw"
+ },
+ "u4-l4-o1": {
+  "ar": "معنى الإيمان بالقدر",
+  "en": "What belief in divine decree means",
+  "tl": "Ang kahulugan ng paniniwala sa tadhana"
+ },
+ "u4-l4-o2": {
+  "ar": "إرادة الإنسان ومشيئة الله",
+  "en": "Human will and Allah’s will",
+  "tl": "Ang kalooban ng tao at ang kalooban ni Allah"
+ },
+ "u4-l4-o3": {
+  "ar": "مراتب الإيمان بالقدر الأربع",
+  "en": "The four levels of belief in divine decree",
+  "tl": "Ang apat na antas ng paniniwala sa tadhana"
+ },
+ "u5-l1-o1": {
+  "ar": "متى يجوز المسح على الخفين والجوربين",
+  "en": "When wiping over leather and cloth socks is allowed",
+  "tl": "Kailan pinapayagan ang pagpunas sa khuff at medyas"
+ },
+ "u5-l1-o2": {
+  "ar": "مدة المسح",
+  "en": "How long wiping is allowed",
+  "tl": "Gaano katagal pinapayagan ang pagpunas"
+ },
+ "u5-l1-o3": {
+  "ar": "صفة المسح",
+  "en": "How to wipe",
+  "tl": "Kung paano magpunas"
+ },
+ "u5-l1-o4": {
+  "ar": "ما يبطل المسح",
+  "en": "What ends the wiping allowance",
+  "tl": "Ang nakakasira sa pagpunas"
+ },
+ "u5-l2-o1": {
+  "ar": "ما يوجب الغسل",
+  "en": "What requires ghusl",
+  "tl": "Ang nag-oobliga ng ghusl"
+ },
+ "u5-l2-o2": {
+  "ar": "صفة الغسل",
+  "en": "How to do ghusl",
+  "tl": "Kung paano gawin ang ghusl"
+ },
+ "u5-l2-o3": {
+  "ar": "ما يُمنع قبل الغسل",
+  "en": "What is not allowed before ghusl",
+  "tl": "Ang hindi pinapayagan bago ang ghusl"
+ },
+ "u5-l3-o1": {
+  "ar": "متى يتيمم المسلم",
+  "en": "When to do tayammum",
+  "tl": "Kailan gagawin ang tayammum"
+ },
+ "u5-l3-o2": {
+  "ar": "صفة التيمم",
+  "en": "How to do tayammum",
+  "tl": "Kung paano gawin ang tayammum"
+ },
+ "u5-l3-o3": {
+  "ar": "ما يبطل التيمم",
+  "en": "What breaks tayammum",
+  "tl": "Ang nakakasira sa tayammum"
+ },
+ "u6-l1-o1": {
+  "ar": "حجاب المرأة المسلمة",
+  "en": "The Muslim woman’s hijab",
+  "tl": "Ang hijab ng babaeng Muslim"
+ },
+ "u6-l1-o2": {
+  "ar": "المحارم",
+  "en": "The mahram relatives",
+  "tl": "Ang mga mahram"
+ },
+ "u6-l1-o3": {
+  "ar": "ضوابط لباس المرأة المسلمة",
+  "en": "The guidelines for a Muslim woman’s dress",
+  "tl": "Ang mga panuntunan sa pananamit ng babaeng Muslim"
+ },
+ "u6-l2-o1": {
+  "ar": "صفات المؤمن مع الناس",
+  "en": "The believer’s character with people",
+  "tl": "Ang ugali ng mananampalataya sa kapwa"
+ },
+ "u6-l2-o2": {
+  "ar": "قلب المؤمن",
+  "en": "The believer’s heart",
+  "tl": "Ang puso ng mananampalataya"
+ },
+ "u6-l2-o3": {
+  "ar": "ما يجتنبه المؤمن",
+  "en": "What the believer stays away from",
+  "tl": "Ang iniiwasan ng mananampalataya"
+ },
+ "u6-l2-o4": {
+  "ar": "حق الوالدين والجيران",
+  "en": "The rights of parents and neighbours",
+  "tl": "Ang karapatan ng mga magulang at kapitbahay"
+ },
+ "u6-l3-o1": {
+  "ar": "الصلة المباشرة بالله",
+  "en": "A direct bond with Allah",
+  "tl": "Ang tuwirang ugnayan kay Allah"
+ },
+ "u6-l3-o2": {
+  "ar": "الحكمة من خلقنا",
+  "en": "Why we were created",
+  "tl": "Kung bakit tayo nilikha"
+ },
+ "u6-l3-o3": {
+  "ar": "الضرورات الخمس",
+  "en": "The five essentials the Sharia protects",
+  "tl": "Ang limang mahalagang bagay na pinangangalagaan ng Shariah"
+ },
+ "u6-l3-o4": {
+  "ar": "الطمأنينة مع الله",
+  "en": "Peace of heart with Allah",
+  "tl": "Ang kapanatagan ng puso kay Allah"
+ },
+ "u6-l4-o1": {
+  "ar": "طعم الإيمان",
+  "en": "The sweetness of faith",
+  "tl": "Ang tamis ng pananampalataya"
+ },
+ "u6-l4-o2": {
+  "ar": "الحياة الطيبة",
+  "en": "The good life",
+  "tl": "Ang mabuting buhay"
+ },
+ "u6-l4-o3": {
+  "ar": "اليقين والرضا عند المصائب",
+  "en": "Certainty and contentment in hardship",
+  "tl": "Ang katiyakan at pagtanggap sa panahon ng pagsubok"
+ },
+ "u6-l4-o4": {
+  "ar": "ما يزيد سعادة المسلم",
+  "en": "What adds to a Muslim’s happiness",
+  "tl": "Ang nagdaragdag sa kaligayahan ng Muslim"
+ }
+}

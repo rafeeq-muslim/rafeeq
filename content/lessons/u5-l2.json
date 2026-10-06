@@ -79,6 +79,11 @@
         "en": "Knows that intercourse and ejaculation with desire require ghusl",
         "tl": "Alam na ang pakikipagtalik at paglabas ng semilya ay nag-oobliga ng paligo"
       },
+      "label": {
+        "ar": "ما يوجب الغسل",
+        "en": "What requires ghusl",
+        "tl": "Ang nag-oobliga ng ghusl"
+      },
       "cards": [
         "u5-l2-c1"
       ],
@@ -91,6 +96,11 @@
         "en": "Describes ghusl: washing the whole body with water",
         "tl": "Nailalarawan ang ghusl: pagbasa ng buong katawan ng tubig"
       },
+      "label": {
+        "ar": "صفة الغسل",
+        "en": "How to do ghusl",
+        "tl": "Kung paano gawin ang ghusl"
+      },
       "cards": [
         "u5-l2-c2"
       ],
@@ -102,6 +112,11 @@
         "ar": "يعرف ما يُحظر على الجنب حتى يغتسل",
         "en": "Knows what a person in janābah may not do until he makes ghusl",
         "tl": "Alam ang mga bagay na hindi maaaring gawin ng isang junub hanggang siya ay maligo"
+      },
+      "label": {
+        "ar": "ما يُمنع قبل الغسل",
+        "en": "What is not allowed before ghusl",
+        "tl": "Ang hindi pinapayagan bago ang ghusl"
       },
       "cards": [
         "u5-l2-c3"

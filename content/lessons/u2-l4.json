@@ -71,6 +71,11 @@
         "en": "Knows that the Qur’an is the word of Allah, revealed to His Prophet Muhammad ﷺ",
         "tl": "Alam na ang Qur’an ay salita ng Allah na ipinahayag kay Propeta Muhammad ﷺ"
       },
+      "label": {
+        "ar": "القرآن كلام الله",
+        "en": "The Quran, the word of Allah",
+        "tl": "Ang Quran, ang salita ni Allah"
+      },
       "cards": [
         "u2-l4-c2",
         "u2-l4-c1"
@@ -84,6 +89,11 @@
         "en": "Knows why Allah revealed the Qur’an",
         "tl": "Alam kung bakit ipinahayag ng Allah ang Qur’an"
       },
+      "label": {
+        "ar": "لماذا أنزل الله القرآن",
+        "en": "Why Allah sent down the Quran",
+        "tl": "Kung bakit ipinahayag ni Allah ang Quran"
+      },
       "cards": [
         "u2-l4-c2"
       ],
@@ -95,6 +105,11 @@
         "ar": "يعرف فضل قراءة القرآن والعمل بهديه",
         "en": "Knows the reward of reading the Qur’an and acting upon its guidance",
         "tl": "Alam ang gantimpala ng pagbasa ng Qur’an at pagsunod sa patnubay nito"
+      },
+      "label": {
+        "ar": "فضل قراءة القرآن والعمل به",
+        "en": "The virtue of reading the Quran and following it",
+        "tl": "Ang kabutihan ng pagbasa sa Quran at pagsunod dito"
       },
       "cards": [
         "u2-l4-c3"

@@ -79,6 +79,11 @@
         "en": "Knows when a Muslim makes tayammum",
         "tl": "Alam kung kailan nagta-tayammum ang Muslim"
       },
+      "label": {
+        "ar": "متى يتيمم المسلم",
+        "en": "When to do tayammum",
+        "tl": "Kailan gagawin ang tayammum"
+      },
       "cards": [
         "u5-l3-c1"
       ],
@@ -91,6 +96,11 @@
         "en": "Describes how tayammum is done",
         "tl": "Nailalarawan ang paraan ng tayammum"
       },
+      "label": {
+        "ar": "صفة التيمم",
+        "en": "How to do tayammum",
+        "tl": "Kung paano gawin ang tayammum"
+      },
       "cards": [
         "u5-l3-c2"
       ],
@@ -102,6 +112,11 @@
         "ar": "يعرف مبطلات التيمم",
         "en": "Knows what invalidates tayammum",
         "tl": "Alam ang nakasisira sa tayammum"
+      },
+      "label": {
+        "ar": "ما يبطل التيمم",
+        "en": "What breaks tayammum",
+        "tl": "Ang nakakasira sa tayammum"
       },
       "cards": [
         "u5-l3-c3"

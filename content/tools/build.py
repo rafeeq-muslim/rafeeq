@@ -16,6 +16,9 @@ import json, os, re, sys, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+# The name a learner reads for each objective (LRN-10 R1); `text` stays the team's wording.
+with open(os.path.join(ROOT, 'objective_labels.json'), encoding='utf-8') as f:
+    LABELS = json.load(f)
 sys.path.insert(0, HERE)
 LANGS = ('ar', 'en', 'tl')
 SITE = 'https://newmuslimguideline.com'
@@ -299,7 +302,8 @@ class Builder:
                 self.claim_verse(lang, n, e, card, lid)
         objectives = []
         for oi, o in enumerate(les.objectives, 1):
-            objectives.append({'id': f'{lid}-o{oi}', 'text': o.text,
+            oid = f'{lid}-o{oi}'
+            objectives.append({'id': oid, 'text': o.text, **({'label': LABELS[oid]} if oid in LABELS else {}),
                                'cards': [f'{lid}-c{k}' for k in o.cards], 'key': o.key})
         exercises = []
         for ei, x in enumerate(les.exercises, 1):

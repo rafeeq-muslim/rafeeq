@@ -59,6 +59,9 @@ def main(path):
         ids += [lid, *objectives, *cards, *(e["id"] for e in lesson["exercises"])]
         if not 2 <= len(objectives) <= 4:
             errors.append(f"{lid}: {len(objectives)} objectives (LRN-10 needs 2 to 4)")
+        for o in lesson["objectives"]:
+            if "label" not in o:
+                errors.append(f"{o['id']}: no learner name (label); objective text is for the team only (LRN-10 R1)")
 
         covered_by_cards = set()
         for c in cards.values():

@@ -83,6 +83,11 @@
         "en": "Names traits of the believer in dealing with people: honesty, keeping promises, fulfilling trusts, kinship ties",
         "tl": "Nasasabi ang mga katangian ng mananampalataya sa pakikitungo sa tao: katapatan, pagtupad sa pangako, pag-iingat ng ipinagkatiwala, pagbisita sa kamag-anak"
       },
+      "label": {
+        "ar": "صفات المؤمن مع الناس",
+        "en": "The believer’s character with people",
+        "tl": "Ang ugali ng mananampalataya sa kapwa"
+      },
       "cards": [
         "u6-l2-c2",
         "u6-l2-c1"
@@ -96,6 +101,11 @@
         "en": "Knows the state of the believer’s heart toward Allah’s decree and toward people",
         "tl": "Alam ang kalagayan ng puso ng mananampalataya sa tadhana ng Allah at sa kapwa"
       },
+      "label": {
+        "ar": "قلب المؤمن",
+        "en": "The believer’s heart",
+        "tl": "Ang puso ng mananampalataya"
+      },
       "cards": [
         "u6-l2-c3"
       ],
@@ -107,6 +117,11 @@
         "ar": "يعرف ما يجتنبه المؤمن: الربا والزنا والخمر والظلم والسرقة",
         "en": "Knows what the believer avoids: usury, adultery, alcohol, oppression and theft",
         "tl": "Alam ang iniiwasan ng mananampalataya: Riba, pangangalunya, alak, pang-aapi at pagnanakaw"
+      },
+      "label": {
+        "ar": "ما يجتنبه المؤمن",
+        "en": "What the believer stays away from",
+        "tl": "Ang iniiwasan ng mananampalataya"
       },
       "cards": [
         "u6-l2-c3",
@@ -120,6 +135,11 @@
         "ar": "يعرف حق الوالدين والجيران في الدرس",
         "en": "Knows what the lesson says about parents and neighbours",
         "tl": "Alam ang sinasabi ng aralin tungkol sa mga magulang at kapitbahay"
+      },
+      "label": {
+        "ar": "حق الوالدين والجيران",
+        "en": "The rights of parents and neighbours",
+        "tl": "Ang karapatan ng mga magulang at kapitbahay"
       },
       "cards": [
         "u6-l2-c4"

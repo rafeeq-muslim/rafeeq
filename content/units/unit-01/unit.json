@@ -88,6 +88,11 @@
             "ar": "يعرف معنى «لا إله إلا الله»: لا معبود حق إلا الله",
             "en": "Knows that “there is no god but Allah” means there is no deity worthy of worship except Allah",
             "tl": "Alam na ang “لا إله إلا الله” ay nangangahulugang walang ibang diyos na karapat-dapat sambahin maliban sa Allah"
+          },
+          "label": {
+            "ar": "معنى «لا إله إلا الله»",
+            "en": "The meaning of “there is no god but Allah”",
+            "tl": "Ang kahulugan ng “walang diyos kundi si Allah”"
           }
         },
         {
@@ -96,6 +101,11 @@
             "ar": "يعرف معنى «محمد رسول الله»",
             "en": "Knows what “Muhammad is the Messenger of Allah” means",
             "tl": "Alam ang kahulugan ng “si Muhammad ay Sugo ng Allah”"
+          },
+          "label": {
+            "ar": "معنى «محمد رسول الله»",
+            "en": "The meaning of “Muhammad is the Messenger of Allah”",
+            "tl": "Ang kahulugan ng “si Muhammad ay Sugo ni Allah”"
           }
         }
       ],
@@ -370,6 +380,11 @@
             "ar": "يعرف أن الطهارة شرط لصحة الصلاة",
             "en": "Knows that purification is a condition for the validity of prayer",
             "tl": "Alam na ang paglilinis ay kondisyon upang tanggapin ang salah"
+          },
+          "label": {
+            "ar": "الطهارة شرط للصلاة",
+            "en": "Purification as a condition of prayer",
+            "tl": "Ang kalinisan bilang kondisyon ng pagdarasal"
           }
         },
         {
@@ -378,6 +393,11 @@
             "ar": "يعرف ما يجب له الوضوء",
             "en": "Knows the acts for which wudu’ is obligatory",
             "tl": "Alam kung kailan obligado ang wudhu"
+          },
+          "label": {
+            "ar": "ما يجب له الوضوء",
+            "en": "What wudu’ is required for",
+            "tl": "Kung para saan kailangan ang wudhu"
           }
         },
         {
@@ -386,6 +406,11 @@
             "ar": "يعرف الماء الطهور وأوصافه الثلاثة",
             "en": "Knows what purifying water is and its three characteristics",
             "tl": "Alam kung ano ang malinis na tubig at ang tatlo nitong katangian"
+          },
+          "label": {
+            "ar": "الماء الطهور",
+            "en": "Purifying water",
+            "tl": "Ang tubig na naglilinis"
           }
         }
       ],
@@ -739,6 +764,11 @@
             "ar": "يعرف أن محل النية القلب ومعناها",
             "en": "Knows that intention is in the heart and what it means",
             "tl": "Alam na ang intensyon ay nasa puso at ang kahulugan nito"
+          },
+          "label": {
+            "ar": "موضع النية ومعناها",
+            "en": "Where intention is made and what it means",
+            "tl": "Kung saan ginagawa ang intensyon at ang kahulugan nito"
           }
         },
         {
@@ -747,6 +777,11 @@
             "ar": "يرتّب خطوات الوضوء الأربع الأولى",
             "en": "Orders the first four steps of wudu’",
             "tl": "Naisasaayos ang unang apat na hakbang ng wudhu"
+          },
+          "label": {
+            "ar": "أول أربع خطوات في الوضوء",
+            "en": "The first four steps of wudu’",
+            "tl": "Ang unang apat na hakbang ng wudhu"
           }
         },
         {
@@ -755,6 +790,11 @@
             "ar": "يميّز المضمضة من الاستنشاق والاستنثار",
             "en": "Tells rinsing the mouth apart from sniffing and blowing out water",
             "tl": "Natutukoy ang pagkakaiba ng pagmumog sa istinshaq at istinthar"
+          },
+          "label": {
+            "ar": "المضمضة والاستنشاق والاستنثار",
+            "en": "Rinsing the mouth and cleaning the nose",
+            "tl": "Ang pagmumog at paglinis ng ilong"
           }
         }
       ],
@@ -1122,6 +1162,11 @@
             "ar": "يرتّب خطوات الوضوء الثماني",
             "en": "Orders all eight steps of wudu’",
             "tl": "Naisasaayos ang walong hakbang ng wudhu"
+          },
+          "label": {
+            "ar": "خطوات الوضوء الثماني",
+            "en": "The eight steps of wudu’",
+            "tl": "Ang walong hakbang ng wudhu"
           }
         },
         {
@@ -1130,6 +1175,11 @@
             "ar": "يعرف حدود ما يُغسل: الوجه، والمرفقان، والكعبان",
             "en": "Knows the limits of washing: the face, the elbows and the ankles",
             "tl": "Alam ang hangganan ng hinuhugasan: ang mukha, ang siko at ang bukong-bukong"
+          },
+          "label": {
+            "ar": "حدود الغسل في الوضوء",
+            "en": "How far to wash in wudu’",
+            "tl": "Hanggang saan huhugasan sa wudhu"
           }
         },
         {
@@ -1138,6 +1188,11 @@
             "ar": "يعرف ما يبطل الوضوء",
             "en": "Knows what nullifies wudu’",
             "tl": "Alam kung ano ang nakakasira sa wudhu"
+          },
+          "label": {
+            "ar": "نواقض الوضوء",
+            "en": "What breaks wudu’",
+            "tl": "Ang nakakasira sa wudhu"
           }
         },
         {
@@ -1146,6 +1201,11 @@
             "ar": "يعرف كيف يزيل النجاسة بعد قضاء الحاجة",
             "en": "Knows how to clean impurity after relieving oneself",
             "tl": "Alam kung paano aalisin ang karumihan pagkatapos dumumi"
+          },
+          "label": {
+            "ar": "الطهارة بعد قضاء الحاجة",
+            "en": "Cleaning after using the toilet",
+            "tl": "Ang paglilinis pagkatapos gumamit ng palikuran"
           }
         }
       ],
@@ -1672,6 +1732,11 @@
             "ar": "يعرف الصلوات الخمس بترتيبها",
             "en": "Knows the five daily prayers in order",
             "tl": "Alam ang limang pagdarasal ayon sa pagkakasunod"
+          },
+          "label": {
+            "ar": "الصلوات الخمس بترتيبها",
+            "en": "The five daily prayers in order",
+            "tl": "Ang limang pang-araw-araw na dasal ayon sa pagkakasunod"
           }
         },
         {
@@ -1680,6 +1745,11 @@
             "ar": "يعرف أن الحدث الأصغر يوجب الوضوء والأكبر يوجب الغسل",
             "en": "Knows minor impurity requires wudu’ and major impurity requires ghusl",
             "tl": "Alam na ang maliit na karumihan ay nangangailangan ng wudhu at ang malaki ay ng ghusl"
+          },
+          "label": {
+            "ar": "الوضوء والغسل: متى يجب كلٌّ منهما",
+            "en": "When wudu’ is needed and when ghusl is needed",
+            "tl": "Kailan kailangan ang wudhu at kailan ang ghusl"
           }
         },
         {
@@ -1688,6 +1758,11 @@
             "ar": "يعرف شروط الطهارة والستر في الصلاة",
             "en": "Knows the requirements of cleanliness and covering in prayer",
             "tl": "Alam ang mga kondisyon ng kalinisan at pagtatakip sa salah"
+          },
+          "label": {
+            "ar": "الطهارة والستر في الصلاة",
+            "en": "Cleanliness and covering in prayer",
+            "tl": "Ang kalinisan at pagtatakip sa pagdarasal"
           }
         },
         {
@@ -1696,6 +1771,11 @@
             "ar": "يعرف ما يفعله من لم يحفظ أقوال الصلاة بعد",
             "en": "Knows what to do before memorizing the words of prayer",
             "tl": "Alam ang gagawin kung hindi pa kabisado ang mga salita ng salah"
+          },
+          "label": {
+            "ar": "الصلاة قبل حفظ أقوالها",
+            "en": "Praying before you know its words by heart",
+            "tl": "Ang pagdarasal bago maisaulo ang mga salita nito"
           }
         }
       ],
@@ -2171,6 +2251,11 @@
             "ar": "يرتّب أول أفعال الصلاة حتى الركوع",
             "en": "Orders the first actions of prayer up to bowing",
             "tl": "Naisasaayos ang mga unang gawain ng salah hanggang sa pagyuko"
+          },
+          "label": {
+            "ar": "أفعال الصلاة حتى الركوع",
+            "en": "The actions of prayer up to bowing",
+            "tl": "Ang mga gawain sa pagdarasal hanggang sa pagyuko"
           }
         },
         {
@@ -2179,6 +2264,11 @@
             "ar": "يعرف ما يقوله في الركوع وكيف يركع",
             "en": "Knows what to say in bowing and how to bow",
             "tl": "Alam ang sasabihin sa pagyuko at kung paano yumuko"
+          },
+          "label": {
+            "ar": "الركوع وما يقال فيه",
+            "en": "Bowing and what is said in it",
+            "tl": "Ang pagyuko at ang sinasabi rito"
           }
         },
         {
@@ -2187,6 +2277,11 @@
             "ar": "يعرف أن الفاتحة تُقرأ في كل ركعة",
             "en": "Knows that al-Fātiḥah is read in every rak‘ah",
             "tl": "Alam na ang Al-Fatiha ay binabasa sa bawat raka’a"
+          },
+          "label": {
+            "ar": "قراءة الفاتحة في كل ركعة",
+            "en": "Reading al-Fātiḥah in every rak‘ah",
+            "tl": "Ang pagbasa ng Al-Fatiha sa bawat raka’a"
           }
         }
       ],
@@ -2630,6 +2725,11 @@
             "ar": "يرتّب أفعال الصلاة من الرفع من الركوع حتى القيام",
             "en": "Orders the actions from rising after bowing to standing again",
             "tl": "Naisasaayos ang mga gawain mula sa pagtayo sa pagkayuko hanggang sa muling pagtayo"
+          },
+          "label": {
+            "ar": "أفعال الصلاة من الرفع من الركوع",
+            "en": "The actions of prayer after rising from bowing",
+            "tl": "Ang mga gawain sa pagdarasal pagkatapos tumayo mula sa pagyuko"
           }
         },
         {
@@ -2638,6 +2738,11 @@
             "ar": "يعرف ذكر كل موضع: الرفع والسجود والجلوس",
             "en": "Knows what is said when rising, prostrating and sitting",
             "tl": "Alam ang sasabihin sa pagtayo, pagpapatirapa at pag-upo"
+          },
+          "label": {
+            "ar": "أذكار الرفع والسجود والجلوس",
+            "en": "What is said when rising, prostrating and sitting",
+            "tl": "Ang sinasabi sa pagtayo, pagpapatirapa at pag-upo"
           }
         },
         {
@@ -2646,6 +2751,11 @@
             "ar": "يعرف التشهد ومتى يُقال، وكيف تنتهي الصلاة",
             "en": "Knows the tashahhud, when it is said, and how the prayer ends",
             "tl": "Alam ang tashahud, kung kailan ito sinasabi, at kung paano nagtatapos ang salah"
+          },
+          "label": {
+            "ar": "التشهد وختام الصلاة",
+            "en": "The tashahhud and how prayer ends",
+            "tl": "Ang tashahhud at kung paano nagtatapos ang pagdarasal"
           }
         }
       ],

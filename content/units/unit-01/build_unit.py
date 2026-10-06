@@ -662,6 +662,14 @@ for lesson in (L1, L2, L3, L4, L5):
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
 
+# The name a learner reads for each objective (LRN-10 R1); `text` stays the team's wording.
+LABELS = json.loads((Path(__file__).parents[2] / "objective_labels.json").read_text(encoding="utf8"))
+for les in LESSONS:
+    for o in les["objectives"]:
+        if o["id"] not in LABELS:
+            raise SystemExit(f"no learner name for {o['id']} in content/objective_labels.json")
+        o["label"] = LABELS[o["id"]]
+
 unit = {
     "schema_version": 1,
     "id": "u01", "order": 1, "feature": "LRN-01",

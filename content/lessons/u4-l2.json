@@ -149,6 +149,11 @@
         "en": "Knows that the angels are of the unseen, servants of Allah created from light, whose number only Allah knows",
         "tl": "Alam na ang mga anghel ay di nakikitang nilalang, nilikha ng Allah mula sa liwanag, at Siya lamang ang nakaaalam ng kanilang bilang"
       },
+      "label": {
+        "ar": "الملائكة",
+        "en": "The angels",
+        "tl": "Ang mga anghel"
+      },
       "cards": [
         "u4-l2-c2",
         "u4-l2-c3",
@@ -163,6 +168,11 @@
         "en": "Knows that Jibreel (peace be upon him) is assigned with the revelation",
         "tl": "Alam na si Jibril ang itinalaga sa pagpapahayag ng rebelasyon"
       },
+      "label": {
+        "ar": "جبريل عليه السلام والوحي",
+        "en": "Jibril (peace be upon him) and revelation",
+        "tl": "Si Jibril (sumakanya nawa ang kapayapaan) at ang rebelasyon"
+      },
       "cards": [
         "u4-l2-c3"
       ],
@@ -174,6 +184,11 @@
         "ar": "يعرف معنى الإيمان بالكتب، وأن القرآن آخرها وقد تكفّل الله بحفظه",
         "en": "Knows what belief in the Scriptures means, and that the Qur’an is the last of them and Allah guaranteed to protect it",
         "tl": "Alam ang kahulugan ng paniniwala sa mga Aklat, at na ang Qur’an ang huli at pinangangalagaan ito ng Allah"
+      },
+      "label": {
+        "ar": "الإيمان بالكتب وحفظ القرآن",
+        "en": "Belief in the books, and the Quran’s preservation",
+        "tl": "Ang paniniwala sa mga kasulatan at ang pag-iingat sa Quran"
       },
       "cards": [
         "u4-l2-c5",
@@ -189,6 +204,11 @@
         "ar": "يطابق الكتب السماوية بالأنبياء الذين أُنزلت عليهم",
         "en": "Matches the divine Scriptures with the prophets they were revealed to",
         "tl": "Naitutugma ang mga Aklat sa mga propeta na pinagbabaan nito"
+      },
+      "label": {
+        "ar": "الكتب السماوية والأنبياء",
+        "en": "The revealed books and their prophets",
+        "tl": "Ang mga ipinahayag na kasulatan at ang kanilang mga propeta"
       },
       "cards": [
         "u4-l2-c8"

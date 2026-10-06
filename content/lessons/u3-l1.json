@@ -65,6 +65,11 @@
         "en": "Lists the five pillars of Islam in order",
         "tl": "Naiisa-isa ang limang haligi ng Islam ayon sa pagkakasunod"
       },
+      "label": {
+        "ar": "أركان الإسلام الخمسة بترتيبها",
+        "en": "The five pillars of Islam in order",
+        "tl": "Ang limang haligi ng Islam ayon sa pagkakasunod"
+      },
       "cards": [
         "u3-l1-c1"
       ],
@@ -76,6 +81,11 @@
         "ar": "يعرف أن أركان الإسلام تلزم كل مسلم، ولماذا سُمّيت أركانًا",
         "en": "Knows that the pillars of Islam are required of every Muslim, and why they are called pillars",
         "tl": "Alam na ang mga haligi ng Islam ay dapat gampanan ng bawat Muslim, at kung bakit tinawag itong mga haligi"
+      },
+      "label": {
+        "ar": "لماذا سُمّيت أركانًا",
+        "en": "Why they are called pillars",
+        "tl": "Kung bakit tinawag silang mga haligi"
       },
       "cards": [
         "u3-l1-c2"

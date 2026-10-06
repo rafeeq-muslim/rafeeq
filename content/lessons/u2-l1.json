@@ -107,6 +107,11 @@
         "en": "Knows that Allah is his Lord and the Lord of all things: the Possessor, the Creator, the Provider, the Disposer",
         "tl": "Alam na si Allah ang kanyang Panginoon at Panginoon ng lahat ng bagay: ang Tagapaglikha, Tagapagtustos at Tagapangasiwa"
       },
+      "label": {
+        "ar": "الله ربي ورب كل شيء",
+        "en": "Allah, my Lord and the Lord of all things",
+        "tl": "Si Allah, ang aking Panginoon at Panginoon ng lahat"
+      },
       "cards": [
         "u2-l1-c4"
       ],
@@ -118,6 +123,11 @@
         "ar": "يعرف أن الله وحده المستحق للعبادة، لا ربّ غيره ولا إله سواه",
         "en": "Knows that Allah alone is worthy of worship, with no lord or god other than Him",
         "tl": "Alam na si Allah lamang ang karapat-dapat sambahin, walang ibang Panginoon at Diyos maliban sa Kanya"
+      },
+      "label": {
+        "ar": "الله وحده المستحق للعبادة",
+        "en": "Allah alone is worthy of worship",
+        "tl": "Si Allah lamang ang karapat-dapat sambahin"
       },
       "cards": [
         "u2-l1-c4",
@@ -132,6 +142,11 @@
         "ar": "يعرف أن لله الأسماء الحسنى والصفات العلا، وأنه ليس كمثله شيء",
         "en": "Knows that Allah has the excellent names and sublime attributes, and that nothing is like Him",
         "tl": "Alam na si Allah ay may magagandang Pangalan at mararangal na katangian, at walang katulad Niya"
+      },
+      "label": {
+        "ar": "أسماء الله الحسنى وصفاته",
+        "en": "Allah’s beautiful names and attributes",
+        "tl": "Ang magagandang pangalan at katangian ni Allah"
       },
       "cards": [
         "u2-l1-c5",

@@ -125,6 +125,11 @@
         "en": "Knows that whoever is content with Allah as Lord, Islam as religion and Muhammad ﷺ as Messenger has tasted faith",
         "tl": "Alam na matitikman ang tamis ng pananampalataya ng sinumang nalugod sa Allah bilang Panginoon, sa Islam bilang relihiyon, at kay Muhammad ﷺ bilang sugo"
       },
+      "label": {
+        "ar": "طعم الإيمان",
+        "en": "The sweetness of faith",
+        "tl": "Ang tamis ng pananampalataya"
+      },
       "cards": [
         "u6-l4-c1"
       ],
@@ -136,6 +141,11 @@
         "ar": "يعرف أن مَن عبد الله كأنه يراه وأخلص له عاش الحياة الطيبة",
         "en": "Knows that whoever worships Allah as if he sees Him, sincerely, lives a good life",
         "tl": "Alam na ang sumasamba sa Allah na para bang nakikita Siya, nang taos-puso, ay mamumuhay nang mabuti"
+      },
+      "label": {
+        "ar": "الحياة الطيبة",
+        "en": "The good life",
+        "tl": "Ang mabuting buhay"
       },
       "cards": [
         "u6-l4-c2"
@@ -149,6 +159,11 @@
         "en": "Knows that the pain of calamities is eased by certainty and contentment with Allah’s decree",
         "tl": "Alam na naiibsan ang init ng pagsubok sa lamig ng katiyakan at pagkalugod sa tadhana ng Allah"
       },
+      "label": {
+        "ar": "اليقين والرضا عند المصائب",
+        "en": "Certainty and contentment in hardship",
+        "tl": "Ang katiyakan at pagtanggap sa panahon ng pagsubok"
+      },
       "cards": [
         "u6-l4-c3"
       ],
@@ -160,6 +175,11 @@
         "ar": "يعرف ما يزيد سعادة المسلم: ذكر الله وتلاوة القرآن وتعلّم دينه من المصادر الصحيحة",
         "en": "Knows what adds to a Muslim’s happiness: remembering Allah, reading the Qur’an, and learning his religion from correct sources",
         "tl": "Alam ang nagdaragdag sa kaligayahan ng Muslim: pag-alaala sa Allah, pagbasa ng Qur’an at pag-aaral ng relihiyon mula sa tamang mapagkukunan"
+      },
+      "label": {
+        "ar": "ما يزيد سعادة المسلم",
+        "en": "What adds to a Muslim’s happiness",
+        "tl": "Ang nagdaragdag sa kaligayahan ng Muslim"
       },
       "cards": [
         "u6-l4-c4",

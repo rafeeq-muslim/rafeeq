@@ -119,6 +119,11 @@
         "en": "Lists the six pillars of faith",
         "tl": "Naiisa-isa ang anim na haligi ng Iman"
       },
+      "label": {
+        "ar": "أركان الإيمان الستة",
+        "en": "The six pillars of faith",
+        "tl": "Ang anim na haligi ng pananampalataya"
+      },
       "cards": [
         "u4-l1-c1",
         "u4-l1-c3"
@@ -132,6 +137,11 @@
         "en": "Tells the pillars of Islam apart from the pillars of faith",
         "tl": "Natutukoy ang pagkakaiba ng mga haligi ng Islam at ng Iman"
       },
+      "label": {
+        "ar": "الفرق بين أركان الإسلام وأركان الإيمان",
+        "en": "Pillars of Islam and pillars of faith: the difference",
+        "tl": "Ang pagkakaiba ng mga haligi ng Islam at ng pananampalataya"
+      },
       "cards": [
         "u4-l1-c2"
       ],
@@ -143,6 +153,11 @@
         "ar": "يعرف تعريف الإيمان المختصر وأنه يزيد وينقص",
         "en": "Knows the short definition of faith and that it increases and decreases",
         "tl": "Alam ang maikling kahulugan ng Iman at na ito ay tumataas at bumababa"
+      },
+      "label": {
+        "ar": "معنى الإيمان وأنه يزيد وينقص",
+        "en": "What faith is, and that it rises and falls",
+        "tl": "Ang kahulugan ng pananampalataya, at na ito ay nadaragdagan at nababawasan"
       },
       "cards": [
         "u4-l1-c4",
@@ -156,6 +171,11 @@
         "ar": "يعرف ما يتضمنه الإيمان بالله: وجوده وربوبيته وألوهيته وأسماؤه وصفاته",
         "en": "Knows what belief in Allah includes: His existence, Lordship, sole right to worship, and Names and Attributes",
         "tl": "Alam ang kasama sa paniniwala sa Allah: ang Kanyang pag-iral, pagka-Panginoon, pagka-Diyos, at mga pangalan at katangian"
+      },
+      "label": {
+        "ar": "ما يتضمنه الإيمان بالله",
+        "en": "What belief in Allah includes",
+        "tl": "Ang saklaw ng paniniwala kay Allah"
       },
       "cards": [
         "u4-l1-c5",

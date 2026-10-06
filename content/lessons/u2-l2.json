@@ -77,6 +77,11 @@
         "en": "Knows the meanings of the Provider, the Most Merciful, the All-Powerful and the King",
         "tl": "Alam ang kahulugan ng Tagapanustos, Pinaka Maawain, Makapangyarihan at Hari"
       },
+      "label": {
+        "ar": "معاني: الرزّاق، الرحمن، القدير، الملك",
+        "en": "The meanings of the Provider, the Most Merciful, the All-Powerful, the King",
+        "tl": "Ang kahulugan ng Tagapagtustos, Pinakamaawain, Makapangyarihan, Hari"
+      },
       "cards": [
         "u2-l2-c1"
       ],
@@ -88,6 +93,11 @@
         "ar": "يعرف معاني: السميع، السلام، البصير، الوكيل",
         "en": "Knows the meanings of the All-Hearing, the Perfect, the All-Seeing and the Trustee",
         "tl": "Alam ang kahulugan ng Nakakarinig, Ligtas o Payapa, Nakakakita at Tagapagkupkop"
+      },
+      "label": {
+        "ar": "معاني: السميع، السلام، البصير، الوكيل",
+        "en": "The meanings of the All-Hearing, the Perfect, the All-Seeing, the Trustee",
+        "tl": "Ang kahulugan ng Nakaririnig, Ganap, Nakakikita, Pinagkakatiwalaan"
       },
       "cards": [
         "u2-l2-c2"
@@ -101,6 +111,11 @@
         "en": "Knows the meanings of the Creator, the Subtle and Kind, the Sufficient and the All-Forgiving",
         "tl": "Alam ang kahulugan ng Tagapaglikha, Banayad at Mabait, Sapat at Nagpapatawad"
       },
+      "label": {
+        "ar": "معاني: الخالق، اللطيف، الكافي، الغفور",
+        "en": "The meanings of the Creator, the Subtle, the Sufficient, the Forgiving",
+        "tl": "Ang kahulugan ng Tagapaglikha, Mabait, Sapat, Mapagpatawad"
+      },
       "cards": [
         "u2-l2-c3"
       ],
@@ -112,6 +127,11 @@
         "ar": "يتفكّر في خلق الله ولطفه بمخلوقاته كما وصف الدرس",
         "en": "Reflects on Allah’s creation and His kindness to His creatures, as the lesson describes",
         "tl": "Nagninilay sa nilikha ng Allah at sa Kanyang kabaitan sa mga ito, ayon sa aralin"
+      },
+      "label": {
+        "ar": "التفكّر في خلق الله ولطفه",
+        "en": "Reflecting on Allah’s creation and kindness",
+        "tl": "Ang pagninilay sa nilikha at kabaitan ni Allah"
       },
       "cards": [
         "u2-l2-c4"

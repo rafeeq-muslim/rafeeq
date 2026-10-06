@@ -113,6 +113,11 @@
         "en": "Knows that Allah sent a messenger to every nation calling to worship Allah alone",
         "tl": "Alam na nagpadala ang Allah sa bawat sambayanan ng Sugo na nag-aanyaya sa pagsamba sa Allah lamang"
       },
+      "label": {
+        "ar": "في كل أمة رسول",
+        "en": "A messenger to every nation",
+        "tl": "Isang sugo sa bawat bansa"
+      },
       "cards": [
         "u4-l3-c2",
         "u4-l3-c1"
@@ -126,6 +131,11 @@
         "en": "Knows the qualities of the messengers given in the lesson",
         "tl": "Alam ang mga katangian ng mga sugo ayon sa aralin"
       },
+      "label": {
+        "ar": "صفات الرسل",
+        "en": "Qualities of the messengers",
+        "tl": "Mga katangian ng mga sugo"
+      },
       "cards": [
         "u4-l3-c3"
       ],
@@ -138,6 +148,11 @@
         "en": "Knows that all the messengers called to the same principle of religion",
         "tl": "Alam na iisa ang paanyaya ng lahat ng mga sugo sa pundasyon ng pananampalataya"
       },
+      "label": {
+        "ar": "دعوة الرسل واحدة",
+        "en": "The messengers’ one message",
+        "tl": "Iisang mensahe ng mga sugo"
+      },
       "cards": [
         "u4-l3-c4"
       ],
@@ -149,6 +164,11 @@
         "ar": "يذكر أمثلة مما يشمله الإيمان باليوم الآخر",
         "en": "Gives examples of what belief in the Last Day includes",
         "tl": "Nakapagbibigay ng mga halimbawa ng kasama sa paniniwala sa Huling Araw"
+      },
+      "label": {
+        "ar": "الإيمان باليوم الآخر",
+        "en": "Belief in the Last Day",
+        "tl": "Ang paniniwala sa Huling Araw"
       },
       "cards": [
         "u4-l3-c6",
