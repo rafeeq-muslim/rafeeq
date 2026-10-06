@@ -1,5 +1,5 @@
 import * as React from "react"
-import type { TablerIcon } from "@tabler/icons-react"
+import type { Icon as IconComponent, TablerIcon } from "@tabler/icons-react"
 
 import { cn } from "@/lib/utils"
 import { PETAL } from "./brand"
@@ -172,7 +172,8 @@ function IconTile({
   size = "md",
   className,
 }: {
-  icon: TablerIcon
+  /** Any Tabler icon (forwardRef or plain component). */
+  icon: TablerIcon | IconComponent
   /** sm 40px, md 44px, lg 48px */
   size?: "sm" | "md" | "lg"
   className?: string

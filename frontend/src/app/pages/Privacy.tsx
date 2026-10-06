@@ -44,7 +44,7 @@ export default function Privacy() {
         />
         <main className="mx-auto flex w-full max-w-xl flex-col gap-8 px-4 pt-6 pb-[calc(env(safe-area-inset-bottom,0px)+3rem)]">
           <header className="flex flex-col gap-3">
-            <span className="grid size-12 place-items-center rounded-full bg-secondary text-secondary-foreground">
+            <span className="grid size-12 place-items-center rounded-full bg-secondary bg-grad-secondary text-secondary-foreground">
               <IconShieldLock className="size-6" stroke={1.75} aria-hidden="true" />
             </span>
             <h1 className="font-heading text-h1 font-bold text-balance">{t("policy.title")}</h1>

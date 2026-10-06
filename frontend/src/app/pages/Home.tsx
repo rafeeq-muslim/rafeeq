@@ -137,9 +137,7 @@ export default function Home() {
           onClick={() => navigate("/guide")}
           className="flex items-center gap-3 border-t pt-5 text-start"
         >
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-            <IconLayoutGrid className="size-5" stroke={1.75} aria-hidden="true" />
-          </span>
+          <IconTile icon={IconLayoutGrid} size="sm" />
           <span className="min-w-0 flex-1">
             <span className="block text-body font-bold">{t("guide.homeLink")}</span>
             <span className="block text-label text-muted-foreground">{t("guide.homeLinkBody")}</span>
