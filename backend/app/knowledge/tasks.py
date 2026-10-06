@@ -145,6 +145,7 @@ async def explain_mistake(session, body: ExplainIn) -> str | None:
 @router.post("/explain")
 async def explain(body: ExplainIn, session: Session, request: Request, user: OptionalUser) -> dict:
     ratelimit.hit(f"explain:{client_key(request, user)}", 20, 60)
+    ratelimit.hit(f"explain:d:{client_key(request, user)}", 150, 86400)
     return {"text": await explain_mistake(session, body)}
 
 
@@ -225,6 +226,7 @@ async def write_guide(session, body: GuideIn) -> str | None:
 @router.post("/guide")
 async def guide(body: GuideIn, session: Session, request: Request, user: OptionalUser) -> dict:
     ratelimit.hit(f"guide:{client_key(request, user)}", 20, 60)
+    ratelimit.hit(f"guide:d:{client_key(request, user)}", 60, 86400)
     return {"text": await write_guide(session, body)}  # the summary is not stored (KNW-10 R4)
 
 

@@ -54,11 +54,12 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
         fails.append("long_quote_outside_marker")  # 5
     if body.strip() and not language_matches(answer, lang):
         fails.append("wrong_language")  # 6
-    if lang == "ar":  # 7
-        for p in retrieved.values():
-            if p["kind"] in SCRIPTURE_KINDS and ngram_overlap(body, p["quote_text"], st.knw_scripture_overlap_words):
-                fails.append("scripture_copied_outside_marker")
-                break
+    # 7: in every language (security review #10): a translation of a verse or
+    # hadith pasted as the model's own words is copying too.
+    for p in retrieved.values():
+        if p["kind"] in SCRIPTURE_KINDS and ngram_overlap(body, p["quote_text"], st.knw_scripture_overlap_words):
+            fails.append("scripture_copied_outside_marker")
+            break
     return fails
 
 

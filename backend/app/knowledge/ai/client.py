@@ -19,6 +19,7 @@ import logging
 import re
 import time
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from functools import cache
 from pathlib import Path
 from typing import Any
@@ -77,19 +78,30 @@ _spent: float | None = None
 _spent_at = 0.0
 
 
+_today: float | None = None
+
+
 async def spent() -> float:
     """Cumulative cost of every recorded call (refreshed from the DB each minute)."""
-    global _spent, _spent_at
+    global _spent, _spent_at, _today
     if _spent is None or time.monotonic() - _spent_at > 60:
+        midnight = datetime.now(UTC).replace(hour=0, minute=0, second=0, microsecond=0)
         async with SessionLocal() as s:
             _spent = float(await s.scalar(select(func.coalesce(func.sum(AiCall.cost_usd), 0.0))) or 0.0)
+            _today = float(await s.scalar(select(func.coalesce(func.sum(AiCall.cost_usd), 0.0)).where(AiCall.at >= midnight)) or 0.0)
         _spent_at = time.monotonic()
     return _spent
 
 
+async def spent_today() -> float:
+    await spent()
+    return _today or 0.0
+
+
 def reset_spend_cache() -> None:
-    global _spent
+    global _spent, _today
     _spent = None
+    _today = None
 
 
 async def guard() -> None:
@@ -98,6 +110,10 @@ async def guard() -> None:
         raise AiUnavailable("no_key")
     if await spent() + MARGIN_USD >= st.ai_budget_usd:
         raise BudgetExceeded("budget")
+    # Security review #5: a daily ceiling so one abusive client cannot spend
+    # the whole budget in a day; everyone gets fixed replies until midnight UTC.
+    if await spent_today() + MARGIN_USD >= st.ai_daily_budget_usd:
+        raise BudgetExceeded("daily_budget")
 
 
 def _cost(model: str, usage: dict) -> float:

@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from app.platform.models import PushSubscription
 from app.platform.push import REMINDER_TEXT, due
 
-SUB = "https://push.example/abc"
+SUB = "https://fcm.googleapis.com/fcm/send/abc"
 
 
 def sub(**kw) -> PushSubscription:
@@ -71,3 +71,10 @@ async def test_mot05_r1_reminder_settings_api(client):
     r = await client.put("/api/push/reminder", json={"endpoint": SUB, "enabled": True, "time": "21:00"})
     assert r.json() == {"enabled": True, "time": "21:00"}
     assert (await client.put("/api/push/reminder", json={"endpoint": SUB, "enabled": False})).json()["enabled"] is False
+
+
+async def test_push_endpoint_must_be_a_known_push_service(client):
+    body = {"install_id": "dev-12345678", "subscription": {"endpoint": "https://attacker.example/x", "keys": {"p256dh": "k", "auth": "a"}}}
+    assert (await client.post("/api/push/subscribe", json=body)).status_code == 422
+    body["subscription"]["endpoint"] = "https://evil.fcm.googleapis.com.attacker.example/x"
+    assert (await client.post("/api/push/subscribe", json=body)).status_code == 422

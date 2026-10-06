@@ -371,7 +371,9 @@ async def templates(session: Session, user: CurrentUser, lang: str | None = None
 
 
 async def reviewer(user: CurrentUser) -> User:
-    if not (user.has("sharia_reviewer") or user.has("admin")):
+    # Only the Sharia reviewer approves text shown to learners (KNW-05 R5);
+    # admins included `has()` implicitly, so check the role itself.
+    if "sharia_reviewer" not in (user.roles or []):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "reviewers_only")
     return user
 

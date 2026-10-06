@@ -179,6 +179,13 @@ async def _handle_for(session, owner: Owner) -> str:
 async def create_request(body: RequestIn, session: Session, owner: CurrentOwner, request: Request) -> CreatedOut:
     client = str(owner.user.id) if owner.user else owner.token_hash or (request.client.host if request.client else "-")
     ratelimit.hit(f"help-create:{client}", 10, 3600)
+    # Security review #6: guest tokens are free to mint, so also limit by
+    # address (in memory only, never stored) and cap urgent requests overall.
+    address = request.client.host if request.client else "-"
+    ratelimit.hit(f"help-create-ip:{address}", 15, 3600)
+    if body.kind == "urgent":
+        ratelimit.hit(f"help-urgent-ip:{address}", 3, 3600)
+        ratelimit.hit("help-urgent-all", 60, 3600)
     token = None
     if owner.user is None and owner.token_hash is None:
         token = new_guest_token()

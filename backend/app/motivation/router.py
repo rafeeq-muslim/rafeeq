@@ -18,7 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
-from app.core.events import publish
+from app.core.events import OutboxEvent, publish
 from app.motivation.engagement import after_interaction, status_at
 from app.motivation.models import AnonEvent, EarnedBadge, EngagementState, StreakDay
 
@@ -120,6 +120,8 @@ async def opt_out(session: AsyncSession, install_id: str, now: datetime) -> None
     """MOT-07 R4 (error example): one bare opt-out event, then unlink everything."""
     await session.execute(update(AnonEvent).where(AnonEvent.install_id == install_id).values(install_id=None))
     await session.execute(delete(EngagementState).where(EngagementState.install_id == install_id))
+    # Status-change history must not keep the device's id either.
+    await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["install_id"].astext == install_id))
     session.add(AnonEvent(install_id=None, type="opt_out", day=now.astimezone(RIYADH).date()))
 
 

@@ -109,3 +109,30 @@ async def test_refresh_rotates_and_logout_ends_session(client):
     assert r.status_code == 200 and r.json()["access_token"]
     await client.post("/api/auth/logout")
     assert (await client.post("/api/auth/refresh")).status_code == 401
+
+
+async def test_password_change_signs_out_other_devices(client):
+    from tests.conftest import register as reg
+
+    out = await reg(client, username="layla-9")
+    other = await client.post("/api/auth/login", json={"username": "layla-9", "password": "pass-1234-word"})
+    other_cookie = other.cookies.get("rafeeq_refresh")
+    r = await client.post(
+        "/api/me/password",
+        json={"current_password": "pass-1234-word", "new_password": "new-pass-5678"},
+        headers=auth(out["access_token"]),
+    )
+    assert r.status_code == 204
+    fresh = r.cookies.get("rafeeq_refresh")
+    assert fresh and fresh != other_cookie
+    client.cookies.clear()
+    client.cookies.set("rafeeq_refresh", other_cookie, path="/api/auth")
+    assert (await client.post("/api/auth/refresh")).status_code == 401  # the other device is signed out
+    client.cookies.clear()
+    client.cookies.set("rafeeq_refresh", fresh, path="/api/auth")
+    assert (await client.post("/api/auth/refresh")).status_code == 200  # this device stays signed in
+
+
+async def test_username_check_is_rate_limited(client):
+    codes = [(await client.get("/api/auth/username-available?u=abcd-1")).status_code for _ in range(31)]
+    assert codes[-1] == 429

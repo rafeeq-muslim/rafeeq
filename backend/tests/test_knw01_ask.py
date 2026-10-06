@@ -367,3 +367,12 @@ async def test_knw01_malformed_marker_is_rejected(client, ai):
     )
     b = await post(client, "What does la ilaha illa allah mean?")
     assert b["outcome"] == "no_source"
+
+
+def test_knw01_translation_pasted_as_model_text_is_rejected_in_english():
+    from app.knowledge.verify import code_checks
+
+    verse = "There has certainly come to you a Messenger from among yourselves. Grievous to him is what you suffer"
+    retrieved = {"quranenc:english_saheeh:9:128": {"kind": "quran_translation", "quote_text": verse}}
+    out = {"answer": f"The Quran says that {verse.lower()}.", "sources": ["quranenc:english_saheeh:9:128"], "sufficient": True}
+    assert "scripture_copied_outside_marker" in code_checks(out, "en", retrieved)

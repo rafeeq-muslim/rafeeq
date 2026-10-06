@@ -15,8 +15,10 @@ import json
 import logging
 import re
 from datetime import UTC, date, datetime
+from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+import requests
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field, field_validator
 from pywebpush import WebPushException, webpush
@@ -43,9 +45,33 @@ class Keys(BaseModel):
     auth: str = Field(max_length=255)
 
 
+# Security review #3: the server POSTs to the endpoint, so only the browsers'
+# own push services are accepted (no SSRF to internal hosts), and redirects
+# are never followed when sending.
+PUSH_HOSTS = (
+    "fcm.googleapis.com",
+    "updates.push.services.mozilla.com",
+    "web.push.apple.com",
+    ".notify.windows.com",
+    ".push.apple.com",
+)
+
+
+def allowed_endpoint(url: str) -> bool:
+    host = urlsplit(url).hostname or ""
+    return url.startswith("https://") and any(host == h or (h.startswith(".") and host.endswith(h)) for h in PUSH_HOSTS)
+
+
 class SubscriptionIn(BaseModel):
     endpoint: str = Field(max_length=1024, pattern=r"^https://")
     keys: Keys
+
+    @field_validator("endpoint")
+    @classmethod
+    def _known_push_service(cls, v: str) -> str:
+        if not allowed_endpoint(v):
+            raise ValueError("unknown push service")
+        return v
 
 
 class SubscribeIn(BaseModel):
@@ -167,8 +193,16 @@ class Gone(Exception):
     pass
 
 
+def _no_redirects() -> requests.Session:
+    session = requests.Session()
+    session.max_redirects = 0
+    return session
+
+
 def _send_sync(sub: PushSubscription, payload: dict) -> None:
     s = get_settings()
+    if not allowed_endpoint(sub.endpoint):
+        raise Gone
     try:
         webpush(
             subscription_info={"endpoint": sub.endpoint, "keys": {"p256dh": sub.p256dh, "auth": sub.auth}},
@@ -177,6 +211,7 @@ def _send_sync(sub: PushSubscription, payload: dict) -> None:
             vapid_claims={"sub": s.vapid_subject},
             ttl=6 * 3600,
             timeout=10,
+            requests_session=_no_redirects(),
         )
     except WebPushException as e:
         if e.response is not None and e.response.status_code in (404, 410):

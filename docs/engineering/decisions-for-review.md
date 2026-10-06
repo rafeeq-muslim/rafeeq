@@ -82,16 +82,20 @@ See `ai-agents.md` (written with the AI build): agents, models, measured prices,
 
 ## Security review (2026-10-05, read-only pass) — status
 
-Fixed: #2 ex-mentor kept access to a closed thread (`companion/inbox.py`), #4 deploys only from `main` (`deploy.yml`).
+Fixed (2026-10-05/06):
+- #2 an ex-mentor kept access to a closed thread (`companion/inbox.py`).
+- #3 push SSRF: only the browsers' push services are accepted, redirects never followed (`platform/push.py`).
+- #4 production deploys only from `main` (`deploy.yml`).
+- #5 AI budget drain: a daily ceiling (`AI_DAILY_BUDGET_USD`, default $0.75, resets 00:00 UTC) on top of the $10 total, and daily per-client limits on explain/guide.
+- #6 urgent-request flooding: limits per address (memory only) and a global urgent cap.
+- #7 username enumeration: the availability check is rate-limited; login misses cost the same as real checks.
+- #8 a password or two-step change ends every other signed-in device; the current device gets a fresh session.
+- #9 security headers on every response including the app shell: CSP (`script-src 'self'`, media only from the approved sources' hosts), `frame-ancestors 'none'`, nosniff, no-referrer, HSTS. Checked with zero CSP violations on the app and the landing page.
+- #10 the scripture-copy check now runs for every language.
+- Low: invite claimed atomically; login limit key normalised; only the Sharia reviewer approves challenge text; sign-out unlinks the account from push; opt-out and account deletion remove event history that links the device or the account.
 
-Open, in priority order (details in the review notes; next session fixes these first):
-1. **Host router logs visitors' real IPs** (`~/claude-works/nginx-app-router/generated/rafeeq.conf`, combined format, 14 days). Needs the router's access-log option for this app set to off, and purging `rafeeq.access.log*`. Outside the repo.
-2. Push endpoint SSRF: allow only known push-service hosts; no redirects.
-3. CI runs on the production host for any branch/PR: give CI a separate unprivileged runner.
-4. Guests can drain the AI budget (explain/guide): daily per-key and global caps, cache explanations.
-5. Forged guest tokens can flood urgent requests: HMAC-signed tokens, global urgent cap.
-6. Username enumeration (`/username-available` unthrottled, login timing): rate-limit, dummy hash on misses.
-7. Password change keeps other sessions: revoke refresh sessions on password/2FA change.
-8. Security headers missing on the app shell (add_header in locations), no CSP/frame-ancestors, add `no-referrer` meta.
-9. Verifier copy check for scripture only in Arabic (`knowledge/verify.py`): run for all languages.
-10. Low: invite reuse race, login-limit key strip, mentor gender change, outbox rows linking install and account, admin approving challenge text, small-cohort suppression, push stays linked after sign-out, db container gets all secrets.
+Open, needs the server owner (outside what Claude may change):
+1. **The host router logs visitors' real IPs** (`~/claude-works/nginx-app-router/generated/rafeeq.conf`, combined format, kept 14 days). The router has no per-app option to turn it off; add one (e.g. `access_log: off` in the app schema and template), then purge `rafeeq.access.log*`.
+2. **CI runs on the production host** for any member's branch or PR. Give CI its own unprivileged user or machine (needs sudo).
+3. Mentor gender can be changed freely after sign-up; decide whether a gender change needs the team's confirmation.
+4. The database container receives the whole secrets file; split a database-only env file.

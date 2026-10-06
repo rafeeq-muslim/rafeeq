@@ -8,12 +8,12 @@ from typing import Annotated, Literal
 
 from fastapi import APIRouter, Cookie, HTTPException, Request, Response, status
 from pydantic import BaseModel, Field, field_validator
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, update
 
 from app.core import ratelimit
 from app.core.config import get_settings
 from app.core.deps import CurrentUser, Session
-from app.core.events import publish
+from app.core.events import OutboxEvent, publish
 from app.core.security import (
     create_access_token,
     hash_password,
@@ -23,10 +23,21 @@ from app.core.security import (
     verify_password,
 )
 from app.platform import generate, mailer
-from app.platform.models import Invite, OneTimeCode, RefreshSession, User
+from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 COOKIE = "rafeeq_refresh"
+_DUMMY_HASH = hash_password("rafeeq-timing-equaliser")
+
+
+async def _revoke_other_sessions(session, user, response: Response) -> None:
+    """Security review #8: a password or two-step change ends every signed-in
+    device; the device that made the change gets a fresh refresh cookie. (The
+    cookie is scoped to /api/auth, so /api/me never sees the old one.)"""
+    await session.execute(delete(RefreshSession).where(RefreshSession.user_id == user.id))
+    await _issue(session, user, response)
+
+
 USERNAME_RE = re.compile(r"^[a-z0-9][a-z0-9._-]{2,38}[a-z0-9]$")
 Locale = Literal["ar", "en", "tl"]
 
@@ -144,7 +155,9 @@ async def suggest(locale: Locale = "ar") -> Suggestion:
 
 
 @router.get("/username-available")
-async def username_available(session: Session, u: str) -> dict:
+async def username_available(session: Session, u: str, request: Request) -> dict:
+    # Security review #7: without a limit anyone could test a hidden convert's usual handle.
+    ratelimit.hit(f"uname:{request.client.host if request.client else '-'}", 30, 600)
     u = u.strip().lower()
     taken = await session.scalar(select(User.id).where(User.username == u))
     return {
@@ -179,7 +192,13 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     session.add(user)
     await session.flush()
     if invite:
-        invite.used_by, invite.used_at = user.id, datetime.now(UTC)
+        # Claim atomically: two parallel sign-ups cannot share one invite.
+        claimed = await session.execute(
+            update(Invite).where(Invite.code == invite.code, Invite.used_by.is_(None)).values(used_by=user.id, used_at=datetime.now(UTC))
+        )
+        if claimed.rowcount != 1:
+            await session.rollback()
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_invalid")
     await publish(session, "AccountCreated", "PLT", {"user_id": str(user.id)})
     return await _issue(session, user, response)
 
@@ -188,9 +207,12 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
 async def login(body: LoginIn, session: Session, request: Request, response: Response) -> LoginOut:
     ip = request.client.host if request.client else "-"
     ratelimit.hit(f"login:{ip}", 30, 600)
-    ratelimit.hit(f"login-user:{body.username.lower()}", 8, 600)
+    ratelimit.hit(f"login-user:{body.username.strip().lower()}", 8, 600)
     user = await session.scalar(select(User).where(User.username == body.username.strip().lower()))
-    if user is None or not verify_password(user.password_hash, body.password):
+    if user is None:
+        verify_password(_DUMMY_HASH, body.password)  # same cost as a real check: no timing hint that an account exists
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
+    if not verify_password(user.password_hash, body.password):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
     if user.two_factor_enabled and user.email:
         challenge = await _send_code(session, user, "login", user.email)
@@ -252,7 +274,12 @@ async def refresh(session: Session, response: Response, rafeeq_refresh: Annotate
 @router.post("/logout", status_code=204)
 async def logout(session: Session, response: Response, rafeeq_refresh: Annotated[str | None, Cookie()] = None) -> None:
     if rafeeq_refresh:
-        await session.execute(delete(RefreshSession).where(RefreshSession.token_hash == sha256(rafeeq_refresh)))
+        rs = await session.scalar(select(RefreshSession).where(RefreshSession.token_hash == sha256(rafeeq_refresh)))
+        if rs is not None:
+            # Signed out: this account's push subscriptions stop receiving its
+            # replies; reminders keep working for the device (re-linked on sign-in).
+            await session.execute(update(PushSubscription).where(PushSubscription.user_id == rs.user_id).values(user_id=None))
+            await session.delete(rs)
         await session.commit()
     response.delete_cookie(COOKIE, path="/api/auth")
 
@@ -300,10 +327,11 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
 
 
 @me.post("/password", status_code=204)
-async def change_password(body: PasswordIn, user: CurrentUser, session: Session) -> None:
+async def change_password(body: PasswordIn, user: CurrentUser, session: Session, response: Response) -> None:
     if not verify_password(user.password_hash, body.current_password):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "invalid_credentials")
     user.password_hash = hash_password(body.new_password)
+    await _revoke_other_sessions(session, user, response)
     await session.commit()
 
 
@@ -320,18 +348,20 @@ async def start_2fa(body: EnableTwoFactorIn, user: CurrentUser, session: Session
 
 
 @me.post("/2fa/confirm", response_model=MeOut)
-async def confirm_2fa(body: ConfirmIn, user: CurrentUser, session: Session) -> MeOut:
+async def confirm_2fa(body: ConfirmIn, user: CurrentUser, session: Session, response: Response) -> MeOut:
     otp = await _check_code(session, body.challenge_id, body.code, "enable_2fa")
     if otp.user_id != user.id:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "code_invalid")
     user.email, user.two_factor_enabled = otp.pending_email, True
+    await _revoke_other_sessions(session, user, response)
     await session.commit()
     return me_out(user)
 
 
 @me.delete("/2fa", response_model=MeOut)
-async def disable_2fa(user: CurrentUser, session: Session) -> MeOut:
+async def disable_2fa(user: CurrentUser, session: Session, response: Response) -> MeOut:
     user.email, user.two_factor_enabled = None, False  # the email is kept only for codes
+    await _revoke_other_sessions(session, user, response)
     await session.commit()
     return me_out(user)
 
@@ -341,6 +371,8 @@ async def delete_account(user: CurrentUser, session: Session, response: Response
     """rules.md §4: delete the account and all its data at any time. Domain
     tables cascade on users.id; domains also receive AccountDeleted."""
     await publish(session, "AccountDeleted", "PLT", {"user_id": str(user.id)})
+    # Leave no event history that names the account (security review #10).
+    await session.execute(delete(OutboxEvent).where(OutboxEvent.payload["user_id"].astext == str(user.id)))
     await session.delete(user)
     await session.commit()
     response.delete_cookie(COOKIE, path="/api/auth")

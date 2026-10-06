@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     openrouter_api_key: str = ""
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     ai_budget_usd: float = 10.0
+    ai_daily_budget_usd: float = 0.75  # ~13 days of the total; resets at 00:00 UTC
     ai_model_main: str = "google/gemma-4-31b-it"
     ai_model_fast: str = "google/gemma-4-26b-a4b-it"
     ai_model_fallback: str = "deepseek/deepseek-v4-pro"
