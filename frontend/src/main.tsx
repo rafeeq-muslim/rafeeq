@@ -37,6 +37,8 @@ const Referrals = lazy(() => import("@/app/companion/mentor/Referrals"))
 const Org = lazy(() => import("@/app/pages/roles/Org")) // ORG-01..03 coordinator
 const Gallery = lazy(() => import("./App"))
 const Downloads = lazy(() => import("@/app/downloads/DownloadsScreen")) // PLT-12
+const MentorApply = lazy(() => import("@/app/companion/MentorApply")) // CMP-08
+const MentorApplications = lazy(() => import("@/app/companion/MentorApplications")) // CMP-08
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/welcome", element: <Welcome /> },
       { path: "/privacy", element: <Privacy /> }, // PLT-05 R1: readable before onboarding and without an account
+      { path: "/mentor-apply", element: <MentorApply /> }, // CMP-08 R1: open without an account
     ],
   },
   { path: "/design", element: <Gallery /> },
@@ -70,6 +73,7 @@ const router = createBrowserRouter([
       { path: "referrals", element: <RequireRole roles={["sharia_reviewer"]}><Referrals /></RequireRole> }, // CMP-02 R5
       { path: "team", element: <RequireRole roles={["team"]}><Team /></RequireRole> },
       { path: "admin", element: <RequireRole roles={["admin"]}><Admin /></RequireRole> },
+      { path: "mentor-applications", element: <RequireRole roles={["team", "admin"]}><MentorApplications /></RequireRole> }, // CMP-08 R3
       { path: "org", element: <RequireRole roles={["org_coordinator"]}><Org /></RequireRole> }, // ORG-02, ORG-03 (the API checks the organisation too)
     ],
   },

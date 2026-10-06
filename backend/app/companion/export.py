@@ -17,6 +17,7 @@ from app.companion.models import (
     HelpMessage,
     HelpRequest,
     MenteeStatus,
+    MentorApplication,
     MentorLink,
     MentorProfile,
     Report,
@@ -58,6 +59,9 @@ async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
     status = await session.get(MenteeStatus, user_id)
     profile = await session.get(MentorProfile, user_id)
     reports = await session.scalars(select(Report).where(Report.reporter_id == user_id).order_by(Report.created_at))
+    application = await session.scalar(
+        select(MentorApplication).where(MentorApplication.user_id == user_id).order_by(MentorApplication.created_at.desc()).limit(1)
+    )
     blocks = await session.scalars(select(Block.created_at).where(Block.blocker_id == user_id).order_by(Block.created_at))
     return {
         "conversations_with_a_human": conversations,
@@ -82,4 +86,20 @@ async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
             {"reason": r.reason, "about": r.target_type, "note": r.note, "status": r.status, "at": r.created_at} for r in reports
         ],
         "blocks": [{"at": at} for at in blocks],
+        # CMP-08 R7: what the person wrote and its state; never the team's note or the invite code.
+        "mentor_application": (
+            {
+                "display_name": application.display_name,
+                "gender": application.gender,
+                "languages": application.languages,
+                "place": application.place,
+                "about": application.about,
+                "contact": application.contact,
+                "status": application.status,
+                "applied_at": application.created_at,
+                "decided_at": application.decided_at,
+            }
+            if application
+            else None
+        ),
     }

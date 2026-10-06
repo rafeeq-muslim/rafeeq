@@ -67,8 +67,8 @@
       "bloom.title": "Unit by unit, your flower grows complete",
       "bloom.lead": "Every unit you finish adds a petal to your flower, and the first one starts today.",
       "bloom.note": "Free, in Arabic, English and Tagalog.",
-      "bloom.mentor": "For mentors and da'wa organisations: mentors join with an invite code from the Rafeeq team.",
-      "bloom.mentorLink": "Join as a mentor",
+      "bloom.mentor": "For mentors and da'wa organisations: apply and the Rafeeq team reviews your application. If you already hold an invite code, create your account with it.",
+      "bloom.mentorLink": "Apply to be a mentor",
       "foot.privacy": "No ads, no trackers."
     },
     tl: {
@@ -115,8 +115,8 @@
       "bloom.title": "Yunit kada yunit, nabubuo ang iyong bulaklak",
       "bloom.lead": "Bawat yunit na matatapos mo ay nagdaragdag ng talulot sa iyong bulaklak, at ngayon nagsisimula ang una.",
       "bloom.note": "Libre, sa Arabic, English at Tagalog.",
-      "bloom.mentor": "Para sa mga mentor at organisasyong pang-da'wa: sumasali ang mga mentor gamit ang invite code mula sa team ng Rafeeq.",
-      "bloom.mentorLink": "Sumali bilang mentor",
+      "bloom.mentor": "Para sa mga mentor at organisasyong pang-da'wa: mag-apply at susuriin ng team ng Rafeeq ang iyong aplikasyon. Kung may invite code ka na, gumawa ng account gamit ito.",
+      "bloom.mentorLink": "Mag-apply bilang mentor",
       "foot.privacy": "Walang ads, walang tracker."
     }
   };

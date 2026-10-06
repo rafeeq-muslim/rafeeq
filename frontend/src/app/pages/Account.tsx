@@ -6,7 +6,7 @@
  * Progress merges both ways after sign-in or sign-up.
  */
 import * as React from "react"
-import { useNavigate } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { IconCheck, IconCopy, IconDice5, IconEye, IconEyeOff, IconLock } from "@tabler/icons-react"
 import { toast } from "sonner"
 
@@ -259,6 +259,10 @@ export function Create({
             <Field>
               <FieldLabel htmlFor="inv">{t("acct.invite")}</FieldLabel>
               <Input id="inv" dir="ltr" autoCapitalize="none" value={invite} onChange={(e) => setInvite(e.target.value.trim())} />
+              {/* CMP-08: no code yet */}
+              <Link to="/mentor-apply" className="w-fit text-label text-primary underline underline-offset-4">
+                {t("cmp.apply.noCode")}
+              </Link>
             </Field>
             <Field>
               <FieldLabel>{t("acct.gender")}</FieldLabel>

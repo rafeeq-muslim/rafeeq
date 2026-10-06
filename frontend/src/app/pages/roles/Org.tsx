@@ -24,6 +24,7 @@ import { SpotIllustration, TopBar } from "@/components/rafeeq"
 import { num, useT, type Key } from "@/app/i18n"
 import { langName } from "@/app/companion/format"
 import { Confirm } from "@/app/companion/Confirm"
+import { ApplicationsList } from "@/app/companion/MentorApplications" // CMP-08 R8
 import { orgApi, type Checkpoint, type CodeRow, type Dashboard, type Fig, type OrgMentor } from "@/app/org/api"
 
 const STATUSES = ["new", "active", "at_risk", "lapsed", "returning", "none"] as const
@@ -50,7 +51,7 @@ export default function Org() {
         {org && (
           <Tabs defaultValue="dashboard" className="gap-6">
             <TabsList className="w-full">
-              {(["dashboard", "mentors", "codes"] as const).map((k) => (
+              {(["dashboard", "mentors", "applications", "codes"] as const).map((k) => (
                 <TabsTrigger key={k} value={k} className="flex-1">
                   {t(`org.tab.${k}` as Key)}
                 </TabsTrigger>
@@ -61,6 +62,9 @@ export default function Org() {
             </TabsContent>
             <TabsContent value="mentors">
               <OrgMentors orgId={org.id} />
+            </TabsContent>
+            <TabsContent value="applications">
+              <ApplicationsList base={`/api/org/${org.id}/mentor-applications`} coordinator />
             </TabsContent>
             <TabsContent value="codes">
               <OrgCodes orgId={org.id} />
