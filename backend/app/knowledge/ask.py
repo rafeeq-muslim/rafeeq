@@ -19,6 +19,15 @@ Outcomes keep "no evidence" apart from failures (reliability R4):
 The internal `detail` code (e.g. verifier_unavailable) and the stage trace
 go to `knw_answer_log` with the random `ask_id`, never to the app.
 
+PRD live v3 (ASK_SOURCE_POLICY=live-enabled-sources-any-sufficient-v3, off
+by default): step 7 also reads the enabled live connectors (islamqa.info,
+binbaz.org.sa, islamenc.com) at question time, in parallel with the local
+index of the other approved sources, inside one bounded window
+(live_sources/). Any one suitable source is enough; only the sources the
+verified answer cites are shown; a connector's failure never blocks an
+answer another source supports. The response then also carries
+`source_policy`, `used_source_ids` and `live_search` (real events only).
+
 Not streamed: the verifier must pass the whole answer before anything is
 shown (rules.md §2.3). Nothing here stores the question text (plan 4.9);
 the provider receives the question and passages only (rules.md §2.6).
@@ -44,6 +53,9 @@ from app.core.events import publish
 from app.knowledge import approved, glossary, query_normalization, source_policy, tasks
 from app.knowledge.ai import agents, screen
 from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
+from app.knowledge.live_sources import orchestrator as live_orchestrator
+from app.knowledge.live_sources import registry as live_registry
+from app.knowledge.live_sources.types import Evidence, SourceResult
 from app.knowledge.models import AnswerLog, Passage, Source
 from app.knowledge.request_context import RequestContext, current
 from app.knowledge.search import RetrievalResult, retrieve
@@ -56,6 +68,11 @@ ESCALATE_ROUTES = ("personal", "sensitive")
 VERIFY_RESERVE_S = 8.0  # kept free for the support check while composing
 MIN_COMPOSE_S = 6.0  # a composition needs at least this much time to be worth starting
 EXPANSION_NEW = 4  # passages an expansion round may add to the context
+# PRD live v3 §9: time the answer still needs after the collection window
+# (composition, the support check and the reply margin).
+LIVE_ANSWER_RESERVE_S = VERIFY_RESERVE_S + MIN_COMPOSE_S + 5.0
+LIVE_RRF_K = 60
+DEDUP_SECONDS = 120.0  # A15: the same client_request_id within this time is the same attempt
 
 # Public reason codes (PRD §5 R4) and whether a retry can help.
 RETRYABLE = {
@@ -125,6 +142,10 @@ class _Track:
         self.cited: list[str] = []
         self.verified = False
         self.passage_source: dict[str, str] = {}
+        # PRD live v3: the attempt's live search results and the cards of its evidence.
+        self.live: list[SourceResult] | None = None
+        self.live_cards: dict[str, dict[str, Any]] = {}
+        self.live_window_ms = 0
 
     def add_retrieval(self, ret: RetrievalResult) -> None:
         for sid, e in ret.sources.items():
@@ -139,6 +160,12 @@ class _Track:
                 cur.pop("exclusion")
         for p in ret.passages:
             self.passage_source[p["id"]] = p["source_id"]
+
+    def add_live(self, results: list[SourceResult], items: list[Evidence], lang: str, window_ms: int) -> None:
+        self.live, self.live_window_ms = results, window_ms
+        for e in items:
+            self.passage_source[e.evidence_id] = e.source_id
+            self.live_cards[e.evidence_id] = live_card(e, lang)
 
     def summary(self) -> dict[str, dict[str, Any]]:
         cited: dict[str, int] = {}
@@ -215,6 +242,11 @@ def _no_evidence(r: dict[str, Any], status: str, reason_code: str, checks: list[
         return _unavailable(r, "temporarily_unavailable", "retrieval_db_error", checks)
     if status == "degraded":
         return _unavailable(r, "temporarily_unavailable", "retrieval_degraded_no_evidence", checks)
+    # PRD live v3 §10: a failure or timeout kept the answer from being decided.
+    if status == "live_unavailable":
+        return _unavailable(r, "temporarily_unavailable", "live_sources_unavailable", checks)
+    if status == "live_degraded":
+        return _unavailable(r, "temporarily_unavailable", "live_degraded_no_evidence", checks)
     return _escalate(r, "no_source", reason_code, reason_code, checks)
 
 
@@ -222,16 +254,46 @@ def _verification_failed(r: dict[str, Any], v: VerificationResult, detail: str =
     return _escalate(r, "verification_failed", "verification_rejected", detail, v.codes)
 
 
-async def source_cards(session: AsyncSession, ids: list[str], allowed: set[str] | None = None) -> list[dict[str, Any]]:
+def live_card(e: Evidence, lang: str) -> dict[str, Any]:
+    """PRD live v3 §6, §7.5: the card of a live record shows the text fetched
+    from the source in this attempt, its link and when it was read; the
+    model never writes it. `live: true` keeps it apart from local records."""
+    return {
+        "id": e.evidence_id,
+        "source_id": e.source_id,
+        "source_name": live_registry.label(e.source_id, lang),
+        "kind": e.kind,
+        "lang": e.lang,
+        "ref": {"title": e.title, "external_id": e.external_record_id},
+        "ref_key": e.external_record_id,
+        "quote_text": e.source_text,
+        "arabic_text": None,
+        "translation": None,
+        "grade": None,
+        "attribution": e.attribution,
+        "title": e.title,
+        "origin_url": e.canonical_url,
+        "version": f"live:{e.retrieved_at}",
+        "retrieved_at": e.retrieved_at,
+        "live": True,
+    }
+
+
+async def source_cards(
+    session: AsyncSession, ids: list[str], allowed: set[str] | None = None, live: dict[str, dict[str, Any]] | None = None
+) -> list[dict[str, Any]]:
     """Source cards for the cited ids, with Quran/hadith text from the
     database (rules.md §1.3): the passage's own text plus the Arabic ayah or
     Arabic hadith of the same record. With `allowed`, passages of any other
     source are left out (the caller then refuses a half-sourced answer).
     Every cited passage keeps its own card; the app groups them for display
-    (reliability R8)."""
+    (reliability R8). `live`: the cards of this attempt's live evidence
+    (PRD live v3), used for their ids instead of the database."""
     if not ids:
         return []
-    rows = {p.id: p for p in await session.scalars(select(Passage).where(Passage.id.in_(ids)))}
+    live = live or {}
+    db_ids = [i for i in ids if i not in live]
+    rows = {p.id: p for p in await session.scalars(select(Passage).where(Passage.id.in_(db_ids)))} if db_ids else {}
     names = {s.id: s.name for s in await session.scalars(select(Source))}
     ayah_keys = {p.ref_key for p in rows.values() if p.source_id == "quranenc" and p.kind != "quran_arabic"}
     arabic = {}
@@ -244,6 +306,9 @@ async def source_cards(session: AsyncSession, ids: list[str], allowed: set[str] 
         }
     cards = []
     for i in ids:
+        if i in live:
+            cards.append(live[i])
+            continue
         p = rows.get(i)
         if p is None or (allowed is not None and p.source_id not in allowed):
             continue
@@ -288,11 +353,18 @@ async def _serve_approved(session: AsyncSession, r: dict[str, Any], question: st
 
 
 async def _retrieve_round(
-    session: AsyncSession, ctx: RequestContext, track: _Track, query: str, lang: str, version: str, exclude: set[str] | None = None
+    session: AsyncSession,
+    ctx: RequestContext,
+    track: _Track,
+    query: str,
+    lang: str,
+    version: str,
+    exclude: set[str] | None = None,
+    sources: list[str] | None = None,
 ) -> RetrievalResult:
     ctx.retrieval_rounds_used += 1
     t = time.monotonic()
-    ret = await retrieve(session, query, lang, version=version, exclude_ids=frozenset(exclude or ()))
+    ret = await retrieve(session, query, lang, sources=sources, version=version, exclude_ids=frozenset(exclude or ()))
     ctx.stage("retrieval", t, round=ctx.retrieval_rounds_used, **ret.trace())
     track.add_retrieval(ret)
     return ret
@@ -321,6 +393,61 @@ async def _expand(
 def _merge(first: list[dict[str, Any]], extra: list[dict[str, Any]], k: int) -> list[dict[str, Any]]:
     new = [p for p in extra if p["id"] not in {x["id"] for x in first}][:EXPANSION_NEW]
     return [*first[: max(k - len(new), 0)], *new]
+
+
+def _fuse(local: list[dict[str, Any]], live: list[dict[str, Any]], k: int) -> list[dict[str, Any]]:
+    """PRD live v3 §7.1: local and live candidates by their rank in their own
+    list (reciprocal rank), then a fixed tie-break by id. No source name
+    enters the order."""
+    score: dict[str, float] = {}
+    by_id: dict[str, dict[str, Any]] = {}
+    for lst in (local, live):
+        for rank, p in enumerate(lst):
+            if p["id"] in by_id:
+                continue
+            by_id[p["id"]] = p
+            score[p["id"]] = 1 / (LIVE_RRF_K + rank)
+    return [by_id[i] for i in sorted(score, key=lambda i: (-score[i], i))[:k]]
+
+
+async def _live_round(
+    session: AsyncSession, ctx: RequestContext, track: _Track, q: query_normalization.QueryForms, lang: str, question: str
+) -> tuple[list[dict[str, Any]], str]:
+    """PRD live v3 §5: the enabled live connectors, in parallel with the local
+    index of the other approved sources. The local copy of a live connector
+    is not used: in this mode its evidence must come from the live source
+    (§8). Only this coroutine uses the database session; the live tasks
+    never see it (§9). Returns (passages, status)."""
+    st = get_settings()
+    t = time.monotonic()
+    live_ids = {c.id for c in live_registry.enabled()}
+    local_ids = [s for s in source_policy.configured_sources() if s not in live_ids]
+    window = min(st.ask_live_window_seconds, ctx.remaining() - LIVE_ANSWER_RESERVE_S)
+    task = asyncio.create_task(live_orchestrator.collect(question, q.canonical, lang, ctx.ask_id, window))
+    try:
+        local = await _retrieve_round(session, ctx, track, q.canonical, lang, q.version, sources=local_ids)
+    except BaseException:
+        task.cancel()
+        await asyncio.gather(task, return_exceptions=True)
+        raise
+    coll = await task
+    ctx.max_retrieval_rounds = ctx.retrieval_rounds_used  # one live round: no expansion
+    live_passages = [e.passage(live_registry.label(e.source_id, lang)) for e in coll.evidence]
+    track.add_live(coll.results, coll.evidence, lang, coll.window_ms)
+    local_used = local.reason not in ("no_eligible_sources", "no_passages_for_lang")
+    failed = len(coll.failed) + (1 if local_used and local.status != "complete" else 0)
+    clean = len(coll.clean) + (1 if local_used and local.status == "complete" else 0)
+    status = "complete" if not failed else "live_unavailable" if not clean else "live_degraded"
+    ctx.stage(
+        "live",
+        t,
+        status=status,
+        window_ms=coll.window_ms,
+        calls=coll.calls,
+        evidence=len(coll.evidence),
+        sources={x.source_id: x.status for x in coll.results},
+    )
+    return _fuse(local.passages, live_passages, st.knw_search_k), status
 
 
 def _same_output(a: dict[str, Any], b: dict[str, Any] | None) -> bool:
@@ -383,14 +510,18 @@ async def _pipeline(
             return cached
 
     # 7. Retrieve in the asker's language only; expand once if empty.
-    ret = await _retrieve_round(session, ctx, track, q.canonical, lang, q.version)
-    status = ret.status
-    passages = ret.passages
-    if not passages:
-        ret2 = await _expand(session, ctx, track, q, lang, set(), first_empty=True)
-        if ret2 is not None:
-            passages = ret2.passages
-            status = ret2.status if ret2.status != "complete" else status
+    # PRD live v3: the live connectors and the local index, in parallel.
+    if live_registry.live_on():
+        passages, status = await _live_round(session, ctx, track, q, lang, question)
+    else:
+        ret = await _retrieve_round(session, ctx, track, q.canonical, lang, q.version)
+        status = ret.status
+        passages = ret.passages
+        if not passages:
+            ret2 = await _expand(session, ctx, track, q, lang, set(), first_empty=True)
+            if ret2 is not None:
+                passages = ret2.passages
+                status = ret2.status if ret2.status != "complete" else status
     if not passages:
         return _no_evidence(r, status, "retrieval_empty")
     retrieved = {p["id"]: p for p in passages}
@@ -463,7 +594,7 @@ async def _pipeline(
     # 9. Source cards: every cited passage must still exist and be allowed (rule 8).
     ids = cited_ids(out)
     allowed = set((await source_policy.eligible_sources(session)).sources)
-    cards = await source_cards(session, ids, allowed)
+    cards = await source_cards(session, ids, allowed, live=track.live_cards)
     if len(cards) != len(ids):
         return _unavailable(r, "temporarily_unavailable", "source_missing_at_render")
     track.verified = True
@@ -520,25 +651,34 @@ async def answer(session: AsyncSession, question: str, lang: str, consent_object
     st = get_settings()
     question = question.strip()
     r = _base(uuid.uuid4().hex, lang)
+    live_mode = live_registry.live_on()
+    # PRD live v3 §9: 60 s and 6 model calls per attempt in live mode.
+    seconds = st.ask_live_deadline_seconds if live_mode else st.ask_deadline_seconds
     ctx = RequestContext.start(
         r["ask_id"],
-        seconds=st.ask_deadline_seconds,
-        max_calls=st.ask_max_external_calls,
+        seconds=seconds,
+        max_calls=st.ask_live_max_ai_calls if live_mode else st.ask_max_external_calls,
         max_retrieval_rounds=st.ask_max_retrieval_rounds,
         max_compose_rounds=st.ask_max_compose_rounds,
     )
     track = _Track()
     token = current.set(ctx)
     try:
-        async with asyncio.timeout(st.ask_deadline_seconds):
+        async with asyncio.timeout(seconds):
             res = await _pipeline(session, ctx, track, r, question, lang, consent_objectives)
     except TimeoutError:
         # The hard stop (e.g. a slow database): a clear failure, never "no source".
         await _rollback(session)
-        ctx.stages.append({"stage": "deadline", "ms": int(st.ask_deadline_seconds * 1000)})
+        ctx.stages.append({"stage": "deadline", "ms": int(seconds * 1000)})
         res = _unavailable(r, "deadline_exceeded", "pipeline_deadline")
     finally:
         current.reset(token)
+    # PRD live v3 §10: optional, compatible additions. `live_search` lists
+    # only what really happened in this attempt (empty when nothing was searched live).
+    res.body["source_policy"] = live_registry.policy()
+    res.body["used_source_ids"] = list(dict.fromkeys(c["source_id"] for c in res.body.get("sources") or []))
+    if live_mode:
+        res.body["live_search"] = [x.public() for x in track.live or []]
     res.trace = {
         "v": 1,
         "flags": _flags(),
@@ -548,6 +688,10 @@ async def answer(session: AsyncSession, question: str, lang: str, consent_object
         "stages": ctx.stages,
         "sources": track.summary(),
     }
+    if track.live is not None:
+        res.trace["policy"] = live_registry.POLICY_LIVE
+        res.trace["live"] = {x.source_id: x.trace() for x in track.live}
+        res.trace["live_window_ms"] = track.live_window_ms
     return res
 
 
@@ -579,9 +723,40 @@ async def _write_log(
         log.exception("answer log not written")
 
 
+# A15: one attempt per client_request_id. A transport retry of the same
+# request (same id, same client) gets the same result instead of a second
+# search; a manual retry in the app sends a new id and starts a new attempt.
+_attempts: dict[str, tuple[float, asyncio.Future]] = {}
+
+
 @router.post("/ask")
 async def ask(body: AskIn, session: Session, request: Request, user: OptionalUser) -> dict:
     key = tasks.client_key(request, user)
+    now = time.monotonic()
+    for k in [k for k, (until, _) in _attempts.items() if until < now]:
+        _attempts.pop(k, None)
+    dkey = f"{key}|{body.client_request_id}" if body.client_request_id else None
+    if dkey and dkey in _attempts:
+        return await asyncio.shield(_attempts[dkey][1])
+    fut: asyncio.Future = asyncio.get_running_loop().create_future()
+    if dkey:
+        _attempts[dkey] = (now + DEDUP_SECONDS, fut)
+    try:
+        out = await _ask(body, session, request, user, key)
+    except BaseException as e:
+        if dkey:
+            _attempts.pop(dkey, None)  # a failed attempt may be sent again
+        if isinstance(e, Exception):
+            fut.set_exception(e)
+            fut.exception()  # retrieved: no "never retrieved" warning when nobody waits
+        else:
+            fut.cancel()
+        raise
+    fut.set_result(out)
+    return out
+
+
+async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, key: str) -> dict:
     ratelimit.hit(f"ask:m:{key}", 8, 60)
     ratelimit.hit(f"ask:d:{key}", 120, 86400)
     started = time.monotonic()
