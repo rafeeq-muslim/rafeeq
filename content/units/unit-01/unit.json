@@ -177,7 +177,7 @@
           "kind": "text",
           "text": {
             "ar": "معنى شهادة أنَّ محمدًا رسول الله : طاعته فيما أمر، وتصديقه فيما أخبر، واجتناب ما نهى عنه وزجر، وألا يُعَبد الله إلا بما شرع.",
-            "en": "The Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, leave what he forbade and warned against, and worship Allah only in the manner he instructed.",
+            "en": "The Shahādah that “Muhammad is the Messenger of Allah” means that it is obligatory to obey his orders, believe what he related, avoid what he forbade and warned against, and worship Allah only in the manner he instructed.",
             "tl": "Ang kahulugan ng pagsasaksi na si Muhammad ay Sugo ng Allah: Ang pagsunod sa kanyang utos, paniniwala sa kanyang ibinalita, pag-iwas sa kanyang ipinagbawal, at pagsamba sa Allah alinsunod sa kanyang itinuro."
           },
           "provenance": {
@@ -186,7 +186,10 @@
           },
           "objectives": [
             "u01-l1-o2"
-          ]
+          ],
+          "edited": {
+            "en": "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+          }
         }
       ],
       "exercises": [
@@ -461,7 +464,7 @@
           "id": "u01-l2-c4",
           "kind": "text",
           "text": {
-            "ar": "أتوضأ وأغتسل بالماء الطهور:\nالماء الطهور هو : كل ماء نزل من السماء أو نبع من الأرض وبقي علي أصل خلقته، ولم تتغير أحد أوصافه الثلاثة، وهي: اللون والطعم والريح: بشيء من الأشياء التي تسلب طهورية الماء.",
+            "ar": "أتوضأ وأغتسل بالماء الطهور:\nالماء الطهور هو : كل ماء نزل من السماء أو نبع من الأرض وبقي على أصل خلقته، ولم تتغير أحد أوصافه الثلاثة، وهي: اللون والطعم والريح: بشيء من الأشياء التي تسلب طهورية الماء.",
             "en": "I perform ablution (Wudu’) and ritual bath (Ghusl) with purifying water.\nPurifying water is any water that falls from the sky or springs from the earth and remains in its original state without a change to any of its three characteristics: color, taste, and smell; by one of them the state of purity of water is interrupted.",
             "tl": "Ako ay magwuwudo at maliligo gamit ang malinis na tubig\nAng malinis na tubig: Lahat ng tubig na nagmula sa langit o lumabas mula sa lupa, nanatili sa orihinal na pagkalikha nito at hindi nabago ang isa sa tatlo nitong mga katangian, at ito ay ang mga: kulay, lasa at amoy; sa pamamagitan ng mga bagay na nakakaalis ng pagkalinis ng tubig."
           },
@@ -471,7 +474,10 @@
           },
           "objectives": [
             "u01-l2-o3"
-          ]
+          ],
+          "edited": {
+            "ar": "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+          }
         }
       ],
       "exercises": [
@@ -758,7 +764,7 @@
           "kind": "text",
           "text": {
             "ar": "النيَّة\nومحلها القلب، ومعنى النية : عزم القلب على فعل العبادة تقربًا إلى الله تعالى.",
-            "en": "Making Niyyah (intention) in the heart.\nNiyyah refers to the resolve in the heart to perform the worship to get close to Allah.",
+            "en": "Making Niyyah (intention) in the heart.\nNiyyah refers to the resolve in the heart to perform the worship in order to get close to Allah.",
             "tl": "Ang intensyon sa puso. Ang kahulugan niyo ay ang hangarin ng puso na gawin ang isang pagsamba upang mapalapit sa Allah."
           },
           "provenance": {
@@ -768,7 +774,10 @@
           "objectives": [
             "u01-l3-o1",
             "u01-l3-o2"
-          ]
+          ],
+          "edited": {
+            "en": "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+          }
         },
         {
           "id": "u01-l3-c2",
@@ -1124,6 +1133,14 @@
             "en": "Knows what nullifies wudu’",
             "tl": "Alam kung ano ang nakakasira sa wudhu"
           }
+        },
+        {
+          "id": "u01-l4-o4",
+          "text": {
+            "ar": "يعرف كيف يزيل النجاسة بعد قضاء الحاجة",
+            "en": "Knows how to clean impurity after relieving oneself",
+            "tl": "Alam kung paano aalisin ang karumihan pagkatapos dumumi"
+          }
         }
       ],
       "cards": [
@@ -1169,7 +1186,7 @@
           "kind": "text",
           "text": {
             "ar": "مسح كل الرأس باليدين مع الأذنين مرةً واحدة\nيبدأ بمقدم رأسه ذاهبًا بهما إلى قفاه ثم يردهما.\nويُدخل سبابتيه في أذنيه،  ويُخالف بإبهاميه على ظاهر أذنيه، فيمسح بذلك ظاهر الأذن وباطنها.",
-            "en": "Passing the wet hands over the head and the ears once .\nOne starts at the hairline and moves his hands back to the nape and then back.\nHe then inserts his index fingers inside his ears\nwhile passing his thumbs over the back of his ears, thus wiping the front and back of the ear.",
+            "en": "Passing the wet hands over the head and the ears once .\nOne starts at the hairline and moves his hands back to the nape and then all the way back.\nHe then inserts his index fingers inside his ears\nwhile passing his thumbs over the back of his ears, thus wiping the front and back of the ear.",
             "tl": "Ang pagpunas ng ulo pati ang dalawang tainga gamit ang dalawang kamay ng isang beses lamang, magsisimula sa unahan ng ulo hanggang sa batok at pagkatapos ibalik ang pagpunas sa unahan ng ulo. At ipasok ang dalawang hintuturo sa tainga at ang hinlalaki ay nakapunas sa ibabaw ng tainga."
           },
           "provenance": {
@@ -1182,7 +1199,10 @@
           "image": "images/wudu-7-head.webp",
           "extra_images": [
             "images/wudu-7-ears.webp"
-          ]
+          ],
+          "edited": {
+            "en": "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+          }
         },
         {
           "id": "u01-l4-c4",
@@ -1231,7 +1251,7 @@
             "section": "After relieving oneself"
           },
           "objectives": [
-            "u01-l4-o3"
+            "u01-l4-o4"
           ]
         }
       ],
@@ -1561,6 +1581,86 @@
             }
           ],
           "answer": "a"
+        },
+        {
+          "id": "u01-l4-e8",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o4"
+          ],
+          "prompt": {
+            "ar": "بماذا تُزال النجاسة بعد قضاء الحاجة؟ (الأفضل)",
+            "en": "What is best for cleaning after relieving oneself?",
+            "tl": "Ano ang pinakamainam na panlinis pagkatapos dumumi?"
+          },
+          "explain_card": "u01-l4-c6",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "الماء الطهور",
+                "en": "Clean water",
+                "tl": "Tubig na naipandadalisay"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "لا يلزم التنظيف",
+                "en": "No cleaning is needed",
+                "tl": "Hindi kailangang maglinis"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "مسحة واحدة بأي شيء",
+                "en": "One wipe with anything",
+                "tl": "Isang pahid ng kahit ano"
+              }
+            }
+          ],
+          "answer": "a"
+        },
+        {
+          "id": "u01-l4-e9",
+          "type": "choice",
+          "objectives": [
+            "u01-l4-o4"
+          ],
+          "prompt": {
+            "ar": "إن لم يُستعمل الماء، فكم مسحة على الأقل؟",
+            "en": "If water is not used, how many wipes at least?",
+            "tl": "Kung hindi tubig ang gagamitin, ilang pahid man lang?"
+          },
+          "explain_card": "u01-l4-c6",
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "ar": "ثلاث مسحات منقية فأكثر بشيء طاهر مباح",
+                "en": "Three cleansing wipes or more, with something clean and permissible",
+                "tl": "Tatlong ulit o higit pa na pagpapahid ng malinis na ipinahihintulot na bagay"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "ar": "مسحة واحدة",
+                "en": "One wipe",
+                "tl": "Isang pahid"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "ar": "لا حد لها ولو مسحة ناقصة",
+                "en": "Any amount, even an incomplete wipe",
+                "tl": "Kahit gaano, kahit hindi malinis"
+              }
+            }
+          ],
+          "answer": "a"
         }
       ]
     },
@@ -1628,7 +1728,7 @@
           "kind": "text",
           "text": {
             "ar": "إذا دخل وقت الصلاة يتطهَّر المسلم من الحدث الأصغر والحدث الأكبر، إذا كان محدثًا حدثًا أكبر.\nالحدث الأكبر هو: ما يُوجب على المسلم الغُسل.\nالحدث الأصغر هو: ما يُوجب على المسلم الوضوء.",
-            "en": "When the time of prayer starts, the Muslim purifies himself from the state of minor impurity, and major impurity if he is in a state of major impurity.\nMajor impurity is what requires Ghusl (ritual bath).\nMinor impurity is what requires Wudu’ (ablution).",
+            "en": "When the time of prayer starts, the Muslim purifies himself from the state of minor impurity, and from major impurity if he is in a state of major impurity.\nMajor impurity is what requires Ghusl (ritual bath).\nMinor impurity is what requires Wudu’ (ablution).",
             "tl": "Kapag pumasok ang oras ng salah marapat na maging malinis ang isang muslim mula sa estado ng maliit at malaking karumihan.\nHadath Akbar (estado ng malaking karumihan): nangangailangan ng Ghusl (buong paghuhugas o pagligo).\nHadath Asghar (estado ng maliit na karumihan): nangangailangan ng Wudhu."
           },
           "provenance": {
@@ -1637,7 +1737,10 @@
           },
           "objectives": [
             "u01-l5-o2"
-          ]
+          ],
+          "edited": {
+            "en": "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
+          }
         },
         {
           "id": "u01-l5-c3",
@@ -2076,8 +2179,8 @@
           "kind": "text",
           "text": {
             "ar": "أرفع يديَّ بمحاذاة المنكبين وأقول: (الله أكبر) ناويًا الدخول في الصلاة.",
-            "en": "I raise my hands to the level of my shoulders and say (الله أكبر) (Allah is the Most Great) with the intention of beginning the prayer.",
-            "tl": "itataas ko ang aking kamay na nakahanay sa aking mga balikat at sasabihin ang katagang: (الله أكبر) (ang Allah ang Pinakadakila) na may kasamang hangarin na simulan ang salah."
+            "en": "I raise my hands to the level of my shoulders and say (الله أكبر) (Meaning: Allah is the Most Great) with the intention of beginning the prayer.",
+            "tl": "itataas ko ang aking kamay na nakahanay sa aking mga balikat at sasabihin ang katagang: (الله أكبر) (Kahulugan: ang Allah ang Pinakadakila) na may kasamang hangarin na simulan ang salah."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2088,8 +2191,8 @@
           ],
           "image": "images/salah-02-takbir.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2097,8 +2200,8 @@
           "kind": "text",
           "text": {
             "ar": "أقرأ دعاء الاستفتاح بما ورد، ومن ذلك قول: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) .",
-            "en": "I say an opening Du‘ā’ (supplication) as reported from the Prophet (Allah’s prayers and peace be upon him). One of the opening supplications is the following: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) (Glory and praise be to You O Allah. Blessed is Your Name and Exalted is Your Majesty, and there is none worthy of worship but You)",
-            "tl": "Aking sasabihin ang pambungad na Duaa (pagsusumamo) na naiulat sa Sunnah, at kabilang dito ang pagsabi: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) “Ang kaluwalhatian ay sa Iyo O Allah, at papuri. Pinagpala ang Iyong Pangalan at Itinaas ang iyong Kamahalan. Walang karapat-dapat sambahin kundi Ikaw lamang.”"
+            "en": "I say an opening Du‘ā’ (supplication) as reported from the Prophet (Allah’s prayers and peace be upon him). One of the opening supplications is the following: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) (Meaning: Glory and praise be to You O Allah. Blessed is Your Name and Exalted is Your Majesty, and there is none worthy of worship but You)",
+            "tl": "Aking sasabihin ang pambungad na Duaa (pagsusumamo) na naiulat sa Sunnah, at kabilang dito ang pagsabi: (سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرَكَ) (Kahulugan:) “Ang kaluwalhatian ay sa Iyo O Allah, at papuri. Pinagpala ang Iyong Pangalan at Itinaas ang iyong Kamahalan. Walang karapat-dapat sambahin kundi Ikaw lamang.”"
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2109,8 +2212,8 @@
           ],
           "image": "images/salah-03-opening.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2118,7 +2221,7 @@
           "kind": "text",
           "text": {
             "ar": "أستعيذ بالله من الشيطان الرجيم فأقول: (أعوذُ باللهِ من الشيطان الرجيم) .",
-            "en": "I seek refuge in Allah from the accursed Satan, saying: (أعوذُ باللهِ من الشيطان الرجيم) (I seek refuge in Allah from the accursed Satan)",
+            "en": "I seek refuge in Allah from the accursed Satan, saying: (أعوذُ باللهِ من الشيطان الرجيم) (Meaning: I seek refuge in Allah from the accursed Satan)",
             "tl": "Humihingi ako ng kanlungan kay Allah mula sa isinumpa na Shaytan (Satanas) sa pagsasabing: (أعوذُ باللهِ من الشيطان الرجيم)."
           },
           "provenance": {
@@ -2130,7 +2233,7 @@
           ],
           "image": "images/salah-04-istiadha.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
             "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
           }
         },
@@ -2186,8 +2289,8 @@
           "kind": "text",
           "text": {
             "ar": "أقول: (الله أكبر) ثم أركع حتى يكون ظهري مستويًا ويداي على ركبتيَّ مفرَّجة الأصابع، ثم أقول في الركوع: (سبحان ربي العظيم) .",
-            "en": "I say (الله أكبر) then I make Ruku‘ by bowing until my back is level, and my hands are on my knees with the fingers spread out, then I say while in Ruku‘ (سبحان ربي العظيم) (Glory is to my Lord, the Great).",
-            "tl": "Sasabihin ko: (الله أكبر) at ako ay yuyuko hanggang sa maging tuwid ang likod at nakalatag ang aking kamay sa aking tuhod na nakabukas ang mga daliri, at aking sasabihin: (سبحان ربي العظيم) (Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)."
+            "en": "I say (الله أكبر) then I make Ruku‘ by bowing until my back is level, and my hands are on my knees with the fingers spread out, then I say while in Ruku‘ (سبحان ربي العظيم) (Meaning: Glory is to my Lord, the Great).",
+            "tl": "Sasabihin ko: (الله أكبر) at ako ay yuyuko hanggang sa maging tuwid ang likod at nakalatag ang aking kamay sa aking tuhod na nakabukas ang mga daliri, at aking sasabihin: (سبحان ربي العظيم) (Kahulugan: Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2199,8 +2302,8 @@
           ],
           "image": "images/salah-07-ruku.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         }
       ],
@@ -2333,24 +2436,24 @@
               "id": "a",
               "text": {
                 "ar": "سبحان ربي العظيم",
-                "en": "سبحان ربي العظيم",
-                "tl": "سبحان ربي العظيم"
+                "en": "سبحان ربي العظيم (Meaning: Glory is to my Lord, the Great)",
+                "tl": "سبحان ربي العظيم (Kahulugan: Ang kaluwalhatian ay sa aking Panginoon, ang Pinakadakila)"
               }
             },
             {
               "id": "b",
               "text": {
                 "ar": "سبحان ربي الأعلى",
-                "en": "سبحان ربي الأعلى",
-                "tl": "سبحان ربي الأعلى"
+                "en": "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)",
+                "tl": "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"
               }
             },
             {
               "id": "c",
               "text": {
                 "ar": "ربي اغفر لي",
-                "en": "ربي اغفر لي",
-                "tl": "ربي اغفر لي"
+                "en": "ربي اغفر لي (Meaning: My Lord, forgive my sins)",
+                "tl": "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)"
               }
             }
           ],
@@ -2519,8 +2622,8 @@
           "kind": "text",
           "text": {
             "ar": "أرفع من الركوع قائلًا: (سمع الله لمن حمده) رافعًا يديَّ إلى حذو المنكبين، وإذا اعتدل جسمي واقفًا أقولُ: (ربنا ولك الحمد) .",
-            "en": "I rise from Ruku‘ while saying: (سمع الله لمن حمده) (Allah hears the one who praises Him) and raising my hands to the level of my shoulders. When I stand straight, I say: (ربنا ولك الحمد) (Our Lord, and to You is all praise).",
-            "tl": "Ako ay tatayo mula sa pagkayuko at sasabihin: (سمع الله لمن حمده) (dininig ng Allah ang sinumang pumuri sa kanya). Itataas ko ang aking mga kamay sa antas ng balikat, at kung ang aking katawan ay ganap nang nakatayo, sasabihin ko: (ربنا ولك الحمد) (Panginoon namin, tanging sa Iyo lamang ang papuri)."
+            "en": "I rise from Ruku‘ while saying: (سمع الله لمن حمده) (Meaning: Allah hears the one who praises Him) and raising my hands to the level of my shoulders. When I stand straight, I say: (ربنا ولك الحمد) (Meaning: Our Lord, and to You is all praise).",
+            "tl": "Ako ay tatayo mula sa pagkayuko at sasabihin: (سمع الله لمن حمده) (Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya). Itataas ko ang aking mga kamay sa antas ng balikat, at kung ang aking katawan ay ganap nang nakatayo, sasabihin ko: (ربنا ولك الحمد) (Kahulugan: Panginoon namin, tanging sa Iyo lamang ang papuri)."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2532,8 +2635,8 @@
           ],
           "image": "images/salah-08-rising.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2541,8 +2644,8 @@
           "kind": "text",
           "text": {
             "ar": "أقولُ: (الله أكبر) وأسجد على اليدين والركبتين والقدمين والجبهة والأنف، وأقول في سجودي: (سبحان ربي الأعلى) .",
-            "en": "I say (الله أكبر) and prostrate on my hands, knees, feet, forehead, and nose, then I say while prostrating: (سبحان ربي الأعلى) (Glory is to my Lord, the Most High).",
-            "tl": "Sasabihin ko ang (الله أكبر) at ako ay magpapatirapa gamit ang mga kamay, tuhod, paa, noo at ilong, at sasabihin ko sa aking pagpatirapa: (سبحان ربي الأعلى) (Luwalhati sa aking Panginoon, ang Kataas-taasan)."
+            "en": "I say (الله أكبر) and prostrate on my hands, knees, feet, forehead, and nose, then I say while prostrating: (سبحان ربي الأعلى) (Meaning: Glory is to my Lord, the Most High).",
+            "tl": "Sasabihin ko ang (الله أكبر) at ako ay magpapatirapa gamit ang mga kamay, tuhod, paa, noo at ilong, at sasabihin ko sa aking pagpatirapa: (سبحان ربي الأعلى) (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2554,8 +2657,8 @@
           ],
           "image": "images/salah-09-sujud.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2563,8 +2666,8 @@
           "kind": "text",
           "text": {
             "ar": "أقولُ: (الله أكبر) وأرفع من السجود حتى أستوي مستقيم الظهر جالسًا على القدم اليسرى وناصبًا القدم اليمنى، وأقول: (ربي اغفر لي) .",
-            "en": "I say (الله أكبر) and rise from the Sujūd (prostration) to sit with my back straight, sitting on my left foot and keeping my right foot erect, and say: (ربي اغفر لي) (My Lord, forgive my sins).",
-            "tl": "Sasabihin ko: (الله أكبر) at ako ay babangon mula sa pagkatirapa hanggang sa maging ganap na matuwid ang aking likod sa pagkakaupo sa kaliwang paa at nakataas ang kanang paa, at bibigkasin ang katagang: (ربي اغفر لي) (Panginoon, patawarin mo ako)."
+            "en": "I say (الله أكبر) and rise from the Sujūd (prostration) to sit with my back straight, sitting on my left foot and keeping my right foot erect, and say: (ربي اغفر لي) (Meaning: My Lord, forgive my sins).",
+            "tl": "Sasabihin ko: (الله أكبر) at ako ay babangon mula sa pagkatirapa hanggang sa maging ganap na matuwid ang aking likod sa pagkakaupo sa kaliwang paa at nakataas ang kanang paa, at bibigkasin ang katagang: (ربي اغفر لي) (Kahulugan: Panginoon, patawarin mo ako)."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2576,8 +2679,8 @@
           ],
           "image": "images/salah-10-sitting.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2628,8 +2731,8 @@
           "kind": "text",
           "text": {
             "ar": "بعد الركعة الثانية من صلاة الظهر والعصر والمغرب والعشاء أجلس لقراءة التشهد الأول وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) ثم أقوم للركعة الثالثة بعد ذلك.",
-            "en": "After the second prostration in the second Rak‘ah of Dhuhr, ‘Asr, Maghrib, and 'Isha’ prayers, I sit to say the first Tashahhud (testimony of faith) whose wording is as follows: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) (All compliments, prayers, and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger). Then I stand up for the third Rak‘ah.",
-            "tl": "Matapos ang pangalawang rakaa ng Dhuhr, Asr, Maghrib at Isha, ako ay uupo upang sabihin ang unang Tashahud: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله).\n“Ang lahat ng kapangyarihan at kadakilaan ay para sa Allah, lahat ng mga panalangin, at lahat ng mabuting pagsasalita at pagkilos ay para sa Kanya. Ang kapayapaan ay sumaiyo O Propeta, at gayundin ang awa ng Allah at ang Kanyang mga pagpapala. Ang kapayapaan ay mapapa-saatin, at sa mga mabubuting lingkod ng Allah. Pinapatotohanan ko na walang sinumang may karapatang sambahin maliban sa Allah, at pinatototohanan ko na si Muhammad ay Kanyang lingkod at sugo.” Pagkatapos ay lilipat ako sa pangatlong rakaa."
+            "en": "After the second prostration in the second Rak‘ah of Dhuhr, ‘Asr, Maghrib, and 'Isha’ prayers, I sit to say the first Tashahhud (testimony of faith) whose wording is as follows: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله) (Meaning: All compliments, prayers, and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger). Then I stand up for the third Rak‘ah.",
+            "tl": "Matapos ang pangalawang rakaa ng Dhuhr, Asr, Maghrib at Isha, ako ay uupo upang sabihin ang unang Tashahud: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله).\n(Kahulugan:) “Ang lahat ng kapangyarihan at kadakilaan ay para sa Allah, lahat ng mga panalangin, at lahat ng mabuting pagsasalita at pagkilos ay para sa Kanya. Ang kapayapaan ay sumaiyo O Propeta, at gayundin ang awa ng Allah at ang Kanyang mga pagpapala. Ang kapayapaan ay mapapa-saatin, at sa mga mabubuting lingkod ng Allah. Pinapatotohanan ko na walang sinumang may karapatang sambahin maliban sa Allah, at pinatototohanan ko na si Muhammad ay Kanyang lingkod at sugo.” Pagkatapos ay lilipat ako sa pangatlong rakaa."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2640,8 +2743,8 @@
           ],
           "image": "images/salah-13-tashahhud.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The Filipino paragraph is split where the page joins the first and last tashahhud."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The Filipino paragraph is split where the page joins the first and last tashahhud. The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2649,8 +2752,8 @@
           "kind": "text",
           "text": {
             "ar": "بعد الركعة الأخيرة من كل صلاة أجلس لقراءة التشهد الأخير، وهو: (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد).",
-            "en": "After the second prostration in the last Rak‘ah of every prayer, I sit to say the last Tashahhud whose wording is as follows (the first Tashahhud plus sending peace and prayers upon the Prophet): (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد) (All compliments, prayers and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger. O Allah, send prayers upon Muhammad and upon the family of Muhammad as You sent prayers upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory. O Allah, send blessings upon Muhammad and upon the family of Muhammad as You sent blessings upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory).",
-            "tl": "Sa huling rakaa ng bawat pagdarasal ako ay uupo upang sabihin ang unang Tashahud bilang karagdagan sa sumusunod na pagbigkas: (اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد).\n“O Allah! Puriin nawa si Muhammad, at ang pamilya ni Muhammad, tulad ng pagpuri Mo kay Ibraaheem, at ang pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat na puriin, at luwalhatiin. At Ikaw ang nagkaloob ng mga pagpapala kay Muhammad, at sa pamilya ni Muhammad, tulad ng pagpapadala mo ng mga pagpapala kay Ibraaheem, at sa pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat puruiin luwalhatiin.’’"
+            "en": "After the second prostration in the last Rak‘ah of every prayer, I sit to say the last Tashahhud whose wording is as follows (the first Tashahhud plus sending peace and prayers upon the Prophet): (التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله، وأشهد أن محمدًا عبده ورسوله، اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد) (Meaning: All compliments, prayers and pure words are due to Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous slaves of Allah. I bear witness that none has the right to be worshiped except Allah, and I bear witness that Muhammad is His slave and Messenger. O Allah, send prayers upon Muhammad and upon the family of Muhammad as You sent prayers upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory. O Allah, send blessings upon Muhammad and upon the family of Muhammad as You sent blessings upon Abraham and upon the family of Abraham; You are indeed Worthy of Praise, Full of Glory).",
+            "tl": "Sa huling rakaa ng bawat pagdarasal ako ay uupo upang sabihin ang unang Tashahud bilang karagdagan sa sumusunod na pagbigkas: (اللهم صلِّ على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد. اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد).\n(Kahulugan:) “O Allah! Puriin nawa si Muhammad, at ang pamilya ni Muhammad, tulad ng pagpuri Mo kay Ibraaheem, at ang pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat na puriin, at luwalhatiin. At Ikaw ang nagkaloob ng mga pagpapala kay Muhammad, at sa pamilya ni Muhammad, tulad ng pagpapadala mo ng mga pagpapala kay Ibraaheem, at sa pamilya ni Ibraaheem; Ikaw lamang ang karapat-dapat puruiin luwalhatiin.’’"
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2660,8 +2763,8 @@
             "u01-l7-o3"
           ],
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         },
         {
@@ -2669,8 +2772,8 @@
           "kind": "text",
           "text": {
             "ar": "بعد ذلك أسلم عن يميني فأقول: (السلام عليكم ورحمة الله) وأسلم عن شمالي فأقول: (السلام عليكم ورحمة الله) ناويًا الخروج من الصلاة، وأكون بذلك قد أديت الصلاة.",
-            "en": "I intend to conclude the prayer and turn my head to the right, saying: (السلام عليكم ورحمة الله) (Peace and blessings of Allah be upon you). Then I turn my head to the left, saying: (السلام عليكم ورحمة الله). Upon doing that, I have completed the performance of my prayer.",
-            "tl": "Nais kong tapusin ang salah sa pamamagitan ng pagsasabi ng: (السلام عليكم ورحمة الله), ang kapayapaan at mga pagpapala ng Allah ay sumaiyo, isang beses habang nakaharap sa kanang direksyon at isang beses habang nakaharap sa kaliwang direksyon; sa ganoong paraan magtatapos ang salah."
+            "en": "I intend to conclude the prayer and turn my head to the right, saying: (السلام عليكم ورحمة الله) (Meaning: Peace and blessings of Allah be upon you). Then I turn my head to the left, saying: (السلام عليكم ورحمة الله). Upon doing that, I have completed the performance of my prayer.",
+            "tl": "Nais kong tapusin ang salah sa pamamagitan ng pagsasabi ng: (السلام عليكم ورحمة الله) (Kahulugan: ang kapayapaan at mga pagpapala ng Allah ay sumaiyo), isang beses habang nakaharap sa kanang direksyon at isang beses habang nakaharap sa kaliwang direksyon; sa ganoong paraan magtatapos ang salah."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -2681,8 +2784,8 @@
           ],
           "image": "images/salah-14-taslim.webp",
           "edited": {
-            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3).",
-            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3)."
+            "en": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06).",
+            "tl": "Transliterated wording replaced with the Arabic wording from the Arabic edition (LRN-01 rule 3). The meaning of the dhikr is labelled «Meaning» so it is not taken for the words of prayer (reviewer, 2026-10-06)."
           }
         }
       ],
@@ -2810,8 +2913,8 @@
               },
               "right": {
                 "ar": "سمع الله لمن حمده",
-                "en": "سمع الله لمن حمده",
-                "tl": "سمع الله لمن حمده"
+                "en": "سمع الله لمن حمده (Meaning: Allah hears the one who praises Him)",
+                "tl": "سمع الله لمن حمده (Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya)"
               }
             },
             {
@@ -2822,8 +2925,8 @@
               },
               "right": {
                 "ar": "سبحان ربي الأعلى",
-                "en": "سبحان ربي الأعلى",
-                "tl": "سبحان ربي الأعلى"
+                "en": "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)",
+                "tl": "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"
               }
             },
             {
@@ -2834,8 +2937,8 @@
               },
               "right": {
                 "ar": "ربي اغفر لي",
-                "en": "ربي اغفر لي",
-                "tl": "ربي اغفر لي"
+                "en": "ربي اغفر لي (Meaning: My Lord, forgive my sins)",
+                "tl": "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)"
               }
             }
           ]
@@ -2857,24 +2960,24 @@
               "id": "a",
               "text": {
                 "ar": "ربي اغفر لي",
-                "en": "ربي اغفر لي",
-                "tl": "ربي اغفر لي"
+                "en": "ربي اغفر لي (Meaning: My Lord, forgive my sins)",
+                "tl": "ربي اغفر لي (Kahulugan: Panginoon, patawarin mo ako)"
               }
             },
             {
               "id": "b",
               "text": {
                 "ar": "سبحان ربي الأعلى",
-                "en": "سبحان ربي الأعلى",
-                "tl": "سبحان ربي الأعلى"
+                "en": "سبحان ربي الأعلى (Meaning: Glory is to my Lord, the Most High)",
+                "tl": "سبحان ربي الأعلى (Kahulugan: Luwalhati sa aking Panginoon, ang Kataas-taasan)"
               }
             },
             {
               "id": "c",
               "text": {
                 "ar": "سمع الله لمن حمده",
-                "en": "سمع الله لمن حمده",
-                "tl": "سمع الله لمن حمده"
+                "en": "سمع الله لمن حمده (Meaning: Allah hears the one who praises Him)",
+                "tl": "سمع الله لمن حمده (Kahulugan: dininig ng Allah ang sinumang pumuri sa kanya)"
               }
             }
           ],

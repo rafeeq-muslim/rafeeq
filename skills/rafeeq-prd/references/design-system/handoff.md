@@ -1,6 +1,6 @@
 # مواصفات تسليم الشاشات
 
-مواصفات الشاشات الأربع المرجعية في المعرض (`?tab=screens`)، بقالب مهارة `design-handoff`. الهدف ألا يخمّن المبرمج شيئًا. القيم كلها رموز من [`DESIGN.md`](../../design-system/DESIGN.md)، والمكوّنات من [`design-system.md`](../design-system.md).
+مواصفات الشاشات الأربع المرجعية في المعرض (`?tab=screens`)، بقالب مهارة `design-handoff`. الهدف ألا يخمّن المبرمج شيئًا. القيم كلها رموز من [`DESIGN.md`](../../frontend/DESIGN.md)، والمكوّنات من [`design-system.md`](../design-system.md).
 
 **مشترك بين الشاشات:**
 - عرض التصميم 390px، وهوامش جانبية 16px (`px-4`).
