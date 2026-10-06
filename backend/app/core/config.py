@@ -57,7 +57,10 @@ class Settings(BaseSettings):
     # of the two channels at the top of the list (2 × (1/60 − 1/61) = 0.00055):
     # two passages of equal relevance differ by that much only because each
     # channel must put one of them first.
-    knw_preferred_source: str = "islamqa"
+    # PRD live v3 §1, §7.2 (final user clarification, supersedes the near-tie
+    # preference for islamqa): no site gets a preference by its name. The
+    # mechanism stays for an explicit env value; empty disables it.
+    knw_preferred_source: str = ""
     knw_near_tie_epsilon: float = 0.0006
 
     # KNW-01 reliability (docs/domains/knowledge/features/KNW-01-chatbot-reliability-prd.md §14.5).
@@ -73,6 +76,43 @@ class Settings(BaseSettings):
     # instruction, 2026-10-06; PLT owner informed). PLT09_ORGANIZED_HOME=false
     # rolls back to the previous Home, «كل ما في رفيق», Discover and «حسابي».
     plt09_organized_home: bool = True
+
+    # --- PRD-LIVE-SOURCE-PRIORITY-AND-FALLBACK v3 (knw-live-source-access) -------------
+    # Off by default: `local-index-v2` answers from the local index only (KNW-01/02).
+    # `live-enabled-sources-any-sufficient-v3` also reads the connectors listed in
+    # ASK_LIVE_SOURCES live at question time, in parallel; any one suitable source is
+    # enough (no minimum, no mandatory source, no primary/fallback order). Rollout and
+    # rollback: docs/engineering/implementation/KNW-live-source-access-report.md.
+    ask_source_policy: str = "local-index-v2"
+    ask_live_sources: str = ""  # e.g. "islamqa,binbaz"; names from app.knowledge.live_sources.registry
+    # islamenc.com's robots.txt disallows /*/search for every agent: its search is
+    # called only once the encyclopedia grants access in writing.
+    ask_live_islamic_content_search_permitted: bool = False
+    ask_live_deadline_seconds: float = 60.0  # §9: whole request in live mode (the app waits 65 s)
+    ask_live_window_seconds: float = 20.0  # §9: one shared search + fetch window
+    ask_live_max_calls_per_source: int = 4  # §9: transport calls per connector, retries included
+    ask_live_max_calls: int = 16  # §9: transport calls per attempt
+    ask_live_max_ai_calls: int = 6  # §9: model + embedding calls per attempt in live mode
+    ask_live_records_per_source: int = 2  # records fetched in full per connector
+    ask_live_chunks_per_record: int = 2  # most relevant parts of one record given to the composer
+    ask_live_request_timeout_seconds: float = 8.0
+    ask_live_user_agent: str = "RafeeqBot/1.0 (+https://rafeeq.nan.sa)"
+
+    # --- KNW-06 library search (PRD-LIBRARY-LIVE-SEARCH, knw-06-library-live-search-build) ---
+    # Its own allowlist: only islamic_content and islamhouse can ever be searched
+    # (app.knowledge.library_search.LIBRARY_SOURCES); the chat settings above are
+    # never read for it. LIBRARY_SEARCH_SOURCES may only switch a library source
+    # off. The encyclopedia stays "not connected" until
+    # ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true (the site's robots.txt).
+    # Rollback: LIBRARY_SEARCH_ENABLED=false hides the search; the catalogue is untouched.
+    library_search_enabled: bool = True
+    library_search_sources: str = "islamic_content,islamhouse"
+    library_search_window_seconds: float = 12.0  # PRD §8: whole backend window (the app waits 15 s)
+    library_search_request_timeout_seconds: float = 8.0
+    library_search_max_calls_per_source: int = 4  # PRD §8: per source per page, retries included
+    library_search_max_calls: int = 8  # PRD §8: shared cap per page
+    library_search_session_seconds: int = 300  # PRD §7: a search session ends after 5 minutes
+    library_search_max_sessions: int = 2000  # memory bound; the oldest session goes first
 
     # Web Push (VAPID).
     vapid_public_key: str = ""

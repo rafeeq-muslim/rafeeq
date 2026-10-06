@@ -5,6 +5,7 @@
  */
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
+import { appUrl } from "@/app/lib/base"
 import { NEUTRAL_LOOK, saveDiscreet } from "@/app/lib/discreetPref"
 import { FALLBACK_TEXT, notificationFor, readLocale, registerPushHandler, saveLocale } from "./plt13-push"
 
@@ -89,7 +90,9 @@ describe("plt-13-r2 every push shows a non-empty notification", () => {
 
 describe("plt-13-r6 a notification opens a screen inside the app", () => {
   it("plt13_r6_server_paths_are_kept_and_other_sites_are_never_opened", async () => {
-    expect((await push({ json: () => ({ title: "x", url: "/next" }) }))[1].data.url).toBe("/next")
+    // Whatever base the app lives under (PLT-10: /app), the link stays inside it.
+    expect((await push({ json: () => ({ title: "x", url: "/next" }) }))[1].data.url).toBe(appUrl("/next"))
+    expect((await push({ json: () => ({ title: "x", url: "https://evil.example/" }) }))[1].data.url).toBe(appUrl("/"))
     expect(notificationFor({ title: "x", url: "https://evil.example/" }, "ar").url).toBeUndefined()
     expect(notificationFor({ title: "x", url: "//evil.example/" }, "ar").url).toBeUndefined()
   })

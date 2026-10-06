@@ -9,14 +9,18 @@ import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
 import { createHandlerBoundToURL } from "workbox-precaching"
+import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
 import { registerPushHandler } from "./sw/plt13-push"
 
 declare const self: ServiceWorkerGlobalScope
 
 self.skipWaiting()
 cleanupOutdatedCaches()
-precacheAndRoute(self.__WB_MANIFEST)
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { denylist: [/^\/api\//, /^\/landing(\/|$)/] }))
+// PLT-10 R1: "/" is the landing page, so the precached /index.html (the app shell)
+// must not answer for it (Workbox maps "/" to "/index.html" by default).
+precacheAndRoute(self.__WB_MANIFEST, { directoryIndex: "" })
+// PLT-10 R1/R2: the landing page at / is never replaced by the app shell; only /app/* is.
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { allowlist: [APP_NAVIGATION], denylist: [/^\/api\//] }))
 
 // Approved lesson content and Quran passages: usable offline. Same origin only.
 registerRoute(
@@ -38,7 +42,7 @@ registerPushHandler(self) // PLT-13 R2: never an empty notification (discreet lo
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close()
-  const url = (event.notification.data as { url?: string })?.url ?? "/"
+  const url = notificationTarget((event.notification.data as { url?: string })?.url)
   event.waitUntil(
     (async () => {
       const all = await self.clients.matchAll({ type: "window", includeUncontrolled: true })

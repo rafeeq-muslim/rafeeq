@@ -56,18 +56,21 @@ TEST_TEXT = {
     "tl": ("Pagsubok", "Nakarating ang abisong ito sa iyong device"),
 }
 TEST_PER_DAY = 3  # R5: at most three a day per device
-# R6: the in-app base path the notification links live under. PLT-10 moves the
-# app to /app/: change this together with the payload urls (tests follow it).
-APP_BASE = "/"
-
-
-def in_app(path: str = "") -> str:
-    return APP_BASE + path.lstrip("/")
 
 
 def urgency_of(payload: dict) -> str:
     """R3: replies from a person (CMP tags) are urgent, everything else normal."""
     return "high" if str(payload.get("tag", "")).startswith("cmp-") else "normal"
+
+
+APP_BASE = "/app"  # PLT-10 R2/R3: the app lives under /app; "/" is the landing page
+
+
+def app_url(url: str) -> str:
+    """An in-app push target under /app ("/next" -> "/app/next"); other URLs unchanged."""
+    if not url.startswith("/") or url.startswith("//") or url == APP_BASE or url.startswith((f"{APP_BASE}/", f"{APP_BASE}?")):
+        return url
+    return f"{APP_BASE}/" if url == "/" else f"{APP_BASE}{url}"
 
 
 class Keys(BaseModel):
@@ -282,7 +285,7 @@ async def test_push(body: EndpointIn, session: Session) -> dict:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "not_subscribed")
     ratelimit.hit(f"push-test:{sub.endpoint}", limit=TEST_PER_DAY, window_s=24 * 3600)
     title, text = TEST_TEXT.get(sub.locale, TEST_TEXT["en"])
-    sent = await send(sub, {"title": title, "body": text, "url": in_app(), "tag": "plt13-test"})
+    sent = await send(sub, {"title": title, "body": text, "url": app_url("/"), "tag": "plt13-test"})
     await session.commit()  # send() marks a gone subscription
     return {"sent": sent}
 
@@ -352,6 +355,8 @@ async def send(sub: PushSubscription, payload: dict) -> bool:
     """Send one push; drop the subscription if the browser says it is gone."""
     if not get_settings().vapid_private_key:
         return False
+    if isinstance(payload.get("url"), str):
+        payload = {**payload, "url": app_url(payload["url"])}  # PLT-10 R3: every caller's link opens inside /app
     try:
         await asyncio.to_thread(_send_sync, sub, payload)
         return True
@@ -390,7 +395,7 @@ async def run_reminders(now: datetime | None = None) -> int:
             if not ok:
                 continue
             title, body = REMINDER_TEXT.get(sub.locale, REMINDER_TEXT["en"])
-            if await send(sub, {"title": title, "body": body, "url": "/next", "tag": "reminder"}):
+            if await send(sub, {"title": title, "body": body, "url": "/app/next", "tag": "reminder"}):
                 sub.last_reminder_on = now.astimezone(ZoneInfo(sub.timezone)).date().isoformat()
                 sub.ignored_in_row = streak
                 sent += 1

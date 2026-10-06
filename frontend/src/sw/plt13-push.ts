@@ -7,6 +7,7 @@
  * in the device's language; the server's texts are already neutral. In
  * discreet mode the icon is the plain note (lib/discreetPref.ts).
  */
+import { notificationTarget } from "../app/lib/base"
 import { PREF_CACHE, notificationLook, readDiscreet } from "../app/lib/discreetPref"
 
 /** MOT-05 R3 neutral reminder text: the same words the server sends. */
@@ -67,7 +68,7 @@ export function notificationFor(raw: Payload | null, locale: PushLocale): { titl
     // no text at all gets the whole neutral reminder text.
     title: title || fallback.title,
     body: title ? body : body || fallback.body,
-    url: inAppPath(raw?.url), // undefined: the click handler's default (sw.ts)
+    url: inAppPath(raw?.url), // undefined: the app's home (lib/base.ts notificationTarget)
     tag: text(raw?.tag) || "rafeeq",
   }
 }
@@ -88,7 +89,7 @@ export function registerPushHandler(sw: ServiceWorkerGlobalScope) {
       Promise.all([readDiscreet(), readLocale()]).then(([discreet, locale]) => {
         const n = notificationFor(raw, locale)
         // PLT-05 R3 / PLT-06 R6: in discreet mode a plain note icon, not the flower.
-        return sw.registration.showNotification(n.title, { body: n.body, ...notificationLook(discreet), tag: n.tag, data: { url: n.url } })
+        return sw.registration.showNotification(n.title, { body: n.body, ...notificationLook(discreet), tag: n.tag, data: { url: notificationTarget(n.url) } })
       }),
     )
   })

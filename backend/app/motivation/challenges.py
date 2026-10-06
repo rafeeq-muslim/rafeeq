@@ -275,7 +275,7 @@ async def _announce(session: AsyncSession, group_id: uuid.UUID, kind: str) -> No
         u = await session.get(User, uid)
         if u is not None:
             text = PUSH[kind].get(u.locale, PUSH[kind]["en"])
-            await push.send_to_user(session, uid, {"title": text, "body": "", "url": "/mentor/group", "tag": "mot-challenge"})
+            await push.send_to_user(session, uid, {"title": text, "body": "", "url": "/app/mentor/group", "tag": "mot-challenge"})
 
 
 def _start(c: Challenge) -> None:
@@ -432,7 +432,7 @@ async def review(challenge_id: uuid.UUID, body: ReviewIn, session: Session, user
                 {
                     "title": PUSH["update"].get(u.locale, PUSH["update"]["en"]),
                     "body": "",
-                    "url": "/inbox?tab=groups",
+                    "url": "/app/inbox?tab=groups",
                     "tag": "mot-challenge",
                 },
             )

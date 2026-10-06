@@ -6,7 +6,9 @@
   ceiling (`AI_EMBED_DAILY_BUDGET_USD`). The sources come from the one
   answer-source policy (source_policy.py), and every run records coverage
   per source and language (embed.record_coverage).
-- KNW-02 R6: once at start, refresh the approved team cards in the index."""
+- KNW-02 R6: once at start, refresh the approved team cards in the index.
+- KNW-05 / KNW-08 R4: once at start, record the product owner's approvals
+  listed in content/approvals/ (owner_approvals.py)."""
 
 import logging
 
@@ -43,11 +45,23 @@ async def refresh_cards() -> None:
         log.exception("approved cards refresh failed")
 
 
+async def record_owner_approvals() -> None:
+    """KNW-08 R4: the product owner's blanket approval (2026-10-06) recorded in
+    the desk's tables, so gated content (the six reciters) follows the desk."""
+    from app.knowledge import owner_approvals
+
+    try:
+        await owner_approvals.run()
+    except Exception:  # never stop the app over this; the next start retries
+        log.exception("owner approvals failed")
+
+
 def register(scheduler) -> None:
     from app.knowledge.library import scheduled_check
 
     st = get_settings()
     scheduler.add_job(refresh_cards, "date", id="knw_cards_refresh", max_instances=1, replace_existing=True)
+    scheduler.add_job(record_owner_approvals, "date", id="knw_owner_approvals", max_instances=1, replace_existing=True)
     scheduler.add_job(scheduled_check, "interval", weeks=1, id="knw_library_links", max_instances=1, coalesce=True, replace_existing=True)
     scheduler.add_job(
         embed_batch,

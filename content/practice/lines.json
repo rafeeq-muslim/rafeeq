@@ -1,5 +1,8 @@
 {
-  "note": "Short Sharia lines shown in Practice (PRC-01 R5, PRC-04 R2). Arabic from the feature documents; English and Tagalog drafted by Claude and must be checked by a fluent speaker before the Sharia reviewer approves them. Nothing here is shown before approval in that language.",
+  "note": "Short Sharia lines shown in Practice (PRC-01 R5, PRC-04 R2). Arabic from the feature documents; English and Tagalog drafted by Claude. Approved in all three languages on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر): not checked by a fluent speaker and not reviewed by the Sharia reviewer, who can still return a line in the review desk (`practice_line`).",
+  "status": "approved",
+  "approved_by": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
+  "approved_on": "2026-10-06",
   "lines": [
     {
       "id": "qibla_direction",
