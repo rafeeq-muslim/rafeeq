@@ -31,6 +31,7 @@ import { ErrorTurn, GuideTurn, HELP_HUMAN, PendingTurn, QuestionTurn, ResponseTu
 import { QUESTION_MAX, useAsk } from "@/app/ask/store"
 import type { AskResponse, Entrypoint } from "@/app/ask/types"
 import { SUGGESTIONS } from "@/app/ask/suggestions"
+import { QuickCheck } from "@/app/ask/QuickCheck"
 
 function useOnline() {
   const [online, setOnline] = React.useState(() => (typeof navigator === "undefined" ? true : navigator.onLine))
@@ -182,13 +183,21 @@ export default function Ask() {
                 )
               if (turn.state === "guide") return <GuideTurn key={turn.id} text={turn.text} nextHref={turn.nextHref} ai={turn.ai} />
               if (turn.response.outcome === "learning_guide") return <PendingTurn key={turn.id} />
-              return (
+              const response = (
                 <ResponseTurn
                   key={turn.id}
                   response={turn.response}
                   onRetry={() => retryTurn(turn.id)}
                   onEdit={() => editQuestion(turn.snapshot.question)}
                 />
+              )
+              // LRN-10 R5: with consent, an answer tagged to an objective brings one quick exercise on it.
+              if (!turn.response.objective_id) return response
+              return (
+                <React.Fragment key={turn.id}>
+                  {response}
+                  <QuickCheck askId={turn.response.ask_id} objectiveId={turn.response.objective_id} />
+                </React.Fragment>
               )
             })}
           </div>
