@@ -343,7 +343,7 @@ Host timers are systemd **user** units on the production host. They are not in t
 To set them up on another host, create `~/.config/systemd/user/<name>.service` with `ExecStart=<repo>/infra/scripts/<script>` and a matching `.timer` as above. Then run `systemctl --user enable --now <name>.timer`, plus `loginctl enable-linger $USER` so they run without a login.
 
 - **`infra/scripts/backup.sh`:**
-  - runs `pg_dump --format=custom` from the `db` container into `/home/naser/backups/rafeeq/rafeeq-<UTC stamp>.dump` (mode 600);
+  - runs `pg_dump --format=custom` from the `db` container into `~/backups/rafeeq/rafeeq-<UTC stamp>.dump` (mode 600);
   - keeps the newest 7.
   - Backups contain user data and never leave the server.
   - Restore with `pg_restore -d rafeeq --no-owner <file>` inside the db container.
