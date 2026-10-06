@@ -623,6 +623,11 @@ PRINTED = {
     "u01-l4-c3": {"en": [("to the nape and then back.", "to the nape and then all the way back.")]},
     "u01-l5-c2": {"en": [("minor impurity, and major impurity if", "minor impurity, and from major impurity if")]},
 }
+ARABIC_GOVERNS = {
+    "u01-l3-c2": {"tl": [("Ang paghugas ng kamay ng tatlong beses.", "Ang paghugas ng kamay.")]},
+    "u01-l3-c3": {"tl": [("Ang pagmumog ng tatlong beses", "Ang pagmumog")]},
+}
+ARABIC_NOTE = "“Three times” removed: the Arabic edition does not say it, and the Arabic edition governs (reviewer, 2026-10-06)."
 PRINTED_NOTE = "Wording corrected to the printed book (owner's aligned spreadsheet) where the site differs."
 for lesson in (L6, L7):
     for c in lesson["cards"]:
@@ -639,6 +644,11 @@ for lesson in (L1, L2, L3, L4, L5):
                 assert a in c["text"][lang], (c["id"], a)
                 c["text"][lang] = c["text"][lang].replace(a, b)
             c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + PRINTED_NOTE).strip()
+        for lang, pairs in ARABIC_GOVERNS.get(c["id"], {}).items():
+            for a, b in pairs:
+                assert a in c["text"][lang], (c["id"], a)
+                c["text"][lang] = c["text"][lang].replace(a, b)
+            c.setdefault("edited", {})[lang] = (c.get("edited", {}).get(lang, "") + " " + ARABIC_NOTE).strip()
 
 LESSONS = [L1, L2, L3, L4, L5, L6, L7]
 

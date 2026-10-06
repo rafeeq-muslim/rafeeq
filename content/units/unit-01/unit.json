@@ -785,7 +785,7 @@
           "text": {
             "ar": "غسل الكفين",
             "en": "Washing the two hands up to the wrists.",
-            "tl": "Ang paghugas ng kamay ng tatlong beses."
+            "tl": "Ang paghugas ng kamay."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -794,7 +794,10 @@
           "objectives": [
             "u01-l3-o2"
           ],
-          "image": "images/wudu-2-hands.webp"
+          "image": "images/wudu-2-hands.webp",
+          "edited": {
+            "tl": "“Three times” removed: the Arabic edition does not say it, and the Arabic edition governs (reviewer, 2026-10-06)."
+          }
         },
         {
           "id": "u01-l3-c3",
@@ -802,7 +805,7 @@
           "text": {
             "ar": "المضمضة\nالمضمضة هي : إدخال الماء في الفم وإدارته فيه، ثم إخراجه.",
             "en": "Rinsing the mouth (Madmadah)\nRinsing the mouth : means to let water into the mouth and swirl it inside then spit it out.",
-            "tl": "Ang pagmumog ng tatlong beses\nAng madmada (Pagmumog): Ang pagpasok ng tubig sa bibig at pananatili sa loob nito at pagkatapos ay ilalabas ito."
+            "tl": "Ang pagmumog\nAng madmada (Pagmumog): Ang pagpasok ng tubig sa bibig at pananatili sa loob nito at pagkatapos ay ilalabas ito."
           },
           "provenance": {
             "source": "newmuslimguideline.com",
@@ -812,7 +815,10 @@
             "u01-l3-o2",
             "u01-l3-o3"
           ],
-          "image": "images/wudu-3-mouth.webp"
+          "image": "images/wudu-3-mouth.webp",
+          "edited": {
+            "tl": "“Three times” removed: the Arabic edition does not say it, and the Arabic edition governs (reviewer, 2026-10-06)."
+          }
         },
         {
           "id": "u01-l3-c4",
