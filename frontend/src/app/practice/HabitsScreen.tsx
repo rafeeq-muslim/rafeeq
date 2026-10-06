@@ -25,17 +25,35 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { SpotIllustration } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
+import { useDevice } from "@/app/stores/device"
 import { deleteHabit, habitView, localDay, newHabit, SUGGESTED, toggleToday } from "./habits"
 import { countOf } from "./plural"
 import { usePractice, type Habit } from "./store"
 import { BackBar } from "./ui"
+
+/** R1: a suggested habit's type, shown before saving. */
+function KindTag({ worship }: { worship: boolean }) {
+  const { t } = useT()
+  return worship ? (
+    <Badge variant="outline" className="shrink-0 text-muted-foreground">
+      <IconEyeOff data-icon="inline-start" stroke={1.75} />
+      {t("practice.habits.kindTagWorship")}
+    </Badge>
+  ) : (
+    <Badge variant="secondary" className="shrink-0">
+      {t("practice.habits.kindLife")}
+    </Badge>
+  )
+}
 
 function HabitRow({ h, onDelete }: { h: Habit; onDelete: () => void }) {
   const { t, locale } = useT()
   const id = React.useId()
   const log = usePractice((s) => s.log)
   const set = usePractice((s) => s.set)
-  const today = localDay()
+  const tz = useDevice((s) => s.city?.tz)
+  // Today in the chosen city's zone, like the prayer times (not the device's).
+  const today = localDay(new Date(), tz)
   const v = habitView(h, log, today)
   const title = h.suggested ? t(`practice.habits.s.${h.suggested}` as Key) : h.title
   const toggle = () => set({ log: toggleToday(h, log, today) })
@@ -87,13 +105,22 @@ function AddHabit({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boo
           <DrawerDescription>{t("practice.habits.addBody")}</DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-5 overflow-y-auto overscroll-contain px-4">
-          <div className="flex flex-wrap gap-2">
+          {/* R1: the type of a suggested habit is shown before it is saved. */}
+          <ul className="flex flex-col">
             {SUGGESTED.filter((s) => !taken.has(s.key)).map((s) => (
-              <Button key={s.key} variant="outline" size="sm" onClick={() => add(newHabit({ suggested: s.key }))}>
-                {t(`practice.habits.s.${s.key}` as Key)}
-              </Button>
+              <li key={s.key}>
+                <button
+                  type="button"
+                  onClick={() => add(newHabit({ suggested: s.key }))}
+                  className="flex min-h-14 w-full items-center gap-3 border-b border-border/70 px-1 text-start hover:bg-muted"
+                >
+                  <IconPlus className="size-5 shrink-0 text-primary" stroke={1.75} aria-hidden="true" />
+                  <span className="min-w-0 flex-1 text-body">{t(`practice.habits.s.${s.key}` as Key)}</span>
+                  <KindTag worship={s.worship} />
+                </button>
+              </li>
             ))}
-          </div>
+          </ul>
           <form
             className="flex flex-col gap-3 border-t pt-4"
             onSubmit={(e) => {

@@ -1,7 +1,7 @@
 /** PRC-02 habits (draft): one test per example. */
 import { describe, expect, it } from "vitest"
 
-import { deleteHabit, habitView, newHabit, toggleToday } from "./habits"
+import { deleteHabit, habitView, localDay, newHabit, SUGGESTED, toggleToday } from "./habits"
 
 const days = (n: number) => Array.from({ length: n }, (_, i) => `2026-10-${String(i + 1).padStart(2, "0")}`)
 
@@ -52,5 +52,26 @@ describe("PRC-02 R5/R6", () => {
     const h = newHabit({ title: "x", worship: false })
     const out = deleteHabit([h], { [h.id]: ["2026-10-01"] }, h.id)
     expect(out).toEqual({ habits: [], log: {} })
+  })
+})
+
+describe("PRC-02 R1: every suggested habit has a known type", () => {
+  it("prc-02-r1 the suggestion list carries the type that is saved", () => {
+    for (const s of SUGGESTED) expect(newHabit({ suggested: s.key }).worship).toBe(s.worship)
+  })
+})
+
+describe("PRC-02 R2/R3: «today» is the chosen city's day", () => {
+  // 2026-10-05 22:30 UTC: already 6 Oct in Riyadh (UTC+3), still 5 Oct in Los Angeles.
+  const at = new Date("2026-10-05T22:30:00Z")
+
+  it("prc-02 a mark made late at night counts for the city's date, not the device's", () => {
+    expect(localDay(at, "Asia/Riyadh")).toBe("2026-10-06")
+    expect(localDay(at, "America/Los_Angeles")).toBe("2026-10-05")
+  })
+
+  it("prc-02 no city chosen → the device's own day", () => {
+    const p = (n: number) => String(n).padStart(2, "0")
+    expect(localDay(at)).toBe(`${at.getFullYear()}-${p(at.getMonth() + 1)}-${p(at.getDate())}`)
   })
 })
