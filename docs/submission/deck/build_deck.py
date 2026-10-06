@@ -1,5 +1,5 @@
 import re
-head=open('deck.html').read()
+head=''
 fonts='''@font-face{font-family:Plex;font-weight:400;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Regular.woff2) format('woff2')}
 @font-face{font-family:Plex;font-weight:500;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
 @font-face{font-family:Plex;font-weight:600;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
@@ -16,7 +16,7 @@ html,body{font-family:Plex,sans-serif;color:var(--ink);background:#fff}
 .s:before{content:"";position:absolute;left:-260px;bottom:-300px;width:760px;height:760px;background:url(assets/flower.svg) center/contain no-repeat;opacity:.07}
 .s.n{background:radial-gradient(1200px 700px at 12% 110%,#7a5ce0 0%,rgba(122,92,224,0) 60%),radial-gradient(900px 600px at 95% -10%,#3b2d99 0%,rgba(59,45,153,0) 65%),linear-gradient(160deg,#1d1645 0%,#2c2275 100%);color:#fff}
 .s.n:before{left:-180px;bottom:-220px;width:900px;height:900px;opacity:.22}
-.s.n:after{content:"";position:absolute;inset:0;background-image:radial-gradient(2px 2px at 12% 18%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 31% 9%,#ffd38f 50%,transparent 51%),radial-gradient(1.5px 1.5px at 47% 22%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 63% 12%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 78% 27%,#ffd38f 50%,transparent 51%),radial-gradient(2px 2px at 88% 8%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 22% 38%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 44%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 55% 62%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 92% 58%,#ffd38f 50%,transparent 51%);opacity:.55;pointer-events:none}
+.s.n:after{content:"";position:absolute;inset:0;background-image:radial-gradient(2px 2px at 12% 18%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 31% 9%,#ffc77d 50%,transparent 51%),radial-gradient(1.5px 1.5px at 47% 22%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 63% 12%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 78% 27%,#ffc77d 50%,transparent 51%),radial-gradient(2px 2px at 88% 8%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 22% 38%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 70% 44%,#fff 50%,transparent 51%),radial-gradient(2px 2px at 55% 62%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 92% 58%,#ffc77d 50%,transparent 51%);opacity:.55;pointer-events:none}
 .s{display:flex;flex-direction:column;justify-content:center}
 .s>*{position:relative;z-index:1}
 .s>.k{align-self:flex-start}
@@ -89,7 +89,7 @@ S('''<img src="assets/logos-light.png" style="position:absolute;top:60px;left:11
   <div style="font-size:33px;line-height:1.65;margin-top:22px;color:#e3deff;max-width:980px">رفيق المسلم الجديد: يعلّمه دينه بلغته خطوة خطوة، ويجيبه من مصادر معتمدة، ويصله بإنسان متى احتاج.</div>
   <div style="margin-top:44px;display:flex;gap:16px;font-size:27px;font-weight:600"><span class="ltr" style="background:#ffc77d;color:#1d1645;padding:12px 30px;border-radius:40px">rafeeq.nan.sa/app</span><span style="border:2px solid rgba(255,255,255,.35);padding:10px 28px;border-radius:40px">العربية · English · Tagalog</span></div>
  </div>
- <div style="flex:none;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(255,211,143,.28),rgba(255,211,143,0) 68%);display:flex;align-items:center;justify-content:center"><img src="assets/flower.svg" style="width:430px;filter:drop-shadow(0 0 60px rgba(255,199,125,.45)) brightness(1.5)"></div>
+ <div style="flex:none;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(122,92,224,.45),rgba(122,92,224,0) 68%);display:flex;align-items:center;justify-content:center"><img src="assets/flower.svg" style="width:430px"></div>
 </div>''',True)
 S(std('كيف تقرأ هذا العرض','ستة معايير، و<em>لكل معيار دليله</em>','رتّبنا العرض على معايير التحدي الستة بأوزانها. في أسفل كل شريحة المعيار الذي تخدمه، وفي آخر العرض جدول يجمع الأدلة.',
 '<div class="g g3">'+''.join(f'<div class="c"><div class="big" style="font-size:70px">{w}</div><h3>{t}</h3><p>{d}</p></div>' for w,t,d in [('25%','وضوح المشكلة وملاءمتها للمسار والجمهور','مشكلة موثّقة بأرقام، وجمهور محدد، ومنتج مبني على حاجاته.'),('20%','الموثوقية والسلامة العلمية','مصادر معتمدة، ومدقق، ومكتب مراجعة شرعية، ولا فتوى من النموذج.'),('15%','توظيف الذكاء الاصطناعي وقيمته','ذكاء مقيَّد بالمصادر يؤدي مهام محددة تتحسن بوجوده.'),('15%','قابلية التنفيذ','مبني ومنشور ويعمل: رابط حي، ومستودع، وفيديو.'),('15%','الأصالة والقيمة المضافة','مسار ومساعد وإنسان وأدوات يومية في تطبيق واحد.'),('10%','القدرة على التنفيذ وتغطية المهام','فريق من أربعة يغطي المنصة والتصميم والتعلّم والمعرفة.')])+'</div>'))
@@ -173,10 +173,33 @@ S('''<img src="assets/logos-light.png" style="position:absolute;top:60px;left:11
 <p class="sub" style="margin-bottom:24px">يفتح من الرابط، دون حساب ودون تثبيت.</p>
 <div class="g" style="grid-template-columns:1fr .8fr 1.5fr 1.5fr">'''+''.join(f'<div class="c"><p style="color:#ffc77d;font-size:22px;font-weight:600">{a}</p><h3 class="ltr" style="font-size:25px;margin-top:6px;white-space:nowrap">{b}</h3></div>' for a,b in [('التطبيق','rafeeq.nan.sa/app'),('صفحة التعريف','rafeeq.nan.sa'),('الفيديو','youtube.com/shorts/NN3KVPgEf-4'),('الكود','github.com/rafeeq-muslim/rafeeq')])+'</div>',True)
 
-CR=['', '', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '20% · الموثوقية', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '15% · الأصالة', '20% · الموثوقية', '15% · قابلية التنفيذ', '20% · الموثوقية', '10% · الفريق', '20% · الموثوقية', '15% · قابلية التنفيذ', '15% · الأصالة', '15% · قابلية التنفيذ', '10% · الفريق', '', ''] ; n=len(out); html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>رفيق</title><style>'+CSS+'</style></head><body>\n'
+S('''<div style="display:flex;flex-direction:column;align-items:center;text-align:center">
+<div style="width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(122,92,224,.45),rgba(122,92,224,0) 68%);display:flex;align-items:center;justify-content:center"><img src="assets/flower.svg" style="width:230px"></div>
+<div style="font-family:Disp;font-size:170px;font-weight:700;line-height:1.2;margin-top:10px">شكرًا لكم</div>
+<div style="font-size:44px;font-weight:600;color:#ffc77d;margin-top:14px">رفيق · لست وحدك في سنتك الأولى</div>
+<div style="width:120px;height:4px;border-radius:4px;background:#ffc77d;margin:44px 0 34px"></div>
+<div style="display:flex;gap:18px;font-size:25px;font-weight:600"><span class="ltr" style="border:2px solid rgba(255,255,255,.3);padding:10px 26px;border-radius:40px">rafeeq.nan.sa/app</span><span class="ltr" style="border:2px solid rgba(255,255,255,.3);padding:10px 26px;border-radius:40px">youtube.com/shorts/NN3KVPgEf-4</span><span class="ltr" style="border:2px solid rgba(255,255,255,.3);padding:10px 26px;border-radius:40px">github.com/rafeeq-muslim/rafeeq</span></div>
+</div>''',True)
+
+CR=['', '', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '15% · الذكاء الاصطناعي', '20% · الموثوقية', '25% · المشكلة والجمهور', '25% · المشكلة والجمهور', '15% · الأصالة', '20% · الموثوقية', '15% · قابلية التنفيذ', '20% · الموثوقية', '10% · الفريق', '20% · الموثوقية', '15% · قابلية التنفيذ', '15% · الأصالة', '15% · قابلية التنفيذ', '10% · الفريق', '', ''] ; 
+import re as _re
+_D=str.maketrans('0123456789','٠١٢٣٤٥٦٧٨٩')
+def arab(h):
+    parts=_re.split(r'(<[^>]+>)',h); o=[]; skip=0
+    for x in parts:
+        if x.startswith('<'):
+            if 'class="ltr"' in x: skip=1
+            elif skip and x.startswith('</'): skip=0
+            o.append(x); continue
+        if skip or _re.search(r'[A-Za-z]',x): o.append(x); continue
+        x=x.replace('$0.0015','٠٫٠٠١٥ دولار').replace('%','٪')
+        x=_re.sub(r'(?<=\d),(?=\d)','٬',x)
+        o.append(x.translate(_D))
+    return ''.join(o)
+n=len(out); html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>رفيق</title><style>'+CSS+'</style></head><body>\n'
 for i,(cls,b) in enumerate(out):
     tg=CR[i] if i<len(CR) else ''
-    ft='' if i in (0,n-1) else f'<div class="ft"><div class="b"><img src="assets/flower.svg">رفيق</div>'+(f'<span class="crit">{tg}</span>' if tg else '')+f'<span class="ltr">{i+1:02d} / {n}</span></div>'
-    html+=f'<section class="s {cls}">{b}{ft}</section>\n'
+    ft='' if i in (0,n-2,n-1) else f'<div class="ft"><div class="b"><img src="assets/flower.svg">رفيق</div>'+(f'<span class="crit">{tg}</span>' if tg else '')+f'<span class="ltr">{i+1:02d} / {n}</span></div>'
+    html+=f'<section class="s {cls}">{arab(b)}{arab(ft.replace(chr(60)+"span class="+chr(34)+"ltr"+chr(34)+">",chr(60)+"span style="+chr(34)+"direction:ltr;unicode-bidi:isolate"+chr(34)+">"))}</section>\n'
 html+='</body></html>'
 open('deck.html','w').write(html); print(n)
