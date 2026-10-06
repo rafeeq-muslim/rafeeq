@@ -12,6 +12,7 @@ import {
   LESSON_LAST_DAY_ONE,
   LESSON_PREPARE_PRAYER,
   localDay,
+  quietKeys,
   suggestion,
   usedKeys,
   type GuideContext,
@@ -76,8 +77,10 @@ describe("plt08 rafeeq guide: suggestions", () => {
 
   it("test_plt08_r3_a_feature_opened_by_hand_is_not_suggested", () => {
     const c = ctx({ completed: after("u01-l1", LESSON_PREPARE_PRAYER, LESSON_LAST_DAY_ONE) })
-    expect(usedKeys("/practice/adhkar/27", c)).toEqual(["adhkar"])
-    const m = { ...fresh(), used: Object.fromEntries(["adhkar", "prayer", "human"].map((k) => [k, true as const])) }
+    // PRC-07 R4: opening adhkar ends the suggestion as a dateless dismissal, never as "used".
+    expect(usedKeys("/practice/adhkar/27", c)).toEqual([])
+    expect(quietKeys("/practice/adhkar/27", c)).toEqual(["adhkar"])
+    const m = { ...fresh(), dismissed: { adhkar: "" }, used: Object.fromEntries(["prayer", "human"].map((k) => [k, true as const])) }
     expect(suggestion(c, m)).toBeNull()
   })
 
