@@ -174,6 +174,7 @@ function Player({ lesson }: { lesson: LessonT }) {
         <LessonHelpButton
           from="lesson"
           topic={lesson.title}
+          context={{ lesson_id: lesson.id, ...(exercise ? { exercise_id: exercise.id } : screen.kind === "card" ? { card_id: lesson.cards[screen.index]?.id } : {}) }}
           onLeave={() => holdLessonForHelp(lesson.id, exercise ? { exerciseId: exercise.id, value, round: attempt, result: shown?.result ?? null } : null)}
         />
       </header>

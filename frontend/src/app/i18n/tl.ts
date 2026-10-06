@@ -1580,4 +1580,8 @@ export const tl: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
   "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ⚠️ Tagalog needs native review ---
+  "ask.context.about": "Tungkol sa: {lesson} · {item}",
+  "ask.context.aboutLesson": "Tungkol sa: {lesson}",
+  "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
 }

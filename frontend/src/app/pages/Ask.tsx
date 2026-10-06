@@ -6,6 +6,10 @@
  *   the lesson's topic alone (ask/lessonHelp.ts) and a human request made
  *   from here says it came from the lesson or the review. LRN-03 R5:
  *   «ارجع إلى الدرس» leads back to that lesson, at the point it was left.
+ *   Owner's decision 2026-10-07: a chip above the input («عن: الدرس ·
+ *   السؤال الحالي») says what the question is about; while it is shown the
+ *   question is sent with that context as ids only, and once the learner
+ *   dismisses it nothing of the lesson is sent.
  * - Answers end with source strips; Quran and hadith words come from the
  *   database; no source → ReferralCard; danger → DangerHelpPanel only.
  * - KNW-10 R3: "What should I learn now?" is answered by the learning guide
@@ -22,7 +26,7 @@
  */
 import * as React from "react"
 import { useLocation, useNavigate } from "react-router"
-import { IconWifiOff } from "@tabler/icons-react"
+import { IconWifiOff, IconX } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -34,7 +38,7 @@ import { useLearning } from "@/app/stores/learning"
 import { useContent } from "@/app/learning/useContent"
 import { buildSummary, fixedMessage, nextHref, requestGuide } from "@/app/ask/guide"
 import { ErrorTurn, GuideTurn, HelpOriginContext, PendingTurn, QuestionTurn, ResponseTurn, humanUrl } from "@/app/ask/parts"
-import { readLessonHelp } from "@/app/ask/lessonHelp"
+import { describeContext, readLessonHelp } from "@/app/ask/lessonHelp"
 import { dropLessonHelpReturn, lessonReturnPath } from "@/app/lesson/helpReturn"
 import { QUESTION_MAX, useAsk } from "@/app/ask/store"
 import type { AskResponse, Entrypoint } from "@/app/ask/types"
@@ -65,7 +69,7 @@ export default function Ask() {
   const consent = useDevice((s) => s.askConsent)
   const setDevice = useDevice((s) => s.set)
   const markSeen = useLearning((s) => s.markSeen)
-  const { lessons } = useContent()
+  const { lessons, content } = useContent()
   const draft = useAsk((s) => s.draft)
   const setDraft = useAsk((s) => s.setDraft)
   const [notice, setNotice] = React.useState<"tooLong" | null>(null)
@@ -103,9 +107,16 @@ export default function Ask() {
     [answerGuide, markSeen],
   )
 
+  // CMP-01 R1: the lesson context (ids) and its chip. Shown → sent with each question; dismissed → never sent.
+  const location = useLocation()
+  const lessonHelp = readLessonHelp(location.state) // origin, topic and the ids of what was on screen
+  const [contextDismissed, setContextDismissed] = React.useState(false)
+  const about = lessonHelp?.context && !contextDismissed ? describeContext(content?.lessons, lessonHelp.context) : null
+  const askContext = about ? lessonHelp?.context : undefined
+
   const submit = (text: string, entrypoint: Entrypoint, suggestionId?: string) => {
     if (!online) return
-    const res = submitQuestion({ text, lang: locale, entrypoint, suggestionId })
+    const res = submitQuestion({ text, lang: locale, entrypoint, suggestionId, context: askContext })
     if (!res.accepted) {
       if (res.reason === "too_long") setNotice("tooLong")
       return
@@ -123,8 +134,6 @@ export default function Ask() {
 
   // CMP-06 R2 ex2: a question its owner sent from the private notebook arrives
   // once, through the route state (never the URL), as an ordinary question.
-  const location = useLocation()
-  const lessonHelp = readLessonHelp(location.state) // CMP-01 R1: topic and origin only
   const origin = lessonHelp?.from ?? "ask"
   // LRN-03 R5: opened from its own tab, nothing of a lesson left earlier is kept any longer.
   const fromTab = !lessonHelp
@@ -252,6 +261,16 @@ export default function Ask() {
             {/* PLT-15 R5: saved answers stay readable offline */}
             <Button variant="link" size="sm" className="px-0" onClick={() => navigate("/discover/saved")}>
               {t("home.org.openSaved")}
+            </Button>
+          </div>
+        )}
+        {about && (
+          <div data-slot="ask-context" className="flex items-center gap-1 rounded-md bg-secondary ps-3 text-secondary-foreground">
+            <p className="min-w-0 flex-1 truncate text-label">
+              {about.item ? t("ask.context.about", { lesson: about.lesson, item: about.item }) : t("ask.context.aboutLesson", { lesson: about.lesson })}
+            </p>
+            <Button variant="ghost" size="icon" aria-label={t("ask.context.dismiss")} onClick={() => setContextDismissed(true)}>
+              <IconX stroke={1.75} />
             </Button>
           </div>
         )}

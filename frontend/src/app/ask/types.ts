@@ -81,6 +81,8 @@ export type AskSnapshot = {
   consent_objectives: boolean
   entrypoint: Entrypoint
   suggestion_id?: string
+  /** CMP-01 R1: what was on screen in the lesson, as ids only; absent once the chip is dismissed. */
+  context?: { lesson_id: string; card_id?: string; exercise_id?: string }
 }
 
 export type ErrorCode =
