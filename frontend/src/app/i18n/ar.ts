@@ -1373,4 +1373,6 @@ export const ar = {
   "plt11.size.download": "نزّلها من مركز التنزيلات",
   "plt11.size.perVerse": "استمع آيةً آيةً بصوت {name}",
   "plt11.size.cancel": "ليس الآن",
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
+  "practice.ramadan.expectedDay": "اليوم {n} من رمضان المتوقع، ولم يُعلن ثبوته بعد",
 } as const

@@ -1374,4 +1374,6 @@ export const en: Dict = {
   "plt11.size.download": "Download it in the download center",
   "plt11.size.perVerse": "Listen verse by verse ({name})",
   "plt11.size.cancel": "Not now",
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected ---
+  "practice.ramadan.expectedDay": "Day {n} of the expected Ramadan; its start has not been announced yet",
 }

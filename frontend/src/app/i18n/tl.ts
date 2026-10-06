@@ -1375,4 +1375,6 @@ export const tl: Dict = {
   "plt11.size.download": "I-download sa download center",
   "plt11.size.perVerse": "Makinig bawat talata ({name})",
   "plt11.size.cancel": "Hindi muna",
+  // --- PRC-04 R2 (prc-04-r2-expected-only): an unannounced Ramadan day is only expected --- ⚠️ Tagalog needs native review
+  "practice.ramadan.expectedDay": "Ika-{n} araw ng inaasahang Ramadan; hindi pa inihahayag ang simula nito",
 }
