@@ -7,7 +7,10 @@
 import * as React from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
+import { Link } from "react-router"
+
 import { cn } from "@/lib/utils"
+import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -16,7 +19,6 @@ import { TopBar } from "@/components/rafeeq"
 import { num, useT, type Key } from "@/app/i18n"
 import { api } from "@/app/lib/api"
 import { useContent } from "@/app/learning/useContent"
-import { ReportsQueue } from "@/app/companion/mentor/ReportsQueue"
 import { ResponderCoverage } from "@/app/companion/mentor/ResponderCoverage"
 import { TeamSightings } from "@/app/pages/roles/TeamSightings"
 
@@ -53,6 +55,15 @@ type Indicators = {
 }
 
 const STATUSES = ["new", "active", "at_risk", "lapsed", "returning"] as const
+/** PLT-17 R7: the dashboard's sections, in page order (ids of their headings or wrappers). */
+const SECTIONS: [string, Key][] = [
+  ["st", "plt17.team.nav.people"],
+  ["lpd", "plt17.team.nav.learning"],
+  ["und", "plt17.team.nav.understanding"],
+  ["sight", "plt17.team.nav.sightings"],
+  ["coverage-title", "plt17.team.nav.coverage"],
+  ["team-reports", "plt17.team.nav.reports"],
+]
 const pct = (r: Rate) => (r === null ? null : `${Math.round(r * 100)}%`)
 
 export default function Team() {
@@ -74,7 +85,7 @@ export default function Team() {
   return (
     <>
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3">{t("team.title")}</span>} />
-      <div className="flex flex-col gap-8 px-4 pt-4 pb-12">
+      <div className="flex flex-col gap-8 px-4 pt-4 pb-12 [&_[id]]:scroll-mt-16">
         <ToggleGroup type="single" variant="outline" value={String(days)} onValueChange={(v) => v && setDays(Number(v) as 7 | 30)} className="w-full">
           {[7, 30].map((n) => (
             <ToggleGroupItem key={n} value={String(n)} className="flex-1">
@@ -83,7 +94,31 @@ export default function Team() {
           ))}
         </ToggleGroup>
 
+        {/* PLT-17 R7: jump to a section without scrolling the whole page. */}
+        <nav aria-label={t("plt17.team.sections")} className="-mx-4 overflow-x-auto px-4">
+          <ul className="flex w-max gap-2">
+            {SECTIONS.map(([id, key]) => (
+              <li key={id}>
+                <a href={`#${id}`} className="inline-flex min-h-11 items-center rounded-full border bg-card px-3 text-label">
+                  {t(key)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         {q.isLoading && <Skeleton className="h-96 rounded-card" />}
+        {q.isError && (
+          <Alert variant="destructive" role="alert">
+            <AlertTitle>{t("plt17.team.loadErrorTitle")}</AlertTitle>
+            <AlertDescription>{t("plt17.team.loadErrorBody")}</AlertDescription>
+            <AlertAction>
+              <Button size="sm" variant="outline" onClick={() => void q.refetch()}>
+                {t("common.retry")}
+              </Button>
+            </AlertAction>
+          </Alert>
+        )}
         {d && (
           <>
             <section className="flex flex-col gap-3" aria-labelledby="st">
@@ -231,9 +266,6 @@ export default function Team() {
             </section>
 
             <Markers markers={d.markers} />
-            <section className="flex flex-col gap-3 border-t pt-6">
-              <ReportsQueue />
-            </section>
           </>
         )}
         {/* PLT-17 R5: month-start announcements (Ramadan mode depends on them); shown even without indicators. */}
@@ -244,6 +276,16 @@ export default function Team() {
         <div className="border-t pt-6">
           <ResponderCoverage />
         </div>
+        {/* PLT-17 R7: reports live in one place, the inbox's «البلاغات» tab. */}
+        <section id="team-reports" className="flex scroll-mt-16 flex-col gap-2 border-t pt-6" aria-labelledby="team-reports-title">
+          <h2 id="team-reports-title" className="font-heading text-h3 font-bold">
+            {t("plt17.team.reportsTitle")}
+          </h2>
+          <p className="text-body text-muted-foreground">{t("plt17.team.reportsBody")}</p>
+          <Button asChild variant="outline" className="w-fit">
+            <Link to="/inbox?tab=reports">{t("plt17.team.reportsOpen")}</Link>
+          </Button>
+        </section>
       </div>
     </>
   )
