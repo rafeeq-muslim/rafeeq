@@ -11,6 +11,7 @@ import { AppShell, type NavKey } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { flushEvents } from "@/app/lib/api"
+import { applyUpdate, maybeApplyUpdate, useUpdateReady } from "@/app/lib/pwa"
 
 const ROUTES: Record<NavKey, string> = { home: "/", learn: "/learn", ask: "/ask", mentor: "/mentor", account: "/me" }
 
@@ -63,6 +64,23 @@ export function QuickExit() {
   )
 }
 
+/** Issue #9 item 11: a newer version during a lesson waits for the learner. */
+function UpdateBar() {
+  const { t } = useT()
+  const ready = useUpdateReady()
+  const location = useLocation()
+  React.useEffect(() => maybeApplyUpdate(location.pathname), [location.pathname])
+  if (!ready) return null
+  return (
+    <div role="status" className="fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+6rem)] z-40 mx-auto flex w-fit items-center gap-3 rounded-full bg-card px-4 py-2 text-label shadow-raised">
+      <span>{t("app.updateReady")}</span>
+      <button type="button" onClick={applyUpdate} className="font-bold text-primary">
+        {t("app.updateNow")}
+      </button>
+    </div>
+  )
+}
+
 export default function AppLayout() {
   useDocumentLocale()
   const { t, dir } = useT()
@@ -85,6 +103,7 @@ export default function AppLayout() {
     <DirectionProvider dir={dir}>
       <TooltipProvider>
         <QuickExit />
+        <UpdateBar />
         <div className="h-dvh">
           <AppShell
             active={activeKey(location.pathname)}

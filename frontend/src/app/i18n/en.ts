@@ -802,4 +802,6 @@ export const en: Dict = {
   "ask.guide.nextLesson": "Your next step is “{step}”, the next lesson on your path.",
   "ask.guide.nextReview": "Your next step is a short review, to make what you learned stick.",
   "lesson.bookTranslation": "The book's translation of the quoted part",
+  "app.updateReady": "An update is ready. Your place in the lesson is saved.",
+  "app.updateNow": "Update now",
 }

@@ -801,4 +801,6 @@ export const ar = {
   "ask.guide.nextLesson": "خطوتك التالية «{step}»، لأنه الدرس التالي في مسارك.",
   "ask.guide.nextReview": "خطوتك التالية مراجعة قصيرة، لتثبيت ما تعلّمته.",
   "lesson.bookTranslation": "ترجمة الكتاب للجزء المقتبس",
+  "app.updateReady": "تحديث جاهز. تقدّمك في الدرس محفوظ.",
+  "app.updateNow": "حدّث الآن",
 } as const

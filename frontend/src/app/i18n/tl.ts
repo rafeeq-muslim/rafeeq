@@ -803,4 +803,6 @@ export const tl: Dict = {
   "ask.guide.nextLesson": "Ang susunod mong hakbang ay “{step}”, ang susunod na aralin sa iyong landas.",
   "ask.guide.nextReview": "Ang susunod mong hakbang ay maikling balik-aral, para tumatag ang natutunan mo.",
   "lesson.bookTranslation": "Salin ng aklat sa sinipi na bahagi",
+  "app.updateReady": "May handang update. Naka-save ang lugar mo sa aralin.",
+  "app.updateNow": "I-update ngayon",
 }
