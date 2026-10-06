@@ -67,7 +67,7 @@ class Settings(BaseSettings):
     ask_max_compose_rounds: int = 2  # first composition + one repair or recomposition
     ask_query_normalization_enabled: bool = True  # search-only canonical query (R2); evidence in the KNW-01 report
     ask_repair_enabled: bool = True  # one bounded repair, then every check again (R5); evidence in the KNW-01 report
-    ask_approved_faq_enabled: bool = False  # R7: off until the Sharia reviewer approves real answers
+    ask_approved_faq_enabled: bool = True  # R7: serves only entries approved by the Sharia reviewer; env false turns it off
 
     # Web Push (VAPID).
     vapid_public_key: str = ""

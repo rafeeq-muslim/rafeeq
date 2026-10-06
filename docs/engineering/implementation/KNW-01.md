@@ -18,7 +18,7 @@
 | Reliability R5 | `ask.py` + `agents.py::repair_answer` | A content rejection gets one bounded repair from the same passages (flag `ASK_REPAIR_ENABLED`), then every check again; an unchanged repair is refused without re-checking; `insufficient` alone gets the one expansion round instead |
 | rules §1.3, plan 2.5 | `app/knowledge/ask.py::_source_card` | Quran/hadith text in the response comes from `knw_passages` by id (plus the Arabic ayah / Arabic hadith of the same record), never from the model |
 | R2 | `ask.py` | Healthy search with no or insufficient evidence → `no_source`; a rejected composition → `verification_failed`; an outage, deadline, budget or degraded search without evidence → `unavailable`. Each: fixed reply + «أريد إنسانًا» + `EscalationRequested` (reason = the outcome) |
-| R2 (outage example), plan 4.8 | `ask.py`, `approved.py` | Main → fallback model → (flag `ASK_APPROVED_FAQ_ENABLED`, off) a valid approved answer, exact match only while the router is down → `unavailable` |
+| R2 (outage example), plan 4.8 | `ask.py`, `approved.py` | Main → fallback model → (flag `ASK_APPROVED_FAQ_ENABLED`, on) a valid approved answer, exact match only while the router is down → `unavailable` |
 | R3 (personal) | `ask.py` | Code (not the model) appends the fixed referral sentence and sets `should_escalate = true` |
 | R4 (disputed) | `ask.py` | Code appends the fixed «للعلماء في المسألة أقوال» sentence |
 | R5 (danger) + permission example | `ask.py` | Fixed reply, `should_escalate = true`, `handoff.kind = "urgent"`, event `DangerDetected` **without question text or identity** |
@@ -71,7 +71,7 @@ Response (plan §12.2 plus what the UI needs):
 
 `OPENROUTER_API_KEY`, `AI_MODEL_MAIN`, `AI_MODEL_FAST`, `AI_MODEL_FALLBACK`, `AI_EMBEDDING_MODEL`, `AI_BUDGET_USD` (10, everything), `AI_DAILY_BUDGET_USD` (0.75, answers and other calls), `AI_EMBED_DAILY_BUDGET_USD` (1.00, the embedding job), `KNW_SEARCH_K` (8), `KNW_MIN_SIMILARITY` (0 until KNW-04 calibration; drops weak vector hits only), `KNW_QUOTE_MAX_WORDS` (6), `KNW_SCRIPTURE_OVERLAP_WORDS` (6), `KNW_ANSWER_SOURCES` (`quranenc,hadeethenc,islamhouse_enc,binbaz,islamqa`; islamqa is a main source by the owner's decision of 2026-10-06), `KNW_PREFERRED_SOURCE` (islamqa) and `KNW_NEAR_TIE_EPSILON` (0.0006; 0 = off), `KNW_EMBED_JOB_LIMIT` (4000) and `KNW_EMBED_JOB_MINUTES` (10).
 
-Reliability (PRD §14.5): `ASK_DEADLINE_SECONDS` (45), `ASK_MAX_EXTERNAL_CALLS` (8), `ASK_MAX_RETRIEVAL_ROUNDS` (2), `ASK_MAX_COMPOSE_ROUNDS` (2), `ASK_QUERY_NORMALIZATION_ENABLED` (true), `ASK_REPAIR_ENABLED` (true), `ASK_APPROVED_FAQ_ENABLED` (false until approved content exists). Error separation, deadlines and tracing have no flag.
+Reliability (PRD §14.5): `ASK_DEADLINE_SECONDS` (45), `ASK_MAX_EXTERNAL_CALLS` (8), `ASK_MAX_RETRIEVAL_ROUNDS` (2), `ASK_MAX_COMPOSE_ROUNDS` (2), `ASK_QUERY_NORMALIZATION_ENABLED` (true), `ASK_REPAIR_ENABLED` (true), `ASK_APPROVED_FAQ_ENABLED` (true: serves only reviewer-approved entries). Error separation, deadlines and tracing have no flag.
 
 ## 5. Tests (`backend/tests/test_knw01_ask.py`; model calls answered by recorded fixtures through `respx`, no network)
 
@@ -95,7 +95,7 @@ Reliability PRD T01–T32: `backend/tests/test_knw01_reliability.py`, `frontend/
 ## 6. Open decisions (recorded, not blocking)
 
 - Danger phrase list and the five fixed replies are drafts written by Claude; مهند and the CMP owner must approve them (plan 4.2, 4.7).
-- `content/knowledge/approved-answers.json` is empty: entries need `source_versions`, a reviewer and a date, and are served only with `ASK_APPROVED_FAQ_ENABLED`.
+- `content/knowledge/approved-answers.json` holds 9 answers (the three starter suggestions in ar, en, tl), all approved by the Sharia reviewer مهند بن صالح الفوزان on 2026-10-06, each with `source_versions`. They are served by default (`ASK_APPROVED_FAQ_ENABLED` true; false turns it off); a draft or returned entry, or one without a reviewer and a date, is never served.
 - `KNW_MIN_SIMILARITY` stays 0. First calibration (plan 5.5, `python -m app.knowledge.eval calibrate`, 2026-10-05, 31-question starter set): answerable questions scored 0.51–0.76, the two "no source" questions 0.57 and 0.63, so the groups overlap and a threshold of 0.63 would drop half the answerable questions. Until the full 80-question set separates them, the gates are the composer's `sufficient` and the verifier (plan 4.4).
-- Helpline numbers per country: none shown (feature open question; `DangerHelpPanel` never invents numbers).
+- Helpline numbers per country: the danger panel in Ask shows the verified helplines bundled in the app (`frontend/src/app/companion/helplineNumbers.ts`, Saudi Arabia and the Philippines, verified 2026-10-06); no unverified number is listed.
 - `sensitive` route: answered from sources like `general`, with `should_escalate = true` so the human button is offered (the feature has no example; plan §4.3 only says it continues to retrieval).

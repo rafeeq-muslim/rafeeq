@@ -15,14 +15,14 @@ import sys
 from pathlib import Path
 
 import pytest
-from sqlalchemy import delete, func, select, text
+from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from app.core.config import get_settings
+from app.core.config import Settings, get_settings
 from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
-from app.knowledge import ask, query_normalization, search, tasks
+from app.knowledge import approved, ask, query_normalization, search, tasks
 from app.knowledge.ai import agents, screen
 from app.knowledge.ai.errors import DeadlineExceeded
 from app.knowledge.models import AiCall, AnswerLog, Passage
@@ -668,6 +668,91 @@ async def test_knw01_t16_budget_gone_serves_valid_approved_answer(client, ai, mo
     monkeypatch.setattr(get_settings(), "ask_approved_faq_enabled", True)
     b = await post(client, "what does la ilaha illa allah mean")
     assert b["outcome"] == "cached" and ai.calls == []
+
+
+# --- R7: the reviewer-approved answers in content/knowledge/approved-answers.json ---
+
+
+def _file_entry(entry_id: str) -> dict:
+    """An entry of the real content file, through the real loader."""
+    return next(e for e in screen.approved_answers() if e["id"] == entry_id)
+
+
+async def _add_entry_passages(entry: dict) -> None:
+    """Dummy passages (plan rule 6) under the entry's ids, at the versions the reviewer approved."""
+    rows = entry["source_versions"]
+    await add_passages(
+        *(
+            {
+                "id": r["id"],
+                "lang": entry["lang"],
+                "source_id": r["source_id"],
+                "ref_key": r["ref_key"],
+                "quote_text": f"TEST_QUOTE_TEXT {r['id']}",
+            }
+            for r in rows
+        )
+    )
+    async with SessionLocal() as s:
+        for r in rows:
+            await s.execute(update(Passage).where(Passage.id == r["id"]).values(version=r["version"]))
+        await s.commit()
+
+
+def _only_entry(monkeypatch, entry: dict) -> None:
+    """Replace the content file with one entry; the real status filter still runs."""
+    real = screen._load
+    monkeypatch.setattr(screen, "_load", lambda name: {"answers": [entry]} if name == "approved-answers.json" else real(name))
+
+
+def test_knw01_r7_on_by_default_and_file_entries_are_reviewer_approved(monkeypatch):
+    assert Settings.model_fields["ask_approved_faq_enabled"].default is True
+    monkeypatch.setenv("ASK_APPROVED_FAQ_ENABLED", "false")
+    assert Settings().ask_approved_faq_enabled is False  # the env override still switches it off
+    entries = screen.approved_answers()
+    assert len(entries) == 9
+    for e in entries:
+        assert e["status"] == "approved" and e["reviewer"] and e["approved_at"]
+        assert set(approved.entry_ids(e)) <= set(approved._versions(e)), e["id"]  # every cited id has its approved version
+
+
+async def test_knw01_r7_reviewer_approved_answer_is_served_with_its_sources(client, ai):
+    entry = _file_entry("suggest-wudu-en")
+    await _add_entry_passages(entry)
+    ai.on("router", ROUTE_GENERAL)
+    b = await post(client, "What is the reward of wudu?")  # ask.suggest.2 in English
+    assert b["outcome"] == "cached" and b["answer"] == entry["answer"]
+    assert sorted(s["id"] for s in b["sources"]) == sorted(approved.entry_ids(entry))
+    assert {s["id"]: s["version"] for s in b["sources"]} == approved._versions(entry)
+    assert ai.agents_called() == ["router"]  # no composition
+
+
+async def test_knw01_r7_outage_serves_reviewer_approved_answer(client, ai):
+    entry = _file_entry("suggest-shahada-ar")
+    await _add_entry_passages(entry)
+    ai.on("router", 503, 503)  # main and fallback down (sourced-answer rule 2, error example)
+    b = await post(client, "ما معنى الشهادتين؟", "ar")
+    assert b["outcome"] == "cached" and b["answer"] == entry["answer"]
+    assert sorted(s["id"] for s in b["sources"]) == sorted(approved.entry_ids(entry))
+
+
+@pytest.mark.parametrize("over", [{"status": "draft"}, {"status": "returned"}, {"reviewer": None}, {"approved_at": None}])
+async def test_knw01_r7_unapproved_entry_is_not_served(client, ai, monkeypatch, over):
+    entry = {**_file_entry("suggest-wudu-en"), **over}
+    await _add_entry_passages(entry)
+    _only_entry(monkeypatch, entry)
+    ai.on("router", 503, 503)
+    b = await post(client, "What is the reward of wudu?")
+    assert b["outcome"] == "unavailable" and b["sources"] == [] and b["answer"] != entry["answer"]
+
+
+async def test_knw01_r7_flag_off_approved_answer_not_served(client, ai, monkeypatch):
+    entry = _file_entry("suggest-wudu-en")
+    await _add_entry_passages(entry)
+    monkeypatch.setattr(get_settings(), "ask_approved_faq_enabled", False)
+    ai.on("router", 503, 503)
+    b = await post(client, "What is the reward of wudu?")
+    assert b["outcome"] == "unavailable" and b["answer"] == screen.fixed("unavailable", "en")
 
 
 async def test_knw01_t20_every_passage_of_one_reference_stays_for_verification(client, ai):
