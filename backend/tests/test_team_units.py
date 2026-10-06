@@ -60,3 +60,37 @@ def test_lrn01_r2_unit1_verse_card_carries_the_quoted_span():
     view = content.lang_view(card, "en")["quran"]["excerpt"]
     assert view["words"] == [22, 27] and view["translation"].startswith("Indeed, Allah loves")
     assert content.lang_view(card, "ar")["quran"]["excerpt"] == {"words": [22, 27]}
+
+
+def _video(lesson: dict, lang: str):
+    return content.lang_view({"media": lesson["media"]}, lang)["media"]["video"]
+
+
+def test_lrn01_r5_english_prayer_lessons_show_no_video_while_the_only_file_is_hevc():
+    content.store.cache_clear()
+    s = content.store()
+    salah = [lesson for lesson in s.lessons.values() if "how-to-pray" in str((lesson.get("media") or {}).get("video"))]
+    assert salah, "unit 1 has prayer lessons with a support video"
+    for lesson in salah:
+        assert _video(lesson, "en") is None  # no player, like Tagalog
+        assert _video(lesson, "tl") is None
+        assert _video(lesson, "ar").startswith("https://d1.islamhouse.com/")
+
+
+def test_lrn01_r5_english_wudu_video_still_plays():
+    content.store.cache_clear()
+    s = content.store()
+    wudu = [lesson for lesson in s.lessons.values() if "wudu" in str((lesson.get("media") or {}).get("video", {}).get("en", ""))]
+    assert wudu and all(_video(lesson, "en").endswith(".mp4") for lesson in wudu)
+
+
+def test_lrn01_r5_an_empty_or_non_https_video_entry_renders_no_player():
+    unit = {
+        "id": "u09",
+        "title": {"ar": "x"},
+        "media": {"support_video": {"v": {"ar": "", "en": "http://example.com/a.mp4", "tl": None}}},
+        "lessons": [{"id": "l1", "title": {"ar": "y"}, "support_video": "v", "objectives": [], "cards": [], "exercises": []}],
+    }
+    _, lessons = team_units.convert(unit, "unit-09")
+    for lang in ("ar", "en", "tl"):
+        assert _video(lessons[0], lang) is None

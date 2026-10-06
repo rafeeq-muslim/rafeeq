@@ -74,6 +74,8 @@ const SOURCE_BY_LOCALE: Record<string, Partial<Record<string, string>> & { defau
   islamqa: { ar: "الإسلام سؤال وجواب", default: "IslamQA" },
   // PRD live v3: the Islamic Content Encyclopedia (islamenc.com), read live.
   islamic_content: { ar: "موسوعة المحتوى الإسلامي", default: "IslamEnc.com" },
+  // KNW-02 R6: the team's approved lesson cards; the link opens the lesson.
+  rafeeq_cards: { ar: "دروس رفيق", tl: "Mga aralin ng Rafeeq", default: "Rafeeq lessons" },
 }
 
 /**

@@ -40,7 +40,8 @@ type Indicators = {
     objectives: Record<string, { lesson: Rate; review: Rate }>
     /** MOT-09 R1: per unit. */
     units: Record<string, { lesson: Rate; review: Rate }>
-    placement: { distribution: Record<string, number>; skipped: number }
+    /** MOT-09 R2/R6: people per units passed; null = under 10 (or would reveal a hidden bucket). Empty with skipped null = under 10 people in all. */
+    placement: { distribution: Record<string, number | null>; skipped: number | null }
     /** MOT-09 R3: share of people who mastered each objective. */
     mastery: Record<string, Rate>
     weakest: string[]
@@ -224,12 +225,7 @@ export default function Team() {
               )}
               <div className="flex flex-col gap-1">
                 <h3 className="text-label font-bold text-muted-foreground">{t("team.placement")}</h3>
-                {Object.entries(d.understanding.placement.distribution).map(([n, c]) => (
-                  <p key={n} className="text-body tabular-nums">
-                    {t("team.placementRow", { n: num(Number(n)), c: num(c) })}
-                  </p>
-                ))}
-                <p className="text-body tabular-nums">{t("team.skipped", { n: num(d.understanding.placement.skipped) })}</p>
+                <Placement placement={d.understanding.placement} />
               </div>
             </section>
 
@@ -244,6 +240,24 @@ export default function Team() {
           <ResponderCoverage />
         </div>
       </div>
+    </>
+  )
+}
+
+/** MOT-09 R6: a figure under 10 people reads «not enough data yet». */
+export function Placement({ placement }: { placement: Indicators["understanding"]["placement"] }) {
+  const { t } = useT()
+  const rows = Object.entries(placement.distribution)
+  if (rows.length === 0 && placement.skipped === null) return <p className="text-label text-muted-foreground">{t("team.notEnough")}</p>
+  const figure = (n: number | null) => (n === null ? t("team.notEnough") : num(n))
+  return (
+    <>
+      {rows.map(([n, c]) => (
+        <p key={n} className="text-body tabular-nums">
+          {t("team.placementRow", { n: num(Number(n)), c: figure(c) })}
+        </p>
+      ))}
+      <p className="text-body tabular-nums">{t("team.skipped", { n: figure(placement.skipped) })}</p>
     </>
   )
 }

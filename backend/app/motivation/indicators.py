@@ -208,8 +208,7 @@ def understanding(events: list[AnonEvent], order: list[dict] | None = None) -> d
                 "review": rate([r for o in objs for r in review.get(o, [])]),
             }
 
-    placement = Counter(e.value for e in events if e.type == "placement_done")
-    skipped = sum(1 for e in events if e.type == "placement_skipped")
+    placement = placement_figures(events)
 
     # R3: people who reached "mastered" among the people who answered it.
     answered: dict[str, set[str]] = defaultdict(set)
@@ -244,19 +243,51 @@ def understanding(events: list[AnonEvent], order: list[dict] | None = None) -> d
     ai, hold = experiment["ai_explanation"], experiment["card_holdout"]
     experiment["difference"] = round(ai - hold, 4) if ai is not None and hold is not None else None
 
-    shown = sum(1 for e in events if e.type == "guide_shown")
+    # R5 rates count messages and answers; R6 counts the people behind them.
+    guide = [e for e in events if e.type == "guide_shown"]
     followed = sum(1 for e in events if e.type == "guide_followed")
     quick = [e for e in answers if e.context == "quick_check"]
     return {
         "objectives": objectives,
         "units": units,
-        "placement": {"distribution": {str(k): v for k, v in sorted(placement.items(), key=lambda kv: kv[0] or 0)}, "skipped": skipped},
+        "placement": placement,
         "mastery": mastery,
         "weakest": [o for _, o in weakest],
         "why_experiment": experiment,
-        "guide_followed": ratio(followed, shown),
-        "quick_check_correct": ratio(sum(bool(e.correct) for e in quick), len(quick)),
+        "guide_followed": ratio(followed, len(guide), _people(guide)),
+        "quick_check_correct": ratio(sum(bool(e.correct) for e in quick), len(quick), _people(quick)),
     }
+
+
+def _people(events: list[AnonEvent]) -> int:
+    """R6: distinct devices, not events (unlinked events cannot be told apart)."""
+    return len({e.install_id for e in events if e.install_id})
+
+
+def placement_figures(events: list[AnonEvent]) -> dict:
+    """R2 with R6: people per number of units passed, and people who skipped.
+
+    Each device counts once, by its last placement outcome (done or skipped),
+    so the buckets and «skipped» are one partition of the people. Events
+    unlinked by an opt-out are left out: they cannot be counted as people.
+    Fewer than 10 people in all hides everything; a bucket under 10 is hidden
+    (None), and if the hidden buckets add up to 1-9 people the next smallest
+    bucket is hidden too, so no small bucket can be worked out from the others
+    (complementary suppression, as in ORG-03)."""
+    last: dict[str, AnonEvent] = {}
+    for e in sorted(
+        (e for e in events if e.type in ("placement_done", "placement_skipped") and e.install_id), key=lambda e: (e.day, *_sort_key(e))
+    ):
+        last[e.install_id or ""] = e
+    if len(last) < MIN_PEOPLE:
+        return {"distribution": {}, "skipped": None}
+    cells: Counter[str] = Counter("skipped" if e.type == "placement_skipped" else str(e.value or 0) for e in last.values())
+    hidden = {k for k, n in cells.items() if n < MIN_PEOPLE}
+    while 0 < sum(cells[k] for k in hidden) < MIN_PEOPLE and len(hidden) < len(cells):
+        hidden.add(min((k for k in cells if k not in hidden), key=lambda k: (cells[k], k)))
+    shown = {k: (None if k in hidden else n) for k, n in cells.items()}
+    skipped = shown.pop("skipped", 0)
+    return {"distribution": dict(sorted(shown.items(), key=lambda kv: int(kv[0]))), "skipped": skipped}
 
 
 class MarkerIn(BaseModel):

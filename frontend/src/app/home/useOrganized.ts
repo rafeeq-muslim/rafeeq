@@ -20,6 +20,7 @@ import { lastSura } from "@/app/discover/player"
 import { loadReciterChoice } from "@/app/discover/reciters"
 import { useLibrary } from "@/app/discover/queries"
 import type { LibraryItemData, RecitationResponse } from "@/app/discover/types"
+import { useGuide } from "@/app/guide/store"
 import { useGuideContext } from "@/app/guide/useGuide"
 import type { Lesson } from "@/app/learning/types"
 import { useAuth } from "@/app/stores/auth"
@@ -107,6 +108,15 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
   })
   const library = useLibrary(locale, Boolean(completed[LESSON_LAST_DAY_ONE]))
   const pick = libraryPick(library.data?.topics)
+  // PLT-08 R3: the guide records Ramadan and «لست وحدك» openings; Home records the others.
+  const used = useGuide((s) => s.used)
+  const homeOpened = useHome((s) => s.opened)
+  const ramadanKey = ramadan ? `ramadan-${ramadan.start.slice(0, 4)}` : null
+  const opened: Eligibility["opened"] = {
+    ...homeOpened,
+    ...(ramadanKey && used[ramadanKey] ? { ramadan: true as const } : {}),
+    ...(used.human ? { human: true as const } : {}),
+  }
   return {
     ctx: {
       completed,
@@ -118,18 +128,21 @@ export function useEligibility(): { ctx: Eligibility; library: LibraryItemData |
       reciterChosen: reciterChosen(),
       recitersAvailable: Array.isArray(recitations.data?.reciters) ? recitations.data.reciters.length : 0,
       libraryPick: pick != null,
+      opened,
     },
     library: pick,
   }
 }
 
-/** R1, R5, R6: the optional components to show now, in their places. */
+/** R1, R5, R6 and PLT-08 R3: the optional components to show now, in their places. */
 export function useOptional(order: Order | null, ctx: Eligibility): OptionalId[] {
   const slots = useHome((s) => s.slots)
   const hidden = useHome((s) => s.hidden)
+  const shown = useHome((s) => s.shown)
+  const day = useHome((s) => s.day)
   const setSlots = useHome((s) => s.setSlots)
   const isEligible = React.useCallback((id: OptionalId) => eligible(id, ctx), [ctx])
-  const next = order ? daySlots(slots, order.optional, isEligible, hidden) : slots
+  const next = order ? daySlots(slots, order.optional, isEligible, hidden, shown, day ?? "") : slots
   const key = next.join(",")
   React.useEffect(() => {
     if (order) setSlots(key ? (key.split(",") as OptionalId[]) : [])

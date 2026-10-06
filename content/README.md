@@ -17,6 +17,7 @@
 
 ```bash
 python3 content/check_content.py content/units/unit-01/unit.json
+python3 content/check_content.py --learner-content   # KNW-05 R2: verse/hadith refs in lessons/, excerpts, recitations, daily cards
 ```
 
 ## Where the content comes from

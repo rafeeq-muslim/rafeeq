@@ -48,7 +48,8 @@ class Settings(BaseSettings):
     # app.knowledge.source_policy (KNW-02 SC1). islamqa is a main source by
     # the product owner's decision of 2026-10-06; its permission request is
     # still recorded as pending in docs/agents/sources.md.
-    knw_answer_sources: str = "quranenc,hadeethenc,islamhouse_enc,binbaz,islamqa"
+    # KNW-02 R6 (owner, 2026-10-06): approved team lesson cards are an answer source.
+    knw_answer_sources: str = "quranenc,hadeethenc,islamhouse_enc,binbaz,islamqa,rafeeq_cards"
     knw_embed_job_limit: int = 4000  # passages per scheduler run (0 disables); ≈ 7 min at the measured 6.7 s per 64 islamqa passages
     knw_embed_job_minutes: int = 10  # scheduler interval of the embedding job
     # Owner decision 2026-10-06: when two candidates from different sources

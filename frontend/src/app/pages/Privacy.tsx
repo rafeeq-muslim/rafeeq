@@ -9,6 +9,9 @@
  * PLT-05.md). Final: approved by the product owner on 2026-10-06 (the
  * updated line says so). No legal review is claimed, and the data controller's
  * name and contact are still missing: rights are exercised in the app.
+ * Added after the approval (same day, a second date line says so): the media
+ * the browser fetches from the sources' own hosts, the library search words
+ * sent to the sources, and where the server data is kept.
  */
 import { Link, useNavigate } from "react-router"
 import { IconArrowRight, IconShieldLock } from "@tabler/icons-react"
@@ -23,9 +26,14 @@ import { useDocumentLocale } from "@/app/AppLayout"
 
 /** Last update, which is also the day the product owner approved the text (2026-10-06). */
 export const POLICY_UPDATED = "2026-10-06"
+/** The day the "media" and "hosting" sections were added, after that approval. */
+export const POLICY_REVISED = "2026-10-06"
 
 // "org": ORG-01 the organisation link (what the link carries, what «نعم» keeps, unlinking).
-export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "stats", "org", "never", "rights", "retention", "signout"] as const
+// "media": what the browser fetches straight from the sources' hosts (CSP img-src/media-src in
+// infra/web.security-headers.inc) and the library search words the server sends (KNW-06);
+// "hosting": where server data and backups are kept (infra/compose.prod.yml, scripts/backup.sh).
+export const POLICY_SECTIONS = ["device", "account", "contact", "notifications", "ai", "media", "stats", "org", "hosting", "never", "rights", "retention", "signout"] as const
 
 export default function Privacy() {
   useDocumentLocale()
@@ -57,6 +65,7 @@ export default function Privacy() {
               {/* LRI…PDI isolates the date so RTL keeps it as 2026-10-06. */}
               {t("policy.updated", { date: `⁦${POLICY_UPDATED}⁩` })}
             </p>
+            <p className="text-label text-muted-foreground">{t("policy.revised", { date: `⁦${POLICY_REVISED}⁩` })}</p>
           </header>
 
           {POLICY_SECTIONS.map((s) => (

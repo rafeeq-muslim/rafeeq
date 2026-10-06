@@ -75,4 +75,10 @@ export function ramadanState(today: YMD, sightings: Sighting[], country: string)
   return { kind: "upcoming", start: next.date, daysLeft: daysBetween(today, next.date), announced: next.announced }
 }
 
-export const isRamadan = (today: YMD, sightings: Sighting[], country: string) => ramadanState(today, sightings, country).kind === "ramadan"
+/** R2: Ramadan mode (Isha +30 under Umm al-Qura, suhoor and iftar, fasting
+ * reminders) starts only with an announced sighting, never from the
+ * calculation alone; until then the day is shown as expected. */
+export function isRamadan(today: YMD, sightings: Sighting[], country: string): boolean {
+  const s = ramadanState(today, sightings, country)
+  return s.kind === "ramadan" && s.announced
+}
