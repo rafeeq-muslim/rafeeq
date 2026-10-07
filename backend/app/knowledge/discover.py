@@ -149,8 +149,17 @@ def _answer_of(row: SavedItem) -> SavedAnswer | None:
         return None  # an old or damaged copy is never shown
 
 
+# Security review 2026-10-07 (A-M3): an account keeps at most this many saved
+# items. A device may hold more (guests save without an account); what does
+# not fit stays on the device only. Writes are limited per account.
+SAVED_MAX = 500
+SAVED_WRITES_PER_MIN = 30
+
+
 async def _saved_of(session, user_id) -> list[Saved]:
-    rows = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()))
+    rows = await session.scalars(
+        select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()).limit(SAVED_MAX)
+    )
     return [Saved(kind=r.kind, ref=r.ref_id, saved_at=r.saved_at, answer=_answer_of(r)) for r in rows]
 
 
@@ -162,12 +171,17 @@ async def get_saved(session: Session, user: CurrentUser) -> SavedList:
 @router.put("/me/saved")
 async def merge_saved(body: SavedList, session: Session, user: CurrentUser) -> SavedList:
     """R3: union of the device and the account, one copy each, earliest date
-    kept. A saved answer moves with its text and source ids (R2), never its question."""
+    kept. A saved answer moves with its text and source ids (R2), never its
+    question. Past `SAVED_MAX` items the newest of the device's new items are
+    taken first and the rest are not stored."""
+    ratelimit.hit(f"saved-sync:{user.id}", SAVED_WRITES_PER_MIN, 60)
     rows = {(r.kind, r.ref_id): r for r in await session.scalars(select(SavedItem).where(SavedItem.user_id == user.id))}
-    for it in body.items:
+    for it in sorted(body.items, key=lambda i: i.saved_at, reverse=True):
         payload = it.answer.model_dump() if it.answer else {}
         row = rows.get((it.kind, it.ref))
         if row is None:
+            if len(rows) >= SAVED_MAX:
+                continue
             row = SavedItem(user_id=user.id, kind=it.kind, ref_id=it.ref, payload=payload, saved_at=it.saved_at)
             session.add(row)
             rows[(it.kind, it.ref)] = row

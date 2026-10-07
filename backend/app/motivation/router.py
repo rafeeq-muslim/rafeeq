@@ -30,6 +30,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import OutboxEvent, payload_text, publish, subscribe
+from app.learning.public import known_ids
 from app.motivation.engagement import account_status, after_interaction, status_at
 from app.motivation.models import AnonEvent, DailySnapshot, EarnedBadge, EngagementState, StreakDay
 
@@ -280,18 +281,26 @@ async def get_motivation(session: Session, user: CurrentUser) -> MotivationSync:
     return await _motivation_of(session, user.id)
 
 
+MOTIVATION_WRITES_PER_MIN = 60  # saved together with learning progress
+
+
 @router.put("/me/motivation")
 async def merge_motivation(body: MotivationSync, session: Session, user: CurrentUser) -> MotivationSync:
     """MOT-02: the larger set of learning days wins (no mixing two histories
     into a streak neither had); MOT-03: badges are kept once, earliest date."""
+    ratelimit.hit(f"motivation-sync:{user.id}", MOTIVATION_WRITES_PER_MIN, 60)
     have = await _motivation_of(session, user.id)
     if len(set(body.days)) > len(have.days):
         await session.execute(delete(StreakDay).where(StreakDay.user_id == user.id))
         session.add_all(StreakDay(user_id=user.id, day=d) for d in sorted(set(body.days)))
+    earned = {b.badge_id: b for b in await session.scalars(select(EarnedBadge).where(EarnedBadge.user_id == user.id))}
+    units = {f"unit-{u}" for u in known_ids()[1]}
     for bid, b in body.badges.items():
-        if not BADGE_ID.fullmatch(bid):
-            continue  # MOT-03 R1: unit badges and 7/30/66 learning days only
-        row = await session.get(EarnedBadge, (user.id, bid))
+        # MOT-03 R1: badges of the path's units and 7/30/66 learning days only
+        # (a made-up unit id is never stored: the set of badges is finite).
+        if not BADGE_ID.fullmatch(bid) or (bid.startswith("unit-") and bid not in units):
+            continue
+        row = earned.get(bid)
         if row is None:
             session.add(EarnedBadge(user_id=user.id, badge_id=bid, earned_at=b.earnedAt))
             # MOT-03 R1: BadgeEarned, to Companion (the mentor sees it only with permission, R6).
