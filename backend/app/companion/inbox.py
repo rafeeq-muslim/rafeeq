@@ -33,7 +33,7 @@ from sqlalchemy import and_, case, exists, func, not_, or_, select, update
 from sqlalchemy.orm import aliased
 
 from app.companion import notify
-from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
+from app.companion.common import THREAD_MSGS_PER_DAY, blocked_by_owner_clause, is_paused, is_team, langs_of, message_page, not_found, now
 from app.companion.contact import mentor_contacted
 from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, Report, ScholarReferral
 from app.companion.text import clean_body_async
@@ -170,6 +170,8 @@ class ThreadMessage(BaseModel):
 class InboxThread(RequestRow):
     messages: list[ThreadMessage]
     referred: list[uuid.UUID] = []  # learner messages already referred to the Sharia reviewer (R5)
+    # Only the last 200 messages come at once; `?before=<id of the first one>` reads the page before them.
+    has_earlier: bool = False
 
 
 async def _row(session, req: HelpRequest, me: User) -> RequestRow:
@@ -240,9 +242,9 @@ async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
 
 
 @router.get("/requests/{request_id}", response_model=InboxThread)
-async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -> InboxThread:
+async def open_request(request_id: uuid.UUID, session: Session, me: Responder, before: uuid.UUID | None = None) -> InboxThread:
     req = await visible_request(session, me, request_id)
-    msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
+    msgs, has_earlier = await message_page(session, req.id, before)
     # CMP-04 R2: a message this responder reported is hidden for him at once.
     reported = set(await session.scalars(select(Report.target_id).where(Report.reporter_id == me.id, Report.target_type == "help_message")))
     names: dict[uuid.UUID, str] = {}
@@ -268,7 +270,7 @@ async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -
     await session.commit()
     row = await _row(session, req, me)
     referred = list(await session.scalars(select(ScholarReferral.message_id).where(ScholarReferral.request_id == req.id)))
-    return InboxThread(**row.model_dump(), messages=out, referred=referred)
+    return InboxThread(**row.model_dump(), messages=out, referred=referred, has_earlier=has_earlier)
 
 
 class ReplyIn(BaseModel):
@@ -281,6 +283,7 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
     if req.learner_id is None and req.guest_token_hash is None:
         raise HTTPException(status.HTTP_409_CONFLICT, "no_owner_yet")  # an alert nobody opened yet
     ratelimit.hit(f"inbox-reply:{me.id}", 60, 60)
+    ratelimit.hit(f"inbox-reply-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
     text = await clean_body_async(body.body)
     t = now()
     if req.mentor_id is None or (req.mentor_id != me.id and req.first_reply_at is None):

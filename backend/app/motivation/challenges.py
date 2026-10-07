@@ -25,9 +25,10 @@ from pydantic import BaseModel, Field, model_validator
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import subscribe
-from app.learning.public import is_live
+from app.learning.public import is_live, known_ids
 from app.motivation.models import Challenge, ChallengeCheck, ChallengeTemplate, GroupMembership, LearningLog
 from app.motivation.router import _when
 from app.platform import push
@@ -117,15 +118,25 @@ class LogIn(BaseModel):
     entries: list[LogEntry] = Field(max_length=500)
 
 
+# Security review 2026-10-07 (A-M3): the log holds real lessons and units of
+# the path only, is merged with one read instead of one per entry, and has a
+# ceiling per account. Challenges read the last week of it; a learner who
+# finishes a lesson a day reaches the ceiling after years.
+LOG_MAX = 5000
+LOG_WRITES_PER_MIN = 30
+
+
 @router.post("/me/learning-log")
 async def learning_log(body: LogIn, session: Session, user: CurrentUser) -> dict:
+    ratelimit.hit(f"learning-log:{user.id}", LOG_WRITES_PER_MIN, 60)
     in_group = await session.scalar(
         select(GroupMembership.group_id).where(GroupMembership.user_id == user.id, GroupMembership.is_mentor.is_(False)).limit(1)
     )
     if in_group is None:
         return {"stored": 0}  # minimum data: only group challenges need this
     now = datetime.now(UTC)
-    stored = 0
+    lessons, units = known_ids()
+    new: dict[tuple, LearningLog] = {}
     for e in body.entries:
         at = _when(e.at, now)
         if e.kind == "day":
@@ -135,18 +146,28 @@ async def learning_log(body: LogIn, session: Session, user: CurrentUser) -> dict
                 continue
             if e.at is None:  # a learning day carries its own date, never "now" (sync or sign-in copies)
                 at = _when(datetime.combine(day, time(12), UTC), now)
-            dup = select(LearningLog.id).where(LearningLog.user_id == user.id, LearningLog.kind == "day", LearningLog.item_id == e.item_id)
+            key: tuple = ("day", e.item_id)
         else:
+            if e.item_id not in (lessons if e.kind == "lesson" else units):
+                continue
             day = e.day or at.date()
-            dup = select(LearningLog.id).where(
-                LearningLog.user_id == user.id, LearningLog.kind == e.kind, LearningLog.item_id == e.item_id, LearningLog.at == at
+            key = (e.kind, e.item_id, at)
+        new.setdefault(key, LearningLog(user_id=user.id, kind=e.kind, item_id=e.item_id, is_repeat=e.is_repeat, day=day, at=at))
+    if not new:
+        return {"stored": 0}
+    have = (
+        await session.execute(
+            select(LearningLog.kind, LearningLog.item_id, LearningLog.at).where(
+                LearningLog.user_id == user.id, LearningLog.item_id.in_({k[1] for k in new})
             )
-        if await session.scalar(dup.limit(1)):
-            continue
-        session.add(LearningLog(user_id=user.id, kind=e.kind, item_id=e.item_id, is_repeat=e.is_repeat, day=day, at=at))
-        stored += 1
+        )
+    ).all()
+    seen = {("day", item) if kind == "day" else (kind, item, at) for kind, item, at in have}
+    room = LOG_MAX - (await session.scalar(select(func.count()).select_from(LearningLog).where(LearningLog.user_id == user.id)) or 0)
+    rows = [row for key, row in new.items() if key not in seen][: max(room, 0)]
+    session.add_all(rows)
     await session.commit()
-    return {"stored": stored}
+    return {"stored": len(rows)}
 
 
 # --- challenges ---------------------------------------------------------

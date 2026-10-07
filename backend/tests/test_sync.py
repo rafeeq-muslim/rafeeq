@@ -7,23 +7,23 @@ async def test_lrn02_device_and_account_progress_are_united(client):
     token = (await register(client))["access_token"]
     h = auth(token)
     phone = {
-        "completed": {"u1-l1": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-03T08:00:00Z", "times": 2}},
+        "completed": {"u01-l1": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-03T08:00:00Z", "times": 2}},
         "unlockedUnits": ["u2"],
-        "mastery": {"u1-o1": {"p": 0.5, "seen": True, "answered": True, "lastAnswerAt": "2026-10-03T08:00:00Z", "checksDone": 0}},
+        "mastery": {"u01-l1-o1": {"p": 0.5, "seen": True, "answered": True, "lastAnswerAt": "2026-10-03T08:00:00Z", "checksDone": 0}},
     }
     laptop = {
         "completed": {
-            "u1-l1": {"first": "2026-09-30T08:00:00Z", "last": "2026-10-02T08:00:00Z", "times": 1},
-            "u1-l2": {"first": "2026-10-04T08:00:00Z", "last": "2026-10-04T08:00:00Z", "times": 1},
+            "u01-l1": {"first": "2026-09-30T08:00:00Z", "last": "2026-10-02T08:00:00Z", "times": 1},
+            "u01-l2": {"first": "2026-10-04T08:00:00Z", "last": "2026-10-04T08:00:00Z", "times": 1},
         },
-        "mastery": {"u1-o1": {"p": 0.9, "seen": True, "answered": True, "lastAnswerAt": "2026-10-02T08:00:00Z", "checksDone": 0}},
+        "mastery": {"u01-l1-o1": {"p": 0.9, "seen": True, "answered": True, "lastAnswerAt": "2026-10-02T08:00:00Z", "checksDone": 0}},
     }
     assert (await client.put("/api/me/learning", json=phone, headers=h)).status_code == 200
     merged = (await client.put("/api/me/learning", json=laptop, headers=h)).json()
-    l1 = merged["completed"]["u1-l1"]
+    l1 = merged["completed"]["u01-l1"]
     assert l1["first"].startswith("2026-09-30") and l1["last"].startswith("2026-10-03") and l1["times"] == 2
-    assert set(merged["completed"]) == {"u1-l1", "u1-l2"} and merged["unlockedUnits"] == ["u2"]
-    assert merged["mastery"]["u1-o1"]["p"] == 0.5  # the later answer wins
+    assert set(merged["completed"]) == {"u01-l1", "u01-l2"} and merged["unlockedUnits"] == ["u2"]
+    assert merged["mastery"]["u01-l1-o1"]["p"] == 0.5  # the later answer wins
 
 
 async def test_mot02_larger_set_of_days_wins(client):
@@ -51,5 +51,5 @@ async def test_sync_needs_an_account(client):
 
 async def test_naive_timestamps_are_rejected(client):
     h = auth((await register(client))["access_token"])
-    bad = {"completed": {"u1-l1": {"first": "2026-10-01T08:00:00", "last": "2026-10-01T08:00:00", "times": 1}}}
+    bad = {"completed": {"u01-l1": {"first": "2026-10-01T08:00:00", "last": "2026-10-01T08:00:00", "times": 1}}}
     assert (await client.put("/api/me/learning", json=bad, headers=h)).status_code == 422

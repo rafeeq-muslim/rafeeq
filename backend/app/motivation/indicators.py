@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import select
 
 from app.core.deps import Session, require_role
-from app.core.events import OutboxEvent
+from app.core.events import OutboxEvent, payload_text
 from app.learning.public import path_order
 from app.motivation.models import AnonEvent, DailySnapshot, ReleaseMarker
 from app.motivation.router import RIYADH
@@ -132,7 +132,7 @@ async def indicators(session: Session, _: Team, days: int = Query(default=7)) ->
     counts = latest.counts if latest else {}
     rates = period_rates(snaps[0] if snaps else None, snaps[1:])
     contacts = await session.scalars(
-        select(OutboxEvent.payload["user_id"].astext).where(
+        select(payload_text("user_id")).where(
             OutboxEvent.name == CONTACT_EVENT, OutboxEvent.created_at >= datetime.combine(since, datetime.min.time(), RIYADH)
         )
     )

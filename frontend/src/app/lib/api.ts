@@ -135,20 +135,31 @@ export function sendEvent(event: Record<string, unknown>) {
   void flushEvents()
 }
 
+/** The server takes at most this many events in one request
+ * (backend motivation/router.py EVENTS_PER_REQUEST). */
+export const EVENT_BATCH = 100
+
 let flushing = false
 export async function flushEvents() {
   if (flushing || (typeof navigator !== "undefined" && !navigator.onLine)) return
   flushing = true
   try {
-    const q: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
-    if (q.length === 0) return
-    const install_id = useDevice.getState().installId
-    const r = await fetch("/api/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ install_id, events: q.slice(0, 500) }),
-    })
-    if (r.ok || r.status === 422) localStorage.setItem(QUEUE_KEY, JSON.stringify(q.slice(500)))
+    // A long offline queue goes in batches; a refusal (429, offline) keeps
+    // the rest for the next event or the next time the device is online.
+    for (let sent = 0; sent < 5; sent++) {
+      const q: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
+      if (q.length === 0) return
+      const install_id = useDevice.getState().installId
+      const r = await fetch("/api/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ install_id, events: q.slice(0, EVENT_BATCH) }),
+      })
+      if (!r.ok && r.status !== 422) return
+      // Events queued while the request was in flight are at the end: keep them.
+      const now: unknown[] = JSON.parse(localStorage.getItem(QUEUE_KEY) ?? "[]")
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(now.slice(Math.min(EVENT_BATCH, q.length))))
+    }
   } catch {
     /* retried on next event or when back online */
   } finally {

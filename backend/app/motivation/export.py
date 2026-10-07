@@ -8,11 +8,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.motivation.models import Challenge, ChallengeCheck, EarnedBadge, EngagementState, LearningLog, StreakDay
 
+EXPORT_MAX = 5000  # the learning log's ceiling per account (challenges.LOG_MAX)
+
 
 async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
     days = await session.scalars(select(StreakDay.day).where(StreakDay.user_id == user_id).order_by(StreakDay.day))
     badges = await session.scalars(select(EarnedBadge).where(EarnedBadge.user_id == user_id).order_by(EarnedBadge.earned_at))
-    log = await session.scalars(select(LearningLog).where(LearningLog.user_id == user_id).order_by(LearningLog.at))
+    log = await session.scalars(select(LearningLog).where(LearningLog.user_id == user_id).order_by(LearningLog.at).limit(EXPORT_MAX))
     states = await session.scalars(select(EngagementState).where(EngagementState.user_id == user_id))
     checks = await session.scalars(select(ChallengeCheck.challenge_id).where(ChallengeCheck.user_id == user_id))
     set_by_me = await session.scalars(select(Challenge).where(Challenge.created_by == user_id).order_by(Challenge.created_at))

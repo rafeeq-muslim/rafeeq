@@ -27,6 +27,11 @@ def _register() -> None:
             mod.register(scheduler)
         except ModuleNotFoundError:
             log.info("jobs module %s not present yet", module)
+    # Event-history retention (security review A-H5): its own module and job,
+    # separate from any purge of sessions or codes.
+    from app.core import retention
+
+    retention.register(scheduler)
 
 
 def start() -> None:

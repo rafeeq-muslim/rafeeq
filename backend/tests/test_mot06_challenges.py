@@ -70,8 +70,8 @@ async def test_mot06_r1_second_challenge_while_running_is_refused(client):
 async def test_mot06_r2_lessons_each_counts_any_lessons_from_where_each_is(client):
     mentor, (joseph, colleague), g = await brothers(client, 2)
     await set_challenge(client, mentor, g, type="lessons_each", target_count=3)
-    await learn(client, joseph, lesson("u1-l3"), lesson("u1-l4"), lesson("u1-l5"))
-    await learn(client, colleague, lesson("u2-l6"), lesson("u2-l7"), lesson("u3-l1"))
+    await learn(client, joseph, lesson("u01-l3"), lesson("u01-l4"), lesson("u01-l5"))
+    await learn(client, colleague, lesson("u2-l3"), lesson("u2-l4"), lesson("u3-l1"))
     seen = await view(client, joseph, g)
     assert (seen["done"], seen["of"], seen["mine"]) == (2, 2, True)
 
@@ -81,7 +81,7 @@ async def test_mot06_r2_days_count_distinct_learning_days(client):
     await set_challenge(client, mentor, g, type="days_each", target_count=3)
     today = datetime.now(UTC).date()
     d1, d2 = today.isoformat(), (today - timedelta(days=1)).isoformat()
-    await learn(client, joseph, lesson("u1-l1", d1), lesson("u1-l2", d1), lesson("u1-l3", d2))
+    await learn(client, joseph, lesson("u01-l1", d1), lesson("u01-l2", d1), lesson("u01-l3", d2))
     async with SessionLocal() as s:
         days = {r.day for r in await s.scalars(select(LearningLog))}
     assert len(days) == 2
@@ -176,7 +176,7 @@ async def test_mot06_r4_progress_is_a_count_without_names(client):
     mentor, members, g = await brothers(client, 8)
     await set_challenge(client, mentor, g, type="lessons_each", target_count=1)
     for m in members[:6]:
-        await learn(client, m, lesson("u1-l1"))
+        await learn(client, m, lesson("u01-l1"))
     seen = await view(client, members[7], g)
     assert (seen["done"], seen["of"], seen["counts"]) == (6, 8, "members")
     blob = str(seen)
@@ -187,8 +187,8 @@ async def test_mot06_r4_progress_is_a_count_without_names(client):
 async def test_mot06_r4_leaver_and_their_lessons_drop_out_of_total(client):
     mentor, (a, b, leaver), g = await brothers(client, 3)
     await set_challenge(client, mentor, g, type="group_total", target_count=20)
-    await learn(client, a, *[lesson(f"u1-l{i}") for i in range(1, 7)])
-    await learn(client, b, *[lesson(f"u2-l{i}") for i in range(1, 6)])
+    await learn(client, a, *[lesson(f"u01-l{i}") for i in range(1, 7)])
+    await learn(client, b, *[lesson(x) for x in ("u2-l1", "u2-l2", "u2-l3", "u2-l4", "u4-l1")])
     await learn(client, leaver, *[lesson(f"u3-l{i}") for i in range(1, 4)])
     assert ((await view(client, a, g))["done"], (await view(client, a, g))["of"]) == (14, 20)
     await client.post(f"/api/groups/{g['id']}/leave", headers=leaver.h)
@@ -202,8 +202,8 @@ async def test_mot06_r4_mentor_sees_only_members_who_share_with_him(client):
         await client.post("/api/mentors/choose", json={"mentor_id": str(mentor.id)}, headers=who.h)
     await client.put("/api/mentors/mine/share", json={"share": True}, headers=joseph.h)
     await set_challenge(client, mentor, g, type="lessons_each", target_count=1)
-    await learn(client, joseph, lesson("u1-l1"))
-    await learn(client, colleague, lesson("u1-l1"))
+    await learn(client, joseph, lesson("u01-l1"))
+    await learn(client, colleague, lesson("u01-l1"))
     seen = await view(client, mentor, g)
     assert seen["done"] == 2 and seen["shared_done"] == [str(joseph.id)]
     # permission withdrawn: gone at once (asked live, never copied)
@@ -217,7 +217,7 @@ async def test_mot06_r4_mentor_sees_only_members_who_share_with_him(client):
 async def test_mot06_r5_ended_challenge_shows_result_without_names(client):
     mentor, members, g = await brothers(client, 3)
     c = await set_challenge(client, mentor, g, type="lessons_each", target_count=1)
-    await learn(client, members[0], lesson("u1-l1"))
+    await learn(client, members[0], lesson("u01-l1"))
     async with SessionLocal() as s:
         await s.execute(update(Challenge).where(Challenge.id == c["id"]).values(ends_at=datetime.now(UTC)))
         await s.commit()
@@ -242,6 +242,6 @@ async def test_cmp05_r6_group_page_challenge_shows_count_only(client):
 
 async def test_mot06_learning_log_is_kept_only_for_group_members(client):
     loner = await person(client, "daniel-1", gender="m")
-    assert (await learn(client, loner, lesson("u1-l1")))["stored"] == 0
+    assert (await learn(client, loner, lesson("u01-l1")))["stored"] == 0
     async with SessionLocal() as s:
         assert list(await s.scalars(select(LearningLog))) == []

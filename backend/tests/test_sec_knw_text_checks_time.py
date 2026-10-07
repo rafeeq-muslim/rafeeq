@@ -104,7 +104,7 @@ def test_sec_answer_checks_are_linear_on_adversarial_model_output(name):
 
 
 def test_sec_unclosed_quotes_were_the_slow_case():
-    """Measured before the fix: 8000 opening marks took 0.4 s in `quoted_spans` (quadratic)."""
+    """`quoted_spans` was slower than linear on marks that are never closed."""
     for mark in ('"', "“", "«", "﴿", "„"):
         assert seconds(textcheck.quoted_spans, mark * ANSWER, enough=BUDGET_S) < BUDGET_S
         assert seconds(textcheck.quoted_spans, (mark + "a ") * (ANSWER // 3), enough=BUDGET_S) < BUDGET_S

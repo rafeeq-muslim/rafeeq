@@ -11,13 +11,14 @@ import { registerRoute } from "workbox-routing"
 import { NetworkFirst } from "workbox-strategies"
 
 import { OFFLINE_CACHE, keptOffline } from "../app/offline/paths"
+import { limitOf } from "./cache-limits"
 
 declare const self: ServiceWorkerGlobalScope
 
 export function registerPlt15Offline(origin: string) {
   registerRoute(
     ({ url, request }) => request.method === "GET" && url.origin === origin && keptOffline(url.pathname),
-    new NetworkFirst({ cacheName: OFFLINE_CACHE, networkTimeoutSeconds: 4 }),
+    new NetworkFirst({ cacheName: OFFLINE_CACHE, networkTimeoutSeconds: 4, plugins: [limitOf(OFFLINE_CACHE)] }),
   )
 }
 

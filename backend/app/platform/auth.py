@@ -14,7 +14,7 @@ from sqlalchemy import delete, or_, select, update
 from app.core import pwhash, ratelimit
 from app.core.config import get_settings
 from app.core.deps import CurrentUser, Session
-from app.core.events import OutboxEvent, publish
+from app.core.events import OutboxEvent, payload_text, publish
 from app.core.security import (
     create_access_token,
     hash_password,
@@ -496,9 +496,7 @@ async def delete_account(user: CurrentUser, session: Session, response: Response
     # Leave no event history that names the account (security review #10).
     # Security audit L11: MentorApproved, MentorSuspended and GroupCreated name it as `mentor_id`.
     uid = str(user.id)
-    await session.execute(
-        delete(OutboxEvent).where(or_(OutboxEvent.payload["user_id"].astext == uid, OutboxEvent.payload["mentor_id"].astext == uid))
-    )
+    await session.execute(delete(OutboxEvent).where(or_(payload_text("user_id") == uid, payload_text("mentor_id") == uid)))
     await session.delete(user)
     await session.commit()
     _forget_cookies(response)

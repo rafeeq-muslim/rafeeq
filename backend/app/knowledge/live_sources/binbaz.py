@@ -15,6 +15,7 @@ X-RateLimit-Limit: 120. Checked from this backend on 2026-10-06:
 Arabic only. Licence: the site footer «جميع الحقوق محفوظة والنقل متاح لكل مسلم
 بشرط ذكر المصدر»; use by an AI assistant still to be confirmed (sources.md)."""
 
+import asyncio
 import re
 from html.parser import HTMLParser
 
@@ -28,6 +29,7 @@ PAGE = "https://binbaz.org.sa/fatwas/{ref}/x"
 AUTHOR = "عبد العزيز بن عبد الله بن باز"
 _REF = re.compile(r"^\d{1,9}$")
 _CANON = re.compile(r"^https://binbaz\.org\.sa/fatwas/(\d+)(?:/|$)")
+MAX_MARKUP = 15_000  # tags, and entities, in one page (security review 2026-10-07, A-M7)
 
 
 def parse_search(data: object, limit: int) -> list[T.Candidate]:
@@ -99,6 +101,11 @@ def parse_page(html: str, final_url: str, ref: str) -> Record:
     m = _CANON.match(final_url)
     if not m or m.group(1) != ref:
         raise http.FetchError(T.BAD_RESPONSE)  # redirected somewhere else
+    # html.parser costs a few microseconds per tag or entity whatever the page
+    # says, so a page that is mostly markup is refused before it is parsed
+    # (a real fatwa page of the allowed size has a few thousand tags).
+    if html.count("<") > MAX_MARKUP or html.count("&") > MAX_MARKUP:
+        raise http.FetchError(T.BAD_RESPONSE)
     p = _Page()
     p.feed(html)
     body = strip_html("".join(p.parts["body"]))
@@ -125,4 +132,4 @@ async def search(call: Call, terms: str, lang: str, limit: int) -> list[T.Candid
 
 async def fetch(call: Call, cand: T.Candidate) -> Record:
     f = await call.get(PAGE.format(ref=cand.external_id), accept="text/html")
-    return parse_page(f.text, f.url, cand.external_id)
+    return await asyncio.to_thread(parse_page, f.text, f.url, cand.external_id)  # off the event loop

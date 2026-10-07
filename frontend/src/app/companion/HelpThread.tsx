@@ -22,9 +22,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { REFERRAL_NOTICE, type ThreadMessage, safetyApi, useMine, usePostToThread, useThread } from "./api"
+import { REFERRAL_NOTICE, type ThreadMessage, earlierOfThread, safetyApi, useMine, usePostToThread, useThread } from "./api"
 import { type ChatItem, ChatList, Composer } from "./Chat"
 import { Confirm } from "./Confirm"
+import { useEarlier } from "./earlier"
 import { UrgentNotice, awaitingText } from "./HelpScreen"
 import { ReportSheet, type ReportTarget } from "./ReportSheet"
 import { ScreenBar } from "./Screen"
@@ -54,6 +55,9 @@ export default function HelpThread() {
   const [blocking, setBlocking] = React.useState(false)
   const mine = useMine()
   const unread = thread.data?.messages.length
+  // A-M4: the last 200 messages come first; earlier ones on demand.
+  const fetchEarlier = React.useCallback((before: string) => earlierOfThread(id ?? "", before), [id])
+  const history = useEarlier(id, thread.data?.messages, thread.data?.has_earlier, fetchEarlier)
 
   React.useEffect(() => {
     // Reading clears the unread mark on lists.
@@ -71,7 +75,7 @@ export default function HelpThread() {
   const data = thread.data
   const title = data?.responder_name ?? (data?.kind === "mentor" ? t("cmp.hub.mentorTitle") : t("cmp.help.team"))
 
-  const items: ChatItem[] = (data?.messages ?? []).map((m) => learnerChatItem(m, t, () => setReport({ type: "help_message", id: m.id })))
+  const items: ChatItem[] = history.messages.map((m) => learnerChatItem(m, t, () => setReport({ type: "help_message", id: m.id })))
 
   const block = async () => {
     try {
@@ -127,6 +131,11 @@ export default function HelpThread() {
             <span dir="auto">{t("cmp.hub.availability", { time: mine.data.mentor.availability })}</span>
           </p>
         )}
+        {history.hasEarlier && (
+          <Button variant="ghost" size="sm" className="self-center" disabled={history.loading} onClick={() => void history.loadEarlier()}>
+            {t("cmp.thread.earlier")}
+          </Button>
+        )}
         {thread.isLoading ? <Skeleton className="h-40 rounded-card" /> : <ChatList items={items} className="flex-1" />}
         {data?.link_ended ? (
           <p className="text-center text-label text-muted-foreground">{t("cmp.thread.endedNote")}</p>
@@ -141,7 +150,13 @@ export default function HelpThread() {
           }}
         />
       </div>
-      <ReportSheet target={report} onClose={() => setReport(null)} />
+      <ReportSheet
+        target={report}
+        onClose={() => {
+          setReport(null)
+          history.reset() // CMP-04 R2: a reported message is never shown from the pages loaded earlier
+        }}
+      />
       <Confirm
         open={blocking}
         onOpenChange={setBlocking}
