@@ -86,7 +86,7 @@ export default function Team() {
     <>
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3">{t("team.title")}</span>} />
       <div className="flex flex-col gap-8 px-4 pt-4 pb-12 [&_[id]]:scroll-mt-16">
-        <ToggleGroup type="single" variant="outline" value={String(days)} onValueChange={(v) => v && setDays(Number(v) as 7 | 30)} className="w-full">
+        <ToggleGroup type="single" variant="outline" value={String(days)} onValueChange={(v) => v && setDays(Number(v) as 7 | 30)} className="w-full @min-[52.5rem]/shell:max-w-sm">
           {[7, 30].map((n) => (
             <ToggleGroupItem key={n} value={String(n)} className="flex-1">
               {t("team.days", { n: num(n) })}
@@ -143,7 +143,7 @@ export default function Team() {
               </ul>
             </section>
 
-            <section className="grid grid-cols-2 gap-3">
+            <section className="grid grid-cols-2 gap-3 @min-[52.5rem]/shell:grid-cols-4">
               {(
                 [
                   ["team.rate.active", d.rates.active],
@@ -156,6 +156,8 @@ export default function Team() {
               ))}
             </section>
 
+            {/* PLT-17 R3: on a computer these two sit side by side (the wrapper is not a box on a phone). */}
+            <div className="contents @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start @min-[52.5rem]/shell:gap-8">
             <section className="flex flex-col gap-3" aria-labelledby="rs">
               <h2 id="rs" className="font-heading text-h3 font-bold">
                 {t("mot.team.returnSeries")}
@@ -180,6 +182,7 @@ export default function Team() {
                 <Stat label={t("mot.team.mentorNotContacted")} value={pct(d.mentor_contact.not_contacted)} />
               </div>
             </section>
+            </div>
 
             <section className="flex flex-col gap-3" aria-labelledby="lpd">
               <h2 id="lpd" className="font-heading text-h3 font-bold">
@@ -189,6 +192,7 @@ export default function Team() {
               <p className="text-label text-muted-foreground">{t("team.optedOut", { n: num(d.learning.opted_out) })}</p>
             </section>
 
+            <div className="contents @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start @min-[52.5rem]/shell:gap-8">
             <section className="flex flex-col gap-3" aria-labelledby="pl">
               <h2 id="pl" className="font-heading text-h3 font-bold">
                 {t("team.perLesson")}
@@ -202,19 +206,20 @@ export default function Team() {
               </h2>
               <Bars rows={d.learning.units_completed.map((r) => ({ label: unitTitle(r.unit_id), value: r.people }))} />
             </section>
+            </div>
 
             <section className="flex flex-col gap-4 border-t pt-6" aria-labelledby="und">
               <h2 id="und" className="font-heading text-h3 font-bold">
                 {t("team.understanding")}
               </h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 @min-[52.5rem]/shell:grid-cols-3">
                 <Stat label={t("team.whyAi")} value={pct(d.understanding.why_experiment.ai_explanation)} />
                 <Stat label={t("mot.team.whyHoldout")} value={pct(d.understanding.why_experiment.card_holdout)} />
                 <Stat label={t("team.guide")} value={pct(d.understanding.guide_followed)} />
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-label font-bold text-muted-foreground">{t("mot.team.perUnit")}</h3>
-                <ul className="flex flex-col gap-1.5">
+                <ul className="flex flex-col gap-1.5 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:gap-x-3">
                   {Object.entries(d.understanding.units).map(([id, r]) => (
                     <li key={id} className="flex items-center gap-3 rounded-md bg-card px-3 py-2 text-label">
                       <span className="min-w-0 flex-1 truncate">{unitTitle(id)}</span>
@@ -227,7 +232,7 @@ export default function Team() {
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-label font-bold text-muted-foreground">{t("team.lessonVsReview")}</h3>
-                <ul className="flex flex-col gap-1.5">
+                <ul className="flex flex-col gap-1.5 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:gap-x-3">
                   {Object.entries(d.understanding.objectives).map(([id, r]) => (
                     <li key={id} className="flex items-center gap-3 rounded-md bg-card px-3 py-2 text-label">
                       <span className="min-w-0 flex-1 truncate">{objectiveText(id)}</span>
@@ -240,7 +245,7 @@ export default function Team() {
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-label font-bold text-muted-foreground">{t("mot.team.mastery")}</h3>
-                <ul className="flex flex-col gap-1.5">
+                <ul className="flex flex-col gap-1.5 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:gap-x-3">
                   {Object.entries(d.understanding.mastery).map(([id, r]) => (
                     <li key={id} className="flex items-center gap-3 rounded-md bg-card px-3 py-2 text-label">
                       <span className="min-w-0 flex-1 truncate">{objectiveText(id)}</span>
@@ -269,12 +274,14 @@ export default function Team() {
           </>
         )}
         {/* PLT-17 R5: month-start announcements (Ramadan mode depends on them); shown even without indicators. */}
+        <div className="contents @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start @min-[52.5rem]/shell:gap-8">
         <div className="border-t pt-6">
           <TeamSightings />
         </div>
         {/* CMP-01 open question: a sister and a brother per language (shown even without indicators). */}
         <div className="border-t pt-6">
           <ResponderCoverage />
+        </div>
         </div>
         {/* PLT-17 R7: reports live in one place, the inbox's «البلاغات» tab. */}
         <section id="team-reports" className="flex scroll-mt-16 flex-col gap-2 border-t pt-6" aria-labelledby="team-reports-title">

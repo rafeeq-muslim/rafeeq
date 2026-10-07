@@ -31,7 +31,7 @@ import { IconWifiOff, IconX } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { AiDisclosure, AskComposer, HumanHelpButton, SpotIllustration, TopBar } from "@/components/rafeeq"
+import { AiDisclosure, AskComposer, ComposerBar, HumanHelpButton, SpotIllustration, TopBar } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { useDevice } from "@/app/stores/device"
 import { useLearning } from "@/app/stores/learning"
@@ -248,7 +248,8 @@ export default function Ask() {
         <div ref={endRef} />
       </div>
 
-      <div className="sticky bottom-0 z-10 flex flex-col gap-2 border-t bg-card px-3 pt-2 pb-3">
+      {/* Expanded: the box lines up with the conversation column (16px gutters). */}
+      <ComposerBar className="gap-2 px-3 pt-2 pb-3 @min-[52.5rem]/shell:px-4">
         {notice === "tooLong" && (
           <p role="alert" className="px-2 text-label text-destructive">
             {t("ask.tooLong")}
@@ -285,7 +286,7 @@ export default function Ask() {
           disabled={!online || busy || draft.trim().length < 2}
           labels={{ input: t("ask.input"), send: t("ask.send") }}
         />
-      </div>
+      </ComposerBar>
     </div>
   )
 }

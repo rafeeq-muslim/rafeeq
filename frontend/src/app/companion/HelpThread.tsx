@@ -109,7 +109,7 @@ export default function HelpThread() {
           )
         }
       />
-      <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-4 px-4 pt-4">
+      <div className="flex min-h-[calc(100dvh-9rem)] @min-[52.5rem]/shell:min-h-[calc(100dvh-6.25rem)] flex-col gap-4 px-4 pt-4">
         {data?.kind === "urgent" && <UrgentNotice />}
         {data?.kind === "urgent" && data.messages.length === 0 && <p className="text-body text-muted-foreground">{t("cmp.urgent.sent")}</p>}
         {data?.awaiting_same_gender ? (

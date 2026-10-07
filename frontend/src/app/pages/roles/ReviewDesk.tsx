@@ -116,7 +116,7 @@ function QueueView() {
     <>
       <TopBar className="sticky top-0" title={<span className="font-heading text-h3">{t("desk.title")}</span>} />
       <div className="flex flex-col gap-5 px-4 pt-4 pb-12">
-        <ToggleGroup type="single" variant="outline" value={lang} onValueChange={(v) => v && setLang(v as Locale)} className="w-full">
+        <ToggleGroup type="single" variant="outline" value={lang} onValueChange={(v) => v && setLang(v as Locale)} className="w-full @min-[52.5rem]/shell:max-w-md">
           {LOCALES.map((l) => (
             <ToggleGroupItem key={l.code} value={l.code} lang={l.code} className="flex-1">
               {l.label}
@@ -210,7 +210,7 @@ function QueueView() {
             <p className="py-8 text-center text-body text-muted-foreground">{t("desk.empty")}</p>
           ))}
 
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-2 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:gap-3">
           {rows.map((r) => (
             <li key={`${r.item_type}:${r.item_id}`}>
               <button

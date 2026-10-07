@@ -144,7 +144,7 @@ export default function InboxThread() {
           )
         }
       />
-      <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-4 px-4 pt-4">
+      <div className="flex min-h-[calc(100dvh-9rem)] @min-[52.5rem]/shell:min-h-[calc(100dvh-6.25rem)] flex-col gap-4 px-4 pt-4">
         {thread.isLoading ? (
           <Skeleton className="h-40 rounded-card" />
         ) : thread.isError || !r ? (

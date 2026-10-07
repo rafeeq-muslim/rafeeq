@@ -270,7 +270,7 @@ export default function GroupPage() {
           )
         }
       />
-      <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-5 px-4 pt-4">
+      <div className="flex min-h-[calc(100dvh-9rem)] @min-[52.5rem]/shell:min-h-[calc(100dvh-6.25rem)] flex-col gap-5 px-4 pt-4">
         <OfflineOnly text="offline.mentor" />{/* PLT-15 R5 */}
         {groups.isLoading || (memberOf && group.isLoading) ? (
           <Skeleton className="h-48 rounded-card" />
