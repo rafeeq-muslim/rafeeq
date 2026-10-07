@@ -180,18 +180,20 @@ function TopBar({
 
 /**
  * The bar that holds a conversation's composer (Ask, help threads, group
- * chat): sticky at the bottom of its page, opaque (PLT-04). On expanded
- * widths it mirrors the page header: its surface runs edge to edge and
- * reaches the bottom edge (over the column's padding), while what is inside
- * it stays in the page's column, in line with the conversation above.
+ * chat) or a page's decision bar (review desk item): sticky at the bottom of
+ * its page, opaque (PLT-04), reaching the bottom edge over the column's
+ * padding. On expanded widths it mirrors the page header: its surface runs
+ * edge to edge, while what is inside it stays in the page's column, in line
+ * with the content above.
  */
 function ComposerBar({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="composer-bar"
       className={cn(
-        "sticky bottom-0 z-10 flex flex-col border-t bg-card",
-        "@min-[52.5rem]/shell:-mb-6 @min-[52.5rem]/shell:before:absolute @min-[52.5rem]/shell:before:-inset-x-[100vw] @min-[52.5rem]/shell:before:-top-px @min-[52.5rem]/shell:before:bottom-0 @min-[52.5rem]/shell:before:-z-10 @min-[52.5rem]/shell:before:border-t @min-[52.5rem]/shell:before:border-border @min-[52.5rem]/shell:before:bg-card",
+        // -mb-6: it reaches the bottom edge over the column's own bottom padding, at every width.
+        "sticky bottom-0 z-10 -mb-6 flex flex-col border-t bg-card",
+        "@min-[52.5rem]/shell:before:absolute @min-[52.5rem]/shell:before:-inset-x-[100vw] @min-[52.5rem]/shell:before:-top-px @min-[52.5rem]/shell:before:bottom-0 @min-[52.5rem]/shell:before:-z-10 @min-[52.5rem]/shell:before:border-t @min-[52.5rem]/shell:before:border-border @min-[52.5rem]/shell:before:bg-card",
         className
       )}
       {...props}

@@ -39,7 +39,18 @@ export function ChatList({ items, empty, className }: { items: ChatItem[]; empty
   const endRef = React.useRef<HTMLDivElement>(null)
   const last = items.at(-1)?.id
   React.useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" })
+    // To the very end of the page's scroller, not only to the end of the list:
+    // the composer sticks to the bottom over the list, and stopping at the
+    // list's end left the newest message behind it.
+    const end = endRef.current
+    if (!end) return
+    end.scrollIntoView({ block: "end" })
+    for (let el = end.parentElement; el; el = el.parentElement) {
+      if (/(auto|scroll)/.test(getComputedStyle(el).overflowY) && el.scrollHeight > el.clientHeight) {
+        el.scrollTop = el.scrollHeight
+        break
+      }
+    }
   }, [last])
 
   if (items.length === 0) return <div className={cn("py-6", className)}>{empty}</div>

@@ -12,6 +12,7 @@ import { MemoryRouter, Route, Routes } from "react-router"
 import { useDevice } from "@/app/stores/device"
 import { AppShell, ComposerBar } from "@/components/rafeeq"
 import { Composer } from "@/app/companion/Chat"
+import reviewDeskSource from "@/app/pages/roles/ReviewDesk.tsx?raw"
 
 vi.mock("@/app/learning/useContent", () => ({
   useContent: () => ({ content: undefined, isLoading: false, isError: false, refetch: () => undefined, lessons: [], preview: false }),
@@ -118,3 +119,19 @@ describe("the composer bar follows its page's column", () => {
     expect(cls.filter((c) => c.includes("inset-x"))).toEqual(["@min-[52.5rem]/shell:before:-inset-x-[100vw]"])
   })
 })
+
+describe("PLT-17 R3: bars at the bottom of a page stay inside the page", () => {
+  it("the review desk item's decision bar is the page's own bar, never fixed to the window", () => {
+    const desk = reviewDeskSource
+    expect(desk).toContain('<ComposerBar data-slot="desk-decision-bar"')
+    expect(desk).not.toMatch(/className="fixed inset-x-0 bottom-0/) // it ran under the navigation rail on a wide screen
+  })
+
+  it("the bar reaches the bottom edge over the column's padding at every width", () => {
+    render(<ComposerBar>x</ComposerBar>)
+    const bar = document.querySelector('[data-slot="composer-bar"]')!
+    expect(bar.className).toMatch(/(^| )-mb-6( |$)/) // unprefixed: no strip between the bar and the bottom navigation on a phone
+    expect(bar.className).toContain("sticky")
+  })
+})
+
