@@ -213,8 +213,9 @@ function Identity() {
     <section className="dark relative isolate flex items-center gap-4 overflow-hidden rounded-panel bg-[linear-gradient(160deg,var(--rf-ink)_0%,var(--rf-deep)_100%)] p-5 text-white">
       <YearFlower month={units} size={84} tone="night" bloom={false} label={t("path.progress", { done: num(units), total: num(content?.units.length ?? 12) })} />
       <div className="min-w-0 flex-1">
-        <p className="truncate font-heading text-h2 font-bold">
-          <bdi>{me?.display_name ?? t("me.guest")}</bdi>
+        {/* The line takes the name's own direction, so a long name is cut at its end, whatever the app's language. */}
+        <p dir="auto" data-slot="me-name" className="truncate font-heading text-h2 font-bold">
+          {me?.display_name ?? t("me.guest")}
         </p>
         {me ? (
           <p dir="ltr" className="truncate text-start text-label text-white/70">

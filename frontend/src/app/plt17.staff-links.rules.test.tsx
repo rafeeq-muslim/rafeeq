@@ -80,6 +80,15 @@ describe("PLT-17 R1: a staff member's screens come first in «حسابي»", () 
     }
   })
 
+  it("plt03_a_long_name_in_another_script_is_cut_at_its_end", () => {
+    useAuth.getState().set({ token: "t", me: { ...user([]), display_name: "A very long Latin display name" }, ready: true })
+    wrap()
+    const name = document.querySelector('[data-slot="me-name"]')!
+    expect(name.textContent).toBe("A very long Latin display name")
+    expect(name.getAttribute("dir")).toBe("auto") // the line follows the name, so the ellipsis lands at the name's end
+    expect(name.className).toContain("truncate")
+  })
+
   it("plt17_r1_learner_sees_no_role_section", () => {
     useAuth.getState().set({ token: "t", me: user(["learner"]), ready: true })
     wrap()
