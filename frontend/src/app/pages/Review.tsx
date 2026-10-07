@@ -146,7 +146,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
           </>
         )}
       </main>
-      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20">
+      <footer ref={footer} className={result ? "fixed inset-x-0 bottom-0 z-20" : "fixed inset-x-0 bottom-0 z-20 border-t bg-background"}>
         {result ? (
           <ExerciseFeedback
             result={result}
@@ -157,7 +157,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
             className="mx-auto max-w-xl"
           />
         ) : (
-          <div className="mx-auto flex max-w-xl border-t bg-background px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
+          <div className="mx-auto flex max-w-xl px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
             <Button size="lg" className="flex-1" disabled={!exercise || !ready(exercise, value)} onClick={onCheck}>
               {t("lesson.check")}
             </Button>
