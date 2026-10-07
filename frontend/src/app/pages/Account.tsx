@@ -32,6 +32,7 @@ function errorKey(e: unknown): Key {
   if (code === "code_invalid" || code === "code_expired") return "acct.codeWrong"
   if (code === "invite_invalid") return "acct.inviteBad"
   if (code === "gender_required_for_mentor") return "acct.genderNeeded"
+  if (code === "invite_needs_reissue") return "acct.inviteReissue"
   if (code === "email_unavailable") return "acct.2faUnavailable"
   return "common.error"
 }

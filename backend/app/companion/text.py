@@ -7,11 +7,13 @@ usually start by moving the talk off Rafeeq, companion README).
 The checks are written to leave ordinary Arabic and English text and Quran
 references («2:255», «البقرة 255-257», dates such as 1447/03/20) alone."""
 
+import asyncio
 import re
 
 from fastapi import HTTPException, status
 
 MAX_BODY = 2000
+CHECK_TIMEOUT_S = 2.0
 
 _DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹＠", "01234567890123456789@")
 
@@ -125,3 +127,17 @@ def clean_body(body: str | None, *, required: bool = True) -> str:
     if kind := contact_violation(body):
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, {"code": "contact_not_allowed", "kind": kind})
     return body
+
+
+async def clean_body_async(body: str | None, *, required: bool = True) -> str:
+    """`clean_body` for request handlers (security review 2026-10-07, B-M5):
+    the scan runs in a worker thread, so even a slow one cannot hold the event
+    loop (second layer behind the linear patterns), and a scan that does not
+    finish refuses the message."""
+    stripped = (body or "").strip()
+    if not stripped or len(stripped) > MAX_BODY:
+        return clean_body(body, required=required)  # nothing to scan
+    try:
+        return await asyncio.wait_for(asyncio.to_thread(clean_body, body, required=required), CHECK_TIMEOUT_S)
+    except TimeoutError:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "message_not_checked") from None

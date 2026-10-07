@@ -1,9 +1,11 @@
 """Events Companion listens to (docs/domains.md).
 
-- DangerDetected (KNW-01 R5): `{ask_id, lang, detector}`, no identity and no
-  question text. Becomes an urgent alert at the top of every inbox; all
-  mentors and team members get a neutral push (CMP-01 R6). The device that
-  opens `/mentor/help?kind=urgent&ask=<ask_id>` becomes its owner.
+- DangerDetected (KNW-01 R5): `{ask_id, lang, detector[, repeat]}`, no identity
+  and no question text. Becomes an urgent alert at the top of every inbox; all
+  mentors and team members get a neutral push (CMP-01 R6; how often:
+  companion/urgent.py). The device that opens the urgent screen with this
+  `ask_id` becomes its owner. `repeat: true` (set by KNW when the same asker
+  or address already raised an alert minutes ago) adds no second alert.
 - EngagementStatusChanged (MOT-07 R3): CMP keeps the status for accounts so
   a mentor sees it while the learner shares progress (CMP-02 R6). Only the
   account events `{user_id, status}` are kept: Motivation sends ONE status
@@ -39,7 +41,7 @@ from datetime import UTC, datetime
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion import notify
+from app.companion import notify, urgent
 from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorApplication, MentorEnded, MentorLink
 from app.core.events import subscribe
 
@@ -48,22 +50,24 @@ LANGS = {"ar", "en", "tl"}
 
 @subscribe("DangerDetected")
 async def on_danger(session: AsyncSession, payload: dict) -> None:
+    if payload.get("repeat"):
+        return  # the same asker again within minutes: the alert already in the inboxes stands
     lang = str(payload.get("lang") or "ar")[:5]
     ask_id = payload.get("ask_id")
     t = datetime.now(UTC)
-    session.add(
-        HelpRequest(
-            kind="urgent",
-            lang=lang if lang in LANGS else "ar",
-            handle="",
-            source="ask",
-            ask_id=str(ask_id)[:64] if ask_id else None,
-            status="open",
-            created_at=t,
-            last_activity_at=t,
-        )
+    alert = HelpRequest(
+        kind="urgent",
+        lang=lang if lang in LANGS else "ar",
+        handle="",
+        source="ask",
+        ask_id=str(ask_id)[:64] if ask_id else None,
+        status="open",
+        created_at=t,
+        last_activity_at=t,
     )
-    notify.later(notify.to_responders, "urgent", "/inbox")
+    session.add(alert)
+    await session.flush()
+    urgent.alert(alert.id)  # one push for this request, capped overall (companion/urgent.py)
 
 
 @subscribe("AccountDeleted")

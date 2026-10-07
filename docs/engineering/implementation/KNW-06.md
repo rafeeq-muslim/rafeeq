@@ -40,3 +40,9 @@
 
 - Topics are the two source categories, not the path's units (KNW-06 open question «ما الموضوعات؟»): mapping 200+ items to units needs the reviewer's time.
 - Files stream from IslamHouse's own host; proxying through Rafeeq for learners who hide their Islam stays open (KNW-06).
+
+## Security review 2026-10-07: the link check asks only the library's hosts (B-L13; branch `sec-injection-hardening`)
+
+`library.py::_alive` used to follow any redirect from the server (`follow_redirects=True`), to an internal address too. It now uses the live connectors' checks (`live_sources/http.py::check_url`, `_check_dns`): https, port 443, no user part, a host in `LINK_HOSTS` (IslamHouse's own hosts), every resolved address public; redirects are followed by hand, three at most, each hop checked again. Verdicts: a link that answers is alive; 4xx/5xx, a name that does not resolve, a network error or a redirect loop is dead (hidden, as before); a redirect that leaves the library's hosts is **not requested** and counts as alive (the source answered); a catalogue address outside the hosts, or a host resolving to a private address, is not requested, is logged, and is never a reason to hide an item. Tests: `backend/tests/test_sec_l13_library_link_check.py` (the KNW-06 tests give every name a public address, so they still never touch the network).
+
+⚠️ Not verified against the real site (tests never call third-party sites): if IslamHouse serves files through redirects to a host outside `FILE_HOSTS`, those items now stay listed without their final file being checked. Watch the first nightly run's `library links checked` line.

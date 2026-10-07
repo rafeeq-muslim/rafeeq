@@ -24,7 +24,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
 from sqlalchemy import and_, delete, exists, func, select, update
 
-from app.companion import notify
+from app.companion import notify, urgent
 from app.companion.common import (
     THREAD_MSGS_PER_DAY,
     CurrentOwner,
@@ -39,7 +39,7 @@ from app.companion.common import (
     same_gender_available,
 )
 from app.companion.models import Block, HelpMessage, HelpRequest, MentorLink, Report
-from app.companion.text import clean_body
+from app.companion.text import clean_body_async
 from app.core import clientkey, ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.security import sha256
@@ -179,11 +179,12 @@ async def _reported_by_owner(session, owner: Owner) -> set[uuid.UUID]:
 
 async def _notify_mentor_of(req: HelpRequest) -> None:
     if req.kind == "urgent" and req.mentor_id is None:
-        notify.later(notify.to_responders, "urgent", "/inbox")
+        urgent.alert(req.id)  # nobody holds it yet: everyone, collapsed (companion/urgent.py, A-H4)
     elif req.kind == "urgent":
         # Security review B-M3: a held urgent request is its holder's and the team's.
+        # The holder hears every message, as in any conversation; the team once per window (A-H4).
         notify.later(notify.to_user, req.mentor_id, "urgent", f"/inbox/r/{req.id}")
-        notify.later(notify.to_role, ["team", "admin"], "urgent", "/inbox")
+        urgent.alert_team(req.id)
     elif req.mentor_id is not None:
         notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
 
@@ -286,13 +287,14 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
     address = request.client.host if request.client else "-"
     ratelimit.hit(f"help-create-ip:{address}", 15, 3600)
     if body.kind == "urgent":
+        # No overall cap here: danger always reaches a human (rules.md §2.8). A
+        # flood is held at the push instead (companion/urgent.py).
         ratelimit.hit(f"help-urgent-ip:{address}", 3, 3600)
-        ratelimit.hit("help-urgent-all", 60, 3600)
     token = None
     if owner.user is None and owner.token_hash is None:
         token = new_guest_token()
         owner = Owner(user=None, token_hash=sha256(token))
-    text = clean_body(body.body, required=body.kind != "urgent")  # urgent needs no words
+    text = await clean_body_async(body.body, required=body.kind != "urgent")  # urgent needs no words
     gender = None if body.kind == "urgent" else await _requester_gender(session, owner, body.gender)  # danger: first available
     t = now()
 
@@ -414,7 +416,7 @@ async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session,
         # Guest tokens are free to mint: a guest's messages are also counted
         # by address (in memory only, never stored).
         ratelimit.hit(f"help-msg-ip:{clientkey.address(request)}", 60, 600)
-    text = clean_body(body.body)
+    text = await clean_body_async(body.body)
     if owner.user is not None and await _link_ended(session, req):
         req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went
     t = now()

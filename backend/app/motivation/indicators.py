@@ -163,6 +163,10 @@ class Figures:
         for unit_id, objs in self.unit_objectives.items():
             for o in objs:
                 self.units_of[o].add(unit_id)
+        # Security review 2026-10-07 (B-L14): an objective id is whatever the
+        # sender typed; with the path at hand, only its own objectives count
+        # and are listed (objectives, mastery, weakest), never an id as typed.
+        self.in_path = set(self.units_of) if self.order else None
         self.by_day: Counter[date] = Counter()
         self.opted_out = 0
         # People (not events) per lesson or unit. Events unlinked by an opt-out
@@ -217,6 +221,8 @@ class Figures:
                 self.completed[e.type][key] += 1
         elif e.type == "opt_out":
             self.opted_out += 1
+        elif self.in_path is not None and e.objective_id and e.objective_id not in self.in_path:
+            return  # B-L14: not an objective of the path
         elif e.type == "first_answer" and e.objective_id:
             self._answer(e)
         elif e.type == "mastered" and e.objective_id and device:
@@ -291,18 +297,19 @@ class Figures:
 
     def learning(self) -> dict:
         """MOT-08 R4: people per lesson in path order (so the team sees where
-        most stop), and people per unit."""
+        most stop), and people per unit.
+
+        Security review 2026-10-07 (B-L14): anonymous events come from any device
+        without sign-in, so a lesson or unit id is whatever the sender typed. Only
+        ids that are in the path are shown; anything else is left out, never
+        listed to the team as typed."""
         lessons, units = self.completed["lesson_completed"], self.completed["unit_completed"]
         per_lesson = [
             {"lesson_id": lesson["lesson_id"], "unit_id": u["unit_id"], "people": lessons.get(lesson["lesson_id"], 0)}
             for u in self.order
             for lesson in u["lessons"]
         ]
-        known = {r["lesson_id"] for r in per_lesson}
-        per_lesson += [{"lesson_id": k, "unit_id": None, "people": n} for k, n in sorted(lessons.items()) if k not in known]
         units_completed = [{"unit_id": u["unit_id"], "people": units.get(u["unit_id"], 0)} for u in self.order]
-        known_units = {r["unit_id"] for r in units_completed}
-        units_completed += [{"unit_id": k, "people": n} for k, n in sorted(units.items()) if k not in known_units]
         return {"per_lesson": per_lesson, "units_completed": units_completed}
 
     def understanding(self) -> dict:
@@ -358,6 +365,11 @@ def figures_of(events: Iterable, order: list[dict] | None = None) -> Figures:
 def understanding(events: Iterable, order: list[dict] | None = None) -> dict:
     """MOT-09 R1-R5 from anonymous first answers."""
     return figures_of(events, order).understanding()
+
+
+def learning_by_path(events: Iterable, order: list[dict]) -> dict:
+    """MOT-08 R4 for a list in memory."""
+    return figures_of(events, order).learning()
 
 
 @router.get("/indicators")

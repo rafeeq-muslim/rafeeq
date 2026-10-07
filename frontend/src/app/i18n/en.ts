@@ -1592,4 +1592,6 @@ export const en: Dict = {
   "ask.context.about": "About: {lesson} · {item}",
   "ask.context.aboutLesson": "About: {lesson}",
   "ask.context.dismiss": "Ask without the lesson context",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "This code is an old one and no longer works. Ask whoever sent it for a new code.",
 }

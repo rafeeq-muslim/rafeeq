@@ -78,6 +78,14 @@ describe("PLT-17 R12: invite codes show their status and can be revoked", () => 
     expect(row.textContent).toContain(en("role.org_coordinator"))
   })
 
+  it("plt17 r12 a long code takes its own row on a phone and shares the row from sm up", async () => {
+    show()
+    const code = await screen.findByText("MEN-AVAIL001")
+    expect(code.className).toContain("basis-full")
+    expect(code.className).toContain("sm:flex-1")
+    expect(code.className).not.toMatch(/(^| )flex-1( |$)/) // unprefixed, it shrank the code to one character per line
+  })
+
   it("plt17 r12 only an available code can be revoked, and revoking calls the API", async () => {
     show()
     await screen.findByText("MEN-AVAIL001")

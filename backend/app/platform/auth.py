@@ -24,6 +24,7 @@ from app.core.security import (
 )
 from app.platform import generate, mailer
 from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
+from app.platform.origin import SameOrigin
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 COOKIE = "rafeeq_refresh"  # local runs (plain http), and production sessions issued before the prefix
@@ -230,12 +231,13 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         # for it before that decision still opens a normal account and is used up.
         roles = ["learner"] if invite.role == "team" else [invite.role]
         if invite.role == "mentor":
-            # Security review B-H1: the gender staff approved wins over what the
-            # registrant sends. Only a code made before invites carried one
-            # still takes the registrant's word.
-            gender = invite.gender or body.gender
-            if not gender:
-                raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
+            # Security review B-H1: the gender staff approved is the mentor's
+            # gender; the registrant never chooses it. A code made before
+            # invites carried one opens no account and stays unused: staff
+            # issue a new one.
+            if not invite.gender:
+                raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_needs_reissue")
+            gender = invite.gender
     user = User(
         username=body.username,
         display_name=body.display_name,
@@ -347,7 +349,7 @@ async def login_2fa(body: TwoFactorIn, session: Session, request: Request, respo
     return await _issue(session, user, response)
 
 
-@router.post("/refresh", response_model=TokenOut)
+@router.post("/refresh", response_model=TokenOut, dependencies=[SameOrigin])
 async def refresh(session: Session, request: Request, response: Response) -> TokenOut:
     rafeeq_refresh = _refresh_token(request)
     if not rafeeq_refresh:
@@ -361,7 +363,7 @@ async def refresh(session: Session, request: Request, response: Response) -> Tok
     return await _issue(session, user, response)
 
 
-@router.post("/logout", status_code=204)
+@router.post("/logout", status_code=204, dependencies=[SameOrigin])
 async def logout(session: Session, request: Request, response: Response) -> None:
     rafeeq_refresh = _refresh_token(request)
     if rafeeq_refresh:
