@@ -19,6 +19,7 @@ the next lesson or a review session (R5).
 """
 
 import asyncio
+import hmac
 import json
 import logging
 import re
@@ -90,9 +91,24 @@ PUSH_HOSTS = (
 )
 
 
+# Security review 2026-10-07 (B-L12): the whole address is read strictly,
+# so nothing odd reaches the sender: https, a plain host name, no user part,
+# port 443 only (written or implied), printable ASCII without «\».
+_ENDPOINT = re.compile(r"https://([a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?)(?::443)?/[!-\[\]-~]*")
+
+
 def allowed_endpoint(url: str) -> bool:
-    host = urlsplit(url).hostname or ""
-    return url.startswith("https://") and any(host == h or (h.startswith(".") and host.endswith(h)) for h in PUSH_HOSTS)
+    m = _ENDPOINT.fullmatch(url)
+    if m is None:
+        return False
+    host = m.group(1)
+    try:
+        parts = urlsplit(url)
+        if parts.hostname != host or parts.port not in (None, 443) or parts.username is not None:
+            return False  # the sender's own reading of the address must agree
+    except ValueError:
+        return False
+    return any(host == h or (h.startswith(".") and host.endswith(h) and len(host) > len(h)) for h in PUSH_HOSTS)
 
 
 class SubscriptionIn(BaseModel):
@@ -157,14 +173,28 @@ async def _by_endpoint(session, endpoint: str) -> PushSubscription:
     return sub
 
 
+def _owns(sub: PushSubscription, keys: Keys, user) -> bool:
+    """Security review 2026-10-07 (B-L12): knowing an endpoint is not owning
+    it. An existing subscription's keys and account link change only for the
+    device itself (it sends the keys the browser gave it) or for the account
+    already linked to it."""
+    same_keys = hmac.compare_digest(sub.p256dh.encode(), keys.p256dh.encode()) and hmac.compare_digest(
+        sub.auth.encode(), keys.auth.encode()
+    )
+    return same_keys or (user is not None and sub.user_id is not None and sub.user_id == user.id)
+
+
 @router.post("/subscribe", status_code=204)
 async def subscribe(body: SubscribeIn, session: Session, user: OptionalUser, request: Request) -> None:
     ratelimit.hit(f"push-sub:{request.client.host if request.client else '-'}", limit=20, window_s=3600)
     sub = await session.scalar(select(PushSubscription).where(PushSubscription.endpoint == body.subscription.endpoint))
+    keys = body.subscription.keys
     if sub is None:
         sub = PushSubscription(endpoint=body.subscription.endpoint)
         session.add(sub)
-    sub.p256dh, sub.auth = body.subscription.keys.p256dh, body.subscription.keys.auth
+    elif not _owns(sub, keys, user):
+        return  # changes nothing and says nothing (same empty answer)
+    sub.p256dh, sub.auth = keys.p256dh, keys.auth
     sub.install_id, sub.locale, sub.timezone, sub.failed_at = body.install_id, body.locale, body.timezone, None
     if user is not None:
         sub.user_id = user.id
@@ -258,6 +288,15 @@ async def resubscribe(body: ResubscribeIn, session: Session, user: OptionalUser,
     if sub is None:
         sub = PushSubscription(endpoint=new_ep)
         session.add(sub)
+    elif not _owns(sub, body.subscription.keys, user):
+        # B-L12: someone else's subscription is left as it is (what /state already shows for it).
+        on = sub.failed_at is None
+        return {
+            "subscribed": on,
+            "reminder": on and sub.reminder_enabled,
+            "time": sub.reminder_time if on else None,
+            "replies": on and sub.replies_enabled,
+        }
     sub.p256dh, sub.auth = body.subscription.keys.p256dh, body.subscription.keys.auth
     sub.install_id, sub.locale, sub.timezone, sub.failed_at = body.install_id, body.locale, body.timezone, None
     if old is not None:
