@@ -91,3 +91,7 @@ Tests (vitest, `frontend/src/app/pages/Lesson.r5.rules.test.tsx`):
 | MOT-08 R1–R6 | `backend/app/motivation/indicators.py`, `pages/roles/Team.tsx` | `test_mot08_*` |
 | MOT-09 R1–R6 | `indicators.understanding()`, events from `answers.ts`, `why.ts`, `Placement.tsx` | `test_mot09_*` |
 | MOT-09 R6 on placement and R5 | `indicators.placement_figures()`: each device counts once by its last outcome (done or skipped); under 10 people in all hides everything; a bucket under 10 is hidden, with complementary suppression (as ORG-03) so it cannot be worked out from the others; events unlinked by an opt-out are left out. `guide_followed` and `quick_check_correct` stay rates over messages and answers, but need 10 distinct devices. Team page shows «لا تكفي البيانات بعد» (`team.notEnough`) in place of each hidden figure | `test_mot09_r6_placement.py`, `Team.placement.test.tsx` |
+
+## Security review 2026-10-07: ids typed into anonymous events are not shown to the team (B-L14; branch `sec-injection-hardening`)
+
+`POST /api/events` needs no sign-in, so a lesson, unit or objective id is whatever the sender typed. `motivation/indicators.py::learning_by_path` listed unknown lesson and unit ids to the team as typed, and `understanding` listed unknown objective ids (objectives, mastery, weakest). Both now keep only ids that are in the path (`path_order()`); the events are still stored. Side effect to know: completions of a lesson that has since left the path are no longer shown. Tests: `backend/tests/test_sec_l14_indicator_ids.py`.
