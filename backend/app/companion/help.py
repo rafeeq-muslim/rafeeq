@@ -211,20 +211,22 @@ async def _claim_alert(session, ask_id: str) -> HelpRequest | None:
 
 async def _requester_gender(session, owner: Owner, given: str | None) -> str:
     """R3: an account's own gender wins; a guest's device answers «أخ أم أخت؟»
-    once, and a later request from the same device reuses that answer."""
+    once. Security review B-M6: that first answer stays with the device's
+    token on the server; a later request from it cannot name the other
+    gender (the earliest answer wins over what is sent)."""
     if owner.user is not None and owner.user.gender:
         return owner.user.gender
-    if given:
-        return given
-    if owner.token_hash is not None:
-        earlier = await session.scalar(
+    if owner.user is None and owner.token_hash is not None:
+        first = await session.scalar(
             select(HelpRequest.requester_gender)
             .where(HelpRequest.guest_token_hash == owner.token_hash, HelpRequest.requester_gender.is_not(None))
-            .order_by(HelpRequest.created_at.desc())
+            .order_by(HelpRequest.created_at)
             .limit(1)
         )
-        if earlier:
-            return earlier
+        if first:
+            return first
+    if given:
+        return given
     raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "gender_required")
 
 

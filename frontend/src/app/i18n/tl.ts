@@ -1585,4 +1585,6 @@ export const tl: Dict = {
   "sec.invite.genderHint": "Kasama itong nase-save sa code. Ito ang magiging kasarian ng account na gagawin gamit nito, at hindi ito mababago ng may-ari.",
   "sec.apps.genderMismatch": "Iba na ang kasarian ng account ngayon sa nakasulat sa aplikasyon, kaya hindi ito natanggap. Kausapin ang nag-apply o tanggihan ito.",
   "sec.inbox.urgentHint": "Makikita agad ito ng team. Kung wala pang sumasagot, makikita rin ito ng lahat ng mentor. Gamitin para sa pananakit o panganib.",
+  "sec.gender.inUse": "Hindi mababago ang piniling ito habang may mentor ka, grupo, o kahilingan ng tulong na bukas pa. Tapusin muna ang mga iyon, saka ito baguhin.",
+  "sec.org.codeLinks": "Mga naka-link na device: {n} · nitong huling araw: {d}",
 }

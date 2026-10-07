@@ -316,9 +316,17 @@ me = APIRouter(prefix="/api/me", tags=["me"])
 GENDER_LOCKED_ROLES = ("mentor", "team", "admin")
 
 
-def set_own_gender(user: User, gender: str) -> None:
-    if user.gender and gender != user.gender and any(user.has(r) for r in GENDER_LOCKED_ROLES):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "gender_locked")
+async def set_own_gender(session, user: User, gender: str) -> None:
+    if user.gender and gender != user.gender:
+        if any(user.has(r) for r in GENDER_LOCKED_ROLES):
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "gender_locked")
+        # Security review B-M6: a learner's gender decided who answers them,
+        # who mentors them and which group they sit in. It does not change
+        # under those; Companion says whether any of them still stands.
+        from app.companion.public import gender_in_use
+
+        if await gender_in_use(session, user.id):
+            raise HTTPException(status.HTTP_409_CONFLICT, "gender_in_use")
     user.gender = gender
 
 
@@ -357,7 +365,7 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
     if body.languages is not None:
         user.languages = body.languages
     if body.gender is not None:
-        set_own_gender(user, body.gender)
+        await set_own_gender(session, user, body.gender)
     await session.commit()
     return me_out(user)
 
