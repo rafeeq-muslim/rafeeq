@@ -24,7 +24,7 @@ def _host_port(url: str) -> tuple[str, int | None] | None:
         return None
 
 
-def is_same_origin(origin: str | None, host_header: str | None, public_url: str) -> bool:
+def is_same_origin(origin: str | None, host_header: str | None, public_url: str, forwarded_host: str | None = None) -> bool:
     if origin is None:
         return True  # not a browser
     theirs = _host_port(origin.strip())
@@ -34,12 +34,16 @@ def is_same_origin(origin: str | None, host_header: str | None, public_url: str)
         return True
     # The page and the API share one host; TLS ends before this server, so the
     # scheme the browser saw is taken from its Origin.
+    # The app's nginx passes `Host` without its port and the browser's own
+    # Host, port included, as `X-Forwarded-Host`: either may name the page's
+    # host, and each is compared with this request's own Origin only.
     scheme = urlsplit(origin.strip()).scheme
-    return bool(host_header) and theirs == _host_port(f"{scheme}://{host_header.strip()}")
+    return any(h and theirs == _host_port(f"{scheme}://{h.strip()}") for h in (host_header, forwarded_host))
 
 
 async def _same_origin(request: Request) -> None:
-    ok = is_same_origin(request.headers.get("origin"), request.headers.get("host"), get_settings().public_url)
+    h = request.headers
+    ok = is_same_origin(h.get("origin"), h.get("host"), get_settings().public_url, h.get("x-forwarded-host"))
     if not ok or request.headers.get("sec-fetch-site", "").lower() == "cross-site":
         raise HTTPException(status.HTTP_403_FORBIDDEN, "cross_site_request")
 

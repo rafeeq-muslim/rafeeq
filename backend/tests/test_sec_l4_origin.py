@@ -39,6 +39,43 @@ def test_sec_l4_same_origin(origin, host, ok):
     assert is_same_origin(origin, host, PUBLIC) is ok
 
 
+@pytest.mark.parametrize(
+    "origin,host,forwarded,ok",
+    [
+        # a local stack behind the app's nginx: Host has no port, X-Forwarded-Host has the browser's
+        ("http://127.0.0.1:5380", "127.0.0.1", "127.0.0.1:5380", True),
+        ("http://localhost:5380", "localhost", "localhost:5380", True),
+        ("http://127.0.0.1:5380", "127.0.0.1:5380", None, True),  # reached directly: Host has the port
+        ("http://127.0.0.1:5999", "127.0.0.1", "127.0.0.1:5380", False),  # another port
+        ("http://127.0.0.1", "127.0.0.1", "127.0.0.1:5380", True),  # default port: Host alone matches, as before
+        ("http://127.0.0.2:5380", "127.0.0.1", "127.0.0.1:5380", False),  # another host
+        ("http://other.example:5380", "127.0.0.1", "127.0.0.1:5380", False),
+        ("https://127.0.0.1:5380", "127.0.0.1", "127.0.0.1:5380", True),  # TLS ends before this server
+        ("ftp://127.0.0.1:5380", "127.0.0.1", "127.0.0.1:5380", False),  # not a web origin
+        ("http://127.0.0.1:5380", "127.0.0.1", None, False),  # no port known: refused
+        ("http://127.0.0.1:5380", "127.0.0.1", "", False),
+        ("http://127.0.0.1:5380", "127.0.0.1", "127.0.0.1:5380@other.example", False),
+        # production: no port anywhere
+        ("https://rafeeq.example", "rafeeq.example", "rafeeq.example", True),
+        ("https://rafeeq.example", "backend:8000", None, True),
+        ("https://sibling.rafeeq.example", "rafeeq.example", "rafeeq.example", False),
+        ("https://rafeeq.example:8443", "rafeeq.example", "rafeeq.example", False),
+    ],
+)
+def test_sec_l4_same_origin_on_an_address_with_a_port(origin, host, forwarded, ok):
+    assert is_same_origin(origin, host, PUBLIC, forwarded) is ok
+
+
+async def test_sec_l4_refresh_works_on_a_local_address_with_a_port_and_stays_strict(client):
+    await register(client)
+    local = {"Host": "127.0.0.1", "X-Forwarded-Host": "127.0.0.1:5380"}
+    for origin in ("http://127.0.0.1:5999", "http://127.0.0.2:5380"):
+        r = await client.post("/api/auth/refresh", headers={**local, "Origin": origin})
+        assert r.status_code == 403 and r.json()["detail"] == "cross_site_request", origin
+    r = await client.post("/api/auth/refresh", headers={**local, "Origin": "http://127.0.0.1:5380"})
+    assert r.status_code == 200 and r.json()["access_token"]
+
+
 async def sessions() -> int:
     async with SessionLocal() as s:
         return await s.scalar(select(func.count()).select_from(RefreshSession)) or 0
