@@ -99,8 +99,9 @@ def later(fn, *args) -> None:
             async with SessionLocal() as session:
                 await fn(session, *args)
                 await session.commit()  # push marks gone subscriptions
-        except Exception:  # pragma: no cover - logged, never raised to the user
-            log.warning("cmp notification failed", exc_info=True)
+        except Exception as e:  # logged, never raised to the user
+            # Security audit M3: the type only (an error can carry a push endpoint or a statement's values).
+            log.warning("cmp notification failed: %s", type(e).__name__)
 
     task = asyncio.get_running_loop().create_task(run())
     _pending.add(task)
