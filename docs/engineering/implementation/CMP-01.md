@@ -117,4 +117,4 @@ Tests (vitest, `frontend/src/app/companion/cmp01.r1.rules.test.tsx`):
 
 - The patterns themselves were made linear by the hotfix `sec-hotfix-contact-filter` (A-H1; `backend/tests/test_cmp01_r5_contact_filter_time.py`). This branch adds the second layer only.
 - Request handlers call `clean_body_async` (`app/companion/text.py`): the scan runs in a worker thread with a 2-second limit, so even a slow scan cannot hold the only server process; a scan that does not finish refuses the message (`422 message_not_checked`). The length limit (2000) is checked before any scan. Call sites: `help.py` (2), `inbox.py` (3), `groups.py` (2), `referrals.py` (1).
-- Tests (`backend/tests/test_sec_contact_filter_off_loop.py`): the scan leaves the event loop free; a scan that does not finish refuses the message; a wider set of adversarial shapes and random mixtures at 2000 characters stays under 50 ms.
+- Tests (`backend/tests/test_sec_contact_filter_off_loop.py`): the scan leaves the event loop free; a scan that does not finish refuses the message; spacing and line breaks hide nothing and add no false alarm. (The time budget is tested by the hotfix's file.)

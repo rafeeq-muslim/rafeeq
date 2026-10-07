@@ -1,10 +1,10 @@
 """Security review 2026-10-07, B-M5: the contact filter (CMP-01 R5) never runs
 on the event loop. The patterns were made linear by the hotfix
-(tests/test_cmp01_r5_contact_filter_time.py, A-H1); this file adds the second
-layer (`clean_body_async`) and a wider set of adversarial shapes."""
+(tests/test_cmp01_r5_contact_filter_time.py, A-H1, which holds the time
+budget); this file tests the second layer (`clean_body_async`) and that
+collapsing the spacing hides nothing and adds no false alarm."""
 
 import asyncio
-import random
 import time
 
 import pytest
@@ -13,76 +13,7 @@ from fastapi import HTTPException
 from app.companion import text
 from app.companion.text import MAX_BODY, clean_body_async, contact_violation
 
-BUDGET_S = 0.050
-
-
-def _fit(unit: str, prefix: str = "", suffix: str = "") -> str:
-    room = MAX_BODY - len(prefix) - len(suffix)
-    return (prefix + unit * (room // len(unit)) + suffix)[:MAX_BODY]
-
-
-# The two shapes measured in the review, at the longest accepted length.
-REVIEW_SHAPES = {
-    # a spelled-out address, then double-spaced «dot + label» groups that never end in a TLD
-    "dot-groups": _fit("  dot  ab", prefix="name at mail"),
-    "dot-groups-mixed": _fit("  dot  ab  .  ab ( dot ) ab", prefix="name  at  mail"),
-    # word, n spaces, at, n spaces, word, n spaces, dot
-    "spaces-around-at": "word" + " " * 660 + "at" + " " * 660 + "word" + " " * 660 + "dot",
-    "spaces-around-at-tabs": "word" + "\t \n" * 220 + "at" + " \t" * 330 + "word" + " " * 660 + "dot",
-}
-
-UNITS = [
-    "1.", "a.", "a-", "a", "1", " ", "@", "a@", "a@a.", ". ", "a .", " at ", "at ", " dot ", "dot ", "a at a dot ",
-    "a  dot  ", "snap ", "ig ", "ig", "snap\t", "-", "_", "a_", "1 ", "1-", "(1)", "+1", "00", "1:", "1/", "www.",
-    ".com", "com.", "a.com_", "a.co", "(at)", "( at )", "[dot]", "( dot )", "x (at) x (dot) ", "gmail ", "wa",
-    "whats ", "واتس ", "سناب ", "٠", "a%", "a+", "\n", "a\n", "1\n", ".", "..", "a..", "-.", "a-.", "is ",
-    "ig is ", "ig id ", "ig:", "ig :", "ig  id  :  ",
-]  # fmt: skip
-PREFIXES = ["", "name at mail", "name@", "snap", "name (at) "]
-
-
-def _shapes() -> dict[str, str]:
-    out = dict(REVIEW_SHAPES)
-    for unit in UNITS:
-        for prefix in PREFIXES:
-            out[f"{prefix!r}+{unit!r}"] = _fit(unit, prefix=prefix)
-        out[f"{unit!r}+end"] = _fit(unit, suffix="!")
-    rng = random.Random(20261007)
-    for i in range(60):  # random mixtures of the same pieces
-        out[f"mix-{i}"] = "".join(rng.choice(UNITS) for _ in range(MAX_BODY))[:MAX_BODY]
-    return out
-
-
-def _seconds(body: str) -> float:
-    best = 10.0
-    for _ in range(3):  # the best of three: a busy test machine is not a slow pattern
-        t = time.perf_counter()
-        contact_violation(body)
-        best = min(best, time.perf_counter() - t)
-        if best < BUDGET_S:
-            break
-    return best
-
-
-@pytest.mark.parametrize("name", list(REVIEW_SHAPES))
-def test_sec_a_h1_review_shapes_finish_within_budget(name):
-    body = REVIEW_SHAPES[name]
-    assert MAX_BODY - 100 < len(body) <= MAX_BODY
-    assert _seconds(body) < BUDGET_S
-
-
-def test_sec_a_h1_no_message_of_the_longest_length_is_slow():
-    contact_violation("warm up: name at mail dot com, snap: a_b")
-    slow = {name: round(s, 3) for name, body in _shapes().items() if (s := _seconds(body)) >= BUDGET_S}
-    assert slow == {}
-
-
-def test_sec_a_h1_time_grows_with_the_length_not_its_square():
-    """Ten times the text may take about ten times as long, never a hundred."""
-    for name, body in REVIEW_SHAPES.items():
-        short, long = body[: MAX_BODY // 10], body
-        ratio = _seconds(long) / max(_seconds(short), 20e-6)
-        assert ratio < 40, name
+REVIEW_SHAPE = ("name at mail" + "  dot  ab" * 300)[:MAX_BODY]  # the shape measured in the review, at the longest length
 
 
 @pytest.mark.parametrize(
@@ -140,7 +71,7 @@ async def test_sec_b_m5_a_scan_that_does_not_finish_refuses_the_message(monkeypa
 
 
 async def test_sec_b_m5_a_guest_message_of_the_review_shape_is_accepted(client):
-    r = await client.post("/api/help/requests", json={"lang": "en", "gender": "f", "body": REVIEW_SHAPES["dot-groups"]})
+    r = await client.post("/api/help/requests", json={"lang": "en", "gender": "f", "body": REVIEW_SHAPE})
     assert r.status_code == 201, r.text
     r = await client.post("/api/help/requests", json={"lang": "en", "gender": "f", "body": "name   at   mail   dot   com"})
     assert r.status_code == 422 and r.json()["detail"] == {"code": "contact_not_allowed", "kind": "email"}

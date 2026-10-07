@@ -95,11 +95,29 @@ def has_arabic(text: str) -> bool:
 
 
 # Quoted spans: "…", “…”, «…», ﴿…﴾, „…“
-_QUOTES = re.compile(r"\"([^\"]+)\"|“([^”]+)”|«([^»]+)»|﴿([^﴾]+)﴾|„([^“]+)“")
+_QUOTE_END = {'"': '"', "“": "”", "«": "»", "﴿": "﴾", "„": "“"}
 
 
 def quoted_spans(text: str) -> list[str]:
-    return [next(g for g in m.groups() if g) for m in _QUOTES.finditer(text)]
+    """The same spans as the pattern  "([^"]+)"|“([^”]+)”|«([^»]+)»|﴿([^﴾]+)﴾|„([^“]+)“
+    in one pass. As a pattern, a text of opening marks that are never closed
+    was searched to its end from each of them (quadratic; security review
+    2026-10-07): a mark with no closing mark left is now looked for once."""
+    out: list[str] = []
+    unclosed: set[str] = set()
+    i, n = 0, len(text)
+    while i < n:
+        end = _QUOTE_END.get(text[i])
+        if end is not None and text[i] not in unclosed:
+            j = text.find(end, i + 1)
+            if j == -1:
+                unclosed.add(text[i])
+            elif j > i + 1:
+                out.append(text[i + 1 : j])
+                i = j + 1
+                continue
+        i += 1
+    return out
 
 
 def longest_quote_words(text: str) -> int:
