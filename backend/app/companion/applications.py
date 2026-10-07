@@ -138,15 +138,16 @@ async def apply(body: ApplyIn, session: Session, request: Request, user: Optiona
         org_id = await org_id_of_code(session, body.org_code)
         if org_id is None:
             raise HTTPException(status.HTTP_404_NOT_FOUND, "code_invalid")  # as ORG-01 R3: «تحقق من الرمز»
-    same = [MentorApplication.user_id == user.id] if user is not None else []
-    if body.contact:
-        same.append(MentorApplication.contact == body.contact)
-    row = await session.scalar(select(MentorApplication).where(MentorApplication.status == "pending", or_(*same)).limit(1))
-    if row is not None and (user is None or row.user_id != user.id):
-        # Security review B-L10: the contact alone proves nothing. Only the
-        # account that made a pending application replaces it; anyone else
-        # gets the same answer and the first application stays as it is.
-        return ApplyOut()
+    pending = MentorApplication.status == "pending"
+    # An account's own pending application first: it is the only one it replaces.
+    row = await session.scalar(select(MentorApplication).where(pending, MentorApplication.user_id == user.id).limit(1)) if user else None
+    if row is None and body.contact:
+        taken = await session.scalar(select(MentorApplication.id).where(pending, MentorApplication.contact == body.contact).limit(1))
+        if taken is not None:
+            # Security review B-L10: the contact alone proves nothing. Only the
+            # account that made a pending application replaces it; anyone else
+            # gets the same answer and the first application stays as it is.
+            return ApplyOut()
     is_new = row is None
     if row is None:
         row = MentorApplication(status="pending")

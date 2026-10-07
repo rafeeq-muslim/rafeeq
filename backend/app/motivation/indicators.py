@@ -6,9 +6,14 @@ snapshots (MOT-08 R2). Any number built from fewer than 10 people is
 replaced by `None` with reason "not_enough_data" (MOT-08 R6, MOT-09 R6).
 Lessons, units and objectives are listed in path order, read through
 Learning's interface (app.learning.public).
+
+The anonymous events of the period are never held in memory together: they
+are read once, a chunk at a time, grouped by device, and only running totals
+are kept (`Figures`).
 """
 
 from collections import Counter, defaultdict
+from collections.abc import Iterable
 from datetime import UTC, date, datetime, timedelta
 from typing import Annotated
 
@@ -16,6 +21,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 
+from app.core import ratelimit
 from app.core.deps import Session, require_role
 from app.core.events import OutboxEvent, payload_text
 from app.learning.public import path_order
@@ -30,6 +36,38 @@ MIN_PEOPLE = 10
 # (app/companion/contact.py; at most one per learner per Riyadh day).
 CONTACT_EVENT = "MentorContacted"
 _MIN_TIME = datetime.min.replace(tzinfo=UTC)
+# Rows fetched from the database at a time while the events are read.
+CHUNK = 1000
+# The page asks for the 7-day and the 30-day view; the figures change once a day.
+READS_PER_MIN = 30
+EVENT_TYPES = (
+    "lesson_completed",
+    "unit_completed",
+    "opt_out",
+    "first_answer",
+    "mastered",
+    "why_shown",
+    "guide_shown",
+    "guide_followed",
+    "placement_done",
+    "placement_skipped",
+)
+EVENT_COLUMNS = (
+    AnonEvent.id,
+    AnonEvent.install_id,
+    AnonEvent.type,
+    AnonEvent.lesson_id,
+    AnonEvent.unit_id,
+    AnonEvent.objective_id,
+    AnonEvent.correct,
+    AnonEvent.context,
+    AnonEvent.shown,
+    AnonEvent.is_repeat,
+    AnonEvent.value,
+    AnonEvent.day,
+    AnonEvent.seq,
+    AnonEvent.created_at,
+)
 
 
 def ratio(num: int, den: int, people: int | None = None) -> float | None:
@@ -82,45 +120,263 @@ def mentor_contact(start: DailySnapshot | None, during: list[DailySnapshot], con
     return {"contacted": ratio(len(contacted & back), len(contacted)), "not_contacted": ratio(len(others & back), len(others))}
 
 
-def people_per(events: list[AnonEvent], type_: str, attr: str) -> Counter[str]:
-    """People (not events) per lesson or unit. Events unlinked by an opt-out
-    have no device id; each first completion among them counts as one."""
-    linked: dict[str, set[str]] = defaultdict(set)
-    unlinked: Counter[str] = Counter()
-    for e in events:
-        key = getattr(e, attr)
-        if e.type != type_ or not key:
-            continue
-        if e.install_id:
-            linked[key].add(e.install_id)
-        elif not e.is_repeat:
-            unlinked[key] += 1
-    return Counter({k: len(v) for k, v in linked.items()}) + unlinked
+def _sort_key(e) -> tuple:
+    """A device's own order: its event counter (MOT-09 R4), then arrival."""
+    return (e.seq if e.seq is not None else float("inf"), e.id or 0, e.created_at or _MIN_TIME)
 
 
-def learning_by_path(events: list[AnonEvent], order: list[dict]) -> dict:
-    """MOT-08 R4: people per lesson in path order (so the team sees where
-    most stop), and people per unit.
+def _after(a, w) -> bool:
+    if a.seq is not None and w.seq is not None:
+        return a.seq > w.seq
+    if a.id is not None and w.id is not None:
+        return a.id > w.id
+    return (a.created_at or _MIN_TIME) > (w.created_at or _MIN_TIME)
 
-    Security review 2026-10-07 (B-L14): anonymous events come from any device
-    without sign-in, so a lesson or unit id is whatever the sender typed. Only
-    ids that are in the path are shown; anything else is left out, never
-    listed to the team as typed."""
-    lessons = people_per(events, "lesson_completed", "lesson_id")
-    units = people_per(events, "unit_completed", "unit_id")
-    per_lesson = [
-        {"lesson_id": lesson["lesson_id"], "unit_id": u["unit_id"], "people": lessons.get(lesson["lesson_id"], 0)}
-        for u in order
-        for lesson in u["lessons"]
-    ]
-    units_completed = [{"unit_id": u["unit_id"], "people": units.get(u["unit_id"], 0)} for u in order]
-    return {"per_lesson": per_lesson, "units_completed": units_completed}
+
+def _device_order(e) -> tuple:
+    """The order `Figures` reads events in: a device's events together (those
+    unlinked by an opt-out last), each day in the device's own order."""
+    return (e.install_id is None, e.install_id or "", e.day or date.min, *_sort_key(e))
+
+
+def events_in_order(since: date):
+    """The period's events as plain rows, in the order of `_device_order`."""
+    return (
+        select(*EVENT_COLUMNS)
+        .where(AnonEvent.day >= since, AnonEvent.type.in_(EVENT_TYPES))
+        .order_by(AnonEvent.install_id.asc().nulls_last(), AnonEvent.day, AnonEvent.seq.asc().nulls_last(), AnonEvent.id)
+    )
+
+
+class Figures:
+    """MOT-08 R4 and MOT-09 R1-R6 from anonymous events, in one pass.
+
+    Events come in `_device_order`. What is kept between events is one
+    device's own answers (dropped when the next device starts) and totals per
+    lesson, unit, objective and day: never the events, never a list of devices.
+    Install ids only link a device's own events; none leaves this class."""
+
+    def __init__(self, order: list[dict] | None = None):
+        self.order = order or []
+        self.unit_objectives = {u["unit_id"]: [o for lsn in u["lessons"] for o in lsn["objectives"]] for u in self.order}
+        self.units_of: dict[str, set[str]] = defaultdict(set)
+        for unit_id, objs in self.unit_objectives.items():
+            for o in objs:
+                self.units_of[o].add(unit_id)
+        # Security review 2026-10-07 (B-L14): an objective id is whatever the
+        # sender typed; with the path at hand, only its own objectives count
+        # and are listed (objectives, mastery, weakest), never an id as typed.
+        self.in_path = set(self.units_of) if self.order else None
+        self.by_day: Counter[date] = Counter()
+        self.opted_out = 0
+        # People (not events) per lesson or unit. Events unlinked by an opt-out
+        # have no device id; each first completion among them counts as one.
+        self.completed: dict[str, Counter[str]] = {"lesson_completed": Counter(), "unit_completed": Counter()}
+        # First answers per objective, in the lesson and in the first review
+        # on a later day: answers, correct ones, people.
+        self.lesson_n: Counter[str] = Counter()
+        self.lesson_ok: Counter[str] = Counter()
+        self.lesson_people: Counter[str] = Counter()
+        self.review_n: Counter[str] = Counter()
+        self.review_ok: Counter[str] = Counter()
+        self.review_people: Counter[str] = Counter()
+        self.unit_lesson_people: Counter[str] = Counter()
+        self.unit_review_people: Counter[str] = Counter()
+        self.answered: Counter[str] = Counter()
+        self.mastered: Counter[str] = Counter()
+        self.why_n: Counter[str] = Counter()
+        self.why_ok: Counter[str] = Counter()
+        self.why_people: Counter[str] = Counter()
+        self.guide_n = self.guide_people = self.followed_n = 0
+        self.quick_n = self.quick_ok = self.quick_people = 0
+        self.placement_cells: Counter[str] = Counter()
+        self._started = False
+        self._device: str | None = None
+        self._reset_device()
+
+    def _reset_device(self) -> None:
+        self._completed: set[tuple[str, str]] = set()
+        self._first_lesson_day: dict[str, date] = {}
+        self._lesson_objs: set[str] = set()
+        self._review_objs: set[str] = set()
+        self._answered: set[str] = set()
+        self._mastered: set[str] = set()
+        self._answers: dict[str, list] = defaultdict(list)
+        self._whys: list = []
+        self._guide = self._quick = False
+        self._placement = None
+
+    def add(self, e) -> None:
+        if not self._started or e.install_id != self._device:
+            self.close()
+            self._started, self._device = True, e.install_id
+        device = e.install_id
+        if e.type in self.completed:
+            if e.type == "lesson_completed":
+                self.by_day[e.day] += 1
+            key = e.lesson_id if e.type == "lesson_completed" else e.unit_id
+            if key and device:
+                self._completed.add((e.type, key))
+            elif key and not e.is_repeat:
+                self.completed[e.type][key] += 1
+        elif e.type == "opt_out":
+            self.opted_out += 1
+        elif self.in_path is not None and e.objective_id and e.objective_id not in self.in_path:
+            return  # B-L14: not an objective of the path
+        elif e.type == "first_answer" and e.objective_id:
+            self._answer(e)
+        elif e.type == "mastered" and e.objective_id and device:
+            self._mastered.add(e.objective_id)
+        elif e.type == "why_shown" and e.objective_id and device and e.shown in ("ai_explanation", "card_holdout"):
+            self._whys.append(e)
+        elif e.type == "guide_shown":
+            self.guide_n += 1
+            self._guide = True
+        elif e.type == "guide_followed":
+            self.followed_n += 1
+        elif e.type in ("placement_done", "placement_skipped") and device:
+            self._placement = e  # the last outcome counts
+
+    def _answer(self, e) -> None:
+        o, device = e.objective_id, e.install_id
+        if e.context == "lesson":
+            self.lesson_n[o] += 1
+            self.lesson_ok[o] += bool(e.correct)
+            self._lesson_objs.add(o)
+            self._first_lesson_day.setdefault(o, e.day)
+        elif e.context == "review" and o in self._first_lesson_day and e.day > self._first_lesson_day[o]:
+            self.review_n[o] += 1
+            self.review_ok[o] += bool(e.correct)
+            self._review_objs.add(o)
+            self._first_lesson_day[o] = date.max  # only the first review counts
+        elif e.context == "quick_check":
+            self.quick_n += 1
+            self.quick_ok += bool(e.correct)
+            self._quick = True
+        if device:
+            self._answered.add(o)
+            self._answers[o].append(e)
+
+    def close(self) -> None:
+        """The current device's events are all in: count it where it belongs.
+        Events without a device id add to the answer totals, never to people."""
+        if self._started and self._device:
+            for type_, key in self._completed:
+                self.completed[type_][key] += 1
+            for objs, per_objective, per_unit in (
+                (self._lesson_objs, self.lesson_people, self.unit_lesson_people),
+                (self._review_objs, self.review_people, self.unit_review_people),
+            ):
+                for o in objs:
+                    per_objective[o] += 1
+                for unit_id in {u for o in objs for u in self.units_of.get(o, ())}:
+                    per_unit[unit_id] += 1
+            for o in self._answered:
+                self.answered[o] += 1
+                self.mastered[o] += o in self._mastered
+            # R4: the next first answer on the same objective after «لماذا؟», by
+            # what was shown: the explanation, or the card text in the random
+            # fifth. Card text shown because the device was offline or the call
+            # failed is not part of the experiment.
+            shown_to = set()
+            for w in self._whys:
+                later = [a for a in self._answers.get(w.objective_id, []) if _after(a, w)]
+                if later:
+                    self.why_n[w.shown] += 1
+                    self.why_ok[w.shown] += bool(min(later, key=_sort_key).correct)
+                    shown_to.add(w.shown)
+            for shown in shown_to:
+                self.why_people[shown] += 1
+            self.guide_people += self._guide
+            self.quick_people += self._quick
+            if self._placement is not None:
+                p = self._placement
+                self.placement_cells["skipped" if p.type == "placement_skipped" else str(p.value or 0)] += 1
+        self._started = False
+        self._reset_device()
+
+    def learning(self) -> dict:
+        """MOT-08 R4: people per lesson in path order (so the team sees where
+        most stop), and people per unit.
+
+        Security review 2026-10-07 (B-L14): anonymous events come from any device
+        without sign-in, so a lesson or unit id is whatever the sender typed. Only
+        ids that are in the path are shown; anything else is left out, never
+        listed to the team as typed."""
+        lessons, units = self.completed["lesson_completed"], self.completed["unit_completed"]
+        per_lesson = [
+            {"lesson_id": lesson["lesson_id"], "unit_id": u["unit_id"], "people": lessons.get(lesson["lesson_id"], 0)}
+            for u in self.order
+            for lesson in u["lessons"]
+        ]
+        units_completed = [{"unit_id": u["unit_id"], "people": units.get(u["unit_id"], 0)} for u in self.order]
+        return {"per_lesson": per_lesson, "units_completed": units_completed}
+
+    def understanding(self) -> dict:
+        objectives = {
+            o: {
+                "lesson": ratio(self.lesson_ok[o], self.lesson_n[o], self.lesson_people[o]),
+                "review": ratio(self.review_ok[o], self.review_n[o], self.review_people[o]),
+            }
+            for o in sorted(self.lesson_n)
+        }
+        # R1: the same two numbers per unit, over all its objectives' first answers.
+        units: dict[str, dict] = {}
+        for unit_id, objs in self.unit_objectives.items():
+            if any(o in self.lesson_n for o in objs):
+                units[unit_id] = {
+                    "lesson": ratio(
+                        sum(self.lesson_ok[o] for o in objs), sum(self.lesson_n[o] for o in objs), self.unit_lesson_people[unit_id]
+                    ),
+                    "review": ratio(
+                        sum(self.review_ok[o] for o in objs), sum(self.review_n[o] for o in objs), self.unit_review_people[unit_id]
+                    ),
+                }
+        # R3: people who reached "mastered" among the people who answered it.
+        mastery = {o: ratio(self.mastered[o], self.answered[o]) for o in sorted(self.answered)}
+        weakest = sorted((v, o) for o, v in mastery.items() if v is not None)[:5]
+        experiment: dict[str, float | None] = {
+            k: ratio(self.why_ok[k], self.why_n[k], self.why_people[k]) for k in ("ai_explanation", "card_holdout")
+        }
+        ai, hold = experiment["ai_explanation"], experiment["card_holdout"]
+        experiment["difference"] = round(ai - hold, 4) if ai is not None and hold is not None else None
+        return {
+            "objectives": objectives,
+            "units": units,
+            "placement": placement_figures(self.placement_cells),
+            "mastery": mastery,
+            "weakest": [o for _, o in weakest],
+            "why_experiment": experiment,
+            # R5 rates count messages and answers; R6 counts the people behind them.
+            "guide_followed": ratio(self.followed_n, self.guide_n, self.guide_people),
+            "quick_check_correct": ratio(self.quick_ok, self.quick_n, self.quick_people),
+        }
+
+
+def figures_of(events: Iterable, order: list[dict] | None = None) -> Figures:
+    """`Figures` for events already in memory (a small set: tests, a script)."""
+    out = Figures(order)
+    for e in sorted(events, key=_device_order):
+        out.add(e)
+    out.close()
+    return out
+
+
+def understanding(events: Iterable, order: list[dict] | None = None) -> dict:
+    """MOT-09 R1-R5 from anonymous first answers."""
+    return figures_of(events, order).understanding()
+
+
+def learning_by_path(events: Iterable, order: list[dict]) -> dict:
+    """MOT-08 R4 for a list in memory."""
+    return figures_of(events, order).learning()
 
 
 @router.get("/indicators")
-async def indicators(session: Session, _: Team, days: int = Query(default=7)) -> dict:
+async def indicators(session: Session, me: Team, days: int = Query(default=7)) -> dict:
     if days not in (7, 30):  # MOT-08 R3: the last 7 and the last 30 days
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "days_must_be_7_or_30")
+    ratelimit.hit(f"team-indicators:{me.id}", READS_PER_MIN, 60)
     today = datetime.now(UTC).astimezone(RIYADH).date()
     since = today - timedelta(days=days)
     all_snaps = list(
@@ -136,11 +392,15 @@ async def indicators(session: Session, _: Team, days: int = Query(default=7)) ->
             OutboxEvent.name == CONTACT_EVENT, OutboxEvent.created_at >= datetime.combine(since, datetime.min.time(), RIYADH)
         )
     )
+    contacted = {c for c in contacts if c}
 
-    events = list(await session.scalars(select(AnonEvent).where(AnonEvent.day >= since)))
-    by_day: Counter[date] = Counter(e.day for e in events if e.type == "lesson_completed")
+    figures = Figures(path_order())
+    rows = await session.stream(events_in_order(since).execution_options(yield_per=CHUNK))
+    async for chunk in rows.partitions():
+        for e in chunk:
+            figures.add(e)
+    figures.close()
     markers = list(await session.scalars(select(ReleaseMarker).where(ReleaseMarker.day >= since).order_by(ReleaseMarker.day)))
-    order = path_order()
 
     return {
         "days": days,
@@ -153,142 +413,31 @@ async def indicators(session: Session, _: Team, days: int = Query(default=7)) ->
             **rates,
         },
         "return_series": return_series({s.day: s for s in all_snaps}, [since + timedelta(days=i) for i in range(days + 1)]),
-        "mentor_contact": mentor_contact(snaps[0] if snaps else None, snaps[1:], {c for c in contacts if c}),
+        "mentor_contact": mentor_contact(snaps[0] if snaps else None, snaps[1:], contacted),
         "learning": {
-            "lessons_per_day": [{"day": d, "count": by_day.get(d, 0)} for d in (since + timedelta(days=i) for i in range(days + 1))],
-            **learning_by_path(events, order),
-            "opted_out": sum(1 for e in events if e.type == "opt_out"),
+            "lessons_per_day": [
+                {"day": d, "count": figures.by_day.get(d, 0)} for d in (since + timedelta(days=i) for i in range(days + 1))
+            ],
+            **figures.learning(),
+            "opted_out": figures.opted_out,
         },
         "markers": [{"day": m.day, "label": m.label} for m in markers],
-        "understanding": understanding(events, order),
+        "understanding": figures.understanding(),
     }
 
 
-def _sort_key(e: AnonEvent) -> tuple:
-    """A device's own order: its event counter (MOT-09 R4), then arrival."""
-    return (e.seq if e.seq is not None else float("inf"), e.id or 0, e.created_at or _MIN_TIME)
-
-
-def _after(a: AnonEvent, w: AnonEvent) -> bool:
-    if a.seq is not None and w.seq is not None:
-        return a.seq > w.seq
-    if a.id is not None and w.id is not None:
-        return a.id > w.id
-    return (a.created_at or _MIN_TIME) > (w.created_at or _MIN_TIME)
-
-
-def understanding(events: list[AnonEvent], order: list[dict] | None = None) -> dict:
-    """MOT-09 R1-R5 from anonymous first answers (install ids only link a
-    device's own events; nothing leaves this function per device)."""
-    if order:
-        # Security review 2026-10-07 (B-L14): an objective id is whatever the
-        # sender typed; with the path at hand, only its own objectives count
-        # and are listed (objectives, mastery, weakest), never an id as typed.
-        in_path = {o for u in order for lsn in u["lessons"] for o in lsn["objectives"]}
-        events = [e for e in events if not e.objective_id or e.objective_id in in_path]
-    answers = sorted((e for e in events if e.type == "first_answer" and e.objective_id), key=lambda e: (e.day, *_sort_key(e)))
-    lesson: dict[str, list[tuple[bool, str | None]]] = defaultdict(list)
-    review: dict[str, list[tuple[bool, str | None]]] = defaultdict(list)
-    first_lesson_day: dict[tuple[str | None, str], date] = {}
-    for e in answers:
-        key = (e.install_id, e.objective_id or "")
-        if e.context == "lesson":
-            lesson[e.objective_id or ""].append((bool(e.correct), e.install_id))
-            first_lesson_day.setdefault(key, e.day)
-        elif e.context == "review" and key in first_lesson_day and e.day > first_lesson_day[key]:
-            review[e.objective_id or ""].append((bool(e.correct), e.install_id))
-            first_lesson_day[key] = date.max  # only the first review counts
-
-    def rate(rows: list[tuple[bool, str | None]]) -> float | None:
-        people = len({i for _, i in rows if i})
-        return ratio(sum(c for c, _ in rows), len(rows), people)
-
-    objectives = {o: {"lesson": rate(lesson[o]), "review": rate(review.get(o, []))} for o in sorted(lesson)}
-
-    # R1: the same two numbers per unit, over all its objectives' first answers.
-    units: dict[str, dict] = {}
-    for u in order or []:
-        objs = [o for lsn in u["lessons"] for o in lsn["objectives"]]
-        if any(o in lesson for o in objs):
-            units[u["unit_id"]] = {
-                "lesson": rate([r for o in objs for r in lesson.get(o, [])]),
-                "review": rate([r for o in objs for r in review.get(o, [])]),
-            }
-
-    placement = placement_figures(events)
-
-    # R3: people who reached "mastered" among the people who answered it.
-    answered: dict[str, set[str]] = defaultdict(set)
-    mastered: dict[str, set[str]] = defaultdict(set)
-    for e in events:
-        if e.objective_id and e.install_id:
-            if e.type == "first_answer":
-                answered[e.objective_id].add(e.install_id)
-            elif e.type == "mastered":
-                mastered[e.objective_id].add(e.install_id)
-    mastery = {o: ratio(len(mastered[o] & answered[o]), len(answered[o])) for o in sorted(answered)}
-    weakest = sorted((v, o) for o, v in mastery.items() if v is not None)[:5]
-
-    # R4: the next first answer on the same objective after «لماذا؟», by what
-    # was shown: the explanation, or the card text in the random fifth. Card
-    # text shown because the device was offline or the call failed is not
-    # part of the experiment.
-    by_device: dict[tuple[str, str], list[AnonEvent]] = defaultdict(list)
-    for a in answers:
-        if a.install_id:
-            by_device[(a.install_id, a.objective_id or "")].append(a)
-    groups: dict[str, list[bool]] = {"ai_explanation": [], "card_holdout": []}
-    people: dict[str, set[str]] = {"ai_explanation": set(), "card_holdout": set()}
-    for w in events:
-        if w.type != "why_shown" or not w.objective_id or not w.install_id or w.shown not in groups:
-            continue
-        later = [a for a in by_device.get((w.install_id, w.objective_id), []) if _after(a, w)]
-        if later:
-            groups[w.shown].append(bool(min(later, key=_sort_key).correct))
-            people[w.shown].add(w.install_id)
-    experiment: dict[str, float | None] = {k: ratio(sum(v), len(v), len(people[k])) for k, v in groups.items()}
-    ai, hold = experiment["ai_explanation"], experiment["card_holdout"]
-    experiment["difference"] = round(ai - hold, 4) if ai is not None and hold is not None else None
-
-    # R5 rates count messages and answers; R6 counts the people behind them.
-    guide = [e for e in events if e.type == "guide_shown"]
-    followed = sum(1 for e in events if e.type == "guide_followed")
-    quick = [e for e in answers if e.context == "quick_check"]
-    return {
-        "objectives": objectives,
-        "units": units,
-        "placement": placement,
-        "mastery": mastery,
-        "weakest": [o for _, o in weakest],
-        "why_experiment": experiment,
-        "guide_followed": ratio(followed, len(guide), _people(guide)),
-        "quick_check_correct": ratio(sum(bool(e.correct) for e in quick), len(quick), _people(quick)),
-    }
-
-
-def _people(events: list[AnonEvent]) -> int:
-    """R6: distinct devices, not events (unlinked events cannot be told apart)."""
-    return len({e.install_id for e in events if e.install_id})
-
-
-def placement_figures(events: list[AnonEvent]) -> dict:
+def placement_figures(cells: Counter[str]) -> dict:
     """R2 with R6: people per number of units passed, and people who skipped.
 
-    Each device counts once, by its last placement outcome (done or skipped),
-    so the buckets and «skipped» are one partition of the people. Events
-    unlinked by an opt-out are left out: they cannot be counted as people.
+    `cells` counts each device once, by its last placement outcome (done or
+    skipped), so the buckets and «skipped» are one partition of the people.
+    Events unlinked by an opt-out are left out: they cannot be counted as people.
     Fewer than 10 people in all hides everything; a bucket under 10 is hidden
     (None), and if the hidden buckets add up to 1-9 people the next smallest
     bucket is hidden too, so no small bucket can be worked out from the others
     (complementary suppression, as in ORG-03)."""
-    last: dict[str, AnonEvent] = {}
-    for e in sorted(
-        (e for e in events if e.type in ("placement_done", "placement_skipped") and e.install_id), key=lambda e: (e.day, *_sort_key(e))
-    ):
-        last[e.install_id or ""] = e
-    if len(last) < MIN_PEOPLE:
+    if sum(cells.values()) < MIN_PEOPLE:
         return {"distribution": {}, "skipped": None}
-    cells: Counter[str] = Counter("skipped" if e.type == "placement_skipped" else str(e.value or 0) for e in last.values())
     hidden = {k for k, n in cells.items() if n < MIN_PEOPLE}
     while 0 < sum(cells[k] for k in hidden) < MIN_PEOPLE and len(hidden) < len(cells):
         hidden.add(min((k for k in cells if k not in hidden), key=lambda k: (cells[k], k)))

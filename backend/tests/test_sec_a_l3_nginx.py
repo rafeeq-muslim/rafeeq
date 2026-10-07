@@ -41,7 +41,7 @@ def test_l3_the_limit_covers_all_of_api_and_is_far_above_a_cold_start():
 
 
 def test_l3_a_refusal_never_writes_the_visitor_address_to_the_log():
-    # nginx logs a refusal with the client address at this level; the error log starts at `notice`.
+    # nginx logs a refusal with the client address at this level, below the image's `notice`;
+    # the server's own error log is off altogether (tests/test_sec_followup_nginx_error_log.py).
     assert "limit_req_log_level info;" in api_block()
-    assert "error_log" not in directives()  # the image's default (notice) is kept
     assert "$remote_addr" not in re.search(r"log_format rafeeq_noip '([^']*)'", CONF).group(1)

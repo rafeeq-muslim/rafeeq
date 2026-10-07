@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from sqlalchemy import ARRAY, String, cast, func, select
 
 from app.core.deps import Session, require_role
+from app.core.events import publish
 from app.platform.models import ROLES, Invite, User
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -138,7 +139,12 @@ async def set_roles(user_id: uuid.UUID, body: RolesIn, admin: Admin, session: Se
         )
         if not others:
             raise HTTPException(409, LAST_ADMIN)
+    was_mentor = "mentor" in (user.roles or [])
     user.roles = body.roles or ["learner"]
+    if was_mentor and "mentor" not in user.roles:
+        # He is nobody's mentor any more: Companion ends his links and returns
+        # his open requests to the pool, as for a suspension (CMP-03 R4).
+        await publish(session, "MentorRoleRemoved", "PLT", {"mentor_id": str(user.id)})
     await session.commit()
     return {"id": str(user.id), "roles": user.roles}
 

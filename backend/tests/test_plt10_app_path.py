@@ -145,7 +145,7 @@ def test_plt10_api_proxy_unchanged():
         "    proxy_set_header Host $host;\n"
         "    proxy_set_header X-Forwarded-For $remote_addr;\n"
         "    proxy_set_header X-Forwarded-Proto https;\n"
-        "    proxy_read_timeout 120s;\n"
-        "    proxy_buffering off;   # streamed answers\n"
-        "  }\n"
     ) in NGINX
+    # The browser's own Host with its port, for the same-origin check only (tests/test_sec_l4_origin.py).
+    assert "    proxy_set_header X-Forwarded-Host $http_host;\n" in NGINX
+    assert ("    proxy_read_timeout 120s;\n    proxy_buffering off;   # streamed answers\n  }\n") in NGINX

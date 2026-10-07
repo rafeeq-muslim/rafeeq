@@ -28,6 +28,11 @@
   a neutral notice to choose another mentor (no reason, no organisation); the
   mentor's open requests return to the pool, where the same-gender rule
   (CMP-01 R3) applies as always.
+- MentorRoleRemoved (Platform, when an admin takes the mentor role away):
+  `{mentor_id}`. The same for links and requests as a suspension, with the
+  same neutral notice. The profile is not marked suspended (the missing role
+  already closes the inbox, and an organisation's own suspension stays what
+  it was), and groups are not touched. Giving the role back restores no link.
 """
 
 import uuid
@@ -99,11 +104,23 @@ async def on_mentor_approved(session: AsyncSession, payload: dict) -> None:
 @subscribe("MentorSuspended")
 async def on_mentor_suspended(session: AsyncSession, payload: dict) -> None:
     from app.companion.inbox import profile_of
-    from app.companion.mentors import end_link
 
     mentor_id = uuid.UUID(str(payload["mentor_id"]))
     prof = await profile_of(session, mentor_id)
     prof.suspended = True
+    await release_mentees(session, mentor_id)
+
+
+@subscribe("MentorRoleRemoved")
+async def on_mentor_role_removed(session: AsyncSession, payload: dict) -> None:
+    await release_mentees(session, uuid.UUID(str(payload["mentor_id"])))
+
+
+async def release_mentees(session: AsyncSession, mentor_id: uuid.UUID) -> None:
+    """The mentor stops being anyone's mentor: every link ends (CMP-03 R4),
+    his open requests return to the pool, each mentee gets the neutral notice."""
+    from app.companion.mentors import end_link
+
     learners = []
     for link in list(await session.scalars(select(MentorLink).where(MentorLink.mentor_id == mentor_id))):
         learners.append(link.learner_id)
