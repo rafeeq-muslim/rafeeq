@@ -166,7 +166,7 @@ Fixed (2026-10-05/06):
 
 Accepted by the product owner (2026-10-06), no action:
 1. The host router keeps its standard access log (visitor IPs, 14 days). The app itself still stores no IP (rules.md §4 inside the app).
-2. CI keeps running on the production host's runner. Accepted because the repo is private, only team members push or open PRs, deploys run only from `main`, and dependencies are locked; the residual risk is a malicious dependency or a stolen member token. **No longer holds (2026-10-07): the repository is public.** CI moved to GitHub-hosted runners and the deploy job is guarded (PRs #105, #112); the deploy and events runners on the server still need restricting by the owner. See `security-review-2026-10-07.md` (C-H1) for this and the rest of the 2026-10-07 review.
+2. CI keeps running on the production host's runner. Accepted because the repo is private, only team members push or open PRs, deploys run only from `main`, and dependencies are locked; the residual risk is a malicious dependency or a stolen member token. **No longer holds (2026-10-07): the repository is public.** CI moved to GitHub-hosted runners and the deploy job is guarded (PRs #105, #112); the remaining server-side steps for the owner are tracked privately. See `security-review-2026-10-07.md` (C-H1) for this and the rest of the 2026-10-07 review.
 
 Still open (small, can be done without the server owner):
 3. Mentor gender can be changed freely after sign-up; decide whether a gender change needs the team's confirmation.

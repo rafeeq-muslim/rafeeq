@@ -2,7 +2,7 @@
 
 Asked for by the product owner once the repository became public: assume attackers read the code. Focus: denial of service and injection, then data safety. Three read-only audits ran on `main` (A: denial of service and limits; B: injection and access control; C: data safety and what the public repo reveals). Nothing was tested against production or third-party sites; timings were measured locally.
 
-Each finding names its fix (pull request) or the accepted risk. Status is as of 2026-10-08. The two findings whose fix is not complete are listed in one neutral line each; their detail is kept with the team, outside the public repository.
+Each finding names its fix (pull request) or the accepted risk. Status is as of 2026-10-07. The two findings whose fix is not complete are listed in one neutral line each; their detail is kept with the team, outside the public repository.
 
 ## Summary
 
@@ -24,7 +24,7 @@ No SQL injection, cross-site scripting, server-side request forgery, path traver
 | A-H4 | **The urgent (danger) channel could be flooded or blocked**: alerts and pushes to every responder were not bounded per sender, and a shared ceiling could turn a real request away | **Fixed, #118 and #114 (live).** An urgent request is never refused for volume; the push to everyone is limited instead (once per request, then at intervals while nobody holds it, with an overall ceiling, after which the team is told). Danger alerts from the assistant are limited per asker and per address. An answered urgent thread belongs to its holder and the team |
 | A-H5 | **Anonymous usage events could grow without bound**, and clean-up queries scanned a growing table | **Fixed, #116 (live).** Events counted per device and per address in small batches; indexes on the outbox payload keys; nightly retention (90 days; the newest account status is always kept) |
 | B-H1 | **A vetted mentor could end up with a different gender than staff approved**: approval kept the account's current gender, a learner could change theirs before approval, and an invite let the registrant choose. That would put a man in the sisters' pool, suggestions and groups | **Fixed, #114 and #117 (live).** Approval uses the application's gender (409 on a mismatch); invites carry a gender that sign-up enforces, and a mentor invite without one is refused at sign-up. Production had no applications and no mentors when found: nothing to repair |
-| C-H1 | **The runners on the production server could be reached from pull requests.** A pull request runs its own copy of the workflow, so no condition in the file protects a self-hosted runner; the approval setting was the only control. | **Repo side fixed, #105 and #112 (live).** CI runs on GitHub-hosted runners with pinned actions; deploy requires `main`, the team repository and the protected `production` environment; outside contributors cannot open pull requests. **Owner steps still open**: see «Outside the repository» |
+| C-H1 | **The runners on the production server could be reached from pull requests.** A pull request runs its own copy of the workflow, so no condition in the file protects a self-hosted runner; the approval setting was the only control. | **Repo side fixed, #105 and #112 (live).** CI runs on GitHub-hosted runners with pinned actions; deploy requires `main`, the team repository and the protected `production` environment; outside contributors cannot open pull requests. |
 | C-H2 | **A failed deploy printed backend log lines into the now-public Actions log**; database errors there could include bound parameters (search words, emails, contacts, hashes) | **Fixed, #112 and #110 (live).** The log goes to a 600-mode file on the server; `hide_parameters=True`. The two earlier failed runs were read: nothing sensitive in them |
 
 ## Medium
@@ -70,16 +70,16 @@ No SQL injection, cross-site scripting, server-side request forgery, path traver
 | B-L13 | Library link check followed redirects to any host | Fixed, #118: the library's hosts only, each hop checked |
 | B-L14 | Unknown lesson ids from anonymous events were listed to the team | Fixed, #118: only ids of the path are listed |
 | C-L2 | Limiter keys from raw usernames | Fixed, #110 |
-| C-L3 | A known username can be locked out of sign-in (8 tries per 10 minutes, counted before the password check) | **Accepted:** the brute-force trade-off (`implementation/PLT-02.md` §3) |
+| C-L3 | Sign-in lockout trade-off | **Accepted** (`implementation/PLT-02.md` §3) |
 | C-L4, C-L5 | Two-step codes: older codes stayed valid; attempts not atomic; `/2fa/confirm` unlimited | Fixed, #110 |
-| C-L6 | Refresh tokens rotate without reuse detection | **Deferred** (`implementation/PLT-02.md` §3) |
+| C-L6 | Refresh-token handling: one further hardening step | **Deferred** (`implementation/PLT-02.md` §3) |
 | C-L7 | Access tokens outlived a password change by up to 30 minutes | Fixed, #110 |
 | C-L8 | `/api/me/password` unlimited | Fixed, #110 |
 | C-L10 | Expired sessions and codes never purged | Fixed, #110 (daily) and #116 (outbox retention) |
 | C-L11 | Account deletion left the account's id in some outbox rows | Fixed, #110 |
 | C-L12 | API docs and schema public in production | Fixed, #110 |
 | C-L13 | Database container settings to narrow | Ready with #111 (on hold) |
-| C-L14 | Backups unencrypted; deleted data lives in them up to 7 days | **Accepted for now**; one policy sentence to add |
+| C-L14 | Backup policy | **Accepted for now** |
 | C-L15 | Password policy is a length minimum only | **Deferred** (`implementation/PLT-02.md` §3) |
 | A/B/C | Per-address limits depend on the host router setting the client address | **Checked safe** in audit A (the router trusts only loopback for `CF-Connecting-IP`); the router itself is outside the repo |
 
@@ -87,19 +87,14 @@ No SQL injection, cross-site scripting, server-side request forgery, path traver
 
 | Item | Status |
 | --- | --- |
-| The bootstrap admin's account name in two `STATUS.md` files | Removed from the tree, #112. It stays in git history: **the owner renames the account** |
+| The bootstrap admin's account name in two `STATUS.md` files | Removed from the tree, #112 |
 | The server account's home-directory paths in infra scripts, docs and the deck sources | Replaced by `RAFEEQ_CONFIG_DIR`, `RAFEEQ_CORPUS_DIR`, `RAFEEQ_BACKUP_DIR` and `~/…`, #112 |
-| Three personal email addresses in commit metadata | History only. Noreply addresses from now on (owner and team) |
+| Three personal email addresses in commit metadata | History only |
 | No secret, key or token in the tree or its history; no seed or demo accounts; no real phone numbers | Checked |
 
-## Outside the repository (owner)
+## Outside the repository
 
-1. **Remove the two CI runners from the server** now that CI runs on hosted runners (`systemctl --user disable --now rafeeq-runner.service rafeeq-runner-2.service`, then delete them under Settings → Actions → Runners).
-2. **Restrict the deploy and events runners.** They should accept only the deploy and notify workflows on `main`. Either re-register both in an organisation runner group limited to `deploy.yml@refs/heads/main` and `notify.yml@refs/heads/main`, or drop both and deploy with a systemd timer that fetches `main`.
-3. **Add the two contact-encryption keys** to the secrets file, then merge #111 (commands in the pull request). Keep a copy: losing the keys loses the contacts.
-4. **Rename the bootstrap admin account.**
-5. **Noreply commit emails** for the three team members.
-6. Confirm the host router's `proxy_read_timeout` is at least 60 s for `/api/`, and that it sets the client address from `CF-Connecting-IP`.
+Server-side steps for the owner are tracked privately.
 
 ## Decisions waiting for the owner
 
@@ -121,4 +116,4 @@ No SQL injection, cross-site scripting, server-side request forgery, path traver
 
 ## Earlier review (2026-10-05), re-checked
 
-Item 2 «CI keeps running on the production host's runner, accepted because the repo is private» no longer holds: see C-H1. Item 4 (the database container receives the whole secrets file) is fixed in #111. The items listed as fixed there were confirmed, with these residuals now closed: #2 ex-mentor access (B-M1), #5 AI budget (A-H3, A-L1), #6 urgent flooding (A-H4).
+Item 2 «CI keeps running on the production host's runner, accepted because the repo is private» no longer holds: see C-H1. Item 4 (the database container receives the whole secrets file) is ready in #111 (on hold). The items listed as fixed there were confirmed, with these residuals now closed: #2 ex-mentor access (B-M1), #5 AI budget (A-H3, A-L1), #6 urgent flooding (A-H4).
