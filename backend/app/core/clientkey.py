@@ -13,7 +13,7 @@
 
 import ipaddress
 
-from fastapi import Request
+from fastapi import HTTPException, Request, status
 
 from app.core import ratelimit
 
@@ -52,5 +52,10 @@ def primary(request: Request, user) -> str:
 def hit(scope: str, request: Request, user, limit: int, window_s: int) -> None:
     """Count one request in `scope` against the address and the account.
     Raises 429 `rate_limited` when either is over `limit` per `window_s`."""
-    for key in keys(request, user):
-        ratelimit.hit(f"{scope}:{key}", limit, window_s)
+    names = [f"{scope}:{key}" for key in keys(request, user)]
+    # Check both before counting either: a request refused on the account
+    # does not also use up the address's allowance (and the other way round).
+    if any(ratelimit.full(name, limit, window_s) for name in names):
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "rate_limited")
+    for name in names:
+        ratelimit.hit(name, limit, window_s)

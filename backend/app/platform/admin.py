@@ -49,7 +49,7 @@ def invite_status(i: Invite, now: datetime | None = None) -> str:
 def new_invite(session, role: str, created_by: uuid.UUID, org_id: uuid.UUID | None = None, expires_at: datetime | None = None) -> Invite:
     """One one-time code for `role`, added to the session (the caller commits).
     Also used by CMP-08 when an application is approved."""
-    code = f"{role[:3].upper()}-{secrets.token_hex(4).upper()}"
+    code = f"{role[:3].upper()}-{secrets.token_urlsafe(16)}"  # security audit M5: 128 random bits; 26 chars fit String(32)
     invite = Invite(code=code, role=role, created_by=created_by, org_id=org_id, expires_at=expires_at)
     session.add(invite)
     return invite

@@ -1,14 +1,22 @@
 # Production on this server: `docker compose -p rafeeq -f infra/compose.prod.yml up -d --build`
-# Secrets live only in /home/naser/.config/rafeeq/secrets.env (never in git).
+# Secrets live only in ~/.config/rafeeq/secrets.env on the server (never in git).
+# Server paths are taken from the account that runs compose: RAFEEQ_CONFIG_DIR
+# (default $HOME/.config/rafeeq) and RAFEEQ_CORPUS_DIR (default
+# $HOME/.local/share/rafeeq/corpus). Run compose as the deploy account, not with
+# sudo: another account's $HOME would point at missing files.
 name: rafeeq
 services:
   db:
     image: pgvector/pgvector:pg16
     restart: unless-stopped
+    # Container logs are capped: they can hold personal data and would otherwise grow without limit.
+    logging: &logging
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }
     environment:
       POSTGRES_USER: rafeeq
       POSTGRES_DB: rafeeq
-    env_file: /home/naser/.config/rafeeq/secrets.env
+    env_file: ${RAFEEQ_CONFIG_DIR:-${HOME}/.config/rafeeq}/secrets.env
     volumes: [pgdata:/var/lib/postgresql/data]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U rafeeq -d rafeeq"]
@@ -18,14 +26,15 @@ services:
     image: rafeeq-backend:latest
     build: { context: .., dockerfile: backend/Dockerfile }
     restart: unless-stopped
-    env_file: /home/naser/.config/rafeeq/secrets.env
+    logging: *logging
+    env_file: ${RAFEEQ_CONFIG_DIR:-${HOME}/.config/rafeeq}/secrets.env
     environment:
       ENV: production
       PUBLIC_URL: https://rafeeq.nan.sa
       CORPUS_DIR: /srv/corpus
     # KNW-02 source files: outside the public repo, read-only in the container.
     volumes:
-      - /home/naser/.local/share/rafeeq/corpus:/srv/corpus:ro
+      - ${RAFEEQ_CORPUS_DIR:-${HOME}/.local/share/rafeeq/corpus}:/srv/corpus:ro
     depends_on: { db: { condition: service_healthy } }
     # Security audit 2026-10-07 A-L7: --limit-concurrency answers 503 past 200 open connections instead of
     # queueing without bound; --timeout-keep-alive closes idle connections after 5 s. ONE process on purpose
@@ -41,6 +50,7 @@ services:
         VITE_VAPID_PUBLIC_KEY: ${VITE_VAPID_PUBLIC_KEY:-}
         VITE_BUILD_ID: ${VITE_BUILD_ID:-dev}
     restart: unless-stopped
+    logging: *logging
     ports: ["127.0.0.1:5380:80"]
     depends_on: [backend]
 volumes:

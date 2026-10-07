@@ -1,21 +1,34 @@
-"""Settings from the environment. No secret has a default value."""
+"""Settings from the environment.
+
+Secrets default to empty, except `jwt_secret`, whose default is a public
+placeholder for local runs only. With ENV=production the settings refuse to
+load (so the backend does not start) while that placeholder or a short secret
+is in use: see `Settings._production_secrets`."""
 
 from functools import lru_cache
 from pathlib import Path
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parents[3]
 
+DEV_JWT_SECRET = "dev-only-change-me"  # public: fine on a laptop, refused in production
+# The placeholder of backend/.env.example is public too.
+PUBLIC_JWT_SECRETS = (DEV_JWT_SECRET, "change-me-generate-a-long-random-value")
+MIN_JWT_SECRET_CHARS = 32
+MIN_BOOTSTRAP_PASSWORD_CHARS = 16
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    # hide_input_in_errors: a refused setting is named, its value (a secret) never printed.
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore", hide_input_in_errors=True)
 
     env: str = "development"
     public_url: str = "http://localhost:5173"
     database_url: str = "postgresql+asyncpg://rafeeq:rafeeq_dev@127.0.0.1:5442/rafeeq"
 
-    jwt_secret: str = "dev-only-change-me"
+    jwt_secret: str = DEV_JWT_SECRET
     access_token_minutes: int = 30
     refresh_token_days: int = 60
 
@@ -146,6 +159,29 @@ class Settings(BaseSettings):
     # Bootstrap admin (created once if no admin exists).
     bootstrap_admin_username: str = ""
     bootstrap_admin_password: str = ""
+
+    @model_validator(mode="after")
+    def _production_secrets(self) -> "Settings":
+        """Security audit M2: production never runs on a public or guessable
+        secret. The message says what to set; it never repeats a value."""
+        if not self.is_production:
+            return self
+        problems = []
+        if self.jwt_secret in PUBLIC_JWT_SECRETS or len(self.jwt_secret) < MIN_JWT_SECRET_CHARS:
+            problems.append(
+                f"JWT_SECRET is missing, a public placeholder or shorter than {MIN_JWT_SECRET_CHARS} characters. "
+                'Set JWT_SECRET in the secrets file to the output of: python3 -c "import secrets; print(secrets.token_urlsafe(48))" '
+                "(everyone signs in again after it changes)."
+            )
+        if self.bootstrap_admin_password and len(self.bootstrap_admin_password) < MIN_BOOTSTRAP_PASSWORD_CHARS:
+            problems.append(
+                f"BOOTSTRAP_ADMIN_PASSWORD is shorter than {MIN_BOOTSTRAP_PASSWORD_CHARS} characters. "
+                "Set a longer one, or remove BOOTSTRAP_ADMIN_USERNAME and BOOTSTRAP_ADMIN_PASSWORD from the secrets file "
+                "if an admin account already exists (they are read only while there is no admin)."
+            )
+        if problems:
+            raise ValueError("Refusing to start with ENV=production: " + " ".join(problems))
+        return self
 
     @property
     def is_production(self) -> bool:

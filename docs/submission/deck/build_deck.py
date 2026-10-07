@@ -1,11 +1,11 @@
 import re
 head=''
-fonts='''@font-face{font-family:Plex;font-weight:400;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Regular.woff2) format('woff2')}
-@font-face{font-family:Plex;font-weight:500;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
-@font-face{font-family:Plex;font-weight:600;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
-@font-face{font-family:Plex;font-weight:700;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahsans-Bold.woff2) format('woff2')}
-@font-face{font-family:Disp;font-weight:500;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahserifdisplay-Medium.woff2) format('woff2')}
-@font-face{font-family:Disp;font-weight:700;src:url(file:///home/naser/projects/aktham/anamuslim/rafeeq/frontend/public/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2) format('woff2')}
+fonts='''@font-face{font-family:Plex;font-weight:400;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahsans-Regular.woff2) format('woff2')}
+@font-face{font-family:Plex;font-weight:500;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
+@font-face{font-family:Plex;font-weight:600;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahsans-Medium.woff2) format('woff2')}
+@font-face{font-family:Plex;font-weight:700;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahsans-Bold.woff2) format('woff2')}
+@font-face{font-family:Disp;font-weight:500;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahserifdisplay-Medium.woff2) format('woff2')}
+@font-face{font-family:Disp;font-weight:700;src:url(../../../../frontend/public/fonts/thmanyah/thmanyahserifdisplay-Bold.woff2) format('woff2')}
 '''
 CSS=fonts+'''
 :root{--ink:#1d1645;--deep:#3b2d99;--violet:#5a48d6;--lav:#7a5ce0;--orchid:#c47ad0;--apricot:#ffc77d;--amber:#f5a23a;--dawn:#f08a4b;--mist:#f7f6fb;--line:#e4e1f2;--muted:#55517a;--t2:#46425f;--v50:#f4f2ff;--v100:#ece9ff;--v200:#d6d0ff;--ok:#157249;--okbg:#e3f4ec}

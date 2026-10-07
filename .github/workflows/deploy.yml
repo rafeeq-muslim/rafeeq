@@ -1,6 +1,9 @@
-# Production deploy on this server (no staging, owner's decision). Runs only
-# on pushes to main or by hand, never on pull requests, so code from forks
-# never reaches the self-hosted runner.
+# Production deploy on the team's server (no staging, owner's decision). Runs
+# only on pushes to main or by hand, never on pull requests.
+# The repo is public, so this file is not what keeps other code off the
+# deploy runner: that is the runner's own restriction (selected workflows on
+# main) and the protected `production` environment, both set in GitHub by the
+# owner (docs/engineering/plan.md §10).
 name: Deploy
 on:
   push: { branches: [main] }
@@ -9,28 +12,34 @@ permissions: { contents: read }
 concurrency: { group: deploy-production, cancel-in-progress: false }
 jobs:
   deploy:
-    # Security review #4: production deploys only ever come from main.
-    if: github.ref == 'refs/heads/main'
+    # Security review #4: production deploys only ever come from main, and
+    # only in the team's repository (a fork's copy of this file never runs it).
+    if: github.ref == 'refs/heads/main' && github.repository == 'rafeeq-muslim/rafeeq'
     # Its own runner (label rafeeq-deploy, nothing else uses it), so a
-    # deploy starts at once instead of queueing behind CI on the shared ones.
+    # deploy starts at once.
     runs-on: [self-hosted, rafeeq-deploy]
+    # Protected in GitHub to the main branch: a run from another branch is refused.
+    environment: production
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: { persist-credentials: false }
       - name: Deploy
         run: bash infra/scripts/deploy.sh
   # PLT-11 R1: after the deploy, check the live site lets browsers keep the
   # hashed files and fonts. Its own job, so it can never trigger deploy.sh's
-  # rollback. While the host router adds `no-store` it only warns (annotation
+  # rollback. It only reads the public site, so it runs on a GitHub-hosted
+  # runner. While the host router adds `no-store` it only warns (annotation
   # in the run summary); set STRICT_CACHE_CHECK to "1" once the router is fixed.
   live-cache-headers:
     needs: deploy
-    runs-on: [self-hosted, rafeeq-deploy]
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     env: { STRICT_CACHE_CHECK: "0" }
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with: { node-version: 24 }
       - name: Live cache headers (PLT-11 R1)
         run: node frontend/scripts/check-live-cache.mjs

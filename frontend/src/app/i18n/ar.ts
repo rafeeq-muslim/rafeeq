@@ -1578,4 +1578,8 @@ export const ar = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "أتُنهي هذه المحادثة؟",
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
+  "ask.context.about": "عن: {lesson} · {item}",
+  "ask.context.aboutLesson": "عن: {lesson}",
+  "ask.context.dismiss": "اسأل دون سياق الدرس",
 } as const

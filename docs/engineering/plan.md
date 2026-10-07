@@ -28,7 +28,7 @@ A working product at **https://rafeeq.nan.sa**, deployed from `main` by GitHub A
 | Push | Web Push (VAPID) via `pywebpush` | MOT-05 reminders, help-request replies, group challenge |
 | Jobs | APScheduler inside the backend process (single instance) | Reminders every minute, daily snapshots 00:00 Asia/Riyadh (MOT-08) |
 | AI | OpenRouter (chat + embeddings) behind one `ai` module with model routing, budget guard and logging without identity | KNW plan §12.5, `rules.md` §2.6 |
-| Deploy | Docker Compose (db, backend, web) on this server; nginx router `rafeeq.nan.sa` → `127.0.0.1:5380`; GitHub Actions self-hosted runner (container) deploys on push to `main` | Owner: "always prod, no staging" |
+| Deploy | Docker Compose (db, backend, web) on this server; nginx router `rafeeq.nan.sa` → `127.0.0.1:5380`; a GitHub Actions self-hosted runner used only for deploys runs it on push to `main`; CI runs on GitHub-hosted runners | Owner: "always prod, no staging" |
 
 ## 3. Repository layout
 
@@ -38,7 +38,7 @@ backend/             FastAPI app (app/<domain>/...), alembic/, tests/
 content/             approved-content sources: lessons (per unit, per language), cards, fixed replies, eval set
 data/hisnmuslim/     adhkar data (PR #3)
 infra/               compose.yml, web nginx.conf, runner compose
-.github/workflows/   ci.yml (all pushes/PRs, GitHub-hosted), deploy.yml (push to main, self-hosted)
+.github/workflows/   ci.yml (main and PRs, GitHub-hosted), deploy.yml (push to main, self-hosted), notify.yml (events log, self-hosted)
 docs/engineering/    this plan, status, decisions, conflicts, AI agents, UX journey
 ```
 
@@ -115,6 +115,9 @@ Measured prices on OpenRouter, 2026-10-05 (USD per million tokens, in/out): `goo
 
 ## 10. Operations
 
-- Secrets only in `/home/naser/.config/rafeeq/secrets.env` (server) and GitHub encrypted secrets if ever needed. Never in git.
-- Backups: nightly `pg_dump` to `/home/naser/backups/rafeeq/` (7 kept).
+- Secrets only in `~/.config/rafeeq/secrets.env` (server, the deploy account's home) and GitHub encrypted secrets if ever needed. Never in git.
+- Backups: nightly `pg_dump` to `~/backups/rafeeq/` on the server (7 kept).
 - Health: `/api/health`; deploy waits for it and rolls back to the previous image on failure.
+- Server paths are never written in the repo: `infra/` reads `RAFEEQ_CONFIG_DIR` (default `$HOME/.config/rafeeq`), `RAFEEQ_CORPUS_DIR` (default `$HOME/.local/share/rafeeq/corpus`) and `RAFEEQ_BACKUP_DIR` (default `$HOME/backups/rafeeq`). Run compose as the deploy account, never with sudo.
+- A failed deploy does not print the backend log in the (public) Actions run: the last 80 lines go to `~/.local/state/rafeeq/deploy-fail-<commit>.log` on the server (mode 600) and the run shows only that path. Container logs are capped at 3 files of 10 MB per service.
+- Runners (the repo is public): CI runs only on GitHub-hosted runners and no CI job may name a self-hosted label, because a pull request brings its own workflow file. The server keeps two runners, `rafeeq-deploy` (deploy.yml) and `rafeeq-events` (notify.yml). What keeps other code off them is set in GitHub, not in the repo: the runners accept only those two workflow files on `main`, and the `production` environment accepts only `main`. Actions are pinned to a commit and checkouts keep no token (`persist-credentials: false`). `backend/tests/test_sec_ci_deploy.py` checks the repo side.

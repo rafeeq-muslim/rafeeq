@@ -2,7 +2,7 @@
 # Nightly database backup (plan §10): compressed pg_dump, newest 7 kept.
 # Backups stay on this server, outside the repo; they contain user data.
 set -euo pipefail
-DIR=/home/naser/backups/rafeeq
+DIR="${RAFEEQ_BACKUP_DIR:-$HOME/backups/rafeeq}"
 mkdir -p "$DIR" && chmod 700 "$DIR"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 docker compose -p rafeeq -f "$(dirname "$0")/../compose.prod.yml" exec -T db \
