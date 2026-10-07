@@ -4,7 +4,6 @@
  * screens keep the 600px column. The conversation composer bar belongs to
  * its page's column (it has no width of its own).
  */
-import { readFileSync } from "node:fs"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { cleanup, render, screen } from "@testing-library/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -13,6 +12,7 @@ import { MemoryRouter, Route, Routes } from "react-router"
 import { useDevice } from "@/app/stores/device"
 import { AppShell, ComposerBar } from "@/components/rafeeq"
 import { Composer } from "@/app/companion/Chat"
+import reviewDeskSource from "@/app/pages/roles/ReviewDesk.tsx?raw"
 
 vi.mock("@/app/learning/useContent", () => ({
   useContent: () => ({ content: undefined, isLoading: false, isError: false, refetch: () => undefined, lessons: [], preview: false }),
@@ -121,10 +121,8 @@ describe("the composer bar follows its page's column", () => {
 })
 
 describe("PLT-17 R3: bars at the bottom of a page stay inside the page", () => {
-  const source = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8")
-
   it("the review desk item's decision bar is the page's own bar, never fixed to the window", () => {
-    const desk = source("./pages/roles/ReviewDesk.tsx")
+    const desk = reviewDeskSource
     expect(desk).toContain('<ComposerBar data-slot="desk-decision-bar"')
     expect(desk).not.toMatch(/className="fixed inset-x-0 bottom-0/) // it ran under the navigation rail on a wide screen
   })
