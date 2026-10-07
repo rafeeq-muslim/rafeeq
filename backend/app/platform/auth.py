@@ -211,6 +211,7 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     if await session.scalar(select(User.id).where(User.username == body.username)):
         raise HTTPException(status.HTTP_409_CONFLICT, {"code": "username_taken", "suggestions": [generate.username() for _ in range(3)]})
     roles = ["learner"]
+    gender = body.gender
     invite: Invite | None = None
     if body.invite_code:
         key, limit, window = INVITE_FAILS
@@ -228,15 +229,20 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         # MOT-08: the team role is granted only in the database; an invite made
         # for it before that decision still opens a normal account and is used up.
         roles = ["learner"] if invite.role == "team" else [invite.role]
-        if invite.role == "mentor" and not body.gender:
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
+        if invite.role == "mentor":
+            # Security review B-H1: the gender staff approved wins over what the
+            # registrant sends. Only a code made before invites carried one
+            # still takes the registrant's word.
+            gender = invite.gender or body.gender
+            if not gender:
+                raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
     user = User(
         username=body.username,
         display_name=body.display_name,
         password_hash=await pwhash.hash_password(body.password),
         roles=roles,
         locale=body.locale,
-        gender=body.gender,
+        gender=gender,
         languages=body.languages or [body.locale],
     )
     session.add(user)
@@ -380,9 +386,17 @@ me = APIRouter(prefix="/api/me", tags=["me"])
 GENDER_LOCKED_ROLES = ("mentor", "team", "admin")
 
 
-def set_own_gender(user: User, gender: str) -> None:
-    if user.gender and gender != user.gender and any(user.has(r) for r in GENDER_LOCKED_ROLES):
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "gender_locked")
+async def set_own_gender(session, user: User, gender: str) -> None:
+    if user.gender and gender != user.gender:
+        if any(user.has(r) for r in GENDER_LOCKED_ROLES):
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "gender_locked")
+        # Security review B-M6: a learner's gender decided who answers them,
+        # who mentors them and which group they sit in. It does not change
+        # under those; Companion says whether any of them still stands.
+        from app.companion.public import gender_in_use
+
+        if await gender_in_use(session, user.id):
+            raise HTTPException(status.HTTP_409_CONFLICT, "gender_in_use")
     user.gender = gender
 
 
@@ -421,7 +435,7 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
     if body.languages is not None:
         user.languages = body.languages
     if body.gender is not None:
-        set_own_gender(user, body.gender)
+        await set_own_gender(session, user, body.gender)
     await session.commit()
     return me_out(user)
 

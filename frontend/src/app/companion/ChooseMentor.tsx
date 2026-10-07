@@ -51,8 +51,9 @@ export function MatchForm({
       await mentorApi.match(gender, langs)
       await qc.invalidateQueries({ queryKey: ["cmp"] })
       onDone()
-    } catch {
-      toast.error(t("common.error"))
+    } catch (e) {
+      // Security review B-M6: no gender change while a mentor, a group or an open request stands.
+      toast.error(t(errorCode(e) === "gender_in_use" ? "sec.gender.inUse" : "common.error"))
     } finally {
       setPending(false)
     }

@@ -14,6 +14,8 @@
 | R5 (what a request shows) | `inbox.py::_out` | `handle` (display name, or a 4-digit guest number), `is_guest`, `lang`, `topic`, `source`, `kind`. Never username, device, IP or token |
 | R6 (mentees; status only with permission) | `inbox.py::mentees` + `events.py::on_engagement` | `EngagementStatusChanged {user_id, status}` → `cmp_mentee_status` (CMP's own copy). The list shows display name, chosen date, `needs_welcome`; `status` is included **only** when `MentorLink.share_progress` is true at read time. Non-mentors → 403 |
 
+**Security review B-M3 (2026-10-07), `inbox.py::visible_clause`, `may_close`, `close`, `make_urgent`; `help.py::_notify_mentor_of`.** An urgent request is visible to every responder only while `mentor_id IS NULL`; once held (the first reply sets `mentor_id`) only its holder (`assigned_clause`) and team/admin see, answer or close it, and it returns to everyone when the holder is cleared (block, suspension). `POST …/close` answers `403 not_assigned` unless the caller is the assignee or team/admin (`RequestRow.can_close` drives the menu item). `POST …/urgent` on a held conversation (`kind = mentor`, or any request with a first reply) keeps `mentor_id` and pushes team/admin only; on an unanswered request it clears `mentor_id` and pushes every responder (rules.md §2.8). A learner's new message in a held urgent request pushes its holder and team/admin, not every mentor. The team reads the whole escalated thread (open question in the feature doc). Tests: `backend/tests/test_sec_b_m3_urgent_threads.py` (9), `frontend/src/app/companion/sec-b.m3.close.test.tsx` (2).
+
 Blocks (CMP-04 R5) are applied in `_visible`: a request whose owner blocked this mentor is never shown to them.
 
 ## 2. Endpoints (role `mentor`, or `team` for urgent)

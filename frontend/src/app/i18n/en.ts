@@ -1581,6 +1581,13 @@ export const en: Dict = {
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
   // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
   "cmp.thread.earlier": "Earlier messages",
+  // --- SEC-B (sec-companion-access): security review B; Tagalog needs native review ---
+  "sec.invite.gender": "Mentor's gender",
+  "sec.invite.genderHint": "Saved with the code. The account created with it gets this gender, and its owner cannot change it.",
+  "sec.apps.genderMismatch": "The account's gender today differs from the one on the application, so it was not approved. Check with the applicant or reject it.",
+  "sec.inbox.urgentHint": "The team sees it at once. If nobody has answered it yet, all mentors see it too. Use it for harm or danger.",
+  "sec.gender.inUse": "This choice cannot change while you have a mentor, a group or a help request that is still open. End those first, then change it.",
+  "sec.org.codeLinks": "Linked devices: {n} · last day: {d}",
   // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
   "ask.context.about": "About: {lesson} · {item}",
   "ask.context.aboutLesson": "About: {lesson}",

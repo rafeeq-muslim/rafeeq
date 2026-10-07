@@ -175,7 +175,7 @@ CODE_RE = r"-[A-Za-z0-9_-]{22}"  # secrets.token_urlsafe(16): 128 random bits
 async def test_sec_m5_team_invite_codes_are_long_and_still_work(client):
     admin = auth(await with_roles(client, "admin-1", "admin"))
     for role, prefix in (("mentor", "MEN"), ("admin", "ADM"), ("sharia_reviewer", "SHA")):
-        code = (await client.post("/api/admin/invites", json={"role": role}, headers=admin)).json()["codes"][0]
+        code = (await client.post("/api/admin/invites", json={"role": role, "gender": "m"}, headers=admin)).json()["codes"][0]
         assert re.fullmatch(prefix + CODE_RE, code), code
         assert len(code) <= Invite.__table__.c.code.type.length
     out = await register(client, username="new-mentor", invite_code=code, gender="m")
@@ -190,7 +190,7 @@ async def test_sec_m5_organisation_invite_codes_are_long(client):
     async with SessionLocal() as s:
         coordinator_code = await s.scalar(select(Invite.code).where(Invite.role == "org_coordinator"))
     assert re.fullmatch("ORG" + CODE_RE, coordinator_code)
-    r = await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)
+    r = await client.post(f"/api/org/{org.id}/invites", json={"gender": "m"}, headers=org.coordinator.h)
     assert re.fullmatch("MEN" + CODE_RE, r.json()["code"]), r.text
 
 
@@ -198,7 +198,7 @@ async def test_sec_m5_cmp08_approval_invite_is_long():
     from app.platform.admin import new_invite
 
     async with SessionLocal() as s:
-        invite = new_invite(s, "mentor", None)
+        invite = new_invite(s, "mentor", None, gender="m")
         assert re.fullmatch("MEN" + CODE_RE, invite.code)
         s.expunge(invite)
 

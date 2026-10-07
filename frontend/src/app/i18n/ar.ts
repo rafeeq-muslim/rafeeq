@@ -1580,6 +1580,13 @@ export const ar = {
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
   // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
   "cmp.thread.earlier": "الرسائل الأقدم",
+  // --- SEC-B (sec-companion-access): security review B ---
+  "sec.invite.gender": "جنس المرشد",
+  "sec.invite.genderHint": "يُحفظ مع الرمز، ويكون جنس الحساب الذي يُنشأ به، ولا يغيّره صاحبه.",
+  "sec.apps.genderMismatch": "جنس الحساب اليوم يخالف الجنس المكتوب في الطلب، فلم يُقبل. راجع صاحب الطلب أو ارفضه.",
+  "sec.inbox.urgentHint": "يراه الفريق فورًا. وإن لم يُجب عنه أحد بعد رآه كل المرشدين أيضًا. استعمله في الأذى أو الخطر.",
+  "sec.gender.inUse": "لا يتغير هذا الاختيار ما دام لك مرشد أو مجموعة أو طلب مساعدة لم يُغلق. أنهِ ذلك أولًا ثم غيّره.",
+  "sec.org.codeLinks": "الأجهزة المرتبطة: {n} · في آخر يوم: {d}",
   // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
   "ask.context.about": "عن: {lesson} · {item}",
   "ask.context.aboutLesson": "عن: {lesson}",

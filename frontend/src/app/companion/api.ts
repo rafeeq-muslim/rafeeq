@@ -64,6 +64,8 @@ export type InboxRow = {
   last_activity_at: string
   assigned_to_me: boolean
   can_reply: boolean
+  /** Security review B-M3: only the assignee or the team ends a conversation (absent on an older server: shown). */
+  can_close?: boolean
 }
 /** `hidden`: only ever true on the responder's own message, hidden for review (CMP-04 R5). */
 export type InboxMessage = {

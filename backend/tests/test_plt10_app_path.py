@@ -137,8 +137,10 @@ def test_plt10_r2_static_files_and_api_are_never_redirected(path):
 
 
 def test_plt10_api_proxy_unchanged():
+    # The proxy lines are as before; the general per-address limit (security
+    # review A-L3, tests/test_sec_a_l3_nginx.py) sits in front of them.
+    assert "  location /api/ {\n    limit_req zone=rafeeq_api burst=4000 nodelay;\n" in NGINX
     assert (
-        "  location /api/ {\n"
         "    proxy_pass http://backend:8000;\n"
         "    proxy_set_header Host $host;\n"
         "    proxy_set_header X-Forwarded-For $remote_addr;\n"

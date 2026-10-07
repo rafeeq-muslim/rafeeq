@@ -10,10 +10,10 @@ counts and pairs only: never a mentee, a request or a conversation.
 import uuid
 from dataclasses import dataclass
 
-from sqlalchemy import func, select
+from sqlalchemy import exists, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion.groups import MENTOR_MEMBER_LIMIT
+from app.companion.groups import MENTOR_MEMBER_LIMIT, may_lead
 from app.companion.inbox import MENTEE_CAP_DEFAULT
 from app.companion.models import Group, GroupMember, HelpRequest, MentorLink, MentorProfile
 
@@ -24,6 +24,35 @@ async def shared_learner_ids(session: AsyncSession, mentor_id: uuid.UUID) -> set
         select(MentorLink.learner_id).where(MentorLink.mentor_id == mentor_id, MentorLink.share_progress.is_(True))
     )
     return set(rows)
+
+
+async def gender_in_use(session: AsyncSession, user_id: uuid.UUID) -> bool:
+    """Security review B-M6, for PLT-02: does this account's gender still
+    decide something here? True while it has a mentor (CMP-03), sits in a
+    group (CMP-05) or has an ordinary request that is not closed (CMP-01 R3).
+    Urgent requests carry no gender and do not count."""
+    return bool(
+        await session.scalar(
+            select(
+                or_(
+                    exists().where(MentorLink.learner_id == user_id),
+                    exists().where(GroupMember.user_id == user_id),
+                    exists().where(
+                        HelpRequest.learner_id == user_id,
+                        HelpRequest.status != "closed",
+                        HelpRequest.kind.in_(("human", "escalation")),
+                    ),
+                )
+            )
+        )
+    )
+
+
+async def may_lead_groups(session: AsyncSession, user) -> bool:
+    """Security review B-M1, for MOT-06: is this account a mentor in good
+    standing now (role held, mentor rules accepted, not suspended)? A group's
+    mentor who is not gets nothing of the group, its challenge included."""
+    return await may_lead(session, user)
 
 
 @dataclass
