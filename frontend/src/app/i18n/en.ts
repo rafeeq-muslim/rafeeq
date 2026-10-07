@@ -1583,4 +1583,5 @@ export const en: Dict = {
   "sec.invite.gender": "Mentor's gender",
   "sec.invite.genderHint": "Saved with the code. The account created with it gets this gender, and its owner cannot change it.",
   "sec.apps.genderMismatch": "The account's gender today differs from the one on the application, so it was not approved. Check with the applicant or reject it.",
+  "sec.inbox.urgentHint": "The team sees it at once. If nobody has answered it yet, all mentors see it too. Use it for harm or danger.",
 }

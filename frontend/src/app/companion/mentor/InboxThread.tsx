@@ -130,9 +130,11 @@ export default function InboxThread() {
                     {t("cmp.inbox.urgent")}
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
-                  {t("cmp.inbox.close")}
-                </DropdownMenuItem>
+                {r.can_close !== false && (
+                  <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
+                    {t("cmp.inbox.close")}
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           )
@@ -187,7 +189,7 @@ export default function InboxThread() {
         open={confirmUrgent}
         onOpenChange={setConfirmUrgent}
         title={t("cmp.inbox.urgent")}
-        description={t("cmp.inbox.urgentHint")}
+        description={t("sec.inbox.urgentHint")}
         confirmLabel={t("cmp.inbox.urgent")}
         cancelLabel={t("common.cancel")}
         destructive

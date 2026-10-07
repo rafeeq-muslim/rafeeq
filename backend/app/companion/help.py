@@ -174,8 +174,12 @@ async def _reported_by_owner(session, owner: Owner) -> set[uuid.UUID]:
 
 
 async def _notify_mentor_of(req: HelpRequest) -> None:
-    if req.kind == "urgent":
+    if req.kind == "urgent" and req.mentor_id is None:
         notify.later(notify.to_responders, "urgent", "/inbox")
+    elif req.kind == "urgent":
+        # Security review B-M3: a held urgent request is its holder's and the team's.
+        notify.later(notify.to_user, req.mentor_id, "urgent", f"/inbox/r/{req.id}")
+        notify.later(notify.to_role, ["team", "admin"], "urgent", "/inbox")
     elif req.mentor_id is not None:
         notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
 
