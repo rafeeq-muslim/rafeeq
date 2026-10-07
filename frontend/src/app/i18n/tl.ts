@@ -1580,6 +1580,8 @@ export const tl: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
   "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
+  // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ⚠️ Tagalog needs native review ---
+  "cmp.thread.earlier": "Mga naunang mensahe",
   // --- SEC-B (sec-companion-access): security review B; Tagalog needs native review ---
   "sec.invite.gender": "Kasarian ng mentor",
   "sec.invite.genderHint": "Kasama itong nase-save sa code. Ito ang magiging kasarian ng account na gagawin gamit nito, at hindi ito mababago ng may-ari.",
@@ -1591,4 +1593,6 @@ export const tl: Dict = {
   "ask.context.about": "Tungkol sa: {lesson} · {item}",
   "ask.context.aboutLesson": "Tungkol sa: {lesson}",
   "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "Luma na ang code na ito at hindi na gumagana. Humingi ng bagong code sa nagpadala nito.",
 }

@@ -26,6 +26,7 @@ import { suraName } from "@/app/lesson/suras"
 import { groupSources, isHadith, isQuran, liveSummary, segments, sourceLabel } from "./answer"
 import { useSaveAnswer } from "./saved"
 import { Helplines } from "@/app/companion/Helplines"
+import { URGENT_START } from "@/app/companion/urgentStart"
 import type { AskResponse, ErrorCode, LiveSearchEntry, SourceCard } from "./types"
 
 /**
@@ -376,7 +377,7 @@ export function ResponseTurn({ response, onRetry, onEdit }: { response: AskRespo
           title={t("ask.danger.title")}
           description={t("ask.danger.body")}
           primaryLabel={t("ask.danger.primary")}
-          onPrimary={() => navigate(helpUrl("urgent", response.ask_id, from))}
+          onPrimary={() => navigate(helpUrl("urgent", response.ask_id, from), { state: URGENT_START })}
         >
           <Helplines />
         </DangerHelpPanel>

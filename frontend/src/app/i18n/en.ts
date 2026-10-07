@@ -1579,6 +1579,8 @@ export const en: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "End this conversation?",
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
+  // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
+  "cmp.thread.earlier": "Earlier messages",
   // --- SEC-B (sec-companion-access): security review B; Tagalog needs native review ---
   "sec.invite.gender": "Mentor's gender",
   "sec.invite.genderHint": "Saved with the code. The account created with it gets this gender, and its owner cannot change it.",
@@ -1590,4 +1592,6 @@ export const en: Dict = {
   "ask.context.about": "About: {lesson} · {item}",
   "ask.context.aboutLesson": "About: {lesson}",
   "ask.context.dismiss": "Ask without the lesson context",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "This code is an old one and no longer works. Ask whoever sent it for a new code.",
 }

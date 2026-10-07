@@ -163,18 +163,21 @@ async def test_h1_org_mentor_invite_needs_a_gender_and_enforces_it(client):
 # --- codes made before invites carried a gender ---------------------------------
 
 
-async def test_h1_old_invite_without_gender_keeps_the_registrant_answer(client):
+async def test_h1_old_mentor_invite_without_gender_opens_no_account_and_stays_unused(client):
     async with SessionLocal() as s:
         s.add(Invite(code="MEN-OLD00001", role="mentor", expires_at=datetime.now(UTC) + timedelta(days=1)))
-        s.add(Invite(code="MEN-OLD00002", role="mentor"))
+        s.add(Invite(code="SHA-OLD00001", role="sharia_reviewer"))
         await s.commit()
 
-    out = await sign_up(client, "old-code-1", "MEN-OLD00001", gender="f")
-    assert out["user"]["gender"] == "f"
+    for name, gender in (("old-code-1", "f"), ("old-code-2", None)):
+        ratelimit.reset()
+        body = {"display_name": "Old Code", "username": name, "password": "pass-1234-word", "invite_code": "MEN-OLD00001"}
+        r = await client.post("/api/auth/register", json=body | ({"gender": gender} if gender else {}))
+        assert r.status_code == 400 and r.json()["detail"] == "invite_needs_reissue"
+    async with SessionLocal() as s:
+        assert (await s.get(Invite, "MEN-OLD00001")).used_by is None
+        assert await s.scalar(select(User.id).where(User.username.in_(["old-code-1", "old-code-2"]))) is None
 
-    ratelimit.reset()
-    r = await client.post(
-        "/api/auth/register",
-        json={"display_name": "Old Code", "username": "old-code-2", "password": "pass-1234-word", "invite_code": "MEN-OLD00002"},
-    )
-    assert r.status_code == 400 and r.json()["detail"] == "gender_required_for_mentor"
+    ratelimit.reset()  # other roles never carried a gender and keep working
+    out = await sign_up(client, "old-reviewer", "SHA-OLD00001")
+    assert out["user"]["roles"] == ["sharia_reviewer"]

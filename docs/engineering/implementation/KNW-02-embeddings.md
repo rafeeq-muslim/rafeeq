@@ -48,3 +48,18 @@ Production state 2026-10-06 (read-only, before the source-coverage deploy): ever
 - `test_knw02_search_threshold_drops_weak_vectors_but_checks_full_text` (replaces `…_threshold_returns_empty_list`: reliability R3)
 - `backend/tests/test_knw02_source_coverage.py`: S01–S20 and the owner's islamqa decisions (table in `KNW-02-source-coverage-report.md` §6)
 - `backend/tests/test_knw02_rules.py`: one test per example of KNW-02 R1, R2, R3, R5 and R6 (`test_knw02_r1_*` … `test_knw02_r6_*`), plus `test_knw02_sc3_embedding_turns_go_round_every_source_and_language`
+
+## Word-search bounds (security review 2026-10-07, A-M6)
+
+`search.tsquery` gives at most 12 words of the question (the longest, in the order asked; `MAX_TERMS`), a word is a prefix term only from 3 letters (`PREFIX_MIN`; a 2-letter word is searched as the exact word), and the vector query and the word query each run under `SET LOCAL statement_timeout` of 15 s (`RETRIEVAL_TIMEOUT_MS`), reset after the query. A cancelled query is a failed channel (`degraded` / `unavailable`, `retrieval_db_error`), never an empty result. Measured on the local corpus (161,050 passages), word query only, median of 3:
+
+| Question | Before | After |
+| --- | --- | --- |
+| English, 600 characters of 2-letter words | 43.3 s (100 terms) | 0.19 s (12 terms) |
+| English, 600 characters of common words | 13.7 s (60 terms) | 1.5 s (12 terms) |
+| Arabic, 600 characters of 2-letter words | over 60 s (76 terms) | 1.7 s (12 terms) |
+| Arabic, 600 characters of common words | over 60 s (98 terms) | 5.3 s (24 terms) |
+| Ordinary short questions (4 to 6 terms) | 0.8 to 2.2 s | same query (0.2 to 0.8 s on the second run: a warmer cache, not the change) |
+| Ordinary long question, Arabic (20 terms) | 4.0 s | 3.2 s (19 terms) |
+
+Answer quality: for the 31 questions of `content/knowledge/eval/questions.jsonl` the 24 word-search candidates are identical for 30; Q014 keeps 21 of 24 («كم» is now the exact word, not a prefix). No KNW test changed. Tests: `backend/tests/test_sec_a_m6_retrieval.py`.

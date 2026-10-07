@@ -26,7 +26,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion.models import MentorLink
-from app.core.events import OutboxEvent, publish
+from app.core.events import OutboxEvent, payload_text, publish
 
 EVENT = "MentorContacted"
 RIYADH = ZoneInfo("Asia/Riyadh")
@@ -42,7 +42,7 @@ async def mentor_contacted(session: AsyncSession, link: MentorLink | None, autho
     day_start = datetime.combine(t.astimezone(RIYADH).date(), time.min, RIYADH)
     already = await session.scalar(
         select(OutboxEvent.id)
-        .where(OutboxEvent.name == EVENT, OutboxEvent.payload["user_id"].astext == uid, OutboxEvent.created_at >= day_start)
+        .where(OutboxEvent.name == EVENT, payload_text("user_id") == uid, OutboxEvent.created_at >= day_start)
         .limit(1)
     )
     if already is not None:

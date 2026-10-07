@@ -83,11 +83,11 @@ async def test_plt02_r1_guest_is_invited_not_forced_for_a_mentor_or_group(client
 
 async def test_plt02_r1_three_guest_lessons_move_into_the_account_and_reach_another_device(client):
     out = await register(client)
-    phone = {"completed": {f"u1-l{i}": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-01T08:00:00Z", "times": 1} for i in (1, 2, 3)}}
+    phone = {"completed": {f"u01-l{i}": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-01T08:00:00Z", "times": 1} for i in (1, 2, 3)}}
     assert (await client.put("/api/me/learning", json=phone, headers=auth(out["access_token"]))).status_code == 200
     other_device = (await client.post("/api/auth/login", json={"username": "layla-1", "password": "pass-1234-word"})).json()
     got = (await client.get("/api/me/learning", headers=auth(other_device["access_token"]))).json()
-    assert set(got["completed"]) == {"u1-l1", "u1-l2", "u1-l3"}
+    assert set(got["completed"]) == {"u01-l1", "u01-l2", "u01-l3"}
 
 
 async def test_plt02_r2_gender_is_not_taken_at_sign_up_but_when_matching(client):
@@ -114,7 +114,7 @@ async def test_plt02_delete_account_removes_it(client):
 
 async def test_mentor_signup_needs_team_invite(client):
     async with SessionLocal() as s:
-        s.add(Invite(code="MEN-TEST", role="mentor"))
+        s.add(Invite(code="MEN-TEST", role="mentor", gender="m"))
         await s.commit()
     r = await client.post(
         "/api/auth/register",

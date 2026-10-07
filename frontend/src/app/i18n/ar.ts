@@ -1578,6 +1578,8 @@ export const ar = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "أتُنهي هذه المحادثة؟",
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
+  // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
+  "cmp.thread.earlier": "الرسائل الأقدم",
   // --- SEC-B (sec-companion-access): security review B ---
   "sec.invite.gender": "جنس المرشد",
   "sec.invite.genderHint": "يُحفظ مع الرمز، ويكون جنس الحساب الذي يُنشأ به، ولا يغيّره صاحبه.",
@@ -1589,4 +1591,6 @@ export const ar = {
   "ask.context.about": "عن: {lesson} · {item}",
   "ask.context.aboutLesson": "عن: {lesson}",
   "ask.context.dismiss": "اسأل دون سياق الدرس",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "هذا الرمز قديم ولم يعد يصلح. اطلب رمزًا جديدًا ممن أرسله إليك.",
 } as const

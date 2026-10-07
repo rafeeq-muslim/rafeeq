@@ -5,6 +5,8 @@ tables).
 - `path_order()`: units and their lessons in path order, with each lesson's
   objectives (for MOT-08 R4 and MOT-09 R1/R3, which report per lesson,
   unit and objective).
+- `known_ids()`: the lesson and unit ids of the path (MOT-06 learning log and
+  MOT-03 unit badges accept only these).
 - `is_live()`: whether a lesson or unit is shown to learners in at least
   one language (merged and not withdrawn by the Sharia reviewer), for the
   MOT-06 R1 challenge target.
@@ -30,6 +32,12 @@ def path_order() -> list[dict]:
                 lessons.append({"lesson_id": lid, "objectives": [o["id"] for o in lesson.get("objectives", [])]})
         out.append({"unit_id": u["id"], "lessons": lessons})
     return out
+
+
+def known_ids() -> tuple[set[str], set[str]]:
+    """(lesson ids, unit ids) of the path, shown or not."""
+    s = store()
+    return set(s.lessons), {u["id"] for u in s.units}
 
 
 async def is_live(session: AsyncSession, kind: Literal["lesson", "unit"], item_id: str) -> bool:
