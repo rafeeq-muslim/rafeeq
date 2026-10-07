@@ -22,6 +22,7 @@ Run the gallery with `cd frontend && npm install && npm run dev`. It shows every
 - **Shell:** build screens inside `AppShell` (bottom nav < 840px; rail on the leading edge + column ≤ 600px + `aside` pane ≥ 840px; labelled rail ≥ 1200px). It uses container queries (`@min-[52.5rem]/shell:`), so use those, not viewport breakpoints, inside it.
 - **Native feel (`.claude/skills/mobile-native`):** safe-area padding on bars and sheets, `dvh` for full-height, inputs ≥ 16px, `overscroll-contain` on inner scrollers, hover only via Tailwind `hover:` (already gated).
 - **Bars are opaque:** sticky top bars and bottom action bars use `bg-card` (over the backdrop) or `bg-background` (full-screen flows) with a hairline border; never `bg-*/NN` with `backdrop-blur`. A `fixed` bottom bar reserves its height with `useFooterSpace`.
+- **Page header = full-width band:** use `<TopBar className="sticky top-0" />` as the first element of a page; it bleeds edge to edge on wide screens by itself. Full-screen routes (listed in `AppLayout` `FULLSCREEN`) get no gutters; paint their root with `min-h-dvh` and a background.
 - **Motion (`.claude/skills/animate`):** `ease-rafeeq` (ease-out) for press/enter, `ease-drawer` for sheets; press 120ms, UI < 300ms; never `ease-in` or `scale(0)`; frequent actions don't animate; delight only for the year-flower bloom and celebrations (`badge-pop`, `petal-pop`). Reduced motion shows the final state.
 
 ## How to build a screen

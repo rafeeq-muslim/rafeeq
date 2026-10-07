@@ -1586,4 +1586,8 @@ export const en: Dict = {
   "sec.inbox.urgentHint": "The team sees it at once. If nobody has answered it yet, all mentors see it too. Use it for harm or danger.",
   "sec.gender.inUse": "This choice cannot change while you have a mentor, a group or a help request that is still open. End those first, then change it.",
   "sec.org.codeLinks": "Linked devices: {n} · last day: {d}",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
+  "ask.context.about": "About: {lesson} · {item}",
+  "ask.context.aboutLesson": "About: {lesson}",
+  "ask.context.dismiss": "Ask without the lesson context",
 }

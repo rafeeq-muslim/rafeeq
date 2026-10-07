@@ -5,7 +5,7 @@ schema (it ignores the column; invites without a gender keep the old
 behaviour: the registrant states it).
 
 Revision ID: f0a1b2c3d4e5
-Revises: a7b8c9d0e1f2 (plt-17 invite revoked_at)
+Revises: b8c9d0e1f2a3 (sec-auth-config-hardening)
 Create Date: 2026-10-07 02:00:00
 
 """
@@ -17,7 +17,7 @@ import sqlalchemy as sa
 from alembic import op
 
 revision: str = "f0a1b2c3d4e5"
-down_revision: str | Sequence[str] | None = "a7b8c9d0e1f2"
+down_revision: str | Sequence[str] | None = "b8c9d0e1f2a3"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

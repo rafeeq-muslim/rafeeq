@@ -56,7 +56,7 @@ function AppShell({
         {/* The column is as tall as its content (self-start), so a sticky bar stays
             for the whole scroll. Expanded: the vertical padding is on the column, not on the scroller,
             so a sticky bar reaches the scroller's edge and nothing shows past it. */}
-        <div className="flex min-h-0 flex-1 justify-center gap-8 overflow-y-auto overscroll-contain @min-[52.5rem]/shell:px-6">
+        <div className="flex min-h-0 flex-1 justify-center gap-8 overflow-x-hidden overflow-y-auto overscroll-contain @min-[52.5rem]/shell:px-6">
           <main
             className={cn(
               "flex min-h-full w-full min-w-0 max-w-[37.5rem] flex-col gap-5 self-start pb-6 *:shrink-0 @min-[52.5rem]/shell:py-6",
@@ -139,8 +139,8 @@ function NavRail({
 /**
  * Compact top bar: safe-area aware, sticky, opaque (PLT-04: nothing shows
  * through a bar). It sits on the backdrop, so it takes the card surface like
- * the navigation, with a hairline under it. On expanded widths it reads as
- * the column header.
+ * the navigation, with a hairline under it. On expanded widths a page's
+ * sticky header is a full-width band from the top edge (PLT-04).
  */
 function TopBar({
   start,
@@ -158,6 +158,9 @@ function TopBar({
       data-slot="top-bar"
       className={cn(
         "z-10 flex min-h-14 shrink-0 items-center gap-2 border-b bg-card px-4 pt-[env(safe-area-inset-top,0px)]",
+        // Expanded, as a page's sticky header: it starts at the very top (over the column's
+        // padding) and its surface runs edge to edge, so it is a band, not a box on the backdrop.
+        "@min-[52.5rem]/shell:[&.sticky]:-mt-6 @min-[52.5rem]/shell:[&.sticky]:before:absolute @min-[52.5rem]/shell:[&.sticky]:before:-inset-x-[100vw] @min-[52.5rem]/shell:[&.sticky]:before:top-0 @min-[52.5rem]/shell:[&.sticky]:before:-bottom-px @min-[52.5rem]/shell:[&.sticky]:before:-z-10 @min-[52.5rem]/shell:[&.sticky]:before:border-b @min-[52.5rem]/shell:[&.sticky]:before:border-border @min-[52.5rem]/shell:[&.sticky]:before:bg-card",
         className
       )}
     >

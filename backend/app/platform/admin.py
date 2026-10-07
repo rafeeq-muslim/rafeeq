@@ -65,7 +65,7 @@ def new_invite(
     what the registrant types."""
     if role == "mentor" and gender not in ("m", "f"):
         raise HTTPException(400, GENDER_REQUIRED)
-    code = f"{role[:3].upper()}-{secrets.token_hex(4).upper()}"
+    code = f"{role[:3].upper()}-{secrets.token_urlsafe(16)}"  # security audit M5: 128 random bits; 26 chars fit String(32)
     invite = Invite(
         code=code, role=role, created_by=created_by, org_id=org_id, expires_at=expires_at, gender=gender if role == "mentor" else None
     )

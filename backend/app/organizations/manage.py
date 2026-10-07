@@ -212,7 +212,9 @@ async def _invite(session, org_id: uuid.UUID, role: str, by: uuid.UUID, gender: 
         raise HTTPException(status.HTTP_403_FORBIDDEN, "team_role_db_only" if role == "team" else "role_not_allowed")
     if role == "mentor" and gender not in ("m", "f"):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")  # security review B-H1
-    code = f"{'MEN' if role == 'mentor' else 'ORG'}-{secrets.token_hex(4).upper()}"
+    code = (
+        f"{'MEN' if role == 'mentor' else 'ORG'}-{secrets.token_urlsafe(16)}"  # security audit M5: 128 random bits; 26 chars fit String(32)
+    )
     expires = datetime.now(UTC) + timedelta(days=INVITE_DAYS)
     gender = gender if role == "mentor" else None
     session.add(Invite(code=code, role=role, created_by=by, org_id=org_id, expires_at=expires, gender=gender))

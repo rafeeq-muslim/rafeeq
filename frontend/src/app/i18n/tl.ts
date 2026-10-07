@@ -1587,4 +1587,8 @@ export const tl: Dict = {
   "sec.inbox.urgentHint": "Makikita agad ito ng team. Kung wala pang sumasagot, makikita rin ito ng lahat ng mentor. Gamitin para sa pananakit o panganib.",
   "sec.gender.inUse": "Hindi mababago ang piniling ito habang may mentor ka, grupo, o kahilingan ng tulong na bukas pa. Tapusin muna ang mga iyon, saka ito baguhin.",
   "sec.org.codeLinks": "Mga naka-link na device: {n} · nitong huling araw: {d}",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ⚠️ Tagalog needs native review ---
+  "ask.context.about": "Tungkol sa: {lesson} · {item}",
+  "ask.context.aboutLesson": "Tungkol sa: {lesson}",
+  "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
 }

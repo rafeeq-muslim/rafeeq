@@ -20,18 +20,24 @@ _TLD = (
     r"(?:com|net|org|info|biz|me|io|co|ly|gg|app|dev|page|xyz|link|site|online|store|shop|live|chat|social|"
     r"tv|cc|to|im|ai|us|uk|ca|au|de|fr|ru|in|pk|ph|sa|ae|eg|qa|kw|om|bh|jo|ma|tr|id|my|ng|tk|ml|ga|cf)"
 )
-_AT = r"(?:@|\(\s*at\s*\)|\[\s*at\s*\]|\{\s*at\s*\}|\s+at\s+)"
-_DOT = r"(?:\.|\(\s*dot\s*\)|\[\s*dot\s*\]|\{\s*dot\s*\}|\s+dot\s+)"
+# Linear time (security review 2026-10-07): these patterns run on text whose
+# whitespace runs were collapsed to one space (`_flat`), so each separator
+# carries its own optional single space and no two neighbouring quantifiers can
+# match the same characters. Every pattern also starts only at the beginning of
+# a run (the lookbehinds), and repeats are bounded.
+_AT = r"(?: ?@ ?| ?\( ?at ?\) ?| ?\[ ?at ?\] ?| ?\{ ?at ?\} ?| at )"
+_DOT = r"(?: ?\. ?| ?\( ?dot ?\) ?| ?\[ ?dot ?\] ?| ?\{ ?dot ?\} ?| dot )"
+_LOCAL = r"(?<![A-Za-z0-9._%+-])[A-Za-z0-9._%+-]+"
 
-_EMAIL = re.compile(r"[^\s@]+@[^\s@]+\.[^\s@]{2,}")
+_EMAIL = re.compile(r"(?<![^\s@])[^\s@]+@[^\s@]+\.[^\s@]{2,}")
 # «name @ gmail . com», «name at gmail dot com», «name (at) mail [dot] org»
 _EMAIL_SPELLED = re.compile(
-    rf"[A-Za-z0-9._%+-]+\s*{_AT}\s*[A-Za-z0-9-]+(?:\s*{_DOT}\s*[A-Za-z0-9-]+)*?\s*{_DOT}\s*{_TLD}(?![A-Za-z0-9])",
+    rf"{_LOCAL}{_AT}[A-Za-z0-9-]+(?:{_DOT}[A-Za-z0-9-]+){{0,8}}?{_DOT}{_TLD}(?![A-Za-z0-9])",
     re.IGNORECASE,
 )
 # «name at gmail», «name @ hotmail»: a mail provider named after «at».
 _EMAIL_PROVIDER = re.compile(
-    rf"[A-Za-z0-9._%+-]+\s*{_AT}\s*(?:gmail|googlemail|hotmail|yahoo|outlook|icloud|live|aol|yandex|proton(?:mail)?)(?![A-Za-z0-9])",
+    rf"{_LOCAL}{_AT}(?:gmail|googlemail|hotmail|yahoo|outlook|icloud|live|aol|yandex|proton(?:mail)?)(?![A-Za-z0-9])",
     re.IGNORECASE,
 )
 
@@ -39,7 +45,7 @@ _LINK = re.compile(
     r"(?:https?://|www\.)\S"
     r"|(?:wa\.me|t\.me/|m\.me/|fb\.me|lnkd\.in|kik\.me|snapchat\.com|x\.com)"
     # any bare domain: letters (or digits) then a dot and a known TLD
-    rf"|(?<![A-Za-z0-9_-])[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9-]+)*\.{_TLD}(?![A-Za-z0-9-])",
+    rf"|(?<![A-Za-z0-9_-])(?<![A-Za-z0-9]\.)[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9-]+)*\.{_TLD}(?![A-Za-z0-9-])",
     re.IGNORECASE,
 )
 
@@ -66,6 +72,7 @@ _AT_HANDLE = re.compile(r"(?<![A-Za-z0-9._%+-])@[A-Za-z0-9_][A-Za-z0-9_.]{2,}")
 
 # Phone numbers: a run of digits with phone separators (no «:» so «2:255» never matches).
 _PHONE_CANDIDATE = re.compile(r"(?<![\d:])(?:\+|00)?\(?\d[\d \t\u00a0\-().·/]*\d\)?")
+_SPACES = re.compile(r"\s+")
 _DATE = re.compile(r"\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}")
 
 
@@ -92,12 +99,14 @@ def _is_phone(s: str) -> bool:
 
 def contact_violation(body: str) -> str | None:
     """The kind of contact detail found in `body` (email | link | handle | phone), or None."""
-    text = body.translate(_DIGITS)
-    if _EMAIL.search(text) or _EMAIL_SPELLED.search(text) or _EMAIL_PROVIDER.search(text):
+    # A hard cap before any pattern runs, whatever the caller checked.
+    text = body[:MAX_BODY].translate(_DIGITS)
+    flat = _SPACES.sub(" ", text)
+    if _EMAIL.search(flat) or _EMAIL_SPELLED.search(flat) or _EMAIL_PROVIDER.search(flat):
         return "email"
-    if _LINK.search(text):
+    if _LINK.search(flat):
         return "link"
-    if _HANDLE_AFTER_SEPARATOR.search(text) or _HANDLE_BARE.search(text) or _AT_HANDLE.search(text):
+    if _HANDLE_AFTER_SEPARATOR.search(flat) or _HANDLE_BARE.search(flat) or _AT_HANDLE.search(flat):
         return "handle"
     if any(_is_phone(m.group(0)) for m in _PHONE_CANDIDATE.finditer(text)):
         return "phone"

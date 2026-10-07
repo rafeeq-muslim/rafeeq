@@ -219,7 +219,7 @@ describe("cmp-01 r1: the lesson's help opens the assistant first", () => {
     expect(screen.getByLabelText(ar("cmp.help.message"))).toBeTruthy() // the request is open
   })
 
-  it("cmp01_r1_lesson_help_carries_the_topic_only_never_the_learners_answers", async () => {
+  it("cmp01_r1_lesson_help_carries_the_topic_and_ids_only_never_the_learners_answers", async () => {
     atExercise()
     app(["/learn/lesson/u1-l3"])
     // Joseph answers the exercise (wrongly) before asking for help.
@@ -231,35 +231,41 @@ describe("cmp-01 r1: the lesson's help opens the assistant first", () => {
     const at = where()
     expect(at.path).toBe("/ask")
     expect(at.search).toBe("") // nothing in the URL
-    expect(at.state).toEqual({ lessonHelp: { from: "lesson", topic: WUDU } }) // exactly this, nothing else
+    // exactly this, nothing else: origin, topic, and (2026-10-07) the ids of what is on screen
+    expect(at.state).toEqual({ lessonHelp: { from: "lesson", topic: WUDU, context: { lesson_id: "u1-l3", exercise_id: "EXERCISE_1" } } })
 
     askReply = () => json(noSource)
     await ask(QUESTION)
     const bodies = sent("/api/ask")
     expect(bodies).toHaveLength(1)
     expect(bodies[0].question).toBe(QUESTION)
-    // The assistant receives the typed question and nothing about the lesson's exercises.
-    expect(Object.keys(bodies[0]).sort()).toEqual(["client_request_id", "consent_objectives", "entrypoint", "lang", "question"])
+    // The assistant receives the typed question and the ids of the screen; the server loads the approved text itself.
+    expect(Object.keys(bodies[0]).sort()).toEqual(["client_request_id", "consent_objectives", "context", "entrypoint", "lang", "question"])
+    expect(bodies[0].context).toEqual({ lesson_id: "u1-l3", exercise_id: "EXERCISE_1" })
     const toAssistant = JSON.stringify(bodies)
-    for (const secret of [CHOSEN, "الجواب الصحيح", "سؤال تمرين الوضوء", "EXERCISE_1", "u1-l3", "firstTried"]) expect(toAssistant).not.toContain(secret)
+    // Never his answer, whether it was right, his progress, or any text of the lesson.
+    for (const secret of [CHOSEN, "الجواب الصحيح", "سؤال تمرين الوضوء", WUDU, "firstTried", "answered", "incorrect"]) expect(toAssistant).not.toContain(secret)
   })
 
-  it("cmp01_r1_hand_over_keeps_only_origin_and_topic", () => {
+  it("cmp01_r1_hand_over_keeps_only_origin_topic_and_ids", () => {
     const dirty = { lessonHelp: { from: "lesson", topic: WUDU, answers: ["b"], exerciseId: "EXERCISE_1" }, other: 1 }
     expect(readLessonHelp(dirty)).toEqual({ from: "lesson", topic: WUDU })
+    const withContext = { lessonHelp: { from: "lesson", topic: WUDU, context: { lesson_id: "u1-l3", exercise_id: "EXERCISE_1", answer: "b", correct: false } } }
+    expect(readLessonHelp(withContext)).toEqual({ from: "lesson", topic: WUDU, context: { lesson_id: "u1-l3", exercise_id: "EXERCISE_1" } })
+    expect(readLessonHelp({ lessonHelp: { from: "lesson", topic: WUDU, context: { lesson_id: "نص يكتبه العميل" } } })).toEqual({ from: "lesson", topic: WUDU })
     expect(readLessonHelp({ lessonHelp: { from: "home", topic: WUDU } })).toBeNull()
     expect(readLessonHelp({ lessonHelp: { from: "lesson", topic: 7 } })).toBeNull()
     expect(readLessonHelp(null)).toBeNull()
   })
 
-  it("cmp01_r1_review_help_opens_the_assistant_with_the_lesson_topic_only", () => {
+  it("cmp01_r1_review_help_opens_the_assistant_with_the_lesson_topic_and_ids_only", () => {
     reviewDue()
     app(["/learn/review"])
     expect(screen.getByText("سؤال تمرين الوضوء")).toBeTruthy()
     fireEvent.click(screen.getByRole("radio", { name: CHOSEN }))
     fireEvent.click(helpButton())
     expect(where().path).toBe("/ask")
-    expect(where().state).toEqual({ lessonHelp: { from: "review", topic: WUDU } })
+    expect(where().state).toEqual({ lessonHelp: { from: "review", topic: WUDU, context: { lesson_id: "u1-l3", exercise_id: "EXERCISE_1" } } })
     expect(document.querySelector("[data-slot=lesson-topic]")?.textContent).toContain(WUDU)
     fireEvent.click(topBarHuman())
     expect(where().search).toBe("?from=review")

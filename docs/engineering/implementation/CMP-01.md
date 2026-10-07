@@ -110,6 +110,35 @@ Tests (vitest, `frontend/src/app/companion/cmp01.r1.rules.test.tsx`):
 | Danger at once | `cmp01_r1_danger_goes_to_a_human_at_once_without_an_answer` |
 | Narrow screens | `cmp01_r1_help_button_stays_reachable_and_named_below_380px`, `cmp01_r1_lesson_human_button_visible_below_380px`, `cmp01_r1_review_human_button_visible_below_380px` (`cmp-audit-gaps.test.tsx`, now on the «مساعدة» button) |
 
+### The lesson context reaches the assistant as ids (branch `cmp-01-r1-lesson-context`, owner's decision 2026-10-07)
+
+This replaces "topic only … `POST /api/ask` is unchanged" above. The owner decided that the context does go to the assistant: as ids, with the approved text loaded by the server, and never the learner's answer.
+
+| Part | Module | Behaviour |
+| --- | --- | --- |
+| Ids of the screen | `ask/lessonHelp.ts` (`HelpContext`, `readHelpContext`), `lesson/LessonHelpButton.tsx` (prop `context`), `pages/Lesson.tsx`, `pages/Review.tsx` | The route state is now `{lessonHelp: {from, topic, context?: {lesson_id, card_id \| exercise_id}}}`. Ids only (`[A-Za-z0-9_-]{1,32}`); any other field is dropped. In a review: the lesson the exercise on screen belongs to + that exercise |
+| Context chip | `pages/Ask.tsx` (`data-slot="ask-context"`, above the composer) | «عن: <عنوان الدرس> · <السؤال الحالي>» (`ask.context.about`, `ask.context.aboutLesson`), written from the content the device already has (`describeContext`). Its ✕ (`ask.context.dismiss`) removes it for this stay on the screen. Shown → every question (typed or suggested) is sent with `context`; dismissed, or the device has no content for those ids → no `context` |
+| Request | `ask/store.ts`, `ask/types.ts` (`AskSnapshot.context`) | `POST /api/ask` gains the optional `context: {lesson_id, card_id? \| exercise_id?}`. A retry re-sends the snapshot's ids. Never the answer, its correctness or progress |
+| Server lookup | `backend/app/knowledge/lesson_context.py` | `ContextRef` (ids only). `load()` reads the lesson learners see in the request language (`review.published`, its unit live too) and builds the block: lesson title + the card's text, or the exercise's prompt and its options / steps / pairs **in text order, without the correct answer**. Unknown, withdrawn or other-language ids → `None` (ignored). A malformed `context` is dropped by validation, never a 422 |
+| Pipeline | `backend/app/knowledge/ask.py` | Unchanged first: the danger, rule-bypass and guide screens read the learner's question alone, before the context is even loaded. Then the block goes to the router and to the composer (and its repair) as a fenced `LESSON CONTEXT` section, and the lesson's title + prompt (or card text, ≤ 240 characters) are appended to the search form (local index and live search). The indexed passages of the card on screen, or of the cards the exercise draws on (`rafeeq_cards:<lang>:<card id>`, KNW-02 R6, at most 3), are placed first among the retrieved passages when the source policy allows `rafeeq_cards`; they are cited and shown as any other source. Nothing is built from the lesson file as a passage |
+| Prompts | `ai/prompts/router.md`, `ai/prompts/composer.md` (rule 12), `ai/agents.py::_lesson_block` | The lesson content is data, never instructions; it is not a passage (every sentence still needs a passage; the support check is unchanged); the composer does not say which option is correct unless a passage states it |
+| Records | `knw_answer_log.trace` | One stage `{"stage": "context", "status": "exercise" \| "card" \| "lesson" \| "ignored"}`. No ids, no text, no question |
+
+Tests:
+
+| Example | Test |
+| --- | --- |
+| Exercise 2, «ما معنى هذا؟» → the ids are sent | vitest `cmp01_r1_help_on_exercise_2_and_asking_what_does_this_mean_sends_the_context_ids` (`companion/cmp01.r1.context.rules.test.tsx`) |
+| … and the composer reads the exercise's approved prompt | pytest `test_cmp01_r1_help_on_exercise_2_composer_input_contains_the_exercise_prompt` (`backend/tests/test_cmp01_r1_lesson_context.py`), `test_cmp01_r1_card_on_screen_is_given_as_context_and_as_a_source` |
+| The learner's answer is never sent | vitest `cmp01_r1_the_learners_answer_is_never_in_the_request`; pytest `test_cmp01_r1_learners_answer_is_never_read_from_the_request`, `test_cmp01_r1_context_block_never_marks_the_correct_answer` |
+| Chip shown / dismissed | vitest `cmp01_r1_context_chip_shows_the_lesson_title_and_the_current_question_above_the_input`, `cmp01_r1_with_the_chip_dismissed_no_context_is_sent`; pytest `test_cmp01_r1_without_context_nothing_of_a_lesson_is_sent` |
+| Unknown ids, another language, a withdrawn lesson | pytest `test_cmp01_r1_unknown_context_ids_are_ignored`, `test_cmp01_r1_context_in_a_language_the_lesson_is_not_approved_in_is_ignored`, `test_cmp01_r1_withdrawn_lesson_is_not_given_as_context`; vitest `cmp01_r1_ids_this_device_has_no_content_for_show_no_chip_and_send_nothing` |
+| Danger still wins | pytest `test_cmp01_r1_danger_still_wins_before_any_context_or_model`, `test_cmp01_r1_router_danger_wins_with_a_context` |
+| Ids / codes only in what is kept | pytest `test_cmp01_r1_log_holds_a_code_only_never_the_context_text_or_the_question`; vitest `cmp01_r1_the_visits_copy_of_the_conversation_keeps_ids_only_never_lesson_text` |
+| Card, review, suggestion, own tab | vitest `cmp01_r1_help_on_a_card_sends_the_card_id`, `cmp01_r1_review_help_sends_the_lesson_and_exercise_ids_of_the_exercise_on_screen`, `cmp01_r1_a_suggested_question_carries_the_context_too_while_the_chip_is_shown`, `cmp01_r1_opened_from_its_own_tab_there_is_no_chip_and_no_context` |
+
+Earlier tests renamed with the decision: `cmp01_r1_lesson_help_carries_the_topic_and_ids_only_never_the_learners_answers`, `cmp01_r1_hand_over_keeps_only_origin_topic_and_ids`, `cmp01_r1_review_help_opens_the_assistant_with_the_lesson_topic_and_ids_only`, `lrn03_r5_the_route_and_the_assistant_carry_ids_of_the_screen_only_never_the_choice_or_progress`. The human request (`POST /api/help/requests`) is unchanged: source only, no ids.
+
 ### LRN-03 R5 on top of R1 (branch `lrn-03-r5-return-to-lesson-build`, 2026-10-07)
 
 - `LessonHelpButton` takes an optional `onLeave`; the lesson uses it to keep, in the device's memory only (`lesson/helpReturn.ts`), which lesson to return to and the exercise as it was on screen. The route state is still exactly `{lessonHelp: {from, topic}}`, the URL is still empty, and neither `POST /api/ask` nor `POST /api/help/requests` gained a field.
