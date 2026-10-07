@@ -332,6 +332,8 @@ describe("cmp-01 r1: the assistant offers a human", () => {
     expect(screen.queryByText(ar("ask.needHuman"))).toBeNull() // no question first: a person now
     fireEvent.click(within(panel).getByRole("button", { name: ar("ask.danger.primary") }))
     expect(where().search).toBe("?kind=urgent&from=lesson&ask=a1")
+    // security review B-M2: the tap travels as router state, so the request starts at once; a bare link would wait for a tap
+    await waitFor(() => expect(sent("/api/help/requests")).toEqual([{ kind: "urgent", source: "lesson", lang: "ar", ask_id: "a1" }]))
   })
 })
 

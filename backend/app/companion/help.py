@@ -24,7 +24,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
 from sqlalchemy import and_, delete, exists, func, select, update
 
-from app.companion import notify
+from app.companion import notify, urgent
 from app.companion.common import (
     CurrentOwner,
     Gender,
@@ -174,8 +174,8 @@ async def _reported_by_owner(session, owner: Owner) -> set[uuid.UUID]:
 
 
 async def _notify_mentor_of(req: HelpRequest) -> None:
-    if req.kind == "urgent":
-        notify.later(notify.to_responders, "urgent", "/inbox")
+    if req.kind == "urgent" and req.first_reply_at is None:
+        urgent.alert(req.id)  # nobody answered yet: everyone, collapsed (companion/urgent.py)
     elif req.mentor_id is not None:
         notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
 
@@ -276,8 +276,9 @@ async def create_request(body: RequestIn, session: Session, owner: CurrentOwner,
     address = request.client.host if request.client else "-"
     ratelimit.hit(f"help-create-ip:{address}", 15, 3600)
     if body.kind == "urgent":
+        # No overall cap here: danger always reaches a human (rules.md §2.8). A
+        # flood is held at the push instead (companion/urgent.py).
         ratelimit.hit(f"help-urgent-ip:{address}", 3, 3600)
-        ratelimit.hit("help-urgent-all", 60, 3600)
     token = None
     if owner.user is None and owner.token_hash is None:
         token = new_guest_token()
