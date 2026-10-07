@@ -11,11 +11,14 @@
  * it at the point it was left (LRN-03 R5).
  *
  * `kind=urgent` (a danger case from the assistant, KNW-01 R5; companion
- * README) creates the urgent request at once, with no question text, shows
- * the verified helplines, and opens it.
+ * README) shows the verified helplines first. Reached by the tap on the
+ * assistant's danger panel it creates the urgent request at once, with no
+ * question text, and opens it; reached by a bare link it waits for the tap on
+ * «تحدث مع إنسان الآن» (security review B-M2: opening a link never creates a
+ * request).
  */
 import * as React from "react"
-import { useNavigate, useSearchParams } from "react-router"
+import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { useQueryClient } from "@tanstack/react-query"
 import { IconArrowLeft, IconHeadset, IconLifebuoy, IconUserHeart } from "@tabler/icons-react"
 
@@ -43,6 +46,7 @@ import { useOnline } from "@/app/offline/online"
 import { ScreenBar, SectionTitle } from "./Screen"
 import { PrivacyLink } from "@/app/pages/Privacy"
 import { useCompanion } from "./store"
+import { tappedInApp } from "./urgentStart"
 import { lessonReturnPath } from "@/app/lesson/helpReturn"
 
 /** R1 ex2: the assistant question of this ask id, if it is still on this device (never fetched). */
@@ -159,35 +163,40 @@ function BackToLesson() {
   )
 }
 
-/** Creates the urgent request on arrival and opens it: a human first, no waiting. */
-function UrgentStart({ source, askId }: { source: Source; askId: string | null }) {
+/** After the tap on the danger panel (`auto`): creates the urgent request on
+ * arrival and opens it, a human first, no waiting. From a link: the same
+ * screen with the button, and nothing is sent until it is tapped. */
+function UrgentStart({ source, askId, auto }: { source: Source; askId: string | null; auto: boolean }) {
   const { t, locale } = useT()
   const navigate = useNavigate()
   const started = React.useRef(false)
   const [failed, setFailed] = React.useState(false)
+  const [sending, setSending] = React.useState(auto)
 
   const start = React.useCallback(async () => {
     setFailed(false)
+    setSending(true)
     try {
       const req = await createRequest({ kind: "urgent", source, lang: locale, ask_id: askId })
       navigate(`/mentor/help/${req.id}`, { replace: true })
     } catch {
       setFailed(true)
+      setSending(false)
     }
   }, [askId, locale, navigate, source])
 
   React.useEffect(() => {
-    if (started.current) return
+    if (!auto || started.current) return
     started.current = true
     void start()
-  }, [start])
+  }, [auto, start])
 
   return (
     <div className="flex flex-col gap-5 px-4 pt-4 pb-4">
       <UrgentNotice />
       <OfflineOnly text="offline.human" />{/* PLT-15 R5: the numbers above work offline */}
-      {failed ? (
-        <Button size="lg" onClick={() => void start()}>
+      {failed || !sending ? (
+        <Button size="lg" data-slot="urgent-start" onClick={() => void start()}>
           {t("human.danger.cta")}
         </Button>
       ) : (
@@ -204,6 +213,7 @@ export default function HelpScreen() {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const [params] = useSearchParams()
+  const tapped = tappedInApp(useLocation().state)
   const signedIn = useAuth((s) => !!s.token)
   const from = params.get("from")
   const source: Source | null = SOURCES.includes(from as Source) ? (from as Source) : null
@@ -228,7 +238,7 @@ export default function HelpScreen() {
     return (
       <>
         <ScreenBar title={t("human.title")} back={-1} />
-        <UrgentStart source={source ?? "ask"} askId={params.get("ask")} />
+        <UrgentStart source={source ?? "ask"} askId={params.get("ask")} auto={tapped} />
       </>
     )
   }

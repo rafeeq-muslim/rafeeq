@@ -56,7 +56,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import clientkey
+from app.core import clientkey, ratelimit
 from app.core.config import get_settings
 from app.core.db import SessionLocal, release
 from app.core.deps import OptionalUser, Session
@@ -880,6 +880,26 @@ async def ask(body: AskIn, session: Session, request: Request, user: OptionalUse
     return out
 
 
+DANGER_ALERT_EVERY_S = 1800  # one alert to everyone per asker
+DANGER_ALERTS_PER_ADDRESS = 3  # per hour, like urgent requests (companion/help.py)
+
+
+def _alert_raised_already(key: str, request: Request) -> bool:
+    """Security review A-H4: a danger phrase costs no model call, so without
+    this one client could alert every mentor 8 times a minute. The asker
+    always gets the danger reply and the button to a human; only the alert to
+    everyone is limited (the event is still published, marked `repeat`)."""
+    limits = (
+        (f"ask-danger:{key}", 1, DANGER_ALERT_EVERY_S),
+        (f"ask-danger-ip:{clientkey.address(request)}", DANGER_ALERTS_PER_ADDRESS, 3600),  # IPv6: per /64 (A-H3)
+    )
+    if any(ratelimit.full(*limit) for limit in limits):
+        return True
+    for limit in limits:
+        ratelimit.hit(*limit)
+    return False
+
+
 async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, key: str) -> dict:
     # A-H3: per address (IPv6: per /64) and per account.
     clientkey.hit("ask:m", request, user, 8, 60)
@@ -897,6 +917,8 @@ async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, 
     b = result.body
     try:
         for name, payload in result.events:
+            if name == "DangerDetected" and _alert_raised_already(key, request):
+                payload = {**payload, "repeat": True}
             await publish(session, name, "KNW", payload)
         await session.commit()
     except SQLAlchemyError:

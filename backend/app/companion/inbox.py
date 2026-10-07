@@ -36,7 +36,7 @@ from app.companion import notify
 from app.companion.common import THREAD_MSGS_PER_DAY, blocked_by_owner_clause, is_paused, is_team, langs_of, message_page, not_found, now
 from app.companion.contact import mentor_contacted
 from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, Report, ScholarReferral
-from app.companion.text import clean_body
+from app.companion.text import clean_body_async
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.platform.models import User
@@ -284,7 +284,7 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
         raise HTTPException(status.HTTP_409_CONFLICT, "no_owner_yet")  # an alert nobody opened yet
     ratelimit.hit(f"inbox-reply:{me.id}", 60, 60)
     ratelimit.hit(f"inbox-reply-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
-    text = clean_body(body.body)
+    text = await clean_body_async(body.body)
     t = now()
     if req.mentor_id is None or (req.mentor_id != me.id and req.first_reply_at is None):
         req.mentor_id = me.id  # R3: the first reply claims it
@@ -472,8 +472,8 @@ async def get_profile(session: Session, me: Mentor) -> ProfileOut:
 @router.put("/profile", response_model=ProfileOut)
 async def put_profile(body: ProfileIn, session: Session, me: Mentor) -> ProfileOut:
     prof = await profile_of(session, me.id)
-    clean_body(body.about, required=False)  # no contact details in the public card either
-    clean_body(body.availability, required=False)
+    await clean_body_async(body.about, required=False)  # no contact details in the public card either
+    await clean_body_async(body.availability, required=False)
     prof.about, prof.availability, prof.accepting, prof.capacity = (
         body.about.strip(),
         body.availability.strip(),

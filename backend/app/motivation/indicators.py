@@ -100,7 +100,12 @@ def people_per(events: list[AnonEvent], type_: str, attr: str) -> Counter[str]:
 
 def learning_by_path(events: list[AnonEvent], order: list[dict]) -> dict:
     """MOT-08 R4: people per lesson in path order (so the team sees where
-    most stop), and people per unit."""
+    most stop), and people per unit.
+
+    Security review 2026-10-07 (B-L14): anonymous events come from any device
+    without sign-in, so a lesson or unit id is whatever the sender typed. Only
+    ids that are in the path are shown; anything else is left out, never
+    listed to the team as typed."""
     lessons = people_per(events, "lesson_completed", "lesson_id")
     units = people_per(events, "unit_completed", "unit_id")
     per_lesson = [
@@ -108,11 +113,7 @@ def learning_by_path(events: list[AnonEvent], order: list[dict]) -> dict:
         for u in order
         for lesson in u["lessons"]
     ]
-    known = {r["lesson_id"] for r in per_lesson}
-    per_lesson += [{"lesson_id": k, "unit_id": None, "people": n} for k, n in sorted(lessons.items()) if k not in known]
     units_completed = [{"unit_id": u["unit_id"], "people": units.get(u["unit_id"], 0)} for u in order]
-    known_units = {r["unit_id"] for r in units_completed}
-    units_completed += [{"unit_id": k, "people": n} for k, n in sorted(units.items()) if k not in known_units]
     return {"per_lesson": per_lesson, "units_completed": units_completed}
 
 
@@ -179,6 +180,12 @@ def _after(a: AnonEvent, w: AnonEvent) -> bool:
 def understanding(events: list[AnonEvent], order: list[dict] | None = None) -> dict:
     """MOT-09 R1-R5 from anonymous first answers (install ids only link a
     device's own events; nothing leaves this function per device)."""
+    if order:
+        # Security review 2026-10-07 (B-L14): an objective id is whatever the
+        # sender typed; with the path at hand, only its own objectives count
+        # and are listed (objectives, mastery, weakest), never an id as typed.
+        in_path = {o for u in order for lsn in u["lessons"] for o in lsn["objectives"]}
+        events = [e for e in events if not e.objective_id or e.objective_id in in_path]
     answers = sorted((e for e in events if e.type == "first_answer" and e.objective_id), key=lambda e: (e.day, *_sort_key(e)))
     lesson: dict[str, list[tuple[bool, str | None]]] = defaultdict(list)
     review: dict[str, list[tuple[bool, str | None]]] = defaultdict(list)

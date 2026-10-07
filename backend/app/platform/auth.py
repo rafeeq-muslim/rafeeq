@@ -24,6 +24,7 @@ from app.core.security import (
 )
 from app.platform import generate, mailer
 from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
+from app.platform.origin import SameOrigin
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 COOKIE = "rafeeq_refresh"  # local runs (plain http), and production sessions issued before the prefix
@@ -348,7 +349,7 @@ async def login_2fa(body: TwoFactorIn, session: Session, request: Request, respo
     return await _issue(session, user, response)
 
 
-@router.post("/refresh", response_model=TokenOut)
+@router.post("/refresh", response_model=TokenOut, dependencies=[SameOrigin])
 async def refresh(session: Session, request: Request, response: Response) -> TokenOut:
     rafeeq_refresh = _refresh_token(request)
     if not rafeeq_refresh:
@@ -362,7 +363,7 @@ async def refresh(session: Session, request: Request, response: Response) -> Tok
     return await _issue(session, user, response)
 
 
-@router.post("/logout", status_code=204)
+@router.post("/logout", status_code=204, dependencies=[SameOrigin])
 async def logout(session: Session, request: Request, response: Response) -> None:
     rafeeq_refresh = _refresh_token(request)
     if rafeeq_refresh:

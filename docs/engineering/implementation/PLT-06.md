@@ -24,3 +24,10 @@ Backend `tests/test_plt06_notifications.py`: `test_plt06_r1_a_new_device_gets_no
 Frontend `src/sw.test.ts` (`plt06_r6_discreet_mode_shows_a_plain_note_icon`, `plt06_r6_without_discreet_mode_the_rafeeq_icon_stays`) and `src/app/platform.gaps.rules.test.tsx` (`plt06_r3_the_lock_screen_line_promises_only_what_is_true`, `plt06_r6_*`).
 
 Frontend `src/app/platform.rules.test.tsx` (`plt-06-r1` … `plt-06-r6`): nothing asked on opening Me and every switch off; permission asked once; three switches in one section; reminder off keeps replies and the subscription; both off removes it; prayer switch needs no permission; lock-screen note; prayer name only when chosen; iPhone note with switches off and disabled; refused permission explained, never asked again; discreet prayer reminder neutral.
+
+## Security review 2026-10-07: push endpoints (B-L12; branch `sec-injection-hardening`)
+
+- **The address is read strictly** (`push.py::allowed_endpoint`, used at subscribe and again before sending): `https`, a plain lower-case host name that is exactly one of the browsers' push services (or a real subdomain of the listed suffixes), no user part, port 443 only (written or implied), printable ASCII without a backslash. Before, any port and odd host characters passed.
+- **Knowing an endpoint is not owning it** (`push.py::_owns`, in `subscribe` and `resubscribe`): an existing subscription's keys, account link and switches change only for the device itself (it sends the same keys the browser gave it) or for the account already linked to it. Anyone else gets the same answer as before and changes nothing. Before, anyone who knew an endpoint could point it at their own keys and account. The other routes that take an endpoint (reminder, replies, learned, unsubscribe, state, test) still treat it as the device's secret, as designed.
+
+Tests: `backend/tests/test_sec_l12_push.py`.

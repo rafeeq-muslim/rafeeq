@@ -90,6 +90,24 @@ def _render_answer(ex: dict, answer: Any) -> str:
     return ""
 
 
+def answer_belongs(ex: dict, answer: Any) -> bool:
+    """Security review 2026-10-07 (B-L2): the learner's answer is one of the
+    exercise's own ids (choose), a list of them (order) or pairs of them
+    (match). Anything else, such as free text, never reaches the prompt."""
+    ids = set(_items(ex))
+
+    def known(a: Any) -> bool:
+        return isinstance(a, str) and a in ids
+
+    if answer is None:
+        return True  # nothing chosen: the explanation rests on the card alone
+    if isinstance(answer, str):
+        return known(answer)
+    if isinstance(answer, list) and len(answer) <= 20:
+        return all(known(a) or (isinstance(a, list) and len(a) == 2 and known(a[0]) and known(a[1])) for a in answer)
+    return False
+
+
 def _render_exercise(ex: dict) -> str:
     lines = [ex.get("prompt") or ""]
     if ex.get("options"):
@@ -132,8 +150,8 @@ async def explain_mistake(session, body: ExplainIn, client: str = "-") -> str | 
     if await session.get(ExplanationBlock, (body.exercise_id, body.lang)):
         return None  # the Sharia reviewer blocked explanations for this exercise
     ex = next((e for e in lesson.get("exercises") or [] if e.get("id") == body.exercise_id), None)
-    if ex is None:
-        return None
+    if ex is None or not answer_belongs(ex, body.answer):
+        return None  # card text only, as for any exercise that cannot be explained
     card = card_text(lesson, ex)
     if not card:
         return None
