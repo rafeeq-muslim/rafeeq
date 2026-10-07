@@ -43,6 +43,10 @@ Learner: `/mentor/group` (join by code, or the group: challenge, members, chat).
 | PLT-05 R5 deletion clears the removal | `test_cmp05_r5_account_deletion_clears_the_removal` |
 | R6 ex1 «6 من 8» | `test_cmp05_r6_group_page_challenge_shows_count_only` (in `test_mot06_challenges.py`) |
 
+## Suspended or de-roled mentor (security review B-M1, 2026-10-07)
+
+`groups.py::access` used to check only `g.mentor_id == me.id`, and the mentor gate ran only on creation, so a suspended mentor, one whose approval was withdrawn, or an account that lost the `mentor` role kept reading, writing, hiding and removing in his groups. `access` now calls `mentor_only` (role + `inbox.mentor_gate`) whenever the caller is the group's mentor: `403 mentors_only | mentor_suspended | mentor_rules_required`. `GET /api/groups/mine` leaves his led groups out (no join code). MOT-06 asks `companion/public.py::may_lead_groups` in `challenges.py::_role` (`403 group_mentor_only`). Checked live on every call, so no event is needed for a role change by the admin, and reinstating restores access. Members are untouched: the group's long-term fate is an open question in the feature doc (rule 7). Tests: `backend/tests/test_sec_b_m1_group_mentor_access.py` (5).
+
 ## Rewrite (PR #21, 2026-10-06)
 
 R1: `DEFAULT_CAPACITY = 10`, `MAX_CAPACITY = 15`, `MENTOR_MEMBER_LIMIT = 25` as the sum of the mentor's group caps (`409 {code: mentor_member_limit, limit, remaining}`); `PUT /api/groups/{id}/capacity` for the mentor (2–15, not below current members, within 25). Frontend: cap editor in the members drawer and the hint in the create form. Tests: `backend/tests/test_cmp05_groups.py` (`test_cmp05_r1_*`).

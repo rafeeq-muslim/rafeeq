@@ -354,3 +354,25 @@ describe("org-03 dashboard", () => {
     expect(screen.getByText(`${ar_("org.lang.other")} · أقل من 10`)).toBeTruthy()
   })
 })
+
+describe("Security review B-H1: an organisation's mentor invite carries a gender", () => {
+  it("sec_b_h1_the_coordinator_states_the_volunteers_gender", async () => {
+    stubFetch((url, method) =>
+      url === "/api/org/o1/mentors"
+        ? json(MENTORS)
+        : url === "/api/org/o1/invites"
+          ? method === "POST"
+            ? json({ code: "MEN-AAAA0001", expires_at: null, used: false, gender: "f" }, 201)
+            : json([])
+          : undefined,
+    )
+    wrap(<OrgMentors orgId="o1" />)
+    await screen.findByText(ar_("org.mentors.mentees", { n: 8, cap: 10 }))
+    const create = screen.getByRole("button", { name: ar_("org.mentors.invite") }) as HTMLButtonElement
+    expect(create.disabled).toBe(true)
+    fireEvent.click(screen.getByRole("radio", { name: ar_("acct.female") }))
+    expect(create.disabled).toBe(false)
+    fireEvent.click(create)
+    await waitFor(() => expect(calls.find((c) => c.url === "/api/org/o1/invites" && c.method === "POST")?.body).toEqual({ gender: "f" }))
+  })
+})

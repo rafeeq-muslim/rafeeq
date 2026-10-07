@@ -64,7 +64,7 @@ export type OrgMentor = {
   group_limit: number
 }
 export type Mentors = { mentors: OrgMentor[]; missing: { lang: string; gender: "m" | "f" }[] }
-export type OrgInvite = { code: string; expires_at: string | null; used: boolean }
+export type OrgInvite = { code: string; expires_at: string | null; used: boolean; gender?: "m" | "f" | null }
 
 export const orgApi = {
   mine: () => api<Org[]>("/api/org/mine"),
@@ -72,13 +72,15 @@ export const orgApi = {
   dashboard: (id: string, lang: string | null) => api<Dashboard>(`/api/org/${id}/dashboard${lang ? `?lang=${lang}` : ""}`),
   mentors: (id: string) => api<Mentors>(`/api/org/${id}/mentors`),
   invites: (id: string) => api<OrgInvite[]>(`/api/org/${id}/invites`),
-  invite: (id: string) => api<OrgInvite>(`/api/org/${id}/invites`, { method: "POST" }),
+  // Security review B-H1: the coordinator states the volunteer's gender; the code carries it.
+  invite: (id: string, gender: "m" | "f") => api<OrgInvite>(`/api/org/${id}/invites`, { method: "POST", body: { gender } }),
   suspend: (id: string, mentor: string) => api(`/api/org/${id}/mentors/${mentor}/suspend`, { method: "POST" }),
   reinstate: (id: string, mentor: string) => api(`/api/org/${id}/mentors/${mentor}/reinstate`, { method: "POST" }),
   revoke: (id: string, mentor: string) => api(`/api/org/${id}/mentors/${mentor}`, { method: "DELETE" }),
 }
 
-export type AdminOrg = Org & { active: boolean; codes: CodeRow[]; coordinators: number }
+/** `links`, `links_last_day`: security review B-M4, counts per code for the admin only. */
+export type AdminOrg = Org & { active: boolean; codes: (CodeRow & { links?: number; links_last_day?: number })[]; coordinators: number }
 export const adminOrgApi = {
   list: () => api<AdminOrg[]>("/api/admin/orgs"),
   create: (name: string, languages: string[]) => api<AdminOrg>("/api/admin/orgs", { method: "POST", body: { name, languages } }),

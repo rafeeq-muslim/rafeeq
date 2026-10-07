@@ -233,8 +233,9 @@ export function OrgMentors({ orgId }: { orgId: string }) {
   const invites = useQuery({ queryKey: ["org", "invites", orgId], queryFn: () => orgApi.invites(orgId) })
   const [confirm, setConfirm] = React.useState<{ m: OrgMentor; action: "suspend" | "revoke" } | null>(null)
   const refresh = () => qc.invalidateQueries({ queryKey: ["org"] })
+  const [inviteGender, setInviteGender] = React.useState<"m" | "f" | "">("") // security review B-H1
   const invite = useMutation({
-    mutationFn: () => orgApi.invite(orgId),
+    mutationFn: () => orgApi.invite(orgId, inviteGender as "m" | "f"),
     onSuccess: (r) => {
       void navigator.clipboard?.writeText(r.code).then(() => toast.success(t("common.copied")), () => undefined)
       void refresh()
@@ -306,7 +307,22 @@ export function OrgMentors({ orgId }: { orgId: string }) {
           {t("org.mentors.invite")}
         </h2>
         <p className="text-label text-muted-foreground">{t("org.mentors.inviteHint")}</p>
-        <Button className="w-fit" disabled={invite.isPending} onClick={() => invite.mutate()}>
+        <div className="flex flex-col gap-2" data-slot="invite-gender">
+          <span className="text-label font-bold">{t("sec.invite.gender")}</span>
+          <ToggleGroup
+            type="single"
+            variant="outline"
+            value={inviteGender}
+            onValueChange={(v) => setInviteGender(v as "m" | "f" | "")}
+            aria-label={t("sec.invite.gender")}
+            className="justify-start"
+          >
+            <ToggleGroupItem value="m">{t("acct.male")}</ToggleGroupItem>
+            <ToggleGroupItem value="f">{t("acct.female")}</ToggleGroupItem>
+          </ToggleGroup>
+          <p className="text-caption text-muted-foreground">{t("sec.invite.genderHint")}</p>
+        </div>
+        <Button className="w-fit" disabled={invite.isPending || !inviteGender} onClick={() => invite.mutate()}>
           <IconUserPlus data-icon="inline-start" stroke={1.75} />
           {t("org.mentors.invite")}
         </Button>
@@ -316,6 +332,7 @@ export function OrgMentors({ orgId }: { orgId: string }) {
               <code dir="ltr" className="flex-1 font-mono text-body">
                 {i.code}
               </code>
+              {i.gender && <span className="text-caption text-muted-foreground">{t(i.gender === "f" ? "acct.female" : "acct.male")}</span>}
               <span className={cn("text-caption", i.used ? "text-muted-foreground" : "font-bold text-success")}>
                 {i.used ? t("admin.used") : i.expires_at ? t("org.mentors.expires", { date: i.expires_at.slice(0, 10) }) : t("admin.unused")}
               </span>

@@ -12,20 +12,29 @@ then the oldest, and keeps it hidden, restores it or removes the author from
 the group (R4). Nobody learns who reported or who blocked them (R5). Blocks:
 a group member, one's mentor (mentors.py) or the person answering a request
 (help.py) (R6).
+
+Security review B-L9: hiding for everyone is one person's word until the team
+looks, so it is capped. One reporter hides at most HIDE_PER_REPORTER_DAY
+messages a day for everyone, at most HIDE_PER_AUTHOR_DAY of them written by
+the same person, and never again a message the team already restored. Past a
+cap the report is still filed with its priority and the team is still
+alerted; the message is hidden for the reporter only, as for other reasons.
+B-L11: a mentor reports a learner's message only while his inbox is open
+(`mentor_gate`).
 """
 
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
-from sqlalchemy import and_, case, delete, select
+from sqlalchemy import and_, case, delete, func, select
 
 from app.companion import notify
-from app.companion.common import CurrentOwner, is_team, not_found
+from app.companion.common import CurrentOwner, Owner, is_team, not_found, now
 from app.companion.groups import access, remove
-from app.companion.inbox import visible_request
+from app.companion.inbox import mentor_gate, visible_request
 from app.companion.models import Block, Group, GroupMessage, HelpMessage, HelpRequest, Report
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
@@ -36,6 +45,33 @@ DANGEROUS = {"marriage", "money", "recruitment"}  # hidden for everyone (R2)
 DANGER_TO_SOMEONE = "danger"  # «خطر على أحد»: top of the queue, team alerted (R3)
 
 Reason = Literal["marriage", "money", "recruitment", "danger", "abuse", "other"]
+
+# B-L9 (defaults until the Companion owner decides): per reporter, per day.
+HIDE_PER_REPORTER_DAY = 5  # messages hidden for everyone
+HIDE_PER_AUTHOR_DAY = 2  # of them, written by the same person
+HIDE_WINDOW = timedelta(hours=24)
+
+
+async def _may_hide_for_all(session, owner: Owner, target_type: str, msg: GroupMessage | HelpMessage) -> bool:
+    """B-L9: whether this reporter's dangerous report still hides the message
+    for everyone. The report itself is filed either way."""
+    if await session.scalar(select(Report.id).where(Report.target_id == msg.id, Report.status == "dismissed").limit(1)):
+        return False  # the team looked and restored it: only the team hides it again
+    mine = Report.reporter_id == owner.user.id if owner.user else Report.reporter_guest_hash == owner.token_hash
+    recent = and_(mine, Report.reason.in_(DANGEROUS), Report.created_at > now() - HIDE_WINDOW)
+    if (await session.scalar(select(func.count()).select_from(Report).where(recent)) or 0) >= HIDE_PER_REPORTER_DAY:
+        return False
+    if target_type == "group_message":
+        same_author = select(GroupMessage.id).where(GroupMessage.group_id == msg.group_id, GroupMessage.author_id == msg.author_id)
+    else:
+        # In a help thread the other side is one person: the learner, or whoever wrote this reply.
+        same_author = select(HelpMessage.id).where(HelpMessage.request_id == msg.request_id, HelpMessage.author == msg.author)
+        if msg.author != "learner":
+            same_author = same_author.where(HelpMessage.author_id == msg.author_id)
+    on_author = await session.scalar(
+        select(func.count()).select_from(Report).where(recent, Report.target_type == target_type, Report.target_id.in_(same_author))
+    )
+    return (on_author or 0) < HIDE_PER_AUTHOR_DAY
 
 
 class ReportIn(BaseModel):
@@ -75,6 +111,7 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
         msg = hm
     high = body.reason in DANGEROUS
     priority = "danger" if body.reason == DANGER_TO_SOMEONE else "high" if high else "normal"
+    hide = high and await _may_hide_for_all(session, owner, body.target_type, msg)  # B-L9, before this report is counted
     session.add(
         Report(
             reporter_id=owner.user.id if owner.user else None,
@@ -87,12 +124,12 @@ async def report(body: ReportIn, session: Session, owner: CurrentOwner) -> dict:
             note=(body.note or "").strip() or None,
         )
     )
-    if high:
+    if hide:
         msg.hidden = True  # R2: hidden for everyone until the team reviews it
     await session.commit()
     if priority != "normal":
         notify.later(notify.to_role, ["team", "admin"], "report_danger" if priority == "danger" else "report", "/inbox?tab=reports")
-    return {"ok": True, "hidden_for_all": high}
+    return {"ok": True, "hidden_for_all": hide}
 
 
 async def _answers(session, user: User, req: HelpRequest) -> bool:
@@ -100,6 +137,7 @@ async def _answers(session, user: User, req: HelpRequest) -> bool:
     if not (user.has("mentor") or is_team(user)):
         return False
     try:
+        await mentor_gate(session, user)  # B-L11: ORG-02 R2, R5 as for the inbox itself
         await visible_request(session, user, req.id)
     except HTTPException:
         return False

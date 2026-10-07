@@ -415,7 +415,13 @@ export function ResponderGender({ me }: { me: Me }) {
     try {
       setAuth({ me: await api<Me>("/api/me", { method: "PATCH", body: { gender } }) })
     } catch (e) {
-      setError(e instanceof ApiError && e.code === "gender_locked" ? "cmp.gaps.gender.lockedErr" : errorKey(e))
+      setError(
+        e instanceof ApiError && e.code === "gender_locked"
+          ? "cmp.gaps.gender.lockedErr"
+          : e instanceof ApiError && e.code === "gender_in_use" // security review B-M6
+            ? "sec.gender.inUse"
+            : errorKey(e),
+      )
     } finally {
       setBusy(false)
     }

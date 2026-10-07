@@ -93,6 +93,12 @@ async def _role(session: AsyncSession, group_id: uuid.UUID, user: User) -> str:
     row = await session.get(GroupMembership, (group_id, user.id))
     if row is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
+    if row.is_mentor:
+        from app.companion.public import may_lead_groups  # CMP's read interface (asked live)
+
+        # Security review B-M1: a suspended or de-roled mentor has no access to his group's challenge.
+        if not await may_lead_groups(session, user):
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "group_mentor_only")
     return "mentor" if row.is_mentor else "member"
 
 
