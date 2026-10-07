@@ -15,7 +15,7 @@ from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app.companion.public import mentor_loads, waiting_pairs
 from app.core.deps import CurrentUser, Session, require_role
@@ -282,17 +282,32 @@ class OrgIn(BaseModel):
     languages: list[Lang] = Field(min_length=1, max_length=3)
 
 
+class AdminCodeRow(CodeRow):
+    """Security review B-M4: how many devices a code holds now and how many
+    linked in the last day, for the admin only (the organisation itself never
+    sees a number under 10: ORG-03 R2). Counts, never a device or a person."""
+
+    links: int = 0
+    links_last_day: int = 0
+
+
 class AdminOrgOut(OrgOut):
     active: bool
-    codes: list[CodeRow]
+    codes: list[AdminCodeRow]
     coordinators: int
 
 
 async def _admin_out(session, org: Organization) -> AdminOrgOut:
+    from app.organizations.links import links_last_day
+
     n = len(list(await session.scalars(select(OrgMember.user_id).where(OrgMember.org_id == org.id, OrgMember.kind == "coordinator"))))
-    return AdminOrgOut(
-        id=org.id, name=org.name, languages=org.languages, active=org.active, codes=await _codes(session, org.id), coordinators=n
-    )
+    held = dict((await session.execute(select(OrgLink.lang, func.count()).where(OrgLink.org_id == org.id).group_by(OrgLink.lang))).all())
+    now = datetime.now(UTC)
+    codes = [
+        AdminCodeRow(**c.model_dump(), links=held.get(c.lang, 0), links_last_day=await links_last_day(session, org.id, c.lang, now))
+        for c in await _codes(session, org.id)
+    ]
+    return AdminOrgOut(id=org.id, name=org.name, languages=org.languages, active=org.active, codes=codes, coordinators=n)
 
 
 @admin.post("", response_model=AdminOrgOut, status_code=201)

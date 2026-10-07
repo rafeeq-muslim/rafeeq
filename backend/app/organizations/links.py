@@ -16,11 +16,12 @@ in URLs, so it does not reach access logs.
 """
 
 import re
-from datetime import UTC, datetime
+import uuid
+from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
-from sqlalchemy import delete, select
+from sqlalchemy import delete, func, select
 
 from app.core import ratelimit
 from app.core.deps import Session
@@ -30,6 +31,24 @@ from app.organizations.models import Organization, OrgCode, OrgLink, OrgLinkStat
 router = APIRouter(prefix="/api/org", tags=["organizations"])
 CODE_RE = re.compile(r"^[A-Z0-9]{4,16}$")
 INSTALL = Field(min_length=8, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
+# Security review B-M4 (minimal part): an install ID is the device's own word,
+# so a script can link many made-up devices and push a small number past the
+# «less than 10» rule (ORG-03 R2). Until install IDs are issued by the server
+# (product decision), one code takes a bounded number of new links a day and
+# the admin sees each code's counts. Default until the ORG owner decides.
+LINKS_PER_CODE_DAY = 200
+
+
+async def links_last_day(session, org_id: uuid.UUID, lang: str, now: datetime) -> int:
+    """Devices linked through one code (organisation + language) in the last 24 hours."""
+    return (
+        await session.scalar(
+            select(func.count())
+            .select_from(OrgLink)
+            .where(OrgLink.org_id == org_id, OrgLink.lang == lang, OrgLink.linked_at > now - timedelta(hours=24))
+        )
+        or 0
+    )
 
 
 def normalize(code: str) -> str:
@@ -99,6 +118,9 @@ async def link(body: LinkIn, session: Session, request: Request) -> LinkOut:
     await unlink(session, body.install_id)
     await session.flush()
     now = datetime.now(UTC)
+    if await links_last_day(session, org.id, row.lang, now) >= LINKS_PER_CODE_DAY:
+        await session.rollback()  # the device's previous link stays as it was
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "rate_limited")  # B-M4
     st = await current_status(session, body.install_id)
     ln = OrgLink(org_id=org.id, install_id=body.install_id, lang=row.lang, linked_at=now, status=st)
     session.add(ln)

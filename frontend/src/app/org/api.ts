@@ -79,7 +79,8 @@ export const orgApi = {
   revoke: (id: string, mentor: string) => api(`/api/org/${id}/mentors/${mentor}`, { method: "DELETE" }),
 }
 
-export type AdminOrg = Org & { active: boolean; codes: CodeRow[]; coordinators: number }
+/** `links`, `links_last_day`: security review B-M4, counts per code for the admin only. */
+export type AdminOrg = Org & { active: boolean; codes: (CodeRow & { links?: number; links_last_day?: number })[]; coordinators: number }
 export const adminOrgApi = {
   list: () => api<AdminOrg[]>("/api/admin/orgs"),
   create: (name: string, languages: string[]) => api<AdminOrg>("/api/admin/orgs", { method: "POST", body: { name, languages } }),
