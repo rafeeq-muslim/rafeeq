@@ -81,7 +81,7 @@ No SQL injection, cross-site scripting, server-side request forgery, path traver
 | C-L13 | Database container settings to narrow | Ready with #111 (on hold) |
 | C-L14 | Backup policy | **Accepted for now** |
 | C-L15 | Password policy is a length minimum only | **Deferred** (`implementation/PLT-02.md` §3) |
-| A/B/C | Per-address limits depend on the host router setting the client address | **Checked safe** in audit A (the router trusts only loopback for `CF-Connecting-IP`); the router itself is outside the repo |
+| A/B/C | Per-address limits depend on the client address reaching the app correctly | **Checked safe** in audit A; the host router is outside the repo |
 
 ## What the public repository revealed
 
