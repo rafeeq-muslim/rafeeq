@@ -46,6 +46,16 @@ export function activeKey(path: string): NavKey {
   return TAB_OF.find(([p]) => matchPath({ path: p, end: false }, path))?.[1] ?? "home"
 }
 
+/** PLT-17 R3: the role dashboards (team, review desk queue, admin, organisation)
+ * hold cards and tables, so on a computer their column is wide. Only these
+ * exact screens: learner screens, conversations and the desk's reading
+ * screens keep the 600px column. */
+const WIDE = ["/team", "/review-desk", "/admin", "/org"]
+
+export function shellWidth(path: string): "column" | "wide" {
+  return WIDE.some((p) => matchPath({ path: p, end: true }, path)) ? "wide" : "column"
+}
+
 /** Screens that take the whole viewport (no navigation). */
 const FULLSCREEN = [/^\/learn\/lesson\//, /^\/learn\/review/, /^\/learn\/placement/, /^\/celebrate/]
 
@@ -161,6 +171,7 @@ export default function AppLayout() {
             active={activeKey(location.pathname)}
             onNavigate={(k) => navigate(ROUTES[k])}
             bottomNav={!fullscreen}
+            width={shellWidth(location.pathname)}
             navLabel={t("nav.main")}
             labels={{ home: t("nav.home"), learn: t("nav.learn"), ask: t("nav.ask"), mentor: t("nav.mentor"), account: t("nav.me") }}
             // Full-screen flows own the whole area: no column padding and no side gutters (PLT-04).

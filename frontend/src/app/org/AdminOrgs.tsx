@@ -49,7 +49,7 @@ export function AdminOrgs() {
       </h2>
       <p className="text-label text-muted-foreground">{t("org.admin.hint")}</p>
       <form
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-3 @min-[52.5rem]/shell:max-w-md"
         onSubmit={(e) => {
           e.preventDefault()
           if (name.trim().length >= 2 && langs.length) create.mutate()
@@ -73,7 +73,7 @@ export function AdminOrgs() {
           {t("org.admin.create")}
         </Button>
       </form>
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-3 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start">
         {list.data?.map((o) => (
           <li key={o.id} className="flex flex-col gap-2 rounded-card border-2 bg-card p-4">
             <p className="text-body font-bold">

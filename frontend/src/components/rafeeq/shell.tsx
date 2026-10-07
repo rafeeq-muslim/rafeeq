@@ -13,6 +13,8 @@ import { BottomNav, NAV, type NavKey } from "./platform"
  *   compact  < 840px  bottom navigation, single column
  *   expanded ≥ 840px  navigation rail (start) + column + side rail (end)
  *   large    ≥ 1200px rail grows into a labelled drawer
+ * The column is 600px at most. `width="wide"` (PLT-17 R3) lets a role
+ * dashboard's column grow to 960px on expanded widths; phones are unchanged.
  * Safe areas, dvh and overscroll follow Emil Kowalski's mobile-native rules.
  */
 
@@ -23,6 +25,7 @@ function AppShell({
   aside,
   children,
   bottomNav = true,
+  width = "column",
   labels,
   navLabel,
   className,
@@ -40,6 +43,8 @@ function AppShell({
   children: React.ReactNode
   /** Full-screen flows (lesson, celebration) hide the navigation. */
   bottomNav?: boolean
+  /** PLT-17 R3: "wide" for data dashboards (cards and tables); every other screen keeps the column. */
+  width?: "column" | "wide"
   className?: string
   contentClassName?: string
 }) {
@@ -58,8 +63,10 @@ function AppShell({
             so a sticky bar reaches the scroller's edge and nothing shows past it. */}
         <div className="flex min-h-0 flex-1 justify-center gap-8 overflow-x-hidden overflow-y-auto overscroll-contain @min-[52.5rem]/shell:px-6">
           <main
+            data-width={width}
             className={cn(
               "flex min-h-full w-full min-w-0 max-w-[37.5rem] flex-col gap-5 self-start pb-6 *:shrink-0 @min-[52.5rem]/shell:py-6",
+              width === "wide" && "@min-[52.5rem]/shell:max-w-[60rem]",
               contentClassName
             )}
           >
@@ -171,4 +178,25 @@ function TopBar({
   )
 }
 
-export { AppShell, TopBar }
+/**
+ * The bar that holds a conversation's composer (Ask, help threads, group
+ * chat): sticky at the bottom of its page, opaque (PLT-04). On expanded
+ * widths it mirrors the page header: its surface runs edge to edge and
+ * reaches the bottom edge (over the column's padding), while what is inside
+ * it stays in the page's column, in line with the conversation above.
+ */
+function ComposerBar({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="composer-bar"
+      className={cn(
+        "sticky bottom-0 z-10 flex flex-col border-t bg-card",
+        "@min-[52.5rem]/shell:-mb-6 @min-[52.5rem]/shell:before:absolute @min-[52.5rem]/shell:before:-inset-x-[100vw] @min-[52.5rem]/shell:before:-top-px @min-[52.5rem]/shell:before:bottom-0 @min-[52.5rem]/shell:before:-z-10 @min-[52.5rem]/shell:before:border-t @min-[52.5rem]/shell:before:border-border @min-[52.5rem]/shell:before:bg-card",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { AppShell, ComposerBar, TopBar }

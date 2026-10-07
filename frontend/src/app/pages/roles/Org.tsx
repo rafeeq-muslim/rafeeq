@@ -58,7 +58,7 @@ export default function Org() {
         )}
         {org && (
           <Tabs defaultValue="dashboard" className="gap-6">
-            <TabsList className="w-full">
+            <TabsList className="w-full @min-[52.5rem]/shell:max-w-xl">
               {(["dashboard", "mentors", "applications", "codes"] as const).map((k) => (
                 <TabsTrigger key={k} value={k} className="flex-1">
                   {t(`org.tab.${k}` as Key)}
@@ -154,7 +154,7 @@ export function OrgDashboard({ orgId }: { orgId: string }) {
           </span>
         </h2>
         <h3 className="text-label font-bold text-muted-foreground">{t("org.dash.statuses")}</h3>
-        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 @min-[52.5rem]/shell:grid-cols-6">
           {STATUSES.map((s) => (
             <li key={s} className="flex flex-col rounded-md bg-card px-3 py-2" data-status={s}>
               <span className="text-caption text-muted-foreground">{t(statusKey(s))}</span>
@@ -266,7 +266,7 @@ export function OrgMentors({ orgId }: { orgId: string }) {
         </h2>
         {q.isLoading && <Skeleton className="h-40 rounded-card" />}
         {q.data && q.data.mentors.length === 0 && <p className="text-body text-muted-foreground">{t("org.mentors.none")}</p>}
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-2 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start @min-[52.5rem]/shell:gap-3">
           {q.data?.mentors.map((m) => (
             <li key={m.id} className="flex flex-col gap-2 rounded-card border-2 bg-card p-4" data-mentor={m.id}>
               <div className="flex flex-wrap items-center gap-2">

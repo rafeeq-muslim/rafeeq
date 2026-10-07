@@ -77,7 +77,7 @@ export default function MentorGroup() {
           </Button>
         }
       />
-      <div className="flex min-h-[calc(100dvh-9rem)] flex-col gap-5 px-4 pt-4">
+      <div className="flex min-h-[calc(100dvh-9rem)] @min-[52.5rem]/shell:min-h-[calc(100dvh-6.25rem)] flex-col gap-5 px-4 pt-4">
         {!g ? (
           <Skeleton className="h-48 rounded-card" />
         ) : (

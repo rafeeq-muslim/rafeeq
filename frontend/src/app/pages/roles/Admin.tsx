@@ -169,9 +169,9 @@ function Roles() {
       <h2 id="rl" className="font-heading text-h3 font-bold">
         {t("admin.users")}
       </h2>
-      <Input dir="ltr" placeholder={t("admin.search")} aria-label={t("admin.search")} value={q} onChange={(e) => setQ(e.target.value.trim())} />
+      <Input dir="ltr" placeholder={t("admin.search")} aria-label={t("admin.search")} value={q} onChange={(e) => setQ(e.target.value.trim())} className="@min-[52.5rem]/shell:max-w-md" />
       {users.data && users.data.length === 0 && <p className="text-label text-muted-foreground">{t("admin.noUsers")}</p>}
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-3 @min-[52.5rem]/shell:grid @min-[52.5rem]/shell:grid-cols-2 @min-[52.5rem]/shell:items-start">
         {users.data?.map((u) => (
           <UserRoles key={u.id} user={u} />
         ))}

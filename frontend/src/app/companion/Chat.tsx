@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "@/components/ui/input-group"
 import { Message, MessageContent, MessageFooter, MessageHeader } from "@/components/ui/message"
+import { ComposerBar } from "@/components/rafeeq"
 import { useT } from "@/app/i18n"
 import { ApiError } from "@/app/lib/api"
 import { errorCode } from "./api"
@@ -139,12 +140,7 @@ export function Composer({
   }
 
   return (
-    <div
-      className={cn(
-        "sticky bottom-0 z-10 -mx-4 flex flex-col gap-1.5 border-t bg-card px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]",
-        className
-      )}
-    >
+    <ComposerBar className={cn("-mx-4 gap-1.5 px-4 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]", className)}>
       <InputGroup className="rounded-panel bg-card shadow-card">
         <InputGroupTextarea
           aria-label={label ?? placeholder}
@@ -179,6 +175,6 @@ export function Composer({
           {error}
         </p>
       )}
-    </div>
+    </ComposerBar>
   )
 }
