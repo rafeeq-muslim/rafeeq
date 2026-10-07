@@ -63,6 +63,33 @@ def fix_markers(text: str, ids: set[str] | frozenset[str]) -> str:
     return _BRACED.sub(one, text)
 
 
+# An answer is plain words: no address to visit, no account to contact, no
+# markup (security review 2026-10-07, B-L1). A passage read live from a
+# website could ask the model to send the reader somewhere; the sources an
+# answer rests on are shown by the app as cards, never written by the model.
+# Quran references («2:255»), source names («al-Bukhari», «IslamQA») and
+# ordinary punctuation never match. Each pattern is linear.
+_ANSWER_LINK = re.compile(
+    r"(?i:https?:|ftp:|mailto:|tel:|javascript:|data:)\s*\S"
+    r"|(?i:\bwww\.)\w"
+    r"|[A-Za-z0-9-]\.[A-Za-z]{2,}/\S"  # name.tld/path
+    r"|[A-Za-z0-9-]\.(?:com|net|org|info|xyz|site|online|link|app|COM|NET|ORG|INFO)(?![A-Za-z0-9-])"  # a bare domain
+)
+_ANSWER_HANDLE = re.compile(r"@\w|\w@")
+_ANSWER_MARKUP = re.compile(r"</?[A-Za-z][^<>\n]{0,200}>|<!--|\]\(|!\[|\[[^\[\]\n]{1,200}\]:|&#|&[a-z]{2,8};")
+
+
+def link_or_markup(text: str) -> str | None:
+    """What an answer must not contain: link | handle | markup, or None."""
+    if _ANSWER_LINK.search(text):
+        return "link"
+    if _ANSWER_HANDLE.search(text):
+        return "handle"
+    if _ANSWER_MARKUP.search(text):
+        return "markup"
+    return None
+
+
 def has_arabic(text: str) -> bool:
     return bool(ARABIC.search(text.replace(SALLA, "")))
 
