@@ -114,7 +114,7 @@ async def test_plt02_delete_account_removes_it(client):
 
 async def test_mentor_signup_needs_team_invite(client):
     async with SessionLocal() as s:
-        s.add(Invite(code="MEN-TEST", role="mentor"))
+        s.add(Invite(code="MEN-TEST", role="mentor", gender="m"))
         await s.commit()
     r = await client.post(
         "/api/auth/register",
