@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion.groups import MENTOR_MEMBER_LIMIT
+from app.companion.groups import MENTOR_MEMBER_LIMIT, may_lead
 from app.companion.inbox import MENTEE_CAP_DEFAULT
 from app.companion.models import Group, GroupMember, HelpRequest, MentorLink, MentorProfile
 
@@ -24,6 +24,13 @@ async def shared_learner_ids(session: AsyncSession, mentor_id: uuid.UUID) -> set
         select(MentorLink.learner_id).where(MentorLink.mentor_id == mentor_id, MentorLink.share_progress.is_(True))
     )
     return set(rows)
+
+
+async def may_lead_groups(session: AsyncSession, user) -> bool:
+    """Security review B-M1, for MOT-06: is this account a mentor in good
+    standing now (role held, mentor rules accepted, not suspended)? A group's
+    mentor who is not gets nothing of the group, its challenge included."""
+    return await may_lead(session, user)
 
 
 @dataclass
