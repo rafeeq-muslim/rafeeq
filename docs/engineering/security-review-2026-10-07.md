@@ -1,0 +1,124 @@
+# Security and data-safety review, 2026-10-07
+
+Asked for by the product owner once the repository became public: assume attackers read the code. Focus: denial of service and injection, then data safety. Three read-only audits ran on `main` (A: denial of service and limits; B: injection and access control; C: data safety and what the public repo reveals). Nothing was tested against production or third-party sites; timings were measured locally.
+
+Each finding names its fix (pull request) or the accepted risk. Status is as of the end of 2026-10-07. Findings whose fix is not live yet are listed in one neutral line; their detail is kept with the team, outside the public repository, until the fix is deployed.
+
+## Summary
+
+| | High | Medium | Low |
+| --- | --- | --- | --- |
+| A. Denial of service | 5 | 7 | 6 |
+| B. Injection and access control | 1 | 6 | 14 |
+| C. Data safety, public repo | 2 | 5 | 15 |
+
+No SQL injection, cross-site scripting, server-side request forgery, path traversal, open redirect or mass assignment was found. The content security policy is sound, and a client cannot spoof its address to dodge a limit.
+
+## High
+
+| # | Finding | Fix |
+| --- | --- | --- |
+| A-H1 | **One guest message could freeze the whole API.** The contact filter (`companion/text.py`) backtracked exponentially on a spelled-out address followed by double-spaced «dot label» groups: 94 characters took 7.5 s, 102 over 20 s, on the event loop of the only worker. Reachable without an account through «أريد إنسانًا» | **Fixed, #107 (hotfix, live).** Linear patterns, whitespace collapsed first, bounded repeats, a 2000-character cap inside the filter; worst adversarial input ≈ 3 ms |
+| A-H2 | **Rate-limiter memory could be exhausted without an account.** Keys were never deleted and could be as large as the 2 MB body (the sign-in username had no length limit) | **Fixed, #110 (live).** Hashed fixed-length keys, emptied keys removed, a sweep, a 50,000-key cap; bounded sign-in fields; per-address limit on `/login/2fa` |
+| A-H3 | **One client could switch the assistant off for everyone.** AI limits were per account *or* per address, so free sign-ups and IPv6 addresses multiplied them: enough to burn the $0.75 daily ceiling, and over about two weeks the $10 total | **Fixed, #113 (live).** Limits count against the address (IPv6 by /64) *and* the account; a global cap of 120 AI requests a minute that degrades to the fixed replies; explain and guide cost at most 4 paid calls, home order 2. |
+| A-H4 | **The urgent (danger) channel needs stronger flood protection** | Fix in progress; detail is kept out of the public repo until it is live. Part already live in #114: an answered urgent thread belongs to its holder and the team |
+| A-H5 | **Anonymous usage events need tighter limits and retention** | Fix in progress; detail is kept out of the public repo until it is live |
+| B-H1 | **A vetted mentor could end up with a different gender than staff approved**: approval kept the account's current gender, a learner could change theirs before approval, and an invite let the registrant choose. That would put a man in the sisters' pool, suggestions and groups | **Fixed, #114 (live).** Approval uses the application's gender (409 on a mismatch); invites carry a gender that sign-up enforces. Production had no applications and no mentors when found: nothing to repair |
+| C-H1 | **The runners on the production server could be reached from pull requests.** A pull request runs its own copy of the workflow, so no condition in the file protects a self-hosted runner; the approval setting was the only control. | **Repo side fixed, #105 and #112 (live).** CI runs on GitHub-hosted runners with pinned actions; deploy requires `main`, the team repository and the protected `production` environment; outside contributors cannot open pull requests. **Owner steps still open**: see «Outside the repository» |
+| C-H2 | **A failed deploy printed backend log lines into the now-public Actions log**; database errors there could include bound parameters (search words, emails, contacts, hashes) | **Fixed, #112 and #110 (live).** The log goes to a 600-mode file on the server; `hide_parameters=True`. The two earlier failed runs were read: nothing sensitive in them |
+
+## Medium
+
+| # | Finding | Fix |
+| --- | --- | --- |
+| A-M1 | Database connections held across slow model and network calls (pool of 20): about 20 slow requests starved everyone | Fixed, #113: the connection is released before every model call, live-source read, library search and push; `pool_timeout` 5 s; at most 12 AI requests at once, 3 per client |
+| A-M2 | Download centre: limits and caching to tighten | Fix in progress; detail is kept out of the public repo until it is live |
+| A-M3 | Account copies (saved items, learning progress, learning log): size caps and cheaper merges | Fix in progress; detail is kept out of the public repo until it is live |
+| A-M4 | Conversation threads: size cap and pagination | Fix in progress; detail is kept out of the public repo until it is live |
+| A-M5 | Argon2 ran on the event loop; password change had no limit | Fixed, #113 (worker thread, 2 at a time) and #110 (limit) |
+| A-M6 | Retrieval query cost to bound | Fix in progress; detail is kept out of the public repo until it is live |
+| A-M7 | Parsing of external pages to harden | Fix in progress; detail is kept out of the public repo until it is live |
+| B-M1 | A suspended, revoked or de-roled mentor kept full access to his groups | Fixed, #114 (access blocked; members keep the group). What becomes of such a group is an owner question |
+| B-M2 | Urgent requests must always start from a tap | Fix in progress; detail is kept out of the public repo until it is live |
+| B-M3 | Any responder could read, answer and close any urgent thread, and close pool requests they did not hold | Fixed, #114 |
+| B-M4 | Organisation dashboard small-number protection: hardening against forged usage | **Partly**, #114 (per-code daily link limit and counts for the admin). The lasting fix is a design decision for the owner |
+| B-M5 | The contact filter was quadratic on other shapes too | Fixed with A-H1, #107 |
+| B-M6 | A learner's or guest's gender is self-declared and changeable | **Partly**, #114: a guest's first answer is bound to the token; no change while the account has a mentor, a group or an open request. Self-declaration stays (owner decision) |
+| C-M1 | `notify.yml`: no shell injection, but a stranger's pull-request title and branch reached the events log that AI build sessions read | Fixed, #112: fields blank for forks, an `external` flag, values cut to 200 characters. Sessions treat log fields as data |
+| C-M2 | Production would start with the public default JWT secret if the setting were ever missing | Fixed, #110: production refuses the default or a short secret, and a short first-admin password |
+| C-M3 | Logs could hold personal data (bound parameters, mail recipients, push endpoints); no log rotation | Fixed, #110 and #112 |
+| C-M4 | The mentor applicant's contact should be encrypted at rest | **Ready, on hold: #111.** Waits for the owner to add two keys to the secrets file |
+| C-M5 | Invite codes carried 32 bits, including admin invites | Fixed, #110: 128-bit codes and a global cap on failed claims |
+
+## Low
+
+| # | Finding | Fix or accepted risk |
+| --- | --- | --- |
+| A-L1 | AI budget check not atomic under concurrency | Fixed, #113 (estimated cost held until settled) |
+| A-L2 | Host router cuts at 60 s, the live ask deadline was 60 s | Fixed, #113 (55 s) |
+| A-L3 | General rate limit on cheap public routes | Fix in progress; detail is kept out of the public repo until it is live |
+| A-L5 | Library search fan-out multiplied by keys | Fixed, #113 (same keying; 3000 outbound searches a day) |
+| A-L6 | Service-worker cache expiry | Fix in progress; detail is kept out of the public repo until it is live |
+| A-L7 | No uvicorn concurrency or keep-alive limits | Fixed, #113 |
+| B-L1 | Prompt hardening for source text and answer checks | Fix in progress; detail is kept out of the public repo until it is live |
+| B-L2 | Stricter input on the explanation route | Fix in progress; detail is kept out of the public repo until it is live |
+| B-L4, C-L9 | Refresh cookie without a prefix; no Origin check on refresh and logout | Prefix fixed, #110 (`__Secure-`; `__Host-` is impossible with `Path=/api/auth`). A further check is in progress. **Accepted risk:** the cookie is not bound to this host alone |
+| B-L9 | Reporting hid a message for everyone at once | Fixed, #114 (caps per reporter and per author) |
+| B-L10 | A pending mentor application could be overwritten, or taken over by another account | Fixed, #114 |
+| B-L11 | `_answers()` skipped the mentor gate | Fixed, #114 |
+| B-L12 | Push subscription handling to tighten | Fix in progress; detail is kept out of the public repo until it is live |
+| B-L13 | Library link check to harden | Fix in progress; detail is kept out of the public repo until it is live |
+| B-L14 | Anonymous event validation | Fix in progress; detail is kept out of the public repo until it is live |
+| C-L2 | Limiter keys from raw usernames | Fixed, #110 |
+| C-L3 | A known username can be locked out of sign-in (8 tries per 10 minutes, counted before the password check) | **Accepted:** the brute-force trade-off (`implementation/PLT-02.md` §3) |
+| C-L4, C-L5 | Two-step codes: older codes stayed valid; attempts not atomic; `/2fa/confirm` unlimited | Fixed, #110 |
+| C-L6 | Refresh tokens rotate without reuse detection | **Deferred** (`implementation/PLT-02.md` §3) |
+| C-L7 | Access tokens outlived a password change by up to 30 minutes | Fixed, #110 |
+| C-L8 | `/api/me/password` unlimited | Fixed, #110 |
+| C-L10 | Expired sessions and codes never purged | Fixed, #110 (daily). Outbox retention follows |
+| C-L11 | Account deletion left the account's id in some outbox rows | Fixed, #110 |
+| C-L12 | API docs and schema public in production | Fixed, #110 |
+| C-L13 | Database container settings to narrow | Ready with #111 (on hold) |
+| C-L14 | Backups unencrypted; deleted data lives in them up to 7 days | **Accepted for now**; one policy sentence to add |
+| C-L15 | Password policy is a length minimum only | **Deferred** (`implementation/PLT-02.md` §3) |
+| A/B/C | Per-address limits depend on the host router setting the client address | **Checked safe** in audit A (the router trusts only loopback for `CF-Connecting-IP`); the router itself is outside the repo |
+
+## What the public repository revealed
+
+| Item | Status |
+| --- | --- |
+| The bootstrap admin's account name in two `STATUS.md` files | Removed from the tree, #112. It stays in git history: **the owner renames the account** |
+| The server account's home-directory paths in infra scripts, docs and the deck sources | Replaced by `RAFEEQ_CONFIG_DIR`, `RAFEEQ_CORPUS_DIR`, `RAFEEQ_BACKUP_DIR` and `~/…`, #112 |
+| Three personal email addresses in commit metadata | History only. Noreply addresses from now on (owner and team) |
+| No secret, key or token in the tree or its history; no seed or demo accounts; no real phone numbers | Checked |
+
+## Outside the repository (owner)
+
+1. **Remove the two CI runners from the server** now that CI runs on hosted runners (`systemctl --user disable --now rafeeq-runner.service rafeeq-runner-2.service`, then delete them under Settings → Actions → Runners).
+2. **Restrict the deploy and events runners.** They should accept only the deploy and notify workflows on `main`. Either re-register both in an organisation runner group limited to `deploy.yml@refs/heads/main` and `notify.yml@refs/heads/main`, or drop both and deploy with a systemd timer that fetches `main`.
+3. **Add the two contact-encryption keys** to the secrets file, then merge #111 (commands in the pull request). Keep a copy: losing the keys loses the contacts.
+4. **Rename the bootstrap admin account.**
+5. **Noreply commit emails** for the three team members.
+6. Confirm the host router's `proxy_read_timeout` is at least 60 s for `/api/`, and that it sets the client address from `CF-Connecting-IP`.
+
+## Decisions waiting for the owner
+
+- What happens to the groups of a suspended, revoked or de-roled mentor (members keep writing; nobody moderates).
+- Whether the team sees a whole escalated private conversation or only what follows the escalation.
+- The default caps: 5 hides a day per reporter and 2 per author; 200 organisation links a day per code; 120 AI requests a minute; signed-in people behind one address share its AI allowance.
+- B-M4 (the organisation dashboard's small-number protection) and B-M6 (self-declared gender): the lasting fixes are design decisions.
+
+## Checked and found safe
+
+- **SQL:** four `text()` uses, all with bound parameters; full-text terms are word tokens; the one `ILIKE` is escaped; no column or order from input.
+- **Model outputs:** routes are enum-checked; cited ids must be in the retrieved set; source cards are built on the server from records, never from model text; no tool calls.
+- **Live sources:** fixed hosts, https on 443, public-address check on every hop, 3 MB cap, HTML stripped to text.
+- **Browser:** no `dangerouslySetInnerHTML`, `innerHTML` from data, `eval` or markdown rendering; external links pass a host allow-list; `script-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'` on every location.
+- **Redirects and files:** nginx redirects are relative; the media route is a strict pattern; downloads go by catalogue id with a host allow-list and no redirects.
+- **Access:** every object route checks its owner or role; roles are read from the database on every request; no CORS; cookies are HttpOnly, Secure and SameSite=Lax.
+- **Authentication:** Argon2id; HS256 fixed on encode and decode; refresh tokens random, stored hashed and rotated; one-time codes hashed with five attempts.
+- **Dependencies:** lockfiles present and used with `--frozen` / `npm ci`; no pinned version known to be vulnerable.
+
+## Earlier review (2026-10-05), re-checked
+
+Item 2 «CI keeps running on the production host's runner, accepted because the repo is private» no longer holds: see C-H1. Item 4 (the database container receives the whole secrets file) is fixed in #111. The items listed as fixed there were confirmed, with these residuals now closed: #2 ex-mentor access (B-M1), #5 AI budget (A-H3, A-L1); #6 urgent flooding is being strengthened (A-H4).
