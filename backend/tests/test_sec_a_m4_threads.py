@@ -29,7 +29,8 @@ async def fill(request_id: str, n: int) -> None:
     start = datetime.now(UTC) - timedelta(days=2)
     async with SessionLocal() as s:
         s.add_all(
-            HelpMessage(request_id=request_id, author="learner", body=f"m{i:04d}", created_at=start + timedelta(seconds=i)) for i in range(n)
+            HelpMessage(request_id=request_id, author="learner", body=f"m{i:04d}", created_at=start + timedelta(seconds=i))
+            for i in range(n)
         )
         await s.commit()
 

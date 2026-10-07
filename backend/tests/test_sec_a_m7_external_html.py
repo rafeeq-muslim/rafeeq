@@ -141,7 +141,12 @@ def test_m7_parsing_a_hostile_500_kb_card_page_takes_under_200_ms():
     assert best_ms(islamic_content.parse_card, (opening * (N // len(opening)))[:N], url, "1", "ar") < BUDGET_MS
     assert best_ms(islamic_content.parse_card, opening + "<" * N, url, "1", "ar") < BUDGET_MS
     # and a real-shaped card is still read
-    card = opening + '{"@type": "QAPage", "url": "' + url + '", "mainEntity": {"name": "T", "text": "Q", "acceptedAnswer": {"text": "<p>A</p>"}}}</script>'
+    card = (
+        opening
+        + '{"@type": "QAPage", "url": "'
+        + url
+        + '", "mainEntity": {"name": "T", "text": "Q", "acceptedAnswer": {"text": "<p>A</p>"}}}</script>'
+    )
     rec = islamic_content.parse_card("<html>" + opening + "{bad</script>" + card, url, "1", "ar")
     assert (rec.title, rec.question, rec.body) == ("T", "Q", "A")
 

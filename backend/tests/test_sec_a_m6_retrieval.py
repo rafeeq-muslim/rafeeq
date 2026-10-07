@@ -12,7 +12,12 @@ from tests.knw_fakes import add_passages
 
 pytest_plugins = ["tests.knw_fakes"]  # the `ai` fixture
 
-EN = {"id": "hadeethenc:en:1", "lang": "en", "quote_text": "TEST_QUOTE_TEXT ablution before prayer", "context_text": "TEST_CONTEXT_TEXT washing"}
+EN = {
+    "id": "hadeethenc:en:1",
+    "lang": "en",
+    "quote_text": "TEST_QUOTE_TEXT ablution before prayer",
+    "context_text": "TEST_CONTEXT_TEXT washing",
+}
 
 
 def terms(q: str | None) -> list[str]:

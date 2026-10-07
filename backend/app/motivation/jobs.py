@@ -90,4 +90,6 @@ async def _purge() -> None:
 
 def register(scheduler) -> None:
     scheduler.add_job(_run, CronTrigger(hour=0, minute=0, timezone=RIYADH), id="mot-daily", replace_existing=True, misfire_grace_time=3600)
-    scheduler.add_job(_purge, CronTrigger(hour=1, minute=20, timezone=RIYADH), id="mot-anon-retention", replace_existing=True, misfire_grace_time=3600)
+    scheduler.add_job(
+        _purge, CronTrigger(hour=1, minute=20, timezone=RIYADH), id="mot-anon-retention", replace_existing=True, misfire_grace_time=3600
+    )

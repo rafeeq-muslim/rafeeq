@@ -78,7 +78,8 @@ async def test_h5_old_anonymous_events_go_and_the_indicator_window_stays(client)
     async with SessionLocal() as s:
         for age in (0, 30, mot_jobs.ANON_EVENT_DAYS, mot_jobs.ANON_EVENT_DAYS + 1, 400):
             s.add_all(
-                AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u01-l1", day=today - timedelta(days=age)) for i in range(12)
+                AnonEvent(install_id=f"d{i}", type="lesson_completed", lesson_id="u01-l1", day=today - timedelta(days=age))
+                for i in range(12)
             )
         await s.commit()
     team = await with_roles(client, "team-1", "team")
@@ -119,7 +120,8 @@ async def test_h5_old_outbox_rows_go_but_every_reader_keeps_what_it_reads():
         await s.commit()
         assert await retention.purge_old_events(s, now) == 5
         left = sorted(
-            (e.name, e.payload.get("user_id") or e.payload.get("install_id"), e.payload.get("status")) for e in await s.scalars(select(OutboxEvent))
+            (e.name, e.payload.get("user_id") or e.payload.get("install_id"), e.payload.get("status"))
+            for e in await s.scalars(select(OutboxEvent))
         )
         assert left == [
             ("EngagementStatusChanged", "acc-a", "at_risk"),

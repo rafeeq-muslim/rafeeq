@@ -158,9 +158,7 @@ SAVED_WRITES_PER_MIN = 30
 
 
 async def _saved_of(session, user_id) -> list[Saved]:
-    rows = await session.scalars(
-        select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()).limit(SAVED_MAX)
-    )
+    rows = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()).limit(SAVED_MAX))
     return [Saved(kind=r.kind, ref=r.ref_id, saved_at=r.saved_at, answer=_answer_of(r)) for r in rows]
 
 

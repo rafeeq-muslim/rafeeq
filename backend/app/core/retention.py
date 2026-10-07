@@ -69,4 +69,6 @@ async def _run() -> None:
 
 
 def register(scheduler) -> None:
-    scheduler.add_job(_run, CronTrigger(hour=1, minute=40, timezone="UTC"), id="outbox-retention", replace_existing=True, misfire_grace_time=3600)
+    scheduler.add_job(
+        _run, CronTrigger(hour=1, minute=40, timezone="UTC"), id="outbox-retention", replace_existing=True, misfire_grace_time=3600
+    )
