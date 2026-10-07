@@ -40,6 +40,9 @@ for _name in ("httpx", "httpcore"):
 
 MAX_REDIRECTS = 3
 MAX_BYTES = 3_000_000
+# A page that is parsed as HTML (security review 2026-10-07, A-M7): parsing
+# cost grows with size, and a fatwa or card page is far smaller than this.
+HTML_MAX_BYTES = 500_000
 MIN_REQUEST_SECONDS = 0.5
 RETRY_STATUSES = {429, 502, 503, 504}
 
@@ -160,7 +163,9 @@ def new_client(user_agent: str) -> httpx.AsyncClient:
     )
 
 
-async def _once(client: httpx.AsyncClient, budget: SourceBudget, url: httpx.URL, accept: str, per_request_s: float) -> Fetched:
+async def _once(
+    client: httpx.AsyncClient, budget: SourceBudget, url: httpx.URL, accept: str, per_request_s: float, max_bytes: int = MAX_BYTES
+) -> Fetched:
     for hop in range(MAX_REDIRECTS + 1):
         url = check_url(url, budget.hosts)
         await _check_dns(url.host)
@@ -187,7 +192,7 @@ async def _once(client: httpx.AsyncClient, budget: SourceBudget, url: httpx.URL,
                 body = bytearray()
                 async for chunk in r.aiter_bytes():
                     body.extend(chunk)
-                    if len(body) > MAX_BYTES:
+                    if len(body) > max_bytes:
                         raise FetchError(T.BAD_RESPONSE)
                 return Fetched(
                     str(url), r.status_code, body.decode(r.encoding or "utf-8", errors="replace"), r.headers.get("content-type", "")
@@ -208,10 +213,12 @@ async def get(
     params: dict[str, str] | None = None,
     per_request_s: float = 8.0,
 ) -> Fetched:
-    """GET with the checks above and one transient retry."""
+    """GET with the checks above and one transient retry. A page asked for
+    as HTML may be at most HTML_MAX_BYTES; anything else MAX_BYTES."""
     u = httpx.URL(url, params=params) if params else httpx.URL(url)
+    max_bytes = HTML_MAX_BYTES if accept.startswith("text/html") else MAX_BYTES
     try:
-        return await _once(client, budget, u, accept, per_request_s)
+        return await _once(client, budget, u, accept, per_request_s, max_bytes)
     except FetchError as e:
         if not e.transient:
             raise
@@ -220,4 +227,4 @@ async def get(
             raise  # Retry-After does not fit the window: report it, do not wait
         if wait > 0:
             await asyncio.sleep(wait)
-        return await _once(client, budget, u, accept, per_request_s)
+        return await _once(client, budget, u, accept, per_request_s, max_bytes)

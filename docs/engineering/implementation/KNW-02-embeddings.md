@@ -59,6 +59,7 @@ Production state 2026-10-06 (read-only, before the source-coverage deploy): ever
 | English, 600 characters of common words | 13.7 s (60 terms) | 1.5 s (12 terms) |
 | Arabic, 600 characters of 2-letter words | over 60 s (76 terms) | 1.7 s (12 terms) |
 | Arabic, 600 characters of common words | over 60 s (98 terms) | 5.3 s (24 terms) |
-| Ordinary questions (4 to 20 terms) | 0.8 to 4.0 s | 0.2 to 3.2 s |
+| Ordinary short questions (4 to 6 terms) | 0.8 to 2.2 s | same query (0.2 to 0.8 s on the second run: a warmer cache, not the change) |
+| Ordinary long question, Arabic (20 terms) | 4.0 s | 3.2 s (19 terms) |
 
 Answer quality: for the 31 questions of `content/knowledge/eval/questions.jsonl` the 24 word-search candidates are identical for 30; Q014 keeps 21 of 24 («كم» is now the exact word, not a prefix). No KNW test changed. Tests: `backend/tests/test_sec_a_m6_retrieval.py`.
