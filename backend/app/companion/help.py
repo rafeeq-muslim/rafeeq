@@ -26,11 +26,13 @@ from sqlalchemy import and_, delete, exists, func, select, update
 
 from app.companion import notify
 from app.companion.common import (
+    THREAD_MSGS_PER_DAY,
     CurrentOwner,
     Gender,
     Lang,
     Owner,
     guest_handle,
+    message_page,
     new_guest_token,
     not_found,
     now,
@@ -97,6 +99,8 @@ class ThreadOut(ThreadSummary):
     # CMP-03 R4: a conversation with a former mentor. It stays readable; what
     # the learner writes here goes to their current mentor or to the pool.
     link_ended: bool = False
+    # Only the last 200 messages come at once; `?before=<id of the first one>` reads the page before them.
+    has_earlier: bool = False
 
 
 class CreatedOut(BaseModel):
@@ -354,10 +358,10 @@ async def my_requests(session: Session, owner: CurrentOwner) -> list[ThreadSumma
 
 
 @router.get("/requests/{request_id}", response_model=ThreadOut)
-async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -> ThreadOut:
+async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner, before: uuid.UUID | None = None) -> ThreadOut:
     req = await owned(session, owner, request_id)
     hidden_for_me = await _reported_by_owner(session, owner)
-    msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
+    msgs, has_earlier = await message_page(session, req.id, before)
     names: dict[uuid.UUID, str] = {}
     out: list[MessageOut] = []
     for m in msgs:
@@ -391,13 +395,19 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
         messages=out,
         can_block=req.mentor_id is not None and req.first_reply_at is not None,
         link_ended=await _link_ended(session, req),
+        has_earlier=has_earlier,
     )
 
 
 @router.post("/requests/{request_id}/messages", status_code=201, response_model=ThreadSummary)
-async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session, owner: CurrentOwner) -> ThreadSummary:
+async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session, owner: CurrentOwner, request: Request) -> ThreadSummary:
     req = await owned(session, owner, request_id)
     ratelimit.hit(f"help-msg:{req.id}", 30, 60)
+    ratelimit.hit(f"help-msg-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
+    if owner.user is None:
+        # Guest tokens are free to mint: a guest's messages are also counted
+        # by address (in memory only, never stored).
+        ratelimit.hit(f"help-msg-ip:{request.client.host if request.client else '-'}", 60, 600)
     text = clean_body(body.body)
     if owner.user is not None and await _link_ended(session, req):
         req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went

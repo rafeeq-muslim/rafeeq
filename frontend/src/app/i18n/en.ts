@@ -1579,4 +1579,6 @@ export const en: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ---
   "cmp.inbox.closeConfirmTitle": "End this conversation?",
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
+  // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
+  "cmp.thread.earlier": "Earlier messages",
 }

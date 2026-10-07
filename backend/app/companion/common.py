@@ -9,10 +9,10 @@ from datetime import UTC, datetime
 from typing import Annotated, Literal
 
 from fastapi import Depends, Header, HTTPException, status
-from sqlalchemy import ARRAY, String, and_, cast, exists, func, or_, select
+from sqlalchemy import ARRAY, String, and_, cast, exists, func, or_, select, tuple_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion.models import Block, HelpRequest, MentorProfile
+from app.companion.models import Block, HelpMessage, HelpRequest, MentorProfile
 from app.core.deps import OptionalUser
 from app.core.security import sha256
 from app.platform.models import User
@@ -154,3 +154,25 @@ def forbidden(detail: str = "forbidden") -> HTTPException:
 
 def not_found() -> HTTPException:
     return HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
+
+
+# --- reading a conversation in pages (security review 2026-10-07, A-M4) -------
+
+THREAD_PAGE = 200
+# One conversation takes at most this many messages a day from each side
+# (in memory, like every limit here): far above any real conversation.
+THREAD_MSGS_PER_DAY = 300
+
+
+async def message_page(session: AsyncSession, request_id: uuid.UUID, before: uuid.UUID | None) -> tuple[list[HelpMessage], bool]:
+    """The last `THREAD_PAGE` messages of a conversation, oldest first, or
+    the page just before the message `before`; and whether older ones exist.
+    A conversation is never read whole, however long it grew."""
+    q = select(HelpMessage).where(HelpMessage.request_id == request_id)
+    if before is not None:
+        anchor = await session.get(HelpMessage, before)
+        if anchor is None or anchor.request_id != request_id:
+            raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
+        q = q.where(tuple_(HelpMessage.created_at, HelpMessage.id) < (anchor.created_at, anchor.id))
+    rows = list(await session.scalars(q.order_by(HelpMessage.created_at.desc(), HelpMessage.id.desc()).limit(THREAD_PAGE + 1)))
+    return rows[:THREAD_PAGE][::-1], len(rows) > THREAD_PAGE

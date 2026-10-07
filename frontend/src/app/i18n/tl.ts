@@ -1580,4 +1580,6 @@ export const tl: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
   "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
+  // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ⚠️ Tagalog needs native review ---
+  "cmp.thread.earlier": "Mga naunang mensahe",
 }
