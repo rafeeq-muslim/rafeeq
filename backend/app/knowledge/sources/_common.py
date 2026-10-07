@@ -55,15 +55,36 @@ _TAG = re.compile(r"<[^>]+>")
 _BLOCK = re.compile(r"(?i)<\s*(br|/p|/div|/li|/h[1-6]|/blockquote|/tr)\s*/?>")
 
 
+def _drop_tags(s: str) -> str:
+    """Exactly `re.sub(r"<[^>]+>", "", s)`, in linear time. On the whole text
+    the pattern is quadratic when many "<" have no ">" after them (each one
+    is scanned to the end), and this runs on text fetched from other sites
+    (security review 2026-10-07, A-M7). A tag ends with ">", so nothing
+    after the last ">" can be part of one: the pattern runs only up to it,
+    where every "<" it tries either matches up to the next ">" (and those
+    letters are not scanned again) or is the "<" of "<>"."""
+    end = s.rfind(">") + 1
+    return _TAG.sub("", s[:end]) + s[end:]
+
+
+def _trim_line_ends(s: str) -> str:
+    """Exactly `re.sub(r"[ \t]+\n", "\n", s)`, in one pass (that pattern is
+    quadratic on a long run of spaces with no newline after it)."""
+    lines = s.split("\n")
+    return "\n".join([*(line.rstrip(" \t") for line in lines[:-1]), lines[-1]])
+
+
 def strip_html(s: str) -> str:
-    """Remove tags only. Block-level closers become newlines so paragraphs survive."""
+    """Remove tags only. Block-level closers become newlines so paragraphs
+    survive. Linear in the length of the text, and byte for byte what the
+    earlier regular expressions returned (tests compare the two)."""
     if not s:
         return ""
     s = _BLOCK.sub("\n", s)
-    s = _TAG.sub("", s)
+    s = _drop_tags(s)
     s = html.unescape(s)
     s = s.replace("\r\n", "\n").replace("\r", "\n")
-    s = re.sub(r"[ \t]+\n", "\n", s)
+    s = _trim_line_ends(s)
     s = re.sub(r"\n{3,}", "\n\n", s)
     return s.strip()
 

@@ -47,7 +47,7 @@ export type ThreadSummary = {
 /** `hidden`: only ever true on the learner's own message, hidden for review (CMP-04 R5). */
 export type ThreadMessage = { id: string; author: "me" | "mentor" | "scholar" | "system"; name: string | null; body: string; created_at: string; hidden?: boolean }
 /** `link_ended`: a former mentor's thread (CMP-03 R4): readable; what is written in it goes to the current mentor or the pool. */
-export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean; link_ended?: boolean }
+export type Thread = ThreadSummary & { messages: ThreadMessage[]; can_block: boolean; link_ended?: boolean; has_earlier?: boolean }
 
 export type InboxRow = {
   id: string
@@ -77,7 +77,7 @@ export type InboxMessage = {
   created_at: string
   hidden?: boolean
 }
-export type InboxThread = InboxRow & { messages: InboxMessage[]; referred: string[] }
+export type InboxThread = InboxRow & { messages: InboxMessage[]; referred: string[]; has_earlier?: boolean }
 export type Referral = {
   id: string
   lang: string
@@ -225,6 +225,12 @@ export function useThread(id: string | undefined) {
     refetchInterval: POLL.thread,
   })
 }
+
+/** A-M4: the page of messages before `before` (the first message on screen). */
+export const earlierOfThread = (id: string, before: string) =>
+  api<Thread>(`/api/help/requests/${id}?before=${encodeURIComponent(before)}`, { headers: helpHeaders() })
+export const earlierOfInboxThread = (id: string, before: string) =>
+  api<InboxThread>(`/api/inbox/requests/${id}?before=${encodeURIComponent(before)}`)
 
 export function usePostToThread(id: string) {
   const qc = useQueryClient()

@@ -8,7 +8,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.knowledge.models import SavedItem
 
+EXPORT_MAX = 500  # the account keeps at most this many (discover.SAVED_MAX)
+
 
 async def export_user(session: AsyncSession, user_id: uuid.UUID) -> dict:
-    items = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at))
+    items = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at).limit(EXPORT_MAX))
     return {"saved": [{"kind": i.kind, "ref": i.ref_id, "content": i.payload, "saved_at": i.saved_at} for i in items]}

@@ -112,6 +112,7 @@ async def test_plt12_r2_item_detail_resolves_every_size_before_download(client, 
 async def test_plt12_r2_quran_text_is_the_readers_own_requests_from_the_database(client, upstream, mushaf):
     assert "quran-text:en" not in _items(await _catalog(client, "en"))  # nothing loaded: nothing offered
     await add_passages({"id": "quranenc:1:1", "kind": "quran_arabic", "lang": "ar", "ref_key": "1:1", "quote_text": "نص"}, embed=False)
+    downloads.reset()  # the catalogue is rebuilt at most every 5 minutes (security review A-M2)
     text = _items(await _catalog(client, "en"))["quran-text:en"]
     keys = [f["key"] for f in text["files"]]
     assert "/api/scripture/quran?sura=2&from=241&to=280&lang=en" in keys and "/api/scripture/quran?sura=114&from=1&to=6&lang=en" in keys
@@ -140,6 +141,7 @@ async def test_plt12_r3_changed_text_changes_the_version_but_not_the_files(clien
     monkeypatch.setattr(library, "load", lambda: items)
     before = _items(await _catalog(client))["lib:ih-1-ar"]
     items[0] = {**items[0], "description": "وصف مصحح"}
+    downloads.reset()  # the catalogue is rebuilt at most every 5 minutes (security review A-M2)
     after = _items(await _catalog(client))["lib:ih-1-ar"]
     assert after["version"] != before["version"]
     assert [f["key"] for f in after["files"]] == [f["key"] for f in before["files"]]  # the device refreshes text only

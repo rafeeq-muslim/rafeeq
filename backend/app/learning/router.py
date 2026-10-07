@@ -9,10 +9,11 @@ from fastapi.responses import FileResponse
 from pydantic import AwareDatetime, BaseModel, Field
 from sqlalchemy import select
 
+from app.core import ratelimit
 from app.core.config import get_settings
 from app.core.deps import CurrentUser, OptionalUser, Session
 from app.knowledge.review import published
-from app.learning.content import build_content
+from app.learning.content import build_content, store
 from app.learning.models import LessonCompletion, ObjectiveMastery, UnitUnlock
 
 router = APIRouter(prefix="/api", tags=["learning"])
@@ -88,13 +89,26 @@ async def get_learning(session: Session, user: CurrentUser) -> LearningSync:
     return await _learning_of(session, user.id)
 
 
+# The account copy only ever holds ids of the path: an unknown lesson, unit or
+# objective id is left out (never stored), so the copy cannot grow past the
+# path itself whatever a client sends (security review 2026-10-07, A-M3).
+LEARNING_WRITES_PER_MIN = 60  # the app saves at most once every 1.5 s
+
+
 @router.put("/me/learning")
 async def merge_learning(body: LearningSync, session: Session, user: CurrentUser) -> LearningSync:
     """Union of completions (earliest first, latest last, most times), union
     of unlocks, and per objective the state with the latest answer."""
-    have = await _learning_of(session, user.id)
+    ratelimit.hit(f"learning-sync:{user.id}", LEARNING_WRITES_PER_MIN, 60)
+    path = store()
+    lessons, units, objectives = set(path.lessons), {u["id"] for u in path.units}, path.objective_ids()
+    done = {c.lesson_id: c for c in await session.scalars(select(LessonCompletion).where(LessonCompletion.user_id == user.id))}
+    unlocked = set(await session.scalars(select(UnitUnlock.unit_id).where(UnitUnlock.user_id == user.id)))
+    mastery = {m.objective_id: m for m in await session.scalars(select(ObjectiveMastery).where(ObjectiveMastery.user_id == user.id))}
     for lid, c in body.completed.items():
-        row = await session.get(LessonCompletion, (user.id, lid))
+        if lid not in lessons:
+            continue
+        row = done.get(lid)
         if row is None:
             session.add(
                 LessonCompletion(user_id=user.id, lesson_id=lid, first_completed_at=c.first, last_completed_at=c.last, times=c.times)
@@ -103,19 +117,19 @@ async def merge_learning(body: LearningSync, session: Session, user: CurrentUser
             row.first_completed_at = min(row.first_completed_at, c.first)
             row.last_completed_at = max(row.last_completed_at, c.last)
             row.times = max(row.times, c.times)
-    for uid in set(body.unlockedUnits) - set(have.unlockedUnits):
+    for uid in (set(body.unlockedUnits) & units) - unlocked:
         session.add(UnitUnlock(user_id=user.id, unit_id=uid))
     epoch = datetime.min.replace(tzinfo=UTC)
     for oid, m in body.mastery.items():
-        mine = have.mastery.get(oid)
+        if oid not in objectives:
+            continue
+        row = mastery.get(oid)
         # Seen exercises are a union: answered on any device counts as seen (LRN-04 R2).
-        seen = list(dict.fromkeys([*(mine.seenExercises if mine else []), *m.seenExercises]))[-60:]
-        if mine is not None and (mine.lastAnswerAt or epoch) >= (m.lastAnswerAt or epoch):
-            if seen != mine.seenExercises:
-                row = await session.get(ObjectiveMastery, (user.id, oid))
+        seen = list(dict.fromkeys([*((row.seen_exercises or []) if row else []), *m.seenExercises]))[-60:]
+        if row is not None and (row.last_answer_at or epoch) >= (m.lastAnswerAt or epoch):
+            if seen != list(row.seen_exercises or []):
                 row.seen_exercises = seen
             continue
-        row = await session.get(ObjectiveMastery, (user.id, oid))
         if row is None:
             row = ObjectiveMastery(user_id=user.id, objective_id=oid)
             session.add(row)
