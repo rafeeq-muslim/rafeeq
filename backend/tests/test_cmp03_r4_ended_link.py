@@ -230,8 +230,9 @@ async def test_cmp03_r4_urgent_request_held_by_old_mentor_keeps_its_routing(clie
     await client.post(f"/api/inbox/requests/{rid}/messages", json={"body": "I am here for you"}, headers=abu.h)
     await choose(client, daniel, yusuf)
     assert await held_by(rid) == abu.id  # untouched: urgent goes to the first available person
-    for m in (abu, yusuf):
-        assert rid in [r["id"] for r in (await client.get("/api/inbox/requests", headers=m.h)).json()]
+    # Security review B-M3: an answered urgent request is its holder's and the team's.
+    assert rid in [r["id"] for r in (await client.get("/api/inbox/requests", headers=abu.h)).json()]
+    assert rid not in [r["id"] for r in (await client.get("/api/inbox/requests", headers=yusuf.h)).json()]
 
 
 # Blocking still behaves as before (CMP-04 R6) ----------------------------------

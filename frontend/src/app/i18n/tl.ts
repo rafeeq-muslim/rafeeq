@@ -1580,6 +1580,13 @@ export const tl: Dict = {
   // --- PLT-17 R4 (plt-17-mentor): ending a conversation asks first ⚠️ Tagalog needs native review ---
   "cmp.inbox.closeConfirmTitle": "Tapusin ang usapang ito?",
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
+  // --- SEC-B (sec-companion-access): security review B; Tagalog needs native review ---
+  "sec.invite.gender": "Kasarian ng mentor",
+  "sec.invite.genderHint": "Kasama itong nase-save sa code. Ito ang magiging kasarian ng account na gagawin gamit nito, at hindi ito mababago ng may-ari.",
+  "sec.apps.genderMismatch": "Iba na ang kasarian ng account ngayon sa nakasulat sa aplikasyon, kaya hindi ito natanggap. Kausapin ang nag-apply o tanggihan ito.",
+  "sec.inbox.urgentHint": "Makikita agad ito ng team. Kung wala pang sumasagot, makikita rin ito ng lahat ng mentor. Gamitin para sa pananakit o panganib.",
+  "sec.gender.inUse": "Hindi mababago ang piniling ito habang may mentor ka, grupo, o kahilingan ng tulong na bukas pa. Tapusin muna ang mga iyon, saka ito baguhin.",
+  "sec.org.codeLinks": "Mga naka-link na device: {n} · nitong huling araw: {d}",
   // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ⚠️ Tagalog needs native review ---
   "ask.context.about": "Tungkol sa: {lesson} · {item}",
   "ask.context.aboutLesson": "Tungkol sa: {lesson}",

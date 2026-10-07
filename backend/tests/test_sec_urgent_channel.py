@@ -8,7 +8,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import func, select
 
-from app.companion import urgent
+from app.companion import notify, urgent
 from app.companion.models import HelpRequest
 from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
@@ -75,19 +75,37 @@ async def test_sec_a_h4_words_in_one_urgent_request_push_everyone_once(client, p
     assert rounds(pushes, mentor) == 1
 
 
-async def test_sec_a_h4_once_someone_answered_only_that_person_is_pushed(client, pushes):
+async def test_sec_a_h4_a_held_urgent_request_pushes_its_holder_and_the_team_once(client, pushes):
+    """B-M3: a held urgent request is its holder's and the team's. The holder
+    hears every message, the team once per window, other mentors nothing."""
     mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m")
     other = await person(client, "abu-omar", roles=("mentor",), gender="m")
+    team = await person(client, "team-one", roles=("team",))
     out = (await client.post("/api/help/requests", json={"kind": "urgent", "lang": "en"})).json()
     rid, h = out["request"]["id"], {"X-Help-Token": out["guest_token"]}
     assert (await client.post(f"/api/inbox/requests/{rid}/messages", json={"body": "I am here"}, headers=mentor.h)).status_code == 201
     await settle()
     pushes.clear()
-    for i in range(3):
+    for i in range(4):
         await client.post(f"/api/help/requests/{rid}/messages", json={"body": f"thank you {i}"}, headers=h)
     await settle()
-    assert [uid for uid, _ in pushes] == [str(mentor.id)] * 3  # like any conversation with its mentor
-    assert rounds(pushes, other) == 0
+    assert rounds(pushes, mentor) == 4 and rounds(pushes, team) == 1 and rounds(pushes, other) == 0
+
+
+async def test_sec_a_h4_a_push_the_full_queue_would_drop_does_not_use_the_turn(client, pushes, monkeypatch):
+    mentor = await person(client, "abu-abdullah", roles=("mentor",), gender="m")
+    out = (await client.post("/api/help/requests", json={"kind": "urgent", "lang": "en"})).json()
+    rid, h = out["request"]["id"], {"X-Help-Token": out["guest_token"]}
+    await settle()
+    assert rounds(pushes, mentor) == 1
+    assert urgent.alert("another-request") == "all"
+    await settle()
+    monkeypatch.setattr(notify, "MAX_WAITING", 0)  # the queue is full
+    assert urgent.alert("third-request") == "none"
+    monkeypatch.undo()
+    assert urgent.alert("third-request") == "all"  # its turn was not used up while the queue was full
+    await settle()
+    assert (await client.post(f"/api/help/requests/{rid}/messages", json={"body": "hello"}, headers=h)).status_code == 201
 
 
 async def test_sec_a_h4_danger_phrases_from_one_asker_raise_one_alert(client, ai, pushes):

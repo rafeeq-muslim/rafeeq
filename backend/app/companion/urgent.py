@@ -5,8 +5,10 @@ Security review 2026-10-07 (A-H4, B-M2): a danger case always reaches a human
 there are; what is limited is the *push* to every mentor and team member,
 which a stranger could otherwise send to everyone again and again.
 
-- One push to every responder per urgent request; while nobody has answered,
+- One push to every responder per urgent request; while nobody holds it,
   further words in the same request alert at most once per `THREAD_EVERY_S`.
+  Once someone holds it (B-M3) the holder hears every message and the team
+  at most once per `THREAD_EVERY_S`.
 - At most `PUSH_CAP` such pushes per hour in total. Over the cap the request
   is still created and still shown first in every inbox; the mentors are not
   pushed, the team is (at most once per `TEAM_EVERY_S`), and it is logged.
@@ -33,10 +35,26 @@ def _free(key: str, limit: int, window_s: int) -> bool:
     return True
 
 
+def _queue_full() -> bool:
+    """The notification queue is bounded (companion/notify.py) and drops what
+    arrives when it is full. A push that would be dropped must not use up the
+    request's turn, so the next message of the same request can still alert."""
+    return len(notify._pending) >= notify.MAX_WAITING
+
+
+def alert_team(thread: object) -> bool:
+    """A held urgent request (B-M3: its holder's and the team's): the team is
+    told about new words in it at most once per `THREAD_EVERY_S`."""
+    if _queue_full() or not _free(f"urgent-push-held:{thread}", 1, THREAD_EVERY_S):
+        return False
+    notify.later(notify.to_role, TEAM_ROLES, "urgent", "/inbox")
+    return True
+
+
 def alert(thread: object) -> str:
-    """Alert people about the urgent request `thread` (its id).
-    Returns what was done: all | team | none."""
-    if not _free(f"urgent-push-thread:{thread}", 1, THREAD_EVERY_S):
+    """Alert people about the urgent request `thread` (its id), while nobody
+    holds it. Returns what was done: all | team | none."""
+    if _queue_full() or not _free(f"urgent-push-thread:{thread}", 1, THREAD_EVERY_S):
         return "none"
     if _free("urgent-push-all", PUSH_CAP, 3600):
         notify.later(notify.to_responders, "urgent", "/inbox")

@@ -24,7 +24,7 @@ async def test_mot08_granting_another_role_still_works(client):
     user = await register(client, username="layla-1")
     r = await client.put(f"/api/admin/users/{user['user']['id']}/roles", json={"roles": ["learner", "mentor"]}, headers=admin)
     assert r.status_code == 200 and r.json()["roles"] == ["learner", "mentor"]
-    r = await client.post("/api/admin/invites", json={"role": "mentor"}, headers=admin)
+    r = await client.post("/api/admin/invites", json={"role": "mentor", "gender": "m"}, headers=admin)
     assert r.status_code == 200 and r.json()["codes"]
 
 
@@ -77,7 +77,7 @@ async def test_mot08_org_invites_mint_only_mentor_and_coordinator(client):
     from tests.org_helpers import make_org
 
     org = await make_org(client)
-    r = await client.post(f"/api/org/{org.id}/invites", headers=org.coordinator.h)
+    r = await client.post(f"/api/org/{org.id}/invites", json={"gender": "f"}, headers=org.coordinator.h)
     assert r.status_code == 201
     async with SessionLocal() as s:
         roles = {i.role for i in await s.scalars(select(Invite))}

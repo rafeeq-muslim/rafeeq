@@ -168,7 +168,7 @@ async def end_link(session, link: MentorLink, new_mentor_id: uuid.UUID | None = 
 async def set_match(body: MatchIn, session: Session, user: CurrentUser) -> MineOut:
     """R2: asked here only, to find a mentor of the same gender who speaks your language.
     A mentor's or team member's gender, once set, changes only by an admin (security)."""
-    set_own_gender(user, body.gender)
+    await set_own_gender(session, user, body.gender)  # 409 gender_in_use while a mentor, group or open request stands (B-M6)
     user.languages = list(dict.fromkeys(body.languages))
     await session.commit()
     return await mine(session, user)

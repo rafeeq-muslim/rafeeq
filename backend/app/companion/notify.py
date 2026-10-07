@@ -126,6 +126,11 @@ def later(fn, *args) -> None:
 
 
 async def drain() -> None:
-    """Tests: wait for background notifications."""
+    """Tests: wait for background notifications. A task left by an earlier
+    test belongs to that test's closed event loop and can never finish:
+    waiting for it would spin forever, so it is dropped."""
+    loop = asyncio.get_running_loop()
+    for stale in [t for t in _pending if t.get_loop() is not loop]:
+        _pending.discard(stale)
     while _pending:
         await asyncio.gather(*list(_pending))

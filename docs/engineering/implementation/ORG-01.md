@@ -12,6 +12,8 @@
 | R4 one at a time, unlink any time | `links.py::link` (deletes the device's previous link first), `POST /api/org/link/remove`; `org/api.ts::unlinkOrg` from «حسابي», `lib/privacy.ts::wipeDevice`, `Me.tsx::DeleteAccount` | Link and status history deleted at once (cascade); nobody is told; frozen daily figures stay (ORG-03 R6) |
 | R5 no power over the learner | no route lists, names or messages linked learners; CMP-01/CMP-03 untouched | Tested by walking the coordinator's responses and the route table |
 
+| R6 per-code daily cap, admin counts (security review B-M4, minimal part) | `links.py::link` + `links_last_day`, `LINKS_PER_CODE_DAY = 200`; `manage.py::AdminCodeRow` in `GET /api/admin/orgs`; `frontend/src/app/org/AdminOrgs.tsx` (`sec.org.codeLinks`) | Counted from `org_links` (organisation + code language, `linked_at` in the last 24 h), so it survives a restart and needs no column; the device's own previous link is removed before counting and restored if the cap refuses (`429 rate_limited`). The coordinator's `GET /api/org/{id}/codes` carries no counts (ORG-03 R2). Does not stop ten forged devices; see the open question. Tests: `backend/tests/test_sec_b_m4_org_link_limits.py` (5) |
+
 ## 2. Data
 
 `org_links` (organisation, install ID, code language, linked at, MOT-07 status copy) and `org_link_statuses` (status changes since linking). No account id, no IP, no name. The install ID travels only in POST bodies.

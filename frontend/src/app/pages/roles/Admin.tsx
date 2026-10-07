@@ -36,7 +36,7 @@ export const rolesOffered = (held: string[]): string[] => (held.includes("team")
 const roleKey = (r: string): Key => (r === "team" ? "role.teamRole" : r === "admin" ? "role.adminRole" : (`role.${r}` as Key))
 
 type InviteStatus = "available" | "used" | "expired" | "revoked"
-type Invite = { code: string; role: string; used: boolean; status?: InviteStatus; expires_at?: string | null; created_at: string }
+type Invite = { code: string; role: string; gender?: "m" | "f" | null; used: boolean; status?: InviteStatus; expires_at?: string | null; created_at: string }
 const statusOf = (i: Invite): InviteStatus => i.status ?? (i.used ? "used" : "available")
 
 /** PLT-17 R11: what a role change adds and removes, shown before it is saved. */
@@ -71,9 +71,13 @@ function Invites() {
   const { t } = useT()
   const qc = useQueryClient()
   const [role, setRole] = React.useState<(typeof INVITE_ROLES)[number]>("mentor")
+  // Security review B-H1: a mentor's code carries the gender the admin approved.
+  const [gender, setGender] = React.useState("")
+  const needsGender = role === "mentor"
   const list = useQuery({ queryKey: ["invites"], queryFn: () => api<Invite[]>("/api/admin/invites") })
   const create = useMutation({
-    mutationFn: () => api<{ codes: string[] }>("/api/admin/invites", { method: "POST", body: { role, count: 1 } }),
+    mutationFn: () =>
+      api<{ codes: string[] }>("/api/admin/invites", { method: "POST", body: needsGender ? { role, count: 1, gender } : { role, count: 1 } }),
     onSuccess: (r) => {
       void navigator.clipboard?.writeText(r.codes[0]).then(() => toast.success(t("common.copied")))
       void qc.invalidateQueries({ queryKey: ["invites"] })
@@ -103,7 +107,17 @@ function Invites() {
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
-      <Button className="w-fit" onClick={() => create.mutate()} disabled={create.isPending}>
+      {needsGender && (
+        <div className="flex flex-col gap-2" data-slot="invite-gender">
+          <span className="text-label font-bold">{t("sec.invite.gender")}</span>
+          <ToggleGroup type="single" variant="outline" value={gender} onValueChange={(v) => setGender(v)} aria-label={t("sec.invite.gender")} className="justify-start">
+            <ToggleGroupItem value="m">{t("acct.male")}</ToggleGroupItem>
+            <ToggleGroupItem value="f">{t("acct.female")}</ToggleGroupItem>
+          </ToggleGroup>
+          <p className="text-caption text-muted-foreground">{t("sec.invite.genderHint")}</p>
+        </div>
+      )}
+      <Button className="w-fit" onClick={() => create.mutate()} disabled={create.isPending || (needsGender && !gender)}>
         {t("admin.create")}
       </Button>
       <ul className="flex flex-col gap-2">
@@ -115,7 +129,10 @@ function Invites() {
               <code dir="ltr" className="min-w-0 flex-1 font-mono text-body break-all">
                 {i.code}
               </code>
-              <span className="text-caption text-muted-foreground">{t(roleKey(i.role))}</span>
+              <span className="text-caption text-muted-foreground">
+                {t(roleKey(i.role))}
+                {i.gender && ` · ${t(i.gender === "f" ? "acct.female" : "acct.male")}`}
+              </span>
               <span data-status={status} className={open ? "text-caption font-bold text-success" : "text-caption text-muted-foreground"}>
                 {t(`admin.status.${status}` as Key)}
               </span>

@@ -20,7 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
 import { TopBar } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
-import { api } from "@/app/lib/api"
+import { api, ApiError } from "@/app/lib/api"
 import { Confirm } from "./Confirm"
 import { dayMonth, langName } from "./format"
 
@@ -74,8 +74,9 @@ export function ApplicationsList({ base, coordinator = false }: { base: string; 
     try {
       await call()
       await qc.invalidateQueries({ queryKey: ["cmp", "applications"] })
-    } catch {
-      toast.error(t("common.error"))
+    } catch (e) {
+      // Security review B-H1: the account's gender no longer matches the application.
+      toast.error(t(e instanceof ApiError && e.code === "gender_mismatch" ? "sec.apps.genderMismatch" : "common.error"))
     } finally {
       setBusy(false)
     }

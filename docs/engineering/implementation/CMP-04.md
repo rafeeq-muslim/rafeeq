@@ -13,6 +13,8 @@
 | R4 (no reporter identity; no block notice) | `groups.py::_message_out` | The author sees `hidden: true` on their own message, nothing about who reported. Blocks are never surfaced to the blocked person |
 | R5 (block member / mentor / responder) | `safety.py::block`, `mentors.py::block`, `help.py::block` | `cmp_blocks(blocker_id | blocker_guest_hash, blocked_id)`. Group messages of blocked users are filtered for the blocker; blocking one's mentor ends the link; blocking the responder clears `mentor_id`, sets `status=open`, and `_visible` hides the request from the blocked mentor. Self-block → `400 cannot_block_self` |
 
+**Security review B (2026-10-07).** L9: `safety.py::_may_hide_for_all` runs before a dangerous report is saved: no hide-for-all when the reporter (account or guest hash) already filed `HIDE_PER_REPORTER_DAY = 5` dangerous reports in the last 24 h, or `HIDE_PER_AUTHOR_DAY = 2` on messages by the same author (same group and author; in a help thread the same request and side), or when a report on that message was `dismissed` (the team restored it). The report is still stored with `priority=high` and the team is pushed; `hidden_for_all` in the answer says what happened; the reporter no longer sees the message (R2, by his own report row). Counted from `cmp_reports`, no new column. L11: `_answers` calls `inbox.mentor_gate`, so a mentor without the accepted rules or suspended cannot report a learner's message (404). Tests: `backend/tests/test_sec_b_l9_l10_l11.py`.
+
 ## 2. Data
 
 `cmp_reports` gains `priority`, `reporter_guest_hash`, `group_id` (for the queue's context); new `cmp_blocks`.

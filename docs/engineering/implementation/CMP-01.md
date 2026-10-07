@@ -55,6 +55,8 @@ Polling with TanStack Query: 10 s while a thread is open, 30 s for lists, paused
 
 ## Rewrite (PR #21, 2026-10-06)
 
+**Security review B-M6 (2026-10-07, minimal part).** `help.py::_requester_gender`: a guest token's earliest stored `requester_gender` wins over the `gender` sent later (the first answer is bound to the token server-side; no new column). `platform/auth.py::set_own_gender` (used by `PATCH /api/me` and `PUT /api/mentors/me/match`) refuses a change with `409 gender_in_use` while `companion/public.py::gender_in_use` is true: a `MentorLink`, a `GroupMember` row, or a `human`/`escalation` request that is not closed. Shown as `sec.gender.inUse` (ar/en/tl). Not solved, by design: gender stays self-declared (new account, erased guest device); open question in the feature doc. Tests: `backend/tests/test_sec_b_m6_gender_binding.py` (7), `frontend/src/app/companion/sec-b.m6.gender.test.tsx` (2).
+
 Danger left CMP-01 (still in the companion domain: README fixed rule). Rules renumbered: R1 source only (+ the assistant question only if chosen), R2 guest device, R3 same gender, R4 topics, R5 no contact details, R6 neutral notice.
 
 | Rule | Change |

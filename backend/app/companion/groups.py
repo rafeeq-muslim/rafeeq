@@ -9,6 +9,13 @@ and refuses contact details (R4). Leaving and removal are silent (R5); a
 member the mentor or the team removed cannot rejoin that group with its code
 (R5 ex2, CMP-04 R4 ex2), while one who left on their own can.
 Membership changes are published as GroupJoined / GroupLeft for MOT-06.
+
+Security review B-M1: leading a group needs the mentor role and an open
+mentor gate on every call, not only at creation (`access`). A suspended
+mentor, one whose approval was withdrawn, or an account that lost the role
+gets 403 on his groups; the members keep the group, and the team acts on
+reports as before. What becomes of such a group later (a new mentor, closing
+it) is an open question for the Companion owner (CMP-05 open questions).
 """
 
 import secrets
@@ -45,6 +52,15 @@ async def mentor_only(user: CurrentUser, session: Session) -> User:
 
 
 Mentor = Annotated[User, Depends(mentor_only)]
+
+
+async def may_lead(session, user: User) -> bool:
+    """Whether this account may act as a group's mentor now (B-M1)."""
+    try:
+        await mentor_only(user, session)
+    except HTTPException:
+        return False
+    return True
 
 
 class GroupIn(BaseModel):
@@ -129,11 +145,14 @@ async def _out(session, g: Group, me: User, with_members: bool = False) -> Group
 
 
 async def access(session, group_id: uuid.UUID, me: User) -> tuple[Group, bool]:
-    """The group and whether `me` is its mentor; 404 for anyone outside it."""
+    """The group and whether `me` is its mentor; 404 for anyone outside it.
+    Its mentor only while he is a mentor in good standing (B-M1): 403
+    `mentors_only`, `mentor_suspended` or `mentor_rules_required` otherwise."""
     g = await session.get(Group, group_id)
     if g is None:
         raise not_found()
     if g.mentor_id == me.id:
+        await mentor_only(me, session)
         return g, True
     if await session.get(GroupMember, (group_id, me.id)) is None:
         raise not_found()  # R4 ex2: outsiders see nothing
@@ -186,7 +205,9 @@ async def create(body: GroupIn, session: Session, me: Mentor) -> GroupOut:
 
 @router.get("/mine", response_model=list[GroupOut])
 async def mine(session: Session, me: CurrentUser) -> list[GroupOut]:
-    led = await session.scalars(select(Group).where(Group.mentor_id == me.id).order_by(Group.created_at.desc()))
+    led = list(await session.scalars(select(Group).where(Group.mentor_id == me.id).order_by(Group.created_at.desc())))
+    if led and not await may_lead(session, me):
+        led = []  # B-M1: no list and no join code while suspended or without the role
     member = await session.scalars(select(Group).join(GroupMember, GroupMember.group_id == Group.id).where(GroupMember.user_id == me.id))
     return [await _out(session, g, me) for g in [*member, *led]]
 
