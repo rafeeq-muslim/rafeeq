@@ -1,8 +1,12 @@
 # Wakes the Claude build session when teammates change the repo: one line
-# per event is appended to a log on this server, which the session watches.
-# Safe on the self-hosted runner: nothing is checked out or executed from the
-# change, PRs use pull_request_target (workflow always from main), and
-# untrusted text (titles, branch names) only travels through env variables.
+# per event is appended to a log on the team's server, which the session watches.
+# Nothing is checked out or executed from the change, PRs use
+# pull_request_target (workflow always from main), and text only travels
+# through env variables.
+# The repo is public and an AI session reads this log, so a stranger's words
+# must not reach it: for a pull request from a fork the title and branch name
+# are left empty and `external` is "1" (the session sees the number and the
+# author only). Every value is cut to 200 characters.
 name: Notify build session
 on:
   push:
@@ -17,7 +21,7 @@ jobs:
   notify:
     # Claude's own commits carry a Claude-Session trailer: no need to wake for them.
     if: ${{ github.event_name == 'pull_request_target' || !contains(github.event.head_commit.message, 'Claude-Session:') }}
-    # Its own runner (label rafeeq-events): a wake-up never waits behind CI or a deploy.
+    # Its own runner (label rafeeq-events): a wake-up never waits behind a deploy.
     runs-on: [self-hosted, rafeeq-events]
     timeout-minutes: 2
     steps:
@@ -27,16 +31,18 @@ jobs:
           REF: ${{ github.ref_name }}
           ACTOR: ${{ github.actor }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          PR_TITLE: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.title || '' }}
+          PR_BRANCH: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref || '' }}
+          EXTERNAL: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository && '1' || '' }}
           COMMIT_MSG: ${{ github.event.head_commit.message }}
           SHA: ${{ github.event.after || github.event.pull_request.head.sha }}
         run: |
           mkdir -p "$HOME/.local/state/rafeeq"
           python3 - <<'PY' >> "$HOME/.local/state/rafeeq/github-events.log"
           import json, os, datetime
-          e = {k.lower(): os.environ.get(k, "") for k in ("EVENT", "REF", "ACTOR", "PR_NUMBER", "PR_TITLE", "PR_BRANCH", "SHA")}
-          e["commit"] = os.environ.get("COMMIT_MSG", "").splitlines()[0][:200] if os.environ.get("COMMIT_MSG") else ""
+          LIMIT = 200
+          e = {k.lower(): os.environ.get(k, "")[:LIMIT] for k in ("EVENT", "REF", "ACTOR", "PR_NUMBER", "PR_TITLE", "PR_BRANCH", "EXTERNAL", "SHA")}
+          e["commit"] = (os.environ.get("COMMIT_MSG", "").splitlines() or [""])[0][:LIMIT]
           e["at"] = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")
           print(json.dumps(e, ensure_ascii=False))
           PY
