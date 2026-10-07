@@ -12,6 +12,7 @@ from fastapi import APIRouter, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, ValidationError, model_serializer, model_validator
 from sqlalchemy import delete, select
 
+from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.knowledge import daily, glossary, library, recitation
 from app.knowledge.models import SavedItem
@@ -149,8 +150,15 @@ def _answer_of(row: SavedItem) -> SavedAnswer | None:
         return None  # an old or damaged copy is never shown
 
 
+# Security review 2026-10-07 (A-M3): an account keeps at most this many saved
+# items. A device may hold more (guests save without an account); what does
+# not fit stays on the device only. Writes are limited per account.
+SAVED_MAX = 500
+SAVED_WRITES_PER_MIN = 30
+
+
 async def _saved_of(session, user_id) -> list[Saved]:
-    rows = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()))
+    rows = await session.scalars(select(SavedItem).where(SavedItem.user_id == user_id).order_by(SavedItem.saved_at.desc()).limit(SAVED_MAX))
     return [Saved(kind=r.kind, ref=r.ref_id, saved_at=r.saved_at, answer=_answer_of(r)) for r in rows]
 
 
@@ -162,12 +170,17 @@ async def get_saved(session: Session, user: CurrentUser) -> SavedList:
 @router.put("/me/saved")
 async def merge_saved(body: SavedList, session: Session, user: CurrentUser) -> SavedList:
     """R3: union of the device and the account, one copy each, earliest date
-    kept. A saved answer moves with its text and source ids (R2), never its question."""
+    kept. A saved answer moves with its text and source ids (R2), never its
+    question. Past `SAVED_MAX` items the newest of the device's new items are
+    taken first and the rest are not stored."""
+    ratelimit.hit(f"saved-sync:{user.id}", SAVED_WRITES_PER_MIN, 60)
     rows = {(r.kind, r.ref_id): r for r in await session.scalars(select(SavedItem).where(SavedItem.user_id == user.id))}
-    for it in body.items:
+    for it in sorted(body.items, key=lambda i: i.saved_at, reverse=True):
         payload = it.answer.model_dump() if it.answer else {}
         row = rows.get((it.kind, it.ref))
         if row is None:
+            if len(rows) >= SAVED_MAX:
+                continue
             row = SavedItem(user_id=user.id, kind=it.kind, ref_id=it.ref, payload=payload, saved_at=it.saved_at)
             session.add(row)
             rows[(it.kind, it.ref)] = row
@@ -199,11 +212,11 @@ async def delete_saved(kind: Kind, ref: str, session: Session, user: CurrentUser
 from fastapi import HTTPException, Request  # noqa: E402
 from pydantic import StringConstraints  # noqa: E402
 
-from app.core import ratelimit  # noqa: E402
+from app.core import clientkey  # noqa: E402
 from app.core.config import get_settings  # noqa: E402
+from app.core.db import release  # noqa: E402
 from app.core.deps import OptionalUser  # noqa: E402
 from app.knowledge import library_search  # noqa: E402
-from app.knowledge.tasks import client_key  # noqa: E402
 
 NO_STORE = {"Cache-Control": "no-store"}
 LibrarySourceId = Literal["islamic_content", "islamhouse"]  # §6: the library allowlist; anything else is a 422 (B21)
@@ -238,18 +251,18 @@ async def library_search_sources(response: Response, lang: Lang = "ar") -> dict:
 
 
 @router.post("/discover/library/search")
-async def library_search_route(body: LibrarySearchIn, request: Request, response: Response, user: OptionalUser) -> dict:
+async def library_search_route(body: LibrarySearchIn, request: Request, response: Response, user: OptionalUser, session: Session) -> dict:
     """§6: POST so the words never sit in a URL; no-store; nothing stored or logged
     about the query or the person (B14). Guests may search (rate-limited)."""
     if not get_settings().library_search_enabled:
         raise _no_store_error(404, "library_search_off")
-    key = client_key(request, user)
-    try:
-        ratelimit.hit(f"libsearch:m:{key}", 20, 60)
-        ratelimit.hit(f"libsearch:d:{key}", 400, 86400)
+    try:  # security audit A-L5: per address (IPv6: per /64) and per account
+        clientkey.hit("libsearch:m", request, user, 20, 60)
+        clientkey.hit("libsearch:d", request, user, 400, 86400)
     except HTTPException as e:
         raise _no_store_error(429, "rate_limited") from e
     requested = list(dict.fromkeys(body.sources)) if body.sources is not None else None
+    await release(session)  # A-M1: the session that read the account holds no connection while the sites are searched
     try:
         result = await library_search.search(
             query=body.query, lang=body.lang, requested=requested, lib_type=body.type, page_size=body.page_size, cursor=body.cursor

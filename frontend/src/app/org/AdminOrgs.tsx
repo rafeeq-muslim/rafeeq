@@ -87,6 +87,12 @@ export function AdminOrgs() {
                   <code dir="ltr" className="font-mono">
                     {c.code}
                   </code>
+                  {/* Security review B-M4: counts only, for the admin, to notice a code being flooded. */}
+                  {c.links !== undefined && (
+                    <span className="text-caption text-muted-foreground tabular-nums" data-slot="code-links">
+                      {t("sec.org.codeLinks", { n: num(c.links), d: num(c.links_last_day ?? 0) })}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

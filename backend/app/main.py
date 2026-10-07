@@ -58,7 +58,15 @@ async def lifespan(app: FastAPI):
     jobs.stop()
 
 
-app = FastAPI(title="Rafeeq API", lifespan=lifespan, docs_url="/api/docs", openapi_url="/api/openapi.json")
+def api_docs(s) -> dict:
+    """Security audit L12: the interactive docs and the schema are for local
+    work; production serves none of /api/docs, /api/redoc, /api/openapi.json."""
+    if s.is_production:
+        return {"docs_url": None, "redoc_url": None, "openapi_url": None}
+    return {"docs_url": "/api/docs", "redoc_url": "/api/redoc", "openapi_url": "/api/openapi.json"}
+
+
+app = FastAPI(title="Rafeeq API", lifespan=lifespan, **api_docs(get_settings()))
 
 for r in (
     auth.router,

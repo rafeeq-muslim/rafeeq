@@ -37,3 +37,4 @@
 | R4 (mentor cannot see) | `test_knw09_r4_saved_items_are_only_the_owners` |
 | R5 ex1/ex2 (delete one; delete with account) | `test_knw09_r5_delete_one_and_all`, `test_knw09_r5_deleting_a_saved_answer_removes_its_text`, `test_knw09_r5_deleting_account_deletes_saved`, vitest `knw-09-r5` (no answer text left on the device) |
 | R6 (withdrawn card shows "no longer available") | vitest `knw-09-r6` (cards and answers) + `test_knw09_r6_passages_of_a_source_no_longer_used_are_not_shown` |
+| Ceiling (security review 2026-10-07, A-M3): an account keeps at most 500 saved items; past that the newest of the device's new items are taken first and the rest stay on the device only; 30 writes a minute per account | `test_m3_an_account_keeps_at_most_500_saved_items`, `test_m3_saved_writes_are_limited_per_account` |

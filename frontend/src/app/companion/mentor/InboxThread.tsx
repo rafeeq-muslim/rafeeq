@@ -18,8 +18,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Skeleton } from "@/components/ui/skeleton"
 import { useT } from "@/app/i18n"
 import { useAuth } from "@/app/stores/auth"
-import { type InboxMessage, type InboxRow, REFERRAL_NOTICE, inboxApi, useInboxThread } from "../api"
+import { type InboxMessage, type InboxRow, REFERRAL_NOTICE, earlierOfInboxThread, inboxApi, useInboxThread } from "../api"
 import { type ChatAction, type ChatItem, ChatList, Composer } from "../Chat"
+import { useEarlier } from "../earlier"
 import { Confirm } from "../Confirm"
 import { langName } from "../format"
 import { ReportSheet, type ReportTarget } from "../ReportSheet"
@@ -70,6 +71,9 @@ export default function InboxThread() {
   const [report, setReport] = React.useState<ReportTarget | null>(null)
   const myGender = useAuth((s) => s.me?.gender ?? null)
   const r = thread.data
+  // A-M4: the last 200 messages come first; earlier ones on demand.
+  const fetchEarlier = React.useCallback((before: string) => earlierOfInboxThread(id ?? "", before), [id])
+  const history = useEarlier(id, r?.messages, r?.has_earlier, fetchEarlier)
 
   const refresh = () => qc.invalidateQueries({ queryKey: ["cmp"] })
   const close = async () => {
@@ -101,7 +105,7 @@ export default function InboxThread() {
   }
 
   const name = r ? requesterName(t, r, myGender) : ""
-  const items: ChatItem[] = (r?.messages ?? []).map((m) =>
+  const items: ChatItem[] = history.messages.map((m) =>
     inboxChatItem(m, t, {
       name,
       // R5: a learner's personal Sharia question goes to scholars, once.
@@ -130,9 +134,11 @@ export default function InboxThread() {
                     {t("cmp.inbox.urgent")}
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
-                  {t("cmp.inbox.close")}
-                </DropdownMenuItem>
+                {r.can_close !== false && (
+                  <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
+                    {t("cmp.inbox.close")}
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           )
@@ -158,6 +164,11 @@ export default function InboxThread() {
                 <AlertDescription>{t("cmp.inbox.alertBody")}</AlertDescription>
               </Alert>
             )}
+            {history.hasEarlier && (
+              <Button variant="ghost" size="sm" className="self-center" disabled={history.loading} onClick={() => void history.loadEarlier()}>
+                {t("cmp.thread.earlier")}
+              </Button>
+            )}
             <ChatList items={items} className="flex-1" />
             {r.can_reply ? (
               <Composer
@@ -173,7 +184,13 @@ export default function InboxThread() {
           </>
         )}
       </div>
-      <ReportSheet target={report} onClose={() => setReport(null)} />
+      <ReportSheet
+        target={report}
+        onClose={() => {
+          setReport(null)
+          history.reset() // CMP-04 R2: a reported message is never shown from the pages loaded earlier
+        }}
+      />
       <Confirm
         open={referring !== null}
         onOpenChange={(o) => !o && setReferring(null)}
@@ -187,7 +204,7 @@ export default function InboxThread() {
         open={confirmUrgent}
         onOpenChange={setConfirmUrgent}
         title={t("cmp.inbox.urgent")}
-        description={t("cmp.inbox.urgentHint")}
+        description={t("sec.inbox.urgentHint")}
         confirmLabel={t("cmp.inbox.urgent")}
         cancelLabel={t("common.cancel")}
         destructive

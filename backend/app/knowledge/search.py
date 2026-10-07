@@ -7,7 +7,9 @@ R3 diagnostics and the KNW-02 source-coverage policy.
 - Vector: bge-m3 cosine over `knw_passages.embedding` (pgvector HNSW), only
   for sources with vectors made by the current embedding model (S19). A
   source with no vectors yet is searched by its words (S07, embedding_pending).
-- Words: Postgres full text over the generated `tsv` column.
+- Words: Postgres full text over the generated `tsv` column; at most 12
+  words of the question (its longest), prefixes from 3 letters, and a time
+  limit on each query (security review 2026-10-07, A-M6).
 - Both channels always run before any "no evidence" decision (R3). The
   cosine threshold `KNW_MIN_SIMILARITY` (> 0) drops weak vector hits only;
   full-text candidates are still passed on, and the composer and verifier
@@ -37,6 +39,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
+from app.core.db import release
 from app.knowledge import query_normalization, source_policy
 from app.knowledge.ai import client
 from app.knowledge.ai.client import AiUnavailable
@@ -125,35 +128,67 @@ async def embed_query(query: str, lang: str = "", version: str = "off") -> tuple
     return vec, "computed", None
 
 
+# Security review 2026-10-07 (A-M6): the cost of the word search grows with
+# every OR-ed term and with how many passages each one matches, so a question
+# gives at most MAX_TERMS words (its longest: the most specific ones), a word
+# is a prefix only from PREFIX_MIN letters (a 2-letter prefix matches a large
+# part of the corpus), and each retrieval query has a time limit.
+MAX_TERMS = 12
+PREFIX_MIN = 3
+RETRIEVAL_TIMEOUT_MS = 15_000
+
+
 def tsquery(question: str, lang: str) -> str | None:
-    """OR of the question's content words, each as a prefix; Arabic words also
-    without their leading particles (و، ب، ال...)."""
-    terms: list[str] = []
+    """OR of the question's content words (the 12 longest, in the order they
+    were asked), each as a prefix from 3 letters; Arabic words also without
+    their leading particles (و، ب، ال...)."""
+    content: list[str] = []
     for w in words(question):
         w = w.replace("'", "")
         if len(w) < 2 or w in _STOP.get(lang, ()) or w.isdigit():
             continue
+        content.append(w)
+    content = list(dict.fromkeys(content))
+    if len(content) > MAX_TERMS:
+        longest = set(sorted(content, key=lambda w: (-len(w), content.index(w)))[:MAX_TERMS])
+        content = [w for w in content if w in longest]
+    terms: list[str] = []
+    for w in content:
         alts = {w}
         if lang == "ar":
             for p in _PREFIXES:
                 if w.startswith(p) and len(w) - len(p) >= 3:
                     alts.add(w[len(p) :])
                     break
-        terms.extend(f"{a}:*" for a in sorted(alts))
+        terms.extend(f"{a}:*" if len(a) >= PREFIX_MIN else a for a in sorted(alts))
     return " | ".join(dict.fromkeys(terms)) or None
+
+
+async def _time_limit(session: AsyncSession) -> None:
+    """A retrieval query that runs longer is cancelled by the database and
+    handled like any database error (a failed channel, never «no source»).
+    `SET LOCAL`: the limit ends with the transaction."""
+    await session.execute(text(f"SET LOCAL statement_timeout = {int(RETRIEVAL_TIMEOUT_MS)}"))
+
+
+async def _no_time_limit(session: AsyncSession) -> None:
+    await session.execute(text("SET LOCAL statement_timeout TO DEFAULT"))
 
 
 async def _vector_hits(session: AsyncSession, vec: list[float], lang: str, sources: list[str]) -> list[tuple[str, float]]:
     await session.execute(text("SET LOCAL hnsw.ef_search = 200"))
     await session.execute(text("SET LOCAL hnsw.iterative_scan = relaxed_order"))
     dist = Passage.embedding.cosine_distance(vec)
+    await _time_limit(session)
     rows = await session.execute(
         select(Passage.id, (1 - dist).label("sim"))
         .where(Passage.lang == lang, Passage.source_id.in_(sources), Passage.embedding.is_not(None))
         .order_by(dist, Passage.id)
         .limit(CANDIDATES)
     )
-    return [(r.id, float(r.sim)) for r in rows]
+    out = [(r.id, float(r.sim)) for r in rows]
+    await _no_time_limit(session)
+    return out
 
 
 async def _text_hits(session: AsyncSession, question: str, lang: str, sources: list[str]) -> list[tuple[str, float]]:
@@ -168,8 +203,11 @@ async def _text_hits(session: AsyncSession, question: str, lang: str, sources: l
             WHERE lang = :lang AND source_id IN :sources AND tsv @@ q
             ORDER BY rank DESC, id LIMIT {CANDIDATES}"""
     ).bindparams(bindparam("sources", expanding=True))
+    await _time_limit(session)
     rows = await session.execute(stmt, {"q": q, "lang": lang, "sources": sources})
-    return [(r.id, float(r.rank)) for r in rows]
+    out = [(r.id, float(r.rank)) for r in rows]
+    await _no_time_limit(session)
+    return out
 
 
 def _dedupe_key(p: Passage) -> str:
@@ -270,6 +308,7 @@ async def retrieve(
     vhits: list[tuple[str, float]] = []
     vector_failed = text_failed = False
     if vector_sources:
+        await release(session)  # A-M1: no connection is held while the question is embedded
         vec, res.embedding, res.embedding_error = await embed_query(query, lang, version)
         if vec is None:
             vector_failed = True

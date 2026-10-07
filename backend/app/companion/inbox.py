@@ -2,10 +2,19 @@
 
 A responder (mentor, or team member with a gender) sees ordinary requests in
 their languages whose requester is of their own gender, and every urgent
-request whatever its language: in danger the first available person answers
-(R1, README). Urgent first, then the longest wait (R2). The first reply
-claims a request; a learner's own mentor gets it first and the pool sees it
-after a day without a reply (R3). The mentor writes when he is available,
+request nobody holds yet, whatever its language: in danger the first
+available person answers (R1, README, rules.md §2.8). Urgent first, then the
+longest wait (R2). The first reply claims a request; a learner's own mentor
+gets it first and the pool sees it after a day without a reply (R3).
+
+Security review B-M3: once someone holds an urgent request (the first reply
+claims it) only that responder and the team see it, answer it or close it;
+it returns to everyone if it loses its holder (blocked or suspended).
+Closing any request is for its assignee or the team. Turning a conversation
+a responder already holds into an urgent one (a private mentor thread, or a
+request he answered) keeps it with him and shows it to the team, with a
+neutral push to the team only: the private words never reach every mentor.
+An unanswered request made urgent loses its holder and reaches everyone. The mentor writes when he is available,
 caps his personal mentees (8 by default, at most 10) and can pause: paused,
 he is not suggested to new learners and takes no new requests from the pool
 (R4). He gives no fatwa: he refers a personal Sharia question to the Sharia
@@ -24,7 +33,7 @@ from sqlalchemy import and_, case, exists, func, not_, or_, select, update
 from sqlalchemy.orm import aliased
 
 from app.companion import notify
-from app.companion.common import blocked_by_owner_clause, is_paused, is_team, langs_of, not_found, now
+from app.companion.common import THREAD_MSGS_PER_DAY, blocked_by_owner_clause, is_paused, is_team, langs_of, message_page, not_found, now
 from app.companion.contact import mentor_contacted
 from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorLink, MentorProfile, Report, ScholarReferral
 from app.companion.text import clean_body
@@ -102,6 +111,9 @@ def visible_clause(user: User, t: datetime, *, paused: bool = False):
         HelpRequest.status != "closed",
         or_(has_owner, HelpRequest.created_at > t - ALERT_LIFETIME),  # unopened alerts fade after 24 h
     )
+    if not is_team(user):
+        # B-M3: held by someone = his (assigned_clause below) and the team's.
+        urgent = and_(urgent, HelpRequest.mentor_id.is_(None))
     conds = [urgent]
     if user.gender and not paused and (user.has("mentor") or is_team(user)):
         matches = and_(
@@ -142,6 +154,7 @@ class RequestRow(BaseModel):
     last_activity_at: datetime
     assigned_to_me: bool
     can_reply: bool
+    can_close: bool = False  # B-M3: the assignee or the team
 
 
 class ThreadMessage(BaseModel):
@@ -157,6 +170,8 @@ class ThreadMessage(BaseModel):
 class InboxThread(RequestRow):
     messages: list[ThreadMessage]
     referred: list[uuid.UUID] = []  # learner messages already referred to the Sharia reviewer (R5)
+    # Only the last 200 messages come at once; `?before=<id of the first one>` reads the page before them.
+    has_earlier: bool = False
 
 
 async def _row(session, req: HelpRequest, me: User) -> RequestRow:
@@ -187,7 +202,14 @@ async def _row(session, req: HelpRequest, me: User) -> RequestRow:
         last_activity_at=req.last_activity_at,
         assigned_to_me=req.mentor_id == me.id,
         can_reply=owned,
+        can_close=may_close(me, req),
     )
+
+
+def may_close(me: User, req: HelpRequest) -> bool:
+    """B-M3: a request is closed by the responder who holds it or by the team,
+    never by a responder who merely sees it in the pool."""
+    return is_team(me) or req.mentor_id == me.id
 
 
 async def visible_request(session, me: User, request_id: uuid.UUID) -> HelpRequest:
@@ -220,9 +242,9 @@ async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
 
 
 @router.get("/requests/{request_id}", response_model=InboxThread)
-async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -> InboxThread:
+async def open_request(request_id: uuid.UUID, session: Session, me: Responder, before: uuid.UUID | None = None) -> InboxThread:
     req = await visible_request(session, me, request_id)
-    msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
+    msgs, has_earlier = await message_page(session, req.id, before)
     # CMP-04 R2: a message this responder reported is hidden for him at once.
     reported = set(await session.scalars(select(Report.target_id).where(Report.reporter_id == me.id, Report.target_type == "help_message")))
     names: dict[uuid.UUID, str] = {}
@@ -248,7 +270,7 @@ async def open_request(request_id: uuid.UUID, session: Session, me: Responder) -
     await session.commit()
     row = await _row(session, req, me)
     referred = list(await session.scalars(select(ScholarReferral.message_id).where(ScholarReferral.request_id == req.id)))
-    return InboxThread(**row.model_dump(), messages=out, referred=referred)
+    return InboxThread(**row.model_dump(), messages=out, referred=referred, has_earlier=has_earlier)
 
 
 class ReplyIn(BaseModel):
@@ -261,6 +283,7 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
     if req.learner_id is None and req.guest_token_hash is None:
         raise HTTPException(status.HTTP_409_CONFLICT, "no_owner_yet")  # an alert nobody opened yet
     ratelimit.hit(f"inbox-reply:{me.id}", 60, 60)
+    ratelimit.hit(f"inbox-reply-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
     text = clean_body(body.body)
     t = now()
     if req.mentor_id is None or (req.mentor_id != me.id and req.first_reply_at is None):
@@ -286,6 +309,8 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
 @router.post("/requests/{request_id}/close", response_model=RequestRow)
 async def close(request_id: uuid.UUID, session: Session, me: Responder) -> RequestRow:
     req = await visible_request(session, me, request_id)
+    if not may_close(me, req):
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "not_assigned")  # B-M3
     req.status = "closed"
     await session.commit()
     return await _row(session, req, me)
@@ -293,13 +318,22 @@ async def close(request_id: uuid.UUID, session: Session, me: Responder) -> Reque
 
 @router.post("/requests/{request_id}/urgent", response_model=RequestRow)
 async def make_urgent(request_id: uuid.UUID, session: Session, me: Responder) -> RequestRow:
-    """R4 ex2: a mentor hands a harmful situation to the team and all mentors."""
+    """R5 ex2: a mentor hands a harmful situation on. B-M3: a conversation a
+    responder already holds (a private mentor thread, or a request someone
+    answered) stays with its holder and goes to the team only; a request
+    nobody answered yet goes to the team and every mentor (rules.md §2.8)."""
     req = await visible_request(session, me, request_id)
     if req.kind != "urgent":
+        held = req.mentor_id is not None and (req.kind == "mentor" or req.first_reply_at is not None)
+        if not held:
+            req.mentor_id = None  # nobody answered: the first available person takes it
         req.kind = "urgent"
         req.status = "open" if req.status == "closed" else req.status
         await session.commit()
-        notify.later(notify.to_responders, "urgent", "/inbox")
+        if held:
+            notify.later(notify.to_role, ["team", "admin"], "urgent", "/inbox")
+        else:
+            notify.later(notify.to_responders, "urgent", "/inbox")
     return await _row(session, req, me)
 
 

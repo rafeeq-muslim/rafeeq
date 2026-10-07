@@ -34,7 +34,14 @@ export const ASK_CLIENT_DEADLINE_MS = 65_000
 export const QUESTION_MIN = 2
 export const QUESTION_MAX = 600
 
-export type SubmitInput = { text: string; lang: string; entrypoint: Entrypoint; suggestionId?: string }
+export type SubmitInput = {
+  text: string
+  lang: string
+  entrypoint: Entrypoint
+  suggestionId?: string
+  /** CMP-01 R1: the lesson context as ids only, while its chip is shown. */
+  context?: AskSnapshot["context"]
+}
 export type Submitted =
   | { accepted: true; turnId: string; done: Promise<AskResponse | null> }
   | { accepted: false; reason: "too_short" | "too_long" | "busy" }
@@ -119,6 +126,7 @@ export const useAsk = create<AskState>()((set, get) => {
           entrypoint: snapshot.entrypoint,
         }
         if (snapshot.suggestion_id) body.suggestion_id = snapshot.suggestion_id
+        if (snapshot.context) body.context = snapshot.context // CMP-01 R1: ids only; the server loads the approved text
         // The attempt ends at abort even if a reply is still on its way; that late reply is dropped.
         const aborted = new Promise<never>((_, reject) =>
           ctrl.signal.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")), { once: true }),
@@ -152,7 +160,7 @@ export const useAsk = create<AskState>()((set, get) => {
     setDraft: (v) => set({ draft: typeof v === "function" ? v(get().draft) : v }),
     put: (id, turn) => set({ turns: get().turns.map((t) => (t.id === id ? turn : t)) }),
 
-    submitQuestion: ({ text, lang, entrypoint, suggestionId }) => {
+    submitQuestion: ({ text, lang, entrypoint, suggestionId, context }) => {
       const invalid = validateQuestion(text)
       if (invalid) return { accepted: false, reason: invalid }
       if (get().busy) return { accepted: false, reason: "busy" }
@@ -162,6 +170,7 @@ export const useAsk = create<AskState>()((set, get) => {
         consent_objectives: useDevice.getState().askConsent,
         entrypoint,
         ...(suggestionId ? { suggestion_id: suggestionId } : {}),
+        ...(context ? { context } : {}),
       }
       const turnId = newId()
       const attemptId = newId()

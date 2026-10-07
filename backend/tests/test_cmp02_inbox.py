@@ -256,7 +256,7 @@ async def test_cmp02_r6_guest_request_shows_handle_only(client):
     assert row["is_guest"] and row["handle"].isdigit() and len(row["handle"]) == 4
     assert set(row) == {
         "id", "handle", "is_guest", "lang", "kind", "topic", "source", "status", "preview", "unread",
-        "created_at", "last_activity_at", "assigned_to_me", "can_reply",
+        "created_at", "last_activity_at", "assigned_to_me", "can_reply", "can_close",
     }  # fmt: skip
 
 

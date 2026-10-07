@@ -163,7 +163,8 @@ export default function AppLayout() {
             bottomNav={!fullscreen}
             navLabel={t("nav.main")}
             labels={{ home: t("nav.home"), learn: t("nav.learn"), ask: t("nav.ask"), mentor: t("nav.mentor"), account: t("nav.me") }}
-            contentClassName={fullscreen ? "max-w-none pb-0 @min-[52.5rem]/shell:py-0" : undefined}
+            // Full-screen flows own the whole area: no column padding and no side gutters (PLT-04).
+            contentClassName={fullscreen ? "max-w-none pb-0 @min-[52.5rem]/shell:-mx-6 @min-[52.5rem]/shell:w-[calc(100%+3rem)] @min-[52.5rem]/shell:py-0" : undefined}
           >
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">{t("common.loading")}</div>}>
               <RouteErrorBoundary resetKey={location.pathname}>

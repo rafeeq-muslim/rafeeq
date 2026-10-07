@@ -25,6 +25,7 @@ endpoint; the site states only «جميع الحقوق محفوظة» (sources.m
 data access to request). The connector stays blocked until
 ASK_LIVE_ISLAMIC_CONTENT_SEARCH_PERMITTED=true is set after written access."""
 
+import asyncio
 import json
 import re
 
@@ -41,7 +42,21 @@ CARD_SHARED = "https://islamenc.com/{lang}/enc-cards/card/{card}"
 INDIVIDUAL = {"101", "102", "103", "104", "105", "106", "107", "108", "109"}
 QUESTIONS = "102"  # «موسوعة الأسئلة والأجوبة للمسلمين» (the site's "questions" filter)
 _ID = re.compile(r"^\d{1,9}$")
-_LDJSON = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
+_LD_OPEN, _LD_CLOSE = '<script type="application/ld+json">', "</script>"
+
+
+def _ld_json_blocks(html: str):
+    """The text of each ld+json script, in page order, in one pass (a lazy
+    regular expression is quadratic on many openings with no closing tag;
+    security review 2026-10-07, A-M7)."""
+    i = 0
+    while True:
+        a = html.find(_LD_OPEN, i)
+        b = html.find(_LD_CLOSE, a + len(_LD_OPEN)) if a != -1 else -1
+        if b == -1:
+            return
+        yield html[a + len(_LD_OPEN) : b]
+        i = b + len(_LD_CLOSE)
 
 
 def blocked_reason() -> str | None:
@@ -70,9 +85,9 @@ def parse_search(data: object, lang: str, limit: int) -> list[T.Candidate]:
 
 
 def parse_card(html: str, url: str, card: str, lang: str) -> Record:
-    for m in _LDJSON.finditer(html):
+    for block in _ld_json_blocks(html):
         try:
-            d = json.loads(m.group(1))
+            d = json.loads(block)
         except ValueError:
             continue
         if not isinstance(d, dict) or d.get("@type") != "QAPage":
@@ -106,4 +121,4 @@ async def search(call: Call, terms: str, lang: str, limit: int) -> list[T.Candid
 async def fetch(call: Call, cand: T.Candidate) -> Record:
     url = card_url(cand.lang, cand.meta.get("enc_id", ""), cand.external_id)
     f = await call.get(url, accept="text/html")
-    return parse_card(f.text, url, cand.external_id, cand.lang)
+    return await asyncio.to_thread(parse_card, f.text, url, cand.external_id, cand.lang)  # off the event loop

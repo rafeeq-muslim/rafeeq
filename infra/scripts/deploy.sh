@@ -2,15 +2,20 @@
 # Build, start, health-check; roll back to the previous images on failure.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
-SECRETS=/home/naser/.config/rafeeq/secrets.env
-FONTS=/home/naser/.config/rafeeq/fonts/thmanyah
+# Server paths come from the account that runs the deploy (the runner's user),
+# never from a fixed home directory. compose.prod.yml reads the same two
+# variables, so they are exported here for every compose call below.
+export RAFEEQ_CONFIG_DIR="${RAFEEQ_CONFIG_DIR:-$HOME/.config/rafeeq}"
+export RAFEEQ_CORPUS_DIR="${RAFEEQ_CORPUS_DIR:-$HOME/.local/share/rafeeq/corpus}"
+SECRETS="$RAFEEQ_CONFIG_DIR/secrets.env"
+FONTS="$RAFEEQ_CONFIG_DIR/fonts/thmanyah"
 COMPOSE="docker compose -p rafeeq -f infra/compose.prod.yml"
 
 # The database container gets only its own settings, not the whole secrets
 # file: db.env holds the POSTGRES_* lines, rewritten on every deploy (mode
 # 600) before any compose command reads it. Unchanged content does not
 # recreate the container.
-DB_ENV="$(dirname "$SECRETS")/db.env"
+DB_ENV="$RAFEEQ_CONFIG_DIR/db.env"
 write_db_env() {
   local tmp
   tmp="$(umask 077 && mktemp "$DB_ENV.XXXXXX")"
@@ -30,8 +35,8 @@ export VITE_VAPID_PUBLIC_KEY="$(grep '^VAPID_PUBLIC_KEY=' "$SECRETS" | cut -d= -
 export VITE_BUILD_ID="$(git rev-parse --short HEAD)"
 
 # KNW-02: reload the approved-source corpus only when its files changed.
-CORPUS=/home/naser/.local/share/rafeeq/corpus
-STAMP=/home/naser/.config/rafeeq/corpus.sha
+CORPUS="$RAFEEQ_CORPUS_DIR"
+STAMP="$RAFEEQ_CONFIG_DIR/corpus.sha"
 load_corpus() {
   [ -d "$CORPUS" ] || return 0
   local sum
@@ -68,7 +73,17 @@ for i in $(seq 1 60); do
 done
 
 echo "health check failed; rolling back" >&2
-$COMPOSE logs --tail=80 backend >&2 || true
+# The Actions log of a public repo is public, and backend errors can carry
+# personal data, so the backend's last lines go to a file only this account
+# can read. The run shows where the file is, never what it holds.
+FAIL_DIR="${RAFEEQ_STATE_DIR:-$HOME/.local/state/rafeeq}"
+FAIL_LOG="$FAIL_DIR/deploy-fail-$(git rev-parse --short HEAD).log"
+if (umask 077 && mkdir -p "$FAIL_DIR" && $COMPOSE logs --tail=80 backend > "$FAIL_LOG" 2>&1); then
+  chmod 600 "$FAIL_LOG"
+  echo "backend log saved on the server: ~${FAIL_LOG#"$HOME"}" >&2
+else
+  echo "backend log could not be saved on the server" >&2
+fi
 for img in rafeeq-backend rafeeq-web; do
   docker image inspect "$img:previous" >/dev/null 2>&1 && docker tag "$img:previous" "$img:latest" || true
 done

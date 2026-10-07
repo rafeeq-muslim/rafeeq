@@ -14,7 +14,7 @@ Downgrade drops the two columns: contacts already encrypted are lost with
 them (decrypt them back first if that ever matters).
 
 Revision ID: e8f9a0b1c2d3
-Revises: a7b8c9d0e1f2 (plt-17 invite revoked_at)
+Revises: f9a0b1c2d3e4 (sec a-h5 outbox payload indexes, production's head)
 Create Date: 2026-10-07 02:00:00
 
 """
@@ -26,7 +26,7 @@ import sqlalchemy as sa
 from alembic import op
 
 revision: str = "e8f9a0b1c2d3"
-down_revision: str | Sequence[str] | None = "a7b8c9d0e1f2"
+down_revision: str | Sequence[str] | None = "f9a0b1c2d3e4"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

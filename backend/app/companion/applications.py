@@ -7,8 +7,9 @@ the coordinator of the organisation whose code they entered) decides.
   to the mentor rules. An applicant who is signed in needs no contact: the
   answer shows in the app.
 - R2: one answer for everyone («وصل طلبك»), whether or not the contact
-  applied before; a second pending application with the same contact (or
-  from the same account) replaces the first. Anti-abuse without third
+  applied before. A second pending application from the same account
+  replaces the first; one that only repeats the contact is not kept and
+  changes nothing (security review B-L10). Anti-abuse without third
   parties: a per-IP limit kept in memory only (the IP is never stored) and
   a hidden field that only a script fills.
 - R3: the contact is the single exception to "no contact details" in
@@ -150,6 +151,11 @@ async def apply(body: ApplyIn, session: Session, request: Request, user: Optiona
         same.append(MentorApplication.contact_hmac == crypto.contact_digest(body.contact))
         same.append(MentorApplication.contact == body.contact)
     row = await session.scalar(select(MentorApplication).where(MentorApplication.status == "pending", or_(*same)).limit(1))
+    if row is not None and (user is None or row.user_id != user.id):
+        # Security review B-L10: the contact alone proves nothing. Only the
+        # account that made a pending application replaces it; anyone else
+        # gets the same answer and the first application stays as it is.
+        return ApplyOut()
     is_new = row is None
     if row is None:
         row = MentorApplication(status="pending")
@@ -274,16 +280,22 @@ async def _approve(session: AsyncSession, row: MentorApplication, by: User) -> N
     account = await session.get(User, row.user_id) if row.user_id else None
     if account is not None:
         # R5: the account becomes a mentor as it is; nothing to send.
+        # Security review B-H1: staff approve the gender written on the
+        # application. An account whose gender differs from it now (changed
+        # after applying) is not approved, so staff see it; nothing changes.
+        if account.gender and account.gender != row.gender:
+            raise HTTPException(status.HTTP_409_CONFLICT, "gender_mismatch")
         if not account.has("mentor"):
             account.roles = [*(account.roles or []), "mentor"]
-        account.gender = account.gender or row.gender
+        account.gender = row.gender
         account.languages = list(dict.fromkeys([*(account.languages or []), *row.languages]))
         await approve_mentor(session, account.id, row.org_id)
         notify.later(notify.to_user, account.id, "notice", "/mentor-apply")
     else:
         # R4: the existing one-time invite, sent by hand.
         expires = now + timedelta(days=INVITE_DAYS) if row.org_id else None
-        row.invite_code = new_invite(session, "mentor", by.id, org_id=row.org_id, expires_at=expires).code
+        # B-H1: the code carries the approved gender; sign-up uses it, not the registrant's answer.
+        row.invite_code = new_invite(session, "mentor", by.id, org_id=row.org_id, expires_at=expires, gender=row.gender).code
     row.status, row.decided_at, row.decided_by = "approved", now, by.id
     await session.commit()
 

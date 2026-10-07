@@ -25,7 +25,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 const DIST = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../dist")
-const PLAYWRIGHT_DIR = process.env.PLAYWRIGHT_DIR ?? "/home/naser/projects/mi/node_modules/"
+const PLAYWRIGHT_DIR = process.env.PLAYWRIGHT_DIR ?? `${process.env.HOME}/projects/mi/node_modules/`
 const CHROME = process.env.CHROME ?? `${process.env.HOME}/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`
 const PORT = Number(process.env.PORT ?? 4179)
 const { chromium } = createRequire(PLAYWRIGHT_DIR)("playwright-core")

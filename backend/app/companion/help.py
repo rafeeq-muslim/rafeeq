@@ -26,11 +26,13 @@ from sqlalchemy import and_, delete, exists, func, select, update
 
 from app.companion import notify
 from app.companion.common import (
+    THREAD_MSGS_PER_DAY,
     CurrentOwner,
     Gender,
     Lang,
     Owner,
     guest_handle,
+    message_page,
     new_guest_token,
     not_found,
     now,
@@ -38,7 +40,7 @@ from app.companion.common import (
 )
 from app.companion.models import Block, HelpMessage, HelpRequest, MentorLink, Report
 from app.companion.text import clean_body
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.security import sha256
 from app.platform.models import User
@@ -97,6 +99,8 @@ class ThreadOut(ThreadSummary):
     # CMP-03 R4: a conversation with a former mentor. It stays readable; what
     # the learner writes here goes to their current mentor or to the pool.
     link_ended: bool = False
+    # Only the last 200 messages come at once; `?before=<id of the first one>` reads the page before them.
+    has_earlier: bool = False
 
 
 class CreatedOut(BaseModel):
@@ -174,8 +178,12 @@ async def _reported_by_owner(session, owner: Owner) -> set[uuid.UUID]:
 
 
 async def _notify_mentor_of(req: HelpRequest) -> None:
-    if req.kind == "urgent":
+    if req.kind == "urgent" and req.mentor_id is None:
         notify.later(notify.to_responders, "urgent", "/inbox")
+    elif req.kind == "urgent":
+        # Security review B-M3: a held urgent request is its holder's and the team's.
+        notify.later(notify.to_user, req.mentor_id, "urgent", f"/inbox/r/{req.id}")
+        notify.later(notify.to_role, ["team", "admin"], "urgent", "/inbox")
     elif req.mentor_id is not None:
         notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
 
@@ -207,20 +215,22 @@ async def _claim_alert(session, ask_id: str) -> HelpRequest | None:
 
 async def _requester_gender(session, owner: Owner, given: str | None) -> str:
     """R3: an account's own gender wins; a guest's device answers «أخ أم أخت؟»
-    once, and a later request from the same device reuses that answer."""
+    once. Security review B-M6: that first answer stays with the device's
+    token on the server; a later request from it cannot name the other
+    gender (the earliest answer wins over what is sent)."""
     if owner.user is not None and owner.user.gender:
         return owner.user.gender
-    if given:
-        return given
-    if owner.token_hash is not None:
-        earlier = await session.scalar(
+    if owner.user is None and owner.token_hash is not None:
+        first = await session.scalar(
             select(HelpRequest.requester_gender)
             .where(HelpRequest.guest_token_hash == owner.token_hash, HelpRequest.requester_gender.is_not(None))
-            .order_by(HelpRequest.created_at.desc())
+            .order_by(HelpRequest.created_at)
             .limit(1)
         )
-        if earlier:
-            return earlier
+        if first:
+            return first
+    if given:
+        return given
     raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "gender_required")
 
 
@@ -354,10 +364,10 @@ async def my_requests(session: Session, owner: CurrentOwner) -> list[ThreadSumma
 
 
 @router.get("/requests/{request_id}", response_model=ThreadOut)
-async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -> ThreadOut:
+async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner, before: uuid.UUID | None = None) -> ThreadOut:
     req = await owned(session, owner, request_id)
     hidden_for_me = await _reported_by_owner(session, owner)
-    msgs = list(await session.scalars(select(HelpMessage).where(HelpMessage.request_id == req.id).order_by(HelpMessage.created_at)))
+    msgs, has_earlier = await message_page(session, req.id, before)
     names: dict[uuid.UUID, str] = {}
     out: list[MessageOut] = []
     for m in msgs:
@@ -391,13 +401,19 @@ async def thread(request_id: uuid.UUID, session: Session, owner: CurrentOwner) -
         messages=out,
         can_block=req.mentor_id is not None and req.first_reply_at is not None,
         link_ended=await _link_ended(session, req),
+        has_earlier=has_earlier,
     )
 
 
 @router.post("/requests/{request_id}/messages", status_code=201, response_model=ThreadSummary)
-async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session, owner: CurrentOwner) -> ThreadSummary:
+async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session, owner: CurrentOwner, request: Request) -> ThreadSummary:
     req = await owned(session, owner, request_id)
     ratelimit.hit(f"help-msg:{req.id}", 30, 60)
+    ratelimit.hit(f"help-msg-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
+    if owner.user is None:
+        # Guest tokens are free to mint: a guest's messages are also counted
+        # by address (in memory only, never stored).
+        ratelimit.hit(f"help-msg-ip:{clientkey.address(request)}", 60, 600)
     text = clean_body(body.body)
     if owner.user is not None and await _link_ended(session, req):
         req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went

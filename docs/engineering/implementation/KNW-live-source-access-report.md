@@ -91,7 +91,7 @@ Changes to the existing answer path (kept small and listed on the agents' board 
 
 | Setting | Default | PRD |
 | --- | --- | --- |
-| `ASK_LIVE_DEADLINE_SECONDS` | 60 | whole backend request 60 s |
+| `ASK_LIVE_DEADLINE_SECONDS` | 55 (security audit 2026-10-07 A-L2: the host router cuts a request at 60 s, so the app's own answer must come first; keep it under the router's `proxy_read_timeout`) | whole backend request 60 s |
 | app deadline `ASK_CLIENT_DEADLINE_MS` | 65,000 | 65 s including auth refresh |
 | `ASK_LIVE_WINDOW_SECONDS` | 20, and never more than the time left minus 19 s for compose, verify and margin | shared window ≤ 20 s |
 | `ASK_LIVE_MAX_CALLS_PER_SOURCE` / `ASK_LIVE_MAX_CALLS` | 4 / 16 (a GET and its checked redirects count as one call) | 4 per connector, 16 total |
@@ -255,3 +255,7 @@ Rollback:
   - `src/app/i18n/{ar,en,tl}.ts`
 - Docs: this report, `docs/agents/sources.md` (islamqa, binbaz and islamenc rows), `docs/engineering/decisions-for-review.md` (new section).
 - No Alembic migration.
+
+## External text is handled in linear time (security review 2026-10-07, A-M7)
+
+`sources/_common.strip_html` no longer runs `<[^>]+>` and `[ \t]+\n` over the whole text (both quadratic: 80,000 «<» took 3.8 s, 80,000 spaces 12 s); it returns byte for byte what it returned before (the tests compare it with the earlier implementation on fixed and 5,000 random inputs), in at most 160 ms for a hostile 500 KB text. It still uses the same tag pattern, limited to the part of the text before the last «>»: `html.parser` was measured too and is linear but slow (1.3 s for 500 KB of «<»), and would change the text for inputs like «x < y > z» (the pattern removes «< y >», the parser keeps it). A page asked for as HTML is at most 500 KB (`http.HTML_MAX_BYTES`; data answers keep 3 MB) ⚠️ not checked against the size of a real page of binbaz.org.sa (no call to other sites from tests). The fatwa page parser (`binbaz.parse_page`, `html.parser`) refuses a page with more than 15,000 tags or 15,000 entities (`MAX_MARKUP`) and runs in a worker thread, as does `islamic_content.parse_card`, whose ld+json scripts are now found in one pass (before: 0.9 s for 60 KB of openings). Worst case measured for a 500 KB page: 65 ms. Tests: `backend/tests/test_sec_a_m7_external_html.py`.

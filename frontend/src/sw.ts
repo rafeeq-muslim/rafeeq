@@ -14,6 +14,8 @@ import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
 import { registerPushHandler } from "./sw/plt13-push"
 import { registerDownloads } from "./sw/plt12-downloads" // PLT-12
 import { registerPlt11Caching } from "./sw/plt11-caching" // PLT-11 R1/R3/R4
+import { limitOf, registerForget } from "./sw/cache-limits" // security review A-L6: bounded runtime caches
+import { CONTENT_CACHE, MEDIA_CACHE } from "./app/offline/paths"
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -30,7 +32,7 @@ registerDownloads() // PLT-12: downloaded files first (before the generic routes
 // Approved lesson content and Quran passages: usable offline. Same origin only.
 registerRoute(
   ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content") || url.pathname.startsWith("/api/scripture")),
-  new NetworkFirst({ cacheName: "rafeeq-content", networkTimeoutSeconds: 4 }),
+  new NetworkFirst({ cacheName: CONTENT_CACHE, networkTimeoutSeconds: 4, plugins: [limitOf(CONTENT_CACHE)] }),
 )
 // Images from Rafeeq itself only (issue #9 item 12). Audio and video bypass the
 // worker: other origins (IslamHouse, Quranpedia verse recitations) are loaded by the browser under media-src
@@ -38,9 +40,10 @@ registerRoute(
 // would break the range requests players need for seeking.
 registerRoute(
   ({ url }) => url.origin === self.location.origin && (url.pathname.startsWith("/api/content/media/") || /\.(jpg|jpeg|png|webp)$/.test(url.pathname)),
-  new StaleWhileRevalidate({ cacheName: "rafeeq-media" }),
+  new StaleWhileRevalidate({ cacheName: MEDIA_CACHE, plugins: [limitOf(MEDIA_CACHE)] }),
 )
 registerPlt11Caching(self) // PLT-11: hashed shell files and fonts, cache first; never audio/video
+registerForget(self) // erasing the device also removes what the cache limits recorded
 
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()))
 

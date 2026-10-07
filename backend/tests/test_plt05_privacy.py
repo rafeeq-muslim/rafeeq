@@ -94,7 +94,7 @@ async def test_plt05_r6_account_downloads_its_own_data_and_nothing_about_others(
     friend = await person(client, "friend-1", gender="f", languages=("en",), display_name="Friend Huda")
     await client.put(
         "/api/me/learning",
-        json={"completed": {"u1-l1": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-01T08:00:00Z", "times": 1}}},
+        json={"completed": {"u01-l1": {"first": "2026-10-01T08:00:00Z", "last": "2026-10-01T08:00:00Z", "times": 1}}},
         headers=layla.h,
     )
     await client.put("/api/me/motivation", json={"days": ["2026-10-01"]}, headers=layla.h)
@@ -112,7 +112,7 @@ async def test_plt05_r6_account_downloads_its_own_data_and_nothing_about_others(
     data = r.json()
     text = json.dumps(data, ensure_ascii=False)
     assert data["account"]["display_name"] == "Quiet Palm" and data["account"]["username"] == "layla-1"
-    assert [c["lesson"] for c in data["learning"]["completed_lessons"]] == ["u1-l1"]
+    assert [c["lesson"] for c in data["learning"]["completed_lessons"]] == ["u01-l1"]
     assert data["motivation"]["learning_days"] == ["2026-10-01"]
     assert [m["text"] for m in data["companion"]["my_group_messages"]] == ["My own words"]
     conv = data["companion"]["conversations_with_a_human"]

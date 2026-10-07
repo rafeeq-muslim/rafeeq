@@ -28,6 +28,8 @@ class User(IdMixin, TimestampMixin, Base):
     gender: Mapped[str | None] = mapped_column(String(1), nullable=True)
     languages: Mapped[list[str]] = mapped_column(ARRAY(String(5)), default=list)
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # Security audit L7: access tokens issued before it are refused. NULL = never changed.
+    password_changed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     def has(self, role: str) -> bool:
         return role in (self.roles or [])
@@ -70,6 +72,10 @@ class Invite(TimestampMixin, Base):
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     # PLT-17 R12: an unused code the admin cancelled.
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # Security review B-H1: the gender staff approved for a mentor (CMP-01 R3).
+    # It becomes the account's gender at sign-up, whatever the registrant sends.
+    # Null on codes made before this column: the registrant states it.
+    gender: Mapped[str | None] = mapped_column(String(1), nullable=True)
 
 
 class PushSubscription(IdMixin, TimestampMixin, Base):

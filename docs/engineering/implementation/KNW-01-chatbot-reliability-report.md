@@ -165,7 +165,7 @@ Local AI spend of this session (development database, `knw_ai_calls`): **$0.0346
 
 ## 8. Effective production configuration before deploy (read-only)
 
-- `KNW_ANSWER_SOURCES`, `KNW_*`, `AI_*`, `ASK_*`: **no override** in `/home/naser/.config/rafeeq/secrets.env` (only key names checked, never values), so the code defaults applied: answer sources `quranenc,hadeethenc,islamhouse_enc,binbaz`, `KNW_MIN_SIMILARITY` 0, `KNW_SEARCH_K` 8, `KNW_EMBED_JOB_LIMIT` 2000 every 15 min, daily ceiling $0.75 shared by answers and embeddings. A `printenv` of four of these names inside `rafeeq-backend-1` (read-only, no values exist) also returned nothing.
+- `KNW_ANSWER_SOURCES`, `KNW_*`, `AI_*`, `ASK_*`: **no override** in the server's secrets file (`~/.config/rafeeq/secrets.env`) (only key names checked, never values), so the code defaults applied: answer sources `quranenc,hadeethenc,islamhouse_enc,binbaz`, `KNW_MIN_SIMILARITY` 0, `KNW_SEARCH_K` 8, `KNW_EMBED_JOB_LIMIT` 2000 every 15 min, daily ceiling $0.75 shared by answers and embeddings. A `printenv` of four of these names inside `rafeeq-backend-1` (read-only, no values exist) also returned nothing.
 - Alembic revision `d1e2f3a4b5c6`. AI spend $0.1618 total, $0.1308 today (embedding $0.1321 total).
 - Corpus counts: see KNW-02 report §2.
 

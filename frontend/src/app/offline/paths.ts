@@ -10,6 +10,9 @@ export const OFFLINE_CACHE = "rafeeq-offline"
 /** The existing sw.ts caches: lesson content and Quran passages, and images. */
 export const CONTENT_CACHE = "rafeeq-content"
 export const MEDIA_CACHE = "rafeeq-media"
+/** Page → worker: forget the limited runtime caches and what was recorded about
+ * their entries (sw/cache-limits.ts); sent when the device is erased or signed out. */
+export const FORGET_MESSAGE = "sec:forget-cached"
 
 const EXACT = new Set(["/api/practice/adhkar", "/api/practice/lines", "/api/practice/sightings", "/api/discover/cards", "/api/discover/library", "/api/glossary"])
 

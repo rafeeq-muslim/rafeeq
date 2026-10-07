@@ -39,7 +39,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.config import get_settings
 from app.core.deps import Session
 from app.knowledge import glossary, library, recitation
@@ -68,6 +68,16 @@ MEANING_AUDIO = "https://d.quranenc.com/data/audio/tagalog_rwwad/{sura:03d}{aya:
 # Per client: requests per window, and files streaming at once (in memory only, never logged).
 RATE, RATE_WINDOW_S = 900, 600
 MAX_CONCURRENT = 3
+# Security review 2026-10-07 (A-M2). For everyone together: files streaming at
+# once and size questions (HEAD) in flight, so no number of addresses can tie
+# up the one backend process with 300 MB streams or bursts of outbound calls.
+MAX_STREAMS = 24
+MAX_HEADS = 12
+# A size that could not be read is not asked again for this long.
+HEAD_RETRY_S = 120
+# Per address, a minute: the full catalogue, and one item's detail (asked once
+# before each download; the answers are cacheable for 5 minutes).
+CATALOG_PER_MIN, ITEM_PER_MIN = 30, 120
 PAGE = 40  # ayat per /api/scripture/quran call, as the reader pages (discover/verses.ts)
 # Estimated bytes of one verse in /api/scripture/quran (41 verses with English ≈ 22 KB, measured 2026-10-06).
 VERSE_BYTES = {"ar": 330, "en": 560, "tl": 560}
@@ -121,37 +131,72 @@ def parse_size(text: str | None) -> int | None:
     return int(float(m.group(1)) * mult)
 
 
+_client: httpx.AsyncClient | None = None
+
+
 def _http() -> httpx.AsyncClient:
-    """Outbound client: never follows redirects (tests replace it with a mock transport)."""
-    return httpx.AsyncClient(timeout=httpx.Timeout(20.0, read=60.0), follow_redirects=False)
+    """The one outbound client of this module, shared by every size question
+    and every stream (a bounded connection pool; never closed by a caller).
+    It never follows redirects. Tests replace this function with one that
+    returns a client on a mock transport."""
+    global _client
+    if _client is None:
+        _client = httpx.AsyncClient(
+            timeout=httpx.Timeout(20.0, read=60.0),
+            follow_redirects=False,
+            limits=httpx.Limits(max_connections=MAX_STREAMS + MAX_HEADS, max_keepalive_connections=8),
+        )
+    return _client
 
 
 # --- sizes (HEAD, cached in process memory: URLs only, nothing about anyone) ---------------
 
 _sizes: dict[str, int | None] = {}
+_failed: dict[str, float] = {}  # url → when its size could not be read (asked again after HEAD_RETRY_S)
+_heads: asyncio.Semaphore | None = None
+
+
+def _head_slots() -> asyncio.Semaphore:
+    global _heads
+    if _heads is None:
+        _heads = asyncio.Semaphore(MAX_HEADS)
+    return _heads
+
+
+def _asked(url: str) -> bool:
+    """The size is known, or could not be read a moment ago."""
+    return url in _sizes or time.monotonic() - _failed.get(url, -HEAD_RETRY_S) < HEAD_RETRY_S
 
 
 async def _head(client: httpx.AsyncClient, url: str) -> None:
     try:
         r = await client.head(url)
         _sizes[url] = int(r.headers["content-length"]) if r.status_code == 200 and "content-length" in r.headers else None
+        _failed.pop(url, None)
     except (httpx.HTTPError, ValueError):
-        pass  # unknown for now; asked again next time
+        _failed[url] = time.monotonic()  # unknown for now; asked again after HEAD_RETRY_S
 
 
-async def resolve_sizes(urls: list[str], budget_s: float) -> None:
-    todo = [u for u in dict.fromkeys(urls) if u not in _sizes and allowed_url(u)]
+async def resolve_sizes(urls: list[str], budget_s: float) -> bool:
+    """Ask the sizes not known yet. Returns whether any question was sent
+    (the cached catalogues are then rebuilt with what was learnt)."""
+    todo = [u for u in dict.fromkeys(urls) if not _asked(u) and allowed_url(u)]
     if not todo:
-        return
-    sem = asyncio.Semaphore(12)
-    async with _http() as client:
+        return False
+    sem = _head_slots()
+    client = _http()
 
-        async def one(u: str) -> None:
-            async with sem:
+    async def one(u: str) -> None:
+        async with sem:
+            if not _asked(u):  # another request asked while this one waited
                 await _head(client, u)
 
+    try:
         with suppress(TimeoutError):
             await asyncio.wait_for(asyncio.gather(*(one(u) for u in todo)), budget_s)
+    finally:
+        _catalogs.clear()
+    return True
 
 
 # --- catalogue -------------------------------------------------------------------------------
@@ -303,8 +348,18 @@ async def _library(session: AsyncSession, lang: str) -> list[dict]:
     return out
 
 
+_catalogs: dict[str, tuple[float, dict]] = {}
+CATALOG_TTL_S = 300
+
+
 async def build_catalog(session: AsyncSession, lang: str) -> dict:
-    return {
+    """The catalogue of one language, built at most once in 5 minutes (it is
+    the same for everyone, and building it reads the whole approved content;
+    Tagalog alone lists a file per verse). Rebuilt when new sizes were learnt."""
+    at, cat = _catalogs.get(lang, (0.0, None))
+    if cat is not None and time.monotonic() - at < CATALOG_TTL_S:
+        return cat
+    cat = {
         "lang": lang,
         "cap_bytes": CAP_BYTES,
         "sections": {
@@ -313,6 +368,8 @@ async def build_catalog(session: AsyncSession, lang: str) -> dict:
             "library": await _library(session, lang),
         },
     }
+    _catalogs[lang] = (time.monotonic(), cat)
+    return cat
 
 
 def _all_items(cat: dict) -> list[dict]:
@@ -320,8 +377,9 @@ def _all_items(cat: dict) -> list[dict]:
 
 
 @router.get("/catalog")
-async def catalog(session: Session, response: Response, lang: Lang = "ar") -> dict:
+async def catalog(session: Session, response: Response, request: Request, lang: Lang = "ar") -> dict:
     """R1/R2: everything downloadable in `lang`, with sizes. The same for everyone."""
+    ratelimit.hit(f"dl-catalog:{_client_key(request)}", CATALOG_PER_MIN, 60)
     first = await build_catalog(session, lang)
     # Sizes of unit media and of each surah's recitation file (not the per-verse meaning audio,
     # asked per item below). A short budget: what is not known yet shows as unknown.
@@ -329,22 +387,21 @@ async def catalog(session: Session, response: Response, lang: Lang = "ar") -> di
         f["key"] for i in _all_items(first) if i["section"] != "library" for f in i["files"] if f["kind"] == "media" and f["bytes"] is None
     ]
     urls = [u for u in urls if not u.startswith(MEANING_AUDIO[:40])]
-    if urls:
-        await resolve_sizes(urls, budget_s=6.0)
+    if urls and await resolve_sizes(urls, budget_s=6.0):
         first = await build_catalog(session, lang)
     response.headers["Cache-Control"] = "public, max-age=300"
     return first
 
 
 @router.get("/catalog/{item_id}")
-async def catalog_item(item_id: str, session: Session, response: Response, lang: Lang = "ar") -> dict:
+async def catalog_item(item_id: str, session: Session, response: Response, request: Request, lang: Lang = "ar") -> dict:
     """R2: one item with every file's size, asked before its download starts."""
+    ratelimit.hit(f"dl-item:{_client_key(request)}", ITEM_PER_MIN, 60)
     item = next((i for i in _all_items(await build_catalog(session, lang)) if i["id"] == item_id), None)
     if item is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "not_found")
     unknown = [f["key"] for f in item["files"] if f["bytes"] is None]
-    if unknown:
-        await resolve_sizes(unknown, budget_s=20.0)
+    if unknown and await resolve_sizes(unknown, budget_s=20.0):
         item = next(i for i in _all_items(await build_catalog(session, lang)) if i["id"] == item_id)
     response.headers["Cache-Control"] = "public, max-age=300"
     return item
@@ -373,14 +430,19 @@ async def file_index(session: AsyncSession) -> dict[str, dict]:
 
 
 def reset() -> None:
-    """Tests: forget cached sizes and the file index."""
-    global _index
+    """Tests: forget cached sizes, catalogues and the file index."""
+    global _index, _heads, _streams
     _index = (0.0, {})
     _sizes.clear()
+    _failed.clear()
+    _catalogs.clear()
     _active.clear()
+    _heads = None
+    _streams = 0
 
 
 _active: dict[str, int] = {}
+_streams = 0  # files streaming now, everyone together
 
 
 class OverCap(Exception):
@@ -388,7 +450,7 @@ class OverCap(Exception):
 
 
 def _client_key(request: Request) -> str:
-    return request.client.host if request.client else "-"  # in memory only, for the limits
+    return clientkey.address(request)  # in memory only, for the limits; IPv6 by /64
 
 
 @router.get("/file/{fid}")
@@ -401,11 +463,15 @@ async def file(fid: str, request: Request, session: Session) -> StreamingRespons
         raise HTTPException(status.HTTP_413_CONTENT_TOO_LARGE, "too_large")
     key = _client_key(request)
     ratelimit.hit(f"dl:{key}", RATE, RATE_WINDOW_S)
-    if _active.get(key, 0) >= MAX_CONCURRENT:
+    global _streams
+    if _active.get(key, 0) >= MAX_CONCURRENT or _streams >= MAX_STREAMS:
         raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "rate_limited")
     _active[key] = _active.get(key, 0) + 1
+    _streams += 1
 
     def release() -> None:
+        global _streams
+        _streams = max(_streams - 1, 0)
         _active[key] = _active.get(key, 1) - 1
         if _active[key] <= 0:
             _active.pop(key, None)
@@ -417,14 +483,12 @@ async def file(fid: str, request: Request, session: Session) -> StreamingRespons
             client.build_request("GET", entry["url"], headers={"Range": rng} if rng and _RANGE.fullmatch(rng) else {}), stream=True
         )
     except httpx.HTTPError:
-        await client.aclose()
         release()
         raise HTTPException(status.HTTP_502_BAD_GATEWAY, "upstream") from None
     total = upstream.headers.get("content-range", "").rpartition("/")[2] or upstream.headers.get("content-length", "")
     if upstream.status_code not in (200, 206) or (total.isdigit() and int(total) > CAP_BYTES):
         code = upstream.status_code
         await upstream.aclose()
-        await client.aclose()
         release()
         if code in (200, 206):
             raise HTTPException(status.HTTP_413_CONTENT_TOO_LARGE, "too_large")
@@ -449,7 +513,6 @@ async def file(fid: str, request: Request, session: Session) -> StreamingRespons
                 yield chunk
         finally:
             await upstream.aclose()
-            await client.aclose()
             release()
 
     return StreamingResponse(body(), status_code=upstream.status_code, headers=headers)

@@ -14,12 +14,24 @@ def _register() -> None:
     if _registered:
         return
     _registered = True
-    for module in ("app.motivation.jobs", "app.platform.push_jobs", "app.knowledge.jobs", "app.organizations.jobs", "app.companion.jobs"):
+    for module in (
+        "app.motivation.jobs",
+        "app.platform.push_jobs",
+        "app.platform.retention",
+        "app.knowledge.jobs",
+        "app.organizations.jobs",
+        "app.companion.jobs",
+    ):
         try:
             mod = __import__(module, fromlist=["register"])
             mod.register(scheduler)
         except ModuleNotFoundError:
             log.info("jobs module %s not present yet", module)
+    # Event-history retention (security review A-H5): its own module and job,
+    # separate from any purge of sessions or codes.
+    from app.core import retention
+
+    retention.register(scheduler)
 
 
 def start() -> None:

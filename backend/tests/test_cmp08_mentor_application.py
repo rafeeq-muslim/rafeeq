@@ -114,8 +114,8 @@ async def test_cmp08_r2_the_answer_never_says_whether_the_contact_applied_before
     first = await apply(client)
     second = await apply(client, about="نص جديد بعد التعديل.")
     assert (first.status_code, first.json()) == (second.status_code, second.json()) == (201, {"received": True, "keep_days": 90})
-    (row,) = await rows()  # the second replaced the first
-    assert row.about == "نص جديد بعد التعديل."
+    (row,) = await rows()  # security review B-L10: the first stays; a repeated contact overwrites nothing
+    assert row.about == form()["about"]
 
 
 async def test_cmp08_r2_a_filled_hidden_field_gets_the_same_answer_and_keeps_nothing(client):

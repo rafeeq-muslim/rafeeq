@@ -24,6 +24,7 @@ import { helpHeaders } from "@/app/companion/store"
 import { linkState, unlinkOrg } from "@/app/org/api"
 import { useOrgLink } from "@/app/org/store"
 import { clearSession as clearAskSession } from "@/app/ask/session"
+import { FORGET_MESSAGE } from "@/app/offline/paths"
 
 export const EXIT_URL = "https://www.bbc.com/weather"
 const PREFIX = "rafeeq."
@@ -126,6 +127,19 @@ async function clearBrowserStorage() {
   }
 }
 
+/** Security review A-L6: the worker records the address and last use of each
+ * entry of its limited caches (which Quran pages and adhkar were read). It
+ * goes with the caches: the worker is asked to forget it, and the record
+ * itself is deleted (at the latest when the worker next stops). */
+function forgetCacheRecords() {
+  try {
+    navigator.serviceWorker?.controller?.postMessage({ type: FORGET_MESSAGE })
+    if (typeof indexedDB !== "undefined") indexedDB.deleteDatabase("workbox-expiration")
+  } catch {
+    /* no worker or no IndexedDB here */
+  }
+}
+
 /** The service worker's app shell; keeping it lets Rafeeq still open after sign-out. */
 export const isAppShellCache = (name: string) => name.startsWith("workbox-precache")
 
@@ -137,6 +151,7 @@ export async function wipeDevice(go: (url: string) => void = (url) => window.loc
   await unlinkOrg().catch(() => undefined) // ORG-01 R4: an organisation link goes with the device
   await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
   await clearBrowserStorage()
+  forgetCacheRecords()
   if (typeof caches !== "undefined") for (const k of await caches.keys()) await caches.delete(k)
   go(appUrl("/welcome"))
 }
@@ -148,6 +163,7 @@ export async function signOutAndErase(go: (url: string) => void = (url) => windo
   await api("/api/auth/logout", { method: "POST" }).catch(() => undefined)
   useAuth.getState().set({ token: null, me: null })
   await clearBrowserStorage()
+  forgetCacheRecords()
   // Runtime caches (content, media) and the discreet-mode copy (rafeeq-prefs) go.
   if (typeof caches !== "undefined") for (const k of await caches.keys()) if (!isAppShellCache(k)) await caches.delete(k)
   go(appUrl("/welcome")) // PLT-10 R2

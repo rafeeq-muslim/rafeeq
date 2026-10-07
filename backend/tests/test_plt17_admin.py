@@ -102,7 +102,7 @@ async def test_plt17_r12_list_shows_each_code_status(client):
     from app.platform.models import Invite
 
     admin = auth(await with_roles(client, "admin-1", "admin"))
-    codes = (await client.post("/api/admin/invites", json={"role": "mentor", "count": 4}, headers=admin)).json()["codes"]
+    codes = (await client.post("/api/admin/invites", json={"role": "mentor", "gender": "m", "count": 4}, headers=admin)).json()["codes"]
     available, used, expired, revoked = codes
     await register(client, username="mentor-1", invite_code=used, gender="m")
     await client.post(f"/api/admin/invites/{revoked}/revoke", headers=admin)

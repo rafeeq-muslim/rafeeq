@@ -126,12 +126,27 @@ async def test_cmp08_r3_the_contact_is_stored_encrypted_never_in_plain_text(clie
     assert [a["contact"] for a in await listed(client, admin)] == [EMAIL]
 
 
-async def test_cmp08_r3_the_same_contact_replaces_the_earlier_pending_application(client):
-    await apply(client, about="الأول")
-    await apply(client, contact="Volunteer@Example.com", about="الثاني")  # normalised to the same contact
+async def test_cmp08_r3_a_repeated_contact_is_found_by_its_digest_and_changes_nothing(client):
+    # Security review B-L10: the contact alone proves nothing, so the first application stays.
+    first = await apply(client, about="الأول")
+    again = await apply(client, contact="Volunteer@Example.com", about="الثاني")  # normalised to the same contact
+    assert (first.status_code, first.json()) == (again.status_code, again.json())
     await apply(client, contact="other@example.com", about="شخص آخر")
-    assert sorted(r.about for r in await rows()) == sorted(["الثاني", "شخص آخر"])
+    assert sorted(r.about for r in await rows()) == sorted(["الأول", "شخص آخر"])
     assert all(plain is None for plain, _, _ in await raw())
+
+
+async def test_cmp08_r3_an_account_replaces_its_own_application_and_the_new_contact_is_encrypted(client):
+    p = await person(client, "maryam-1", gender="f")
+    await apply(client, p.h, contact="first@example.com", about="الأول")
+    await apply(client, p.h, contact="second@example.com", about="الثاني")
+    (row,) = await rows()
+    assert (row.about, row.contact, row.readable_contact()) == ("الثاني", None, "second@example.com")
+    assert row.contact_hmac == crypto.contact_digest("second@example.com")
+    # Another account that only knows the contact changes nothing.
+    other = await person(client, "sara-1", gender="f")
+    await apply(client, other.h, contact="second@example.com", about="دخيل")
+    assert [r.about for r in await rows()] == ["الثاني"]
 
 
 async def test_cmp08_r3_a_signed_in_application_stores_no_contact_at_all(client):
@@ -190,11 +205,11 @@ async def test_cmp08_r3_existing_plain_text_rows_are_encrypted_and_the_old_colum
     assert seen == ["+15555550100", "None", EMAIL]
 
 
-async def test_cmp08_r3_a_new_application_replaces_a_pending_row_still_in_plain_text(client):
+async def test_cmp08_r3_a_repeated_contact_is_also_found_on_a_row_still_in_plain_text(client):
     await plaintext_row()
-    await apply(client, about="نص جديد")
-    (row,) = await rows()
-    assert row.about == "نص جديد" and row.contact is None and row.readable_contact() == EMAIL
+    assert (await apply(client, about="نص جديد")).status_code == 201
+    (row,) = await rows()  # B-L10: not replaced and no second row, even before the row is encrypted
+    assert row.about == "نص" and row.contact == EMAIL
 
 
 def test_cmp08_r3_the_encryption_step_runs_at_start_and_daily():

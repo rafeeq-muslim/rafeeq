@@ -174,6 +174,7 @@ function Player({ lesson }: { lesson: LessonT }) {
         <LessonHelpButton
           from="lesson"
           topic={lesson.title}
+          context={{ lesson_id: lesson.id, ...(exercise ? { exercise_id: exercise.id } : screen.kind === "card" ? { card_id: lesson.cards[screen.index]?.id } : {}) }}
           onLeave={() => holdLessonForHelp(lesson.id, exercise ? { exerciseId: exercise.id, value, round: attempt, result: shown?.result ?? null } : null)}
         />
       </header>
@@ -200,7 +201,7 @@ function Player({ lesson }: { lesson: LessonT }) {
         )}
       </main>
 
-      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20">
+      <footer ref={footer} className={shown ? "fixed inset-x-0 bottom-0 z-20" : "fixed inset-x-0 bottom-0 z-20 border-t bg-background"}>
         {shown ? (
           <ExerciseFeedback
             result={shown.result === "correct" ? "correct" : "incorrect"}
@@ -245,7 +246,7 @@ function Player({ lesson }: { lesson: LessonT }) {
             }
           />
         ) : (
-          <div className="mx-auto flex max-w-xl gap-3 border-t bg-background px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
+          <div className="mx-auto flex max-w-xl gap-3 px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
             {screen.kind === "card" ? (
               <>
                 {screen.index > 0 && (

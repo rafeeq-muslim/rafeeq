@@ -20,6 +20,7 @@ Admin = Annotated[User, Depends(require_role("admin"))]
 class InviteIn(BaseModel):
     role: Literal["mentor", "sharia_reviewer", "team", "admin"]
     count: int = 1
+    gender: Literal["m", "f"] | None = None  # required for a mentor (security review B-H1)
 
 
 # MOT-08 (open question decided 2026-10-06): the team role is granted only in
@@ -46,11 +47,28 @@ def invite_status(i: Invite, now: datetime | None = None) -> str:
     return "available"
 
 
-def new_invite(session, role: str, created_by: uuid.UUID, org_id: uuid.UUID | None = None, expires_at: datetime | None = None) -> Invite:
+GENDER_REQUIRED = "gender_required_for_mentor"
+
+
+def new_invite(
+    session,
+    role: str,
+    created_by: uuid.UUID,
+    org_id: uuid.UUID | None = None,
+    expires_at: datetime | None = None,
+    gender: str | None = None,
+) -> Invite:
     """One one-time code for `role`, added to the session (the caller commits).
-    Also used by CMP-08 when an application is approved."""
-    code = f"{role[:3].upper()}-{secrets.token_hex(4).upper()}"
-    invite = Invite(code=code, role=role, created_by=created_by, org_id=org_id, expires_at=expires_at)
+    Also used by CMP-08 when an application is approved and by ORG-02 for an
+    organisation's codes. A mentor's code carries the gender staff approved
+    (security review B-H1): the same-gender rule (CMP-01 R3) must not rest on
+    what the registrant types."""
+    if role == "mentor" and gender not in ("m", "f"):
+        raise HTTPException(400, GENDER_REQUIRED)
+    code = f"{role[:3].upper()}-{secrets.token_urlsafe(16)}"  # security audit M5: 128 random bits; 26 chars fit String(32)
+    invite = Invite(
+        code=code, role=role, created_by=created_by, org_id=org_id, expires_at=expires_at, gender=gender if role == "mentor" else None
+    )
     session.add(invite)
     return invite
 
@@ -62,7 +80,7 @@ async def create_invites(body: InviteIn, admin: Admin, session: Session) -> dict
     codes = []
     ends = datetime.now(UTC) + timedelta(days=ADMIN_INVITE_DAYS)
     for _ in range(max(1, min(body.count, 50))):
-        codes.append(new_invite(session, body.role, admin.id, expires_at=ends).code)
+        codes.append(new_invite(session, body.role, admin.id, expires_at=ends, gender=body.gender).code)
     await session.commit()
     return {"codes": codes, "expires_at": ends}
 
@@ -75,6 +93,7 @@ async def list_invites(admin: Admin, session: Session) -> list[dict]:
         {
             "code": i.code,
             "role": i.role,
+            "gender": i.gender,
             "used": i.used_by is not None,
             "status": invite_status(i, now),
             "expires_at": i.expires_at,

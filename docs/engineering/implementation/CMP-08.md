@@ -8,10 +8,10 @@
 | Rule | Module | Behaviour |
 | --- | --- | --- |
 | R1 form | `app/companion/applications.py::apply` (`POST /api/mentor-applications`, no auth) | `ApplyIn`: display name ≤ 40, gender, 1–3 languages, optional place ≤ 80, about 1–600, contact (email, or phone normalised to `+digits`, 7–15 digits), `rules_accepted` must be true, optional `org_code`. `422` otherwise. Signed in: contact optional, the account's own gender wins |
-| R2 one answer, anti-abuse | same | Always `201 {received, keep_days: 90}`. A pending row with the same contact (found by its keyed digest, §2.1) or account is replaced. `ratelimit.hit("mentor-apply:<ip>", 5, 3600)` in memory, IP never stored. Honeypot `website`: same answer, nothing stored. No captcha |
+| R2 one answer, anti-abuse | same | Always `201 {received, keep_days: 90}`. A pending row from the same account is replaced; a submission that only repeats a pending row's contact (found by its keyed digest, §2.1; no account, or another account) gets the same answer and is not stored, so nobody overwrites or takes over an application by knowing its contact (security review B-L10; `tests/test_sec_b_l9_l10_l11.py`). `ratelimit.hit("mentor-apply:<ip>", 5, 3600)` in memory, IP never stored. Honeypot `website`: same answer, nothing stored. No captcha |
 | R3 staff only | `staff` router, `require_role("team")` (admins pass) | `GET /api/admin/mentor-applications`. The contact is encrypted at rest (§2.1); `503 applications_closed` on apply while the keys are not set. `GET /api/mentor-applications/mine` returns status and date only |
-| R4 decide | `_approve`, `_reject`, `remove` | Approve without an account: `platform/admin.py::new_invite` (the existing `invites` row; with `org_id` and 7 days when the application named an organisation). Reject: the contact (ciphertext, digest and any plain text left) and `about` set to NULL, optional `note`. `409 already_decided` on a second decision |
-| R5 account | `_approve` → `organizations/public.py::approve_mentor` | Adds `mentor` to the roles, sets gender if unset, merges languages, adds the `org_members` row when an organisation was named, publishes `MentorApproved {mentor_id, user_id}`. `409 already_mentor` on apply. Neutral push to the applicant |
+| R4 decide | `_approve`, `_reject`, `remove` | Approve without an account: `platform/admin.py::new_invite` (the existing `invites` row; with `org_id` and 7 days when the application named an organisation; with `gender` = the application's gender, which `register` enforces: security review B-H1). Reject: the contact (ciphertext, digest and any plain text left) and `about` set to NULL, optional `note`. `409 already_decided` on a second decision |
+| R5 account | `_approve` → `organizations/public.py::approve_mentor` | Adds `mentor` to the roles, sets the account's gender to the application's (`409 gender_mismatch`, nothing changed, when the account now has the other gender: security review B-H1), merges languages, adds the `org_members` row when an organisation was named, publishes `MentorApproved {mentor_id, user_id}`. `409 already_mentor` on apply. Neutral push to the applicant |
 | R6 retention | `applications.py::purge`, `companion/jobs.py` (00:20 Asia/Riyadh daily) | Deletes pending rows older than 90 days and decided rows 90 days after `decided_at` |
 | R7 rights | `companion/events.py` (AccountDeleted), `companion/export.py`, `DELETE /api/mentor-applications/mine` | FK `ON DELETE CASCADE` plus the handler; the export has the application without `note` and `invite_code` |
 | R8 coordinator | `org` router, `organizations/manage.py::coordinator_of` | `GET/POST /api/org/{org_id}/mentor-applications[/{id}/approve|reject]`: only rows with that `org_id` (`404` otherwise), `note` always null, no delete |
@@ -22,7 +22,7 @@
 Table `cmp_mentor_applications` (migration `d4e5f6a7b8c9`, on `1a9e0d5c3b7f`): display_name, gender, languages, locale, place, about, contact, user_id (FK users, cascade), org_id (no FK, like `invites.org_id`), status, created_at, decided_at, decided_by (FK users, set null), note, invite_code.
 
 
-Migration `e8f9a0b1c2d3` (on `a7b8c9d0e1f2`, columns only): `contact_enc` (Text) and `contact_hmac` (String 64, indexed). The plain `contact` column stays for one release so the previous image still runs; a later release drops it.
+Migration `e8f9a0b1c2d3` (on `f9a0b1c2d3e4`, columns only): `contact_enc` (Text) and `contact_hmac` (String 64, indexed). The plain `contact` column stays for one release so the previous image still runs; a later release drops it.
 
 ### 2.1 Contact storage: encrypted at rest (security audit 2026-10-07, M4)
 
@@ -70,5 +70,7 @@ echo "APPLICATION_CONTACT_HMAC_KEY=$(python3 -c 'import secrets;print(secrets.to
 i18n: `cmp.apply.*`, `cmp.apps.*`, `org.tab.applications`, `policy.apply.*`, `policy.revisedApply`. English and Tagalog written by Claude from the Arabic.
 
 ## 4. Tests
+
+Security review B-H1: `tests/test_sec_b_h1_mentor_gender.py` (8).
 
 Backend `tests/test_cmp08_contact_encryption.py` (`test_cmp08_r3_*`: round trip, storage, lookup, rejection, export, wrong key, rows in plain text, production without keys, keys added later, rotation) and `tests/test_cmp08_mentor_application.py` (36): `test_cmp08_r1_*` … `test_cmp08_r9_*`, one or more per example. Frontend `src/app/companion/cmp08.rules.test.tsx` (28): the form, the confirmation, the honeypot, the applicant's status, the four entry points, the team list and the coordinator mode, the policy section.

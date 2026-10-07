@@ -41,17 +41,75 @@ No account is needed to start. On a phone, "Add to Home Screen" installs it as a
 
 ## Run it locally
 
-Everything below was run end to end on a fresh clone. It takes about 10 minutes, most of it downloads.
+There are two ways. **Option A needs only Docker** and works the same on Linux, macOS (Intel and Apple Silicon) and Windows. Option B runs each part by hand for development. Both were run end to end on a fresh clone.
 
 ### What you get without keys
 
 | Works with no keys at all | Needs something extra |
 | --- | --- |
-| Landing page, language choice, every lesson and exercise, review, the path map, badges and streak, prayer times and qibla, Hijri calendar, adhkar, the library, accounts and roles, «أريد إنسانًا», the review desk | Quran verses inside lessons: load the QuranEnc corpus (step 5, no key) · The AI assistant, «لماذا؟» explanations and embeddings: an [OpenRouter](https://openrouter.ai/keys) key · Push notifications: VAPID keys · Emailed sign-in codes: an SMTP server |
+| Landing page, language choice, every lesson and exercise, review, the path map, badges and streak, prayer times and qibla, Hijri calendar, adhkar, the library, accounts and roles, «أريد إنسانًا», the review desk | Quran verses inside lessons: the QuranEnc corpus (no key; option A loads it for you, option B step 5) · The AI assistant, «لماذا؟» explanations and embeddings: an [OpenRouter](https://openrouter.ai/keys) key · Push notifications: VAPID keys · Emailed sign-in codes: an SMTP server |
 
 Without an OpenRouter key the assistant replies that it can't answer right now and offers a person. That is the intended safe failure, not a bug.
 
-### Prerequisites
+### Option A: one command with Docker (recommended)
+
+You need [Git](https://git-scm.com/downloads) and Docker ([Docker Desktop](https://www.docker.com/products/docker-desktop/) on macOS and Windows, or Docker Engine with the Compose plugin v2.24+ on Linux). No Python, uv or Node on your machine.
+
+macOS, Linux, or Windows in WSL2 / Git Bash:
+
+```bash
+git clone https://github.com/rafeeq-muslim/rafeeq.git
+cd rafeeq
+cp .env.example .env        # optional: every value has a default; change the passwords
+docker compose -f docker-compose.local.yml up --build
+```
+
+Windows PowerShell:
+
+```powershell
+git clone https://github.com/rafeeq-muslim/rafeeq.git
+cd rafeeq
+Copy-Item .env.example .env
+docker compose -f docker-compose.local.yml up --build
+```
+
+Then open:
+
+| Page | URL |
+| --- | --- |
+| Landing page | http://localhost:8380/ |
+| The app | http://localhost:8380/app/ |
+| API docs | http://localhost:8390/api/docs |
+
+Sign in from the welcome screen («لي حساب، سجّل دخولي») with `BOOTSTRAP_ADMIN_USERNAME` / `BOOTSTRAP_ADMIN_PASSWORD` from `.env` (defaults: `admin` / `change-me-local-admin`).
+
+What the command does ([`docker-compose.local.yml`](docker-compose.local.yml)):
+
+| Service | What it does |
+| --- | --- |
+| `db` | PostgreSQL 16 with pgvector, data in a named volume |
+| `backend` | builds the production API image, runs the migrations (safe to repeat), creates the first admin if none exists, serves the API |
+| `loader` | one-shot: fetches the QuranEnc text on the first run only (~27 MB, about 2 minutes, no key) and loads it so lessons show verses. Re-runs only re-load. `LOAD_QURANENC=0` skips it |
+| `web` | builds the production web image: nginx serves the landing page at `/`, the app at `/app/`, and proxies `/api` |
+
+The first `up --build` takes a few minutes, mostly image downloads and the frontend build. On our test machine the stack was healthy in 1.5 minutes with warm caches, and the QuranEnc load finished about 2 minutes later. Every image is multi-arch (amd64 and arm64).
+
+Useful commands:
+
+```bash
+docker compose -f docker-compose.local.yml up -d --build      # in the background
+docker compose -f docker-compose.local.yml logs -f backend     # follow the API log
+docker compose -f docker-compose.local.yml down                # stop (data kept)
+docker compose -f docker-compose.local.yml down -v             # stop and delete the data
+```
+
+Settings: ports (`WEB_PORT`, `API_PORT`, `DB_PORT`), passwords and optional keys go in the root `.env` ([`.env.example`](.env.example)). Any backend setting from the table below can be added there too, e.g. `OPENROUTER_API_KEY` for the assistant; restart with `up -d` after changing it. This is a local development setup: production uses `infra/compose.prod.yml`.
+
+### Option B: run each part by hand
+
+This path suits development (hot reload). It takes about 10 minutes, most of it downloads.
+
+#### Prerequisites (option B)
 
 | Tool | Version | Why |
 | --- | --- | --- |
@@ -61,7 +119,7 @@ Without an OpenRouter key the assistant replies that it can't answer right now a
 | [uv](https://docs.astral.sh/uv/) | recent (tested with 0.11) | Python packages and running the backend |
 | Node.js | 24 (`frontend/Dockerfile`), with npm 11 | frontend |
 
-### Quick start
+#### Steps (option B)
 
 **1. Clone**
 
@@ -73,10 +131,10 @@ cd rafeeq
 **2. Start PostgreSQL with pgvector**
 
 ```bash
-docker run -d --name rafeeq-dev-db \
-  -e POSTGRES_USER=rafeeq -e POSTGRES_PASSWORD=rafeeq_dev -e POSTGRES_DB=rafeeq \
-  -p 127.0.0.1:5442:5432 pgvector/pgvector:pg16
+docker run -d --name rafeeq-dev-db -e POSTGRES_USER=rafeeq -e POSTGRES_PASSWORD=rafeeq_dev -e POSTGRES_DB=rafeeq -p 127.0.0.1:5442:5432 pgvector/pgvector:pg16
 ```
+
+(One line, so it pastes into bash, zsh and PowerShell alike.)
 
 This is the same image production uses. The migrations create the `vector` extension themselves.
 
@@ -84,13 +142,13 @@ This is the same image production uses. The migrations create the `vector` exten
 
 ```bash
 cd backend
-cp .env.example .env          # local values; edit JWT_SECRET and the admin password
+cp .env.example .env          # PowerShell: Copy-Item .env.example .env ; then edit JWT_SECRET and the admin password
 uv sync                       # installs Python 3.12 and the packages if needed
 uv run alembic upgrade head   # creates every table
 uv run uvicorn app.main:app --port 8000 --reload
 ```
 
-Run backend commands from `backend/`: the settings are read from `backend/.env` in the current directory. Check it: `curl http://127.0.0.1:8000/api/health` returns `{"ok":true}`. The API docs are at http://127.0.0.1:8000/api/docs.
+Run backend commands from `backend/`: the settings are read from `backend/.env` in the current directory. Check it: `curl http://127.0.0.1:8000/api/health` returns `{"ok":true}`. The API docs are at http://127.0.0.1:8000/api/docs (local runs only: off with `ENV=production`).
 
 **4. The first admin account**
 
@@ -126,6 +184,8 @@ Open:
 In production nginx serves the landing page at `/` and the app at `/app/` (`infra/web.nginx.conf`). The Vite dev server has no such split, so in development `/` shows an empty app shell; use the URLs above. Vite forwards `/api` to `http://127.0.0.1:8000`, so keep the backend on port 8000.
 
 ### Optional: the AI assistant and the full corpus
+
+These steps are written for option B (run from `backend/`). With option A, put the key in the root `.env` and run `docker compose -f docker-compose.local.yml up -d`; run any command below inside the stack by replacing `uv run` with `docker compose -f docker-compose.local.yml run --rm loader`, for example `docker compose -f docker-compose.local.yml run --rm loader python -m app.knowledge.sources.hadeethenc --fetch`.
 
 1. Put an OpenRouter key in `backend/.env` as `OPENROUTER_API_KEY`, then restart the backend. Spending is capped by `AI_BUDGET_USD` (total) and the daily ceilings below.
 2. Fetch and load the other approved sources. Each takes a few minutes and needs network; each source's terms are in `docs/agents/sources.md`:
@@ -166,14 +226,14 @@ All backend settings live in `backend/app/core/config.py`. Each field is read fr
 
 | Variable | Production | Default | What it is / how to get it |
 | --- | --- | --- | --- |
-| `ENV` | yes: `production` | `development` | `production` makes the sign-in cookie `Secure` |
+| `ENV` | yes: `production` | `development` | `production` makes the sign-in cookie `Secure` (named `__Secure-rafeeq_refresh`), turns the API docs off, and refuses to start on a weak `JWT_SECRET` or a short first-admin password |
 | `PUBLIC_URL` | yes | `http://localhost:5173` | Where the app is opened from; sent as `HTTP-Referer` on AI calls |
 | `DATABASE_URL` | yes | `postgresql+asyncpg://rafeeq:rafeeq_dev@127.0.0.1:5442/rafeeq` | Async SQLAlchemy URL to PostgreSQL 16 with pgvector |
-| `JWT_SECRET` | yes | `dev-only-change-me` | Signs sign-in tokens. Generate: `python3 -c "import secrets; print(secrets.token_urlsafe(48))"` |
+| `JWT_SECRET` | yes, 32 characters or more: with `ENV=production` the backend does not start on the default, the `.env.example` placeholder or a shorter value | `dev-only-change-me` | Signs sign-in tokens. Generate: `python3 -c "import secrets; print(secrets.token_urlsafe(48))"` |
 | `ACCESS_TOKEN_MINUTES` | no | `30` | Access token lifetime |
 | `REFRESH_TOKEN_DAYS` | no | `60` | Refresh cookie lifetime |
 | `BOOTSTRAP_ADMIN_USERNAME` | first start | empty | First admin, created at startup only if no admin exists |
-| `BOOTSTRAP_ADMIN_PASSWORD` | first start | empty | Its password; choose a long one |
+| `BOOTSTRAP_ADMIN_PASSWORD` | first start | empty | Its password. With `ENV=production`: 16 characters or more, or the backend does not start; remove both values once the admin exists |
 
 **Content and corpus paths**
 
@@ -299,6 +359,36 @@ python3 ../content/check_content.py   # content rules (approved ids, glossary)
 | No service worker or offline mode in dev | The worker is registered only in production builds: `npm run build && npm run preview` |
 | A recitation or video doesn't play locally | Media come from IslamHouse and Quranpedia; check your network |
 | Python warns about the locale | Harmless; `export LC_ALL=C.UTF-8` silences it |
+
+#### By operating system
+
+**Windows**
+- Use [Docker Desktop](https://www.docker.com/products/docker-desktop/) with the WSL2 backend (the default). Option A works from PowerShell or from a WSL2 shell. For option B, we recommend running everything inside WSL2 (Ubuntu) and cloning into the WSL file system (`~/rafeeq`, not `/mnt/c/...`), which is much faster.
+- Line endings: the repo's `.gitattributes` checks text files out with LF, so scripts and config work in the Linux containers even with `core.autocrlf=true`. If you see `/bin/sh^M` or `bad interpreter`, the files were checked out with CRLF by an older clone: clone again.
+- `docker compose` is slow or runs out of memory: give WSL more memory in `%UserProfile%\.wslconfig` (`[wsl2]` then `memory=6GB`), then `wsl --shutdown`.
+- Secrets without bash: `docker run --rm python:3.12-slim python -c "import secrets;print(secrets.token_urlsafe(48))"` works in PowerShell too.
+- A port is in use: `netstat -ano | findstr :8380` shows who holds it; change `WEB_PORT` in `.env`.
+
+**macOS (Intel and Apple Silicon)**
+- Docker Desktop, OrbStack or Colima all work. Every image has an arm64 build, so nothing runs under emulation on Apple Silicon.
+- The first build is slower on Docker Desktop's default file sharing; option A doesn't mount source folders, so this only affects option B. Give Docker at least 4 GB of memory (Settings → Resources).
+- A port is in use: `lsof -i :8380`. Change the ports in `.env`.
+- Option B: install Python with `uv` (it fetches 3.12 itself) and Node 24 with `brew install node@24` or `nvm`.
+
+**Linux**
+- Docker Engine with the Compose plugin v2.24 or newer (`docker compose version`); the old `docker-compose` v1 won't read this file.
+- If `docker` needs `sudo`, either use it or add yourself to the `docker` group (`sudo usermod -aG docker $USER`, then log in again).
+- A port is in use: `ss -ltnp | grep 8380`; change the ports in `.env`.
+
+**Any OS**
+- `extension "vector" is not available`: the database isn't the pgvector image; option A always uses `pgvector/pgvector:pg16`.
+- The app shows an old version after an update: it's an installable PWA with a service worker. Reload once more, or clear the site data in the browser's developer tools (Application → Storage).
+- Lessons show no Quran verse: the loader hasn't finished, or it had no network. `docker compose -f docker-compose.local.yml logs loader`, then `docker compose -f docker-compose.local.yml up loader` to retry.
+- The fonts differ from the live site: the Thmanyah fonts can't be redistributed, so a local run uses the fallback Arabic fonts. That's expected.
+
+## Data
+
+Data pipeline: see [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md): every source Rafeeq fetches, the exact commands, where the output goes, and every scheduled job.
 
 ## Licences and sources
 
