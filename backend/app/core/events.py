@@ -28,10 +28,11 @@ class OutboxEvent(IdMixin, Base):
     payload: Mapped[dict] = mapped_column(JSONB)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     # Opt-out, account deletion and the mentor-contact lookup find rows by
-    # these two payload fields: without the indexes each is a full scan.
+    # these payload fields: without the indexes each is a full scan.
     __table_args__ = (
         Index("ix_outbox_payload_install_id", text("(payload ->> 'install_id')")),
         Index("ix_outbox_payload_user_id", text("(payload ->> 'user_id')")),
+        Index("ix_outbox_payload_mentor_id", text("(payload ->> 'mentor_id')")),  # account deletion also matches the mentor's id
     )
 
 

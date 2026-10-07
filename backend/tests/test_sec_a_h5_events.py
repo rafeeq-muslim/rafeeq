@@ -59,9 +59,13 @@ async def test_h5_opt_out_still_goes_through_when_the_event_budget_is_spent(clie
 async def test_h5_outbox_lookups_by_device_and_account_use_an_index():
     async with SessionLocal() as s:
         names = set(await s.scalars(text("SELECT indexname FROM pg_indexes WHERE tablename = 'outbox'")))
-        assert {"ix_outbox_payload_install_id", "ix_outbox_payload_user_id"} <= names
+        assert {"ix_outbox_payload_install_id", "ix_outbox_payload_user_id", "ix_outbox_payload_mentor_id"} <= names
         await s.execute(text("SET LOCAL enable_seqscan = off"))
-        for key, index in (("install_id", "ix_outbox_payload_install_id"), ("user_id", "ix_outbox_payload_user_id")):
+        for key, index in (
+            ("install_id", "ix_outbox_payload_install_id"),
+            ("user_id", "ix_outbox_payload_user_id"),
+            ("mentor_id", "ix_outbox_payload_mentor_id"),
+        ):
             stmt = delete(OutboxEvent).where(payload_text(key) == "x")
             sql = str(stmt.compile(s.bind, compile_kwargs={"literal_binds": True}))
             plan = "\n".join(await s.scalars(text("EXPLAIN " + sql)))

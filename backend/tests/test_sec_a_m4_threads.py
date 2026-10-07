@@ -73,15 +73,24 @@ async def test_m4_the_responder_reads_the_last_200_and_earlier_ones_on_demand(cl
     assert [m["body"] for m in earlier["messages"]] == [f"m{i:04d}" for i in range(51)] and earlier["has_earlier"] is False
 
 
+def forget_minute_limit(rid: str) -> None:
+    """Drop the conversation's per-minute counter (the limiter may keep its keys as digests)."""
+    key = f"help-msg:{rid}"
+    digest = getattr(ratelimit, "_digest", None)
+    ratelimit._hits.pop(key, None)
+    if digest is not None:
+        ratelimit._hits.pop(digest(key), None)
+
+
 async def test_m4_a_conversation_takes_a_bounded_number_of_messages_a_day(client):
     layla = await person(client, "layla-1", gender="f")
     r = await client.post("/api/help/requests", json={"lang": "en", "body": "first words"}, headers=layla.h)
     rid = r.json()["request"]["id"]
     for i in range(THREAD_MSGS_PER_DAY):
         if i % 30 == 0:
-            ratelimit._hits.pop(f"help-msg:{rid}", None)  # the per-minute limit is not what is tested here
+            forget_minute_limit(rid)  # the per-minute limit is not what is tested here
         assert (await client.post(f"/api/help/requests/{rid}/messages", json={"body": "more"}, headers=layla.h)).status_code == 201
-    ratelimit._hits.pop(f"help-msg:{rid}", None)
+    forget_minute_limit(rid)
     assert (await client.post(f"/api/help/requests/{rid}/messages", json={"body": "more"}, headers=layla.h)).status_code == 429
 
 
