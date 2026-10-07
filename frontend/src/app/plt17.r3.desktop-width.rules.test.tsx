@@ -4,6 +4,7 @@
  * screens keep the 600px column. The conversation composer bar belongs to
  * its page's column (it has no width of its own).
  */
+import { readFileSync } from "node:fs"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { cleanup, render, screen } from "@testing-library/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -118,3 +119,21 @@ describe("the composer bar follows its page's column", () => {
     expect(cls.filter((c) => c.includes("inset-x"))).toEqual(["@min-[52.5rem]/shell:before:-inset-x-[100vw]"])
   })
 })
+
+describe("PLT-17 R3: bars at the bottom of a page stay inside the page", () => {
+  const source = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8")
+
+  it("the review desk item's decision bar is the page's own bar, never fixed to the window", () => {
+    const desk = source("./pages/roles/ReviewDesk.tsx")
+    expect(desk).toContain('<ComposerBar data-slot="desk-decision-bar"')
+    expect(desk).not.toMatch(/className="fixed inset-x-0 bottom-0/) // it ran under the navigation rail on a wide screen
+  })
+
+  it("the bar reaches the bottom edge over the column's padding at every width", () => {
+    render(<ComposerBar>x</ComposerBar>)
+    const bar = document.querySelector('[data-slot="composer-bar"]')!
+    expect(bar.className).toMatch(/(^| )-mb-6( |$)/) // unprefixed: no strip between the bar and the bottom navigation on a phone
+    expect(bar.className).toContain("sticky")
+  })
+})
+
