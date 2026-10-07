@@ -8,6 +8,9 @@
 - Spend guard: before any paid call, the cumulative cost of all calls must
   be below `AI_BUDGET_USD` (product owner: $10). Past it, `BudgetExceeded`
   is raised and callers fall back to fixed replies; no request is sent.
+  The check also reserves the call's estimated cost until its real cost is
+  recorded, so calls sent at the same moment cannot all pass on the same
+  figure (security audit 2026-10-07 A-L1).
   Two daily ceilings sit under the total: the corpus embedding job (agent
   "embed") has `AI_EMBED_DAILY_BUDGET_USD`, everything else (answers, query
   embeddings, learning tasks) has `AI_DAILY_BUDGET_USD`, so neither can
@@ -114,18 +117,43 @@ def reset_spend_cache() -> None:
     _today_embed = None
 
 
-async def guard(agent: str | None = None) -> None:
+# A-L1: estimated cost of the calls now in flight, per daily ceiling
+# (True = the embedding job). Added to the recorded spend in every check.
+_reserved: dict[bool, float] = {False: 0.0, True: 0.0}
+
+
+def estimate(model: str, prompt_chars: int, max_tokens: int = 0) -> float:
+    """An upper estimate of one call's cost before it is sent: two characters
+    per prompt token (Arabic costs more tokens than English) and the whole
+    `max_tokens` of output, at the model's listed price."""
+    pin, pout = PRICES.get(model, UNKNOWN_PRICE)
+    return (prompt_chars / 2 * pin + max_tokens * pout) / 1e6
+
+
+async def guard(agent: str | None = None, reserve: float = 0.0) -> None:
+    """Raise unless one more call fits the total and the daily ceiling. With
+    `reserve` (the call's estimated cost) the amount is held until
+    `_settle`: the check and the hold are one step for the event loop."""
     st = get_settings()
     if not st.openrouter_api_key:
         raise AiUnavailable("no_key")
-    if await spent() + MARGIN_USD >= st.ai_budget_usd:
+    await spent()  # the only await: nothing below yields to another task
+    job = agent == EMBED_JOB_AGENT
+    if (_spent or 0.0) + sum(_reserved.values()) + reserve + MARGIN_USD >= st.ai_budget_usd:
         raise BudgetExceeded("budget")
     # Security review #5: a daily ceiling so one abusive client cannot spend
     # the whole budget in a day; everyone gets fixed replies until midnight UTC.
     # The embedding job has its own ceiling (KNW-02 SC3).
-    ceiling = st.ai_embed_daily_budget_usd if agent == EMBED_JOB_AGENT else st.ai_daily_budget_usd
-    if await spent_today(agent) + MARGIN_USD >= ceiling:
+    ceiling = st.ai_embed_daily_budget_usd if job else st.ai_daily_budget_usd
+    if ((_today_embed if job else _today) or 0.0) + _reserved[job] + reserve + MARGIN_USD >= ceiling:
         raise BudgetExceeded("daily_budget")
+    _reserved[job] += reserve
+
+
+def _settle(agent: str, reserve: float) -> None:
+    """The call ended (its real cost is recorded, or it failed): drop its hold."""
+    job = agent == EMBED_JOB_AGENT
+    _reserved[job] = max(0.0, _reserved[job] - reserve)
 
 
 def _cost(model: str, usage: dict) -> float:
@@ -254,7 +282,19 @@ async def complete(
 ) -> tuple[str, float]:
     """One paid call to one model. Returns (content, cost). Raises _CallFailed,
     or AiUnavailable subclasses (budget, deadline, call budget) before sending."""
-    await guard(agent)
+    held = estimate(model, len(system) + len(user), max_tokens)
+    await guard(agent, held)
+    try:
+        return await _complete(
+            agent, model, system, user, json_mode=json_mode, max_tokens=max_tokens, temperature=temperature, timeout_s=timeout_s
+        )
+    finally:
+        _settle(agent, held)
+
+
+async def _complete(
+    agent: str, model: str, system: str, user: str, *, json_mode: bool, max_tokens: int, temperature: float, timeout_s: float
+) -> tuple[str, float]:
     timeout_s = _budgeted_timeout(timeout_s)
     body: dict[str, Any] = {
         "model": model,
@@ -322,7 +362,16 @@ async def chat_text(agent: str, model: str, system: str, user: str, *, max_token
 async def embed(texts: list[str], agent: str = "embed") -> list[list[float]]:
     """bge-m3 vectors (1024-d) for `texts`, in order."""
     st = get_settings()
-    await guard(agent)
+    held = estimate(st.ai_embedding_model, sum(len(t) for t in texts))
+    await guard(agent, held)
+    try:
+        return await _embed(texts, agent)
+    finally:
+        _settle(agent, held)
+
+
+async def _embed(texts: list[str], agent: str) -> list[list[float]]:
+    st = get_settings()
     timeout_s = _budgeted_timeout(60.0)
     started = time.monotonic()
     try:

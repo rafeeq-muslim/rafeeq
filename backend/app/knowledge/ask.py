@@ -56,13 +56,13 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import ratelimit
+from app.core import clientkey
 from app.core.config import get_settings
-from app.core.db import SessionLocal
+from app.core.db import SessionLocal, release
 from app.core.deps import OptionalUser, Session
 from app.core.events import publish
 from app.knowledge import approved, cards, glossary, lesson_context, query_normalization, source_policy, tasks
-from app.knowledge.ai import agents, screen
+from app.knowledge.ai import agents, gate, screen
 from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
 from app.knowledge.live_sources import orchestrator as live_orchestrator
 from app.knowledge.live_sources import registry as live_registry
@@ -455,6 +455,7 @@ async def _live_round(
         task.cancel()
         await asyncio.gather(task, return_exceptions=True)
         raise
+    await release(session)  # A-M1: no connection is held while the live sources are read
     coll = await task
     ctx.max_retrieval_rounds = ctx.retrieval_rounds_used  # one live round: no expansion
     live_passages = [e.passage(live_registry.label(e.source_id, lang)) for e in coll.evidence]
@@ -522,6 +523,7 @@ async def _pipeline(
     lang: str,
     consent: bool,
     context: lesson_context.ContextRef | None = None,
+    client: str = "-",
 ) -> Result:
     st = get_settings()
     t = time.monotonic()
@@ -552,11 +554,43 @@ async def _pipeline(
     # is the lesson context loaded (approved text, by id). The search form
     # gains the lesson's topic so that «ما معنى هذا؟» finds it.
     lc = await _load_context(session, ctx, context, lang)
-    lesson_text = lc.text if lc else ""
     if lc and lc.search:
         topic = lc.search if q.version == "off" else query_normalization.canonical(lc.search) or lc.search
         q = replace(q, canonical=f"{q.canonical} {topic}", variants=[f"{v} {topic}" for v in q.variants])
 
+    # Security audit 2026-10-07 A-H3: everything below costs model calls, so it
+    # passes the global gate. The screens above never do: a danger message
+    # reaches a human whatever the load. A refused entry is the router-down
+    # path: an exact approved answer if there is one, else the fixed apology.
+    t = time.monotonic()
+    try:
+        async with gate.slot(client):
+            return await _answer_steps(session, ctx, track, r, question, lang, consent, q, lc)
+    except gate.Busy as e:
+        ctx.stage("gate", t, status=str(e))
+        if st.ask_approved_faq_enabled:
+            cached = await _serve_approved(session, r, question, exact_only=True)
+            if cached:
+                return cached
+        return _unavailable(r, "temporarily_unavailable", f"gate_{e}")
+
+
+async def _answer_steps(
+    session: AsyncSession,
+    ctx: RequestContext,
+    track: _Track,
+    r: dict[str, Any],
+    question: str,
+    lang: str,
+    consent: bool,
+    q: query_normalization.QueryForms,
+    lc: lesson_context.LessonContext | None = None,
+) -> Result:
+    st = get_settings()
+    lesson_text = lc.text if lc else ""
+    # Security audit A-M1: the session's connection goes back to the pool
+    # before every model call below (`release`), never held while one runs.
+    await release(session)
     # 5. Route and level, with the original question.
     t = time.monotonic()
     try:
@@ -625,6 +659,7 @@ async def _pipeline(
             )
         ctx.compose_rounds_used += 1
         ctx.reserve_seconds = VERIFY_RESERVE_S
+        await release(session)  # A-M1: composing and verifying hold no connection
         t = time.monotonic()
         try:
             if mode == "compose":
@@ -735,6 +770,7 @@ async def answer(
     lang: str,
     consent_objectives: bool = False,
     context: lesson_context.ContextRef | None = None,
+    client: str = "-",
 ) -> Result:
     st = get_settings()
     question = question.strip()
@@ -753,7 +789,7 @@ async def answer(
     token = current.set(ctx)
     try:
         async with asyncio.timeout(seconds):
-            res = await _pipeline(session, ctx, track, r, question, lang, consent_objectives, context)
+            res = await _pipeline(session, ctx, track, r, question, lang, consent_objectives, context, client)
     except TimeoutError:
         # The hard stop (e.g. a slow database): a clear failure, never "no source".
         await _rollback(session)
@@ -819,7 +855,7 @@ _attempts: dict[str, tuple[float, asyncio.Future]] = {}
 
 @router.post("/ask")
 async def ask(body: AskIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    key = tasks.client_key(request, user)
+    key = clientkey.primary(request, user)
     now = time.monotonic()
     for k in [k for k, (until, _) in _attempts.items() if until < now]:
         _attempts.pop(k, None)
@@ -845,11 +881,12 @@ async def ask(body: AskIn, session: Session, request: Request, user: OptionalUse
 
 
 async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, key: str) -> dict:
-    ratelimit.hit(f"ask:m:{key}", 8, 60)
-    ratelimit.hit(f"ask:d:{key}", 120, 86400)
+    # A-H3: per address (IPv6: per /64) and per account.
+    clientkey.hit("ask:m", request, user, 8, 60)
+    clientkey.hit("ask:d", request, user, 120, 86400)
     started = time.monotonic()
     try:
-        result = await answer(session, body.question, body.lang, body.consent_objectives, body.context)
+        result = await answer(session, body.question, body.lang, body.consent_objectives, body.context, client=key)
     except Exception:
         # §14.1: an unexpected error is a technical error with a safe code, never "no source".
         log.exception("ask pipeline failed")

@@ -106,7 +106,9 @@ class Settings(BaseSettings):
     # called only once the encyclopedia grants access in writing. A third party's
     # rule, not covered by the owner's go-live approval: stays off.
     ask_live_islamic_content_search_permitted: bool = False
-    ask_live_deadline_seconds: float = 60.0  # §9: whole request in live mode (the app waits 65 s)
+    # Security audit 2026-10-07 A-L2: 55, not the PRD's 60: the host router cuts a request at 60 s
+    # (proxy_read_timeout), so the app must get its own answer first. Keep this under the router's value.
+    ask_live_deadline_seconds: float = 55.0  # §9: whole request in live mode (the app waits 65 s)
     ask_live_window_seconds: float = 20.0  # §9: one shared search + fetch window
     ask_live_max_calls_per_source: int = 4  # §9: transport calls per connector, retries included
     ask_live_max_calls: int = 16  # §9: transport calls per attempt
@@ -131,6 +133,16 @@ class Settings(BaseSettings):
     library_search_max_calls: int = 8  # PRD §8: shared cap per page
     library_search_session_seconds: int = 300  # PRD §7: a search session ends after 5 minutes
     library_search_max_sessions: int = 2000  # memory bound; the oldest session goes first
+
+    # --- Security audit 2026-10-07 A (sec-ai-limits): limits on AI-backed requests ---
+    # Every client's allowance is counted per address (IPv6: per /64) AND per
+    # account (app.core.clientkey). The caps below are global, for all clients
+    # together; past one, the routes give their fixed replies / fallbacks, never an error.
+    ai_global_requests_per_minute: int = 120  # /api/ask + learning explain/guide + home order
+    ai_max_concurrent_requests: int = 12  # AI-backed requests running at once (A-M1)
+    ai_max_concurrent_per_client: int = 3  # of them, for one client
+    ai_gate_wait_seconds: float = 2.0  # how long a request waits for a place before its fallback
+    library_search_daily_cap: int = 3000  # outbound library searches (pages) per UTC day
 
     # Web Push (VAPID).
     vapid_public_key: str = ""

@@ -11,7 +11,7 @@ from fastapi import APIRouter, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import delete, or_, select, update
 
-from app.core import ratelimit
+from app.core import pwhash, ratelimit
 from app.core.config import get_settings
 from app.core.deps import CurrentUser, Session
 from app.core.events import OutboxEvent, publish
@@ -21,7 +21,6 @@ from app.core.security import (
     new_opaque_token,
     new_otp,
     sha256,
-    verify_password,
 )
 from app.platform import generate, mailer
 from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
@@ -234,7 +233,7 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
     user = User(
         username=body.username,
         display_name=body.display_name,
-        password_hash=hash_password(body.password),
+        password_hash=await pwhash.hash_password(body.password),
         roles=roles,
         locale=body.locale,
         gender=body.gender,
@@ -267,9 +266,9 @@ async def login(body: LoginIn, session: Session, request: Request, response: Res
     ratelimit.hit(f"login-user:{body.username.strip().lower()}", 8, 600)
     user = await session.scalar(select(User).where(User.username == body.username.strip().lower()))
     if user is None:
-        verify_password(_DUMMY_HASH, body.password)  # same cost as a real check: no timing hint that an account exists
+        await pwhash.verify_password(_DUMMY_HASH, body.password)  # same cost as a real check: no timing hint that an account exists
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
-    if not verify_password(user.password_hash, body.password):
+    if not await pwhash.verify_password(user.password_hash, body.password):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_credentials")
     if user.two_factor_enabled and user.email:
         challenge = await _send_code(session, user, "login", user.email)
@@ -430,9 +429,9 @@ async def patch_me(body: MePatch, user: CurrentUser, session: Session) -> MeOut:
 @me.post("/password", status_code=204)
 async def change_password(body: PasswordIn, user: CurrentUser, session: Session, response: Response) -> None:
     ratelimit.hit(f"password:{user.id}", 5, 600)  # security audit L8: a stolen access token cannot guess the password freely
-    if not verify_password(user.password_hash, body.current_password):
+    if not await pwhash.verify_password(user.password_hash, body.current_password):
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "invalid_credentials")
-    user.password_hash = hash_password(body.new_password)
+    user.password_hash = await pwhash.hash_password(body.new_password)
     # Security audit L7: access tokens issued before this moment are refused
     # (core/deps.py); the app then refreshes with the new cookie set below.
     user.password_changed_at = datetime.now(UTC)

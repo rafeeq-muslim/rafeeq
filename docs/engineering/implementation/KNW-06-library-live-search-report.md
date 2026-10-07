@@ -64,7 +64,7 @@ Contract (PRD §6), `POST /api/discover/library/search`, `Cache-Control: no-stor
 
 - `sources` omitted = every library source that can be searched now; `[]` → 422; any other id → 422; extra fields → 422.
 - 200: `{search_id, status: success|partial, items: [{id, source_id, source_name, title, snippet, type, lang, url, retrieved_at}], source_status: [{source_id, status}], next_cursor}`. Source statuses: `ok, no_results, timeout, unavailable, not_connected, unsupported_language, unsupported_type`.
-- 503 `{code: sources_unavailable, source_status}` when every searched source failed; 410 `search_expired`; 422 `cursor_mismatch` / invalid input; 429 `rate_limited` (20/min, 400/day per account or address, in memory); 404 `library_search_off`.
+- 503 `{code: sources_unavailable, source_status}` when every searched source failed; 410 `search_expired`; 422 `cursor_mismatch` / invalid input; 429 `rate_limited` (20/min, 400/day per address and, when signed in, also per account; IPv6 per /64; in memory). Security audit 2026-10-07 A-L5: all clients together start at most `LIBRARY_SEARCH_DAILY_CAP` (3000) outbound searches per UTC day, then 503 `sources_unavailable` until midnight; 404 `library_search_off`.
 
 ### Frontend
 

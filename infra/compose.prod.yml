@@ -36,7 +36,11 @@ services:
     volumes:
       - ${RAFEEQ_CORPUS_DIR:-${HOME}/.local/share/rafeeq/corpus}:/srv/corpus:ro
     depends_on: { db: { condition: service_healthy } }
-    command: ["sh", "-c", "export DATABASE_URL=postgresql+asyncpg://rafeeq:$${POSTGRES_PASSWORD}@db:5432/rafeeq && alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*' --no-access-log"]
+    # Security audit 2026-10-07 A-L7: --limit-concurrency answers 503 past 200 open connections instead of
+    # queueing without bound; --timeout-keep-alive closes idle connections after 5 s. ONE process on purpose
+    # (no --workers): the rate limiter, the AI gate and budget hold, the library search sessions and the
+    # scheduled jobs live in this process's memory and assume it is the only one.
+    command: ["sh", "-c", "export DATABASE_URL=postgresql+asyncpg://rafeeq:$${POSTGRES_PASSWORD}@db:5432/rafeeq && alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*' --no-access-log --limit-concurrency 200 --timeout-keep-alive 5"]
   web:
     image: rafeeq-web:latest
     build:
