@@ -114,3 +114,4 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | `EscalationRequested`, `DangerDetected` | KNW → CMP |
 | `AccountCreated`, `AccountDeleted` | PLT → LRN, MOT, PRC |
 | `MentorApproved`, `MentorSuspended` | ORG → CMP |
+| `MentorRoleRemoved` (an admin took the mentor role away) | PLT → CMP |

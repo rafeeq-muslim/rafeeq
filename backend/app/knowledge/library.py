@@ -142,12 +142,41 @@ def learner_topics(live: dict[str, Any], hidden: set[str], lang: str = "ar") -> 
 # --- link health (R1 error) ---------------------------------------------------
 
 
-async def _alive(client: httpx.AsyncClient, url: str) -> bool:
+# Security review 2026-10-07 (B-L13): the job asks only IslamHouse's own hosts,
+# with the live connectors' checks (live_sources/http.py: https, port 443, no
+# user part, exact host, every resolved address public) on the first address
+# and again on every redirect, which it follows by hand, a few at most. It
+# never requests an address outside the list, wherever a redirect points.
+LINK_HOSTS = frozenset(FILE_HOSTS)
+LINK_REDIRECTS = 3
+
+
+async def _alive(client: httpx.AsyncClient, url: str) -> bool | None:
+    """True: the link answers. False: it is gone. None: not asked (an address
+    this job may not request), which is never a reason to hide an item."""
+    from app.knowledge.live_sources import http as safe
+    from app.knowledge.live_sources import types as T
+
+    target: str | httpx.URL = url
     try:
-        r = await client.head(url, follow_redirects=True)
-        if r.status_code == 405:
-            r = await client.get(url, headers={"Range": "bytes=0-0"}, follow_redirects=True)
-        return r.status_code < 400
+        for _ in range(LINK_REDIRECTS + 1):
+            u = safe.check_url(target, LINK_HOSTS)
+            await safe._check_dns(u.host)
+            r = await client.head(u, follow_redirects=False)
+            if r.status_code == 405:
+                r = await client.get(u, headers={"Range": "bytes=0-0"}, follow_redirects=False)
+            if r.status_code in (301, 302, 303, 307, 308) and r.headers.get("location"):
+                target = u.join(r.headers["location"])
+                continue
+            return r.status_code < 400
+        return False  # a redirect loop
+    except safe.FetchError as e:
+        if e.code != T.BLOCKED_URL:
+            return False  # the name does not resolve
+        if target is url:
+            log.warning("library link not checked: its address is not one of the library's hosts")
+            return None
+        return True  # the source answered with a redirect elsewhere: the link exists, and we do not follow it
     except httpx.HTTPError:
         return False
 
@@ -162,7 +191,7 @@ async def check_library_links(session: AsyncSession, client: httpx.AsyncClient |
     try:
         for it in load():
             urls = [f["url"] for f in it.get("files", [])] or [it["origin_url"]]
-            ok = all([await _alive(client, u) for u in urls])
+            ok = all([await _alive(client, u) is not False for u in urls])
             row = rows.get(it["id"])
             if row is None:
                 row = LibraryItem(

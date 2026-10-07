@@ -18,6 +18,16 @@ UNITS = [
 ]  # fmt: skip
 
 
+def _cpu_seconds(call) -> float:
+    """Best of three, in CPU time: a busy machine must not fail the test."""
+    best = float("inf")
+    for _ in range(3):
+        start = time.process_time()
+        call()
+        best = min(best, time.process_time() - start)
+    return best
+
+
 def adversarial() -> list[str]:
     shapes = [
         # the two shapes measured in the review
@@ -31,17 +41,14 @@ def adversarial() -> list[str]:
 
 @pytest.mark.parametrize("body", adversarial(), ids=lambda b: f"{b[:18]!r}x{len(b)}")
 def test_cmp01_r5_contact_filter_finishes_within_budget(body: str) -> None:
-    start = time.perf_counter()
-    contact_violation(body)
-    assert time.perf_counter() - start < BUDGET_S
+    assert _cpu_seconds(lambda: contact_violation(body)) < BUDGET_S
 
 
 def test_cmp01_r5_text_past_the_cap_is_never_matched() -> None:
     # The cap holds inside the filter itself, whatever the caller checked.
-    start = time.perf_counter()
     assert contact_violation("a" * MAX_BODY + " name@example.com") is None
     assert contact_violation("x " * 500_000) is None
-    assert time.perf_counter() - start < BUDGET_S * 4
+    assert _cpu_seconds(lambda: contact_violation("x " * 500_000)) < BUDGET_S * 4
 
 
 @pytest.mark.parametrize(

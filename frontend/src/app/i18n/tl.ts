@@ -1593,6 +1593,8 @@ export const tl: Dict = {
   "ask.context.about": "Tungkol sa: {lesson} · {item}",
   "ask.context.aboutLesson": "Tungkol sa: {lesson}",
   "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "Luma na ang code na ito at hindi na gumagana. Humingi ng bagong code sa nagpadala nito.",
   // --- CMP-08 R3 (sec-cmp-08-contact-encryption): the form is closed while the contact keys are not set ⚠️ Tagalog needs native review ---
   "cmp.apply.closed": "Hindi bukas ang aplikasyon sa ngayon. Bumalik sa ibang pagkakataon.",
 }

@@ -1592,6 +1592,8 @@ export const en: Dict = {
   "ask.context.about": "About: {lesson} · {item}",
   "ask.context.aboutLesson": "About: {lesson}",
   "ask.context.dismiss": "Ask without the lesson context",
+  // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
+  "acct.inviteReissue": "This code is an old one and no longer works. Ask whoever sent it for a new code.",
   // --- CMP-08 R3 (sec-cmp-08-contact-encryption): the form is closed while the contact keys are not set ---
   "cmp.apply.closed": "Applications are not open right now. Please come back later.",
 }

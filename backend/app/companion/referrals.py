@@ -21,7 +21,7 @@ from app.companion import notify
 from app.companion.common import not_found, now
 from app.companion.inbox import RequestRow, Responder, _row, visible_request
 from app.companion.models import HelpMessage, HelpRequest, ScholarReferral
-from app.companion.text import clean_body
+from app.companion.text import clean_body_async
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
 from app.platform.models import User
@@ -110,7 +110,7 @@ async def answer(referral_id: uuid.UUID, body: AnswerIn, session: Session, me: R
     if r.status == "answered":
         raise HTTPException(status.HTTP_409_CONFLICT, "already_answered")
     ratelimit.hit(f"referral-answer:{me.id}", 30, 60)
-    text = clean_body(body.body)
+    text = await clean_body_async(body.body)
     req = await session.get(HelpRequest, r.request_id)
     if req is None:
         raise not_found()

@@ -52,3 +52,9 @@ No new tables. Uses `knw_explanation_log`, `lrn_explanation_blocks` (read only),
 
 - The objective list offered to the tagger is every objective of every approved lesson in the learner's language. LRN-10 may later restrict it to "taught" objectives; the tagger contract does not change.
 - MOT-09 R4's one-in-five card-only arm stays on the device (`why.ts`), so the server never knows which arm a learner is in.
+
+## Security review 2026-10-07: the learner's answer is an id of the exercise (B-L2; branch `sec-injection-hardening`)
+
+`POST /api/learning/explain` took `answer` as anything; a text that matched no option went into the model prompt as written (300–600 characters), and what came back could be kept in `knw_explanation_log`. Now `tasks.py::answer_belongs` accepts only what the three exercise types produce: one id of the exercise (choose), a list of its ids (order), pairs of its ids (match), or nothing. Anything else gets `{"text": null}` (the card text is shown, as for any exercise that cannot be explained) and no model call is made. The contract in `frontend/src/app/lesson/why.ts` is unchanged. Tests: `backend/tests/test_sec_l2_explain_answer.py`.
+
+The same review timed the assistant's text checks on adversarial input (`backend/tests/test_sec_knw_text_checks_time.py`): `ai/textcheck.py::quoted_spans` was slower than linear on quotation marks that are never closed and is now one pass with the same results; the others (`normalize`, `words`, markers, language, copy check, attribution, transliteration, `ai/screen.py` phrases, `approved.py::matches`) are linear.

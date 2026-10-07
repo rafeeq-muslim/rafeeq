@@ -1,9 +1,11 @@
 """Events Companion listens to (docs/domains.md).
 
-- DangerDetected (KNW-01 R5): `{ask_id, lang, detector}`, no identity and no
-  question text. Becomes an urgent alert at the top of every inbox; all
-  mentors and team members get a neutral push (CMP-01 R6). The device that
-  opens `/mentor/help?kind=urgent&ask=<ask_id>` becomes its owner.
+- DangerDetected (KNW-01 R5): `{ask_id, lang, detector[, repeat]}`, no identity
+  and no question text. Becomes an urgent alert at the top of every inbox; all
+  mentors and team members get a neutral push (CMP-01 R6; how often:
+  companion/urgent.py). The device that opens the urgent screen with this
+  `ask_id` becomes its owner. `repeat: true` (set by KNW when the same asker
+  or address already raised an alert minutes ago) adds no second alert.
 - EngagementStatusChanged (MOT-07 R3): CMP keeps the status for accounts so
   a mentor sees it while the learner shares progress (CMP-02 R6). Only the
   account events `{user_id, status}` are kept: Motivation sends ONE status
@@ -26,6 +28,11 @@
   a neutral notice to choose another mentor (no reason, no organisation); the
   mentor's open requests return to the pool, where the same-gender rule
   (CMP-01 R3) applies as always.
+- MentorRoleRemoved (Platform, when an admin takes the mentor role away):
+  `{mentor_id}`. The same for links and requests as a suspension, with the
+  same neutral notice. The profile is not marked suspended (the missing role
+  already closes the inbox, and an organisation's own suspension stays what
+  it was), and groups are not touched. Giving the role back restores no link.
 """
 
 import uuid
@@ -34,7 +41,7 @@ from datetime import UTC, datetime
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.companion import notify
+from app.companion import notify, urgent
 from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorApplication, MentorEnded, MentorLink
 from app.core.events import subscribe
 
@@ -43,22 +50,24 @@ LANGS = {"ar", "en", "tl"}
 
 @subscribe("DangerDetected")
 async def on_danger(session: AsyncSession, payload: dict) -> None:
+    if payload.get("repeat"):
+        return  # the same asker again within minutes: the alert already in the inboxes stands
     lang = str(payload.get("lang") or "ar")[:5]
     ask_id = payload.get("ask_id")
     t = datetime.now(UTC)
-    session.add(
-        HelpRequest(
-            kind="urgent",
-            lang=lang if lang in LANGS else "ar",
-            handle="",
-            source="ask",
-            ask_id=str(ask_id)[:64] if ask_id else None,
-            status="open",
-            created_at=t,
-            last_activity_at=t,
-        )
+    alert = HelpRequest(
+        kind="urgent",
+        lang=lang if lang in LANGS else "ar",
+        handle="",
+        source="ask",
+        ask_id=str(ask_id)[:64] if ask_id else None,
+        status="open",
+        created_at=t,
+        last_activity_at=t,
     )
-    notify.later(notify.to_responders, "urgent", "/inbox")
+    session.add(alert)
+    await session.flush()
+    urgent.alert(alert.id)  # one push for this request, capped overall (companion/urgent.py)
 
 
 @subscribe("AccountDeleted")
@@ -95,11 +104,23 @@ async def on_mentor_approved(session: AsyncSession, payload: dict) -> None:
 @subscribe("MentorSuspended")
 async def on_mentor_suspended(session: AsyncSession, payload: dict) -> None:
     from app.companion.inbox import profile_of
-    from app.companion.mentors import end_link
 
     mentor_id = uuid.UUID(str(payload["mentor_id"]))
     prof = await profile_of(session, mentor_id)
     prof.suspended = True
+    await release_mentees(session, mentor_id)
+
+
+@subscribe("MentorRoleRemoved")
+async def on_mentor_role_removed(session: AsyncSession, payload: dict) -> None:
+    await release_mentees(session, uuid.UUID(str(payload["mentor_id"])))
+
+
+async def release_mentees(session: AsyncSession, mentor_id: uuid.UUID) -> None:
+    """The mentor stops being anyone's mentor: every link ends (CMP-03 R4),
+    his open requests return to the pool, each mentee gets the neutral notice."""
+    from app.companion.mentors import end_link
+
     learners = []
     for link in list(await session.scalars(select(MentorLink).where(MentorLink.mentor_id == mentor_id))):
         learners.append(link.learner_id)

@@ -15,6 +15,8 @@ Code checks (no model):
   6 the answer is in the asker's language
   7 Arabic answers: no run of KNW_SCRIPTURE_OVERLAP_WORDS words copied from a
     retrieved Quran or hadith passage outside markers
+  8 no web address, e-mail, account name (@name) or HTML/Markdown markup
+    outside markers (security review 2026-10-07, B-L1)
 Then a fast-model support check: every sentence is supported by the cited
 passages. If the checker cannot run, the answer is not shown (fail closed).
 """
@@ -26,7 +28,15 @@ from typing import Any
 from app.core.config import get_settings
 from app.knowledge.ai import agents
 from app.knowledge.ai.client import AiUnavailable
-from app.knowledge.ai.textcheck import MARKER, has_arabic, language_matches, longest_quote_words, ngram_overlap, strip_markers
+from app.knowledge.ai.textcheck import (
+    MARKER,
+    has_arabic,
+    language_matches,
+    link_or_markup,
+    longest_quote_words,
+    ngram_overlap,
+    strip_markers,
+)
 
 SCRIPTURE_KINDS = ("quran_arabic", "quran_translation", "quran_tafsir", "hadith")
 # Codes that mean "the passages do not answer it" rather than a content violation.
@@ -78,6 +88,8 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
         fails.append("long_quote_outside_marker")  # 5
     if body.strip() and not language_matches(answer, lang):
         fails.append("wrong_language")  # 6
+    if link_or_markup(body):
+        fails.append("link_or_markup_in_answer")  # 8
     # 7: in every language (security review #10): a translation of a verse or
     # hadith pasted as the model's own words is copying too.
     for p in retrieved.values():

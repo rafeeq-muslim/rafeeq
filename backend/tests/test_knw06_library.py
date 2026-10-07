@@ -27,6 +27,19 @@ def _item(iid, lang="tl", topic="basics", type_="books", host="d1.islamhouse.com
     }
 
 
+@pytest.fixture(autouse=True)
+def _no_real_dns(monkeypatch):
+    """The link check resolves each host before asking it (security review
+    B-L13); tests never touch the network, so every name gets a public address."""
+    from app.knowledge.live_sources import http as live_http
+    from tests.knw_live_fakes import PUBLIC_IP
+
+    async def resolve(host: str) -> list[str]:
+        return [PUBLIC_IP]
+
+    monkeypatch.setattr(live_http, "resolve_host", resolve)
+
+
 UNITS = [
     {"id": "u1", "order": 1, "title": {"ar": "دليل اليوم الأول", "en": "First Day Guide", "tl": "Gabay sa Unang Araw"}},
     {"id": "u2", "order": 2, "title": {"ar": "ربي ونبيي وكتابي", "en": "My Lord", "tl": "Ang Panginoon ko"}},

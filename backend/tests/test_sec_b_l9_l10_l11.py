@@ -163,6 +163,22 @@ async def test_l10_an_applicant_signed_in_still_replaces_her_own_pending_applica
     assert row.user_id == maryam.id and row.about == "A better description of my experience."
 
 
+async def test_l10_her_own_update_is_kept_when_the_contact_is_also_on_another_pending_application(client):
+    """Follow-up: a signed-in applicant's own pending application is found by
+    her account, whatever other pending application carries the same contact."""
+    other = await apply(client)  # someone else, not signed in, same contact
+    maryam = await person(client, "maryam-1")
+    await apply(client, headers=maryam.h, contact=None, display_name="Maryam")
+
+    r = await apply(client, headers=maryam.h, contact=EMAIL, display_name="Maryam", about="A better description of my experience.")
+
+    assert (r.status_code, r.json()) == (other.status_code, other.json()) == (201, {"received": True, "keep_days": 90})
+    by_account = {row.user_id: row for row in await rows()}
+    assert set(by_account) == {None, maryam.id}  # still two applications, none taken over
+    assert by_account[maryam.id].about == "A better description of my experience."
+    assert by_account[None].display_name == "Umm Yusuf" and by_account[None].about.startswith("I have looked after")
+
+
 # --- L11 ------------------------------------------------------------------------
 
 

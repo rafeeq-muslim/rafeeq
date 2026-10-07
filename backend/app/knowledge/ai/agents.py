@@ -40,16 +40,25 @@ async def route_question(question: str, lang: str, context: str = "") -> dict[st
     return {"route": r.data["route"], "level": r.data["level"]}
 
 
+def _one_line(text: Any) -> str:
+    """A header field (source name, grade, attribution) on one line, without fence marks."""
+    return " ".join(str(text).replace("<<<", "«").replace(">>>", "»").split())[:200]
+
+
 def passage_block(p: dict[str, Any]) -> str:
-    head = [p["kind"], p.get("source_name") or p["source_id"]]
+    """One passage for a prompt. Its text and explanation are fenced like the
+    question (security review 2026-10-07, B-L1): a passage, above all one read
+    live from a website, is data, and nothing inside it can end the block or
+    start a new passage or section (rules.md §2.5)."""
+    head = [p["kind"], _one_line(p.get("source_name") or p["source_id"])]
     meta = p.get("meta") or {}
     if meta.get("grade"):
-        head.append(f"grade: {meta['grade']}")
+        head.append(f"grade: {_one_line(meta['grade'])}")
     if meta.get("attribution"):
-        head.append(str(meta["attribution"]))
-    out = f"[{p['id']}] ({' · '.join(head)})\nTEXT: {p['quote_text'][:PASSAGE_CHARS]}"
+        head.append(_one_line(meta["attribution"]))
+    out = f"[{p['id']}] ({' · '.join(head)})\nTEXT:\n{_q(p['quote_text'][:PASSAGE_CHARS])}"
     if p.get("context_text"):
-        out += f"\nEXPLANATION: {p['context_text'][:CONTEXT_CHARS]}"
+        out += f"\nEXPLANATION:\n{_q(p['context_text'][:CONTEXT_CHARS])}"
     return out
 
 
@@ -67,6 +76,10 @@ REPAIR_HINTS = {
         " your own saying what the passage teaches, or remove it; the marker shows the text."
     ),
     "unsupported_sentence": "Some sentences were not supported by the passages. Remove them; add nothing new.",
+    "link_or_markup_in_answer": (
+        "The answer contained a web address, an e-mail address, an account name or HTML/Markdown markup."
+        " Write plain words only; the app shows the sources itself."
+    ),
     "empty": "The answer was empty.",
 }
 
@@ -139,11 +152,16 @@ async def repair_answer(
     return _composer_out(r.data, passages)
 
 
+def _source(text: str) -> str:
+    """A source for the support check, fenced; a passage block is fenced already."""
+    return text if text.startswith("[") and "\nTEXT:\n<<<\n" in text else _q(text)
+
+
 async def support_check(agent: str, text: str, sources: list[str]) -> dict[str, Any]:
     def ok(d: dict) -> bool:
         return isinstance(d.get("supported"), bool)
 
-    user = "SOURCES:\n" + "\n---\n".join(s[:3000] for s in sources) + f"\n\nTEXT:\n{_q(text)}"
+    user = "SOURCES:\n" + "\n---\n".join(_source(s[:3000]) for s in sources) + f"\n\nTEXT:\n{_q(text)}"
     r = await client.chat_json(agent, "fast", prompt("support_check"), user, max_tokens=300, check=ok)
     return {"supported": r.data["supported"], "unsupported": r.data.get("unsupported") or []}
 
