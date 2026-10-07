@@ -119,6 +119,13 @@ class Settings(BaseSettings):
     library_search_session_seconds: int = 300  # PRD §7: a search session ends after 5 minutes
     library_search_max_sessions: int = 2000  # memory bound; the oldest session goes first
 
+    # --- Security audit 2026-10-07 A (sec-ai-limits): limits on AI-backed requests ---
+    # Every client's allowance is counted per address (IPv6: per /64) AND per
+    # account (app.core.clientkey). The caps below are global, for all clients
+    # together; past one, the routes give their fixed replies / fallbacks, never an error.
+    ai_global_requests_per_minute: int = 120  # /api/ask + learning explain/guide + home order
+    library_search_daily_cap: int = 3000  # outbound library searches (pages) per UTC day
+
     # Web Push (VAPID).
     vapid_public_key: str = ""
     vapid_private_key: str = ""

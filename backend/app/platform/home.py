@@ -18,12 +18,13 @@ from typing import Annotated, Any, Literal
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.core import ratelimit
+from app.core import clientkey
 from app.core.config import get_settings
 from app.core.deps import OptionalUser, Session
-from app.knowledge.ai import agents
+from app.knowledge.ai import agents, gate
 from app.knowledge.ai.client import AiUnavailable
-from app.knowledge.tasks import approved_names, client_key
+from app.knowledge.request_context import call_budget
+from app.knowledge.tasks import approved_names
 
 router = APIRouter(prefix="/api/home", tags=["home"])
 
@@ -31,6 +32,9 @@ MAIN = ("daily", "card", "ask")  # R1: «يومي», «بطاقة اليوم», 
 OPTIONAL = ("ramadan", "human", "save", "reciter", "library", "install")  # R3 table order (the fixed order); PLT-16 "install" last
 Bucket = Literal["fajr", "morning", "dhuhr", "asr", "evening", "night"]
 Id = Annotated[str, Field(max_length=24)]
+# Security audit 2026-10-07 A-H3: one call in normal use; one retry or the
+# fallback model at most. The app waits 4 s.
+ORDER_MAX_CALLS, ORDER_SECONDS = 2, 6.0
 
 
 class NextStep(BaseModel):
@@ -79,8 +83,8 @@ async def config() -> dict:
 async def order(body: OrderIn, session: Session, request: Request, user: OptionalUser) -> dict:
     if not enabled():
         return {"order": None}
-    ratelimit.hit(f"home-order:{client_key(request, user)}", 10, 60)
-    ratelimit.hit(f"home-order:d:{client_key(request, user)}", 20, 86400)  # R5: once a day per device in normal use
+    clientkey.hit("home-order", request, user, 10, 60)
+    clientkey.hit("home-order:d", request, user, 20, 86400)  # R5: once a day per device in normal use
     objectives, lessons = await approved_names(session, body.lang, learner=True)
     nxt: dict[str, str] | None = None
     if body.next and body.next.review:
@@ -93,7 +97,9 @@ async def order(body: OrderIn, session: Session, request: Request, user: Optiona
         "next": nxt,
     }
     try:
-        raw = await agents.order_home(summary, body.bucket, body.lang)
+        async with gate.slot(clientkey.primary(request, user)):
+            with call_budget(ORDER_MAX_CALLS, ORDER_SECONDS):
+                raw = await agents.order_home(summary, body.bucket, body.lang)
     except AiUnavailable:
         return {"order": None}
     return {"order": check_order(raw)}  # the summary is not stored
