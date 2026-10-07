@@ -24,6 +24,7 @@ from app.core.security import (
 )
 from app.platform import generate, mailer
 from app.platform.models import Invite, OneTimeCode, PushSubscription, RefreshSession, User
+from app.platform.origin import SameOrigin
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 COOKIE = "rafeeq_refresh"
@@ -273,7 +274,7 @@ async def login_2fa(body: TwoFactorIn, session: Session, response: Response) -> 
     return await _issue(session, user, response)
 
 
-@router.post("/refresh", response_model=TokenOut)
+@router.post("/refresh", response_model=TokenOut, dependencies=[SameOrigin])
 async def refresh(session: Session, response: Response, rafeeq_refresh: Annotated[str | None, Cookie()] = None) -> TokenOut:
     if not rafeeq_refresh:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "no_session")
@@ -286,7 +287,7 @@ async def refresh(session: Session, response: Response, rafeeq_refresh: Annotate
     return await _issue(session, user, response)
 
 
-@router.post("/logout", status_code=204)
+@router.post("/logout", status_code=204, dependencies=[SameOrigin])
 async def logout(session: Session, response: Response, rafeeq_refresh: Annotated[str | None, Cookie()] = None) -> None:
     if rafeeq_refresh:
         rs = await session.scalar(select(RefreshSession).where(RefreshSession.token_hash == sha256(rafeeq_refresh)))
