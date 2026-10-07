@@ -20,6 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from app.core import clientkey
 from app.core.config import get_settings
+from app.core.db import release
 from app.core.deps import OptionalUser, Session
 from app.knowledge.ai import agents, gate
 from app.knowledge.ai.client import AiUnavailable
@@ -97,6 +98,7 @@ async def order(body: OrderIn, session: Session, request: Request, user: Optiona
         "next": nxt,
     }
     try:
+        await release(session)  # security audit A-M1: no connection is held while the model works
         async with gate.slot(clientkey.primary(request, user)):
             with call_budget(ORDER_MAX_CALLS, ORDER_SECONDS):
                 raw = await agents.order_home(summary, body.bucket, body.lang)

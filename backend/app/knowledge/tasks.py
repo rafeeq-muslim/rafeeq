@@ -20,6 +20,7 @@ from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import select
 
 from app.core import clientkey
+from app.core.db import release
 from app.core.deps import OptionalUser, Session, require_role
 from app.knowledge import glossary
 from app.knowledge.ai import agents, gate
@@ -139,6 +140,7 @@ async def explain_mistake(session, body: ExplainIn, client: str = "-") -> str | 
     try:
         # KNW-03 R3: approved terms in the learner's language (none yet: the input is unchanged).
         gloss = glossary.prompt_block(await glossary.prompt_terms(session, body.lang))
+        await release(session)  # A-M1: no connection is held while the model works
         async with gate.slot(client):
             with call_budget(EXPLAIN_MAX_CALLS, EXPLAIN_SECONDS):
                 text = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, body.answer), body.lang, gloss)
@@ -233,6 +235,7 @@ async def write_guide(session, body: GuideIn, client: str = "-") -> str | None:
     summary = {"mastered": mastered, "needs_review": reviewing, "next": nxt, "returning": body.returning}
     allowed = {*mastered, *reviewing, *([nxt["lesson"]] if nxt and "lesson" in nxt else [])}
     try:
+        await release(session)  # A-M1
         async with gate.slot(client):
             with call_budget(GUIDE_MAX_CALLS, GUIDE_SECONDS):
                 text = await agents.write_guide(summary, body.lang)
@@ -263,6 +266,7 @@ async def tag_question(session, question: str, lang: str, route: str) -> str | N
     if not objectives:
         return None
     try:
+        await release(session)  # A-M1
         return await agents.tag_objective(question, objectives)
     except AiUnavailable:
         return None

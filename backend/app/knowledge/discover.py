@@ -201,6 +201,7 @@ from pydantic import StringConstraints  # noqa: E402
 
 from app.core import clientkey  # noqa: E402
 from app.core.config import get_settings  # noqa: E402
+from app.core.db import release  # noqa: E402
 from app.core.deps import OptionalUser  # noqa: E402
 from app.knowledge import library_search  # noqa: E402
 
@@ -237,7 +238,7 @@ async def library_search_sources(response: Response, lang: Lang = "ar") -> dict:
 
 
 @router.post("/discover/library/search")
-async def library_search_route(body: LibrarySearchIn, request: Request, response: Response, user: OptionalUser) -> dict:
+async def library_search_route(body: LibrarySearchIn, request: Request, response: Response, user: OptionalUser, session: Session) -> dict:
     """§6: POST so the words never sit in a URL; no-store; nothing stored or logged
     about the query or the person (B14). Guests may search (rate-limited)."""
     if not get_settings().library_search_enabled:
@@ -248,6 +249,7 @@ async def library_search_route(body: LibrarySearchIn, request: Request, response
     except HTTPException as e:
         raise _no_store_error(429, "rate_limited") from e
     requested = list(dict.fromkeys(body.sources)) if body.sources is not None else None
+    await release(session)  # A-M1: the session that read the account holds no connection while the sites are searched
     try:
         result = await library_search.search(
             query=body.query, lang=body.lang, requested=requested, lib_type=body.type, page_size=body.page_size, cursor=body.cursor

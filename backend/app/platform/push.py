@@ -382,7 +382,21 @@ async def send_to_user(session, user_id, payload: dict) -> int:
             PushSubscription.replies_enabled.is_(True),
         )
     )
+    subs = list(subs)
+    await release_for_send(session)
     return sum([await send(s, payload) for s in subs])
+
+
+RELEASE_FOR_SEND = "release_for_send"
+
+
+async def release_for_send(session) -> None:
+    """Security audit 2026-10-07 A-M1: a background notification's own session
+    (`SessionLocal(info={RELEASE_FOR_SEND: True})`, companion/notify.py) gives
+    its connection back before each push leaves; a request's or a job's
+    session is left alone (it may hold unsaved work)."""
+    if session.info.get(RELEASE_FOR_SEND):
+        await session.commit()
 
 
 async def run_reminders(now: datetime | None = None) -> int:

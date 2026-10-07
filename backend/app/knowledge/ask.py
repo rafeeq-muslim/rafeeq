@@ -47,7 +47,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core import clientkey
 from app.core.config import get_settings
-from app.core.db import SessionLocal
+from app.core.db import SessionLocal, release
 from app.core.deps import OptionalUser, Session
 from app.core.events import publish
 from app.knowledge import approved, glossary, query_normalization, source_policy, tasks
@@ -430,6 +430,7 @@ async def _live_round(
         task.cancel()
         await asyncio.gather(task, return_exceptions=True)
         raise
+    await release(session)  # A-M1: no connection is held while the live sources are read
     coll = await task
     ctx.max_retrieval_rounds = ctx.retrieval_rounds_used  # one live round: no expansion
     live_passages = [e.passage(live_registry.label(e.source_id, lang)) for e in coll.evidence]
@@ -517,6 +518,9 @@ async def _answer_steps(
     q: query_normalization.QueryForms,
 ) -> Result:
     st = get_settings()
+    # Security audit A-M1: the session's connection goes back to the pool
+    # before every model call below (`release`), never held while one runs.
+    await release(session)
     # 5. Route and level, with the original question.
     t = time.monotonic()
     try:
@@ -578,6 +582,7 @@ async def _answer_steps(
             )
         ctx.compose_rounds_used += 1
         ctx.reserve_seconds = VERIFY_RESERVE_S
+        await release(session)  # A-M1: composing and verifying hold no connection
         t = time.monotonic()
         try:
             if mode == "compose":

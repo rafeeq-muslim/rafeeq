@@ -91,7 +91,7 @@ Changes to the existing answer path (kept small and listed on the agents' board 
 
 | Setting | Default | PRD |
 | --- | --- | --- |
-| `ASK_LIVE_DEADLINE_SECONDS` | 60 | whole backend request 60 s |
+| `ASK_LIVE_DEADLINE_SECONDS` | 55 (security audit 2026-10-07 A-L2: the host router cuts a request at 60 s, so the app's own answer must come first; keep it under the router's `proxy_read_timeout`) | whole backend request 60 s |
 | app deadline `ASK_CLIENT_DEADLINE_MS` | 65,000 | 65 s including auth refresh |
 | `ASK_LIVE_WINDOW_SECONDS` | 20, and never more than the time left minus 19 s for compose, verify and margin | shared window ≤ 20 s |
 | `ASK_LIVE_MAX_CALLS_PER_SOURCE` / `ASK_LIVE_MAX_CALLS` | 4 / 16 (a GET and its checked redirects count as one call) | 4 per connector, 16 total |
