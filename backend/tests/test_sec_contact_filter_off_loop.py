@@ -1,9 +1,7 @@
-"""Security review 2026-10-07, A-H1 / B-M5: the contact filter (CMP-01 R5) is
-linear in the message length and never runs on the event loop.
-
-Before the fix a guest's message of about 100 characters kept the only
-server process busy for more than 20 seconds (nested whitespace quantifiers in
-the spelled-out e-mail patterns), and «a.a.a.…» was quadratic."""
+"""Security review 2026-10-07, B-M5: the contact filter (CMP-01 R5) never runs
+on the event loop. The patterns were made linear by the hotfix
+(tests/test_cmp01_r5_contact_filter_time.py, A-H1); this file adds the second
+layer (`clean_body_async`) and a wider set of adversarial shapes."""
 
 import asyncio
 import random
@@ -141,8 +139,8 @@ async def test_sec_b_m5_a_scan_that_does_not_finish_refuses_the_message(monkeypa
     assert e.value.status_code == 422 and e.value.detail == "message_not_checked"
 
 
-async def test_sec_a_h1_a_guest_message_of_the_review_shape_is_answered_at_once(client):
-    t = time.perf_counter()
+async def test_sec_b_m5_a_guest_message_of_the_review_shape_is_accepted(client):
     r = await client.post("/api/help/requests", json={"lang": "en", "gender": "f", "body": REVIEW_SHAPES["dot-groups"]})
     assert r.status_code == 201, r.text
-    assert time.perf_counter() - t < 2
+    r = await client.post("/api/help/requests", json={"lang": "en", "gender": "f", "body": "name   at   mail   dot   com"})
+    assert r.status_code == 422 and r.json()["detail"] == {"code": "contact_not_allowed", "kind": "email"}
