@@ -126,7 +126,8 @@ function Invites() {
           const open = status === "available"
           return (
             <li key={i.code} className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border bg-card px-3 py-2">
-              <code dir="ltr" className="min-w-0 flex-1 font-mono text-body break-all">
+              {/* its own row on a phone, so a 26-character code is not squeezed beside the labels */}
+              <code dir="ltr" className="min-w-0 basis-full font-mono text-body break-all sm:flex-1 sm:basis-0">
                 {i.code}
               </code>
               <span className="text-caption text-muted-foreground">

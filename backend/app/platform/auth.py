@@ -230,12 +230,13 @@ async def register(body: RegisterIn, session: Session, request: Request, respons
         # for it before that decision still opens a normal account and is used up.
         roles = ["learner"] if invite.role == "team" else [invite.role]
         if invite.role == "mentor":
-            # Security review B-H1: the gender staff approved wins over what the
-            # registrant sends. Only a code made before invites carried one
-            # still takes the registrant's word.
-            gender = invite.gender or body.gender
-            if not gender:
-                raise HTTPException(status.HTTP_400_BAD_REQUEST, "gender_required_for_mentor")
+            # Security review B-H1: the gender staff approved is the mentor's
+            # gender; the registrant never chooses it. A code made before
+            # invites carried one opens no account and stays unused: staff
+            # issue a new one.
+            if not invite.gender:
+                raise HTTPException(status.HTTP_400_BAD_REQUEST, "invite_needs_reissue")
+            gender = invite.gender
     user = User(
         username=body.username,
         display_name=body.display_name,
