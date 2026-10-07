@@ -24,6 +24,12 @@ async def optional_user(session: Session, authorization: str | None = Header(def
     user = await session.get(User, uuid.UUID(payload["sub"]))
     if user is None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_token")
+    # Security audit L7: a token issued before the last password change is no
+    # longer accepted. `iat` has whole seconds, so the change is floored too:
+    # the token the app gets by refreshing right after the change must pass.
+    changed = user.password_changed_at
+    if changed is not None and int(payload.get("iat", 0)) < int(changed.timestamp()):
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "invalid_token")
     return user
 
 

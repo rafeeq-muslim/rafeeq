@@ -39,7 +39,7 @@ from fastapi.responses import StreamingResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.config import get_settings
 from app.core.deps import Session
 from app.knowledge import glossary, library, recitation
@@ -450,7 +450,7 @@ class OverCap(Exception):
 
 
 def _client_key(request: Request) -> str:
-    return request.client.host if request.client else "-"  # in memory only, for the limits
+    return clientkey.address(request)  # in memory only, for the limits; IPv6 by /64
 
 
 @router.get("/file/{fid}")

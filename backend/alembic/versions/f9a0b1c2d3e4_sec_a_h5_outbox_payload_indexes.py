@@ -6,12 +6,12 @@ Opt-out, account deletion and the mentor-contact check find outbox rows by
 the whole table. Additive only: three expression indexes, no table or column
 change, so the previous image keeps running.
 
-Revises a7b8c9d0e1f2, the only head on origin/main when written. Other
-security branches also add a revision on that head; whichever merges later
-re-points its `down_revision` to the head already on main (one line).
+Revises b8c9d0e1f2a3 (sec-auth-config-hardening), the only head on
+origin/main when this branch merged main. A branch that merges later
+re-points its own `down_revision` to the head then on main (one line).
 
 Revision ID: f9a0b1c2d3e4
-Revises: a7b8c9d0e1f2
+Revises: b8c9d0e1f2a3
 Create Date: 2026-10-07 00:10:00
 
 """
@@ -23,7 +23,7 @@ import sqlalchemy as sa
 from alembic import op
 
 revision: str = "f9a0b1c2d3e4"
-down_revision: str | Sequence[str] | None = "a7b8c9d0e1f2"
+down_revision: str | Sequence[str] | None = "b8c9d0e1f2a3"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

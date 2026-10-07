@@ -27,7 +27,7 @@ from pydantic import AwareDatetime, BaseModel, Field
 from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.events import OutboxEvent, payload_text, publish, subscribe
 from app.learning.public import known_ids
@@ -95,7 +95,7 @@ def _when(at: datetime | None, now: datetime) -> datetime:
 
 @router.post("/events", status_code=202)
 async def events(body: EventsIn, session: Session, request: Request) -> dict:
-    address = request.client.host if request.client else "-"  # kept in memory only
+    address = clientkey.address(request)  # kept in memory only; IPv6 by /64
     ratelimit.hit(f"events:{body.install_id}", limit=60, window_s=60)
     ratelimit.hit(f"events-ip:{address}", limit=240, window_s=60)
     now = datetime.now(UTC)

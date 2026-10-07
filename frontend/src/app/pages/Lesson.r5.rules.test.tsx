@@ -435,16 +435,20 @@ describe("lrn-03 r5: «ارجع إلى الدرس» shows whenever the learner c
 })
 
 describe("lrn-03 r5: what is kept for the return stays on the device, and only as long as needed", () => {
-  it("lrn03_r5_the_route_and_the_assistant_carry_no_lesson_id_choice_or_progress", async () => {
+  it("lrn03_r5_the_route_and_the_assistant_carry_ids_of_the_screen_only_never_the_choice_or_progress", async () => {
     readCardsAndSolvedOne()
     fireEvent.click(chosen())
     fireEvent.click(helpButton())
     const at = where()
     expect(at.search).toBe("")
-    expect(at.state).toEqual({ lessonHelp: { from: "lesson", topic: WUDU } }) // CMP-01 R1: exactly this
+    // CMP-01 R1 (owner's decision 2026-10-07): origin, topic and the ids of what is on screen; exactly this.
+    expect(at.state).toEqual({ lessonHelp: { from: "lesson", topic: WUDU, context: { lesson_id: LESSON, exercise_id: "EXERCISE_2" } } })
     await ask(QUESTION)
-    const sent = JSON.stringify(calls.filter((c) => c.url === "/api/ask").map((c) => c.body))
-    for (const secret of [CHOSEN, RIGHT_2, PROMPT_2, "EXERCISE_2", LESSON, WUDU]) expect(sent).not.toContain(secret)
+    const bodies = calls.filter((c) => c.url === "/api/ask").map((c) => c.body)
+    expect(bodies[0]?.context).toEqual({ lesson_id: LESSON, exercise_id: "EXERCISE_2" }) // ids only
+    const sent = JSON.stringify(bodies)
+    // What is held for the return (the choice, its result, the progress) and every text of the lesson stay on the device.
+    for (const secret of [CHOSEN, RIGHT_2, PROMPT_2, WUDU, "EXERCISE_1", "firstTried", "answered"]) expect(sent).not.toContain(secret)
   })
 
   it("lrn03_r5_cmp01_r1_ex2_the_help_request_still_carries_no_lesson_name_or_answer", async () => {
@@ -463,7 +467,10 @@ describe("lrn-03 r5: what is kept for the return stays on the device, and only a
     expect(post.body!.source).toBe("lesson")
     expect(post.body!.body).toBe("أحتاج من يشرح لي")
     const wire = JSON.stringify(calls) // every URL and body sent while he was away from the lesson
-    for (const secret of [CHOSEN, RIGHT_2, PROMPT_2, "EXERCISE_2", LESSON, WUDU]) expect(wire).not.toContain(secret)
+    for (const secret of [CHOSEN, RIGHT_2, PROMPT_2, WUDU]) expect(wire).not.toContain(secret)
+    // CMP-01 R1 (2026-10-07): the ids of the screen go to the assistant only; the human request has none of them.
+    const toHuman = JSON.stringify(calls.filter((c) => c.url !== "/api/ask" && c.url !== "/api/events"))
+    for (const id of ["EXERCISE_2", LESSON]) expect(toHuman).not.toContain(id)
   })
 
   it("lrn03_r5_nothing_is_written_to_storage_for_the_return", () => {

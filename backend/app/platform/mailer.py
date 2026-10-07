@@ -41,6 +41,7 @@ async def send_code(to: str, code: str, locale: str) -> bool:
     try:
         await asyncio.to_thread(_send, to, subject, body.format(code=code))
         return True
-    except Exception:  # delivery failures must not leak details to the client
-        log.exception("email delivery failed")
+    except Exception as e:  # delivery failures must not leak details to the client
+        # Security audit M3: the type only. SMTP errors and tracebacks repeat the recipient's address.
+        log.error("email delivery failed: %s", type(e).__name__)
         return False

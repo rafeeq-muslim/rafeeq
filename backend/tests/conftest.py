@@ -29,7 +29,10 @@ async def _schema():
 
 @pytest.fixture(autouse=True)
 async def _clean():
+    from app.knowledge.ai import gate
+
     ratelimit.reset()
+    gate.reset()  # the global AI gate (security audit A-H3) is per process, like the limiter
     yield
     # DELETE in reverse dependency order: far faster than TRUNCATE on near-empty tables.
     async with engine.begin() as conn:

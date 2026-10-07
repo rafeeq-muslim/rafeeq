@@ -1580,4 +1580,8 @@ export const ar = {
   "cmp.inbox.closeConfirmBody": "تخرج من قائمة محادثاتك المفتوحة، وتبقى رسائلها محفوظة. وإن كتب صاحبها من جديد عادت مفتوحة.",
   // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
   "cmp.thread.earlier": "الرسائل الأقدم",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
+  "ask.context.about": "عن: {lesson} · {item}",
+  "ask.context.aboutLesson": "عن: {lesson}",
+  "ask.context.dismiss": "اسأل دون سياق الدرس",
 } as const

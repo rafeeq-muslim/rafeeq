@@ -37,6 +37,13 @@ TEXTS: dict[str, dict[str, str]] = {
 }
 
 _pending: set[asyncio.Task] = set()
+# Security audit 2026-10-07 A-M1: background notifications are bounded. At
+# most MAX_SENDING run at once (the rest wait their turn), none holds a
+# database connection while a push is on its way, and past MAX_WAITING a new
+# one is dropped with a log line instead of piling up without limit.
+MAX_SENDING = 4
+MAX_WAITING = 500
+_sending: dict[int, asyncio.Semaphore] = {}  # one per event loop
 
 
 def text(kind: str, locale: str | None) -> str:
@@ -66,6 +73,7 @@ async def to_endpoint(session: AsyncSession, endpoint: str, kind: str, locale: s
     )
     if sub is None:
         return 0
+    await push.release_for_send(session)
     return int(await push.send(sub, payload(kind, locale, url)))
 
 
@@ -92,17 +100,27 @@ def later(fn, *args) -> None:
     without delaying it (the danger path must answer the learner first).
     Errors are logged only."""
 
+    if len(_pending) >= MAX_WAITING:
+        log.warning("cmp notification dropped: %d already waiting", len(_pending))
+        return
+    loop = asyncio.get_running_loop()
+    turn = _sending.setdefault(id(loop), asyncio.Semaphore(MAX_SENDING))
+
     async def run():
         from app.core.db import SessionLocal
 
+        await turn.acquire()
         try:
-            async with SessionLocal() as session:
+            async with SessionLocal(info={push.RELEASE_FOR_SEND: True}) as session:
                 await fn(session, *args)
                 await session.commit()  # push marks gone subscriptions
-        except Exception:  # pragma: no cover - logged, never raised to the user
-            log.warning("cmp notification failed", exc_info=True)
+        except Exception as e:  # logged, never raised to the user
+            # Security audit M3: the type only (an error can carry a push endpoint or a statement's values).
+            log.warning("cmp notification failed: %s", type(e).__name__)
+        finally:
+            turn.release()
 
-    task = asyncio.get_running_loop().create_task(run())
+    task = loop.create_task(run())
     _pending.add(task)
     task.add_done_callback(_pending.discard)
 

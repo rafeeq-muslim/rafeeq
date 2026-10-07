@@ -1581,4 +1581,8 @@ export const en: Dict = {
   "cmp.inbox.closeConfirmBody": "It leaves your list of open conversations, and its messages are kept. If the person writes again, it reopens.",
   // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ---
   "cmp.thread.earlier": "Earlier messages",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ---
+  "ask.context.about": "About: {lesson} · {item}",
+  "ask.context.aboutLesson": "About: {lesson}",
+  "ask.context.dismiss": "Ask without the lesson context",
 }

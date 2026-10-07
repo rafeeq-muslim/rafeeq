@@ -40,7 +40,7 @@ from app.companion.common import (
 )
 from app.companion.models import Block, HelpMessage, HelpRequest, MentorLink, Report
 from app.companion.text import clean_body
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.deps import CurrentUser, Session
 from app.core.security import sha256
 from app.platform.models import User
@@ -407,7 +407,7 @@ async def post_message(request_id: uuid.UUID, body: MessageIn, session: Session,
     if owner.user is None:
         # Guest tokens are free to mint: a guest's messages are also counted
         # by address (in memory only, never stored).
-        ratelimit.hit(f"help-msg-ip:{request.client.host if request.client else '-'}", 60, 600)
+        ratelimit.hit(f"help-msg-ip:{clientkey.address(request)}", 60, 600)
     text = clean_body(body.body)
     if owner.user is not None and await _link_ended(session, req):
         req = await _where_to_write(session, owner.user, req)  # the summary returned says where it went

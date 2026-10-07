@@ -1582,4 +1582,8 @@ export const tl: Dict = {
   "cmp.inbox.closeConfirmBody": "Aalis ito sa listahan mo ng mga bukas na usapan, at mananatili ang mga mensahe nito. Kapag sumulat muli ang tao, magbubukas itong muli.",
   // --- SEC A-M4 (sec-data-growth-limits): a long conversation loads earlier messages on demand ⚠️ Tagalog needs native review ---
   "cmp.thread.earlier": "Mga naunang mensahe",
+  // --- CMP-01 R1 (cmp-01-r1-lesson-context): the context chip above the assistant's input ⚠️ Tagalog needs native review ---
+  "ask.context.about": "Tungkol sa: {lesson} · {item}",
+  "ask.context.aboutLesson": "Tungkol sa: {lesson}",
+  "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
 }

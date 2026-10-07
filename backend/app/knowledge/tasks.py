@@ -19,13 +19,15 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import select
 
-from app.core import ratelimit
+from app.core import clientkey
+from app.core.db import release
 from app.core.deps import OptionalUser, Session, require_role
 from app.knowledge import glossary
-from app.knowledge.ai import agents
+from app.knowledge.ai import agents, gate
 from app.knowledge.ai.client import AiUnavailable
 from app.knowledge.ai.textcheck import ATTRIBUTION, TRANSLIT, has_arabic, quoted_spans, words
 from app.knowledge.models import ExplanationLog
+from app.knowledge.request_context import call_budget
 from app.knowledge.review import published
 from app.learning import content as learning_content
 from app.learning.models import ExplanationBlock
@@ -41,10 +43,11 @@ _BLAME = re.compile(
     r"\b(missed|absence|away for|days ago|been away|skipped|fell behind|nawala ka|hindi ka nakapag|lumiban)\b|غبت|غيابك|فاتك|انقطعت|تأخرت|قصّرت|قصرت",
     re.I,
 )
-
-
-def client_key(request: Request, user) -> str:
-    return str(user.id) if user else (request.client.host if request.client else "-")
+# Security audit 2026-10-07 A-H3: paid calls and seconds one request may use
+# (JSON retries and the fallback model included). Normal use: 2 calls each
+# (writer + checker). The app waits 8 s for an explanation and 10 s for the guide.
+EXPLAIN_MAX_CALLS, EXPLAIN_SECONDS = 4, 12.0
+GUIDE_MAX_CALLS, GUIDE_SECONDS = 4, 12.0
 
 
 # --- explain (LRN-03 R6, KNW-10 R1/R2/R4) -------------------------------------
@@ -122,7 +125,7 @@ def check_explanation(text: str, lang: str) -> list[str]:
     return fails
 
 
-async def explain_mistake(session, body: ExplainIn) -> str | None:
+async def explain_mistake(session, body: ExplainIn, client: str = "-") -> str | None:
     lesson = (await published(session, "lesson", body.lang)).get(body.lesson_id)
     if not isinstance(lesson, dict):
         return None  # only approved text is ever explained
@@ -137,10 +140,13 @@ async def explain_mistake(session, body: ExplainIn) -> str | None:
     try:
         # KNW-03 R3: approved terms in the learner's language (none yet: the input is unchanged).
         gloss = glossary.prompt_block(await glossary.prompt_terms(session, body.lang))
-        text = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, body.answer), body.lang, gloss)
-        if check_explanation(text, body.lang):
-            return None
-        verdict = await agents.support_check("explain_checker", text, [card])
+        await release(session)  # A-M1: no connection is held while the model works
+        async with gate.slot(client):
+            with call_budget(EXPLAIN_MAX_CALLS, EXPLAIN_SECONDS):
+                text = await agents.explain_mistake(card, _render_exercise(ex), _render_answer(ex, body.answer), body.lang, gloss)
+                if check_explanation(text, body.lang):
+                    return None
+                verdict = await agents.support_check("explain_checker", text, [card])
     except AiUnavailable:
         return None
     if not verdict["supported"]:
@@ -153,9 +159,9 @@ async def explain_mistake(session, body: ExplainIn) -> str | None:
 
 @router.post("/explain")
 async def explain(body: ExplainIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    ratelimit.hit(f"explain:{client_key(request, user)}", 20, 60)
-    ratelimit.hit(f"explain:d:{client_key(request, user)}", 150, 86400)
-    return {"text": await explain_mistake(session, body)}
+    clientkey.hit("explain", request, user, 20, 60)
+    clientkey.hit("explain:d", request, user, 150, 86400)
+    return {"text": await explain_mistake(session, body, clientkey.primary(request, user))}
 
 
 # --- guide (LRN-07, KNW-10 R3/R4) ---------------------------------------------
@@ -215,7 +221,7 @@ def check_guide(text: str, lang: str, allowed: set[str]) -> list[str]:
     return fails
 
 
-async def write_guide(session, body: GuideIn) -> str | None:
+async def write_guide(session, body: GuideIn, client: str = "-") -> str | None:
     objectives, lessons = await approved_names(session, body.lang, learner=True)
     mastered = [objectives[i] for i in body.mastered if i in objectives]
     reviewing = [objectives[i] for i in body.reviewing if i in objectives]
@@ -229,10 +235,13 @@ async def write_guide(session, body: GuideIn) -> str | None:
     summary = {"mastered": mastered, "needs_review": reviewing, "next": nxt, "returning": body.returning}
     allowed = {*mastered, *reviewing, *([nxt["lesson"]] if nxt and "lesson" in nxt else [])}
     try:
-        text = await agents.write_guide(summary, body.lang)
-        if check_guide(text, body.lang, allowed):
-            return None
-        verdict = await agents.support_check("guide_checker", text, [json.dumps(summary, ensure_ascii=False)])
+        await release(session)  # A-M1
+        async with gate.slot(client):
+            with call_budget(GUIDE_MAX_CALLS, GUIDE_SECONDS):
+                text = await agents.write_guide(summary, body.lang)
+                if check_guide(text, body.lang, allowed):
+                    return None
+                verdict = await agents.support_check("guide_checker", text, [json.dumps(summary, ensure_ascii=False)])
     except AiUnavailable:
         return None
     return text if verdict["supported"] else None
@@ -240,9 +249,9 @@ async def write_guide(session, body: GuideIn) -> str | None:
 
 @router.post("/guide")
 async def guide(body: GuideIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    ratelimit.hit(f"guide:{client_key(request, user)}", 20, 60)
-    ratelimit.hit(f"guide:d:{client_key(request, user)}", 60, 86400)
-    return {"text": await write_guide(session, body)}  # the summary is not stored (KNW-10 R4)
+    clientkey.hit("guide", request, user, 20, 60)
+    clientkey.hit("guide:d", request, user, 60, 86400)
+    return {"text": await write_guide(session, body, clientkey.primary(request, user))}  # the summary is not stored (KNW-10 R4)
 
 
 # --- objective tagging (LRN-10 R5, KNW-10 R5) ---------------------------------
@@ -257,6 +266,7 @@ async def tag_question(session, question: str, lang: str, route: str) -> str | N
     if not objectives:
         return None
     try:
+        await release(session)  # A-M1
         return await agents.tag_objective(question, objectives)
     except AiUnavailable:
         return None

@@ -160,8 +160,27 @@ _SESSIONS: "OrderedDict[str, _Session]" = OrderedDict()
 _KEY = secrets.token_bytes(32)  # fingerprints never leave this process
 
 
+# Security audit 2026-10-07 A-L5: every client together may start at most
+# LIBRARY_SEARCH_DAILY_CAP outbound searches (result pages, each at most
+# LIBRARY_SEARCH_MAX_CALLS requests to the sites) per UTC day. Past it the
+# search answers `sources_unavailable` until midnight; the catalogue is untouched.
+_outbound_day: tuple[str, int] = ("", 0)
+
+
+def _take_outbound() -> bool:
+    global _outbound_day
+    today = datetime.now(UTC).date().isoformat()
+    used = _outbound_day[1] if _outbound_day[0] == today else 0
+    if used >= get_settings().library_search_daily_cap:
+        return False
+    _outbound_day = (today, used + 1)
+    return True
+
+
 def reset() -> None:
+    global _outbound_day
     _SESSIONS.clear()
+    _outbound_day = ("", 0)
 
 
 def _prune(now: float) -> None:
@@ -265,6 +284,9 @@ async def _fetch(src: Source, st: _State, sess: _Session, client, shared: http.B
 async def _next_page(sess: _Session, page_size: int) -> dict[str, Any]:
     s = get_settings()
     srcs = sources()
+    if any(len(st.buffer) < page_size and st.next_page is not None for st in sess.states.values()) and not _take_outbound():
+        down = [{"source_id": sid, "status": "unavailable"} for sid in sess.selected]
+        raise SearchError(503, "sources_unavailable", {"source_status": down})
     status: dict[str, dict[str, Any]] = {}
     tasks: list[asyncio.Task] = []
     shared = http.Budget(s.library_search_max_calls, time.monotonic() + s.library_search_window_seconds)
