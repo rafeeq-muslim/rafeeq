@@ -37,6 +37,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
+from app.core.db import release
 from app.knowledge import query_normalization, source_policy
 from app.knowledge.ai import client
 from app.knowledge.ai.client import AiUnavailable
@@ -270,6 +271,7 @@ async def retrieve(
     vhits: list[tuple[str, float]] = []
     vector_failed = text_failed = False
     if vector_sources:
+        await release(session)  # A-M1: no connection is held while the question is embedded
         vec, res.embedding, res.embedding_error = await embed_query(query, lang, version)
         if vec is None:
             vector_failed = True

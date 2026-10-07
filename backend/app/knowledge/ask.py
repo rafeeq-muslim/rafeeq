@@ -31,34 +31,45 @@ answer another source supports. The response then also carries
 Not streamed: the verifier must pass the whole answer before anything is
 shown (rules.md §2.3). Nothing here stores the question text (plan 4.9);
 the provider receives the question and passages only (rules.md §2.6).
+
+CMP-01 R1 (owner's decision 2026-10-07): a question asked from a lesson or
+a review may carry `context`, ids only (lesson id + card id or exercise
+id). After the screens (which read the learner's question alone, as
+before), the server loads the approved text of those ids itself
+(lesson_context.py) and gives it to the router, to the search form and to
+the composer as fenced lesson content; the indexed passages of that card
+(`rafeeq_cards`) join the retrieved ones. Ids that are unknown, withdrawn
+or in another language are ignored. The answer is still composed from
+passages only and verified; no log or record holds more than a code.
 """
 
 import asyncio
 import logging
 import time
 import uuid
+from dataclasses import replace
 from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel, Field, StringConstraints
+from pydantic import BaseModel, Field, StringConstraints, ValidationError, field_validator
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import ratelimit
+from app.core import clientkey, ratelimit
 from app.core.config import get_settings
-from app.core.db import SessionLocal
+from app.core.db import SessionLocal, release
 from app.core.deps import OptionalUser, Session
 from app.core.events import publish
-from app.knowledge import approved, glossary, query_normalization, source_policy, tasks
-from app.knowledge.ai import agents, screen
+from app.knowledge import approved, cards, glossary, lesson_context, query_normalization, source_policy, tasks
+from app.knowledge.ai import agents, gate, screen
 from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
 from app.knowledge.live_sources import orchestrator as live_orchestrator
 from app.knowledge.live_sources import registry as live_registry
 from app.knowledge.live_sources.types import Evidence, SourceResult
 from app.knowledge.models import AnswerLog, Passage, Source
 from app.knowledge.request_context import RequestContext, current
-from app.knowledge.search import RetrievalResult, retrieve
+from app.knowledge.search import RetrievalResult, passage_dict, retrieve
 from app.knowledge.verify import VerificationResult, cited_ids, verify
 
 log = logging.getLogger("rafeeq.ask")
@@ -68,6 +79,7 @@ ESCALATE_ROUTES = ("personal", "sensitive")
 VERIFY_RESERVE_S = 8.0  # kept free for the support check while composing
 MIN_COMPOSE_S = 6.0  # a composition needs at least this much time to be worth starting
 EXPANSION_NEW = 4  # passages an expansion round may add to the context
+CONTEXT_PASSAGES = 3  # CMP-01 R1: indexed cards of the lesson context placed first
 # PRD live v3 §9: time the answer still needs after the collection window
 # (composition, the support check and the reply margin).
 LIVE_ANSWER_RESERVE_S = VERIFY_RESERVE_S + MIN_COMPOSE_S + 5.0
@@ -95,6 +107,19 @@ class AskIn(BaseModel):
     client_request_id: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_-]{8,64}$")
     entrypoint: Literal["typed", "suggestion"] | None = None
     suggestion_id: str | None = Field(default=None, pattern=r"^[a-z0-9_]{1,40}$")
+    # CMP-01 R1: what the learner has on screen, as ids only. The server loads the text.
+    context: lesson_context.ContextRef | None = None
+
+    @field_validator("context", mode="before")
+    @classmethod
+    def _ids_or_nothing(cls, v: Any) -> Any:
+        """A context that is not well-formed ids is ignored; it never fails the question."""
+        if isinstance(v, lesson_context.ContextRef):
+            return v
+        try:
+            return lesson_context.ContextRef.model_validate(v) if isinstance(v, dict) else None
+        except ValidationError:
+            return None
 
 
 def _base(ask_id: str, lang: str) -> dict[str, Any]:
@@ -430,6 +455,7 @@ async def _live_round(
         task.cancel()
         await asyncio.gather(task, return_exceptions=True)
         raise
+    await release(session)  # A-M1: no connection is held while the live sources are read
     coll = await task
     ctx.max_retrieval_rounds = ctx.retrieval_rounds_used  # one live round: no expansion
     live_passages = [e.passage(live_registry.label(e.source_id, lang)) for e in coll.evidence]
@@ -450,12 +476,54 @@ async def _live_round(
     return _fuse(local.passages, live_passages, st.knw_search_k), status
 
 
+async def _load_context(
+    session: AsyncSession, ctx: RequestContext, ref: lesson_context.ContextRef | None, lang: str
+) -> lesson_context.LessonContext | None:
+    """CMP-01 R1: the approved text of the ids the app sent, or None (ignored)."""
+    if ref is None:
+        return None
+    t = time.monotonic()
+    try:
+        lc = await lesson_context.load(session, ref, lang)
+    except SQLAlchemyError:  # optional input: the question is answered without it
+        log.exception("lesson context not loaded")
+        await _rollback(session)
+        lc = None
+    ctx.stage("context", t, status=lc.kind if lc else "ignored")
+    return lc
+
+
+async def _context_passages(session: AsyncSession, lc: lesson_context.LessonContext, lang: str) -> list[dict[str, Any]]:
+    """The indexed approved cards of the lesson context (KNW-02 R6), if the
+    source policy allows `rafeeq_cards`. Nothing is built from the lesson
+    file here: a card that is not in the index is not a source."""
+    ids = lc.passage_ids[:CONTEXT_PASSAGES]
+    if not ids or cards.SOURCE_ID not in (await source_policy.eligible_sources(session)).sources:
+        return []
+    rows = {
+        p.id: p
+        for p in await session.scalars(
+            select(Passage).where(Passage.id.in_(ids), Passage.lang == lang, Passage.source_id == cards.SOURCE_ID)
+        )
+    }
+    src = await session.get(Source, cards.SOURCE_ID)
+    return [passage_dict(rows[i], src.name if src else cards.SOURCE_ID) for i in ids if i in rows]
+
+
 def _same_output(a: dict[str, Any], b: dict[str, Any] | None) -> bool:
     return b is not None and (a.get("answer") or "").strip() == (b.get("answer") or "").strip() and a.get("sources") == b.get("sources")
 
 
 async def _pipeline(
-    session: AsyncSession, ctx: RequestContext, track: _Track, r: dict[str, Any], question: str, lang: str, consent: bool
+    session: AsyncSession,
+    ctx: RequestContext,
+    track: _Track,
+    r: dict[str, Any],
+    question: str,
+    lang: str,
+    consent: bool,
+    context: lesson_context.ContextRef | None = None,
+    client: str = "-",
 ) -> Result:
     st = get_settings()
     t = time.monotonic()
@@ -482,10 +550,51 @@ async def _pipeline(
             return Result(_fixed(r, "refused", "manipulation", "manipulation"))
     ctx.stage("screen", t, result="pass", normalization=q.version, variants=len(q.variants))
 
+    # CMP-01 R1: only now, after the screens passed on the learner's own words,
+    # is the lesson context loaded (approved text, by id). The search form
+    # gains the lesson's topic so that «ما معنى هذا؟» finds it.
+    lc = await _load_context(session, ctx, context, lang)
+    if lc and lc.search:
+        topic = lc.search if q.version == "off" else query_normalization.canonical(lc.search) or lc.search
+        q = replace(q, canonical=f"{q.canonical} {topic}", variants=[f"{v} {topic}" for v in q.variants])
+
+    # Security audit 2026-10-07 A-H3: everything below costs model calls, so it
+    # passes the global gate. The screens above never do: a danger message
+    # reaches a human whatever the load. A refused entry is the router-down
+    # path: an exact approved answer if there is one, else the fixed apology.
+    t = time.monotonic()
+    try:
+        async with gate.slot(client):
+            return await _answer_steps(session, ctx, track, r, question, lang, consent, q, lc)
+    except gate.Busy as e:
+        ctx.stage("gate", t, status=str(e))
+        if st.ask_approved_faq_enabled:
+            cached = await _serve_approved(session, r, question, exact_only=True)
+            if cached:
+                return cached
+        return _unavailable(r, "temporarily_unavailable", f"gate_{e}")
+
+
+async def _answer_steps(
+    session: AsyncSession,
+    ctx: RequestContext,
+    track: _Track,
+    r: dict[str, Any],
+    question: str,
+    lang: str,
+    consent: bool,
+    q: query_normalization.QueryForms,
+    lc: lesson_context.LessonContext | None = None,
+) -> Result:
+    st = get_settings()
+    lesson_text = lc.text if lc else ""
+    # Security audit A-M1: the session's connection goes back to the pool
+    # before every model call below (`release`), never held while one runs.
+    await release(session)
     # 5. Route and level, with the original question.
     t = time.monotonic()
     try:
-        routed = await agents.route_question(question, lang)
+        routed = await agents.route_question(question, lang, context=lesson_text)
     except AiUnavailable as e:
         ctx.stage("route", t, status="unavailable")
         if st.ask_approved_faq_enabled:
@@ -522,6 +631,13 @@ async def _pipeline(
             if ret2 is not None:
                 passages = ret2.passages
                 status = ret2.status if ret2.status != "complete" else status
+    if lc:  # the card on screen (or the exercise's cards), from the index, first
+        pinned = await _context_passages(session, lc, lang)
+        if pinned:
+            for p in pinned:
+                track.passage_source[p["id"]] = p["source_id"]
+            taken = {p["id"] for p in pinned}
+            passages = [*pinned, *(p for p in passages if p["id"] not in taken)][: st.knw_search_k]
     if not passages:
         return _no_evidence(r, status, "retrieval_empty")
     retrieved = {p["id"]: p for p in passages}
@@ -543,13 +659,14 @@ async def _pipeline(
             )
         ctx.compose_rounds_used += 1
         ctx.reserve_seconds = VERIFY_RESERVE_S
+        await release(session)  # A-M1: composing and verifying hold no connection
         t = time.monotonic()
         try:
             if mode == "compose":
-                out = await agents.compose_answer(question, lang, r["route"], r["level"], passages, gloss)
+                out = await agents.compose_answer(question, lang, r["route"], r["level"], passages, gloss, context=lesson_text)
             else:
                 out = await agents.repair_answer(
-                    question, lang, r["route"], r["level"], passages, prev or {}, v.codes, v.unsupported, gloss
+                    question, lang, r["route"], r["level"], passages, prev or {}, v.codes, v.unsupported, gloss, context=lesson_text
                 )
         except AiUnavailable as e:
             ctx.stage(mode, t, round=ctx.compose_rounds_used, status="unavailable")
@@ -647,7 +764,14 @@ def _flags() -> dict[str, Any]:
     }
 
 
-async def answer(session: AsyncSession, question: str, lang: str, consent_objectives: bool = False) -> Result:
+async def answer(
+    session: AsyncSession,
+    question: str,
+    lang: str,
+    consent_objectives: bool = False,
+    context: lesson_context.ContextRef | None = None,
+    client: str = "-",
+) -> Result:
     st = get_settings()
     question = question.strip()
     r = _base(uuid.uuid4().hex, lang)
@@ -665,7 +789,7 @@ async def answer(session: AsyncSession, question: str, lang: str, consent_object
     token = current.set(ctx)
     try:
         async with asyncio.timeout(seconds):
-            res = await _pipeline(session, ctx, track, r, question, lang, consent_objectives)
+            res = await _pipeline(session, ctx, track, r, question, lang, consent_objectives, context, client)
     except TimeoutError:
         # The hard stop (e.g. a slow database): a clear failure, never "no source".
         await _rollback(session)
@@ -731,7 +855,7 @@ _attempts: dict[str, tuple[float, asyncio.Future]] = {}
 
 @router.post("/ask")
 async def ask(body: AskIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    key = tasks.client_key(request, user)
+    key = clientkey.primary(request, user)
     now = time.monotonic()
     for k in [k for k, (until, _) in _attempts.items() if until < now]:
         _attempts.pop(k, None)
@@ -765,21 +889,24 @@ def _alert_raised_already(key: str, request: Request) -> bool:
     this one client could alert every mentor 8 times a minute. The asker
     always gets the danger reply and the button to a human; only the alert to
     everyone is limited (the event is still published, marked `repeat`)."""
-    address = request.client.host if request.client else "-"
-    try:
-        ratelimit.hit(f"ask-danger:{key}", 1, DANGER_ALERT_EVERY_S)
-        ratelimit.hit(f"ask-danger-ip:{address}", DANGER_ALERTS_PER_ADDRESS, 3600)
-    except HTTPException:
+    limits = (
+        (f"ask-danger:{key}", 1, DANGER_ALERT_EVERY_S),
+        (f"ask-danger-ip:{clientkey.address(request)}", DANGER_ALERTS_PER_ADDRESS, 3600),  # IPv6: per /64 (A-H3)
+    )
+    if any(ratelimit.full(*limit) for limit in limits):
         return True
+    for limit in limits:
+        ratelimit.hit(*limit)
     return False
 
 
 async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, key: str) -> dict:
-    ratelimit.hit(f"ask:m:{key}", 8, 60)
-    ratelimit.hit(f"ask:d:{key}", 120, 86400)
+    # A-H3: per address (IPv6: per /64) and per account.
+    clientkey.hit("ask:m", request, user, 8, 60)
+    clientkey.hit("ask:d", request, user, 120, 86400)
     started = time.monotonic()
     try:
-        result = await answer(session, body.question, body.lang, body.consent_objectives)
+        result = await answer(session, body.question, body.lang, body.consent_objectives, body.context, client=key)
     except Exception:
         # §14.1: an unexpected error is a technical error with a safe code, never "no source".
         log.exception("ask pipeline failed")

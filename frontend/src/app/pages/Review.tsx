@@ -125,6 +125,9 @@ function ReviewSession({ content }: { content: Content | undefined }) {
   const done = items.length - new Set(queue).size
   // CMP-01 R1: the assistant gets the topic of the lesson this exercise belongs to, nothing else.
   const topic = exercise ? (Object.values(content.lessons).find((l) => l.exercises.some((e) => e.id === exercise.id))?.title ?? "") : ""
+  // CMP-01 R1 (2026-10-07): and what is on screen, as ids only (the lesson of this exercise + the exercise).
+  const helpLessonId = exercise ? Object.values(content.lessons).find((l) => l.exercises.some((e) => e.id === exercise.id))?.id : undefined
+  const helpContext = exercise && helpLessonId ? { lesson_id: helpLessonId, exercise_id: exercise.id } : undefined
 
   return (
     <div className="flex min-h-dvh flex-col bg-background">
@@ -133,7 +136,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
           <IconX />
         </Button>
         <Progress value={(done / items.length) * 100} aria-label={t("review.title")} className="h-3.5 flex-1" />
-        <LessonHelpButton from="review" topic={topic} />
+        <LessonHelpButton from="review" topic={topic} context={helpContext} />
       </header>
       <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-5 px-5 pt-3 pb-40" style={footerHeight ? { paddingBottom: footerHeight + 24 } : undefined}>
         {exercise && (
@@ -146,7 +149,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
           </>
         )}
       </main>
-      <footer ref={footer} className="fixed inset-x-0 bottom-0 z-20">
+      <footer ref={footer} className={result ? "fixed inset-x-0 bottom-0 z-20" : "fixed inset-x-0 bottom-0 z-20 border-t bg-background"}>
         {result ? (
           <ExerciseFeedback
             result={result}
@@ -157,7 +160,7 @@ function ReviewSession({ content }: { content: Content | undefined }) {
             className="mx-auto max-w-xl"
           />
         ) : (
-          <div className="mx-auto flex max-w-xl border-t bg-background px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
+          <div className="mx-auto flex max-w-xl px-5 pt-3 pb-[calc(env(safe-area-inset-bottom,0px)+1rem)]">
             <Button size="lg" className="flex-1" disabled={!exercise || !ready(exercise, value)} onClick={onCheck}>
               {t("lesson.check")}
             </Button>

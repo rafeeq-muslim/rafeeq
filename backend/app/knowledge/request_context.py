@@ -13,6 +13,8 @@ never the question, the answer or passage text (PRD §7).
 """
 
 import time
+from collections.abc import Iterator
+from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 from typing import Any
@@ -24,7 +26,7 @@ MIN_CALL_SECONDS = 2.0  # below this a call cannot finish; stop instead of start
 
 @dataclass
 class RequestContext:
-    ask_id: str
+    ask_id: str | None  # None outside /api/ask (call_budget below)
     deadline: float  # time.monotonic() value
     max_calls: int
     max_retrieval_rounds: int
@@ -65,3 +67,18 @@ class RequestContext:
 
 
 current: ContextVar[RequestContext | None] = ContextVar("knw_request_context", default=None)
+
+
+@contextmanager
+def call_budget(max_calls: int, seconds: float) -> Iterator[RequestContext]:
+    """Security audit 2026-10-07 A-H3: the same budget for a learning task
+    (explain, guide, home order). Inside the block every model call, JSON
+    retries and the fallback model included, counts against `max_calls` and
+    gets only the time left of `seconds`; past either, the client raises
+    before sending and the task falls back to its fixed text."""
+    ctx = RequestContext(None, time.monotonic() + seconds, max_calls, 0, 0)
+    token = current.set(ctx)
+    try:
+        yield ctx
+    finally:
+        current.reset(token)

@@ -15,8 +15,6 @@ Counters live in memory (one backend process, like core/ratelimit)."""
 
 import logging
 
-from fastapi import HTTPException
-
 from app.companion import notify
 from app.core import ratelimit
 
@@ -29,10 +27,9 @@ TEAM_ROLES = ["team", "admin"]
 
 
 def _free(key: str, limit: int, window_s: int) -> bool:
-    try:
-        ratelimit.hit(key, limit, window_s)
-    except HTTPException:
+    if ratelimit.full(key, limit, window_s):
         return False
+    ratelimit.hit(key, limit, window_s)
     return True
 
 

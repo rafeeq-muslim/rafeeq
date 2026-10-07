@@ -1,10 +1,12 @@
 name: CI
-# Runs on the team's self-hosted runners, which sit on the production server.
-# The repo is public, so every job is limited to pushes and to pull requests
-# from branches of THIS repository: a fork's pull request never reaches the
-# runners (it could run arbitrary code there).
+# Runs on GitHub-hosted runners only. The repo is public, and for a pull
+# request GitHub takes the workflow file from the pull request itself, so no
+# condition written here can keep a stranger's code off a self-hosted runner.
+# CI therefore never touches the production server: nothing in this file may
+# name a self-hosted label (backend/tests/test_sec_ci_deploy.py checks it).
+# Actions are pinned to a commit; the tag is in the trailing comment.
 # On main and on pull requests only: a pushed branch with a PR was tested
-# twice (push and pull_request), which kept both shared runners busy.
+# twice (push and pull_request).
 on:
   push: { branches: [main] }
   pull_request:
@@ -12,31 +14,35 @@ permissions: { contents: read }
 concurrency: { group: "ci-${{ github.ref }}", cancel-in-progress: true }
 jobs:
   backend:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, rafeeq]
+    runs-on: ubuntu-latest
+    # The suite took 17 minutes on the team server (2026-10-07); the other jobs keep 20.
+    timeout-minutes: 30
     services:
       db:
         image: pgvector/pgvector:pg16
         env: { POSTGRES_USER: rafeeq, POSTGRES_PASSWORD: rafeeq_dev, POSTGRES_DB: rafeeq_test }
-        ports: ["127.0.0.1:5443:5432"]  # 5442 is the local dev database on this host
+        ports: ["127.0.0.1:5443:5432"]
         options: >-
           --health-cmd "pg_isready -U rafeeq" --health-interval 5s --health-retries 20
     defaults: { run: { working-directory: backend } }
     env:
       DATABASE_URL: postgresql+asyncpg://rafeeq:rafeeq_dev@127.0.0.1:5443/rafeeq_test
     steps:
-      - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: { persist-credentials: false }
+      # uv installs the Python named in backend/.python-version.
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
       - run: uv sync --frozen
       - run: uv run ruff check . && uv run ruff format --check .
       - run: uv run pytest -q
   frontend:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, rafeeq]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults: { run: { working-directory: frontend } }
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with: { node-version: 24, cache: npm, cache-dependency-path: frontend/package-lock.json }
       - run: npm ci
       - run: npx tsc -b
@@ -48,10 +54,12 @@ jobs:
   # LRN-03 R1 / LRN-10 R2: every card covered by an exercise, every objective by two,
   # answers and ids valid, no transliteration; the pipeline units are traced to the book.
   content:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: [self-hosted, rafeeq]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: { persist-credentials: false }
+      # Standard library only: the runner image's python3 is enough.
       - run: for f in content/units/*/unit.json; do python3 content/check_content.py "$f"; done
       # KNW-05 R2 ex2: verses and hadiths cited by the pipeline lessons, excerpts,
       # recitations and daily cards exist (corpus parts are skipped when absent).
