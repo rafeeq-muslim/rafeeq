@@ -131,27 +131,50 @@ export default function DownloadsScreen() {
 function CatalogSection({ section, items, lang }: { section: Section; items: CatalogItem[]; lang: string }) {
   const { t, locale } = useT()
   const id = `dl-${section}`
+  // Owner decision 2026-10-10: a unit downloads without its videos; each video is offered under its unit, opt-in.
+  const top = items.filter((it) => it.kind !== "video")
+  const videosOf = (unit: CatalogItem) => items.filter((v) => v.kind === "video" && unit.kind === "unit" && v.unit === unit.ref)
   return (
     <section aria-labelledby={id} className="flex flex-col gap-3">
       <h2 id={id} className="font-heading text-h3 font-bold">
         {t(`downloads.section.${section}` as Key)}
       </h2>
-      {items.length === 0 ? (
+      {top.length === 0 ? (
         <p className="text-body text-muted-foreground">{t("downloads.empty")}</p>
       ) : (
         <ul className="flex flex-col divide-y">
-          {items.map((it) => (
+          {top.map((it) => (
             <li key={it.id} className="flex flex-col gap-2 py-4">
               <span dir="auto" className="text-body font-bold">
                 {itemName(it, t, locale)}
               </span>
               {it.kind === "surah" && it.title && <span className="text-caption text-muted-foreground">{t("downloads.byReciter", { name: it.title })}</span>}
+              {it.kind === "unit" && videosOf(it).length > 0 && <span className="text-caption text-muted-foreground">{t("downloads.video.unitNote")}</span>}
               <DownloadControl itemId={it.id} lang={lang} withDelete openable={section === "library"} />
+              <UnitVideos videos={videosOf(it)} lang={lang} />
             </li>
           ))}
         </ul>
       )}
     </section>
+  )
+}
+
+/** A unit's videos, each downloadable on its own (opt-in), with its size. */
+function UnitVideos({ videos, lang }: { videos: CatalogItem[]; lang: string }) {
+  const { t, locale } = useT()
+  if (videos.length === 0) return null
+  return (
+    <ul aria-label={t("downloads.video.listLabel")} className="mt-2 flex flex-col gap-3 border-s-2 border-border ps-4">
+      {videos.map((v) => (
+        <li key={v.id} className="flex flex-col gap-2">
+          <span dir="auto" className="text-label font-bold">
+            {itemName(v, t, locale)}
+          </span>
+          <DownloadControl itemId={v.id} lang={lang} withDelete action={t("downloads.video.download")} />
+        </li>
+      ))}
+    </ul>
   )
 }
 

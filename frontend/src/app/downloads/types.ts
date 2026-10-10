@@ -16,11 +16,13 @@ export type Section = "lessons" | "quran" | "library"
 export type CatalogItem = {
   id: string
   section: Section
-  /** unit | quran_text | surah | books | audios | videos | articles */
+  /** unit | video | quran_text | surah | books | audios | videos | articles */
   kind: string
-  /** unit id, surah number, "all", or library item id. */
+  /** unit id, surah number, "all", library item id, or (video) the first lesson showing it. */
   ref: string
   title: string
+  /** A lesson video (owner decision 2026-10-10: never part of its unit's download): its unit. */
+  unit?: string
   files: CatalogFile[]
   bytes: number
   sizes_known: boolean

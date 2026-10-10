@@ -1229,7 +1229,7 @@ export const tl: Dict = {
   "offline.loadFailed.title": "Hindi nabuksan ang screen na ito",
   "offline.loadFailed.body": "Baka may mas bagong bersyon ng Rafeeq. Subukang muli para mabuksan ito.",
   "offline.home": "Pumunta sa Home",
-  "offline.video": "Kailangan ng koneksyon o ng na-download na unit para sa video na ito. Ituloy ang aralin at panoorin ito kapag may koneksyon na.",
+  "offline.video": "Kailangan ng koneksyon para sa video na ito. Ituloy ang aralin at panoorin ito kapag may koneksyon na; puwede mo rin itong i-download nang hiwalay para manatili sa iyo.",
   "offline.cityList": "Kailangan ng koneksyon ang listahan ng mga lungsod sa unang pagkakataon. Kumonekta nang isang beses para piliin ang iyong lungsod; pagkatapos ay gagana ang oras ng dasal kahit offline.",
   "offline.savedItem": "Hindi maipakita ang naka-save na ito ngayon. Lalabas ito kapag may koneksyon ka na ulit.",
   "offline.libraryList": "Kailangan ng koneksyon ang aklatan sa unang pagkakataon. Lalabas ito kapag may koneksyon ka na ulit.",
@@ -1595,4 +1595,12 @@ export const tl: Dict = {
   "ask.context.dismiss": "Magtanong nang walang konteksto ng aralin",
   // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
   "acct.inviteReissue": "Luma na ang code na ito at hindi na gumagana. Humingi ng bagong code sa nagpadala nito.",
+  // --- PLT-12 (plt-12-videos-lazy): owner decision 2026-10-10, a unit downloads without its videos; each video plays online or is downloaded on its own. ⚠️ Tagalog needs native review ---
+  "downloads.video.name": "Video: {name}",
+  "downloads.video.unitNote": "Hindi kasama ang mga video: napapanood ang mga ito kapag may koneksyon, at puwede mong i-download nang hiwalay ang alinman sa mga ito.",
+  "downloads.video.listLabel": "Mga video sa unit na ito",
+  "downloads.video.download": "I-download para mapanood offline",
+  "lesson.videoCard.online": "Napapanood kapag may koneksyon",
+  "lesson.videoCard.kept": "Nasa device mo, napapanood offline",
+  "lesson.videoCard.failed": "Hindi ma-play ang video ngayon. Ituloy ang aralin at subukang muli mamaya.",
 }

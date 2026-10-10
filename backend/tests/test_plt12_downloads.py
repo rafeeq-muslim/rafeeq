@@ -94,10 +94,27 @@ async def test_plt12_r1_catalog_has_three_sections_and_units_with_sizes(client, 
 async def test_plt12_r2_unit_carries_its_lessons_text_photos_and_media_in_language(client, upstream, mushaf):
     files = {f["key"]: f for f in _items(await _catalog(client))["unit:u01:ar"]["files"]}
     assert "/api/content?lang=ar" in files  # the approved lessons' text, as the app asks for it
-    videos = [k for k in files if k.endswith(".mp4")]
-    assert len(videos) == 2 and all("/ar/" in k for k in videos)  # wudu + prayer, Arabic only
+    assert not [k for k in files if k.endswith(".mp4")]  # owner decision 2026-10-10: no videos in a unit download
+    assert any(k.endswith(".mp3") for k in files)  # its audio (Al-Fatiha) stays
     assert any(k.startswith("/api/content/media/unit-01/images/") for k in files)  # step photos
     assert all(f["url"] == f"/api/downloads/file/{f['id']}" for k, f in files.items() if k.startswith("https://"))  # same origin only
+
+
+async def test_plt12_videos_are_items_of_their_own_outside_the_unit_size(client, upstream, mushaf):
+    """Owner decision 2026-10-10: a unit downloads without its videos; each video is offered apart, with its size."""
+    wudu = "https://d1.islamhouse.com/data/ar/ih_videos/mp4/single/ar-sifat-alwoduo.mp4"
+    upstream.sizes[wudu] = int(22 * MB)
+    items = _items(await _catalog(client))
+    unit = items["unit:u01:ar"]
+    assert unit["bytes"] < 10 * MB  # text, photos, audio (the 22 MB video is not counted)
+    videos = [i for i in items.values() if i["kind"] == "video" and i["unit"] == "u01"]
+    assert len(videos) == 2 and all("/ar/" in i["files"][0]["key"] for i in videos)  # wudu + prayer, once each, Arabic only
+    one = next(i for i in videos if i["files"][0]["key"] == wudu)
+    assert one["id"] == f"video:{downloads.file_id(wudu)}" and one["section"] == "lessons" and one["title"]
+    assert one["bytes"] == int(22 * MB) and one["downloadable"]
+    assert (await client.get(f"/api/downloads/catalog/{one['id']}?lang=ar")).json()["bytes"] == int(22 * MB)
+    r = await client.get(one["files"][0]["url"], headers={"Range": "bytes=0-99"})  # streamed on play, by its id
+    assert r.status_code == 206
 
 
 async def test_plt12_r2_item_detail_resolves_every_size_before_download(client, upstream, mushaf):

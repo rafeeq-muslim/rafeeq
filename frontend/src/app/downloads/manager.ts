@@ -210,11 +210,27 @@ export async function removeAll() {
 }
 
 /**
+ * Owner decision 2026-10-10: videos left the unit download. A video that a unit
+ * downloaded earlier already holds becomes a downloaded item of its own, so the
+ * unit's update (which drops files it no longer lists) never deletes it; it
+ * keeps playing offline, and the learner removes it from the center if they wish.
+ */
+function adoptVideos(items: CatalogItem[]) {
+  for (const next of items) {
+    if (next.kind !== "video" || store().items[next.id]) continue
+    const holder = Object.values(store().items).find((i) => next.files.every((f) => i.done.includes(f.key)))
+    if (!holder) continue
+    store().put({ ...fromCatalog(next, holder.lang), done: next.files.map((f) => f.key), status: "done" })
+  }
+}
+
+/**
  * R3: compare the downloaded items with the catalogue. Changed text is fetched
  * again now (silently); a changed or added media file is offered with its size.
  */
 export async function checkUpdates(catalog: Catalog) {
   const latest = new Map(Object.values(catalog.sections).flat().map((i) => [i.id, i]))
+  adoptVideos([...latest.values()])
   const cache = await deps.caches.open(DOWNLOADS_CACHE)
   for (const it of Object.values(store().items)) {
     const next = latest.get(it.id)

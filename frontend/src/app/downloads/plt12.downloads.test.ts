@@ -247,3 +247,44 @@ describe("plt-12-r1 storage in three parts", () => {
     vi.unstubAllGlobals()
   })
 })
+
+// Owner decision 2026-10-10: a unit downloads without its videos; each video is its own opt-in item.
+describe("plt-12 videos load lazily: never in a unit download, opt-in one by one", () => {
+  const WUDU = media("wudu.mp4", 2000)
+  const SALAH = media("salah.mp4", 2500)
+  const LEAN = item("unit:u01:ar", [text("/api/content?lang=ar", 300), media("fatiha.mp3", 400)], { version: "v2" })
+  const video = (f: CatalogFile) => item(`video:${f.id}`, [f], { kind: "video", ref: "u01-l3", unit: "u01", title: "الوضوء" })
+
+  it("plt12_videos_unit_download_fetches_no_video", async () => {
+    await download(LEAN, "ar")
+    expect(useDownloads.getState().items[LEAN.id].status).toBe("done")
+    expect(net.mock.calls.map((c) => c[0])).not.toContain(WUDU.url)
+    expect(cache.keysOf()).not.toContain(WUDU.key)
+  })
+
+  it("plt12_videos_one_video_downloads_on_request_and_is_deleted_alone", async () => {
+    await download(LEAN, "ar")
+    await download(video(WUDU), "ar")
+    expect(useDownloads.getState().items[`video:${WUDU.id}`].status).toBe("done")
+    expect(cache.keysOf()).toContain(WUDU.key)
+    expect(cache.keysOf()).not.toContain(SALAH.key)
+    await remove(`video:${WUDU.id}`)
+    expect(cache.keysOf()).not.toContain(WUDU.key)
+    expect(useDownloads.getState().items[LEAN.id].status).toBe("done") // the unit stays
+  })
+
+  it("plt12_videos_a_unit_downloaded_with_videos_keeps_them_as_items_of_their_own", async () => {
+    await download(item(LEAN.id, [...LEAN.files, WUDU, SALAH]), "ar") // before the decision: the unit held both videos
+    net.mockClear()
+    await checkUpdates(catalog(LEAN, video(WUDU), video(SALAH)))
+    const items = useDownloads.getState().items
+    expect(items[`video:${WUDU.id}`]).toMatchObject({ status: "done", done: [WUDU.key] })
+    expect(items[`video:${SALAH.id}`]).toMatchObject({ status: "done", done: [SALAH.key] })
+    expect(cache.keysOf()).toEqual(expect.arrayContaining([WUDU.key, SALAH.key])) // nothing deleted silently
+    expect(items[LEAN.id].files.map((f) => f.key)).not.toContain(WUDU.key)
+    expect(net.mock.calls.map((c) => c[0])).not.toContain(WUDU.url) // nothing fetched again
+    await remove(`video:${WUDU.id}`) // the learner removes a video from the center when they wish
+    expect(cache.keysOf()).not.toContain(WUDU.key)
+    expect(cache.keysOf()).toContain(SALAH.key)
+  })
+})

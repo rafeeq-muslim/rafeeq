@@ -96,6 +96,13 @@ export function storedBytes(item: SavedItem): number {
   return item.files.filter((f) => done.has(f.key)).reduce((n, f) => n + (f.bytes ?? 0), 0)
 }
 
+/** Whether a file (by the URL the app requests) is complete on this device, in any
+ * download: a lesson video downloaded alone, or held by a unit downloaded before
+ * videos left the unit (owner decision 2026-10-10). */
+export function useHeld(key: string): boolean {
+  return useDownloads((s) => Object.values(s.items).some((i) => i.done.includes(key)))
+}
+
 /** Bytes all downloads take, each shared file counted once (R4: the storage numbers). */
 export function totalStored(items: Record<string, SavedItem>): number {
   const seen = new Map<string, number>()

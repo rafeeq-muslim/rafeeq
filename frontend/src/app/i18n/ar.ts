@@ -1227,7 +1227,7 @@ export const ar = {
   "offline.loadFailed.title": "تعذّر فتح هذه الشاشة",
   "offline.loadFailed.body": "ربما صدر إصدار أحدث من رفيق. أعد المحاولة لتفتح.",
   "offline.home": "إلى الرئيسية",
-  "offline.video": "المقطع يحتاج اتصالًا أو تنزيل الوحدة. أكمل درسك، وشاهده حين تتصل.",
+  "offline.video": "يحتاج هذا المقطع اتصالًا. أكمل درسك، وشاهده حين تتصل، ولك حينها أن تنزّله وحده ليبقى معك.",
   "offline.cityList": "قائمة المدن تحتاج اتصالًا أول مرة. اتصل مرة واحدة لتختار مدينتك، وبعدها تعمل المواقيت دون اتصال.",
   "offline.savedItem": "تعذّر عرض هذا المحفوظ الآن. سيظهر حين يعود الاتصال.",
   "offline.libraryList": "المكتبة تحتاج اتصالًا أول مرة. ستظهر حين يعود الاتصال.",
@@ -1593,4 +1593,12 @@ export const ar = {
   "ask.context.dismiss": "اسأل دون سياق الدرس",
   // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
   "acct.inviteReissue": "هذا الرمز قديم ولم يعد يصلح. اطلب رمزًا جديدًا ممن أرسله إليك.",
+  // --- PLT-12 (plt-12-videos-lazy): owner decision 2026-10-10, a unit downloads without its videos; each video plays online or is downloaded on its own ---
+  "downloads.video.name": "مقطع: {name}",
+  "downloads.video.unitNote": "دون مقاطع الفيديو: تُشاهد مع الاتصال، ولك أن تنزّل ما شئت منها وحده.",
+  "downloads.video.listLabel": "مقاطع الفيديو في هذه الوحدة",
+  "downloads.video.download": "نزّله للمشاهدة دون اتصال",
+  "lesson.videoCard.online": "يعمل مع الاتصال",
+  "lesson.videoCard.kept": "على جهازك، يعمل دون اتصال",
+  "lesson.videoCard.failed": "تعذّر تشغيل المقطع الآن. أكمل درسك، وأعد المحاولة بعد قليل.",
 } as const

@@ -1228,7 +1228,7 @@ export const en: Dict = {
   "offline.loadFailed.title": "This screen didn't open",
   "offline.loadFailed.body": "A newer version of Rafeeq may be out. Try again to open it.",
   "offline.home": "Go to Home",
-  "offline.video": "This video needs a connection or the unit downloaded. Carry on with your lesson and watch it when you're connected.",
+  "offline.video": "This video needs a connection. Carry on with your lesson and watch it when you're connected; you can then download it on its own to keep it.",
   "offline.cityList": "The city list needs a connection the first time. Connect once to choose your city; after that prayer times work offline.",
   "offline.savedItem": "This saved item can't be shown right now. It will appear when you're back online.",
   "offline.libraryList": "The library needs a connection the first time. It will appear when you're back online.",
@@ -1594,4 +1594,12 @@ export const en: Dict = {
   "ask.context.dismiss": "Ask without the lesson context",
   // B-H1 follow-up (sec-b-h1-genderless-invite-and-admin-code-row): a mentor code without a stored gender
   "acct.inviteReissue": "This code is an old one and no longer works. Ask whoever sent it for a new code.",
+  // --- PLT-12 (plt-12-videos-lazy): owner decision 2026-10-10, a unit downloads without its videos; each video plays online or is downloaded on its own ---
+  "downloads.video.name": "Video: {name}",
+  "downloads.video.unitNote": "Videos not included: they play when you're online, and you can download any of them on its own.",
+  "downloads.video.listLabel": "Videos in this unit",
+  "downloads.video.download": "Download to watch offline",
+  "lesson.videoCard.online": "Plays when you're online",
+  "lesson.videoCard.kept": "On your device, plays offline",
+  "lesson.videoCard.failed": "The video couldn't play just now. Carry on with your lesson and try again in a moment.",
 }

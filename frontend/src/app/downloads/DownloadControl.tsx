@@ -34,12 +34,16 @@ type Props = {
   withDelete?: boolean
   /** Library: open the downloaded copy instead of the website. */
   openable?: boolean
+  /** The catalogue entry when the caller has it (a lesson video): the whole catalogue is not loaded. */
+  entry?: CatalogItem
+  /** The download button's words in place of «نزّل» (a lesson video says what it is for). */
+  action?: string
 }
 
-export function DownloadControl({ itemId, lang, withDelete = false, openable = false }: Props) {
+export function DownloadControl({ itemId, lang, withDelete = false, openable = false, entry, action }: Props) {
   const { t, locale } = useT()
-  const catalog = useCatalog(lang)
-  const item = catalog.data ? Object.values(catalog.data.sections).flat().find((i) => i.id === itemId) : undefined
+  const catalog = useCatalog(lang, !entry)
+  const item = entry ?? (catalog.data ? Object.values(catalog.data.sections).flat().find((i) => i.id === itemId) : undefined)
   const saved = useDownloads((s) => s.items[itemId])
   const progress = useDownloads((s) => s.progress[itemId] ?? 0)
   const [asking, setAsking] = React.useState<CatalogItem | null>(null)
@@ -104,7 +108,7 @@ export function DownloadControl({ itemId, lang, withDelete = false, openable = f
           onClick={() => void ask(item)}
         >
           <IconDownload data-icon="inline-start" stroke={1.75} />
-          {t("downloads.download")} <span className="tabular-nums text-muted-foreground">{item.sizes_known ? formatSize(item.bytes, t) : `≥ ${formatSize(item.bytes, t)}`}</span>
+          {action ?? t("downloads.download")} <span className="tabular-nums text-muted-foreground">{item.sizes_known ? formatSize(item.bytes, t) : `≥ ${formatSize(item.bytes, t)}`}</span>
         </Button>
         {confirmDialog}
       </>
