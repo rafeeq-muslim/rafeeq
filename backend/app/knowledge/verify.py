@@ -17,6 +17,9 @@ Code checks (no model):
     retrieved Quran or hadith passage outside markers
   8 no web address, e-mail, account name (@name) or HTML/Markdown markup
     outside markers (security review 2026-10-07, B-L1)
+  9 no passage id left as text outside a marker («[islamqa:en:1:p1]»); a
+    bracketed list of retrieved ids is written as markers before this
+    (textcheck.fix_bracket_citations), counted as malformed_marker
 Then a fast-model support check: every sentence is supported by the cited
 passages. If the checker cannot run, the answer is not shown (fail closed).
 """
@@ -31,6 +34,7 @@ from app.knowledge.ai.client import AiUnavailable
 from app.knowledge.ai.textcheck import (
     MARKER,
     has_arabic,
+    has_raw_id,
     language_matches,
     link_or_markup,
     longest_quote_words,
@@ -78,8 +82,10 @@ def code_checks(out: dict[str, Any], lang: str, retrieved: dict[str, dict[str, A
     ids = cited_ids(out)
     if not ids:
         fails.append("no_citation")
-    if "{{" in body or "}}" in body:
-        fails.append("malformed_marker")  # e.g. {{binbaz:ar:1}} without "q:": never shown as text
+    if "{{" in body or "}}" in body or has_raw_id(body):
+        # e.g. {{binbaz:ar:1}} without "q:", or «[islamqa:en:1:p1]» left as text
+        # (one not retrieved, or not in brackets): a passage id is never shown.
+        fails.append("malformed_marker")
     if any(i not in retrieved for i in ids):
         fails.append("unretrieved_reference")  # 2
     if lang != "ar" and has_arabic(body):

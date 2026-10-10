@@ -9,11 +9,20 @@ import type { LiveSearchEntry, SourceCard } from "./types"
 export type Segment = { type: "text"; text: string } | { type: "quote"; source: SourceCard }
 
 const MARKER = /\{\{q:([^{}\s]+)\}\}/g
+/** A passage id as text («islamqa:en:193670:p1», «live:binbaz:ar:1:c2»); same shape as the server's textcheck.RAW_ID. */
+const RAW_ID = String.raw`(?<![\w{:])(?:q:\s*)?(?:live:)?[a-z][a-z0-9_]*:[a-z][a-z0-9_]*:[A-Za-z0-9_.:-]*[A-Za-z0-9]`
+const RAW_ID_LIST = new RegExp(String.raw`\s*[\[(]\s*${RAW_ID}(?:\s*[,;،]\s*${RAW_ID})*\s*[\])]`, "g")
+const RAW_ID_ANY = new RegExp(RAW_ID, "g")
 
 /** Trim, and drop punctuation stranded at the start by a marker («{{q:x}}. Then…»). */
 const tidy = (s: string) =>
   s
     .replace(/\{\{[^{}]*\}\}/g, " ") // a malformed marker is never shown (the server rejects it too)
+    // A passage id is never shown as text, bracketed or bare (the server rejects it too; KNW-01 2026-10-10).
+    .replace(RAW_ID_LIST, "")
+    .replace(RAW_ID_ANY, " ")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/[ \t]+([.,،;؛])/gu, "$1")
     .trim()
     .replace(/^[.,،;؛:]+\s*/u, "")
 
