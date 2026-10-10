@@ -105,6 +105,8 @@ export default function InboxThread() {
   }
 
   const name = r ? requesterName(t, r, myGender) : ""
+  // CMP-02 R8: the team reads an escalated private thread whole, from its first message.
+  const staffEscalated = !!r?.escalated && !r.assigned_to_me
   const items: ChatItem[] = history.messages.map((m) =>
     inboxChatItem(m, t, {
       name,
@@ -136,7 +138,7 @@ export default function InboxThread() {
                 )}
                 {r.can_close !== false && (
                   <DropdownMenuItem className="min-h-11 text-label" onSelect={() => setConfirmClose(true)}>
-                    {t("cmp.inbox.close")}
+                    {t(staffEscalated ? "cmp.mod.endEscalation" : "cmp.inbox.close")}
                   </DropdownMenuItem>
                 )}
               </DropdownMenuContent>
@@ -159,6 +161,11 @@ export default function InboxThread() {
               {r.topic && <Badge variant="outline">{t(`cmp.topic.${r.topic}`)}</Badge>}
               {r.source && <span className="text-caption text-muted-foreground">{t(`cmp.from.${r.source}`)}</span>}
             </div>
+            {staffEscalated && (
+              <Alert variant="warning" data-slot="escalated-hint">
+                <AlertDescription className="text-body">{t("cmp.mod.escalatedHint")}</AlertDescription>
+              </Alert>
+            )}
             {!r.can_reply && (
               <Alert variant="destructive">
                 <AlertDescription>{t("cmp.inbox.alertBody")}</AlertDescription>
@@ -213,9 +220,9 @@ export default function InboxThread() {
       <Confirm
         open={confirmClose}
         onOpenChange={setConfirmClose}
-        title={t("cmp.inbox.closeConfirmTitle")}
-        description={t("cmp.inbox.closeConfirmBody")}
-        confirmLabel={t("cmp.inbox.close")}
+        title={t(staffEscalated ? "cmp.mod.endEscalation" : "cmp.inbox.closeConfirmTitle")}
+        description={t(staffEscalated ? "cmp.mod.endEscalationBody" : "cmp.inbox.closeConfirmBody")}
+        confirmLabel={t(staffEscalated ? "cmp.mod.endEscalation" : "cmp.inbox.close")}
         cancelLabel={t("common.cancel")}
         onConfirm={() => void close()}
       />

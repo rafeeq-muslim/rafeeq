@@ -14,8 +14,13 @@ Security review B-M1: leading a group needs the mentor role and an open
 mentor gate on every call, not only at creation (`access`). A suspended
 mentor, one whose approval was withdrawn, or an account that lost the role
 gets 403 on his groups; the members keep the group, and the team acts on
-reports as before. What becomes of such a group later (a new mentor, closing
-it) is an open question for the Companion owner (CMP-05 open questions).
+reports as before.
+
+CMP-05 R8/R9 (owner decision 2026-10-10): such a group «needs a mentor». Its
+members read and do not post, and nobody joins, until the team assigns a
+mentor (`moderation.py`) or the mentor is in good standing again. The team
+also pauses (nobody posts) or closes (final; places freed) a group; `state`
+says which of active | needs_mentor | paused | closed applies.
 """
 
 import secrets
@@ -40,6 +45,7 @@ CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"  # no 0/O, 1/I/L
 DEFAULT_CAPACITY = 10
 MAX_CAPACITY = 15
 MENTOR_MEMBER_LIMIT = 25  # R1: across all of one mentor's groups
+ACTIVE, NEEDS_MENTOR, PAUSED, CLOSED = "active", "needs_mentor", "paused", "closed"
 
 
 async def mentor_only(user: CurrentUser, session: Session) -> User:
@@ -61,6 +67,17 @@ async def may_lead(session, user: User) -> bool:
     except HTTPException:
         return False
     return True
+
+
+async def state_of(session, g: Group, mentor: User | None = None) -> str:
+    """R8/R9: closed and paused are the team's; «needs a mentor» follows from
+    the mentor's standing now (suspended, approval withdrawn, role removed)."""
+    if g.status == CLOSED:
+        return CLOSED
+    mentor = mentor or await session.get(User, g.mentor_id)
+    if mentor is None or not await may_lead(session, mentor):
+        return NEEDS_MENTOR
+    return PAUSED if g.status == PAUSED else ACTIVE
 
 
 class GroupIn(BaseModel):
@@ -90,6 +107,7 @@ class GroupOut(BaseModel):
     role: str  # mentor | member
     join_code: str | None = None  # the mentor only
     members: list[MemberOut] = []
+    state: str = ACTIVE  # R8/R9: active | needs_mentor | paused | closed; posting only when active
 
 
 class JoinIn(BaseModel):
@@ -132,6 +150,7 @@ async def _out(session, g: Group, me: User, with_members: bool = False) -> Group
         mentor_name=mentor.display_name if mentor else "",
         role="mentor" if is_mentor else "member",
         join_code=g.join_code if is_mentor else None,
+        state=await state_of(session, g, mentor),
     )
     if with_members:
         rows = await session.execute(
@@ -162,7 +181,8 @@ async def access(session, group_id: uuid.UUID, me: User) -> tuple[Group, bool]:
 async def _check_member_limit(session, mentor_id: uuid.UUID, capacity: int, *, besides: uuid.UUID | None = None) -> None:
     """R1 ex3: the places in all of a mentor's groups stay within 25. A group's
     places are its cap, so raising a cap counts like a new group."""
-    q = select(func.coalesce(func.sum(Group.capacity), 0)).where(Group.mentor_id == mentor_id)
+    # R8: a closed group's places are free again.
+    q = select(func.coalesce(func.sum(Group.capacity), 0)).where(Group.mentor_id == mentor_id, Group.status != CLOSED)
     if besides is not None:
         q = q.where(Group.id != besides)
     used = await session.scalar(q) or 0
@@ -224,13 +244,21 @@ async def join(body: JoinIn, session: Session, me: CurrentUser) -> GroupOut:
         raise HTTPException(status.HTTP_409_CONFLICT, "match_profile_required")
     if me.gender != g.gender or g.lang not in (me.languages or [me.locale]):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "group_not_suitable")  # R2: no details
-    current = await session.scalar(select(GroupMember.group_id).where(GroupMember.user_id == me.id).limit(1))
+    # R2: one group at a time; a closed group no longer counts (R8).
+    current = await session.scalar(
+        select(GroupMember.group_id)
+        .join(Group, Group.id == GroupMember.group_id)
+        .where(GroupMember.user_id == me.id, Group.status != CLOSED)
+        .limit(1)
+    )
     if current == g.id:
         return await _out(session, g, me, with_members=True)
     if current is not None:
         raise HTTPException(status.HTTP_409_CONFLICT, "already_in_group")
     if await session.get(GroupRemoval, (g.id, me.id)) is not None:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "group_unavailable")  # R5 ex2: neutral, no reason given (CMP-04 R5)
+    if await state_of(session, g) != ACTIVE:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "group_unavailable")  # R8/R9: paused, closed or waiting for a mentor
     if await _count(session, g.id) >= g.capacity:
         raise HTTPException(status.HTTP_409_CONFLICT, "group_full")
     session.add(GroupMember(group_id=g.id, user_id=me.id, joined_at=now()))
@@ -252,6 +280,8 @@ async def set_capacity(group_id: uuid.UUID, body: CapacityIn, session: Session, 
     g, is_mentor = await access(session, group_id, me)
     if not is_mentor:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "mentors_only")
+    if g.status == CLOSED:
+        raise HTTPException(status.HTTP_409_CONFLICT, "group_closed")
     if body.capacity < await _count(session, g.id):
         raise HTTPException(status.HTTP_409_CONFLICT, "below_members")
     await _check_member_limit(session, me.id, body.capacity, besides=g.id)
@@ -317,6 +347,9 @@ async def messages(group_id: uuid.UUID, session: Session, me: CurrentUser, after
 @router.post("/{group_id}/messages", status_code=201, response_model=GroupMessageOut)
 async def post(group_id: uuid.UUID, body: MessageIn, session: Session, me: CurrentUser) -> GroupMessageOut:
     g, is_mentor = await access(session, group_id, me)
+    state = await state_of(session, g)
+    if state != ACTIVE:
+        raise HTTPException(status.HTTP_409_CONFLICT, f"group_{state}")  # R8/R9: members read, nobody posts
     ratelimit.hit(f"group-msg:{me.id}", 20, 60)
     text = await clean_body_async(body.body)
     m = GroupMessage(group_id=g.id, author_id=me.id, body=text, created_at=now())

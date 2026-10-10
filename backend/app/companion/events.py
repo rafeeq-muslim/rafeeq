@@ -32,7 +32,12 @@
   `{mentor_id}`. The same for links and requests as a suspension, with the
   same neutral notice. The profile is not marked suspended (the missing role
   already closes the inbox, and an organisation's own suspension stays what
-  it was), and groups are not touched. Giving the role back restores no link.
+  it was). Giving the role back restores no link.
+- Both, for groups (CMP-05 R9, owner decision 2026-10-10): each of his groups
+  that is not closed now «needs a mentor» (`groups.state_of`): its members get
+  a neutral notice and the team and admins a neutral push, once, when the
+  mentor goes from good standing to not. The group itself is not changed: a
+  reinstated mentor finds it again unless the team assigned another.
 """
 
 import uuid
@@ -42,7 +47,7 @@ from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companion import notify, urgent
-from app.companion.models import GroupMessage, HelpRequest, MenteeStatus, MentorApplication, MentorEnded, MentorLink
+from app.companion.models import Group, GroupMember, GroupMessage, HelpRequest, MenteeStatus, MentorApplication, MentorEnded, MentorLink
 from app.core.events import subscribe
 
 LANGS = {"ar", "en", "tl"}
@@ -107,13 +112,38 @@ async def on_mentor_suspended(session: AsyncSession, payload: dict) -> None:
 
     mentor_id = uuid.UUID(str(payload["mentor_id"]))
     prof = await profile_of(session, mentor_id)
+    was_suspended = prof.suspended
     prof.suspended = True
     await release_mentees(session, mentor_id)
+    if not was_suspended:
+        await groups_need_mentor(session, mentor_id)
 
 
 @subscribe("MentorRoleRemoved")
 async def on_mentor_role_removed(session: AsyncSession, payload: dict) -> None:
-    await release_mentees(session, uuid.UUID(str(payload["mentor_id"])))
+    from app.companion.models import MentorProfile
+
+    mentor_id = uuid.UUID(str(payload["mentor_id"]))
+    await release_mentees(session, mentor_id)
+    prof = await session.get(MentorProfile, mentor_id)
+    if prof is None or not prof.suspended:  # a suspended mentor's groups were already flagged
+        await groups_need_mentor(session, mentor_id)
+
+
+STAFF = ["team", "admin"]
+
+
+async def groups_need_mentor(session: AsyncSession, mentor_id: uuid.UUID) -> None:
+    """CMP-05 R9: his groups wait for a mentor. Members are told, neutrally,
+    that one is being arranged (the group page says the rest); the team and
+    admins get a neutral push and find the groups first in their list."""
+    groups = list(await session.scalars(select(Group.id).where(Group.mentor_id == mentor_id, Group.status != "closed")))
+    if not groups:
+        return
+    members = set(await session.scalars(select(GroupMember.user_id).where(GroupMember.group_id.in_(groups))))
+    for user_id in members:
+        notify.later(notify.to_user, user_id, "notice", "/mentor/group")
+    notify.later(notify.to_role, STAFF, "notice", "/staff-groups")
 
 
 async def release_mentees(session: AsyncSession, mentor_id: uuid.UUID) -> None:

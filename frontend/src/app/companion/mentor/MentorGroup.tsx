@@ -23,6 +23,7 @@ import { initial, langName, weekdayDate } from "../format"
 import { ScreenBar, SectionTitle } from "../Screen"
 import { CreateChallenge } from "./CreateChallenge"
 import { CopyCode, GroupCapacity } from "./MentorGroupsTab"
+import { GroupStateNotice } from "../staff/StaffGroups"
 
 export default function MentorGroup() {
   const { id } = useParams()
@@ -117,13 +118,19 @@ export default function MentorGroup() {
               <SectionTitle id="mchat-title">{t("cmp.group.chat")}</SectionTitle>
               <ChatList items={items} empty={<p className="text-center text-body text-muted-foreground">{t("cmp.group.chatEmpty")}</p>} />
             </section>
-            <Composer
-              placeholder={t("cmp.group.placeholder")}
-              onSend={async (text) => {
-                await groupApi.post(g.id, text)
-                await qc.invalidateQueries({ queryKey: ["cmp", "group-messages", g.id] })
-              }}
-            />
+            {!g.state || g.state === "active" ? (
+              <Composer
+                placeholder={t("cmp.group.placeholder")}
+                onSend={async (text) => {
+                  await groupApi.post(g.id, text)
+                  await qc.invalidateQueries({ queryKey: ["cmp", "group-messages", g.id] })
+                }}
+              />
+            ) : (
+              <div className="sticky bottom-0 pb-4">
+                <GroupStateNotice state={g.state} mentor />
+              </div>
+            )}
 
             <CreateChallenge group={g} open={creating} onOpenChange={setCreating} />
             <Drawer open={membersOpen} onOpenChange={setMembersOpen}>
