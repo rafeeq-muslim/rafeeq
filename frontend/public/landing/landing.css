@@ -112,6 +112,7 @@ html:not(.js) [data-sc-cue], html:not(.js) [data-sc-in], html:not(.js) [data-sc-
 .body { margin: 0; text-wrap: pretty; max-width: 34rem; }
 .caption { font-size: var(--fs-caption); line-height: 1.55; }
 .book { font-weight: 700; white-space: nowrap; }
+@media (max-width: 359px) { .book { white-space: normal; } } /* a long title must not widen the smallest phones */
 .nw { white-space: nowrap; }
 
 /* ------------------------------------------------------------ buttons
@@ -244,6 +245,12 @@ html:not(.js) [data-sc-cue], html:not(.js) [data-sc-in], html:not(.js) [data-sc-
 }
 .bar.is-day .btn--night { background: var(--rf-violet); color: var(--rf-white); --lip: var(--rf-deep); }
 @media (min-width: 1100px) { .bar__dock { visibility: hidden; } }
+/* smallest phones: the Latin wordmark, the dock and three languages fit the bar */
+@media (max-width: 359px) {
+  .bar { gap: 8px; }
+  .bar__brand, .bar__brand img { height: 28px; }
+  .bar .lang a { min-width: 40px; padding: 0 6px; }
+}
 
 .lang { display: flex; align-items: center; gap: 2px; padding: 3px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22); }
 .bar.is-day .lang { box-shadow: inset 0 0 0 1px var(--rf-line); }
@@ -478,6 +485,8 @@ html:not(.js) .static-flower, .rm .static-flower { display: block; }
 .bloom__p { margin: 12px 0 0; color: #ded9fb; max-width: 30rem; }
 .bloom__cta { margin-top: clamp(16px, 3svh, 30px); display: grid; justify-items: center; gap: 10px; }
 .bloom__cta .hero__note { text-align: center; }
+/* a long call to action (Tagalog at 320px) wraps instead of widening the page */
+.bloom__cta .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.3; padding-block: 10px; }
 .bloom__mentor { margin: clamp(14px, 2.6svh, 28px) 0 0; font-size: var(--fs-label); color: #cfc9f3; max-width: 34rem; }
 .bloom__mentor a { color: var(--rf-violet-200); font-weight: 700; text-underline-offset: 0.3em; }
 .foot { margin-top: auto; padding-top: 14px; width: 100%; max-width: 60rem; border-top: 1px solid rgb(255 255 255 / 0.12); color: #b9b2e6; font-size: var(--fs-caption); display: flex; flex-wrap: wrap; gap: 4px 18px; justify-content: center; }
