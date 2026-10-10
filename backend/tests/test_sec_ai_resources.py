@@ -4,6 +4,7 @@ connection across slow calls, bounded AI requests and notifications), M5
 Model calls are scripted (tests/knw_fakes.py); no network."""
 
 import asyncio
+import contextlib
 import threading
 import uuid
 from pathlib import Path
@@ -13,7 +14,7 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy import update
 
 from app.companion import notify
-from app.core import pwhash, security
+from app.core import limits, pwhash, security
 from app.core.config import Settings, get_settings
 from app.core.db import SessionLocal, engine
 from app.knowledge import ask, library_search
@@ -175,39 +176,21 @@ def test_sec_m1_a_request_waits_only_seconds_for_a_connection():
     assert engine.pool.timeout() <= 5
 
 
-# --- M1: a bounded number of AI-backed requests at once -----------------------------
+# --- M1: one client's AI-backed requests at once are bounded -----------------------
+# Owner decision 2026-10-10 (plt-admin-limits): no global ceiling and no wait
+# for a place (tests/test_plt_admin_limits.py); the per-client places remain.
 
 
-async def test_sec_m1_gate_bounds_concurrent_requests_and_frees_places(monkeypatch):
-    st = get_settings()
-    monkeypatch.setattr(st, "ai_max_concurrent_requests", 1)
-    monkeypatch.setattr(st, "ai_gate_wait_seconds", 0.05)
-    async with gate.slot("a"):
-        assert gate.running() == 1
-        with pytest.raises(gate.Busy):
-            async with gate.slot("b"):
-                pass
-    assert gate.running() == 0
-    async with gate.slot("b"):  # the place is free again
-        pass
-
-    monkeypatch.setattr(st, "ai_gate_wait_seconds", 2.0)
-
-    async def short():
-        async with gate.slot("a"):
-            await asyncio.sleep(0.05)
-
-    task = asyncio.create_task(short())
-    await asyncio.sleep(0)
-    async with gate.slot("b"):  # waits for the place instead of failing
-        assert task.done()
-    await task
+async def test_sec_m1_gate_has_no_global_ceiling_and_frees_places():
+    async with contextlib.AsyncExitStack() as stack:
+        for n in range(50):
+            await stack.enter_async_context(gate.slot(f"client-{n}"))
+        assert gate.running() == 50
+    assert gate.running() == 0 and gate._per_client == {}
 
 
-async def test_sec_m1_one_client_cannot_hold_every_place(monkeypatch):
-    st = get_settings()
-    monkeypatch.setattr(st, "ai_max_concurrent_requests", 4)
-    monkeypatch.setattr(st, "ai_max_concurrent_per_client", 2)
+async def test_sec_m1_one_client_cannot_open_unbounded_requests():
+    limits.override("ai_concurrent_per_client", 2)
     async with gate.slot("a"), gate.slot("a"):
         with pytest.raises(gate.Busy):
             async with gate.slot("a"):
@@ -217,16 +200,14 @@ async def test_sec_m1_one_client_cannot_hold_every_place(monkeypatch):
     assert gate.running() == 0 and gate._per_client == {}
 
 
-async def test_sec_m1_busy_gate_gives_the_fallback_not_an_error(client, ai, seed, monkeypatch):  # noqa: F811
-    st = get_settings()
-    monkeypatch.setattr(st, "ai_max_concurrent_requests", 1)
-    monkeypatch.setattr(st, "ai_gate_wait_seconds", 0.05)
+async def test_sec_m1_busy_client_gives_the_fallback_not_an_error(client, ai, seed):  # noqa: F811
+    limits.override("ai_concurrent_per_client", 1)
     ai.always("explainer", {"text": "The intention is made in the heart."}).always("support", SUPPORTED)
-    async with gate.slot("someone-else"):
+    async with gate.slot("a:127.0.0.1"):  # this test client already has one running
         r = await client.post("/api/learning/explain", json=EXPLAIN)
         assert r.status_code == 200 and r.json() == {"text": None}
         r = await client.post("/api/ask", json=QUESTION)
-        assert r.status_code == 200 and r.json()["reason_code"] == "temporarily_unavailable"
+        assert r.status_code == 200 and r.json()["reason_code"] == "temporarily_unavailable" and r.json()["retryable"] is True
         assert ai.calls == []
         danger = await client.post("/api/ask", json={"question": "They beat me at home", "lang": "en"})
         assert danger.json()["outcome"] == "danger"  # rules.md §2.8

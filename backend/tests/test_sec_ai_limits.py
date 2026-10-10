@@ -5,9 +5,10 @@ calls are scripted (tests/knw_fakes.py); no network."""
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from app.core import clientkey
+from app.core import clientkey, limits
 from app.core.config import get_settings
 from app.knowledge import library_search
+from app.knowledge.ai import gate
 from app.learning import content
 from app.main import app
 from tests.conftest import auth, register
@@ -129,17 +130,19 @@ async def test_sec_l5_library_search_is_limited_by_address_and_account(sites):  
             assert r.status_code == 429 and r.headers["cache-control"] == "no-store"
 
 
-# --- the global per-minute cap degrades, never errors -----------------------------
+# --- one client over its places degrades, never errors -------------------------------
+# Owner decision 2026-10-10 (plt-admin-limits): the global per-minute cap is
+# gone (tests/test_plt_admin_limits.py); the per-client places remain.
 
 
-async def test_sec_h3_global_cap_gives_fallbacks_without_a_model_call(ai, seed, monkeypatch):
-    monkeypatch.setattr(get_settings(), "ai_global_requests_per_minute", 2)
+async def test_sec_h3_a_client_over_its_places_gets_fallbacks_without_a_model_call(ai, seed):
+    limits.override("ai_concurrent_per_client", 1)
     ai.always("explainer", {"text": "The intention is made in the heart."}).always("support", SUPPORTED)
-    async with at("203.0.113.1") as a, at("203.0.113.2") as b, at("203.0.113.3") as c:
+    async with at("203.0.113.1") as a, at("203.0.113.2") as b, at("203.0.113.3") as c, gate.slot("a:203.0.113.3"):
         assert (await a.post("/api/learning/explain", json=EXPLAIN)).json()["text"]
         assert (await b.post("/api/learning/explain", json=EXPLAIN)).json()["text"]
         calls = len(ai.calls)
-        # the cap is reached: every AI-backed route answers 200 with its fallback
+        # c already has a request running: every AI-backed route answers 200 with its fallback
         r = await c.post("/api/learning/explain", json=EXPLAIN)
         assert r.status_code == 200 and r.json() == {"text": None}
         r = await c.post("/api/learning/guide", json=GUIDE)
@@ -154,8 +157,8 @@ async def test_sec_h3_global_cap_gives_fallbacks_without_a_model_call(ai, seed, 
             True,
         )
         assert out["should_escalate"] is True  # «أريد إنسانًا» is still offered
-        assert len(ai.calls) == calls  # no paid call past the cap
-        # rules.md §2.8: a danger message is never held back by the cap
+        assert len(ai.calls) == calls  # no paid call past the limit
+        # rules.md §2.8: a danger message is never held back by the limit
         r = await c.post("/api/ask", json=ASK)
         assert r.json()["outcome"] == "danger" and r.json()["handoff"]["kind"] == "urgent"
 

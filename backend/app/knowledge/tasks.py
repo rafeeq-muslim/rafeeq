@@ -19,7 +19,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy import select
 
-from app.core import clientkey
+from app.core import clientkey, limits
 from app.core.db import release
 from app.core.deps import OptionalUser, Session, require_role
 from app.knowledge import glossary
@@ -177,8 +177,8 @@ async def explain_mistake(session, body: ExplainIn, client: str = "-") -> str | 
 
 @router.post("/explain")
 async def explain(body: ExplainIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    clientkey.hit("explain", request, user, 20, 60)
-    clientkey.hit("explain:d", request, user, 150, 86400)
+    clientkey.hit("explain", request, user, await limits.value("explain_per_minute"), 60)  # admin-editable (plt-admin-limits)
+    clientkey.hit("explain:d", request, user, limits.get("explain_per_day"), 86400)
     return {"text": await explain_mistake(session, body, clientkey.primary(request, user))}
 
 
@@ -267,8 +267,8 @@ async def write_guide(session, body: GuideIn, client: str = "-") -> str | None:
 
 @router.post("/guide")
 async def guide(body: GuideIn, session: Session, request: Request, user: OptionalUser) -> dict:
-    clientkey.hit("guide", request, user, 20, 60)
-    clientkey.hit("guide:d", request, user, 60, 86400)
+    clientkey.hit("guide", request, user, await limits.value("guide_per_minute"), 60)  # admin-editable (plt-admin-limits)
+    clientkey.hit("guide:d", request, user, limits.get("guide_per_day"), 86400)
     return {"text": await write_guide(session, body, clientkey.primary(request, user))}  # the summary is not stored (KNW-10 R4)
 
 

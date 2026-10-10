@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import ARRAY, String, cast, func, select
 
+from app.core import limits  # plt-admin-limits
 from app.core.deps import Session, require_role
 from app.core.events import publish
 from app.platform.models import ROLES, Invite, User
@@ -170,3 +171,61 @@ async def find_users(admin: Admin, session: Session, username: str) -> list[dict
     prefix = username.lower().replace("\\", "").replace("%", "").replace("_", "\\_")
     rows = (await session.scalars(select(User).where(User.username.ilike(f"{prefix}%", escape="\\")).limit(20))).all()
     return [{"id": str(u.id), "username": u.username, "display_name": u.display_name, "roles": u.roles, "gender": u.gender} for u in rows]
+
+
+# --- plt-admin-limits (owner decision 2026-10-10) ------------------------------
+# "These limits must be editable by superadmin." Rafeeq has no role above
+# admin, so the admin role edits them. Values, bounds and defaults:
+# app.core.limits. Every change is audited (limit, old, new, admin id).
+
+
+class LimitIn(BaseModel):
+    value: float
+
+
+def _limit_row(key: str) -> dict:
+    return next(r for r in limits.snapshot() if r["key"] == key)
+
+
+@router.get("/limits")
+async def list_limits(admin: Admin) -> list[dict]:
+    await limits.refresh(force=True)
+    return limits.snapshot()
+
+
+@router.put("/limits/{key}")
+async def set_limit(key: str, body: LimitIn, admin: Admin, session: Session) -> dict:
+    if key not in limits.SPECS:
+        raise HTTPException(404, "not_found")
+    try:
+        limits.check(key, body.value)
+    except ValueError as e:
+        raise HTTPException(422, f"limit_{e}") from None
+    await limits.save(session, key, body.value, admin.id)
+    return _limit_row(key)
+
+
+@router.delete("/limits/{key}")
+async def reset_limit(key: str, admin: Admin, session: Session) -> dict:
+    """Back to the code default."""
+    if key not in limits.SPECS:
+        raise HTTPException(404, "not_found")
+    await limits.save(session, key, None, admin.id)
+    return _limit_row(key)
+
+
+@router.get("/limit-changes")
+async def limit_changes(admin: Admin, session: Session) -> list[dict]:
+    """The latest 100 changes: which limit, from what to what, by which admin id."""
+    change = limits.LimitChange
+    rows = (await session.scalars(select(change).order_by(change.created_at.desc()).limit(100))).all()
+    return [
+        {
+            "key": c.key,
+            "old": c.old_value,
+            "new": c.new_value,
+            "admin_id": str(c.admin_id) if c.admin_id else None,
+            "at": c.created_at.isoformat(),
+        }
+        for c in rows
+    ]

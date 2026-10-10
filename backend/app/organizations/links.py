@@ -23,7 +23,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
 from sqlalchemy import delete, func, select
 
-from app.core import ratelimit
+from app.core import limits, ratelimit
 from app.core.deps import Session
 from app.motivation.public import current_status
 from app.organizations.models import Organization, OrgCode, OrgLink, OrgLinkStatus
@@ -35,8 +35,8 @@ INSTALL = Field(min_length=8, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
 # so a script can link many made-up devices and push a small number past the
 # «less than 10» rule (ORG-03 R2). Until install IDs are issued by the server
 # (product decision), one code takes a bounded number of new links a day and
-# the admin sees each code's counts. Default until the ORG owner decides.
-LINKS_PER_CODE_DAY = 200
+# the admin sees each code's counts. Default 200 until the ORG owner decides;
+# the admin changes it as `org_links_per_code_day` (app.core.limits, plt-admin-limits).
 
 
 async def links_last_day(session, org_id: uuid.UUID, lang: str, now: datetime) -> int:
@@ -118,7 +118,7 @@ async def link(body: LinkIn, session: Session, request: Request) -> LinkOut:
     await unlink(session, body.install_id)
     await session.flush()
     now = datetime.now(UTC)
-    if await links_last_day(session, org.id, row.lang, now) >= LINKS_PER_CODE_DAY:
+    if await links_last_day(session, org.id, row.lang, now) >= await limits.value("org_links_per_code_day"):
         await session.rollback()  # the device's previous link stays as it was
         raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "rate_limited")  # B-M4
     st = await current_status(session, body.install_id)

@@ -36,7 +36,7 @@ from app.companion.common import CurrentOwner, Owner, is_team, not_found, now
 from app.companion.groups import access, remove
 from app.companion.inbox import mentor_gate, visible_request
 from app.companion.models import Block, Group, GroupMessage, HelpMessage, HelpRequest, Report
-from app.core import ratelimit
+from app.core import limits, ratelimit
 from app.core.deps import CurrentUser, Session
 from app.platform.models import User
 
@@ -46,9 +46,9 @@ DANGER_TO_SOMEONE = "danger"  # «خطر على أحد»: top of the queue, team
 
 Reason = Literal["marriage", "money", "recruitment", "danger", "abuse", "other"]
 
-# B-L9 (defaults until the Companion owner decides): per reporter, per day.
-HIDE_PER_REPORTER_DAY = 5  # messages hidden for everyone
-HIDE_PER_AUTHOR_DAY = 2  # of them, written by the same person
+# B-L9: per reporter, per day: `report_hides_per_reporter_day` messages hidden
+# for everyone (default 5), `report_hides_per_author_day` of them written by the
+# same person (default 2). Admin-editable (app.core.limits, plt-admin-limits).
 HIDE_WINDOW = timedelta(hours=24)
 
 
@@ -59,7 +59,8 @@ async def _may_hide_for_all(session, owner: Owner, target_type: str, msg: GroupM
         return False  # the team looked and restored it: only the team hides it again
     mine = Report.reporter_id == owner.user.id if owner.user else Report.reporter_guest_hash == owner.token_hash
     recent = and_(mine, Report.reason.in_(DANGEROUS), Report.created_at > now() - HIDE_WINDOW)
-    if (await session.scalar(select(func.count()).select_from(Report).where(recent)) or 0) >= HIDE_PER_REPORTER_DAY:
+    cap = await limits.value("report_hides_per_reporter_day")
+    if (await session.scalar(select(func.count()).select_from(Report).where(recent)) or 0) >= cap:
         return False
     if target_type == "group_message":
         same_author = select(GroupMessage.id).where(GroupMessage.group_id == msg.group_id, GroupMessage.author_id == msg.author_id)
@@ -71,7 +72,7 @@ async def _may_hide_for_all(session, owner: Owner, target_type: str, msg: GroupM
     on_author = await session.scalar(
         select(func.count()).select_from(Report).where(recent, Report.target_type == target_type, Report.target_id.in_(same_author))
     )
-    return (on_author or 0) < HIDE_PER_AUTHOR_DAY
+    return (on_author or 0) < limits.get("report_hides_per_author_day")
 
 
 class ReportIn(BaseModel):

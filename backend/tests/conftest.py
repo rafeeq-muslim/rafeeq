@@ -29,10 +29,12 @@ async def _schema():
 
 @pytest.fixture(autouse=True)
 async def _clean():
+    from app.core import limits
     from app.knowledge.ai import gate
 
     ratelimit.reset()
-    gate.reset()  # the global AI gate (security audit A-H3) is per process, like the limiter
+    gate.reset()  # the per-client AI gate is per process, like the limiter
+    limits.reset()  # plt-admin-limits: the cached admin values (tables are emptied below)
     yield
     # DELETE in reverse dependency order: far faster than TRUNCATE on near-empty tables.
     async with engine.begin() as conn:

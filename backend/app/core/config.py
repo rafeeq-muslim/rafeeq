@@ -41,10 +41,10 @@ class Settings(BaseSettings):
     # AI (OpenRouter). Budget is a hard cap on paid calls (product owner: $10).
     openrouter_api_key: str = ""
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
-    ai_budget_usd: float = 10.0
+    ai_budget_usd: float = 10.0  # default of the admin-editable total (app.core.limits)
     # Daily ceiling for answers and every other model call except the corpus
     # embedding job; resets at 00:00 UTC.
-    ai_daily_budget_usd: float = 0.75
+    ai_daily_budget_usd: float = 0.75  # default of the admin-editable daily ceiling (app.core.limits)
     # KNW-02 SC3: the corpus embedding job (agent "embed") has its own daily
     # ceiling, so a large run neither stalls behind answers nor blocks them.
     # The $10 total above still covers everything.
@@ -136,12 +136,10 @@ class Settings(BaseSettings):
 
     # --- Security audit 2026-10-07 A (sec-ai-limits): limits on AI-backed requests ---
     # Every client's allowance is counted per address (IPv6: per /64) AND per
-    # account (app.core.clientkey). The caps below are global, for all clients
-    # together; past one, the routes give their fixed replies / fallbacks, never an error.
-    ai_global_requests_per_minute: int = 120  # /api/ask + learning explain/guide + home order
-    ai_max_concurrent_requests: int = 12  # AI-backed requests running at once (A-M1)
-    ai_max_concurrent_per_client: int = 3  # of them, for one client
-    ai_gate_wait_seconds: float = 2.0  # how long a request waits for a place before its fallback
+    # account (app.core.clientkey). Owner decision 2026-10-10 (plt-admin-limits):
+    # no global cap on AI requests (the former AI_GLOBAL_REQUESTS_PER_MINUTE,
+    # AI_MAX_CONCURRENT_REQUESTS and AI_GATE_WAIT_SECONDS are gone); the per-client
+    # limits and the two budget ceilings above are admin-editable (app.core.limits).
     library_search_daily_cap: int = 3000  # outbound library searches (pages) per UTC day
 
     # Web Push (VAPID).

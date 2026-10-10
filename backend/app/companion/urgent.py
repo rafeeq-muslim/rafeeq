@@ -6,24 +6,23 @@ there are; what is limited is the *push* to every mentor and team member,
 which a stranger could otherwise send to everyone again and again.
 
 - One push to every responder per urgent request; while nobody holds it,
-  further words in the same request alert at most once per `THREAD_EVERY_S`.
-  Once someone holds it (B-M3) the holder hears every message and the team
-  at most once per `THREAD_EVERY_S`.
-- At most `PUSH_CAP` such pushes per hour in total. Over the cap the request
+  further words in the same request alert at most once per
+  `urgent_repeat_minutes` (default 10). Once someone holds it (B-M3) the
+  holder hears every message and the team at most once per that interval.
+- At most `urgent_pushes_per_hour` (default 20) such pushes per hour in total. Over the cap the request
   is still created and still shown first in every inbox; the mentors are not
   pushed, the team is (at most once per `TEAM_EVERY_S`), and it is logged.
 
+Both numbers are admin-editable (app.core.limits, plt-admin-limits).
 Counters live in memory (one backend process, like core/ratelimit)."""
 
 import logging
 
 from app.companion import notify
-from app.core import ratelimit
+from app.core import limits, ratelimit
 
 log = logging.getLogger(__name__)
 
-THREAD_EVERY_S = 600
-PUSH_CAP = 20  # pushes to every responder per hour
 TEAM_EVERY_S = 600
 TEAM_ROLES = ["team", "admin"]
 
@@ -42,10 +41,14 @@ def _queue_full() -> bool:
     return len(notify._pending) >= notify.MAX_WAITING
 
 
+def _every_s() -> int:
+    return int(limits.get("urgent_repeat_minutes")) * 60
+
+
 def alert_team(thread: object) -> bool:
     """A held urgent request (B-M3: its holder's and the team's): the team is
-    told about new words in it at most once per `THREAD_EVERY_S`."""
-    if _queue_full() or not _free(f"urgent-push-held:{thread}", 1, THREAD_EVERY_S):
+    told about new words in it at most once per `urgent_repeat_minutes`."""
+    if _queue_full() or not _free(f"urgent-push-held:{thread}", 1, _every_s()):
         return False
     notify.later(notify.to_role, TEAM_ROLES, "urgent", "/inbox")
     return True
@@ -54,9 +57,9 @@ def alert_team(thread: object) -> bool:
 def alert(thread: object) -> str:
     """Alert people about the urgent request `thread` (its id), while nobody
     holds it. Returns what was done: all | team | none."""
-    if _queue_full() or not _free(f"urgent-push-thread:{thread}", 1, THREAD_EVERY_S):
+    if _queue_full() or not _free(f"urgent-push-thread:{thread}", 1, _every_s()):
         return "none"
-    if _free("urgent-push-all", PUSH_CAP, 3600):
+    if _free("urgent-push-all", int(limits.get("urgent_pushes_per_hour")), 3600):
         notify.later(notify.to_responders, "urgent", "/inbox")
         return "all"
     log.warning("urgent push cap reached: request kept, mentors not pushed")
