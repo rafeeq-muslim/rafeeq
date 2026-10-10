@@ -42,6 +42,9 @@ describe("knw-01-r1 answer segments", () => {
 const lesson = (id: string, objectives: string[]): Lesson =>
   ({ id, unit: "u", order: 1, title: `TITLE_${id}`, cards: [], exercises: [], approved: true, objectives: objectives.map((o) => ({ id: o, text: `TEXT_${o}`, cards: [] })) }) as Lesson
 
+// A fixed day: o1 (mastered 2026-10-01) is not yet due for its later check.
+const NOW = new Date("2026-10-02T12:00:00Z")
+
 describe("knw-10-r3 learning guide summary", () => {
   const lessons = [lesson("l1", ["o1", "o2"]), lesson("l2", ["o3"])]
   const progress = {
@@ -55,13 +58,13 @@ describe("knw-10-r3 learning guide summary", () => {
   }
 
   it("sends ids only: mastered, reviewing, next lesson", () => {
-    const s = buildSummary("en", lessons, progress as never)
+    const s = buildSummary("en", lessons, progress as never, NOW)
     expect(s).toEqual({ lang: "en", mastered: ["o1"], reviewing: ["o2"], next: { lesson_id: "l2" } })
     expect(nextHref(s)).toBe("/learn/lesson/l2")
   })
 
   it("builds the fixed message from the same summary", () => {
-    const s = buildSummary("en", lessons, progress as never)
+    const s = buildSummary("en", lessons, progress as never, NOW)
     const t = (k: string, v?: Record<string, string>) => `${k}:${JSON.stringify(v ?? {})}`
     const msg = fixedMessage(s, lessons, t as never)
     // issue #9: lesson titles, never the team-facing objective texts
@@ -72,7 +75,7 @@ describe("knw-10-r3 learning guide summary", () => {
 
   it("uses each objective's learner name, never its team text (LRN-10 R1)", () => {
     const named = lessons.map((l) => ({ ...l, objectives: l.objectives.map((o) => ({ ...o, label: `LABEL_${o.id}` })) }))
-    const s = buildSummary("en", named, progress as never)
+    const s = buildSummary("en", named, progress as never, NOW)
     const t = (k: string, v?: Record<string, string>) => `${k}:${JSON.stringify(v ?? {})}`
     const msg = fixedMessage(s, named, t as never)
     expect(msg).toContain("LABEL_o1")
