@@ -13,6 +13,7 @@ from app.companion import (
     help,
     inbox,
     mentors,
+    moderation,  # CMP-05 R8/R9: the team moderates groups
     referrals,
     safety,
 )
@@ -24,6 +25,7 @@ for _r in (
     referrals.router,
     mentors.router,
     groups.router,
+    moderation.router,
     safety.router,
     coverage.router,
     applications.public,

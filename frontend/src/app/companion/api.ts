@@ -66,6 +66,8 @@ export type InboxRow = {
   can_reply: boolean
   /** Security review B-M3: only the assignee or the team ends a conversation (absent on an older server: shown). */
   can_close?: boolean
+  /** CMP-02 R8: a private mentor thread its mentor turned urgent; the team reads all of it. */
+  escalated?: boolean
 }
 /** `hidden`: only ever true on the responder's own message, hidden for review (CMP-04 R5). */
 export type InboxMessage = {
@@ -123,7 +125,10 @@ export type Group = {
   role: "mentor" | "member"
   join_code: string | null
   members: Member[]
+  /** CMP-05 R8/R9: posting only while active (absent on an older server: active). */
+  state?: GroupState
 }
+export type GroupState = "active" | "needs_mentor" | "paused" | "closed"
 export type GroupMessage = {
   id: string
   author_id: string | null
@@ -415,4 +420,55 @@ export function useReferrals(enabled: boolean) {
 
 export const referralApi = {
   answer: (id: string, body: string) => api<Referral>(`/api/referrals/${id}/answer`, { method: "POST", body: { body } }),
+}
+
+// --- CMP-05 R8/R9 (cmp-admin-groups): the team moderates groups -------------
+
+export type StaffGroup = {
+  id: string
+  name: string
+  lang: string
+  gender: Gender
+  capacity: number
+  members_count: number
+  mentor_id: string
+  mentor_name: string
+  state: GroupState
+  created_at: string
+  /** Staff of the group's gender read its chat; the others manage it without reading. */
+  can_read: boolean
+}
+export type MentorCandidate = { id: string; display_name: string; places_used: number; places_left: number }
+
+export function useStaffGroups() {
+  return useQuery({ queryKey: ["cmp", "staff-groups"], queryFn: () => api<StaffGroup[]>("/api/staff/groups"), refetchInterval: POLL.list })
+}
+
+export function useStaffGroup(id: string | undefined) {
+  return useQuery({ queryKey: ["cmp", "staff-group", id], queryFn: () => api<StaffGroup>(`/api/staff/groups/${id}`), enabled: !!id })
+}
+
+export function useStaffGroupMessages(id: string | undefined, enabled: boolean) {
+  return useQuery({
+    queryKey: ["cmp", "staff-group-messages", id],
+    queryFn: () => api<GroupMessage[]>(`/api/staff/groups/${id}/messages`),
+    enabled: !!id && enabled,
+    refetchInterval: POLL.thread,
+  })
+}
+
+export function useMentorCandidates(id: string | undefined, enabled: boolean) {
+  return useQuery({
+    queryKey: ["cmp", "staff-group-candidates", id],
+    queryFn: () => api<MentorCandidate[]>(`/api/staff/groups/${id}/candidates`),
+    enabled: !!id && enabled,
+  })
+}
+
+export const staffGroupApi = {
+  assign: (id: string, mentorId: string) => api<StaffGroup>(`/api/staff/groups/${id}/mentor`, { method: "PUT", body: { mentor_id: mentorId } }),
+  setStatus: (id: string, status: "active" | "paused" | "closed") =>
+    api<StaffGroup>(`/api/staff/groups/${id}/status`, { method: "PUT", body: { status } }),
+  hide: (id: string, messageId: string) => api(`/api/staff/groups/${id}/messages/${messageId}/hide`, { method: "POST" }),
+  remove: (id: string, userId: string) => api(`/api/staff/groups/${id}/members/${userId}`, { method: "DELETE" }),
 }

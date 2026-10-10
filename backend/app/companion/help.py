@@ -185,6 +185,10 @@ async def _notify_mentor_of(req: HelpRequest) -> None:
         # The holder hears every message, as in any conversation; the team once per window (A-H4).
         notify.later(notify.to_user, req.mentor_id, "urgent", f"/inbox/r/{req.id}")
         urgent.alert_team(req.id)
+    elif req.escalated_at is not None and req.mentor_id is not None:
+        # CMP-02 R8: an escalated private thread: its mentor as always, the team once per window.
+        notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
+        urgent.alert_team(req.id)
     elif req.mentor_id is not None:
         notify.later(notify.to_user, req.mentor_id, "message", f"/inbox/r/{req.id}")
 

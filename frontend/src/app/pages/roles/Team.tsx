@@ -21,6 +21,7 @@ import { api } from "@/app/lib/api"
 import { useContent } from "@/app/learning/useContent"
 import { ResponderCoverage } from "@/app/companion/mentor/ResponderCoverage"
 import { TeamSightings } from "@/app/pages/roles/TeamSightings"
+import { StaffGroupsSection } from "@/app/companion/staff/StaffGroups" // CMP-ADMIN-GROUPS: CMP-05 R8/R9
 
 type Rate = number | null
 type Indicators = {
@@ -293,6 +294,8 @@ export default function Team() {
             <Link to="/inbox?tab=reports">{t("plt17.team.reportsOpen")}</Link>
           </Button>
         </section>
+        {/* CMP-ADMIN-GROUPS (owner 2026-10-10): the team moderates groups (CMP-05 R8/R9) */}
+        <StaffGroupsSection />
       </div>
     </>
   )

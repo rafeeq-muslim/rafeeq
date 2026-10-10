@@ -4,6 +4,7 @@
  * R3 display names only. R4 text chat, members and mentor only, every
  *    message reportable, contact details refused. R5 leave silently.
  * R6 the week's challenge as a count (MOT-06).
+ * R8/R9 a group waiting for a mentor, paused or closed is read only, and says why.
  */
 import * as React from "react"
 import { useNavigate } from "react-router"
@@ -30,6 +31,7 @@ import { Confirm } from "./Confirm"
 import { initial } from "./format"
 import { ReportSheet, type ReportTarget } from "./ReportSheet"
 import { ScreenBar, SectionTitle } from "./Screen"
+import { GroupStateNotice } from "./staff/StaffGroups"
 
 const JOIN_ERRORS: Record<string, string> = {
   code_unknown: "cmp.group.err.unknown",
@@ -193,13 +195,19 @@ function GroupBody({ group }: { group: Group }) {
           <ChatList items={items} empty={<p className="text-center text-body text-muted-foreground">{t("cmp.group.chatEmpty")}</p>} />
         )}
       </section>
-      <Composer
-        placeholder={t("cmp.group.placeholder")}
-        onSend={async (text) => {
-          await groupApi.post(group.id, text)
-          await qc.invalidateQueries({ queryKey: ["cmp", "group-messages", group.id] })
-        }}
-      />
+      {!group.state || group.state === "active" ? (
+        <Composer
+          placeholder={t("cmp.group.placeholder")}
+          onSend={async (text) => {
+            await groupApi.post(group.id, text)
+            await qc.invalidateQueries({ queryKey: ["cmp", "group-messages", group.id] })
+          }}
+        />
+      ) : (
+        <div className="sticky bottom-0 pb-4">
+          <GroupStateNotice state={group.state} />
+        </div>
+      )}
       <ReportSheet target={report} onClose={() => setReport(null)} />
     </>
   )
@@ -211,7 +219,8 @@ export default function GroupPage() {
   const qc = useQueryClient()
   const signedIn = useAuth((s) => !!s.token)
   const groups = useMyGroups()
-  const memberOf = groups.data?.find((g) => g.role === "member")
+  // CMP-05 R8: a closed group stays readable, but the one that is not closed comes first.
+  const memberOf = groups.data?.find((g) => g.role === "member" && g.state !== "closed") ?? groups.data?.find((g) => g.role === "member")
   const group = useGroup(memberOf?.id)
   const [membersOpen, setMembersOpen] = React.useState(false)
   const [leaving, setLeaving] = React.useState(false)

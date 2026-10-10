@@ -21,6 +21,15 @@ he is not suggested to new learners and takes no new requests from the pool
 reviewer (`referrals.py`) and turns danger into an urgent request (R5). A
 request shows a display name or guest number, language, topic and source
 only; a mentee's status only while they share progress (R6, MOT-07 R6).
+
+R8 (owner decision 2026-10-10, «All of it of course»): a private mentor
+thread turned urgent keeps its kind and gets `escalated_at`, so the learner
+and the mentor stay in ONE thread and the team reads all of it, from the
+first message, including what a report hid (marked), until a team member
+ends the escalation. Nobody else sees it: not other mentors, not the Sharia
+reviewer, not a coordinator, and not the pool after the mentor leaves. Each
+staff opening is recorded once a day per person and thread in the event
+history (`EscalatedThreadRead {request_id, user_id}`, no text).
 """
 
 import uuid
@@ -39,6 +48,7 @@ from app.companion.models import HelpMessage, HelpRequest, MenteeStatus, MentorL
 from app.companion.text import clean_body_async
 from app.core import ratelimit
 from app.core.deps import CurrentUser, Session
+from app.core.events import OutboxEvent, payload_text, publish
 from app.platform.models import User
 
 router = APIRouter(prefix="/api/inbox", tags=["companion"])
@@ -104,6 +114,11 @@ def assigned_clause(mentor_id: uuid.UUID):
     )
 
 
+def escalated_clause():
+    """R8: a private mentor thread its mentor turned urgent (CMP-02 R5 ex3)."""
+    return and_(HelpRequest.kind == "mentor", HelpRequest.escalated_at.is_not(None))
+
+
 def visible_clause(user: User, t: datetime, *, paused: bool = False):
     has_owner = or_(HelpRequest.learner_id.is_not(None), HelpRequest.guest_token_hash.is_not(None))
     urgent = and_(
@@ -115,6 +130,8 @@ def visible_clause(user: User, t: datetime, *, paused: bool = False):
         # B-M3: held by someone = his (assigned_clause below) and the team's.
         urgent = and_(urgent, HelpRequest.mentor_id.is_(None))
     conds = [urgent]
+    if is_team(user):
+        conds.append(escalated_clause())  # R8: the team reads an escalated private thread, whatever its state
     if user.gender and not paused and (user.has("mentor") or is_team(user)):
         matches = and_(
             HelpRequest.lang.in_(langs_of(user)),
@@ -155,6 +172,7 @@ class RequestRow(BaseModel):
     assigned_to_me: bool
     can_reply: bool
     can_close: bool = False  # B-M3: the assignee or the team
+    escalated: bool = False  # R8: a private mentor thread its mentor turned urgent (the team reads all of it)
 
 
 class ThreadMessage(BaseModel):
@@ -192,7 +210,7 @@ async def _row(session, req: HelpRequest, me: User) -> RequestRow:
         handle=req.handle,
         is_guest=req.learner_id is None,
         lang=req.lang,
-        kind=req.kind,
+        kind="urgent" if req.escalated_at is not None else req.kind,  # R8: shown as urgent, still one private thread
         topic=req.topic,
         source=req.source,
         status=req.status,
@@ -203,6 +221,7 @@ async def _row(session, req: HelpRequest, me: User) -> RequestRow:
         assigned_to_me=req.mentor_id == me.id,
         can_reply=owned,
         can_close=may_close(me, req),
+        escalated=req.escalated_at is not None,
     )
 
 
@@ -232,7 +251,7 @@ async def visible_request(session, me: User, request_id: uuid.UUID) -> HelpReque
 async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
     t = now()
     order = (
-        case((HelpRequest.kind == "urgent", 0), (HelpRequest.status == "open", 1), else_=2),
+        case((or_(HelpRequest.kind == "urgent", HelpRequest.escalated_at.is_not(None)), 0), (HelpRequest.status == "open", 1), else_=2),
         case((HelpRequest.status == "open", HelpRequest.last_activity_at), else_=None).asc().nulls_last(),
         HelpRequest.last_activity_at.desc(),
     )
@@ -244,6 +263,10 @@ async def list_requests(session: Session, me: Responder) -> list[RequestRow]:
 @router.get("/requests/{request_id}", response_model=InboxThread)
 async def open_request(request_id: uuid.UUID, session: Session, me: Responder, before: uuid.UUID | None = None) -> InboxThread:
     req = await visible_request(session, me, request_id)
+    # R8: the team reads an escalated conversation whole, hidden messages marked.
+    staff_view = is_team(me) and req.mentor_id != me.id and (req.escalated_at is not None or req.kind == "urgent")
+    if staff_view and req.escalated_at is not None:
+        await _record_staff_read(session, req.id, me.id)
     msgs, has_earlier = await message_page(session, req.id, before)
     # CMP-04 R2: a message this responder reported is hidden for him at once.
     reported = set(await session.scalars(select(Report.target_id).where(Report.reporter_id == me.id, Report.target_type == "help_message")))
@@ -251,7 +274,7 @@ async def open_request(request_id: uuid.UUID, session: Session, me: Responder, b
     out = []
     for m in msgs:
         mine = m.author_id == me.id
-        if m.id in reported or (m.hidden and not mine):
+        if m.id in reported or (m.hidden and not mine and not staff_view):
             continue  # CMP-04 R5: the author still sees his own hidden message, marked for review
         name = None
         if m.author == "mentor" and m.author_id:
@@ -273,6 +296,26 @@ async def open_request(request_id: uuid.UUID, session: Session, me: Responder, b
     return InboxThread(**row.model_dump(), messages=out, referred=referred, has_earlier=has_earlier)
 
 
+STAFF_READ_EVERY = timedelta(days=1)
+
+
+async def _record_staff_read(session, request_id: uuid.UUID, staff_id: uuid.UUID) -> None:
+    """R8: who on the team opened an escalated private thread, once a day per
+    person and thread, in the event history; ids only, never the text."""
+    seen = await session.scalar(
+        select(OutboxEvent.id)
+        .where(
+            OutboxEvent.name == "EscalatedThreadRead",
+            payload_text("user_id") == str(staff_id),
+            payload_text("request_id") == str(request_id),
+            OutboxEvent.created_at > now() - STAFF_READ_EVERY,
+        )
+        .limit(1)
+    )
+    if seen is None:
+        await publish(session, "EscalatedThreadRead", "CMP", {"request_id": str(request_id), "user_id": str(staff_id)})
+
+
 class ReplyIn(BaseModel):
     body: str = Field(max_length=4000)
 
@@ -286,8 +329,8 @@ async def reply(request_id: uuid.UUID, body: ReplyIn, session: Session, me: Resp
     ratelimit.hit(f"inbox-reply-day:{req.id}", THREAD_MSGS_PER_DAY, 86400)
     text = await clean_body_async(body.body)
     t = now()
-    if req.mentor_id is None or (req.mentor_id != me.id and req.first_reply_at is None):
-        req.mentor_id = me.id  # R3: the first reply claims it
+    if req.mentor_id is None or (req.mentor_id != me.id and req.first_reply_at is None and req.kind != "mentor"):
+        req.mentor_id = me.id  # R3: the first reply claims it (never a private mentor thread: R8)
     req.first_reply_at = req.first_reply_at or t
     req.status = "answered"
     req.last_activity_at = t
@@ -311,6 +354,11 @@ async def close(request_id: uuid.UUID, session: Session, me: Responder) -> Reque
     req = await visible_request(session, me, request_id)
     if not may_close(me, req):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "not_assigned")  # B-M3
+    if req.escalated_at is not None and is_team(me) and req.mentor_id != me.id:
+        # R8: the team ends the escalation; the thread stays the learner's and his mentor's.
+        req.escalated_at = None
+        await session.commit()
+        return await _row(session, req, me)
     req.status = "closed"
     await session.commit()
     return await _row(session, req, me)
@@ -323,6 +371,15 @@ async def make_urgent(request_id: uuid.UUID, session: Session, me: Responder) ->
     answered) stays with its holder and goes to the team only; a request
     nobody answered yet goes to the team and every mentor (rules.md §2.8)."""
     req = await visible_request(session, me, request_id)
+    if req.kind == "mentor":
+        # R8: a private thread stays ONE thread (kind kept): its mentor and the
+        # team read all of it, before and after; a neutral push to the team only.
+        if req.escalated_at is None:
+            req.escalated_at = now()
+            req.status = "open" if req.status == "closed" else req.status
+            await session.commit()
+            notify.later(notify.to_role, ["team", "admin"], "urgent", "/inbox")
+        return await _row(session, req, me)
     if req.kind != "urgent":
         held = req.mentor_id is not None and (req.kind == "mentor" or req.first_reply_at is not None)
         if not held:
