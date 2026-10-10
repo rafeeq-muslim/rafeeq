@@ -60,7 +60,40 @@ def fix_markers(text: str, ids: set[str] | frozenset[str]) -> str:
             return m.group(0)
         return " ".join(f"{{{{q:{f}}}}}" for f in fixed)
 
-    return _BRACED.sub(one, text)
+    return fix_bracket_citations(_BRACED.sub(one, text), ids)
+
+
+# A passage id written as plain text, outside a marker: «islamqa:en:193670:p1»,
+# «quranenc:english_saheeh:2:255», «live:binbaz:ar:1:c2». Every id is
+# source:segment:rest; a Quran reference («2:255»), a time or a web address
+# never matches. Linear.
+RAW_ID = re.compile(r"(?<![\w{:])(?:live:)?[a-z][a-z0-9_]*:[a-z][a-z0-9_]*:[A-Za-z0-9_.:-]*[A-Za-z0-9]")
+_BRACKETED = re.compile(r"[\[(]([^\[\]()\n]{1,400})[\])]")
+
+
+def has_raw_id(text: str) -> bool:
+    """A passage id left as text (checked on the answer with its markers removed)."""
+    return bool(RAW_ID.search(text))
+
+
+def fix_bracket_citations(text: str, ids: set[str] | frozenset[str]) -> str:
+    """The composer sometimes cites as «[islamqa:en:1:p1, islamqa:en:2:p3]»
+    or «(binbaz:ar:7)» instead of markers (2026-10-10). A bracketed span made
+    only of ids becomes {{q:ID}} markers only when EVERY id in it was
+    retrieved this attempt; otherwise it is left as written and the checks
+    reject it (`malformed_marker`, `unretrieved_reference` stays strict).
+    Ordinary words in brackets are never touched. Never invents an id."""
+
+    def one(m: re.Match[str]) -> str:
+        parts = [p for p in _ID_SEP.split(_Q_ANY.sub(r"\1", m.group(1))) if p]
+        if not parts or not all(RAW_ID.fullmatch(p) for p in parts):
+            return m.group(0)
+        fixed = [fix_marker_id(p, ids) for p in parts]
+        if any(f is None for f in fixed):
+            return m.group(0)
+        return " ".join(f"{{{{q:{f}}}}}" for f in fixed)
+
+    return _BRACKETED.sub(one, text)
 
 
 # An answer is plain words: no address to visit, no account to contact, no

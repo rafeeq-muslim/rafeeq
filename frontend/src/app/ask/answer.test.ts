@@ -37,6 +37,19 @@ describe("knw-01-r1 answer segments", () => {
     expect(s.map((x) => x.type)).toEqual(["text", "text", "quote"])
     expect(JSON.stringify(s)).not.toContain("{{q:")
   })
+
+  it("never shows a passage id as text, bracketed or bare (2026-10-10)", () => {
+    const s = segments(
+      "It is not allowed [islamqa:en:193670:p1, islamqa:en:26771:p2]. Guards too (q:live:binbaz:en:7:c1). See hadeethenc:en:1 here.",
+      [],
+    )
+    expect(s).toEqual([{ type: "text", text: "It is not allowed. Guards too. See here." }])
+  })
+
+  it("keeps ordinary brackets, Quran references and times", () => {
+    const text = "Read Ayat al-Kursi (2:255) at night [in the evening], at 10:30:00."
+    expect(segments(text, [])).toEqual([{ type: "text", text }])
+  })
 })
 
 const lesson = (id: string, objectives: string[]): Lesson =>
