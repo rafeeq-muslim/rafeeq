@@ -290,6 +290,9 @@
     var scrollEls = [];
     var vh = innerHeight, vw = innerWidth;
     var y = 0, needsLayout = true;
+    // Perf: the document height is read in layout(), not on every scroll; a
+    // layout read in read() forced a style pass after the page's own writes.
+    var docMaxY = 1;
     var progressBar = root.querySelector('[data-sc-progress]');
     var docEl = document.documentElement;
 
@@ -617,6 +620,7 @@
       });
 
       needsLayout = false;
+      docMaxY = Math.max((document.documentElement.scrollHeight || 0) - vh, 1);
       read();
     }
 
@@ -817,7 +821,7 @@
     function read() {
       y = scrollY || pageYOffset;
       var driftA = null, driftB = null, driftT = 0;
-      var maxY = Math.max((document.documentElement.scrollHeight || 0) - vh, 1);
+      var maxY = docMaxY;
 
       for (var i = 0; i < acts.length; i++) {
         var a = acts[i];
@@ -1195,7 +1199,9 @@
 
     layout();
     initPointer();
-    requestAnimationFrame(tick);
+    // Perf: the seek loop runs only on a page with scrub clips; an idle rAF
+    // loop otherwise keeps a phone producing frames for nothing.
+    if (playheads.length) requestAnimationFrame(tick);
     document.documentElement.classList.add('sc-ready');
 
     var api = { layout: layout, read: read, acts: acts, worlds: worlds, clips: playheads, lerp: LERP };
