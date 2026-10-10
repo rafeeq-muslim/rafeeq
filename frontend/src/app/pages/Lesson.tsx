@@ -9,7 +9,7 @@
  */
 import * as React from "react"
 import { useNavigate, useParams } from "react-router"
-import { IconArrowLeft, IconHelpCircle, IconSparkles, IconX } from "@tabler/icons-react"
+import { IconArrowLeft, IconHelpCircle, IconMovieOff, IconPlayerPlayFilled, IconSparkles, IconX } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -46,6 +46,9 @@ import { askWhy, type Why } from "@/app/lesson/why"
 import { useWarmLesson } from "@/app/offline/warmup" // PLT-15 R2
 import { OfflineNote } from "@/app/offline/NeedsConnection"
 import { useOnline } from "@/app/offline/online"
+import { DownloadControl } from "@/app/downloads/DownloadControl" // PLT-12: one video, opt-in
+import { formatSize, useVideoItem } from "@/app/downloads/queries"
+import { useDownloads, useHeld } from "@/app/downloads/store"
 
 export default function LessonPage() {
   const { lessonId = "" } = useParams()
@@ -353,20 +356,63 @@ function Recitation({ files }: { files: string[] }) {
   )
 }
 
-/** LRN-01 R5: an optional support video, opened only when asked. */
+/**
+ * LRN-01 R5: an optional support video, opened only when asked.
+ * PLT-12, owner decision 2026-10-10: a unit download never includes its
+ * videos. Until the learner taps it, the video is a poster card with its size
+ * (nothing fetched: PLT-11 R4); the tap streams it (Range, no full download
+ * first). Offline and not on the device, the card says it needs a connection
+ * and the lesson goes on (PLT-15 R2). Online, the learner may download this
+ * one video to keep it (opt-in). A video already on the device (downloaded
+ * alone, or with a unit before this decision) plays offline from there.
+ */
 function SupportVideo({ src }: { src: string }) {
-  const { t } = useT()
-  const [open, setOpen] = React.useState(false)
-  // PLT-15 R2 / LRN-03 R5: offline (not downloaded) the video says so and the lesson goes on.
+  const { t, locale } = useT()
   const online = useOnline()
+  const held = useHeld(src)
+  const video = useVideoItem(src, locale, online)
+  // Held by an older unit download only: nothing to offer here (it plays offline already).
+  const savedVideo = useDownloads((s) => (video.id ? s.items[video.id] : undefined))
+  const [open, setOpen] = React.useState(false)
   const [failed, setFailed] = React.useState(false)
-  if (!online || failed) return <OfflineNote text="offline.video" />
-  return open ? (
-    // PLT-11 R4: nothing loads before the learner asks; the button is that ask, so it starts playing.
-    <video controls playsInline autoPlay preload="none" src={src} onError={() => setFailed(!navigator.onLine)} className="w-full rounded-card bg-black" />
-  ) : (
-    <Button variant="secondary" className="w-fit" onClick={() => setOpen(true)}>
-      {t("lesson.video")}
-    </Button>
+  const playable = online || held
+
+  if (open && playable && !failed) {
+    return <video controls playsInline autoPlay preload="none" src={src} onError={() => setFailed(true)} className="aspect-video w-full rounded-card bg-black" />
+  }
+  const size = video.item?.sizes_known ? formatSize(video.item.bytes, t) : null
+  const meta = [size, t(held ? "lesson.videoCard.kept" : "lesson.videoCard.online")].filter(Boolean).join(" · ")
+  return (
+    <div className="flex flex-col gap-3" data-slot="support-video">
+      {playable ? (
+        <button
+          type="button"
+          onClick={() => {
+            setFailed(false)
+            setOpen(true)
+          }}
+          className="flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-card bg-secondary p-4 text-secondary-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <span className="grid size-16 place-items-center rounded-full bg-primary text-primary-foreground shadow-raised" aria-hidden="true">
+            <IconPlayerPlayFilled className="size-7" />
+          </span>
+          <span className="text-body font-bold">{t("lesson.video")}</span>
+          <span className="text-caption tabular-nums text-muted-foreground">{meta}</span>
+        </button>
+      ) : (
+        <div className="flex aspect-video w-full flex-col items-center justify-center gap-3 rounded-card bg-muted p-4 text-center text-muted-foreground">
+          <IconMovieOff className="size-10" stroke={1.5} aria-hidden="true" />
+          <OfflineNote text="offline.video" className="max-w-sm text-start" />
+        </div>
+      )}
+      {failed && online && (
+        <p role="status" className="text-label text-muted-foreground">
+          {t("lesson.videoCard.failed")}
+        </p>
+      )}
+      {online && video.id && (!held || savedVideo) && (
+        <DownloadControl itemId={video.id} lang={locale} entry={video.item} action={t("downloads.video.download")} />
+      )}
+    </div>
   )
 }

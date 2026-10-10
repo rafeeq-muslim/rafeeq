@@ -5,7 +5,7 @@ import { api } from "@/app/lib/api"
 import { num, type Key } from "@/app/i18n"
 import { suraName } from "@/app/lesson/suras"
 import { checkUpdates } from "./manager"
-import type { Catalog } from "./types"
+import type { Catalog, CatalogItem } from "./types"
 
 type T = (key: Key, vars?: Record<string, string | number>) => string
 
@@ -39,5 +39,31 @@ export function formatSize(bytes: number, t: T): string {
 export function itemName(item: { kind: string; ref: string; title: string; id: string }, t: T, locale: string): string {
   if (item.kind === "quran_text") return t(item.id.endsWith(":ar") ? "downloads.quranTextAr" : "downloads.quranText")
   if (item.kind === "surah") return t("downloads.surah", { name: suraName(Number(item.ref), locale) })
+  if (item.kind === "video") return t("downloads.video.name", { name: item.title })
   return item.title
+}
+
+/** The catalogue id of a lesson video: `video:` + the server's file id of its URL
+ * (backend downloads.file_id: "f" + the first 24 hex of SHA-256). */
+export async function videoItemId(url: string): Promise<string> {
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(url)))
+  const hex = [...digest].map((b) => b.toString(16).padStart(2, "0")).join("")
+  return `video:f${hex.slice(0, 24)}`
+}
+
+/**
+ * Owner decision 2026-10-10: a lesson video is its own download, never part of
+ * the unit's. Its id and catalogue entry (size, before anything is fetched);
+ * the entry only while online (one small request, not the whole catalogue).
+ */
+export function useVideoItem(url: string, lang: string, online: boolean) {
+  const id = useQuery({ queryKey: ["video-item-id", url], queryFn: () => videoItemId(url), staleTime: Infinity, retry: false })
+  const item = useQuery({
+    queryKey: ["downloads-item", id.data, lang],
+    queryFn: () => api<CatalogItem>(`/api/downloads/catalog/${encodeURIComponent(id.data!)}?lang=${lang}`),
+    enabled: online && !!id.data,
+    staleTime: 5 * 60_000,
+    retry: false,
+  })
+  return { id: id.data, item: item.data }
 }

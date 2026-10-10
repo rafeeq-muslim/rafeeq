@@ -74,6 +74,22 @@ describe("plt-12-r1 the center shows what can be downloaded, sizes and what is d
   })
 })
 
+describe("plt-12 owner decision 2026-10-10: a unit's videos are offered under it, one by one", () => {
+  it("plt12_videos_unit_size_without_videos_and_each_video_opt_in_with_its_size", async () => {
+    const lean = { ...unit(1, 0), files: [], bytes: 4 * MB }
+    const wudu: CatalogItem = { ...unit(1, 22 * MB), id: "video:fwudu", kind: "video", ref: "u01-l3", unit: "u01", title: "صفة الوضوء" }
+    CATALOG.sections.lessons = [lean, wudu]
+    show()
+    expect(await screen.findByRole("button", { name: ar("downloads.downloadLabel", { name: "الوحدة 1", size: ar("downloads.size.mb", { n: "4.0" }) }) })).toBeTruthy()
+    expect(screen.getByText(ar("downloads.video.unitNote"))).toBeTruthy()
+    const name = ar("downloads.video.name", { name: "صفة الوضوء" })
+    const button = screen.getByRole("button", { name: ar("downloads.downloadLabel", { name, size: ar("downloads.size.mb", { n: "22.0" }) }) })
+    expect(button.textContent).toContain(ar("downloads.video.download"))
+    expect(screen.getByRole("list", { name: ar("downloads.video.listLabel") })).toBeTruthy() // under its unit, not a row of its own
+    CATALOG.sections.lessons = [unit(1, 50 * MB), unit(2, 12 * MB)]
+  })
+})
+
 describe("plt-12-r6 a Quranpedia reciter has no download button", () => {
   it("plt12_r6_quranpedia_reciter_plays_online_only", () => {
     render(<OnlineOnlyNote />)

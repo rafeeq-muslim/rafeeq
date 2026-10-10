@@ -4,7 +4,10 @@ Catalogue (R1, R2, R6): `GET /api/downloads/catalog?lang=` lists, in three
 sections, the items a learner can download, each with its files and sizes:
 
 - lessons: one item per path unit in that language (its approved lessons'
-  text, step photos, videos and audio in that language);
+  text, step photos and audio in that language), and apart from it one item
+  per support video of the unit (owner decision 2026-10-10: a unit downloads
+  without its videos; a video plays streamed, and is kept on the device only
+  when the learner asks for that one video);
 - quran: the Quran text with the learner's translation (from the stored
   QuranEnc records, the exact URLs the reader asks for), and one item per
   surah of the approved IslamHouse recitation (plus the QuranEnc Tagalog
@@ -287,10 +290,11 @@ async def _lessons(session: AsyncSession, lang: str) -> list[dict]:
     for u in content["units"]:
         files = [path_file, terms_file]
         lessons = [content["lessons"][lid] for lid in u["lessons"]]
+        videos: dict[str, dict] = {}  # url → the first lesson showing it (two lessons may share one)
         for lesson in lessons:
             video = (lesson.get("media") or {}).get("video")
             if isinstance(video, str) and allowed_url(video):
-                files.append(_media(video))
+                videos.setdefault(video, lesson)
             for card in lesson.get("cards") or []:
                 q = card.get("quran")
                 if isinstance(q, dict) and q.get("ayat"):
@@ -305,6 +309,11 @@ async def _lessons(session: AsyncSession, lang: str) -> list[dict]:
                         files.append(_media(a))
         title = u.get("title") if isinstance(u.get("title"), str) else u["id"]
         out.append(_item(f"unit:{u['id']}:{lang}", "lessons", "unit", u["id"], title, files, {"unit": u, "lessons": lessons}))
+        # Owner decision 2026-10-10: each video is an item of its own, downloaded only on its own request.
+        for url, lesson in videos.items():
+            media = _media(url)
+            item = _item(f"video:{media['id']}", "lessons", "video", lesson["id"], lesson.get("title") or "", [media], None)
+            out.append({**item, "unit": u["id"]})
     return out
 
 
