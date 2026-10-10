@@ -1603,4 +1603,8 @@ export const tl: Dict = {
   "lesson.videoCard.online": "Napapanood kapag may koneksyon",
   "lesson.videoCard.kept": "Nasa device mo, napapanood offline",
   "lesson.videoCard.failed": "Hindi ma-play ang video ngayon. Ituloy ang aralin at subukang muli mamaya.",
+  // --- PLT-12 (plt-12-videos-choice): owner 2026-10-10, a unit with videos asks whether they come too. ⚠️ Tagalog needs native review ---
+  "downloads.choice.body": "Isasama ba ang mga video? Kung hindi, napapanood ang mga ito kapag may koneksyon, at puwede mong i-download nang hiwalay ang alinman mamaya.",
+  "downloads.choice.without": "Walang video · {size}",
+  "downloads.choice.with": "May mga video · {size}",
 }

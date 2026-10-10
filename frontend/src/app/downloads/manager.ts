@@ -185,6 +185,22 @@ export async function download(item: CatalogItem, lang: string) {
   return enqueue(item.id)
 }
 
+/**
+ * Owner 2026-10-10: a unit «مع المقاطع»: the unit, then each of its videos as
+ * its own item (so each stays removable on its own), queued in that order.
+ * A video already downloaded is left as it is.
+ */
+export async function downloadAll(items: CatalogItem[], lang: string) {
+  await askPersist()
+  for (const item of items) {
+    const prev = store().items[item.id]
+    if (!item.downloadable || (prev?.status === "done" && prev.version === item.version)) continue
+    store().put(fromCatalog(item, lang, prev))
+    if (!queue.includes(item.id)) queue.push(item.id)
+  }
+  return pump()
+}
+
 /** R5: continue every unfinished download (on reconnect, on opening the center). */
 export function resume() {
   for (const it of Object.values(store().items)) if (["queued", "downloading", "paused"].includes(it.status)) void enqueue(it.id)
