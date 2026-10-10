@@ -24,7 +24,12 @@ _HADITH_CLAIM = re.compile(r"\b(the prophet|messenger of allah)\b.*\b(said|says)
 def action_of(body: dict[str, Any]) -> str:
     o = body.get("outcome")
     if o in ("answered", "cached"):
-        return "refer" if body.get("route") == "personal" else "answer"
+        if body.get("route") != "personal":
+            return "answer"
+        # Owner decision 2026-10-10 (KNW-01 R3): the general answer with its
+        # sources AND the button to a person; without the button it is not "refer".
+        human = body.get("should_escalate") and (body.get("handoff") or {}).get("kind") == "escalation"
+        return "refer" if human else "answer"
     if o == "no_source" and body.get("route") == "personal":
         return "refer"  # KNW-01 R3: no ruling and a human offered; with no source there is nothing general to quote
     if o in ("no_source", "unavailable", "verification_failed"):

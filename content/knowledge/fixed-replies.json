@@ -1,5 +1,5 @@
 {
-  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. Drafted by Claude, 2026-10-05; approved on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر), not reviewed by the Sharia reviewer; the team can still revise the wording. 2026-10-06 (KNW-01 reliability R4): no_source, verification_failed and unavailable reworded from the PRD's table so a failure is never shown as a lack of sources.",
+  "_about": "Plan 4.7: the fixed replies of the assistant, returned without a model. They carry no Sharia statement. Drafted by Claude, 2026-10-05; approved on 2026-10-06 by the product owner's blanket approval (ناصر بن عبدالعزيز العويمر), not reviewed by the Sharia reviewer; the team can still revise the wording. 2026-10-06 (KNW-01 reliability R4): no_source, verification_failed and unavailable reworded from the PRD's table so a failure is never shown as a lack of sources. 2026-10-10 (product owner's decision, KNW-01 R3): personal_note reworded from 'talk to your mentor' to a general-information line; the button to ask a person now is in the app. Drafted by Claude, not reviewed by the Sharia reviewer; the Tagalog line needs a native speaker's review.",
   "status": "approved",
   "approved_by": "product owner blanket approval 2026-10-06 (ناصر بن عبدالعزيز العويمر)",
   "approved_on": "2026-10-06",
@@ -35,9 +35,9 @@
       "tl": "Hindi ko natapos ang sagot ngayon, at hindi ako sumasagot nang hindi sinusuri. Pakisubukan muli maya-maya."
     },
     "personal_note": {
-      "ar": "الحكم في حالتك بعينها يحتاج إلى مختص يعرف تفاصيلها؛ تحدث مع مرشدك.",
-      "en": "A ruling on your own situation needs a qualified person who knows its details; talk to your mentor.",
-      "tl": "Ang hatol sa iyong sariling sitwasyon ay nangangailangan ng taong may kaalaman na nakakaalam ng mga detalye nito; kausapin ang iyong mentor."
+      "ar": "هذا ما تذكره المصادر في هذه المسألة بوجه عام، وليس حكمًا على حالتك بعينها.",
+      "en": "This is what the sources say about this matter in general; it is not a ruling on your own case.",
+      "tl": "Ito ang sinasabi ng mga sanggunian tungkol sa usaping ito sa pangkalahatan; hindi ito hatol sa iyong sariling kaso."
     },
     "disputed_note": {
       "ar": "للعلماء في هذه المسألة أقوال.",

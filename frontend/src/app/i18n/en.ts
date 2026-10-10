@@ -1606,4 +1606,8 @@ export const en: Dict = {
   "downloads.choice.body": "Include the videos? Without them, they play when you're online, and you can download any of them later on its own.",
   "downloads.choice.without": "Without videos · {size}",
   "downloads.choice.with": "With videos · {size}",
+  // --- KNW-01 R3 (knw-personal-general-answer): owner 2026-10-10, a personal question gets the general answer and a button to ask a person now ---
+  "ask.personalGeneral.title": "Your own situation may differ",
+  "ask.personalGeneral.body": "A person from our team can help you with it privately, in your language.",
+  "ask.personalGeneral.action": "Ask a person now",
 }

@@ -1607,4 +1607,8 @@ export const tl: Dict = {
   "downloads.choice.body": "Isasama ba ang mga video? Kung hindi, napapanood ang mga ito kapag may koneksyon, at puwede mong i-download nang hiwalay ang alinman mamaya.",
   "downloads.choice.without": "Walang video · {size}",
   "downloads.choice.with": "May mga video · {size}",
+  // --- KNW-01 R3 (knw-personal-general-answer): owner 2026-10-10, a personal question gets the general answer and a button to ask a person now. ⚠️ Tagalog needs native review ---
+  "ask.personalGeneral.title": "Maaaring iba ang iyong sitwasyon",
+  "ask.personalGeneral.body": "Matutulungan ka rito nang pribado ng isang tao mula sa aming team, sa iyong wika.",
+  "ask.personalGeneral.action": "Magtanong sa isang tao ngayon",
 }
