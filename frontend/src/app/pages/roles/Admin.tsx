@@ -28,6 +28,7 @@ import { useT, type Key } from "@/app/i18n"
 import { api, ApiError } from "@/app/lib/api"
 import { AdminOrgs } from "@/app/org/AdminOrgs" // ORG-01: organisations made by the team
 import { AdminLimits } from "./AdminLimits" // plt-admin-limits (owner 2026-10-10)
+import { StaffGroupsSection } from "@/app/companion/staff/StaffGroups" // CMP-ADMIN-GROUPS: CMP-05 R8/R9
 
 // MOT-08: the team role is granted only in the database, so it is never offered
 // here; a person who already holds it keeps a box to revoke it.
@@ -64,6 +65,8 @@ export default function Admin() {
         <AdminOrgs />
         <Roles />
         <AdminLimits /> {/* plt-admin-limits: «الحدود» */}
+        {/* CMP-ADMIN-GROUPS (owner 2026-10-10): groups and their mentors, those needing one first */}
+        <StaffGroupsSection />
       </div>
     </>
   )

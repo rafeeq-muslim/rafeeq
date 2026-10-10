@@ -287,7 +287,7 @@ describe("cmp-01 r1: the assistant offers a human", () => {
     askReply = () => json({ ...base, route: "personal", level: "D", sources: [] })
     await ask("هل تصح صلاتي في حالتي؟")
     const card = await needHumanCard()
-    expect(card.textContent).toContain(ar("ask.personal.title"))
+    expect(card.textContent).toContain(ar("ask.personalGeneral.title"))
     fireEvent.click(within(card).getByRole("button"))
     expect(where().search).toBe("?kind=escalation&from=lesson&ask=a1")
   })

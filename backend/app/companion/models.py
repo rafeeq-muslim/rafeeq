@@ -87,6 +87,10 @@ class HelpRequest(IdMixin, Base):
         UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True
     )
     first_reply_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    # CMP-02 R8 (owner 2026-10-10): a private mentor thread turned urgent keeps
+    # kind "mentor" (one thread for the learner and the mentor) and the team
+    # reads all of it while this is set; a team member ending it clears it.
+    escalated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     last_activity_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -133,6 +137,9 @@ class Group(IdMixin, Base):
     mentor_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), _user_fk(), index=True)
     capacity: Mapped[int] = mapped_column(Integer, default=10)
     join_code: Mapped[str] = mapped_column(String(12), unique=True)
+    # CMP-05 R8: active | paused | closed, set by the team. «Needs a mentor»
+    # (R9) is not stored: it follows from the mentor's standing (groups.lead_ok).
+    status: Mapped[str] = mapped_column(String(10), default="active", server_default="active")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

@@ -235,7 +235,7 @@ describe("knw-01 r4/r6 outcomes and errors", () => {
       expect(inThread).toBeTruthy() // still offered, in the same row
       expect(retry.compareDocumentPosition(inThread!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy() // after retry
       expect(inThread!.getAttribute("data-variant")).toBe("ghost") // secondary, not the main button
-      expect(screen.queryByText(t("ar", "ask.personal.title"))).toBeNull()
+      expect(screen.queryByText(t("ar", "ask.personalGeneral.title"))).toBeNull()
       fireEvent.click(retry)
       await settle()
       expect(askBodies).toHaveLength(2) // the user's tap sends the same question again
@@ -299,5 +299,53 @@ describe("knw-01 r8 / knw-02 sc5 source cards", () => {
       expect(strip.textContent).toContain(name)
       expect(strip.getAttribute("href")).toBe("https://islamqa.info/ar/answers/6940")
     }
+  })
+})
+
+describe("knw-01 r3: a personal question gets the general answer and a button to ask a person now (owner 2026-10-10)", () => {
+  const personal: AskResponse = {
+    ...base,
+    route: "personal",
+    level: "D",
+    answer: "TEST_GENERAL_ANSWER {{q:binbaz:ar:12}}",
+    sources: [card("binbaz:ar:12", "binbaz", "12")],
+    notes: ["TEST_PERSONAL_NOTE"],
+    should_escalate: true,
+    handoff: { kind: "escalation", lang: "ar" },
+  }
+  const escalation = { should_escalate: true, handoff: { kind: "escalation" as const, lang: "ar" } }
+
+  it("shows the sourced answer, its note, one line that the case may differ and a main button to a person", async () => {
+    stubFetch(async () => json(personal))
+    renderAsk()
+    fireEvent.click(screen.getByRole("button", { name: "ما معنى الشهادتين؟" }))
+    await screen.findByText(/TEST_GENERAL_ANSWER/)
+    expect(document.querySelectorAll("[data-slot=source-strip]")).toHaveLength(1) // the answer keeps its source
+    expect(screen.getByText("TEST_PERSONAL_NOTE")).toBeTruthy()
+    const referral = document.querySelector("[data-slot=referral-card]") as HTMLElement
+    expect(referral.textContent).toContain(t("ar", "ask.personalGeneral.title"))
+    expect(referral.textContent).toContain(t("ar", "ask.personalGeneral.body"))
+    const button = screen.getByRole("button", { name: t("ar", "ask.personalGeneral.action") })
+    expect(referral.contains(button)).toBe(true)
+    expect(button.getAttribute("data-variant")).not.toBe("ghost") // prominent, not a quiet choice
+  })
+
+  it("with no source it apologizes and offers a person, with no general answer", async () => {
+    const noSource = { ...base, ...escalation, route: "personal", level: "D", outcome: "no_source", reason_code: "retrieval_empty", answer: "FIXED" }
+    stubFetch(async () => json(noSource))
+    renderAsk()
+    fireEvent.click(screen.getByRole("button", { name: "ما معنى الشهادتين؟" }))
+    await screen.findByText(t("ar", "ask.noSource.title"))
+    expect(screen.queryByText(t("ar", "ask.personalGeneral.title"))).toBeNull()
+    expect(document.querySelector("[data-slot=source-strip]")).toBeNull()
+  })
+
+  it("danger is unchanged: the help panel only, no answer and no personal card", async () => {
+    stubFetch(async () => json({ ...base, route: "danger", level: "D", outcome: "danger", answer: "FIXED", should_escalate: true, handoff: { kind: "urgent", lang: "ar" } }))
+    renderAsk()
+    fireEvent.click(screen.getByRole("button", { name: "ما معنى الشهادتين؟" }))
+    await screen.findByText(t("ar", "ask.danger.title"))
+    expect(screen.queryByText(t("ar", "ask.personalGeneral.title"))).toBeNull()
+    expect(document.querySelector("[data-slot=source-strip]")).toBeNull()
   })
 })

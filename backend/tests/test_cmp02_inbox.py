@@ -257,6 +257,7 @@ async def test_cmp02_r6_guest_request_shows_handle_only(client):
     assert set(row) == {
         "id", "handle", "is_guest", "lang", "kind", "topic", "source", "status", "preview", "unread",
         "created_at", "last_activity_at", "assigned_to_me", "can_reply", "can_close",
+        "escalated",  # CMP-02 R8: a flag, no data about the person
     }  # fmt: skip
 
 

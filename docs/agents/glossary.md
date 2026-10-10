@@ -115,3 +115,4 @@ Use these exact terms in docs, code identifiers and UI copy. Arabic is the team'
 | `AccountCreated`, `AccountDeleted` | PLT → LRN, MOT, PRC |
 | `MentorApproved`, `MentorSuspended` | ORG → CMP |
 | `MentorRoleRemoved` (an admin took the mentor role away) | PLT → CMP |
+| `GroupMentorAssigned`, `GroupStatusChanged`, `GroupReadByStaff`, `EscalatedThreadRead` (staff actions on groups and escalated threads; ids only, no text) | Inside CMP: the event history only (CMP-05 R8, CMP-02 R8) |

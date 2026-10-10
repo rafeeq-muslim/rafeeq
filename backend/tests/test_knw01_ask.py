@@ -14,6 +14,7 @@ from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
 from app.knowledge import ask
 from app.knowledge.ai import screen
+from app.knowledge.ai.client import prompt
 from app.knowledge.models import AiCall, AnswerLog
 from tests.knw_fakes import add_passages
 
@@ -183,26 +184,59 @@ async def test_knw01_r2_outage_serves_cached_approved_answer(client, ai, monkeyp
 # --- Rule 3 -------------------------------------------------------------------
 
 
-async def test_knw01_r3_personal_case_refers_without_ruling(client, ai):
+async def test_knw01_r3_personal_case_gets_general_answer_with_sources_and_the_button(client, ai):
+    """Owner decision 2026-10-10: what the matter normally is, with its sources,
+    framed as general information, and the button to ask a person now."""
     await add_passages(BIRTHDAY)
     ai.on("router", {"route": "personal", "level": "D"})
     ai.on(
         "composer",
         {
             "sufficient": True,
-            "answer": "The source speaks generally about kindness to family and about celebrations.",
+            "answer": "In general, the source speaks about kindness to family and about celebrations.",
             "sources": ["binbaz:en:7"],
         },
     )
     ai.on("support", SUPPORTED)
     b = await post(client, "Should I attend my mother's birthday celebration?")
     assert b["outcome"] == "answered" and b["route"] == "personal"
-    assert b["sources"][0]["id"] == "binbaz:en:7"
+    assert b["answer"].startswith("In general") and b["sources"][0]["id"] == "binbaz:en:7"
     assert b["notes"] == [screen.fixed("personal_note", "en")]  # added by code, not the model
-    assert b["should_escalate"] is True and b["handoff"]["kind"] == "escalation"
+    assert b["should_escalate"] is True and b["handoff"] == {"kind": "escalation", "lang": "en"}  # the button
     composer = next(body for agent, body in ai.calls if agent == "composer")
     assert "ROUTE: personal" in composer["messages"][1]["content"]
     assert [e.name for e in await outbox()] == ["EscalationRequested"]
+
+
+@pytest.mark.parametrize("lang", ["ar", "en", "tl"])
+def test_knw01_r3_personal_note_is_general_information_not_a_referral_to_a_mentor(lang):
+    note = screen.fixed("personal_note", lang)
+    assert {"ar": "بوجه عام", "en": "in general", "tl": "sa pangkalahatan"}[lang] in note
+    assert not any(w in note.lower() for w in ("مرشد", "mentor"))
+
+
+def test_knw01_r3_composer_prompt_frames_personal_answers_as_general_without_a_verdict():
+    rule = next(line for line in prompt("composer").splitlines() if line.startswith("6. ROUTE personal"))
+    assert "general information" in rule and "never as a verdict" in rule
+    assert "never say whether their own marriage, divorce, contract, worship or inheritance share is valid" in rule
+
+
+async def test_knw01_r3_personal_case_without_a_source_apologizes_and_offers_a_person(client, ai):
+    await add_passages(SHAHADA)
+    ai.on("router", {"route": "personal", "level": "D"})
+    ai.on("composer", {"sufficient": False, "answer": "", "sources": []})
+    b = await post(client, "Is my marriage still valid now that I am Muslim and my wife is not?")
+    assert b["outcome"] == "no_source" and b["route"] == "personal"
+    assert b["answer"] == screen.fixed("no_source", "en") and b["sources"] == [] and b["notes"] == []
+    assert b["should_escalate"] is True and b["handoff"] == {"kind": "escalation", "lang": "en"}
+
+
+async def test_knw01_r3_first_person_danger_is_unchanged(client, ai):
+    """A first-person situation that shows danger never gets the general answer."""
+    await add_passages(BIRTHDAY)
+    b = await post(client, "Can I stay with my husband? He beats me because I became Muslim")
+    assert b["outcome"] == "danger" and b["handoff"] == {"kind": "urgent", "lang": "en"}
+    assert b["sources"] == [] and b["notes"] == [] and ai.calls == []
 
 
 # --- Rule 4 -------------------------------------------------------------------

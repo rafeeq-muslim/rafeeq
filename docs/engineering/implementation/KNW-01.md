@@ -19,7 +19,7 @@
 | rules §1.3, plan 2.5 | `app/knowledge/ask.py::_source_card` | Quran/hadith text in the response comes from `knw_passages` by id (plus the Arabic ayah / Arabic hadith of the same record), never from the model |
 | R2 | `ask.py` | Healthy search with no or insufficient evidence → `no_source`; a rejected composition → `verification_failed`; an outage, deadline, budget or degraded search without evidence → `unavailable`. Each: fixed reply + «أريد إنسانًا» + `EscalationRequested` (reason = the outcome) |
 | R2 (outage example), plan 4.8 | `ask.py`, `approved.py` | Main → fallback model → (flag `ASK_APPROVED_FAQ_ENABLED`, on) a valid approved answer, exact match only while the router is down → `unavailable` |
-| R3 (personal) | `ask.py` | Code (not the model) appends the fixed referral sentence and sets `should_escalate = true` |
+| R3 (personal) | `ask.py`, `ask/parts.tsx` | Code (not the model) appends the fixed general-information sentence (`personal_note`) and sets `should_escalate = true`; the app shows «قد تختلف حالتك» and the main button «اسأل إنسانًا الآن» (owner 2026-10-10) |
 | R4 (disputed) | `ask.py` | Code appends the fixed «للعلماء في المسألة أقوال» sentence |
 | R5 (danger) + permission example | `ask.py` | Fixed reply, `should_escalate = true`, `handoff.kind = "urgent"`, event `DangerDetected` **without question text or identity** |
 | rules §2.6, plan 4.9 | `ask.py` | Provider receives only question + passages. `knw_answer_log` stores lang, route, level, outcome, latency, and (reliability §7) `ask_id`, reason code, internal detail code, entry point, suggestion id, client request id and a trace of stage names, durations, counts and codes; never question, answer or passage text |
@@ -82,7 +82,7 @@ Reliability (PRD §14.5): `ASK_DEADLINE_SECONDS` (45), `ASK_MAX_EXTERNAL_CALLS` 
 | R1 ex3 unretrieved reference drops the answer | `test_knw01_r1_unretrieved_reference_drops_answer` |
 | R2 ex1 no source → apology + human | `test_knw01_r2_no_source_apologizes_and_offers_human` |
 | R2 ex2 model outage → apology / cached approved answer | `test_knw01_r2_outage_gives_apology_not_error`, `test_knw01_r2_outage_serves_cached_approved_answer` |
-| R3 personal → texts + referral | `test_knw01_r3_personal_case_refers_without_ruling` |
+| R3 personal → general answer + button to a person; no source → apology; danger unchanged | `test_knw01_r3_*`, `Ask.test.tsx` «knw-01 r3» |
 | R4 disputed → views, no preference | `test_knw01_r4_disputed_adds_views_differ_note` |
 | R5 ex1 danger → no content, human, event | `test_knw01_r5_danger_phrase_routes_to_human_without_model` |
 | R5 ex2 urgent request without text | `test_knw01_r5_danger_event_carries_no_question_text` |

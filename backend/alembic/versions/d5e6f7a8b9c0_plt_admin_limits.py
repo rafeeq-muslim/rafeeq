@@ -4,11 +4,11 @@ Owner decision 2026-10-10: the abuse and traffic limits of the 2026-10-07
 security work are editable by the admin. Additive only: two new tables; no
 row = the code default, so the previous image keeps running.
 
-Revises f9a0b1c2d3e4, the only head on origin/main (49fad2c). A branch that
+Revises c4d5e6f7a8b9 (cmp-admin-groups), the head on origin/main after #128. A branch that
 merges later re-points its own `down_revision` to the head then on main.
 
 Revision ID: d5e6f7a8b9c0
-Revises: f9a0b1c2d3e4
+Revises: c4d5e6f7a8b9 (cmp-admin-groups)
 Create Date: 2026-10-10 13:00:00
 
 """
@@ -21,7 +21,7 @@ from sqlalchemy.dialects import postgresql
 from alembic import op
 
 revision: str = "d5e6f7a8b9c0"
-down_revision: str | Sequence[str] | None = "f9a0b1c2d3e4"
+down_revision: str | Sequence[str] | None = "c4d5e6f7a8b9"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

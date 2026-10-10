@@ -67,7 +67,10 @@ def passage_block(p: dict[str, Any]) -> str:
 REPAIR_HINTS = {
     "wrong_language": "The answer was not written in LANGUAGE. Write it in LANGUAGE only.",
     "arabic_in_non_arabic_answer": "The answer contained Arabic letters. Use Latin letters only.",
-    "malformed_marker": "A marker was malformed. Markers are exactly {{q:PASSAGE_ID}}.",
+    "malformed_marker": (
+        "A marker was malformed or a passage id was written as text. Markers are exactly {{q:PASSAGE_ID}};"
+        " never write a passage id in brackets or in the text."
+    ),
     "unretrieved_reference": "The answer cited an id that is not among the PASSAGES. Cite only ids given in PASSAGES.",
     "no_citation": "The answer cited no passage. Cite the passage ids you used in sources.",
     "long_quote_outside_marker": "The answer quoted a long span. Use your own short words, or a marker.",

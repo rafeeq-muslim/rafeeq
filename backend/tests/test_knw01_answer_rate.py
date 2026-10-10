@@ -266,3 +266,12 @@ def test_knw01_answer_rate_router_keeps_general_questions_in_scope():
     assert "Can I pray in jeans?" in text and "is NOT personal" in text  # first-person general questions
     assert "Everyday life as a Muslim is in scope" in text and "«ماذا آكل في حفلة العمل؟»" in text
     assert "When unsure between `danger` and another route, choose `danger`." in text  # danger first, unchanged
+
+
+def test_knw01_r3_router_sends_first_person_situations_to_personal():
+    """Owner decision 2026-10-10: a question about the asker's own life (family, job,
+    marriage) is `personal` every time, not a coin flip with `general`; feelings stay `sensitive`."""
+    text = (Path(agents.__file__).parent / "prompts" / "router.md").read_text(encoding="utf-8")
+    assert "is always `personal`" in text and "This holds in every language" in text
+    assert "When unsure between `general` and `personal` for a question about the asker's own life, choose `personal`." in text
+    assert "is `sensitive` even in the first person" in text
