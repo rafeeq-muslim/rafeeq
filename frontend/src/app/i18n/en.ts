@@ -1656,4 +1656,8 @@ export const en: Dict = {
   "cmp.mod.escalatedHint": "The mentor made this private conversation urgent, so you see all of it from the first message; anything hidden by a report is marked. That you opened it is recorded, never the text.",
   "cmp.mod.endEscalation": "End the escalation",
   "cmp.mod.endEscalationBody": "It goes back to being a private conversation between the learner and their mentor, and leaves the team's inbox.",
+  // --- KNW-01 R3 (knw-personal-general-answer): owner 2026-10-10, a personal question gets the general answer and a button to ask a person now ---
+  "ask.personalGeneral.title": "Your own situation may differ",
+  "ask.personalGeneral.body": "A person from our team can help you with it privately, in your language.",
+  "ask.personalGeneral.action": "Ask a person now",
 }

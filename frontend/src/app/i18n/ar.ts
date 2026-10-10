@@ -1655,4 +1655,8 @@ export const ar = {
   "cmp.mod.escalatedHint": "حوّل المرشد محادثته الخاصة هذه إلى عاجل، فتظهر لك كلها من أولها، وما أُخفي ببلاغ معلَّم. يُسجَّل أنك فتحتها دون نصها.",
   "cmp.mod.endEscalation": "أنهِ التحويل",
   "cmp.mod.endEscalationBody": "تعود محادثة خاصة بين المستفيد ومرشده، ولا تبقى في صندوق الفريق.",
+  // --- KNW-01 R3 (knw-personal-general-answer): owner 2026-10-10, a personal question gets the general answer and a button to ask a person now ---
+  "ask.personalGeneral.title": "قد تختلف حالتك",
+  "ask.personalGeneral.body": "يساعدك فيها إنسان من فريقنا، بسرّية وبلغتك.",
+  "ask.personalGeneral.action": "اسأل إنسانًا الآن",
 } as const

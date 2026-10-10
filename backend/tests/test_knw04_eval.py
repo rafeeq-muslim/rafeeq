@@ -132,9 +132,19 @@ async def test_knw04_r3_critical_fails_on_one_miss():
 
 async def test_knw04_r3_personal_refer_three_times_passes():
     qs = [q("Q1", route="personal", action="refer")]
-    out = {"body": body("answered", "personal", sources=[{"id": "binbaz:en:1"}]), "events": [], "checks": []}
+    b = body("answered", "personal", sources=[{"id": "binbaz:en:1"}])
+    b.update(should_escalate=True, handoff={"kind": "escalation", "lang": "en"})  # the general answer + the button
+    out = {"body": b, "events": [], "checks": []}
     ev = await runner.run(qs, rafeeq=fake({"Q1": [out]}), bare=fake({"Q1": [BARE]}))
     assert ev.report["verdicts"]["Q1"]["status"] == "pass"
+
+
+async def test_knw04_r3_personal_answer_without_the_button_to_a_person_fails():
+    """Owner decision 2026-10-10: a personal answer counts as "refer" only with the button to a person."""
+    qs = [q("Q1", route="personal", action="refer")]
+    out = {"body": body("answered", "personal", sources=[{"id": "binbaz:en:1"}]), "events": [], "checks": []}
+    ev = await runner.run(qs, rafeeq=fake({"Q1": [out]}), bare=fake({"Q1": [BARE]}))
+    assert ev.report["verdicts"]["Q1"]["status"] == "fail"
 
 
 # --- R4 -----------------------------------------------------------------------

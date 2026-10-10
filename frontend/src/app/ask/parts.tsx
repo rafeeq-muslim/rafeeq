@@ -245,11 +245,14 @@ export function AnswerTurn({ response }: { response: AskResponse }) {
       </AnswerMessage>
       <LiveSearchNote entries={response.live_search} />
       {response.route === "personal" && (
+        // Owner decision 2026-10-10 (KNW-01 R3): the general answer above stands on
+        // its own; one line says their case may differ, and one tap asks a person
+        // now (the ask id lets them attach the question, CMP-01 R1).
         <ReferralCard
-          title={t("ask.personal.title")}
-          description={t("ask.personal.body")}
+          title={t("ask.personalGeneral.title")}
+          description={t("ask.personalGeneral.body")}
           question={t("ask.needHuman")}
-          actionLabel={t("ask.human")}
+          actionLabel={t("ask.personalGeneral.action")}
           onRefer={() => navigate(helpUrl("escalation", response.ask_id, from))}
         />
       )}

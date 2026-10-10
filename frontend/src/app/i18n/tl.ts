@@ -1657,4 +1657,8 @@ export const tl: Dict = {
   "cmp.mod.escalatedHint": "Ginawang agaran ng mentor ang pribadong usapang ito, kaya makikita mo ang lahat mula sa unang mensahe; may marka ang anumang itinago dahil sa ulat. Itinatala na binuksan mo ito, hindi ang teksto.",
   "cmp.mod.endEscalation": "Tapusin ang pag-akyat",
   "cmp.mod.endEscalationBody": "Babalik ito bilang pribadong usapan ng learner at ng kaniyang mentor, at aalis sa inbox ng team.",
+  // --- KNW-01 R3 (knw-personal-general-answer): owner 2026-10-10, a personal question gets the general answer and a button to ask a person now. ⚠️ Tagalog needs native review ---
+  "ask.personalGeneral.title": "Maaaring iba ang iyong sitwasyon",
+  "ask.personalGeneral.body": "Matutulungan ka rito nang pribado ng isang tao mula sa aming team, sa iyong wika.",
+  "ask.personalGeneral.action": "Magtanong sa isang tao ngayon",
 }
