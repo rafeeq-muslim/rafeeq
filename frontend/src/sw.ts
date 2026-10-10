@@ -8,7 +8,7 @@
 import { cleanupOutdatedCaches, precacheAndRoute } from "workbox-precaching"
 import { registerRoute, NavigationRoute } from "workbox-routing"
 import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies"
-import { createHandlerBoundToURL } from "workbox-precaching"
+import { createHandlerBoundToURL, getCacheKeyForURL } from "workbox-precaching"
 import "./sw/plt15-offline" // PLT-15: adhkar text, glossary and saved-item lists kept for offline use
 import { APP_NAVIGATION, notificationTarget } from "./app/lib/base"
 import { registerPushHandler } from "./sw/plt13-push"
@@ -16,6 +16,7 @@ import { registerDownloads } from "./sw/plt12-downloads" // PLT-12
 import { registerPlt11Caching } from "./sw/plt11-caching" // PLT-11 R1/R3/R4
 import { limitOf, registerForget } from "./sw/cache-limits" // security review A-L6: bounded runtime caches
 import { CONTENT_CACHE, MEDIA_CACHE } from "./app/offline/paths"
+import { fillPrecache } from "./sw/precache-fill" // size budget: install in seconds, not ~40 s
 
 declare const self: ServiceWorkerGlobalScope
 
@@ -23,7 +24,17 @@ self.skipWaiting()
 cleanupOutdatedCaches()
 // PLT-10 R1: "/" is the landing page, so the precached /index.html (the app shell)
 // must not answer for it (Workbox maps "/" to "/index.html" by default).
-precacheAndRoute(self.__WB_MANIFEST, { directoryIndex: "" })
+const MANIFEST = self.__WB_MANIFEST
+precacheAndRoute(MANIFEST, { directoryIndex: "" })
+// Workbox's default precache name (workbox-core cacheNames.precache).
+const PRECACHE = `workbox-precache-v2-${self.registration.scope}`
+self.addEventListener("install", (event) =>
+  event.waitUntil(
+    caches.open(PRECACHE).then((cache) =>
+      fillPrecache(MANIFEST, { cache, keyFor: getCacheKeyForURL, fetch: (url, init) => fetch(url, init), base: self.location.href }),
+    ),
+  ),
+)
 // PLT-10 R1/R2: the landing page at / is never replaced by the app shell; only /app/* is.
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/index.html"), { allowlist: [APP_NAVIGATION], denylist: [/^\/api\//] }))
 
