@@ -43,6 +43,11 @@ export function itemName(item: { kind: string; ref: string; title: string; id: s
   return item.title
 }
 
+/** A unit's videos in the catalogue (each its own item since 2026-10-10). */
+export function unitVideos(catalog: Catalog | undefined, unitRef: string): CatalogItem[] {
+  return catalog ? catalog.sections.lessons.filter((v) => v.kind === "video" && v.unit === unitRef) : []
+}
+
 /** The catalogue id of a lesson video: `video:` + the server's file id of its URL
  * (backend downloads.file_id: "f" + the first 24 hex of SHA-256). */
 export async function videoItemId(url: string): Promise<string> {

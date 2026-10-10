@@ -1602,4 +1602,8 @@ export const en: Dict = {
   "lesson.videoCard.online": "Plays when you're online",
   "lesson.videoCard.kept": "On your device, plays offline",
   "lesson.videoCard.failed": "The video couldn't play just now. Carry on with your lesson and try again in a moment.",
+  // --- PLT-12 (plt-12-videos-choice): owner 2026-10-10, a unit with videos asks whether they come too ---
+  "downloads.choice.body": "Include the videos? Without them, they play when you're online, and you can download any of them later on its own.",
+  "downloads.choice.without": "Without videos · {size}",
+  "downloads.choice.with": "With videos · {size}",
 }

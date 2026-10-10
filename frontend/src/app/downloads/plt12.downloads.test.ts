@@ -5,7 +5,7 @@
  */
 import { beforeEach, describe, expect, it, vi, type Mock } from "vitest"
 
-import { checkUpdates, download, remove, removeAll, resume, setDeps, storageSummary, DOWNLOADS_CACHE } from "./manager"
+import { checkUpdates, download, downloadAll, remove, removeAll, resume, setDeps, storageSummary, DOWNLOADS_CACHE } from "./manager"
 import { totalStored, useDownloads } from "./store"
 import type { Catalog, CatalogFile, CatalogItem } from "./types"
 import { wipeDevice } from "@/app/lib/privacy"
@@ -260,6 +260,19 @@ describe("plt-12 videos load lazily: never in a unit download, opt-in one by one
     expect(useDownloads.getState().items[LEAN.id].status).toBe("done")
     expect(net.mock.calls.map((c) => c[0])).not.toContain(WUDU.url)
     expect(cache.keysOf()).not.toContain(WUDU.key)
+  })
+
+  it("plt12_choice_with_videos_downloads_the_unit_and_each_video_removable_alone", async () => {
+    await download(video(WUDU), "ar") // already on the device: left as it is
+    net.mockClear()
+    await downloadAll([LEAN, video(WUDU), video(SALAH)], "ar")
+    const items = useDownloads.getState().items
+    expect([items[LEAN.id], items[`video:${WUDU.id}`], items[`video:${SALAH.id}`]].map((i) => i.status)).toEqual(["done", "done", "done"])
+    expect(net.mock.calls.map((c) => c[0])).not.toContain(WUDU.url) // not fetched twice
+    expect(cache.keysOf()).toEqual(expect.arrayContaining([WUDU.key, SALAH.key]))
+    await remove(`video:${SALAH.id}`)
+    expect(cache.keysOf()).not.toContain(SALAH.key)
+    expect(useDownloads.getState().items[LEAN.id].status).toBe("done")
   })
 
   it("plt12_videos_one_video_downloads_on_request_and_is_deleted_alone", async () => {

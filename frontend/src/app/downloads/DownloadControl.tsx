@@ -2,7 +2,8 @@
  * PLT-12: the one download control, used in place (a path unit, a surah in
  * listening, a library item: R1) and on each row of the download center.
  * Shows the size before anything is fetched (R2), asks before downloading
- * (R3), then progress, «منزّلة», «تحديث متاح» (R3), «لا تكفي المساحة» (R5).
+ * (R3; a unit with videos asks whether they come too, each choice with its
+ * total size: owner 2026-10-10; a unit without videos starts at once), then progress, «منزّلة», «تحديث متاح» (R3), «لا تكفي المساحة» (R5).
  */
 import * as React from "react"
 import { IconAlertTriangle, IconCircleCheck, IconDownload, IconFileDownload, IconRefresh, IconTrash, IconWifiOff } from "@tabler/icons-react"
@@ -22,8 +23,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { useT } from "@/app/i18n"
 import { api } from "@/app/lib/api"
-import { download, openDownloaded, remove } from "./manager"
-import { formatSize, itemName, useCatalog } from "./queries"
+import { download, downloadAll, openDownloaded, remove } from "./manager"
+import { formatSize, itemName, unitVideos, useCatalog } from "./queries"
 import { storedBytes, useDownloads, type SavedItem } from "./store"
 import type { CatalogItem } from "./types"
 
@@ -46,44 +47,78 @@ export function DownloadControl({ itemId, lang, withDelete = false, openable = f
   const item = entry ?? (catalog.data ? Object.values(catalog.data.sections).flat().find((i) => i.id === itemId) : undefined)
   const saved = useDownloads((s) => s.items[itemId])
   const progress = useDownloads((s) => s.progress[itemId] ?? 0)
-  const [asking, setAsking] = React.useState<CatalogItem | null>(null)
+  const [asking, setAsking] = React.useState<{ item: CatalogItem; videos: CatalogItem[] } | null>(null)
   const [preparing, setPreparing] = React.useState(false)
+  const withoutRef = React.useRef<HTMLButtonElement>(null)
 
   if (!item && !saved) return null
   const name = itemName((saved ?? item)!, t, locale)
 
   // R2: the size before the download, every file's size known (the catalogue may not know all yet).
+  const sized = async (base: CatalogItem) => {
+    try {
+      return base.sizes_known ? base : await api<CatalogItem>(`/api/downloads/catalog/${encodeURIComponent(base.id)}?lang=${lang}`)
+    } catch {
+      return base
+    }
+  }
   const ask = async (base: CatalogItem) => {
     setPreparing(true)
     try {
-      setAsking(base.sizes_known ? base : await api<CatalogItem>(`/api/downloads/catalog/${encodeURIComponent(base.id)}?lang=${lang}`))
-    } catch {
-      setAsking(base)
+      // Owner 2026-10-10: a unit with videos asks whether they come too (its videos: the catalogue's own items).
+      const own = base.kind === "unit" ? unitVideos(catalog.data, base.ref).filter((v) => v.downloadable) : []
+      const [full, ...videos] = await Promise.all([sized(base), ...own.map(sized)])
+      // A unit without videos downloads at once: its size is on the button already.
+      if (base.kind === "unit" && videos.length === 0) void download(full, lang)
+      else setAsking({ item: full, videos })
     } finally {
       setPreparing(false)
     }
   }
 
+  const sizeText = (items: CatalogItem[]) => {
+    const n = items.reduce((a, i) => a + i.bytes, 0)
+    return items.every((i) => i.sizes_known) ? formatSize(n, t) : `≥ ${formatSize(n, t)}`
+  }
+  const choose = asking && asking.videos.length > 0
   const confirmDialog = (
     <AlertDialog open={!!asking} onOpenChange={(o) => !o && setAsking(null)}>
-      <AlertDialogContent>
+      <AlertDialogContent
+        onOpenAutoFocus={(e) => {
+          if (!withoutRef.current) return
+          e.preventDefault() // the first choice (without videos) is the default
+          withoutRef.current.focus()
+        }}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>{t("downloads.confirm.title", { name })}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("downloads.confirm.body", { size: asking?.sizes_known === false ? `≥ ${formatSize(asking.bytes, t)}` : formatSize(asking?.bytes ?? 0, t) })}
+            {choose ? t("downloads.choice.body") : t("downloads.confirm.body", { size: asking ? sizeText([asking.item]) : "" })}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() => {
-              if (asking) void download(asking, lang)
-              setAsking(null)
-            }}
-          >
-            {t("downloads.confirm.go")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
+        {choose ? (
+          <AlertDialogFooter className="flex-col sm:flex-col sm:justify-stretch">
+            <AlertDialogAction ref={withoutRef} className="w-full" onClick={() => void download(asking.item, lang)}>
+              {t("downloads.choice.without", { size: sizeText([asking.item]) })}
+            </AlertDialogAction>
+            <AlertDialogAction variant="outline" className="w-full" onClick={() => void downloadAll([asking.item, ...asking.videos], lang)}>
+              {t("downloads.choice.with", { size: sizeText([asking.item, ...asking.videos]) })}
+            </AlertDialogAction>
+            <AlertDialogCancel className="w-full">{t("common.cancel")}</AlertDialogCancel>
+          </AlertDialogFooter>
+        ) : (
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (asking) void download(asking.item, lang)
+                setAsking(null)
+              }}
+            >
+              {t("downloads.confirm.go")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   )

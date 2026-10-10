@@ -1601,4 +1601,8 @@ export const ar = {
   "lesson.videoCard.online": "يعمل مع الاتصال",
   "lesson.videoCard.kept": "على جهازك، يعمل دون اتصال",
   "lesson.videoCard.failed": "تعذّر تشغيل المقطع الآن. أكمل درسك، وأعد المحاولة بعد قليل.",
+  // --- PLT-12 (plt-12-videos-choice): owner 2026-10-10, a unit with videos asks whether they come too ---
+  "downloads.choice.body": "هل تريد مقاطع الفيديو معها؟ بدونها تُشاهد مع الاتصال، ولك أن تنزّل أيًّا منها لاحقًا وحده.",
+  "downloads.choice.without": "بدون المقاطع · {size}",
+  "downloads.choice.with": "مع المقاطع · {size}",
 } as const
