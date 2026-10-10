@@ -156,13 +156,26 @@ html:not(.js) [data-sc-cue], html:not(.js) [data-sc-in], html:not(.js) [data-sc-
 :root[dir="rtl"] .sky__base { background:
     radial-gradient(90% 60% at 20% 0%, rgb(59 45 153 / 0.55), transparent 70%),
     linear-gradient(180deg, var(--rf-ink) 0%, #261c5e 55%, var(--rf-deep) 130%); }
-.sky__far { position: absolute; inset: -12% 0; will-change: transform; }
+.sky__far { position: absolute; inset: -12% 0; will-change: transform; container-type: size; }
 .sky__far svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .sky__pattern { color: rgb(255 255 255 / 0.035); }
 .sky__stars circle { fill: #fff; }
-.sky__stars .tw { animation: twinkle 5.5s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+/* twinkling stars: placed on the stars' own grid (viewBox 1000, "slice"),
+   so --k is the SVG's scale; opacity-only, so the compositor runs it */
+.sky__tw {
+  --k: calc(max(100cqw, 100cqh) / 1000);
+  position: absolute; border-radius: 50%; background: #fff;
+  left: calc(50% + (var(--x) - 500 - var(--r)) * var(--k));
+  top: calc(50% + (var(--y) - 500 - var(--r)) * var(--k));
+  width: calc(2 * var(--r) * var(--k)); height: calc(2 * var(--r) * var(--k));
+  opacity: var(--o, 0.6);
+  animation: twinkle 5.5s ease-in-out infinite alternate; animation-delay: var(--d, 0s);
+}
 @keyframes twinkle { from { opacity: var(--o, 0.6); } to { opacity: 0.12; } }
-.sky.is-hidden .tw { animation-play-state: paused; }
+.sky.is-hidden .sky__tw { animation-play-state: paused; }
+/* scrollcraft publishes --sc-p on every act on every scroll; nothing on this
+   page reads it from a descendant, so it must not restyle each act's subtree */
+@property --sc-p { syntax: "<number>"; inherits: false; initial-value: 0; }
 
 .halo { position: absolute; left: 0; top: 0; width: 100px; height: 100px; color: rgb(255 255 255 / 0.14); will-change: transform, opacity; transform-origin: 50% 50%; }
 .halo svg { width: 100%; height: 100%; overflow: visible; }
@@ -278,7 +291,7 @@ main { position: relative; }
   align-items: end;
 }
 .hero__flower { grid-row: 1; justify-self: center; align-self: center; width: min(66vw, 38svh, 320px); aspect-ratio: 1; }
-.hero__copy { grid-row: 2; max-width: 40rem; padding-bottom: 8px; }
+.hero__copy { grid-row: 2; max-width: 40rem; padding-bottom: 8px; will-change: opacity; /* faded per scroll frame: compositor only */ }
 .hero__sub { margin: 14px 0 0; color: #ded9fb; font-size: var(--fs-body); max-width: 31rem; text-wrap: pretty; }
 .hero__actions { margin-top: 26px; display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 .hero__note { margin: 0; color: #cfc9f3; font-size: var(--fs-label); text-align: center; }
@@ -433,6 +446,9 @@ html:not(.js) .static-flower, .rm .static-flower { display: block; }
 .dial__tilt { position: absolute; inset: 0; }
 .dial__layer { position: absolute; inset: 0; }
 .dial__layer svg { width: 100%; height: 100%; display: block; overflow: visible; }
+/* the needle's own box (viewBox 36..164): small enough that, turned, it never
+   pokes out of the dial and widens a phone's page */
+.dial__needle { position: absolute; inset: 18%; will-change: transform; }
 .daily__copy > * + * { margin-top: 20px; }
 .private { display: flex; gap: 12px; align-items: flex-start; padding-top: 22px; border-top: 1px solid var(--rf-line); max-width: 34rem; }
 .private .icon { color: var(--rf-violet); margin-top: 0.25em; }

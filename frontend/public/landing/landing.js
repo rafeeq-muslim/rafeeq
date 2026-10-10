@@ -228,13 +228,21 @@
 
   function buildSky() {
     var far = document.getElementById("skyFar");
-    var r = rng(1445), stars = '<svg class="sky__stars" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">';
+    var r = rng(1445), stars = '<svg class="sky__stars" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">', twinkles = "";
     for (var i = 0; i < 130; i++) {
       var x = r() * 1000, y = r() * 1000, big = r() > 0.92, o = (0.25 + r() * 0.6).toFixed(2);
-      var tw = i % 9 === 0 ? ' class="tw" style="--o:' + o + ";--d:" + (-r() * 5).toFixed(2) + 's"' : "";
-      stars += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (big ? 1.7 : 0.6 + r() * 0.7).toFixed(2) + '" opacity="' + o + '"' + tw + "/>";
+      var d = i % 9 === 0 ? (-r() * 5).toFixed(2) : null;   // same draw order as before: same sky
+      var rad = (big ? 1.7 : 0.6 + r() * 0.7).toFixed(2);
+      if (d !== null) {
+        // Perf: a twinkling star is its own small element (opacity runs on the
+        // compositor), not a circle in the sky SVG, whose animation restyled
+        // and repainted the whole full-screen sky layer on every frame.
+        twinkles += '<i class="sky__tw" style="--x:' + x.toFixed(1) + ";--y:" + y.toFixed(1) + ";--r:" + rad + ";--o:" + o + ";--d:" + d + 's"></i>';
+        continue;
+      }
+      stars += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + rad + '" opacity="' + o + '"/>';
     }
-    stars += "</svg>";
+    stars += "</svg>" + twinkles;
     // «نقشة الرفاق»: tone-on-tone repeat of the symbol (graphics.tsx PetalPattern)
     var tile = 78, fl = function (cx, cy, rr) {
       var g = '<g transform="translate(' + (cx - rr) + " " + (cy - rr) + ") scale(" + (2 * rr / 120) + ')">';
@@ -267,11 +275,14 @@
     [12, 44, 5, 56, 1, "o", 0.5, 0.55]
   ];
   var nearEls = [];
-  function petalShape(fill, id) {
+  function petalShape(fill, id, blur) {
     var g = fill === "v" ? '<linearGradient id="' + id + '" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#3b2d99"/><stop offset=".6" stop-color="#7a5ce0"/><stop offset="1" stop-color="#c47ad0"/></linearGradient>'
       : fill === "o" ? '<linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c47ad0"/><stop offset="1" stop-color="#7a5ce0"/></linearGradient>'
       : '<linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b4a9f5"/><stop offset="1" stop-color="#7a5ce0"/></linearGradient>';
-    return '<svg viewBox="0 0 40 80"><defs>' + g + '</defs><ellipse cx="20" cy="40" rx="18" ry="38" fill="url(#' + id + ')"/></svg>';
+    // the softness is drawn into the petal (rasterised once), not a CSS filter
+    // the compositor would have to re-run on every frame the petal moves
+    var f = blur ? '<filter id="' + id + 'b" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="' + blur.toFixed(2) + '"/></filter>' : "";
+    return '<svg viewBox="0 0 40 80"><defs>' + g + f + '</defs><ellipse cx="20" cy="40" rx="18" ry="38" fill="url(#' + id + ')"' + (blur ? ' filter="url(#' + id + 'b)"' : "") + "/></svg>";
   }
   function buildNear() {
     var host = document.getElementById("near");
@@ -283,9 +294,10 @@
       el.style.left = (RTL ? 100 - n[0] : n[0]) + "%";
       el.style.marginLeft = (-w / 2) + "vmin";
       el.style.top = n[1] + "%";
-      el.style.filter = "blur(" + n[4] + "px)";
       el.style.opacity = n[6];
-      el.innerHTML = petalShape(n[5], "np" + i);
+      // CSS blur(n px) in the SVG's own units: the 40-unit-wide box is w vmin
+      var unitPx = (w * Math.min(innerWidth, innerHeight) / 100) / 40;
+      el.innerHTML = petalShape(n[5], "np" + i, n[4] / unitPx);
       el._rot = RTL ? -n[3] : n[3];
       el._speed = n[7];
       el.style.transform = "rotate(" + el._rot + "deg)";
@@ -382,8 +394,12 @@
       var a = i * 7.5 * Math.PI / 180, r1 = i % 4 === 0 ? 64 : 67, x1 = 100 + Math.sin(a) * r1, y1 = 100 - Math.cos(a) * r1, x2 = 100 + Math.sin(a) * 71, y2 = 100 - Math.cos(a) * 71;
       s += '<line x1="' + x1.toFixed(2) + '" y1="' + y1.toFixed(2) + '" x2="' + x2.toFixed(2) + '" y2="' + y2.toFixed(2) + '" stroke="' + (i % 4 ? "#d6d0ff" : "#8b7ceb") + '" stroke-width="' + (i % 4 ? 0.8 : 1.4) + '" stroke-linecap="round"/>';
     }
-    s += '<g id="needle"><ellipse cx="100" cy="66" rx="9" ry="30" fill="url(#' + id + 'v)"/><ellipse cx="100" cy="128" rx="5" ry="16" fill="#d6d0ff"/></g>';
-    s += '<circle cx="100" cy="100" r="9" fill="#3b2d99"/><circle cx="100" cy="100" r="3.5" fill="#fff"/></svg>';
+    s += "</svg>";
+    // the needle is its own layer, turned with a CSS transform: turning it
+    // inside the plate's SVG repainted the whole dial on every scroll frame
+    s += '<div class="dial__needle" id="needle"><svg viewBox="36 36 128 128">' + defs(id + "n");
+    s += '<g><ellipse cx="100" cy="66" rx="9" ry="30" fill="url(#' + id + 'nv)"/><ellipse cx="100" cy="128" rx="5" ry="16" fill="#d6d0ff"/></g>';
+    s += '<circle cx="100" cy="100" r="9" fill="#3b2d99"/><circle cx="100" cy="100" r="3.5" fill="#fff"/></svg></div>';
     document.getElementById("dialNeedle").innerHTML = s;
   }
 
@@ -405,13 +421,14 @@
   }
 
   /* the companion: one flower, live petals */
-  var comp, compOn = [], compIdle, compGlow, compCore;
+  var comp, compOn = [], compIdle, compIdleEls = [], compGlow, compCore;
   function buildCompanion() {
     comp = document.getElementById("companion");
     comp.innerHTML = yearFlowerSVG(0, { live: true, idle: "currentColor" });
     compOn = Array.prototype.slice.call(comp.querySelectorAll(".on ellipse"));
     compIdle = comp.querySelector(".idle");
-    compIdle.querySelectorAll("ellipse").forEach(function (e) { e.removeAttribute("stroke"); });
+    compIdleEls = Array.prototype.slice.call(compIdle.querySelectorAll("ellipse"));
+    compIdleEls.forEach(function (e) { e.removeAttribute("stroke"); });
     compGlow = comp.querySelector(".cf-glow");
     compCore = comp.querySelector(".cf-core");
   }
@@ -452,27 +469,48 @@
   function rectOf(node) { var r = node.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; }
   function centreOf(r) { return { x: r.x + r.w / 2, y: r.y + r.h / 2, s: r.w }; }
 
+  /* Perf (phones): every layout read of a frame happens first and every
+     style write after it, so a scroll costs one style/layout pass instead of
+     a forced one per section; a value that did not change is not written
+     again (an SVG attribute write restyles and repaints the flower even when
+     the value is equal). */
+  function setAttr(node, name, v) { var k = "_a" + name; if (node[k] !== v) { node[k] = v; node.setAttribute(name, v); } }
+  function setStyle(node, name, v) { var k = "_s" + name; if (node[k] !== v) { node[k] = v; node.style[name] = v; } }
+
   function frame(now) {
     raf = 0;
+    // ---- reads (layout) -------------------------------------------------
     vh = innerHeight; vw = innerWidth;
     var y = scrollY;
     maxY = Math.max(1, document.documentElement.scrollHeight - vh);
-
     var sheet = el.sheet.getBoundingClientRect();
     var sTop = sheet.top, sBot = sheet.bottom, sH = sheet.height;
-
     var hero = el.hero.getBoundingClientRect();
     var heroP = clamp01(-hero.top / Math.max(hero.height - vh, 1));
     var bloom = el.bloom.getBoundingClientRect();
     var bloomP = clamp01(-bloom.top / Math.max(bloom.height - vh, 1));
+    var barH = el.bar.offsetHeight;
+    var st = el.heroStage.getBoundingClientRect().top, hc = el.heroCopy.getBoundingClientRect();
+    var dr = el.days.getBoundingClientRect();
+    var chapterRects = [];
+    for (var ci = 0; ci < chapters.length; ci++) chapterRects.push(chapters[ci].sec.getBoundingClientRect());
+    var H, D, B, dl, askR;
+    if (!RM) {
+      var dockNode = vw >= 1100 ? el.dockRail : el.dockBar;
+      H = centreOf(rectOf(el.anchorHero)); D = centreOf(rectOf(dockNode)); B = centreOf(rectOf(el.anchorBloom));
+      if (vw >= 1100) { var rr = el.rail.getBoundingClientRect(); if (!rr.width) D = centreOf(rectOf(el.dockBar)); }
+      if (el.dawn._vh !== vh) { el.dawn._h = el.dawn.offsetHeight; el.dawn._vh = vh; }
+      dl = el.daily.getBoundingClientRect();
+      if (el.ask && !el.ask.classList.contains("ask-flow")) askR = el.ask.getBoundingClientRect();
+    }
 
+    // ---- writes ---------------------------------------------------------
     // sky visible at all? (the sheet covers it completely in the middle)
     var skyVisible = sTop > 0 || sBot < vh;
     el.sky.classList.toggle("is-hidden", !skyVisible);
-    el.sky.style.visibility = skyVisible ? "" : "hidden";
+    setStyle(el.sky, "visibility", skyVisible ? "" : "hidden");
 
     // ---- the bar: night or day under it
-    var barH = el.bar.offsetHeight;
     var day = sTop < barH * 0.6 && sBot > barH * 0.6;
     el.bar.classList.toggle("is-day", day);
 
@@ -480,9 +518,8 @@
     // reaches the bar so the title never sits under the brand.
     // Measured from the stage, so the copy is always whole at rest, however
     // short the screen.
-    var st = el.heroStage.getBoundingClientRect().top, hc = el.heroCopy.getBoundingClientRect();
     var moved = Math.max(0, -st), room = Math.max(hc.top - st - barH, 1);
-    el.heroCopy.style.opacity = (1 - clamp01(moved / room)).toFixed(3);
+    setStyle(el.heroCopy, "opacity", (1 - clamp01(moved / room)).toFixed(3));
 
     // ---- petals drawn: 1 on arrival, 10 while the sheet is read, the 12th at the bloom
     if (loadT0 && loadDraw < 1) loadDraw = clamp01((now - loadT0) / 900);
@@ -493,93 +530,96 @@
     }
     var ignite = smooth((bloomP - 0.2) / 0.18);
 
-    if (RM) { reducedFrame(draws, sTop, sBot, read); scheduleIfLoading(); return; }
+    if (RM) { reducedFrame(draws, sTop, sBot, read, dr, chapterRects); scheduleIfLoading(); return; }
 
     // ---- companion: hero → dock → bloom
     var t1 = easeIO((vh * 0.98 - sTop) / (vh * 0.55));
     var t2 = easeIO((vh * 0.92 - sBot) / (vh * 0.8));
-    var dockNode = vw >= 1100 ? el.dockRail : el.dockBar;
-    var H = centreOf(rectOf(el.anchorHero)), D = centreOf(rectOf(dockNode)), B = centreOf(rectOf(el.anchorBloom));
-    if (vw >= 1100) { var rr = el.rail.getBoundingClientRect(); if (!rr.width) D = centreOf(rectOf(el.dockBar)); }
     // subject plane inside the pinned hero: recedes a little while the near plane sweeps past
     H.y -= heroP * 46; H.s *= 1 - heroP * 0.07;
     var c;
     if (t2 > 0) c = { x: lerp(D.x, B.x, t2), y: lerp(D.y, B.y, t2) - Math.sin(t2 * Math.PI) * vh * 0.06, s: lerp(D.s, B.s, t2) };
     else c = { x: lerp(H.x, D.x, t1), y: lerp(H.y, D.y, t1) - Math.sin(t1 * Math.PI) * vh * 0.05, s: lerp(H.s, D.s, t1) };
     var sc = c.s / 180; // 120 flower units span 180px of the 240px box
-    comp.style.transform = "translate3d(" + (c.x - 120 * sc).toFixed(2) + "px," + (c.y - 120 * sc).toFixed(2) + "px,0) scale(" + sc.toFixed(4) + ")";
+    setStyle(comp, "transform", "translate3d(" + (c.x - 120 * sc).toFixed(2) + "px," + (c.y - 120 * sc).toFixed(2) + "px,0) scale(" + sc.toFixed(4) + ")");
     var flying = t1 > 0.02 && t2 < 0.985;
     comp.classList.toggle("is-top", flying);
     var dockMist = flying && D.y > sTop && D.y < sBot && t1 > 0.5 && t2 < 0.5;
     comp.classList.toggle("is-day", dockMist);
     // small sizes need thicker strokes (brand: 6.2 below 64px)
     var dockness = flying ? Math.max(Math.min(t1, 1 - t2), 0) : 0;
-    var onW = lerp(4.6, 7.4, dockness), idleW = lerp(2.4, 4, dockness);
+    var onW = lerp(4.6, 7.4, dockness).toFixed(2), idleW = lerp(2.4, 4, dockness).toFixed(2);
     for (k = 0; k < 12; k++) {
-      compOn[k].setAttribute("stroke-dashoffset", (100 - draws[k] * 100).toFixed(1));
-      compOn[k].setAttribute("stroke-width", onW.toFixed(2));
+      setAttr(compOn[k], "stroke-dashoffset", (100 - draws[k] * 100).toFixed(1));
+      setAttr(compOn[k], "stroke-width", onW);
     }
-    compIdle.setAttribute("stroke-width", idleW.toFixed(2));
-    compIdle.querySelectorAll("ellipse").forEach(function (e) { e.setAttribute("stroke-width", idleW.toFixed(2)); });
-    compGlow.setAttribute("opacity", ignite.toFixed(3));
-    compCore.setAttribute("r", (9 + 2 * ignite).toFixed(2));
+    setAttr(compIdle, "stroke-width", idleW);
+    for (k = 0; k < compIdleEls.length; k++) setAttr(compIdleEls[k], "stroke-width", idleW);
+    setAttr(compGlow, "opacity", ignite.toFixed(3));
+    setAttr(compCore, "r", (9 + 2 * ignite).toFixed(2));
 
     // ---- rail (desktop chapter nav) shows only over the sheet
     el.rail.classList.toggle("is-on", sTop < vh * 0.3 && sBot > vh * 0.7);
 
-    // ---- sky planes
+    // ---- sky planes: nothing to move while the sheet covers the sky
     var inBloom = y > maxY - vh * 4;
     var ref = inBloom ? y - maxY : y;            // 0 at either end of the page
-    el.far.style.transform = "translate3d(0," + (-ref * 0.05).toFixed(1) + "px,0)";
-    var haloC = t2 > 0 ? B : H, haloS = haloC.s * (t2 > 0 ? lerp(1.9, 2.25, smooth(bloomP / 0.5)) : (vw < 900 ? 1.9 : 1.75));
-    var haloO = t2 > 0 ? 0.9 * smooth((t2 - 0.4) / 0.6) : 1 - smooth(t1 / 0.5);
-    var haloY = haloC.y + (t2 > 0 ? 0 : heroP * 30);   // the mid plane lags the subject
-    // sized in px (not scaled) so the halo keeps hairline strokes at any size
-    var hs = Math.round(haloS);
-    if (hs !== el.halo._s) { el.halo.style.width = el.halo.style.height = hs + "px"; el.halo._s = hs; }
-    el.halo.style.transform = "translate3d(" + (haloC.x - hs / 2).toFixed(1) + "px," + (haloY - hs / 2).toFixed(1) + "px,0) rotate(" + (ref * 0.02 + bloomP * 30).toFixed(2) + "deg)";
-    el.halo.style.opacity = haloO.toFixed(3);
-    var dawnH = el.dawn.offsetHeight;
-    el.dawn.style.transform = "translate3d(0," + (sTop - dawnH + 30).toFixed(1) + "px,0)";
-    el.dawn.style.opacity = (smooth((vh * 1.25 - sTop) / (vh * 0.7)) * (sTop > -dawnH ? 1 : 0)).toFixed(3);
-    el.dusk.style.transform = "translate3d(0," + (sBot - 30).toFixed(1) + "px,0)";
-    el.dusk.style.opacity = (smooth((vh - sBot) / (vh * 0.5)) * (1 - ignite * 0.4)).toFixed(3);
-    var coreS = B.s * 2.6;
-    el.core.style.transform = "translate3d(" + (B.x - 50).toFixed(1) + "px," + (B.y - 50).toFixed(1) + "px,0) scale(" + ((coreS / 100) * (0.7 + 0.3 * ignite)).toFixed(3) + ")";
-    el.core.style.opacity = (0.6 * ignite).toFixed(3);
+    if (skyVisible) {
+      setStyle(el.far, "transform", "translate3d(0," + (-ref * 0.05).toFixed(1) + "px,0)");
+      var haloC = t2 > 0 ? B : H, haloS = haloC.s * (t2 > 0 ? lerp(1.9, 2.25, smooth(bloomP / 0.5)) : (vw < 900 ? 1.9 : 1.75));
+      var haloO = t2 > 0 ? 0.9 * smooth((t2 - 0.4) / 0.6) : 1 - smooth(t1 / 0.5);
+      var haloY = haloC.y + (t2 > 0 ? 0 : heroP * 30);   // the mid plane lags the subject
+      // sized in px (not scaled) so the halo keeps hairline strokes at any size
+      var hs = Math.round(haloS);
+      if (hs !== el.halo._s) { el.halo.style.width = el.halo.style.height = hs + "px"; el.halo._s = hs; }
+      setStyle(el.halo, "transform", "translate3d(" + (haloC.x - hs / 2).toFixed(1) + "px," + (haloY - hs / 2).toFixed(1) + "px,0) rotate(" + (ref * 0.02 + bloomP * 30).toFixed(2) + "deg)");
+      setStyle(el.halo, "opacity", haloO.toFixed(3));
+      var dawnH = el.dawn._h;
+      setStyle(el.dawn, "transform", "translate3d(0," + (sTop - dawnH + 30).toFixed(1) + "px,0)");
+      setStyle(el.dawn, "opacity", (smooth((vh * 1.25 - sTop) / (vh * 0.7)) * (sTop > -dawnH ? 1 : 0)).toFixed(3));
+      setStyle(el.dusk, "transform", "translate3d(0," + (sBot - 30).toFixed(1) + "px,0)");
+      setStyle(el.dusk, "opacity", (smooth((vh - sBot) / (vh * 0.5)) * (1 - ignite * 0.4)).toFixed(3));
+      var coreS = B.s * 2.6;
+      setStyle(el.core, "transform", "translate3d(" + (B.x - 50).toFixed(1) + "px," + (B.y - 50).toFixed(1) + "px,0) scale(" + ((coreS / 100) * (0.7 + 0.3 * ignite)).toFixed(3) + ")");
+      setStyle(el.core, "opacity", (0.6 * ignite).toFixed(3));
+    }
 
     // near plane: only around the hero
     var nearOn = y < vh * 2.4;
-    el.near.style.visibility = nearOn ? "" : "hidden";
+    setStyle(el.near, "visibility", nearOn ? "" : "hidden");
     if (nearOn) for (var n = 0; n < nearEls.length; n++) {
       var ne = nearEls[n];
-      ne.style.transform = "translate3d(0," + (-y * ne._speed).toFixed(1) + "px,0) rotate(" + (ne._rot + y * 0.01 * (n % 2 ? 1 : -1)).toFixed(2) + "deg)";
+      setStyle(ne, "transform", "translate3d(0," + (-y * ne._speed).toFixed(1) + "px,0) rotate(" + (ne._rot + y * 0.01 * (n % 2 ? 1 : -1)).toFixed(2) + "deg)");
     }
 
     // confetti: rises on the ignite, then keeps drifting at three depths
     var conf = smooth((bloomP - 0.22) / 0.3);
-    el.confetti.style.opacity = (conf * (bloom.top < vh ? 1 : 0)).toFixed(3);
-    for (var pl = 0; pl < planes.length; pl++) {
+    var confO = conf * (bloom.top < vh ? 1 : 0);
+    setStyle(el.confetti, "opacity", confO.toFixed(3));
+    if (confO > 0) for (var pl = 0; pl < planes.length; pl++) {
       var sp = planes[pl]._speed;
-      planes[pl].style.transform = "translate3d(0," + (((1 - conf) * 55 - bloomP * 6) * sp).toFixed(2) + "vh,0)";
+      setStyle(planes[pl], "transform", "translate3d(0," + (((1 - conf) * 55 - bloomP * 6) * sp).toFixed(2) + "vh,0)");
     }
 
     // ---- 3 · which question route is showing
-    if (el.ask && !el.ask.classList.contains("ask-flow")) {
-      var a = el.ask.getBoundingClientRect(), askP = clamp01(-a.top / Math.max(a.height - vh, 1));
+    if (askR) {
+      var askP = clamp01(-askR.top / Math.max(askR.height - vh, 1));
       var idx = askP < 0.258 ? 0 : askP < 0.508 ? 1 : askP < 0.753 ? 2 : 3;
-      el.cases.forEach(function (b, i) { if (i === idx) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      if (idx !== el.caseIdx) {
+        el.caseIdx = idx;
+        el.cases.forEach(function (b, i) { if (i === idx) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      }
     }
 
     // ---- 5 · the needle settles onto its bearing as the dial arrives
-    var dl = el.daily.getBoundingClientRect(), dp = clamp01((vh - dl.top) / (vh + dl.height));
-    el.needle.setAttribute("transform", "rotate(" + (300 - 70 * (1 - smooth(dp / 0.55))).toFixed(2) + " 100 100)");
+    var dp = clamp01((vh - dl.top) / (vh + dl.height));
+    setStyle(el.needle, "transform", "rotate(" + (300 - 70 * (1 - smooth(dp / 0.55))).toFixed(2) + "deg)");
 
     // ---- 6 · days
-    daysFrame();
+    daysFrame(dr);
 
     // ---- chapter nav state
-    railFrame(read);
+    railFrame(chapterRects);
 
     // ---- harness: publish what the bespoke layers actually paint
     var sig = [Math.round(heroP * 20), Math.round(t1 * 20), Math.round(t2 * 20), Math.round(bloomP * 20), Math.round(ignite * 10)].join("|");
@@ -590,36 +630,34 @@
 
   function scheduleIfLoading() { if (loadT0 && loadDraw < 1) schedule(); }
 
-  function daysFrame() {
-    var r = el.days.getBoundingClientRect(), p = clamp01((vh * 0.95 - r.top) / (vh * 0.55));
+  function daysFrame(r) {
+    var p = clamp01((vh * 0.95 - r.top) / (vh * 0.55));
     for (var i = 0; i < DAYS; i++) {
       var v;
       if (i < PAUSE) v = smooth((p - 0.04 - i * 0.08) / 0.1);
       else if (i === PAUSE) v = smooth((p - 0.4) / 0.1);
       else v = smooth((p - 0.54 - (i - PAUSE - 1) * 0.08) / 0.1);
-      dayEls[i].fill.style.opacity = v.toFixed(3);
-      if (dayEls[i].tag) dayEls[i].tag.style.opacity = v.toFixed(3);
+      setStyle(dayEls[i].fill, "opacity", v.toFixed(3));
+      if (dayEls[i].tag) setStyle(dayEls[i].tag, "opacity", v.toFixed(3));
     }
   }
 
   var chapters = [];
-  function railFrame(read) {
+  function railFrame(rects) {
     var cur = -1;
     for (var i = 0; i < chapters.length; i++) {
-      var r = chapters[i].sec.getBoundingClientRect();
+      var r = rects[i];
       if (r.top < vh * 0.5 && r.bottom > vh * 0.5) cur = i;
       chapters[i].a.classList.toggle("is-read", r.top < vh * 0.5);
     }
     chapters.forEach(function (c, i) { if (i === cur) c.a.setAttribute("aria-current", "true"); else c.a.removeAttribute("aria-current"); });
   }
 
-  function reducedFrame(draws, sTop, sBot, read) {
+  function reducedFrame(draws, sTop, sBot, read, dr, chapterRects) {
     // no movement anywhere: the docked flower appears in place and steps through petals
-    var barH = el.bar.offsetHeight;
-    el.bar.classList.toggle("is-day", sTop < barH * 0.6 && sBot > barH * 0.6);
     el.rail.classList.toggle("is-on", sTop < vh * 0.3 && sBot > vh * 0.7);
-    daysFrame();
-    railFrame(read);
+    daysFrame(dr);
+    railFrame(chapterRects);
   }
 
   function schedule() { if (!raf) raf = requestAnimationFrame(frame); }
@@ -701,9 +739,13 @@
     wireCases();
     wireScrollTo();
 
+    // Before the engine's own listener, so this frame (all reads, then writes)
+    // runs first in each animation frame and the engine's writes that follow
+    // do not force a second style pass here.
+    addEventListener("scroll", schedule, { passive: true });
+
     window.ScrollCraft.mount(document.body);
 
-    addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
     addEventListener("focusin", focusPark);
 
