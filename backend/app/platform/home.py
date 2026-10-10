@@ -18,7 +18,7 @@ from typing import Annotated, Any, Literal
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.core import clientkey
+from app.core import clientkey, limits
 from app.core.config import get_settings
 from app.core.db import release
 from app.core.deps import OptionalUser, Session
@@ -84,8 +84,8 @@ async def config() -> dict:
 async def order(body: OrderIn, session: Session, request: Request, user: OptionalUser) -> dict:
     if not enabled():
         return {"order": None}
-    clientkey.hit("home-order", request, user, 10, 60)
-    clientkey.hit("home-order:d", request, user, 20, 86400)  # R5: once a day per device in normal use
+    clientkey.hit("home-order", request, user, await limits.value("home_order_per_minute"), 60)  # admin-editable (plt-admin-limits)
+    clientkey.hit("home-order:d", request, user, limits.get("home_order_per_day"), 86400)  # R5: once a day per device in normal use
     objectives, lessons = await approved_names(session, body.lang, learner=True)
     nxt: dict[str, str] | None = None
     if body.next and body.next.review:

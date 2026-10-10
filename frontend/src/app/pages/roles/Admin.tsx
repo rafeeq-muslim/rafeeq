@@ -27,6 +27,7 @@ import { TopBar } from "@/components/rafeeq"
 import { useT, type Key } from "@/app/i18n"
 import { api, ApiError } from "@/app/lib/api"
 import { AdminOrgs } from "@/app/org/AdminOrgs" // ORG-01: organisations made by the team
+import { AdminLimits } from "./AdminLimits" // plt-admin-limits (owner 2026-10-10)
 
 // MOT-08: the team role is granted only in the database, so it is never offered
 // here; a person who already holds it keeps a box to revoke it.
@@ -62,6 +63,7 @@ export default function Admin() {
         <Invites />
         <AdminOrgs />
         <Roles />
+        <AdminLimits /> {/* plt-admin-limits: «الحدود» */}
       </div>
     </>
   )

@@ -25,7 +25,7 @@
 `POST /api/learning/guide`
 - Body `{lang, mastered: [objective_id], reviewing: [objective_id], next: {lesson_id}|{review: true}|null, returning: bool}` (the LRN-07 "learning summary": objective levels, next step, review objectives, language; no identity, no question text) → `{text: string|null}`. Unknown or unapproved ids are dropped before the model sees them. Rate limit 20/min and 60/day, keyed the same way.
 
-Security audit 2026-10-07 A-H3 (both endpoints, and `POST /api/home/order`): the model part runs inside the global gate (`knowledge/ai/gate.py`; past the cap the reply is `{text: null}`) and inside a call budget (`request_context.call_budget`): at most 4 paid calls and 12 s per request, JSON retries and the fallback model included (home order: 2 calls, 6 s). Tests: `backend/tests/test_sec_ai_limits.py`.
+Security audit 2026-10-07 A-H3 (both endpoints, and `POST /api/home/order`): the model part runs inside the per-client gate (`knowledge/ai/gate.py`; a client over its places gets `{text: null}`; the global cap was removed by owner decision 2026-10-10, plt-admin-limits; per-minute/per-day limits are admin-editable in `app/core/limits.py`) and inside a call budget (`request_context.call_budget`): at most 4 paid calls and 12 s per request, JSON retries and the fallback model included (home order: 2 calls, 6 s). Tests: `backend/tests/test_sec_ai_limits.py`.
 
 ## 3. Data
 

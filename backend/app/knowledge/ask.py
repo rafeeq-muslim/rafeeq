@@ -56,7 +56,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core import clientkey, ratelimit
+from app.core import clientkey, limits, ratelimit
 from app.core.config import get_settings
 from app.core.db import SessionLocal, release
 from app.core.deps import OptionalUser, Session
@@ -880,8 +880,9 @@ async def ask(body: AskIn, session: Session, request: Request, user: OptionalUse
     return out
 
 
-DANGER_ALERT_EVERY_S = 1800  # one alert to everyone per asker
-DANGER_ALERTS_PER_ADDRESS = 3  # per hour, like urgent requests (companion/help.py)
+# One alert to everyone per asker per `danger_alert_every_minutes` (default 30),
+# and `danger_alerts_per_address_hour` (default 3) per address: admin-editable
+# (app.core.limits, plt-admin-limits).
 
 
 def _alert_raised_already(key: str, request: Request) -> bool:
@@ -889,21 +890,22 @@ def _alert_raised_already(key: str, request: Request) -> bool:
     this one client could alert every mentor 8 times a minute. The asker
     always gets the danger reply and the button to a human; only the alert to
     everyone is limited (the event is still published, marked `repeat`)."""
-    limits = (
-        (f"ask-danger:{key}", 1, DANGER_ALERT_EVERY_S),
-        (f"ask-danger-ip:{clientkey.address(request)}", DANGER_ALERTS_PER_ADDRESS, 3600),  # IPv6: per /64 (A-H3)
+    every_s = int(limits.get("danger_alert_every_minutes")) * 60
+    caps = (
+        (f"ask-danger:{key}", 1, every_s),
+        (f"ask-danger-ip:{clientkey.address(request)}", int(limits.get("danger_alerts_per_address_hour")), 3600),  # IPv6: per /64 (A-H3)
     )
-    if any(ratelimit.full(*limit) for limit in limits):
+    if any(ratelimit.full(*cap) for cap in caps):
         return True
-    for limit in limits:
-        ratelimit.hit(*limit)
+    for cap in caps:
+        ratelimit.hit(*cap)
     return False
 
 
 async def _ask(body: AskIn, session: AsyncSession, request: Request, user: Any, key: str) -> dict:
     # A-H3: per address (IPv6: per /64) and per account.
-    clientkey.hit("ask:m", request, user, 8, 60)
-    clientkey.hit("ask:d", request, user, 120, 86400)
+    clientkey.hit("ask:m", request, user, await limits.value("ask_per_minute"), 60)  # admin-editable (plt-admin-limits)
+    clientkey.hit("ask:d", request, user, limits.get("ask_per_day"), 86400)
     started = time.monotonic()
     try:
         result = await answer(session, body.question, body.lang, body.consent_objectives, body.context, client=key)

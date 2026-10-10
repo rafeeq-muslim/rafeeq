@@ -9,8 +9,7 @@ Contacts here are made up (example.com)."""
 from sqlalchemy import select, update
 
 from app.companion.models import MentorApplication, MentorProfile
-from app.companion.safety import HIDE_PER_AUTHOR_DAY, HIDE_PER_REPORTER_DAY
-from app.core import ratelimit
+from app.core import limits, ratelimit
 from app.core.db import SessionLocal
 from app.platform.models import User
 from tests.cmp_helpers import bodies, group_with, person, say
@@ -36,7 +35,7 @@ async def sisters(client, n: int):
 
 
 async def test_l9_one_reporter_hides_a_few_messages_for_everyone_a_day_not_more(client):
-    assert HIDE_PER_REPORTER_DAY == 5
+    assert limits.get("report_hides_per_reporter_day") == 5  # default; admin-editable (plt-admin-limits)
     mentor, members, g = await sisters(client, 8)
     reporter, reader, authors = members[0], members[1], members[2:]
     team = await person(client, "team-one", roles=("team",))
@@ -57,7 +56,7 @@ async def test_l9_one_reporter_hides_a_few_messages_for_everyone_a_day_not_more(
 
 
 async def test_l9_one_reporter_cannot_silence_one_person(client):
-    assert HIDE_PER_AUTHOR_DAY == 2
+    assert limits.get("report_hides_per_author_day") == 2
     mentor, (reporter, target, reader), g = await sisters(client, 3)
     mids = [await say(client, target, g["id"], f"My message {i}") for i in range(4)]
 

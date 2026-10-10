@@ -8,9 +8,8 @@ from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import select, update
 
-from app.core import ratelimit
+from app.core import limits, ratelimit
 from app.core.db import SessionLocal
-from app.organizations import links
 from app.organizations.models import OrgLink
 from tests.conftest import auth, with_roles
 from tests.org_helpers import device, link, make_org
@@ -22,7 +21,7 @@ async def try_link(client, code: str, install_id: str | None = None):
 
 
 async def test_m4_one_code_takes_a_limited_number_of_new_links_a_day(client, monkeypatch):
-    monkeypatch.setattr(links, "LINKS_PER_CODE_DAY", 3)
+    limits.override("org_links_per_code_day", 3)  # admin-editable (plt-admin-limits)
     org = await make_org(client, languages=("tl", "ar"))
     for _ in range(3):
         assert (await try_link(client, org.codes["tl"])).status_code == 201
@@ -39,7 +38,7 @@ async def test_m4_one_code_takes_a_limited_number_of_new_links_a_day(client, mon
 
 
 async def test_m4_the_limit_is_per_day_and_a_device_linking_again_does_not_count_twice(client, monkeypatch):
-    monkeypatch.setattr(links, "LINKS_PER_CODE_DAY", 2)
+    limits.override("org_links_per_code_day", 2)
     org = await make_org(client, languages=("tl",))
     mine = await link(client, org.codes["tl"])
     assert (await try_link(client, org.codes["tl"], mine)).status_code == 201  # the same device again: still one link
@@ -53,7 +52,7 @@ async def test_m4_the_limit_is_per_day_and_a_device_linking_again_does_not_count
 
 
 async def test_m4_the_default_limit_leaves_room_for_an_office_day(client):
-    assert links.LINKS_PER_CODE_DAY == 200
+    assert limits.get("org_links_per_code_day") == 200
 
 
 async def test_m4_the_admin_sees_how_many_devices_each_code_holds(client):

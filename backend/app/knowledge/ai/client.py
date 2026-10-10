@@ -38,6 +38,7 @@ from typing import Any
 import httpx
 from sqlalchemy import func, select
 
+from app.core import limits
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.knowledge.ai.errors import AiUnavailable, BudgetExceeded, CallBudgetExhausted, DeadlineExceeded
@@ -137,14 +138,15 @@ async def guard(agent: str | None = None, reserve: float = 0.0) -> None:
     st = get_settings()
     if not st.openrouter_api_key:
         raise AiUnavailable("no_key")
-    await spent()  # the only await: nothing below yields to another task
+    await limits.refresh()  # plt-admin-limits: both ceilings are admin-editable (defaults: the env settings)
+    await spent()  # the last await: nothing below yields to another task
     job = agent == EMBED_JOB_AGENT
-    if (_spent or 0.0) + sum(_reserved.values()) + reserve + MARGIN_USD >= st.ai_budget_usd:
+    if (_spent or 0.0) + sum(_reserved.values()) + reserve + MARGIN_USD >= limits.get("ai_total_budget_usd"):
         raise BudgetExceeded("budget")
     # Security review #5: a daily ceiling so one abusive client cannot spend
     # the whole budget in a day; everyone gets fixed replies until midnight UTC.
     # The embedding job has its own ceiling (KNW-02 SC3).
-    ceiling = st.ai_embed_daily_budget_usd if job else st.ai_daily_budget_usd
+    ceiling = st.ai_embed_daily_budget_usd if job else limits.get("ai_daily_budget_usd")
     if ((_today_embed if job else _today) or 0.0) + _reserved[job] + reserve + MARGIN_USD >= ceiling:
         raise BudgetExceeded("daily_budget")
     _reserved[job] += reserve
@@ -204,13 +206,22 @@ def _budgeted_timeout(default: float) -> float:
 # --- transport ----------------------------------------------------------------
 
 _clients: dict[int, httpx.AsyncClient] = {}
+# Owner decision 2026-10-10 (plt-admin-limits): many people ask at once and
+# OpenRouter serves them concurrently, so the connection pool must not be a
+# hidden queue. httpx's default (100 connections) would make the 101st call
+# wait; one question makes a few calls in sequence, not in parallel, so 1000
+# connections cover far more people asking at the same moment than the
+# backend's other limits (uvicorn --limit-concurrency) let in. A call that
+# still finds no connection within `pool` seconds fails like any provider
+# error: the person gets the retryable reply, never silence.
+HTTP_LIMITS = httpx.Limits(max_connections=1000, max_keepalive_connections=100, keepalive_expiry=30.0)
 
 
 def _client() -> httpx.AsyncClient:
     loop = id(asyncio.get_running_loop())
     c = _clients.get(loop)
     if c is None or c.is_closed:
-        c = _clients[loop] = httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=5.0))
+        c = _clients[loop] = httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=5.0, pool=5.0), limits=HTTP_LIMITS)
     return c
 
 

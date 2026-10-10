@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 
 from app.companion import notify, urgent
 from app.companion.models import HelpRequest
+from app.core import limits
 from app.core.db import SessionLocal
 from app.core.events import OutboxEvent
 from app.main import app
@@ -53,8 +54,10 @@ async def test_sec_a_h4_a_flood_never_closes_the_urgent_door(client, pushes):
     rows = (await client.get("/api/inbox/requests", headers=mentor.h)).json()
     assert len([r for r in rows if r["kind"] == "urgent"]) == 70
     # the mentors are pushed up to the cap; over it only the team hears, once per ten minutes
-    assert rounds(pushes, mentor) == urgent.PUSH_CAP
-    assert rounds(pushes, team) == urgent.PUSH_CAP + 1
+    cap = limits.get("urgent_pushes_per_hour")  # admin-editable, default 20 (plt-admin-limits)
+    assert cap == 20
+    assert rounds(pushes, mentor) == cap
+    assert rounds(pushes, team) == cap + 1
 
 
 async def test_sec_a_h4_the_address_limit_stays(client):
