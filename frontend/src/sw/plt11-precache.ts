@@ -31,6 +31,8 @@ export const PRECACHE_GLOB_PATTERNS = ["**/*.{js,css,html,svg,woff2,png}"]
 export const PRECACHE_GLOB_IGNORES = [
   "landing/**",
   "brand/*-1024.png",
+  // Manifest icon only (install / splash screen): the browser fetches it itself, online. 139 KB.
+  "brand/rafeeq-app-icon-512.png",
   // Fallback fonts: unicode-range subsets, fetched only for the scripts on screen.
   "assets/ibm-plex-*",
   "assets/noto-naskh-*",

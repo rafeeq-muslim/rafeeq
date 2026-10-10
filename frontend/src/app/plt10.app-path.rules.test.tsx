@@ -56,7 +56,8 @@ describe("plt-10-r1 the bare address shows the landing page", () => {
   it("plt10_r1_first_visit_at_the_bare_address_sees_the_landing_page", () => {
     // nginx serving / with the landing page: backend/tests/test_plt10_app_path.py
     expect(APP_NAVIGATION.test("/")).toBe(false) // the worker never answers "/" with the app shell
-    expect(swTs).toMatch(/precacheAndRoute\(self\.__WB_MANIFEST, \{ directoryIndex: "" \}\)/)
+    expect(swTs).toMatch(/const MANIFEST = self\.__WB_MANIFEST\n/)
+    expect(swTs).toMatch(/precacheAndRoute\(MANIFEST, \{ directoryIndex: "" \}\)/)
   })
 
   it("plt10_r1_someone_with_an_account_still_sees_the_landing_page_with_a_link_to_the_app", () => {
