@@ -12,7 +12,8 @@ Where the dump comes from (found in the site's JS bundle, 2026-10-05):
 Each line: {"serial", "op": "created"|..., "type": "answer"|"article"|"research"|"book"|"topic"|..., "data": {...}}
 Answer fields: reference, title, question (HTML), body (HTML), source{reference,title}, topics[], createdAt, updatedAt, ...
 
-Raw:  <raw_dir>/manifest.json, <raw_dir>/<lang>/data.ndjson.gz
+Raw:  <raw_dir>/manifest.json, <raw_dir>/<lang>/data.ndjson.gz (gzip or, from the
+      2026-10-11 dump on, plain NDJSON under the same name; read by magic bytes)
 Run:  cd backend && uv run python -m app.knowledge.sources.islamqa [--fetch]
 """
 
@@ -66,6 +67,13 @@ def _names(x) -> list[str]:
     return [t.get("title", "") for t in x] if isinstance(x, list) else []
 
 
+def _open_text(f: Path):
+    """The dump is named .gz but since 2026-10-11 may be plain NDJSON: trust the magic bytes."""
+    with f.open("rb") as fh:
+        gz = fh.read(2) == b"\x1f\x8b"
+    return gzip.open(f, "rt", encoding="utf-8") if gz else f.open(encoding="utf-8")
+
+
 def iter_passages(raw_dir: Path) -> Iterator[dict]:
     for lang in LANGS:
         f = raw_dir / lang / "data.ndjson.gz"
@@ -73,7 +81,7 @@ def iter_passages(raw_dir: Path) -> Iterator[dict]:
             continue
         version, fetched = _version(raw_dir, lang), iso_from_mtime(f)
         latest: dict[tuple[str, str], dict | None] = {}
-        with gzip.open(f, "rt", encoding="utf-8") as fh:
+        with _open_text(f) as fh:
             for line in fh:
                 r = json.loads(line)
                 if r.get("type") not in TYPES:
